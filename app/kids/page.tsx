@@ -4,7 +4,6 @@ import { ArrowIcon } from "@/components/ArrowIcon";
 import { ContactButtons } from "@/components/ContactButtons";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { LeadForm } from "@/components/LeadForm";
 
 export const metadata: Metadata = {
   title: "AI для детей 8–13 лет",
@@ -28,7 +27,7 @@ const lessons = [
 export default function KidsPage() {
   return (
     <>
-      <Header contactHref="#kids-contact" alternateHref="/en/kids" />
+      <Header contactHref="/start" alternateHref="/en/kids" />
       <main>
         <section className="kidsHero">
           <div className="shell kidsHeroGrid">
@@ -37,7 +36,7 @@ export default function KidsPage() {
               <h1>AI — это не кнопка<br /><span>«сделай за меня».</span></h1>
               <p>Это инструмент, с которым ребёнок может придумывать, исследовать, создавать и — главное — учиться задавать хорошие вопросы и проверять ответы.</p>
               <div className="heroActions">
-                <Link className="button buttonLight" href="#kids-contact">Обсудить с преподавателем <ArrowIcon /></Link>
+                <Link className="button buttonLight" href="/start">Обсудить с преподавателем <ArrowIcon /></Link>
                 <Link className="textLink textLinkLight" href="#curriculum">Смотреть 10 занятий <ArrowIcon /></Link>
               </div>
               <div className="heroProofRow heroProofLight"><span>ADULT CONTACT</span><span>PRIVACY FIRST</span><span>PROJECT-BASED</span></div>
@@ -121,9 +120,9 @@ export default function KidsPage() {
           <div className="shell">
             <div className="sectionHead splitHead"><div><span className="kicker">Формат и стоимость</span><h2>45–60 минут за занятие</h2></div><p>Индивидуально. Темп и сложность меняются под ребёнка, а не наоборот.</p></div>
             <div className="pricingGrid kidsPricing">
-              <article className="priceCard"><span className="cardMeta">Mini</span><h3>4 занятия</h3><div className="price">$290</div><p>Первое знакомство с AI через творчество и небольшой мини-проект.</p><Link className="button buttonGhost buttonWide" href="#kids-contact">Выбрать Mini</Link></article>
-              <article className="priceCard featuredPrice"><span className="popular">Основная программа</span><span className="cardMeta">Creator</span><h3>10 занятий</h3><div className="price">$890</div><p>Полный маршрут от основ до самостоятельной презентации итогового AI-проекта.</p><Link className="button buttonPrimary buttonWide" href="#kids-contact">Выбрать Creator</Link></article>
-              <article className="priceCard"><span className="cardMeta">Studio</span><h3>12 занятий</h3><div className="price">$1,190</div><p>Больше времени на сложный проект, визуальную часть или первые технические эксперименты.</p><Link className="button buttonGhost buttonWide" href="#kids-contact">Выбрать Studio</Link></article>
+              <article className="priceCard"><span className="cardMeta">Mini</span><h3>4 занятия</h3><div className="price">$290</div><p>Первое знакомство с AI через творчество и небольшой мини-проект.</p><Link className="button buttonGhost buttonWide" href="/start">Выбрать Mini</Link></article>
+              <article className="priceCard featuredPrice"><span className="popular">Основная программа</span><span className="cardMeta">Creator</span><h3>10 занятий</h3><div className="price">$890</div><p>Полный маршрут от основ до самостоятельной презентации итогового AI-проекта.</p><Link className="button buttonPrimary buttonWide" href="/start">Выбрать Creator</Link></article>
+              <article className="priceCard"><span className="cardMeta">Studio</span><h3>12 занятий</h3><div className="price">$1,190</div><p>Больше времени на сложный проект, визуальную часть или первые технические эксперименты.</p><Link className="button buttonGhost buttonWide" href="/start">Выбрать Studio</Link></article>
             </div>
           </div>
         </section>
@@ -138,7 +137,7 @@ export default function KidsPage() {
         <section className="familyConciergeBand">
           <div className="shell familyConciergeGrid">
             <div><span className="kicker kickerLight">Family Concierge</span><h2>Для семьи, которой нужен более управляемый формат.</h2><p>12 занятий ребёнку + 2 отдельные сессии родителю + индивидуальный проект + правила безопасного использования AI дома.</p></div>
-            <div className="familyConciergePrice"><span>PREMIUM</span><b>$1,490</b><Link className="button buttonLight buttonWide" href="#kids-contact">Обсудить Family</Link></div>
+            <div className="familyConciergePrice"><span>PREMIUM</span><b>$1,490</b><Link className="button buttonLight buttonWide" href="/start">Обсудить Family</Link></div>
           </div>
         </section>
 
@@ -151,8 +150,8 @@ export default function KidsPage() {
 
         <section className="contactSection" id="kids-contact">
           <div className="shell contactGrid">
-            <div><span className="kicker kickerLight">Для родителей</span><h2>Расскажите, чем ребёнок увлекается.</h2><p>Подберём тему первого проекта и объясним формат. Контактные данные в форме должны принадлежать взрослому.</p><ContactButtons fallbackHref="#kids-form" /></div>
-            <div id="kids-form"><LeadForm defaultAudience="parent" program="kids-8-13" /></div>
+            <div><span className="kicker kickerLight">Для родителей</span><h2>Расскажите, чем ребёнок увлекается.</h2><p>Подберём тему первого проекта и объясним формат. Контактные данные в форме должны принадлежать взрослому.</p><ContactButtons fallbackHref="/start" /></div>
+            <div className="contactOnlyCard"><span className="cardMeta">Для взрослого</span><h3>Короткий brief без данных ребёнка</h3><p>Возраст, интересы, цель и формат online / Phuket. Имя, телефон или email ребёнка на старте не нужны.</p><Link className="button buttonPrimary buttonWide" href="/start">Что написать →</Link></div>
           </div>
         </section>
       </main>

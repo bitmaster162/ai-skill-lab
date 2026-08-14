@@ -4,7 +4,6 @@ import { ArrowIcon } from "@/components/ArrowIcon";
 import { ContactButtons } from "@/components/ContactButtons";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { LeadForm } from "@/components/LeadForm";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/", languages: { ru: "/", en: "/en" } },
@@ -17,21 +16,21 @@ const programs = [
     title: "AI для жизни и работы",
     text: "ChatGPT, Gemini, Claude и другие модели как рабочая система: исследования, тексты, анализ, решения и личные процессы.",
     meta: "1-на-1 · с нуля",
-    href: "#contact",
+    href: "/start",
   },
   {
     index: "02",
     title: "AI Builder",
     text: "Ассистенты, автоматизации, агенты и простые AI-продукты. Меньше лекций — больше сборки руками.",
     meta: "Практика · проекты",
-    href: "#contact",
+    href: "/start",
   },
   {
     index: "03",
     title: "AI для бизнеса",
     text: "Разбираем процессы команды, выбираем точки внедрения и обучаем сотрудников использовать AI измеримо и безопасно.",
     meta: "Команды · процессы",
-    href: "#contact",
+    href: "/start",
   },
   {
     index: "04",
@@ -205,7 +204,7 @@ export default function Home() {
               <span className="cardMeta">Family Concierge</span>
               <div className="price">$1,490</div>
               <p>Премиальный персональный формат. Конкретный набор инструментов согласовывается с родителем и зависит от возраста.</p>
-              <Link className="button buttonPrimary buttonWide" href="#contact">Обсудить Family</Link>
+              <Link className="button buttonPrimary buttonWide" href="/start">Обсудить Family</Link>
               <small>Без скрытых подписок на обучение. Сторонние AI-сервисы, если нужны, оплачиваются отдельно.</small>
             </article>
           </div>
@@ -221,17 +220,17 @@ export default function Home() {
               <article className="priceCard">
                 <span className="cardMeta">Start</span><h3>4 занятия</h3><div className="price">$390</div>
                 <p>Разобраться в AI, настроить базовый рабочий процесс и получить первый полезный результат.</p>
-                <Link className="button buttonGhost buttonWide" href="#contact">Выбрать Start</Link>
+                <Link className="button buttonGhost buttonWide" href="/start">Выбрать Start</Link>
               </article>
               <article className="priceCard featuredPrice">
                 <span className="popular">Основной</span><span className="cardMeta">Personal</span><h3>10 занятий</h3><div className="price">$890</div>
                 <p>Полная персональная траектория: практика, материалы, собственные шаблоны и итоговый проект.</p>
-                <Link className="button buttonPrimary buttonWide" href="#contact">Выбрать Personal</Link>
+                <Link className="button buttonPrimary buttonWide" href="/start">Выбрать Personal</Link>
               </article>
               <article className="priceCard">
                 <span className="cardMeta">Intensive</span><h3>12 занятий + проект</h3><div className="price">$1,290</div>
                 <p>Для сложной задачи: автоматизация, AI-агент, мини-продукт или технический portfolio project.</p>
-                <Link className="button buttonGhost buttonWide" href="#contact">Выбрать Intensive</Link>
+                <Link className="button buttonGhost buttonWide" href="/start">Выбрать Intensive</Link>
               </article>
             </div>
           </div>
@@ -264,12 +263,17 @@ export default function Home() {
         <section className="contactSection" id="contact">
           <div className="shell contactGrid">
             <div>
-              <span className="kicker kickerLight">Старт</span>
+              <span className="kicker kickerLight">Старт · contact-only</span>
               <h2>Сначала задача.<br />Потом программа.</h2>
               <p>Напишите, для кого обучение и какой результат нужен. Для детей и подростков контакт должен принадлежать взрослому.</p>
-              <ContactButtons fallbackHref="#contact-form" />
+              <ContactButtons fallbackHref="/start" />
             </div>
-            <div id="contact-form"><LeadForm /></div>
+            <div className="contactOnlyCard">
+              <span className="cardMeta">Короткий brief</span>
+              <h3>Без формы и лишних данных</h3>
+              <p>Укажите: кому обучение, цель, текущий уровень и формат online / Phuket. Для несовершеннолетнего достаточно возраста и интересов — без лишних персональных данных.</p>
+              <Link className="button buttonPrimary buttonWide" href="/start">Что написать →</Link>
+            </div>
           </div>
         </section>
       </main>

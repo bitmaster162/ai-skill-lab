@@ -40,7 +40,7 @@ export function Header({ contactHref, locale = "ru", alternateHref }: HeaderProp
   const t = labels[locale];
   const base = locale === "ru" ? "" : "/en";
   const home = base || "/";
-  const contact = contactHref || `${base}/#contact`;
+  const contact = contactHref || `${base}/start`;
   const alternate = alternateHref || (locale === "ru" ? "/en" : "/");
 
   return (

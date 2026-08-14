@@ -4,7 +4,6 @@ import { ArrowIcon } from "@/components/ArrowIcon";
 import { ContactButtons } from "@/components/ContactButtons";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { LeadForm } from "@/components/LeadForm";
 
 export const metadata: Metadata = {
   title: "AI для подростков 14–18 лет",
@@ -28,7 +27,7 @@ const modules = [
 export default function TeensPage() {
   return (
     <>
-      <Header contactHref="#teens-contact" alternateHref="/en/teens" />
+      <Header contactHref="/start" alternateHref="/en/teens" />
       <main>
         <section className="teenHero">
           <div className="shell teenHeroGrid">
@@ -36,7 +35,7 @@ export default function TeensPage() {
               <div className="eyebrow eyebrowLight"><span className="dot dotLight" /> 14–18 лет · portfolio track</div>
               <h1>Не готовиться к будущему.<br /><span>Начать собирать его.</span></h1>
               <p>AI как прикладной навык: research, код, автоматизации, презентации и собственный проект, который можно показать, а не только описать.</p>
-              <div className="heroActions"><Link className="button buttonLight" href="#teens-contact">Подобрать трек <ArrowIcon /></Link><Link className="textLink textLinkLight" href="#teen-program">Смотреть программу <ArrowIcon /></Link></div>
+              <div className="heroActions"><Link className="button buttonLight" href="/start">Подобрать трек <ArrowIcon /></Link><Link className="textLink textLinkLight" href="#teen-program">Смотреть программу <ArrowIcon /></Link></div>
               <div className="heroProofRow heroProofLight"><span>RESEARCH</span><span>BUILD</span><span>PORTFOLIO</span><span>VERIFY</span></div>
             </div>
             <div className="teenTerminal" aria-label="Схема подросткового AI-проекта">
@@ -83,9 +82,9 @@ export default function TeensPage() {
           <div className="shell">
             <div className="sectionHead splitHead"><div><span className="kicker">Стоимость</span><h2>Три уровня глубины</h2></div><p>Можно начать с короткого трека и перейти в Builder только если формат и интерес совпали.</p></div>
             <div className="pricingGrid">
-              <article className="priceCard"><span className="cardMeta">Explorer</span><h3>6 занятий</h3><div className="price">$490</div><p>AI literacy + research + первый небольшой проект.</p><Link className="button buttonGhost buttonWide" href="#teens-contact">Выбрать Explorer</Link></article>
-              <article className="priceCard featuredPrice"><span className="popular">Оптимально</span><span className="cardMeta">Portfolio</span><h3>10 занятий</h3><div className="price">$890</div><p>Полный маршрут с итоговым проектом и персональной картой развития.</p><Link className="button buttonPrimary buttonWide" href="#teens-contact">Выбрать Portfolio</Link></article>
-              <article className="priceCard"><span className="cardMeta">Builder</span><h3>12 занятий</h3><div className="price">$1,290</div><p>Больше кода, автоматизаций и времени на технический или продуктовый проект.</p><Link className="button buttonGhost buttonWide" href="#teens-contact">Выбрать Builder</Link></article>
+              <article className="priceCard"><span className="cardMeta">Explorer</span><h3>6 занятий</h3><div className="price">$490</div><p>AI literacy + research + первый небольшой проект.</p><Link className="button buttonGhost buttonWide" href="/start">Выбрать Explorer</Link></article>
+              <article className="priceCard featuredPrice"><span className="popular">Оптимально</span><span className="cardMeta">Portfolio</span><h3>10 занятий</h3><div className="price">$890</div><p>Полный маршрут с итоговым проектом и персональной картой развития.</p><Link className="button buttonPrimary buttonWide" href="/start">Выбрать Portfolio</Link></article>
+              <article className="priceCard"><span className="cardMeta">Builder</span><h3>12 занятий</h3><div className="price">$1,290</div><p>Больше кода, автоматизаций и времени на технический или продуктовый проект.</p><Link className="button buttonGhost buttonWide" href="/start">Выбрать Builder</Link></article>
             </div>
           </div>
         </section>
@@ -98,7 +97,7 @@ export default function TeensPage() {
         </section>
 
         <section className="contactSection" id="teens-contact">
-          <div className="shell contactGrid"><div><span className="kicker kickerLight">Старт</span><h2>Расскажите, что уже интересно подростку.</h2><p>Код, дизайн, игры, наука, контент, бизнес или пока ничего конкретного — это достаточно, чтобы собрать первый маршрут.</p><ContactButtons fallbackHref="#teens-form" /></div><div id="teens-form"><LeadForm defaultAudience="teen" program="teens-14-18" /></div></div>
+          <div className="shell contactGrid"><div><span className="kicker kickerLight">Старт</span><h2>Расскажите, что уже интересно подростку.</h2><p>Код, дизайн, игры, наука, контент, бизнес или пока ничего конкретного — это достаточно, чтобы собрать первый маршрут.</p><ContactButtons fallbackHref="/start" /></div><div className="contactOnlyCard"><span className="cardMeta">Контакт взрослого</span><h3>Начните с цели и интересов</h3><p>Достаточно возраста, текущего уровня и направления интереса. Организационная переписка идёт через взрослого.</p><Link className="button buttonPrimary buttonWide" href="/start">Что написать →</Link></div></div>
         </section>
       </main>
       <Footer />

@@ -77,3 +77,7 @@ No fabricated testimonials, student counts, income claims or unverified instruct
 - `/method` and `/en/method`: transferable learning method and verification loop.
 - `/phuket` and `/en/phuket`: honest Phuket-by-arrangement + online worldwide positioning without claiming a permanent venue.
 - Header pricing links now use dedicated routes; footer links expose pricing, method and location pages.
+
+## R10 contact-flow cleanup
+
+The public Next.js pages now mirror the contact-only operating model used by the static release: buyer and youth CTAs route through `/start` / `/en/start`, and no public page renders the dormant first-party `LeadForm`. The form/API implementation remains available for a future explicit form-enabled launch after legal and webhook configuration.

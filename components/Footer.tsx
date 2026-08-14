@@ -30,7 +30,7 @@ export function Footer({ locale = "ru" }: { locale?: Locale }) {
           <Link href={`${base}/kids`}>{en ? "Kids 8–13" : "Дети 8–13"}</Link>
           <Link href={`${base}/teens`}>{en ? "Teens 14–18" : "Подростки 14–18"}</Link>
           <Link href={`${base}/safety`}>{en ? "Youth AI safety" : "Безопасность детей"}</Link>
-          <Link href={`${base}/#contact`}>{en ? "Contact" : "Заявка"}</Link>
+          <Link href={`${base}/start`}>{en ? "Contact" : "Заявка"}</Link>
         </div>
         <div className="footerLegal">
           <span>© {new Date().getFullYear()} AI Skill Lab</span>
