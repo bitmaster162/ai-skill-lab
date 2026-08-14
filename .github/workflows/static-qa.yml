@@ -23,3 +23,5 @@ jobs:
         run: python scripts/check_static_release.py
       - name: Validate commercial facts parity
         run: python scripts/check_commercial_parity.py
+      - name: Validate contact funnel
+        run: python scripts/check_contact_funnel.py
