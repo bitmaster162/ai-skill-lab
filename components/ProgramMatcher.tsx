@@ -30,6 +30,9 @@ const copy = {
     note: "Это не автоматическое подтверждение fit. Перед оплатой вручную сверяем цель, уровень, расписание и scope.",
     track: "Посмотреть направление →",
     start: "Отправить brief →",
+    copy: "Скопировать brief",
+    copied: "Скопировано",
+    copyError: "Не удалось скопировать",
     reset: "Сбросить",
   },
   en: {
@@ -52,6 +55,9 @@ const copy = {
     note: "This is not an automatic fit approval. Goal, level, schedule and scope are confirmed manually before payment.",
     track: "View the track →",
     start: "Send a brief →",
+    copy: "Copy brief",
+    copied: "Copied",
+    copyError: "Copy failed",
     reset: "Reset",
   },
 } as const;
@@ -99,6 +105,7 @@ export function ProgramMatcher({ locale = "ru" }: { locale?: MatcherLocale }) {
   const [audience, setAudience] = useState<Audience | null>(null);
   const [goal, setGoal] = useState<Goal | null>(null);
   const [depth, setDepth] = useState<Depth | null>(null);
+  const [copyState, setCopyState] = useState<"idle" | "done" | "error">("idle");
   const base = locale === "en" ? "/en" : "";
 
   const result = useMemo(() => {
@@ -121,6 +128,44 @@ export function ProgramMatcher({ locale = "ru" }: { locale?: MatcherLocale }) {
     };
   }, [audience, goal, depth, locale, base]);
 
+
+  const optionLabel = (kind: "audience" | "goal" | "depth", value: string) => {
+    const list = kind === "audience" ? t.audienceOptions : kind === "goal" ? t.goalOptions : t.depthOptions;
+    return list.find(([v]) => v === value)?.[1] || value;
+  };
+
+  const copyBrief = async () => {
+    if (!result || !audience || !goal || !depth) return;
+    const lines = locale === "ru"
+      ? [
+          "AI Skill Lab — запрос",
+          `Для кого: ${optionLabel("audience", audience)}`,
+          `Цель: ${optionLabel("goal", goal)}`,
+          `Глубина: ${optionLabel("depth", depth)}`,
+          `Стартовая рекомендация: ${result.title} · ${result.length} · ${result.price}`,
+          audience === "kids" || audience === "teens" ? "Организационный контакт: родитель / законный представитель" : "",
+          "Контекст: [1–2 предложения без чувствительных данных]",
+          "Формат: online / Phuket",
+        ]
+      : [
+          "AI Skill Lab — request",
+          `For: ${optionLabel("audience", audience)}`,
+          `Goal: ${optionLabel("goal", goal)}`,
+          `Depth: ${optionLabel("depth", depth)}`,
+          `Starting recommendation: ${result.title} · ${result.length} · ${result.price}`,
+          audience === "kids" || audience === "teens" ? "Organizational contact: parent / legal guardian" : "",
+          "Context: [1–2 sentences without sensitive data]",
+          "Format: online / Phuket",
+        ];
+    const text = lines.filter(Boolean).join("\n");
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopyState("done");
+    } catch {
+      setCopyState("error");
+    }
+  };
+
   const choose = <T extends string>(value: T, current: T | null, setter: (v:T)=>void, label: string) => (
     <button type="button" className={`matcherOption ${current===value ? "isSelected" : ""}`} aria-pressed={current===value} onClick={() => setter(value)}>{label}</button>
   );
@@ -136,7 +181,7 @@ export function ProgramMatcher({ locale = "ru" }: { locale?: MatcherLocale }) {
         <div className="matcherResultTop"><div><h2>{result.title}</h2><p>{result.length}</p></div><strong>{result.price}</strong></div>
         <div className="matcherReason"><b>{t.why}</b><p>{result.reason}</p></div>
         <p className="matcherNote">{t.note}</p>
-        <div className="heroActions"><Link className="button buttonPrimary" href={result.path}>{t.track}</Link><Link className="button buttonGhost" href={`${base}/start`}>{t.start}</Link><button type="button" className="matcherReset" onClick={() => {setAudience(null);setGoal(null);setDepth(null)}}>{t.reset}</button></div>
+        <div className="heroActions"><Link className="button buttonPrimary" href={result.path}>{t.track}</Link><button type="button" className="button buttonGhost" onClick={copyBrief}>{copyState === "done" ? t.copied : copyState === "error" ? t.copyError : t.copy}</button><Link className="textLink matcherStartLink" href={`${base}/start`}>{t.start}</Link><button type="button" className="matcherReset" onClick={() => {setAudience(null);setGoal(null);setDepth(null);setCopyState("idle")}}>{t.reset}</button></div>
       </>}
     </section>
   </div>;
