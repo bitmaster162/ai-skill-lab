@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowIcon } from "@/components/ArrowIcon";
 import { ContactButtons } from "@/components/ContactButtons";
 import { Footer } from "@/components/Footer";
+import { JsonLd } from "@/components/JsonLd";
+import { organizationSchema, websiteSchema } from "@/lib/structured-data";
 import { Header } from "@/components/Header";
 
 export const metadata: Metadata = {
@@ -66,8 +68,9 @@ const faq = [
 export default function Home() {
   return (
     <>
+      <JsonLd data={[websiteSchema, organizationSchema]} />
       <Header alternateHref="/en" />
-      <main>
+      <main id="main">
         <section className="hero heroR2">
           <div className="orb orbOne" />
           <div className="orb orbTwo" />

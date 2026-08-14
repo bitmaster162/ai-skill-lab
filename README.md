@@ -13,8 +13,8 @@ This keeps the live site useful without silently exposing a broken form or inven
 
 ## Routes
 
-- RU: `/`, `/personal`, `/business`, `/kids`, `/teens`, `/about`, `/pricing`, `/method`, `/phuket`, `/projects`, `/parents`, `/start`, `/privacy`, `/terms`, `/safety`
-- EN: `/en`, `/en/personal`, `/en/business`, `/en/kids`, `/en/teens`, `/en/about`, `/en/pricing`, `/en/method`, `/en/phuket`, `/en/projects`, `/en/parents`, `/en/start`, `/en/privacy`, `/en/terms`, `/en/safety`
+- RU: `/`, `/personal`, `/business`, `/kids`, `/teens`, `/about`, `/pricing`, `/method`, `/phuket`, `/projects`, `/parents`, `/faq`, `/start`, `/privacy`, `/terms`, `/safety`
+- EN: `/en`, `/en/personal`, `/en/business`, `/en/kids`, `/en/teens`, `/en/about`, `/en/pricing`, `/en/method`, `/en/phuket`, `/en/projects`, `/en/parents`, `/en/faq`, `/en/start`, `/en/privacy`, `/en/terms`, `/en/safety`
 
 ## Environment
 
@@ -81,3 +81,9 @@ No fabricated testimonials, student counts, income claims or unverified instruct
 ## R10 contact-flow cleanup
 
 The public Next.js pages now mirror the contact-only operating model used by the static release: buyer and youth CTAs route through `/start` / `/en/start`, and no public page renders the dormant first-party `LeadForm`. The form/API implementation remains available for a future explicit form-enabled launch after legal and webhook configuration.
+
+## R11 discoverability layer
+
+- Added `/faq` and `/en/faq` with visible buyer questions/answers.
+- Added minimal `WebSite` + `EducationalOrganization` JSON-LD to the root home page without inventing legal/address details.
+- Kept structured data limited to claims visible on the site; no fake reviews, ratings or FAQ rich-result promises.
