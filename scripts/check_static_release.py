@@ -78,6 +78,17 @@ def main():
         if sm != set(routes):
             problems.append(f'sitemap mismatch: routes={len(routes)} sitemap={len(sm)} missing={sorted(set(routes)-sm)} extra={sorted(sm-set(routes))}')
 
+    source_placeholder_rx=re.compile(r'https?://(?:example\.com|localhost(?::\d+)?)', re.I)
+    for root_name in ('app','components','lib'):
+        root=ROOT/root_name
+        if not root.exists(): continue
+        for p in root.rglob('*'):
+            if p.is_file() and p.suffix.lower() in {'.ts','.tsx','.js','.jsx'}:
+                try: text=p.read_text(encoding='utf-8')
+                except UnicodeDecodeError: continue
+                if source_placeholder_rx.search(text):
+                    problems.append(f'release placeholder URL in {p.relative_to(ROOT)}')
+
     secret_rx=re.compile(r'(sk-[A-Za-z0-9]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY)')
     for p in LIVE.rglob('*'):
         if p.is_file() and p.suffix.lower() in {'.html','.css','.js','.json','.xml','.txt','.svg','.webmanifest'}:
