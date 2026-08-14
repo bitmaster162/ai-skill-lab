@@ -11,7 +11,7 @@ LIVE = ROOT / 'deploy' / 'live'
 class PageParser(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
-        self.links=[]; self.anchors=set(); self.forms=0; self.canonical=[]; self.jsonld=[]
+        self.links=[]; self.anchors=set(); self.forms=0; self.canonical=[]; self.alternates={}; self.jsonld=[]
         self._jsonld=False; self._buf=[]
     def handle_starttag(self, tag, attrs):
         a=dict(attrs)
@@ -21,6 +21,7 @@ class PageParser(HTMLParser):
         if 'id' in a: self.anchors.add(a['id'])
         if tag == 'form': self.forms += 1
         if tag == 'link' and a.get('rel') == 'canonical' and a.get('href'): self.canonical.append(a['href'])
+        if tag == 'link' and a.get('rel') == 'alternate' and a.get('hreflang') and a.get('href'): self.alternates[a['hreflang']]=a['href']
         if tag == 'script' and a.get('type') == 'application/ld+json': self._jsonld=True; self._buf=[]
     def handle_endtag(self, tag):
         if tag == 'script' and self._jsonld:
@@ -70,6 +71,26 @@ def main():
                 if anchor not in tp.anchors: problems.append(f'{route}: missing anchor {href}')
     if forms: problems.append(f'public static forms present: {forms}')
 
+    canonical_base='https://ai-skill-lab.vercel.app'
+    for route,parser in parsed.items():
+        expected_canonical=canonical_base + ('/' if route == '/' else route)
+        if parser.canonical != [expected_canonical]:
+            problems.append(f'{route}: canonical mismatch {parser.canonical!r} != {expected_canonical!r}')
+        if route == '/': ru_route, en_route = '/', '/en'
+        elif route == '/en': ru_route, en_route = '/', '/en'
+        elif route.startswith('/en/'):
+            ru_route, en_route = route[3:], route
+        else:
+            ru_route, en_route = route, '/en' + route
+        expected_alt={
+            'ru': canonical_base + ('/' if ru_route == '/' else ru_route),
+            'en': canonical_base + en_route,
+            'x-default': canonical_base + ('/' if ru_route == '/' else ru_route),
+        }
+        for lang,expected in expected_alt.items():
+            if parser.alternates.get(lang) != expected:
+                problems.append(f'{route}: hreflang {lang} mismatch {parser.alternates.get(lang)!r} != {expected!r}')
+
     sitemap=LIVE/'sitemap.xml'
     if not sitemap.exists(): problems.append('missing sitemap.xml')
     else:
@@ -77,6 +98,28 @@ def main():
         sm={x.rstrip('/') or '/' for x in locs}
         if sm != set(routes):
             problems.append(f'sitemap mismatch: routes={len(routes)} sitemap={len(sm)} missing={sorted(set(routes)-sm)} extra={sorted(sm-set(routes))}')
+
+    release_manifest=LIVE/'_release.json'
+    if not release_manifest.exists():
+        problems.append('missing _release.json')
+    else:
+        try:
+            manifest=json.loads(release_manifest.read_text(encoding='utf-8'))
+            if manifest.get('schema') != 'ai-skill-lab.static-release.v1': problems.append('invalid release manifest schema')
+            listed={x['path']:(x['size'],x['sha256']) for x in manifest.get('files',[])}
+            actual={}
+            import hashlib
+            for p in sorted(LIVE.rglob('*')):
+                if not p.is_file() or p == release_manifest: continue
+                rel=p.relative_to(LIVE).as_posix(); b=p.read_bytes()
+                actual[rel]=(len(b),hashlib.sha256(b).hexdigest())
+            if listed != actual: problems.append(f'release manifest file map mismatch: listed={len(listed)} actual={len(actual)}')
+            aggregate=''.join(f'{path}\t{size}\t{sha}\n' for path,(size,sha) in sorted(actual.items())).encode()
+            digest=hashlib.sha256(aggregate).hexdigest()
+            if manifest.get('payload_sha256') != digest: problems.append('release manifest payload_sha256 mismatch')
+            if manifest.get('file_count') != len(actual): problems.append('release manifest file_count mismatch')
+        except Exception as e:
+            problems.append(f'invalid _release.json: {e}')
 
     source_placeholder_rx=re.compile(r'https?://(?:example\.com|localhost(?::\d+)?)', re.I)
     for root_name in ('app','components','lib'):
