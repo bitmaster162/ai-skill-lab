@@ -1,6 +1,30 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { site } from "@/lib/site";
-export const metadata: Metadata = { title: "Начать обучение", alternates: { canonical: "/start", languages: { ru: "/start", en: "/en/start" } } };
-export default function StartPage(){return <><Header contactHref={site.telegram}/><main id="main"><section className="contactSection"><div className="shell contactGrid"><div><span className="kicker kickerLight">START · без формы</span><h2>Сначала fit.<br/>Потом программа.</h2><p>Коротко опишите: кому обучение, цель, текущий уровень и формат online / Phuket. Для несовершеннолетнего контакт ведёт взрослый.</p><div className="contactButtons"><a className="button buttonLight" href={site.telegram} target="_blank" rel="noopener noreferrer">Открыть Telegram →</a></div></div><div className="contactOnlyCard"><h3>Что написать</h3><p>1. Кому обучение<br/>2. Что должно стать возможным<br/>3. Текущий уровень<br/>4. Online / Phuket и RU / EN</p><small>Не присылайте лишние персональные данные ребёнка.</small></div></div></section></main><Footer/></>;}
+
+export const metadata: Metadata = {
+  title: "Начать обучение",
+  description: "Выберите тип запроса и отправьте короткий brief в Telegram: взрослый, ребёнок, подросток или business workflow.",
+  alternates: { canonical: "/start", languages: { ru: "/start", en: "/en/start" } },
+};
+
+const briefs = [
+  { meta:"ADULT", title:"Личная программа", href:"/personal", lines:["Цель на ближайшие 1–3 месяца","Какие задачи повторяются сейчас","Какие AI-инструменты уже используете","Online / Phuket · RU / EN"] },
+  { meta:"KIDS · 8–13", title:"Для ребёнка", href:"/kids", lines:["Возраст","Что ребёнку интересно","Есть ли опыт с AI","Какой формат проекта мог бы увлечь"] },
+  { meta:"TEENS · 14–18", title:"Для подростка", href:"/teens", lines:["Возраст и текущий уровень","Интересы: code / design / science / content / business","Что уже пробовал с AI","Какой portfolio outcome был бы полезен"] },
+  { meta:"BUSINESS", title:"Workflow pilot", href:"/business", lines:["Какой процесс хотите улучшить","Кто его выполняет и кто владелец","Как часто он повторяется","Что считается хорошим выходом и что будет при ошибке"] },
+];
+
+export default function StartPage(){return <>
+  <Header contactHref={site.telegram} alternateHref="/en/start"/>
+  <main id="main">
+    <section className="contactSection"><div className="shell contactGrid"><div><span className="kicker kickerLight">START · без формы</span><h2>Сначала fit.<br/>Потом программа.</h2><p>Выберите тип запроса ниже и отправьте короткий brief. Для несовершеннолетнего организационный контакт ведёт взрослый.</p><div className="contactButtons"><a className="button buttonLight" href={site.telegram} target="_blank" rel="noopener noreferrer">Открыть Telegram →</a></div></div><div className="contactOnlyCard"><span className="cardMeta">Что не нужно присылать</span><h3>Минимум данных.</h3><p>Не нужны документы, адрес, школа ребёнка, пароли, API keys, платёжные данные или чувствительная корпоративная информация.</p><small>Scope, стоимость и правила оплаты подтверждаются до любой оплаты.</small></div></div></section>
+
+    <section className="section"><div className="shell"><div className="sectionHead"><span className="kicker">Выберите brief</span><h2>Четыре сообщения, которые экономят лишний созвон.</h2><p className="sectionSub">Не надо отвечать идеально. Эти пункты просто дают достаточно контекста, чтобы предложить адекватный маршрут.</p></div><div className="programGrid">{briefs.map((b)=><article className="programCard" key={b.meta}><span className="cardMeta">{b.meta}</span><h3>{b.title}</h3><ol className="numberList">{b.lines.map((x)=><li key={x}>{x}</li>)}</ol><div className="heroActions"><Link className="textLink" href={b.href}>Посмотреть направление →</Link></div></article>)}</div></div></section>
+
+    <section className="section sectionMuted"><div className="shell splitHead"><div><span className="kicker">Что произойдёт дальше</span><h2>Без скрытого checkout.</h2></div><div><ol className="numberList"><li>Сверяем цель и формат.</li><li>Предлагаем подходящий пакет или более короткий старт.</li><li>Подтверждаем scope, расписание, оплату и правила переноса.</li><li>Только после этого начинается программа.</li></ol></div></div></section>
+  </main>
+  <Footer/>
+</>}
