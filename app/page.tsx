@@ -80,7 +80,7 @@ export default function Home() {
                 Он должен делать вас сильнее. Учимся исследовать, создавать, автоматизировать и собирать собственные AI-процессы на реальных задачах.
               </p>
               <div className="heroActions">
-                <Link className="button buttonPrimary" href="#contact">Подобрать программу <ArrowIcon /></Link>
+                <Link className="button buttonPrimary" href="/start">Подобрать программу <ArrowIcon /></Link>
                 <Link className="textLink" href="#programs">Смотреть направления <ArrowIcon /></Link>
               </div>
               <div className="heroProofRow">

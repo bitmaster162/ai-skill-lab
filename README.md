@@ -2,7 +2,7 @@
 
 Bilingual Next.js website for practical one-to-one AI education: adults, AI builders, teams, kids 8–13 and teens 14–18.
 
-## R4 launch mode
+## R7 launch mode
 
 R4 supports two explicit operating modes:
 
@@ -13,8 +13,8 @@ This keeps the live site useful without silently exposing a broken form or inven
 
 ## Routes
 
-- RU: `/`, `/kids`, `/teens`, `/privacy`, `/terms`, `/safety`
-- EN: `/en`, `/en/kids`, `/en/teens`, `/en/privacy`, `/en/terms`, `/en/safety`
+- RU: `/`, `/personal`, `/business`, `/kids`, `/teens`, `/about`, `/start`, `/privacy`, `/terms`, `/safety`
+- EN: `/en`, `/en/personal`, `/en/business`, `/en/kids`, `/en/teens`, `/en/about`, `/en/start`, `/en/privacy`, `/en/terms`, `/en/safety`
 
 ## Environment
 
@@ -57,3 +57,10 @@ The gate validates the public site/contact in contact-only mode. If lead collect
 ## Claims discipline
 
 No fabricated testimonials, student counts, income claims or unverified instructor biography are included.
+
+## R7 conversion layer
+
+- `/start` and `/en/start` provide a no-form lead brief before Telegram contact.
+- `/about` and `/en/about` make the teaching method and claims discipline explicit.
+- Static release adds skip navigation, focus-visible treatment, reduced-motion handling and a real 404 page.
+- No testimonials, student counts or outcome guarantees were added.

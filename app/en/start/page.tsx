@@ -1,0 +1,6 @@
+import type { Metadata } from "next";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
+import { site } from "@/lib/site";
+export const metadata: Metadata = { title: "Start", alternates: { canonical: "/en/start", languages: { ru: "/start", en: "/en/start" } } };
+export default function StartPage(){return <><Header locale="en" contactHref={site.telegram} alternateHref="/start"/><main id="main"><section className="contactSection"><div className="shell contactGrid"><div><span className="kicker kickerLight">START · no form</span><h2>Fit first.<br/>Program second.</h2><p>Send a short brief: who is learning, the goal, current level and online / Phuket preference. For a minor, contact is handled by an adult.</p><div className="contactButtons"><a className="button buttonLight" href={site.telegram} target="_blank" rel="noopener noreferrer">Open Telegram →</a></div></div><div className="contactOnlyCard"><h3>What to send</h3><p>1. Who is learning<br/>2. What should become possible<br/>3. Current level<br/>4. Online / Phuket and RU / EN</p><small>Do not send unnecessary personal information about a child.</small></div></div></section></main><Footer locale="en"/></>;}

@@ -227,3 +227,6 @@ button { cursor: pointer; }
 }
 .contactOnlyCard h3 { margin: 0; font-size: clamp(28px, 4vw, 44px); letter-spacing: -.045em; line-height: 1; }
 .contactOnlyCard p { margin: 0; color: var(--muted); line-height: 1.65; }
+
+/* R7 conversion + accessibility */
+.skipLink{position:fixed;left:12px;top:-80px;z-index:100;background:var(--acid);color:var(--ink);padding:10px 14px;border-radius:10px;font-weight:900}.skipLink:focus{top:12px}:focus-visible{outline:3px solid #4f8cff;outline-offset:3px}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
