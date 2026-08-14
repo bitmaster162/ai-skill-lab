@@ -13,8 +13,8 @@ This keeps the live site useful without silently exposing a broken form or inven
 
 ## Routes
 
-- RU: `/`, `/personal`, `/business`, `/kids`, `/teens`, `/about`, `/start`, `/privacy`, `/terms`, `/safety`
-- EN: `/en`, `/en/personal`, `/en/business`, `/en/kids`, `/en/teens`, `/en/about`, `/en/start`, `/en/privacy`, `/en/terms`, `/en/safety`
+- RU: `/`, `/personal`, `/business`, `/kids`, `/teens`, `/about`, `/projects`, `/parents`, `/start`, `/privacy`, `/terms`, `/safety`
+- EN: `/en`, `/en/personal`, `/en/business`, `/en/kids`, `/en/teens`, `/en/about`, `/en/projects`, `/en/parents`, `/en/start`, `/en/privacy`, `/en/terms`, `/en/safety`
 
 ## Environment
 
@@ -64,3 +64,9 @@ No fabricated testimonials, student counts, income claims or unverified instruct
 - `/about` and `/en/about` make the teaching method and claims discipline explicit.
 - Static release adds skip navigation, focus-visible treatment, reduced-motion handling and a real 404 page.
 - No testimonials, student counts or outcome guarantees were added.
+
+## R8 proof layer
+
+- `/projects` and `/en/projects`: example outcome formats, explicitly not client case studies.
+- `/parents` and `/en/parents`: buyer-facing progress rubric, age/safety framing and family decision support.
+- Public youth age wording remains aligned with current OpenAI guidance and is linked to the official Help Center from the static parent page.
