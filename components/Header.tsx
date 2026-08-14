@@ -56,7 +56,7 @@ export function Header({ contactHref, locale = "ru", alternateHref }: HeaderProp
           <Link href={`${base}/teens`}>{t.teens}</Link>
           <Link href={`${base}/pricing`}>{t.pricing}</Link>
           <Link href={`${base}/about`}>{t.about}</Link>
-          <Link href={`${base}/#faq`}>{t.faq}</Link>
+          <Link href={`${base}/faq`}>{t.faq}</Link>
         </nav>
         <div className="headerActions">
           <Link className="langSwitch" href={alternate}>{t.lang}</Link>
@@ -70,7 +70,7 @@ export function Header({ contactHref, locale = "ru", alternateHref }: HeaderProp
               <Link href={`${base}/teens`}>{t.teens}</Link>
               <Link href={`${base}/pricing`}>{t.pricing}</Link>
               <Link href={`${base}/about`}>{t.about}</Link>
-              <Link href={`${base}/#faq`}>{t.faq}</Link>
+              <Link href={`${base}/faq`}>{t.faq}</Link>
               <Link href={contact}>{t.cta}</Link>
             </nav>
           </details>
