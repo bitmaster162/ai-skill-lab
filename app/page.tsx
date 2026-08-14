@@ -1,9 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowIcon } from "@/components/ArrowIcon";
 import { ContactButtons } from "@/components/ContactButtons";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { LeadForm } from "@/components/LeadForm";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/", languages: { ru: "/", en: "/en" } },
+};
+
 
 const programs = [
   {
@@ -235,11 +241,10 @@ export default function Home() {
           <div className="shell instructorGrid">
             <div className="instructorBadge"><span>HUMAN<br />IN THE<br />LOOP</span></div>
             <div>
-              <span className="kicker">Кто ведёт</span>
-              <h2>Практик AI-продуктов,<br />а не диктор курса.</h2>
-              <p>Занятия строятся вокруг реальной работы с современными AI-моделями, автоматизациями и цифровыми продуктами. Если инструмент не нужен для результата — его нет в программе.</p>
+              <span className="kicker">Формат 1-на-1</span>
+              <h2>Живой разбор,<br />а не диктор курса.</h2>
+              <p>Занятия строятся вокруг реальной работы с современными AI-моделями, автоматизациями и цифровыми продуктами. Ученик показывает экран, объясняет решения, получает обратную связь и сразу исправляет слабые места.</p>
               <div className="expertiseTags"><span>AI WORKFLOWS</span><span>AGENTS</span><span>RESEARCH</span><span>AUTOMATION</span><span>PRODUCT</span></div>
-              <p className="finePrint">Перед публикацией можно добавить подтверждаемые биографические факты, кейсы и фотографию преподавателя. В R2 намеренно нет непроверенных отзывов и цифр.</p>
             </div>
           </div>
         </section>

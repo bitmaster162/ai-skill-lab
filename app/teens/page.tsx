@@ -9,6 +9,7 @@ import { LeadForm } from "@/components/LeadForm";
 export const metadata: Metadata = {
   title: "AI для подростков 14–18 лет",
   description: "Персональное обучение AI для подростков 14–18 лет: исследования, портфолио, автоматизации, основы кода и собственный AI-проект.",
+  alternates: { canonical: "/teens", languages: { ru: "/teens", en: "/en/teens" } },
 };
 
 const modules = [
@@ -86,6 +87,13 @@ export default function TeensPage() {
               <article className="priceCard featuredPrice"><span className="popular">Оптимально</span><span className="cardMeta">Portfolio</span><h3>10 занятий</h3><div className="price">$890</div><p>Полный маршрут с итоговым проектом и персональной картой развития.</p><Link className="button buttonPrimary buttonWide" href="#teens-contact">Выбрать Portfolio</Link></article>
               <article className="priceCard"><span className="cardMeta">Builder</span><h3>12 занятий</h3><div className="price">$1,290</div><p>Больше кода, автоматизаций и времени на технический или продуктовый проект.</p><Link className="button buttonGhost buttonWide" href="#teens-contact">Выбрать Builder</Link></article>
             </div>
+          </div>
+        </section>
+
+        <section className="section safetyBand">
+          <div className="shell safetyBandGrid">
+            <div><span className="kicker">13–17 и AI-сервисы</span><h2>Разрешение взрослого — часть процесса.</h2></div>
+            <div><p>Для несовершеннолетних организационный контакт остаётся у взрослого. У каждого AI-сервиса свои возрастные правила; для ChatGPT пользователям младше 18 требуется разрешение родителя или законного представителя.</p><Link className="textLink" href="/safety">Правила безопасности <ArrowIcon /></Link></div>
           </div>
         </section>
 

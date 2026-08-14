@@ -9,6 +9,7 @@ import { LeadForm } from "@/components/LeadForm";
 export const metadata: Metadata = {
   title: "Personal AI education",
   description: "Practical one-to-one AI education for adults, kids, teens and teams: real projects, research, automation and responsible AI use.",
+  alternates: { canonical: "/en", languages: { ru: "/", en: "/en" } },
 };
 
 const programs = [

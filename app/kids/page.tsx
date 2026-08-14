@@ -9,6 +9,7 @@ import { LeadForm } from "@/components/LeadForm";
 export const metadata: Metadata = {
   title: "AI для детей 8–13 лет",
   description: "Персональная программа AI для детей 8–13 лет: творчество, исследования, критическое мышление, безопасная работа с AI и собственный итоговый проект.",
+  alternates: { canonical: "/kids", languages: { ru: "/kids", en: "/en/kids" } },
 };
 
 const lessons = [
@@ -124,6 +125,13 @@ export default function KidsPage() {
               <article className="priceCard featuredPrice"><span className="popular">Основная программа</span><span className="cardMeta">Creator</span><h3>10 занятий</h3><div className="price">$890</div><p>Полный маршрут от основ до самостоятельной презентации итогового AI-проекта.</p><Link className="button buttonPrimary buttonWide" href="#kids-contact">Выбрать Creator</Link></article>
               <article className="priceCard"><span className="cardMeta">Studio</span><h3>12 занятий</h3><div className="price">$1,190</div><p>Больше времени на сложный проект, визуальную часть или первые технические эксперименты.</p><Link className="button buttonGhost buttonWide" href="#kids-contact">Выбрать Studio</Link></article>
             </div>
+          </div>
+        </section>
+
+        <section className="section safetyBand">
+          <div className="shell safetyBandGrid">
+            <div><span className="kicker">Возраст и безопасность</span><h2>До 13 — взрослый остаётся в контуре.</h2></div>
+            <div><p>Программа не требует самостоятельного аккаунта ChatGPT для ребёнка младше 13 лет. Если ChatGPT используется как демонстрационный инструмент, фактическое взаимодействие с сервисом проводит взрослый. Для любого AI-инструмента перед использованием проверяются его актуальные возрастные правила.</p><Link className="textLink" href="/safety">Все правила детской AI-безопасности <ArrowIcon /></Link></div>
           </div>
         </section>
 
