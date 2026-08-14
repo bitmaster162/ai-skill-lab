@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { FormEvent, useState } from "react";
+import { site } from "@/lib/site";
+import { ArrowIcon } from "./ArrowIcon";
 
 type State = "idle" | "sending" | "sent" | "error";
 type Audience = "adult" | "parent" | "teen" | "business";
@@ -25,6 +27,20 @@ export function LeadForm({
   const youthProgram = kidsProgram || teenProgram;
   const needsAdultConfirmation = youthProgram || audience === "parent" || audience === "teen";
   const base = en ? "/en" : "";
+
+  if (!site.leadFormEnabled) {
+    return (
+      <div className="contactOnlyCard">
+        <span className="cardMeta">{en ? "CONTACT-ONLY LAUNCH" : "CONTACT-ONLY ЗАПУСК"}</span>
+        <h3>{en ? "Write directly in Telegram" : "Напишите напрямую в Telegram"}</h3>
+        <p>{en ? "The website does not collect application data in the current launch mode. Tell us who the training is for and the result you want." : "В текущем режиме сайт не собирает данные заявок. Напишите, для кого обучение и какой результат хотите получить."}</p>
+        <a className="button buttonPrimary buttonWide" href={site.telegram} target="_blank" rel="noreferrer">
+          {en ? "Message on Telegram" : "Написать в Telegram"} <ArrowIcon />
+        </a>
+        {needsAdultConfirmation ? <p className="formNote">{en ? "For minors, the conversation must be started and managed by an adult." : "Для несовершеннолетних переписку начинает и ведёт взрослый."}</p> : null}
+      </div>
+    );
+  }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

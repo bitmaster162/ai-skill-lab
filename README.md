@@ -2,52 +2,42 @@
 
 Bilingual Next.js website for practical one-to-one AI education: adults, AI builders, teams, kids 8–13 and teens 14–18.
 
-## R3 scope
+## R4 launch mode
 
-- Russian and English commercial site with dedicated youth tracks.
-- `/kids` and `/teens` programs plus English equivalents.
-- `/privacy`, `/terms`, `/safety` plus English equivalents.
-- Youth applications require an adult confirmation; kids 8–13 leads are server-enforced as parent/guardian submissions.
-- Privacy consent is required client-side and server-side.
-- Lead delivery through a private HTTPS webhook with optional HMAC-SHA256 signing (recommended and required by the launch checker).
-- Telegram CTA and configurable WhatsApp CTA.
-- Metadata, sitemap, robots, app icon and generated Open Graph image.
-- No fabricated testimonials, student counts, income claims or unverified instructor biography.
+R4 supports two explicit operating modes:
 
-## Run locally
+1. **Contact-only (default / current public launch)** — the site does not collect lead data. All primary contact CTAs open the configured Telegram URL. This mode can launch without a webhook.
+2. **Lead-form mode** — set `NEXT_PUBLIC_LEAD_FORM_ENABLED=true`. The launch gate then requires the real operator identity, legal/privacy email, jurisdiction, HTTPS webhook and a webhook signing secret.
 
-```bash
-npm install
-npm run dev
-```
+This keeps the live site useful without silently exposing a broken form or inventing legal/operator details.
 
-Open `http://localhost:3000`.
+## Routes
+
+- RU: `/`, `/kids`, `/teens`, `/privacy`, `/terms`, `/safety`
+- EN: `/en`, `/en/kids`, `/en/teens`, `/en/privacy`, `/en/terms`, `/en/safety`
 
 ## Environment
 
 ```bash
-cp .env.example .env.local
+NEXT_PUBLIC_SITE_URL=https://ai-skill-lab.vercel.app
+NEXT_PUBLIC_TELEGRAM_URL=https://t.me/BiTFormer
+NEXT_PUBLIC_WHATSAPP_URL=
+NEXT_PUBLIC_LEAD_FORM_ENABLED=false
 ```
 
-Public configuration:
+Only when enabling the internal lead form:
 
-- `NEXT_PUBLIC_SITE_URL` — final production domain.
-- `NEXT_PUBLIC_TELEGRAM_URL` — public Telegram contact.
-- `NEXT_PUBLIC_WHATSAPP_URL` — optional `https://wa.me/...` contact.
-- `NEXT_PUBLIC_LEGAL_OPERATOR_NAME` — real person/company operating the service.
-- `NEXT_PUBLIC_LEGAL_CONTACT_EMAIL` — privacy/legal contact.
-- `NEXT_PUBLIC_LEGAL_JURISDICTION` — operator jurisdiction/place of operation.
+```bash
+NEXT_PUBLIC_LEGAL_OPERATOR_NAME=<real operator>
+NEXT_PUBLIC_LEGAL_CONTACT_EMAIL=<real legal/privacy email>
+NEXT_PUBLIC_LEGAL_JURISDICTION=<real jurisdiction>
+LEAD_WEBHOOK_URL=https://...
+LEAD_WEBHOOK_SECRET=<24+ chars secret>
+```
 
-Private configuration:
-
-- `LEAD_WEBHOOK_URL` — HTTPS endpoint that receives lead JSON.
-- `LEAD_WEBHOOK_SECRET` — secret used to sign the exact request body in `X-AI-Skill-Lab-Signature` as `sha256=<hex>`.
-
-The lead payload schema is `ai-skill-lab.lead.v2` and contains adult contact information, program/audience, goal, locale, consent flags, source and timestamp.
+The lead payload schema is `ai-skill-lab.lead.v2`. When a secret is configured, the exact JSON body is signed in `X-AI-Skill-Lab-Signature` as `sha256=<hex>`.
 
 ## Launch gate
-
-Before any public deployment, configure production environment values and run:
 
 ```bash
 npm run check:launch
@@ -55,12 +45,15 @@ npm run build
 npm run lint
 ```
 
-`check:launch` fails on missing legal/operator data, missing webhook configuration, a short webhook secret, non-HTTPS URLs or `example.com` as the site URL.
+The gate validates the public site/contact in contact-only mode. If lead collection is enabled it becomes stricter and blocks missing operator/privacy/webhook configuration.
 
 ## Youth safety
 
-The site does not require an independent ChatGPT account for children under 13. The youth-safety page records the current operating rule used by the program: for educational use with a child under 13, actual ChatGPT interaction is adult-conducted; users under 18 require parent/guardian permission. Provider rules must be rechecked before use because third-party terms can change.
+- Youth applications/communication use an adult contact.
+- The site does not request a child’s own phone/email/messenger contact.
+- For educational use with a child under 13, ChatGPT interaction is adult-conducted.
+- Users under 18 require parent/guardian permission for ChatGPT, and provider age rules are rechecked before use.
 
-## Deployment status
+## Claims discipline
 
-R3 is source-ready but **not publicly deployed**. Final legal operator details, domain, webhook destination, webhook secret and any instructor biography/photo must be approved before production promotion.
+No fabricated testimonials, student counts, income claims or unverified instructor biography are included.
