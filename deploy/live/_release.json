@@ -1,5 +1,5 @@
 {
-  "file_count": 42,
+  "file_count": 44,
   "files": [
     {
       "path": "404.html",
@@ -23,8 +23,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "d5930b63805a3e3db785e113fe1295bca1db6561eed7572d49ce65e30eb0d5f3",
-      "size": 11865
+      "sha256": "8e95691dbbfc7c155b760751c0c15d40ffea63a24f32ca94c94b8ef3b0bd0619",
+      "size": 11906
     },
     {
       "path": "en/about.html",
@@ -50,6 +50,11 @@
       "path": "en/kids.html",
       "sha256": "366b4787e24147ee2a17c253c3ef7803d14fe81e7f4fdcc1fd3d1e807db590e5",
       "size": 7516
+    },
+    {
+      "path": "en/matcher.html",
+      "sha256": "d20567bdee896ed45743f4551e6b859a5807ee8b684817a6dde6d125ea5e4193",
+      "size": 8448
     },
     {
       "path": "en/method.html",
@@ -93,8 +98,8 @@
     },
     {
       "path": "en/start.html",
-      "sha256": "c35b9273f7d347755667bb566ccc0b525ccb6536c0245854fef8ad8909a9bfe5",
-      "size": 4823
+      "sha256": "6d4df9b1f1b677c4f0add9ea6d6889d4c5bca1160e318863a2f10222a5b7e1d8",
+      "size": 4891
     },
     {
       "path": "en/teens.html",
@@ -118,13 +123,18 @@
     },
     {
       "path": "index.html",
-      "sha256": "b6a410a8edcfbc1f26b9455f3a91de10070c9b260c792501da60d2e8cd0c6d62",
-      "size": 15058
+      "sha256": "8bd718ec8f7aa20cabd1cc539840d66c65f136817db5f4ab93258e2511d5832e",
+      "size": 15112
     },
     {
       "path": "kids.html",
       "sha256": "cfd26240cd5f7ab6fe11bb5f525ef1627e39835baf90078ba543f0e239084264",
       "size": 9836
+    },
+    {
+      "path": "matcher.html",
+      "sha256": "16f2811fd9ac16b3ba55f40011616d98eaefba53f5b95250404cf52bba13fe0e",
+      "size": 9559
     },
     {
       "path": "method.html",
@@ -183,18 +193,18 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "a97f7185c1eb951d5314380ee7454f2ef2921b8eca545176e40eda64fb7a97d2",
-      "size": 2230
+      "sha256": "a0f64dc9774f54e4cd7f898408e27df7be96677c43134511c504a26b68ae2087",
+      "size": 2357
     },
     {
       "path": "start.html",
-      "sha256": "d8939544cbf9ac0eedd6d99612f94ed701609360e3af83a6ef22607bcf43dba1",
-      "size": 6056
+      "sha256": "5afd42d435ca15ff2ec6dc6fefdecf2b3bf613135b9b76160ecf2a632f443634",
+      "size": 6141
     },
     {
       "path": "style.css",
-      "sha256": "0a6415cd6b2563e6b4749159469a41232d4a12d0f5302eaa3db6bd7b4a0fe687",
-      "size": 15312
+      "sha256": "c0615cfd18febc42024f702da6c492b8fb7555170c1e82d0e2665eaa1ad5a9ca",
+      "size": 17575
     },
     {
       "path": "teens.html",
@@ -212,7 +222,7 @@
       "size": 858
     }
   ],
-  "payload_sha256": "909fc2fd15d0b7c50869d340afcbdb51e0edc604a3528714372b5ce8d8d4380d",
-  "release_id": "R17",
+  "payload_sha256": "373eea9373621c987107972fcaeb4c6cb6e99038807c8f58a13e59eab585c493",
+  "release_id": "LOCAL",
   "schema": "ai-skill-lab.static-release.v1"
 }
