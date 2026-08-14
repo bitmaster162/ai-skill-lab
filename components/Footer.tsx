@@ -19,6 +19,9 @@ export function Footer({ locale = "ru" }: { locale?: Locale }) {
         </div>
         <div className="footerLinks">
           <Link href={`${base}/about`}>{en ? "About" : "О проекте"}</Link>
+          <Link href={`${base}/pricing`}>{en ? "Pricing" : "Стоимость"}</Link>
+          <Link href={`${base}/method`}>{en ? "Method" : "Метод"}</Link>
+          <Link href={`${base}/phuket`}>Phuket / online</Link>
           <Link href={`${base}/projects`}>{en ? "Example projects" : "Примеры проектов"}</Link>
           <Link href={`${base}/parents`}>{en ? "For parents" : "Родителям"}</Link>
           <Link href={`${base}/start`}>{en ? "Start" : "Начать"}</Link>
