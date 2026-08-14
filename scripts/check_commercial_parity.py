@@ -17,6 +17,8 @@ FILES={
     'kids_en':[ROOT/'app/en/kids/page.tsx',ROOT/'deploy/live/en/kids.html'],
     'teens_ru':[ROOT/'app/teens/page.tsx',ROOT/'deploy/live/teens.html'],
     'teens_en':[ROOT/'app/en/teens/page.tsx',ROOT/'deploy/live/en/teens.html'],
+    'home_ru':[ROOT/'app/page.tsx',ROOT/'deploy/live/index.html'],
+    'home_en':[ROOT/'app/en/page.tsx',ROOT/'deploy/live/en.html'],
 }
 
 def read(p:Path)->str:
@@ -30,7 +32,9 @@ for track,plans in FACTS['tracks'].items():
     for plan in plans:
         for locale in ('ru','en'):
             needles=(plan['name'],plan['price'],plan[f'sessions_{locale}'])
-            for surface in (f'pricing_{locale}',f'matcher_{locale}',f'{track}_{locale}'):
+            surfaces=[f'pricing_{locale}',f'matcher_{locale}',f'{track}_{locale}']
+            if track == 'adult': surfaces.append(f'home_{locale}')
+            for surface in surfaces:
                 for path,text in texts[surface]:
                     lower=text.lower()
                     for needle in needles:
@@ -41,7 +45,8 @@ for track,plans in FACTS['tracks'].items():
 family=FACTS['family']
 for locale in ('ru','en'):
     needles=(family['name'],family['price'],family[f'sessions_{locale}'])
-    for path,text in texts[f'pricing_{locale}']:
+    for surface in (f'pricing_{locale}', f'home_{locale}'):
+      for path,text in texts[surface]:
         lower=text.lower()
         for needle in needles:
             checks += 1

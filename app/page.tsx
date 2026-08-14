@@ -206,6 +206,7 @@ export default function Home() {
             <article className="premiumPriceCard">
               <span className="cardMeta">Family Concierge</span>
               <div className="price">$1,490</div>
+              <p><strong>12 занятий + 2 сессии родителю</strong></p>
               <p>Премиальный персональный формат. Конкретный набор инструментов согласовывается с родителем и зависит от возраста.</p>
               <Link className="button buttonPrimary buttonWide" href="/start">Обсудить Family</Link>
               <small>Без скрытых подписок на обучение. Сторонние AI-сервисы, если нужны, оплачиваются отдельно.</small>
