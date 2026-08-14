@@ -230,3 +230,6 @@ button { cursor: pointer; }
 
 /* R7 conversion + accessibility */
 .skipLink{position:fixed;left:12px;top:-80px;z-index:100;background:var(--acid);color:var(--ink);padding:10px 14px;border-radius:10px;font-weight:900}.skipLink:focus{top:12px}:focus-visible{outline:3px solid #4f8cff;outline-offset:3px}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+
+/* R13 business pilot brief */
+.numberList{margin:0;padding:0;list-style:none;counter-reset:brief;display:grid;gap:12px}.numberList li{counter-increment:brief;position:relative;padding:15px 16px 15px 52px;border:1px solid #d9dde0;border-radius:14px;color:#4b535b;line-height:1.5;background:#fff}.numberList li:before{content:counter(brief,decimal-leading-zero);position:absolute;left:16px;top:15px;font-size:10px;font-weight:900;letter-spacing:.08em;color:#7d858e}
