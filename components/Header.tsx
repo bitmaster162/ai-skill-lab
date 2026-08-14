@@ -11,7 +11,8 @@ type HeaderProps = {
 
 const labels = {
   ru: {
-    programs: "Программы",
+    personal: "Взрослым",
+    business: "Бизнес",
     kids: "Дети 8–13",
     teens: "Подростки 14–18",
     pricing: "Стоимость",
@@ -21,7 +22,8 @@ const labels = {
     lang: "EN",
   },
   en: {
-    programs: "Programs",
+    personal: "Adults",
+    business: "Business",
     kids: "Kids 8–13",
     teens: "Teens 14–18",
     pricing: "Pricing",
@@ -44,7 +46,8 @@ export function Header({ contactHref, locale = "ru", alternateHref }: HeaderProp
       <div className="shell headerInner">
         <Logo href={home} />
         <nav className="desktopNav" aria-label={locale === "ru" ? "Основная навигация" : "Main navigation"}>
-          <Link href={`${base}/#programs`}>{t.programs}</Link>
+          <Link href={`${base}/personal`}>{t.personal}</Link>
+          <Link href={`${base}/business`}>{t.business}</Link>
           <Link href={`${base}/kids`}>{t.kids}</Link>
           <Link href={`${base}/teens`}>{t.teens}</Link>
           <Link href={`${base}/#pricing`}>{t.pricing}</Link>
@@ -56,7 +59,8 @@ export function Header({ contactHref, locale = "ru", alternateHref }: HeaderProp
           <details className="mobileMenu">
             <summary aria-label={t.menu}><span /><span /><span /></summary>
             <nav>
-              <Link href={`${base}/#programs`}>{t.programs}</Link>
+              <Link href={`${base}/personal`}>{t.personal}</Link>
+              <Link href={`${base}/business`}>{t.business}</Link>
               <Link href={`${base}/kids`}>{t.kids}</Link>
               <Link href={`${base}/teens`}>{t.teens}</Link>
               <Link href={`${base}/#pricing`}>{t.pricing}</Link>

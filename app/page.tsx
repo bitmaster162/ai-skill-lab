@@ -241,9 +241,10 @@ export default function Home() {
           <div className="shell instructorGrid">
             <div className="instructorBadge"><span>HUMAN<br />IN THE<br />LOOP</span></div>
             <div>
-              <span className="kicker">Формат 1-на-1</span>
-              <h2>Живой разбор,<br />а не диктор курса.</h2>
-              <p>Занятия строятся вокруг реальной работы с современными AI-моделями, автоматизациями и цифровыми продуктами. Ученик показывает экран, объясняет решения, получает обратную связь и сразу исправляет слабые места.</p>
+              <span className="kicker">Роберт · founder / instructor</span>
+              <h2>Обучение из практики,<br />а не из слайдов.</h2>
+              <p>Я строю и использую AI-системы в реальной работе: research-процессы, agents, automation, decision workflows и цифровые продукты. На занятиях мы разбираем задачу, собираем решение, тестируем и исправляем слабые места.</p>
+              <p className="finePrint">Без выдуманных клиентских логотипов, отзывов и обещаний дохода. Доказательство прогресса — результат, который ученик может показать и объяснить.</p>
               <div className="expertiseTags"><span>AI WORKFLOWS</span><span>AGENTS</span><span>RESEARCH</span><span>AUTOMATION</span><span>PRODUCT</span></div>
             </div>
           </div>

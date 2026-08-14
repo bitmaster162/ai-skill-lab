@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url><loc>https://ai-skill-lab.vercel.app/</loc></url>
+<url><loc>https://ai-skill-lab.vercel.app/personal</loc></url>
+<url><loc>https://ai-skill-lab.vercel.app/business</loc></url>
 <url><loc>https://ai-skill-lab.vercel.app/kids</loc></url>
 <url><loc>https://ai-skill-lab.vercel.app/teens</loc></url>
 <url><loc>https://ai-skill-lab.vercel.app/privacy</loc></url>
 <url><loc>https://ai-skill-lab.vercel.app/terms</loc></url>
 <url><loc>https://ai-skill-lab.vercel.app/safety</loc></url>
 <url><loc>https://ai-skill-lab.vercel.app/en</loc></url>
+<url><loc>https://ai-skill-lab.vercel.app/en/personal</loc></url>
+<url><loc>https://ai-skill-lab.vercel.app/en/business</loc></url>
 <url><loc>https://ai-skill-lab.vercel.app/en/kids</loc></url>
 <url><loc>https://ai-skill-lab.vercel.app/en/teens</loc></url>
 <url><loc>https://ai-skill-lab.vercel.app/en/privacy</loc></url>

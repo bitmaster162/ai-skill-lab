@@ -18,7 +18,8 @@ export function Footer({ locale = "ru" }: { locale?: Locale }) {
           </p>
         </div>
         <div className="footerLinks">
-          <Link href={`${base}/#programs`}>{en ? "Programs" : "Программы"}</Link>
+          <Link href={`${base}/personal`}>{en ? "Adults" : "Взрослым"}</Link>
+          <Link href={`${base}/business`}>{en ? "Business" : "Бизнес"}</Link>
           <Link href={`${base}/kids`}>{en ? "Kids 8–13" : "Дети 8–13"}</Link>
           <Link href={`${base}/teens`}>{en ? "Teens 14–18" : "Подростки 14–18"}</Link>
           <Link href={`${base}/safety`}>{en ? "Youth AI safety" : "Безопасность детей"}</Link>

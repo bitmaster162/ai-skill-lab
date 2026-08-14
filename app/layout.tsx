@@ -8,11 +8,11 @@ export const metadata: Metadata = {
     template: "%s | AI Skill Lab",
   },
   description:
-    "Практическое обучение AI для взрослых, детей, подростков и команд: индивидуальные программы, реальные проекты и ответственное использование инструментов.",
+    "Практическое обучение AI 1-на-1 для взрослых, бизнеса, детей и подростков — Phuket и online: реальные проекты, research, automation и responsible AI.",
   metadataBase: new URL(site.url),
   openGraph: {
     title: "AI Skill Lab",
-    description: "Персональное обучение AI через реальные задачи и собственные проекты.",
+    description: "Персональное обучение AI 1-на-1 в Phuket и online через реальные задачи, workflows и собственные проекты.",
     type: "website",
     siteName: "AI Skill Lab",
     locale: "ru_RU",
