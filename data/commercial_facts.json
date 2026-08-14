@@ -1,0 +1,23 @@
+{
+  "schema": "ai-skill-lab.commercial-facts.v1",
+  "currency": "USD",
+  "tracks": {
+    "adult": [
+      {"id":"start","name":"Start","price":"$390","sessions_ru":"4 занятия","sessions_en":"4 sessions"},
+      {"id":"personal","name":"Personal","price":"$890","sessions_ru":"10 занятий","sessions_en":"10 sessions"},
+      {"id":"intensive","name":"Intensive","price":"$1,290","sessions_ru":"12 занятий + проект","sessions_en":"12 sessions + project"}
+    ],
+    "kids": [
+      {"id":"mini","name":"Mini","price":"$290","sessions_ru":"4 занятия","sessions_en":"4 sessions"},
+      {"id":"creator","name":"Creator","price":"$890","sessions_ru":"10 занятий","sessions_en":"10 sessions"},
+      {"id":"studio","name":"Studio","price":"$1,190","sessions_ru":"12 занятий","sessions_en":"12 sessions"}
+    ],
+    "teens": [
+      {"id":"explorer","name":"Explorer","price":"$490","sessions_ru":"6 занятий","sessions_en":"6 sessions"},
+      {"id":"portfolio","name":"Portfolio","price":"$890","sessions_ru":"10 занятий","sessions_en":"10 sessions"},
+      {"id":"builder","name":"Builder","price":"$1,290","sessions_ru":"12 занятий","sessions_en":"12 sessions"}
+    ]
+  },
+  "family": {"name":"Family Concierge","price":"$1,490","sessions_ru":"12 занятий + 2 сессии родителю","sessions_en":"12 learner sessions + 2 parent sessions"},
+  "business": {"price_mode":"custom_scope","display":"Custom scope"}
+}

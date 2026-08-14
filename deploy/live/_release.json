@@ -68,8 +68,8 @@
     },
     {
       "path": "en/personal.html",
-      "sha256": "4e50f7e419d9e9a51f869a00922d993641e93e772ba8f9ec92005a460174761a",
-      "size": 5881
+      "sha256": "25c4f4b200aaa57f2e3a0a94cfc1618acae3642b71f4f26df08e392cec470748",
+      "size": 5890
     },
     {
       "path": "en/phuket.html",
@@ -78,8 +78,8 @@
     },
     {
       "path": "en/pricing.html",
-      "sha256": "6b69b960f5fa49b9b699f59b26bb972aa15d93acd181c28902f83af5123eab59",
-      "size": 5383
+      "sha256": "1070ddcc43b35fad1a3c554d291ec179a5b609e43a0566db7b62a3bd0e6877a1",
+      "size": 6083
     },
     {
       "path": "en/privacy.html",
@@ -153,8 +153,8 @@
     },
     {
       "path": "personal.html",
-      "sha256": "4a40b6e885ea98dc775ac9acc5f28c3919f0bff774fd3a289928b87aa90e0cc4",
-      "size": 7199
+      "sha256": "206102487884cafbd975dc011e824b3888282754a75c3f7dbb4b5fb05743cf76",
+      "size": 7214
     },
     {
       "path": "phuket.html",
@@ -163,8 +163,8 @@
     },
     {
       "path": "pricing.html",
-      "sha256": "fa2ddf81e4513738b386a3d88bf72d83d0c5efa63d5cd9856128b657cccfb07c",
-      "size": 6662
+      "sha256": "7efc71398593289808cb37300d730ab389f6099d04302bfcb864e62dbd33d84b",
+      "size": 7441
     },
     {
       "path": "privacy.html",
@@ -222,7 +222,7 @@
       "size": 858
     }
   ],
-  "payload_sha256": "78dddd16fe6e2c81964be0010f12bb53ac0f652ad24252f751c72a0cdb8ed314",
+  "payload_sha256": "ba97495aacaf113f468c8ac610acca516ad41f56d49ce4602008c9a43c8cdc80",
   "release_id": "LOCAL",
   "schema": "ai-skill-lab.static-release.v1"
 }

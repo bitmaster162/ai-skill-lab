@@ -21,3 +21,5 @@ jobs:
           python-version: '3.12'
       - name: Validate static release
         run: python scripts/check_static_release.py
+      - name: Validate commercial facts parity
+        run: python scripts/check_commercial_parity.py
