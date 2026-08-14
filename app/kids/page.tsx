@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowIcon } from "@/components/ArrowIcon";
+import { ContactButtons } from "@/components/ContactButtons";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { LeadForm } from "@/components/LeadForm";
 
 export const metadata: Metadata = {
-  title: "AI для детей 8–14 лет",
-  description: "Персональная программа AI для детей: творчество, исследования, критическое мышление, безопасная работа с AI и собственный итоговый проект.",
+  title: "AI для детей 8–13 лет",
+  description: "Персональная программа AI для детей 8–13 лет: творчество, исследования, критическое мышление, безопасная работа с AI и собственный итоговый проект.",
 };
 
 const lessons = [
@@ -26,18 +27,19 @@ const lessons = [
 export default function KidsPage() {
   return (
     <>
-      <Header contactHref="#kids-contact" />
+      <Header contactHref="#kids-contact" alternateHref="/en/kids" />
       <main>
         <section className="kidsHero">
           <div className="shell kidsHeroGrid">
             <div>
-              <div className="eyebrow eyebrowLight"><span className="dot dotLight" /> Для детей 8–14 лет · 1-на-1</div>
+              <div className="eyebrow eyebrowLight"><span className="dot dotLight" /> Для детей 8–13 лет · 1-на-1</div>
               <h1>AI — это не кнопка<br /><span>«сделай за меня».</span></h1>
-              <p>Это инструмент, с которым ребёнок может придумывать, исследовать, создавать и — главное — учиться задавать хорошие вопросы.</p>
+              <p>Это инструмент, с которым ребёнок может придумывать, исследовать, создавать и — главное — учиться задавать хорошие вопросы и проверять ответы.</p>
               <div className="heroActions">
                 <Link className="button buttonLight" href="#kids-contact">Обсудить с преподавателем <ArrowIcon /></Link>
                 <Link className="textLink textLinkLight" href="#curriculum">Смотреть 10 занятий <ArrowIcon /></Link>
               </div>
+              <div className="heroProofRow heroProofLight"><span>ADULT CONTACT</span><span>PRIVACY FIRST</span><span>PROJECT-BASED</span></div>
             </div>
             <div className="kidsHeroBoard">
               <div className="boardLabel">FINAL PROJECT</div>
@@ -52,6 +54,15 @@ export default function KidsPage() {
           </div>
         </section>
 
+        <section className="trustStrip trustStripDark">
+          <div className="shell trustStripGrid">
+            <div><b>45–60 минут</b><span>Под возраст и внимание</span></div>
+            <div><b>1-на-1</b><span>Темп не диктует группа</span></div>
+            <div><b>Контакт взрослого</b><span>Без прямого маркетинга ребёнку</span></div>
+            <div><b>Свой проект</b><span>Ребёнок презентует результат сам</span></div>
+          </div>
+        </section>
+
         <section className="section">
           <div className="shell">
             <div className="sectionHead splitHead">
@@ -61,7 +72,7 @@ export default function KidsPage() {
             <div className="kidsPrinciples">
               <article><span>01</span><h3>Сначала идея</h3><p>Ребёнок формулирует собственный замысел, а AI помогает его развить.</p></article>
               <article><span>02</span><h3>Проверять обязательно</h3><p>Разбираем ошибки и галлюцинации, сравниваем ответы с надёжными источниками.</p></article>
-              <article><span>03</span><h3>Приватность по умолчанию</h3><p>Не вводим лишние персональные данные, не публикуем личную информацию и обсуждаем цифровые границы.</p></article>
+              <article><span>03</span><h3>Приватность по умолчанию</h3><p>Не вводим лишние персональные данные и обсуждаем цифровые границы до начала работы.</p></article>
               <article><span>04</span><h3>Проект важнее промпта</h3><p>Навык измеряется тем, что ребёнок способен придумать, собрать, объяснить и улучшить.</p></article>
             </div>
           </div>
@@ -69,7 +80,7 @@ export default function KidsPage() {
 
         <section className="section sectionMuted" id="curriculum">
           <div className="shell">
-            <div className="sectionHead"><span className="kicker">Программа</span><h2>10 занятий → 1 законченный проект</h2><p className="sectionSub">Темы адаптируются под возраст и интересы ребёнка: от космоса и животных до игр, искусства или техники.</p></div>
+            <div className="sectionHead"><span className="kicker">Программа</span><h2>10 занятий → 1 законченный проект</h2><p className="sectionSub">Темы адаптируются под возраст и интересы: от космоса и животных до игр, искусства, музыки или техники.</p></div>
             <div className="curriculumList">
               {lessons.map(([num, title, text]) => (
                 <article key={num}><span>{num}</span><h3>{title}</h3><p>{text}</p></article>
@@ -116,10 +127,24 @@ export default function KidsPage() {
           </div>
         </section>
 
+        <section className="familyConciergeBand">
+          <div className="shell familyConciergeGrid">
+            <div><span className="kicker kickerLight">Family Concierge</span><h2>Для семьи, которой нужен более управляемый формат.</h2><p>12 занятий ребёнку + 2 отдельные сессии родителю + индивидуальный проект + правила безопасного использования AI дома.</p></div>
+            <div className="familyConciergePrice"><span>PREMIUM</span><b>$1,490</b><Link className="button buttonLight buttonWide" href="#kids-contact">Обсудить Family</Link></div>
+          </div>
+        </section>
+
+        <section className="section teenBridge">
+          <div className="shell splitHead">
+            <div><span className="kicker">Уже 14+</span><h2>Тогда нужен другой уровень.</h2></div>
+            <div><p>Для подростков 14–18 программа смещается от творчества к исследованиям, портфолио, коду, автоматизациям и первым самостоятельным продуктам.</p><Link className="textLink" href="/teens">Открыть программу 14–18 <ArrowIcon /></Link></div>
+          </div>
+        </section>
+
         <section className="contactSection" id="kids-contact">
           <div className="shell contactGrid">
-            <div><span className="kicker kickerLight">Для родителей</span><h2>Расскажите, чем ребёнок увлекается.</h2><p>Подберём тему первого проекта и объясним формат. Контактные данные в форме должны принадлежать взрослому.</p></div>
-            <LeadForm defaultAudience="parent" />
+            <div><span className="kicker kickerLight">Для родителей</span><h2>Расскажите, чем ребёнок увлекается.</h2><p>Подберём тему первого проекта и объясним формат. Контактные данные в форме должны принадлежать взрослому.</p><ContactButtons fallbackHref="#kids-form" /></div>
+            <div id="kids-form"><LeadForm defaultAudience="parent" program="kids-8-13" /></div>
           </div>
         </section>
       </main>

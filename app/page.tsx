@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowIcon } from "@/components/ArrowIcon";
+import { ContactButtons } from "@/components/ContactButtons";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { LeadForm } from "@/components/LeadForm";
@@ -8,57 +9,80 @@ const programs = [
   {
     index: "01",
     title: "AI для жизни и работы",
-    text: "От уверенной работы с моделями до исследований, контента, анализа и личных AI-процессов.",
+    text: "ChatGPT, Gemini, Claude и другие модели как рабочая система: исследования, тексты, анализ, решения и личные процессы.",
     meta: "1-на-1 · с нуля",
+    href: "#contact",
   },
   {
     index: "02",
     title: "AI Builder",
-    text: "Создание собственных ассистентов, автоматизаций и рабочих связок без лишней теории.",
+    text: "Ассистенты, автоматизации, агенты и простые AI-продукты. Меньше лекций — больше сборки руками.",
     meta: "Практика · проекты",
+    href: "#contact",
   },
   {
     index: "03",
     title: "AI для бизнеса",
-    text: "Разбираем реальные процессы команды и внедряем AI там, где он экономит время или усиливает результат.",
+    text: "Разбираем процессы команды, выбираем точки внедрения и обучаем сотрудников использовать AI измеримо и безопасно.",
     meta: "Команды · процессы",
+    href: "#contact",
+  },
+  {
+    index: "04",
+    title: "AI для детей",
+    text: "8–13 лет: творчество, исследования, критическое мышление и собственный проект без модели «сделай за меня».",
+    meta: "8–13 · родительский контакт",
+    href: "/kids",
+  },
+  {
+    index: "05",
+    title: "AI для подростков",
+    text: "14–18 лет: AI как реальный навык для учёбы, портфолио, первых проектов, кода и будущей профессии.",
+    meta: "14–18 · portfolio track",
+    href: "/teens",
   },
 ];
 
+const outcomes = [
+  ["PERSONAL OS", "Собственный набор AI-процессов для работы, учёбы или личных задач."],
+  ["RESEARCH", "Исследование с источниками, проверкой фактов и структурированным выводом."],
+  ["AI AGENT", "Рабочий ассистент или автоматизация под конкретный повторяемый процесс."],
+  ["PORTFOLIO", "Законченный проект, который можно показать клиенту, школе, команде или родителю."],
+];
+
 const faq = [
-  ["Нужно ли уметь программировать?", "Нет. Базовые программы начинаются без кода. Если цель — создавать более сложные системы, постепенно подключаем технический стек."],
-  ["Это записанный курс?", "Нет. Основа — персональные занятия и практика на ваших задачах. Материалы и шаблоны остаются у вас после занятий."],
-  ["Какие AI-инструменты используются?", "Подбираем инструменты под задачу: ChatGPT, Gemini, Claude и другие актуальные сервисы. Цель — не привязать ученика к одному интерфейсу, а научить переносимому подходу."],
-  ["Как проходит обучение детей?", "Отдельная программа строится вокруг проектов, критического мышления и безопасного использования AI. Заявку и контакт оставляет родитель."],
+  ["Нужно ли уметь программировать?", "Нет. Базовые программы начинаются без кода. Технический стек подключаем только там, где он нужен для вашей цели."],
+  ["Это записанный курс?", "Нет. Основа — персональная работа 1-на-1 и практика на ваших задачах. Материалы и шаблоны остаются после занятий."],
+  ["Какие AI-инструменты используются?", "Подбираем инструменты под задачу, а не строим обучение вокруг одного бренда. Важнее переносимый навык постановки задачи, проверки и сборки процесса."],
+  ["Можно ли учить ребёнка или подростка?", "Да. Для 8–13 и 14–18 есть отдельные траектории. Контакт и заявку оставляет взрослый; возрастные требования конкретных сервисов проверяются перед использованием."],
+  ["Что будет на выходе?", "Не сертификат ради сертификата, а законченный результат: процесс, исследование, ассистент, презентация, мини-продукт или портфолио-проект."],
 ];
 
 export default function Home() {
   return (
     <>
-      <Header />
+      <Header alternateHref="/en" />
       <main>
-        <section className="hero">
+        <section className="hero heroR2">
           <div className="orb orbOne" />
           <div className="orb orbTwo" />
           <div className="shell heroGrid">
             <div className="heroCopy">
-              <div className="eyebrow"><span className="dot" /> Персональное обучение AI</div>
-              <h1>Не курс про AI.<br /><span>Навык работать с ним.</span></h1>
+              <div className="eyebrow"><span className="dot" /> Персональное обучение AI · online / Phuket</div>
+              <h1>AI не должен<br />делать вас <span>зависимее.</span></h1>
               <p className="heroLead">
-                Учимся применять искусственный интеллект к реальным задачам — от первых промптов до собственных автоматизаций и проектов.
+                Он должен делать вас сильнее. Учимся исследовать, создавать, автоматизировать и собирать собственные AI-процессы на реальных задачах.
               </p>
               <div className="heroActions">
                 <Link className="button buttonPrimary" href="#contact">Подобрать программу <ArrowIcon /></Link>
                 <Link className="textLink" href="#programs">Смотреть направления <ArrowIcon /></Link>
               </div>
-              <div className="heroStats">
-                <div><strong>1:1</strong><span>индивидуальный формат</span></div>
-                <div><strong>80%</strong><span>практика и проекты</span></div>
-                <div><strong>4</strong><span>траектории обучения</span></div>
+              <div className="heroProofRow">
+                <span>1:1 PERSONAL</span><span>PROJECT-BASED</span><span>RU / EN</span><span>NO FLUFF</span>
               </div>
             </div>
-            <div className="heroVisual" aria-label="Схема обучения AI">
-              <div className="visualTop"><span>YOUR AI STACK</span><span className="livePill">● LIVE</span></div>
+            <div className="heroVisual" aria-label="Схема практического обучения AI">
+              <div className="visualTop"><span>YOUR AI STACK</span><span className="livePill">● BUILD</span></div>
               <div className="visualCore">
                 <div className="coreRing ring1" />
                 <div className="coreRing ring2" />
@@ -66,16 +90,23 @@ export default function Home() {
                 <div className="node nodeA">RESEARCH</div>
                 <div className="node nodeB">CREATE</div>
                 <div className="node nodeC">AUTOMATE</div>
-                <div className="node nodeD">THINK</div>
+                <div className="node nodeD">VERIFY</div>
               </div>
               <div className="visualBottom">
-                <div><span>01</span><b>ЗАДАЧА</b></div>
-                <i />
-                <div><span>02</span><b>ИНСТРУМЕНТ</b></div>
-                <i />
+                <div><span>01</span><b>ЦЕЛЬ</b></div><i />
+                <div><span>02</span><b>СИСТЕМА</b></div><i />
                 <div><span>03</span><b>РЕЗУЛЬТАТ</b></div>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="trustStrip">
+          <div className="shell trustStripGrid">
+            <div><b>Не массовый курс</b><span>Маршрут собирается под задачу</span></div>
+            <div><b>Работа руками</b><span>Большая часть времени — практика</span></div>
+            <div><b>Проверяемый результат</b><span>На выходе остаётся проект</span></div>
+            <div><b>Responsible AI</b><span>Фактчекинг, приватность, границы</span></div>
           </div>
         </section>
 
@@ -83,86 +114,132 @@ export default function Home() {
           <div className="shell">
             <div className="sectionHead splitHead">
               <div>
-                <span className="kicker">Направления</span>
-                <h2>Под задачу, а не под шаблон</h2>
+                <span className="kicker">5 траекторий</span>
+                <h2>Один AI.<br />Совсем разные задачи.</h2>
               </div>
-              <p>Одна база, разные траектории: каждый ученик собирает свой набор AI-навыков вокруг конкретной цели.</p>
+              <p>Не продаём одинаковую программу всем. Сначала определяем, какой результат должен появиться после обучения, затем собираем маршрут.</p>
             </div>
-            <div className="programGrid">
-              {programs.map((program) => (
-                <article className="programCard" key={program.index}>
+            <div className="programGrid programGridR2">
+              {programs.map((program, index) => (
+                <article className={`programCard ${index >= 3 ? "youthCard" : ""}`} key={program.index}>
                   <span className="cardIndex">{program.index}</span>
                   <div className="cardSpacer" />
                   <span className="cardMeta">{program.meta}</span>
                   <h3>{program.title}</h3>
                   <p>{program.text}</p>
-                  <Link href="#contact" className="cardLink">Подробнее <ArrowIcon /></Link>
+                  <Link href={program.href} className="cardLink">Подробнее <ArrowIcon /></Link>
                 </article>
               ))}
-              <article className="programCard kidsCard">
-                <div className="kidsBadge">8–14</div>
-                <div className="cardSpacer" />
-                <span className="cardMeta">Отдельная программа</span>
-                <h3>AI для детей</h3>
-                <p>Учимся создавать, исследовать и думать вместе с AI — безопасно, понятно и через собственные проекты.</p>
-                <Link href="/kids" className="cardLink">Открыть программу <ArrowIcon /></Link>
-              </article>
             </div>
           </div>
         </section>
 
-        <section className="kidsBand">
+        <section className="section sectionInk">
+          <div className="shell">
+            <div className="sectionHead splitHead sectionHeadLight">
+              <div><span className="kicker kickerLight">Что считается результатом</span><h2>Не «я посмотрел уроки».<br /><em>Я умею это делать.</em></h2></div>
+              <p>Финальный проект выбирается под цель ученика. Ниже — типы результатов программы, а не выдуманные отзывы или обещания заработка.</p>
+            </div>
+            <div className="outcomeGrid">
+              {outcomes.map(([title, text], index) => (
+                <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="kidsBand kidsBandR2">
           <div className="shell kidsBandGrid">
             <div>
-              <span className="kicker kickerLight">Для нового поколения</span>
-              <h2>Ребёнок не просто нажимает «спросить AI».<br />Он понимает, <em>что с ним делать.</em></h2>
-              <p>Для детей 8–14 лет: изображения, истории, исследования, презентации, первые игры и проекты. Отдельно — фактчекинг, приватность и правила работы с AI.</p>
-              <Link className="button buttonLight" href="/kids">Программа для детей <ArrowIcon /></Link>
+              <span className="kicker kickerLight">8–18 лет</span>
+              <h2>Для детей — не «быстрее делать домашку».<br />Для подростков — <em>не просто промпты.</em></h2>
+              <p>Две отдельные возрастные программы. 8–13 — через творчество, исследования и безопасные привычки. 14–18 — через реальные проекты, портфолио, код и AI-инструменты для учёбы и будущей работы.</p>
+              <div className="heroActions">
+                <Link className="button buttonLight" href="/kids">Дети 8–13 <ArrowIcon /></Link>
+                <Link className="button buttonGhost buttonOnDark" href="/teens">Подростки 14–18 <ArrowIcon /></Link>
+              </div>
             </div>
-            <div className="kidsManifesto">
-              <span>CREATE</span><span>QUESTION</span><span>CHECK</span><span>BUILD</span>
-              <div className="manifestoCore">AI<br /><small>IS A TOOL</small></div>
+            <div className="ageSplitVisual">
+              <div className="agePanel"><span>8–13</span><b>CREATE<br />QUESTION<br />CHECK</b><small>curiosity → project</small></div>
+              <div className="agePanel agePanelAcid"><span>14–18</span><b>BUILD<br />RESEARCH<br />SHIP</b><small>skill → portfolio</small></div>
             </div>
           </div>
         </section>
 
         <section className="section" id="format">
           <div className="shell">
-            <div className="sectionHead">
-              <span className="kicker">Как это работает</span>
-              <h2>От цели до собственного результата</h2>
+            <div className="sectionHead splitHead">
+              <div><span className="kicker">Метод</span><h2>Цель → практика → система → проект</h2></div>
+              <p>AI меняется слишком быстро, чтобы учить интерфейсы по кнопкам. Поэтому основа — переносимый способ работы, который остаётся полезным после очередного обновления модели.</p>
             </div>
             <div className="steps">
-              <article><span>01</span><h3>Диагностика</h3><p>Определяем текущий уровень, интересы и конкретный результат, ради которого вы пришли.</p></article>
-              <article><span>02</span><h3>Персональный маршрут</h3><p>Собираем программу и инструменты без ненужных модулей и одинаковых домашних заданий для всех.</p></article>
-              <article><span>03</span><h3>Практика</h3><p>Каждое занятие — работа руками. Учимся на реальных задачах и сразу собираем собственные шаблоны.</p></article>
-              <article><span>04</span><h3>Проект</h3><p>В конце остаётся законченный результат: рабочий процесс, ассистент, исследование, презентация или другой проект.</p></article>
+              <article><span>01</span><h3>Диагностика</h3><p>Фиксируем уровень, интересы, ограничения и конкретный результат.</p></article>
+              <article><span>02</span><h3>Персональный маршрут</h3><p>Убираем лишние модули и выбираем только нужные инструменты.</p></article>
+              <article><span>03</span><h3>Сборка руками</h3><p>Каждое занятие даёт артефакт: шаблон, исследование, workflow или часть проекта.</p></article>
+              <article><span>04</span><h3>Финальный проект</h3><p>Ученик объясняет логику работы, ограничения AI и собственный вклад.</p></article>
             </div>
           </div>
         </section>
 
-        <section className="section sectionMuted" id="pricing">
+        <section className="section sectionMuted premiumParents">
+          <div className="shell premiumParentGrid">
+            <div className="premiumParentCopy">
+              <span className="kicker">Premium Family</span>
+              <h2>Не просто занятия ребёнку.<br />AI-среда для семьи.</h2>
+              <p>Для родителей, которым нужен более управляемый формат: индивидуальный трек ребёнка, отдельные встречи со взрослым, настройка правил использования AI дома и финальная демонстрация проекта.</p>
+              <ul className="featureList">
+                <li>12 персональных занятий ребёнку или подростку</li>
+                <li>2 отдельные сессии для родителя</li>
+                <li>индивидуальная тема итогового проекта</li>
+                <li>семейные правила приватности и использования AI</li>
+                <li>финальная презентация результата</li>
+              </ul>
+            </div>
+            <article className="premiumPriceCard">
+              <span className="cardMeta">Family Concierge</span>
+              <div className="price">$1,490</div>
+              <p>Премиальный персональный формат. Конкретный набор инструментов согласовывается с родителем и зависит от возраста.</p>
+              <Link className="button buttonPrimary buttonWide" href="#contact">Обсудить Family</Link>
+              <small>Без скрытых подписок на обучение. Сторонние AI-сервисы, если нужны, оплачиваются отдельно.</small>
+            </article>
+          </div>
+        </section>
+
+        <section className="section" id="pricing">
           <div className="shell">
             <div className="sectionHead splitHead">
-              <div><span className="kicker">Форматы</span><h2>Начать можно с малого</h2></div>
-              <p>Цены первой версии. Программу можно скорректировать после вводного разговора.</p>
+              <div><span className="kicker">Форматы</span><h2>Можно проверить формат<br />до большого пакета</h2></div>
+              <p>Стоимость относится к персональному обучению 1-на-1. Детские и подростковые пакеты имеют собственные страницы.</p>
             </div>
             <div className="pricingGrid">
               <article className="priceCard">
                 <span className="cardMeta">Start</span><h3>4 занятия</h3><div className="price">$390</div>
-                <p>Чтобы разобраться в AI, настроить базовый рабочий процесс и понять, куда двигаться дальше.</p>
+                <p>Разобраться в AI, настроить базовый рабочий процесс и получить первый полезный результат.</p>
                 <Link className="button buttonGhost buttonWide" href="#contact">Выбрать Start</Link>
               </article>
               <article className="priceCard featuredPrice">
-                <span className="popular">Оптимально</span><span className="cardMeta">Personal</span><h3>10 занятий</h3><div className="price">$890</div>
-                <p>Полная персональная траектория с практикой, материалами и итоговым проектом.</p>
+                <span className="popular">Основной</span><span className="cardMeta">Personal</span><h3>10 занятий</h3><div className="price">$890</div>
+                <p>Полная персональная траектория: практика, материалы, собственные шаблоны и итоговый проект.</p>
                 <Link className="button buttonPrimary buttonWide" href="#contact">Выбрать Personal</Link>
               </article>
               <article className="priceCard">
-                <span className="cardMeta">Team</span><h3>Для бизнеса</h3><div className="price">по запросу</div>
-                <p>Разбор процессов, обучение команды и внедрение AI-связок под ваши рабочие задачи.</p>
-                <Link className="button buttonGhost buttonWide" href="#contact">Обсудить задачу</Link>
+                <span className="cardMeta">Intensive</span><h3>12 занятий + проект</h3><div className="price">$1,290</div>
+                <p>Для сложной задачи: автоматизация, AI-агент, мини-продукт или технический portfolio project.</p>
+                <Link className="button buttonGhost buttonWide" href="#contact">Выбрать Intensive</Link>
               </article>
+            </div>
+          </div>
+        </section>
+
+        <section className="section instructorSection">
+          <div className="shell instructorGrid">
+            <div className="instructorBadge"><span>HUMAN<br />IN THE<br />LOOP</span></div>
+            <div>
+              <span className="kicker">Кто ведёт</span>
+              <h2>Практик AI-продуктов,<br />а не диктор курса.</h2>
+              <p>Занятия строятся вокруг реальной работы с современными AI-моделями, автоматизациями и цифровыми продуктами. Если инструмент не нужен для результата — его нет в программе.</p>
+              <div className="expertiseTags"><span>AI WORKFLOWS</span><span>AGENTS</span><span>RESEARCH</span><span>AUTOMATION</span><span>PRODUCT</span></div>
+              <p className="finePrint">Перед публикацией можно добавить подтверждаемые биографические факты, кейсы и фотографию преподавателя. В R2 намеренно нет непроверенных отзывов и цифр.</p>
             </div>
           </div>
         </section>
@@ -181,11 +258,12 @@ export default function Home() {
         <section className="contactSection" id="contact">
           <div className="shell contactGrid">
             <div>
-              <span className="kicker kickerLight">Следующий шаг</span>
-              <h2>Опишите цель.<br />Соберём маршрут.</h2>
-              <p>Оставьте контакт и пару слов о задаче. Для детской программы заявку заполняет родитель.</p>
+              <span className="kicker kickerLight">Старт</span>
+              <h2>Сначала задача.<br />Потом программа.</h2>
+              <p>Напишите, для кого обучение и какой результат нужен. Для детей и подростков контакт должен принадлежать взрослому.</p>
+              <ContactButtons fallbackHref="#contact-form" />
             </div>
-            <LeadForm />
+            <div id="contact-form"><LeadForm /></div>
           </div>
         </section>
       </main>

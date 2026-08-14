@@ -114,3 +114,66 @@ button { cursor: pointer; }
 @media (max-width: 620px) {
   .shell{width:min(100% - 26px,1180px)}.headerInner{min-height:66px}.hero{min-height:auto;padding:54px 0}.hero h1,.kidsHero h1{font-size:49px}.heroLead,.kidsHero p{font-size:17px}.heroStats{gap:18px;justify-content:space-between}.heroStats strong{font-size:20px}.heroStats span{font-size:10px}.heroGrid,.kidsHeroGrid{gap:42px}.heroVisual,.kidsHeroBoard{min-height:430px;border-radius:22px}.visualCore{min-height:320px}.ring2{width:320px;height:320px}.section,.kidsBand,.contactSection{padding:76px 0}.sectionHead h2,.kidsBand h2,.contactSection h2,.parentCard h2{font-size:39px}.programGrid,.kidsPrinciples{grid-template-columns:1fr}.programCard{min-height:320px}.kidsBandGrid{gap:45px}.kidsManifesto{min-height:330px}.manifestoCore{width:150px;height:150px;font-size:43px}.steps{grid-template-columns:1fr}.steps article{border-right:0;border-bottom:1px solid #d5d8dc;margin-right:0;min-height:210px}.steps h3{margin-top:55px}.formRow{grid-template-columns:1fr}.leadForm{padding:20px}.footerGrid{grid-template-columns:1fr}.footerLegal{grid-column:auto}.kidsHero{padding:64px 0}.boardCanvas{min-height:330px}.boardCenter{width:145px;height:145px;font-size:29px}.curriculumList article{grid-template-columns:46px 1fr}.curriculumList p{grid-column:2}.parentCard{padding:26px}.checkList{margin-top:42px}
 }
+
+/* R2 commercial system */
+.logoText { font-size: 13px; letter-spacing: .08em; }
+.logoText b { color: var(--ink); }
+.headerActions { display: flex; align-items: center; gap: 10px; }
+.langSwitch { min-width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid #d5d8dc; border-radius: 999px; font-size: 10px; font-weight: 900; letter-spacing: .08em; background: rgba(255,255,255,.55); }
+.mobileMenu { display: none; position: relative; }
+.mobileMenu summary { list-style: none; width: 42px; height: 42px; border: 1px solid #d5d8dc; border-radius: 50%; display: grid; place-content: center; gap: 4px; cursor: pointer; background: rgba(255,255,255,.72); }
+.mobileMenu summary::-webkit-details-marker { display:none; }
+.mobileMenu summary span { width: 16px; height: 1.5px; background: var(--ink); display: block; }
+.mobileMenu nav { position: absolute; right: 0; top: 50px; width: min(280px, calc(100vw - 26px)); background: #fff; border: 1px solid #dfe2e6; border-radius: 18px; padding: 10px; box-shadow: 0 22px 70px rgba(11,13,16,.16); display: grid; }
+.mobileMenu nav a { padding: 13px 14px; border-radius: 10px; font-size: 13px; font-weight: 750; }
+.mobileMenu nav a:hover { background:#f1f2ef; }
+.heroR2 { min-height: 760px; }
+.heroProofRow { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 46px; }
+.heroProofRow span { border: 1px solid #d6d9dd; border-radius: 999px; padding: 8px 11px; color: #6e747c; font-size: 9px; font-weight: 900; letter-spacing: .11em; }
+.heroProofLight span { border-color:#383e46; color:#aeb4bb; }
+.trustStrip { border-top:1px solid #d9dde0; border-bottom:1px solid #d9dde0; background:#fff; }
+.trustStripGrid { display:grid; grid-template-columns:repeat(4,1fr); }
+.trustStripGrid > div { padding:24px 22px 24px 0; border-right:1px solid #e1e4e7; display:grid; gap:5px; }
+.trustStripGrid > div:not(:first-child){padding-left:22px}.trustStripGrid > div:last-child{border-right:0}
+.trustStripGrid b { font-size:13px; letter-spacing:-.02em; }.trustStripGrid span{font-size:11px;color:#858b92;line-height:1.45}
+.trustStripDark{background:#101317;border-color:#2a2f35;color:#fff}.trustStripDark .trustStripGrid>div{border-color:#2e343b}.trustStripDark .trustStripGrid span{color:#8f969f}
+.programGridR2 { grid-template-columns: repeat(6,1fr); }
+.programGridR2 .programCard { grid-column: span 2; }
+.programGridR2 .programCard:nth-child(4), .programGridR2 .programCard:nth-child(5) { grid-column: span 3; }
+.youthCard { background:linear-gradient(150deg,#111419,#1a1e24); border-color:#252a31; color:#fff; }
+.youthCard p{color:#adb4bc}.youthCard .cardLink{border-color:#343a42}.youthCard .cardMeta,.youthCard .cardIndex{color:#838b94}.youthCard:nth-child(5){background:linear-gradient(145deg,#b9ff3f,#8ef2d8);color:#0a0d10;border-color:transparent}.youthCard:nth-child(5) p,.youthCard:nth-child(5) .cardMeta,.youthCard:nth-child(5) .cardIndex{color:#344238}.youthCard:nth-child(5) .cardLink{border-color:rgba(11,13,16,.18)}
+.sectionInk { background:#0e1115; color:#fff; }
+.sectionHeadLight p { color:#aab0b7; }.sectionHeadLight h2 em{color:var(--acid);font-style:normal}
+.outcomeGrid { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid #353a41; }
+.outcomeGrid article { min-height:300px; padding:24px 24px 24px 0; margin-right:24px; border-right:1px solid #353a41; }
+.outcomeGrid article:last-child{border-right:0;margin-right:0}.outcomeGrid span{font-size:10px;color:#69717b}.outcomeGrid h3{font-size:24px;margin:100px 0 12px;letter-spacing:-.04em}.outcomeGrid p{color:#aab1b9;line-height:1.55;font-size:13px}
+.outcomeGridLight{border-color:#ccd1d5}.outcomeGridLight article{border-color:#ccd1d5}.outcomeGridLight h3{color:var(--ink)}.outcomeGridLight p{color:var(--muted)}
+.ageSplitVisual { display:grid; grid-template-columns:1fr 1fr; gap:14px; min-height:430px; transform:rotate(1deg); }
+.agePanel { border:1px solid #323840; border-radius:24px; padding:24px; display:flex; flex-direction:column; justify-content:space-between; background:#171b20; }
+.agePanel>span{font-size:50px;line-height:1;font-weight:950;letter-spacing:-.07em;color:#fff}.agePanel b{font-size:24px;line-height:1.15;letter-spacing:-.04em}.agePanel small{text-transform:uppercase;letter-spacing:.12em;color:#7d858e;font-size:9px}.agePanelAcid{background:var(--acid);color:var(--ink);border-color:var(--acid);margin-top:36px;margin-bottom:-36px}.agePanelAcid>span{color:var(--ink)}.agePanelAcid small{color:#526337}
+.premiumParentGrid { display:grid; grid-template-columns:1.15fr .85fr; gap:28px; align-items:stretch; }
+.premiumParentCopy { background:#fff; border:1px solid #d8dce0; border-radius:28px; padding:42px; }
+.premiumParentCopy h2{font-size:clamp(40px,5vw,62px);line-height:1;letter-spacing:-.055em;margin:14px 0 20px}.premiumParentCopy p{color:var(--muted);font-size:16px;line-height:1.6;max-width:720px}
+.featureList{list-style:none;padding:0;margin:34px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}.featureList li{padding-left:22px;position:relative;color:#454c54;font-size:13px;line-height:1.45}.featureList li:before{content:'↗';position:absolute;left:0;font-weight:900}
+.premiumPriceCard { background:#101317; color:#fff; border-radius:28px; padding:36px; display:flex; flex-direction:column; }
+.premiumPriceCard .price{font-size:66px;font-weight:950;letter-spacing:-.07em;margin:60px 0 18px}.premiumPriceCard p{color:#aeb4bc;line-height:1.6;flex:1}.premiumPriceCard small{color:#7e858e;line-height:1.45;margin-top:16px}.premiumPriceCard .cardMeta{color:#939aa3}
+.instructorGrid{display:grid;grid-template-columns:.7fr 1.3fr;gap:70px;align-items:center}.instructorBadge{aspect-ratio:1;border-radius:50%;background:var(--acid);display:grid;place-items:center;max-width:380px;transform:rotate(-6deg)}.instructorBadge span{font-size:48px;font-weight:950;line-height:.87;letter-spacing:-.07em}.instructorGrid h2{font-size:clamp(40px,5vw,64px);line-height:1;letter-spacing:-.055em;margin:14px 0 22px}.instructorGrid p{color:var(--muted);line-height:1.65;max-width:730px}.expertiseTags{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0}.expertiseTags span{border:1px solid #d4d8dc;border-radius:999px;padding:8px 11px;font-size:9px;font-weight:900;letter-spacing:.1em}.finePrint{font-size:11px!important;color:#8b9198!important}
+.contactButtons{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.buttonOnDark{border-color:#3c424a;background:#171b20;color:#fff}.buttonOnDark:hover{background:#22272e}
+.familyConciergeBand{background:#111419;color:#fff;padding:72px 0}.familyConciergeGrid{display:grid;grid-template-columns:1.25fr .75fr;gap:60px;align-items:center}.familyConciergeGrid h2{font-size:clamp(38px,4.8vw,60px);line-height:1;letter-spacing:-.05em;margin:14px 0}.familyConciergeGrid p{color:#aeb4bc;line-height:1.6;max-width:700px}.familyConciergePrice{border:1px solid #353b43;border-radius:24px;padding:28px;display:grid;gap:18px}.familyConciergePrice>span{font-size:9px;letter-spacing:.12em;color:#8f969e;font-weight:900}.familyConciergePrice>b{font-size:64px;letter-spacing:-.07em}.teenBridge .splitHead{align-items:center}.teenBridge .textLink{margin-top:20px}
+.teenHero{background:#0d1014;color:#fff;min-height:720px;display:grid;align-items:center;padding:90px 0;overflow:hidden}.teenHeroGrid{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center}.teenHero h1{font-size:clamp(54px,6vw,86px);line-height:.94;letter-spacing:-.065em;margin:28px 0 26px}.teenHero h1 span{color:var(--cyan)}.teenHero p{color:#b6bcc3;font-size:19px;line-height:1.6;max-width:700px}
+.teenTerminal{border:1px solid #353b43;border-radius:26px;background:#12161b;padding:22px;box-shadow:0 36px 100px rgba(0,0,0,.28);transform:rotate(1deg)}.terminalTop{display:flex;justify-content:space-between;color:#8f969e;font-size:9px;letter-spacing:.1em;padding-bottom:18px;border-bottom:1px solid #2e343b}.terminalTop span:last-child{color:var(--cyan)}.terminalLines{display:grid;padding:35px 0;gap:16px}.terminalLines span{border:1px solid #2d333b;background:#171c22;border-radius:12px;padding:15px;font-size:11px;font-weight:850;letter-spacing:.08em;color:#d4d8dc}.terminalLines i{font-style:normal;color:#707881;margin-right:18px}.terminalOutput{background:linear-gradient(145deg,var(--cyan),var(--acid));color:#0a0d10;border-radius:18px;padding:24px;display:grid;gap:10px}.terminalOutput small{font-size:9px;letter-spacing:.12em;font-weight:900}.terminalOutput b{font-size:22px;letter-spacing:-.03em}
+
+@media (max-width: 1100px) {
+  .desktopNav{gap:16px;font-size:12px}.programGridR2{grid-template-columns:repeat(2,1fr)}.programGridR2 .programCard,.programGridR2 .programCard:nth-child(4),.programGridR2 .programCard:nth-child(5){grid-column:auto}.outcomeGrid{grid-template-columns:1fr 1fr}.outcomeGrid article:nth-child(2){border-right:0}.premiumParentGrid,.instructorGrid,.familyConciergeGrid,.teenHeroGrid{grid-template-columns:1fr}.instructorBadge{max-width:300px}.ageSplitVisual{max-width:680px}
+}
+@media (max-width: 980px) {
+  .mobileMenu{display:block}.headerCta{display:none}.trustStripGrid{grid-template-columns:1fr 1fr}.trustStripGrid>div:nth-child(2){border-right:0}.premiumParentGrid,.teenHeroGrid{gap:36px}.familyConciergeGrid{gap:30px}
+}
+@media (max-width: 620px) {
+  .logoText{font-size:11px}.logoMark{width:29px;height:29px}.langSwitch{min-width:34px;height:34px}.mobileMenu summary{width:38px;height:38px}.heroProofRow{margin-top:32px}.trustStripGrid{grid-template-columns:1fr}.trustStripGrid>div,.trustStripGrid>div:not(:first-child){padding:16px 0;border-right:0;border-bottom:1px solid #e1e4e7}.trustStripGrid>div:last-child{border-bottom:0}.trustStripDark .trustStripGrid>div{border-color:#2e343b}.programGridR2{grid-template-columns:1fr}.sectionInk{padding:76px 0}.outcomeGrid{grid-template-columns:1fr}.outcomeGrid article{border-right:0;border-bottom:1px solid #353a41;margin-right:0;min-height:210px}.outcomeGrid h3{margin-top:60px}.ageSplitVisual{grid-template-columns:1fr;min-height:auto}.agePanel{min-height:260px}.agePanelAcid{margin:0}.premiumParentCopy{padding:26px}.premiumParentCopy h2{font-size:39px}.featureList{grid-template-columns:1fr}.premiumPriceCard{padding:26px}.premiumPriceCard .price{font-size:54px;margin-top:40px}.instructorBadge{max-width:220px}.instructorBadge span{font-size:34px}.instructorGrid h2{font-size:39px}.familyConciergeBand{padding:60px 0}.familyConciergePrice>b{font-size:52px}.teenHero{padding:64px 0}.teenHero h1{font-size:49px}.teenHero p{font-size:17px}.teenTerminal{padding:16px}.terminalLines{padding:24px 0}.terminalLines span{font-size:9px;padding:12px}.terminalOutput b{font-size:18px}
+}
+.heroCopy { position: relative; z-index: 1; }
+.kidsBandR2 { border-top: 1px solid #242a31; border-bottom: 1px solid #242a31; }
+.premiumParents { border-top: 1px solid #dde0e3; border-bottom: 1px solid #dde0e3; }
+.instructorSection { background: #f7f7f3; }
+.teenCurriculum { margin-top: 8px; }

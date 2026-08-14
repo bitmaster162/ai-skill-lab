@@ -1,15 +1,18 @@
-# AI Academy
+# AI Skill Lab
 
-Premium Russian-language website for practical AI education.
+Premium bilingual website for practical, one-to-one AI education.
 
-## Current scope
+## R2 scope
 
-- Home page with adult, builder, business and kids tracks.
-- Dedicated `/kids` page for ages 8–14.
-- Responsive layout, pricing, FAQ and conversion sections.
-- Parent-only contact guidance for the kids program.
-- Lead endpoint at `POST /api/lead` with honeypot filtering and optional webhook delivery.
-- No child accounts and no direct collection of a child's contact details.
+- Russian home page with 5 tracks: adults, AI Builder, business, kids 8–13, teens 14–18.
+- Dedicated `/kids` and `/teens` commercial pages.
+- English versions at `/en`, `/en/kids`, `/en/teens`.
+- Premium Family Concierge offer with parent sessions and a learner project.
+- Project-based outcomes without fabricated testimonials, income claims or unverifiable student counts.
+- Responsive desktop/mobile navigation and RU/EN switches.
+- Telegram CTA with configurable WhatsApp link.
+- Lead endpoint at `POST /api/lead` with honeypot filtering, input limits and optional webhook delivery.
+- For minors, contact details are collected from an adult only; no child accounts are created by this site.
 
 ## Run locally
 
@@ -20,26 +23,32 @@ npm run dev
 
 Open `http://localhost:3000`.
 
-## Lead delivery
-
-Set an HTTPS webhook you control:
+## Environment
 
 ```bash
 cp .env.example .env.local
-# then set LEAD_WEBHOOK_URL in .env.local
 ```
 
-The endpoint sends a compact JSON payload with name, audience, adult contact, goal, source and timestamp.
+Set:
+
+- `NEXT_PUBLIC_SITE_URL` — final production domain.
+- `NEXT_PUBLIC_TELEGRAM_URL` — public Telegram contact.
+- `NEXT_PUBLIC_WHATSAPP_URL` — optional `https://wa.me/...` contact.
+- `LEAD_WEBHOOK_URL` — private HTTPS endpoint that receives lead JSON.
+
+The lead payload contains adult name/contact, audience, requested program, goal, locale, source and timestamp.
 
 ## Production checklist
 
-1. Replace `https://example.com` in `app/layout.tsx` with the final domain.
-2. Confirm brand name, prices and contact channel.
-3. Configure `LEAD_WEBHOOK_URL` in Vercel.
-4. Add final privacy/terms pages for the operating jurisdiction.
-5. Run `npm run build` and `npm run lint` in a network-enabled environment.
-6. Deploy only after the final content and form destination are approved.
+1. Confirm final brand/domain and replace `https://example.com`.
+2. Confirm Telegram/WhatsApp destinations.
+3. Add only source-backed teacher biography, photo, case studies and testimonials.
+4. Configure `LEAD_WEBHOOK_URL` in Vercel.
+5. Add privacy/terms pages appropriate to the operating jurisdiction.
+6. Check age requirements for each third-party AI service used in youth lessons.
+7. Run `npm run build` and `npm run lint` in a network-enabled environment.
+8. Deploy only after final content and form destination are approved.
 
-## Local review preview
+## Local dependency-free preview
 
-A dependency-free HTML preview can be generated/kept outside the production Git payload under `preview/` for quick visual review.
+The `preview/` directory contains static pages for visual review when npm dependencies cannot be installed. Preview and review artifacts are intentionally ignored by Git.
