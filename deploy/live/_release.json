@@ -1,5 +1,5 @@
 {
-  "file_count": 51,
+  "file_count": 53,
   "files": [
     {
       "path": "404.html",
@@ -33,8 +33,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "91f65ce18fdbff19471cc090d0e76b7f71e3d21258d17e49b0c44724ac2443e7",
-      "size": 18740
+      "sha256": "ab637c614a11263b106a7ce4b7caf148e89dbc085eb2ede2b34ca80e0e4114ac",
+      "size": 18889
     },
     {
       "path": "en/about.html",
@@ -127,6 +127,11 @@
       "size": 8338
     },
     {
+      "path": "en/studio.html",
+      "sha256": "659663ad79ea756f7494d55a978899a5f33505c6308d6beae63e430cd57a3d35",
+      "size": 9588
+    },
+    {
       "path": "en/teens.html",
       "sha256": "c892cd438cee53121c2c80f99a20bb63cce3b59420a5f4f93866527956746b8a",
       "size": 7791
@@ -148,8 +153,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "208fc761106d47b5d7110631e3742e7511790d329e87435c319e66ff6073219e",
-      "size": 22852
+      "sha256": "d5f052ba6f1922ced33e4d65cd2ffe01a807ed367a8e70a41906c7a1d67ad4eb",
+      "size": 23000
     },
     {
       "path": "kids.html",
@@ -158,8 +163,8 @@
     },
     {
       "path": "lab-command.js",
-      "sha256": "ba7e30db2a71312134170512890d62d503fede9f9a5d8fdcb1cd3848eb522174",
-      "size": 1501
+      "sha256": "970c2b9396e868fc9c8339b873e3ee118326e133d4e9c3f1ea748af0fbf2b93f",
+      "size": 1552
     },
     {
       "path": "matcher.html",
@@ -228,13 +233,18 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "ff5751fa7b4fbb83458e382150624c7e3f3cb11ac5fdbc0a5ba005fadd628c32",
-      "size": 2690
+      "sha256": "6f1a4115d72302df779bbcc270d62bdc92a31318e0e05eb70104caa325204037",
+      "size": 2813
     },
     {
       "path": "start.html",
       "sha256": "c1271f6e9df4671c1d376ceb9d3179bffe6266aa81069047ea1ff267fd9f072b",
       "size": 9922
+    },
+    {
+      "path": "studio.html",
+      "sha256": "3867b68d63245ad30f83cf425fd8efd0ce093ae925914c581ad4de8ea0e38d08",
+      "size": 11275
     },
     {
       "path": "style.css",
@@ -257,7 +267,7 @@
       "size": 2232
     }
   ],
-  "payload_sha256": "09ffa0596dcfe977cdce7c25544512d393a77ea2932cc156973a3a33b5bb5d57",
-  "release_id": "R66",
+  "payload_sha256": "64ded707b2845efebcbdbd7740d2888a4239298de0b3038e40335009c20bc3a7",
+  "release_id": "R67",
   "schema": "ai-skill-lab.static-release.v1"
 }

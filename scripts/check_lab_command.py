@@ -19,13 +19,13 @@ for p in pages:
 
 src=(ROOT/'components'/'LabCommand.tsx').read_text(encoding='utf-8')
 header=(ROOT/'components'/'Header.tsx').read_text(encoding='utf-8')
-for marker in ['showModal()','event.metaKey || event.ctrlKey','aria-keyshortcuts="Control+K Meta+K"','Project Studio','Pilot Simulator','Program Matcher','AI Challenge','Build Log']:
+for marker in ['showModal()','event.metaKey || event.ctrlKey','aria-keyshortcuts="Control+K Meta+K"','Project Studio','Pilot Simulator','Program Matcher','AI Challenge','Build Log','AI Studio']:
     checks+=1
     if marker not in src:errors.append(f'LabCommand.tsx: missing {marker}')
 checks+=1
 if '<LabCommand locale={locale} />' not in header:errors.append('Header.tsx: LabCommand not mounted')
 js=(LIVE/'lab-command.js').read_text(encoding='utf-8')
-for marker in ['document.documentElement.lang','d.innerHTML','data-lab-command-close','/proof','/projects','/business#pilot-simulator','/matcher','/challenge','/build','/start']:
+for marker in ['document.documentElement.lang','d.innerHTML','data-lab-command-close','/proof','/projects','/business#pilot-simulator','/matcher','/challenge','/build','/studio','/start']:
     checks+=1
     if marker not in js:errors.append(f'lab-command.js: shared runtime missing {marker}')
 for forbidden in ['fetch(','XMLHttpRequest','localStorage','sessionStorage','document.cookie','sendBeacon(','WebSocket(']:

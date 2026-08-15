@@ -140,6 +140,7 @@ export default function Home() {
                 <article key={item.title}><span>0{index + 1}</span><h3>{item.title}</h3><p><b>INPUT</b> {item.input}</p><p><b>AI LAYER</b> {item.ai}</p><p><b>HUMAN GATE</b> {item.human}</p><p><b>SHIP</b> {item.ship}</p></article>
               ))}
             </div>
+            <div className="heroActions"><Link className="button buttonLight" href="/studio">Собрать с нами →</Link><Link className="textLink" href="/build">Build log →</Link></div>
           </div>
         </section>
 

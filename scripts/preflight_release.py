@@ -37,6 +37,7 @@ def main()->int:
       ('curriculum_package_mapping',['python','scripts/check_curriculum_package_mapping.py']),
       ('parent_route_parity',['python','scripts/check_parent_route_parity.py']),
       ('trust_route_parity',['python','scripts/check_trust_route_parity.py']),
+      ('studio_offer',['python','scripts/check_studio_offer.py']),
       ('business_decision_gate',['python','scripts/check_business_decision_gate.py']),
       ('build_story',['python','scripts/check_build_story.py']),
       ('proof_route',['python','scripts/check_proof_route.py']),
