@@ -23,8 +23,8 @@
     },
     {
       "path": "curriculum.html",
-      "sha256": "a4c4d7b442e56ec107b3d6769b294ef250c9e3583bc3fa7eccef9e8b288a1ff9",
-      "size": 11049
+      "sha256": "e2b947892b72fc68bab0b7bfe268443dedc875a26b517dc79792094ef1650c8c",
+      "size": 15245
     },
     {
       "path": "en.html",
@@ -48,8 +48,8 @@
     },
     {
       "path": "en/curriculum.html",
-      "sha256": "23ff51b8fc8a2ece0ac71e554b5d8e3100b4fcae74622027ae6a89d817332327",
-      "size": 9151
+      "sha256": "964274f02f3e6e5b0d842e8276326e4dedeafc2cc9265c07a56135cd65792205",
+      "size": 12770
     },
     {
       "path": "en/faq.html",
@@ -243,11 +243,11 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "7d3ac1878809c11d3dded90cc8401f4e93bc61dd8ce2c5c37bc69032ed44e117",
-      "size": 2124
+      "sha256": "9599d43f8c35a030d70d3758253ea387c8ba8ff4e9e0af2f84f6ad7ff2314304",
+      "size": 2232
     }
   ],
-  "payload_sha256": "7bc17f439626698fedac900d837fb0e749440af303e7a8e67ff95493e07b9999",
-  "release_id": "R59",
+  "payload_sha256": "cbaed0cfc6d41dfd76dbf3871c227a4479dfacaebd68d0f1061e10cd2cc78947",
+  "release_id": "R60",
   "schema": "ai-skill-lab.static-release.v1"
 }
