@@ -18,3 +18,6 @@
 @media(max-width:980px){.links{display:none}.mobileNav{display:block}.navin{height:64px}}
 @media(max-width:620px){.wrap{width:min(100% - 24px,1120px)}.navCta{display:none}.logo{font-size:11px;letter-spacing:.055em}.mark{width:30px;height:30px}.navActions{gap:6px}.hero{padding-top:52px}.hero h1{font-size:clamp(43px,13vw,54px)}.lead{font-size:17px}.actions .btn{width:100%}.proofchips{gap:6px}.program,.card,.panel,.mq{border-radius:18px}}
 @media(prefers-reduced-motion:reduce){.mobileNav summary span{transition:none!important}}
+
+/* R26 local-only brief copy action */
+.briefCardActions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}.briefCardActions .textLink{margin-top:0}.briefCopy{cursor:pointer}@media(max-width:620px){.briefCardActions{align-items:stretch;flex-direction:column}.briefCardActions .btn{width:100%}}
