@@ -4,7 +4,7 @@ import { ArrowIcon } from "@/components/ArrowIcon";
 import { ContactButtons } from "@/components/ContactButtons";
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
-import { organizationSchema, websiteSchema } from "@/lib/structured-data";
+import { organizationSchemaRu, websiteSchema } from "@/lib/structured-data";
 import { Header } from "@/components/Header";
 
 export const metadata: Metadata = {
@@ -68,7 +68,7 @@ const faq = [
 export default function Home() {
   return (
     <>
-      <JsonLd data={[websiteSchema, organizationSchema]} />
+      <JsonLd data={[websiteSchema, organizationSchemaRu]} />
       <Header alternateHref="/en" />
       <main id="main">
         <section className="hero heroR2">

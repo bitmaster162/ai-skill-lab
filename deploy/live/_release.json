@@ -23,8 +23,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "2f709440ea7dcfdccf5a1e7088c441933ca6b94f8146485b831d8a74dcc87cf9",
-      "size": 13233
+      "sha256": "ee314c80b9b173ca4bcf2946c1b8bf2b1c2b3c6797b3c37b312c25eba3582e0f",
+      "size": 13301
     },
     {
       "path": "en/about.html",
@@ -123,8 +123,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "4093fc98ea3f93fc04e2ad3210df1295bed35521530ecbd4fb5095ae1c43d635",
-      "size": 16892
+      "sha256": "3c62b153a00a6957d00f5d873c521009309fefcff2d3951a44e7f0b4d53d6fe6",
+      "size": 16960
     },
     {
       "path": "kids.html",
@@ -218,11 +218,11 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "9845d8af4aba8c7a9b881b8b883d8612fb755ce27c8520a9453346878d042749",
+      "sha256": "fa5b5fd00488f4c427ff9d270b9562aae7b9b4ac8d9664f4d3c242f5a9b420f3",
       "size": 1530
     }
   ],
-  "payload_sha256": "c2a8fa233e58f4b1216d0643db2301c8fc62ea9f09de81787fd4023589080fe6",
-  "release_id": "R37",
+  "payload_sha256": "fef7dc7bf1f18b78bc6e2764feeda3d8c0548bebac6766018835cefe162ed784",
+  "release_id": "R38",
   "schema": "ai-skill-lab.static-release.v1"
 }
