@@ -51,6 +51,7 @@ def main()->int:
       ('static_accessibility',['python','scripts/check_static_accessibility.py']),
       ('client_privacy',['python','scripts/check_client_privacy.py']),
       ('launch_gate',['npm','run','check:launch']),
+      ('release_artifact_builder',['python','scripts/build_release_artifacts.py','--release',args.release]),
       ('git_diff_check',['git','diff','--check']),
     ]
     for name,cmd in checks:
