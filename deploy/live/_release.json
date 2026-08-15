@@ -13,8 +13,8 @@
     },
     {
       "path": "business.html",
-      "sha256": "507326c61edaab7a9d8518fcb9d60c9c9ed7b810eef45fb9a65f0e375dd57753",
-      "size": 18714
+      "sha256": "26e69f7ff00990e51b63e25a6d1dbebe5b2293d6807c614a7c58432b3c63201e",
+      "size": 18735
     },
     {
       "path": "curriculum.html",
@@ -33,8 +33,8 @@
     },
     {
       "path": "en/business.html",
-      "sha256": "53adfb4c9ed5a271a5e791944a23fb82368994e7028a17a7d13ee882646d2569",
-      "size": 14489
+      "sha256": "410291ba204e22db2b14921c5d474f07981f82afcd989fda9fea31e6a589b71c",
+      "size": 14510
     },
     {
       "path": "en/curriculum.html",
@@ -93,8 +93,8 @@
     },
     {
       "path": "en/proof.html",
-      "sha256": "60ad43bfaefc4dc4687c32e46ba33951b23cc6188ddc40e4b8e4a17e42c289a3",
-      "size": 12496
+      "sha256": "31ed889b9850ac8f1fbb3d30134cb8a86b2ac030a67263becab86a57a5fae036",
+      "size": 13675
     },
     {
       "path": "en/safety.html",
@@ -183,8 +183,8 @@
     },
     {
       "path": "proof.html",
-      "sha256": "5214b9577d2a2ea785be15394ea52b3d8b7f52902e32662730ad15e78170e1a4",
-      "size": 15421
+      "sha256": "a839771d66801a2680766eb048653a7f244c3bd1e77328c03632c8d345029f2f",
+      "size": 16783
     },
     {
       "path": "robots.txt",
@@ -232,7 +232,7 @@
       "size": 1800
     }
   ],
-  "payload_sha256": "2eab15d19deb93b2607bbdd495b782332f1b6fc89b299844cd8e64b6d5cdae02",
-  "release_id": "R54",
+  "payload_sha256": "fe4849cdef85e63764edbd59438a2ea269379be07c418c3949d0fc8ea10f0676",
+  "release_id": "R55",
   "schema": "ai-skill-lab.static-release.v1"
 }

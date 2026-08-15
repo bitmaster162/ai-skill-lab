@@ -52,6 +52,7 @@ def main()->int:
       ('pilot_simulator',['python','scripts/check_pilot_simulator.py']),
       ('pilot_simulator_runtime',['node','scripts/check_pilot_simulator_runtime.mjs']),
       ('lab_discoverability',['python','scripts/check_lab_discoverability.py']),
+      ('lab_hub',['python','scripts/check_lab_hub.py']),
       ('commercial_parity',['python','scripts/check_commercial_parity.py']),
       ('contact_funnel',['python','scripts/check_contact_funnel.py']),
       ('cta_semantics',['python','scripts/check_cta_semantics.py']),
