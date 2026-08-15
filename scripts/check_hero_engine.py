@@ -17,6 +17,13 @@ for rel in ['deploy/live/index.html','deploy/live/en.html']:
   if marker not in text:errors.append(f'{rel}: missing {marker!r}')
  checks+=1
  if text.count('data-engine-key=')!=4:errors.append(f'{rel}: expected 4 engine buttons')
+
+for rel in ['deploy/live/index.html','deploy/live/en.html']:
+ text=(ROOT/rel).read_text(encoding='utf-8')
+ for marker in ['0 PUBLIC FORMS','HASHED CSP','HUMAN-GATED','data-lab-command-open']:
+  checks+=1
+  if marker not in text:errors.append(f'{rel}: proof-first hero missing {marker!r}')
+
 corpus=component+'\n'+(ROOT/'deploy/live/index.html').read_text()+'\n'+(ROOT/'deploy/live/en.html').read_text()
 for bad in ['live model call','hidden AI call','sends your input','отправляет ваш ввод']:
  checks+=1

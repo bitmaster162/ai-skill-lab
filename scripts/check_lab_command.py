@@ -10,10 +10,12 @@ for p in pages:
     en=rel=='en.html' or rel.startswith('en/')
     expected=['/en/proof','/en/projects','/en/business#pilot-simulator','/en/matcher','/en/challenge','/en/start'] if en else ['/proof','/projects','/business#pilot-simulator','/matcher','/challenge','/start']
     for token,count in [
-        ('data-lab-command-open',1),('id="lab-command"',1),('data-lab-command-close',1),('src="/lab-command.js"',1),('aria-keyshortcuts="Control+K Meta+K"',1)
+        ('id="lab-command"',1),('data-lab-command-close',1),('src="/lab-command.js"',1),('aria-keyshortcuts="Control+K Meta+K"',1)
     ]:
         checks+=1
         if t.count(token)!=count:errors.append(f'{rel}: {token} count={t.count(token)} expected={count}')
+    checks+=1
+    if t.count('data-lab-command-open')<1:errors.append(f'{rel}: missing Lab Command opener')
     for href in expected:
         checks+=1
         # destination must exist in command dialog; other page links may also use it

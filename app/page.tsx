@@ -84,10 +84,10 @@ export default function Home() {
               </p>
               <div className="heroActions">
                 <Link className="button buttonPrimary" href="/start">Подобрать программу <ArrowIcon /></Link>
-                <Link className="textLink" href="#programs">Смотреть направления <ArrowIcon /></Link>
+                <button className="textLink heroLabTrigger" type="button" data-lab-command-open aria-haspopup="dialog" aria-controls="lab-command">Открыть LAB · ⌘K</button>
               </div>
               <div className="heroProofRow">
-                <span>1:1 PERSONAL</span><span>PROJECT-BASED</span><span>RU / EN</span><span>NO FLUFF</span>
+                <span>0 PUBLIC FORMS</span><span>HASHED CSP</span><span>HUMAN-GATED</span><span>BYTE-EXACT</span>
               </div>
             </div>
             <HeroEngine />

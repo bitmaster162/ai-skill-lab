@@ -55,8 +55,13 @@ export function LabCommand({ locale = "ru" }: LabCommandProps) {
         open();
       }
     };
+    const external = [...document.querySelectorAll<HTMLElement>("[data-lab-command-open]")].filter((el) => !el.classList.contains("labCommandTrigger"));
+    external.forEach((el) => el.addEventListener("click", open));
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      external.forEach((el) => el.removeEventListener("click", open));
+      window.removeEventListener("keydown", onKey);
+    };
   }, []);
 
   return (

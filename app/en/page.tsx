@@ -43,8 +43,8 @@ export default function EnglishHome() {
               <div className="eyebrow"><span className="dot" /> Personal AI education · online / Phuket</div>
               <h1>AI should not make you<br /><span>more dependent.</span></h1>
               <p className="heroLead">It should make you more capable. Learn to research, create, automate and build reliable AI workflows around real tasks.</p>
-              <div className="heroActions"><Link className="button buttonPrimary" href="/en/start">Find my program <ArrowIcon /></Link><Link className="textLink" href="#programs">Explore tracks <ArrowIcon /></Link></div>
-              <div className="heroProofRow"><span>1:1 PERSONAL</span><span>PROJECT-BASED</span><span>RU / EN</span><span>NO FLUFF</span></div>
+              <div className="heroActions"><Link className="button buttonPrimary" href="/en/start">Find my program <ArrowIcon /></Link><button className="textLink heroLabTrigger" type="button" data-lab-command-open aria-haspopup="dialog" aria-controls="lab-command">Open LAB · ⌘K</button></div>
+              <div className="heroProofRow"><span>0 PUBLIC FORMS</span><span>HASHED CSP</span><span>HUMAN-GATED</span><span>BYTE-EXACT</span></div>
             </div>
             <HeroEngine locale="en" />
           </div>
