@@ -7,7 +7,7 @@ surfaces=[
  ('app/build/page.tsx',False),('app/en/build/page.tsx',True),
  ('deploy/live/build.html',False),('deploy/live/en/build.html',True),
 ]
-required_common=['BUILD STORY / OPEN PROVENANCE','R8','R24','R31','R38','R49','R60','R65','R66','CHATGPT','WEB RESEARCH','LOCAL TEST STACK','GIT / BUNDLES','VERCEL','HUMAN REVIEW','STATIC JS BROKE','METADATA DRIFT','WRAPPER CORRUPTED','SANDBOX DISAPPEARED','DEPLOYMENT BLOCKED','/_release.json']
+required_common=['BUILD STORY / OPEN PROVENANCE','R8','R24','R31','R38','R49','R60','R65','R66','R68','TRANSFER','CHATGPT','WEB RESEARCH','LOCAL TEST STACK','GIT / BUNDLES','VERCEL','HUMAN REVIEW','STATIC JS BROKE','METADATA DRIFT','WRAPPER CORRUPTED','SANDBOX DISAPPEARED','DEPLOYMENT BLOCKED','/_release.json']
 for rel,en in surfaces:
     text=(ROOT/rel).read_text(encoding='utf-8')
     for marker in required_common:

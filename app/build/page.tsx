@@ -18,6 +18,7 @@ const milestones = [
   ["R60", "EXPERIENCE", "Site becomes the demo", "Proof Lab, Project Studio, Pilot Simulator, Brief Compiler, Challenge и Skill Graph превратили сайт в интерактивное доказательство."],
   ["R65", "ATTENTION", "Product-scene hero", "Первый экран перестал быть маркетинговой иллюстрацией и начал показывать ACTIVE WORKFLOW → DEFINE → BUILD → VERIFY → SHIP."],
   ["R66", "PROVENANCE", "Build process becomes public", "История сборки, failures, toolchain и границы ответственности становятся частью самого продукта."],
+  ["R68", "TRANSFER", "Performance becomes a contract", "Worst-case first view держится примерно в 14 KB Brotli: HTML + общий CSS + LAB runtime. Бюджет проверяется на каждом релизе."],
 ] as const;
 
 const failures = [

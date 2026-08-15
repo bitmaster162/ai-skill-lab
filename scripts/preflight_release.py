@@ -43,6 +43,7 @@ def main()->int:
       ('proof_route',['python','scripts/check_proof_route.py']),
       ('security_headers',['python','scripts/check_security_headers.py']),
       ('static_performance',['python','scripts/check_static_performance.py']),
+      ('transfer_performance',['node','scripts/check_transfer_performance.mjs']),
       ('contrast_tokens',['python','scripts/check_contrast_tokens.py']),
       ('motion_policy',['python','scripts/check_motion_policy.py']),
       ('inline_scripts',['python','scripts/check_inline_scripts.py']),
