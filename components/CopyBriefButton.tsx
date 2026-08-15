@@ -27,7 +27,7 @@ async function copyText(text: string) {
 }
 
 export function CopyBriefButton({ title, lines, locale = "ru" }: CopyBriefButtonProps) {
-  const [copied, setCopied] = useState(false);
+  const [copyState, setCopyState] = useState<"idle" | "done" | "error">("idle");
   const isEn = locale === "en";
   const text = [
     isEn ? "AI Skill Lab — brief" : "AI Skill Lab — запрос",
@@ -41,12 +41,16 @@ export function CopyBriefButton({ title, lines, locale = "ru" }: CopyBriefButton
       type="button"
       onClick={async () => {
         const ok = await copyText(text);
-        setCopied(ok);
-        if (ok) window.setTimeout(() => setCopied(false), 1800);
+        setCopyState(ok ? "done" : "error");
+        window.setTimeout(() => setCopyState("idle"), 1800);
       }}
       aria-live="polite"
     >
-      {copied ? (isEn ? "Copied ✓" : "Скопировано ✓") : (isEn ? "Copy brief" : "Скопировать brief")}
+      {copyState === "done"
+        ? (isEn ? "Copied ✓" : "Скопировано ✓")
+        : copyState === "error"
+          ? (isEn ? "Copy failed" : "Не удалось скопировать")
+          : (isEn ? "Copy brief" : "Скопировать brief")}
     </button>
   );
 }

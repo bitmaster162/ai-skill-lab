@@ -36,11 +36,13 @@ async function run(rel,lang){
     ['Для подростка',['Возраст и текущий уровень','Интересы: code / design / science / content / business','Что уже пробовал с AI','Какой portfolio outcome был бы полезен']],
     ['Workflow pilot',['Какой процесс хотите улучшить','Кто его выполняет и кто владелец','Как часто он повторяется','Что считается хорошим выходом / что будет при ошибке']],
   ];
+  const initial=isEn?'Copy brief':'Скопировать brief';
   const buttons=[];
-  for(const [title,lines] of specs){const card=new Card(title,lines);buttons.push(new E({textContent:isEn?'Copy brief':'Скопировать brief',card}));}
-  let clipboard='';
+  for(const [title,lines] of specs){const card=new Card(title,lines);buttons.push(new E({textContent:initial,card}));}
+  let clipboard=''; const timers=[];
   const document={documentElement:{lang},body:{appendChild(){}},querySelectorAll(sel){return sel==='.briefCopy'?buttons:[]},createElement(){return new E()},execCommand(){return true}};
-  const context={document,navigator:{clipboard:{async writeText(t){clipboard=String(t)}}},setTimeout(fn){fn();return 1},clearTimeout(){},console};context.window=context;
+  const navigator={clipboard:{async writeText(t){clipboard=String(t)}}};
+  const context={document,navigator,setTimeout(fn){timers.push(fn);return timers.length},clearTimeout(){},console};context.window=context;
   vm.runInNewContext(extract(path.join(root,rel)),context,{filename:rel,timeout:1000});
   let checks=0;
   for(let i=0;i<buttons.length;i++){
@@ -50,7 +52,16 @@ async function run(rel,lang){
     if(!clipboard.includes(title))throw new Error(`${rel} card${i+1}: missing route title`); checks++;
     for(const line of lines) if(!clipboard.includes(line))throw new Error(`${rel} card${i+1}: missing field ${line}`);
     if(clipboard.split('\n').length!==6)throw new Error(`${rel} card${i+1}: expected 6 brief lines`); checks++;
+    if(buttons[i].textContent !== (isEn?'Copied ✓':'Скопировано ✓'))throw new Error(`${rel} card${i+1}: missing success feedback`); checks++;
+    while(timers.length) timers.shift()();
+    if(buttons[i].textContent!==initial)throw new Error(`${rel} card${i+1}: success label did not reset`); checks++;
   }
+  navigator.clipboard.writeText=async()=>{throw new Error('clipboard denied')};
+  document.execCommand=()=>false;
+  await buttons[0].trigger();
+  if(buttons[0].textContent !== (isEn?'Copy failed':'Не удалось скопировать'))throw new Error(`${rel}: missing failure feedback`); checks++;
+  while(timers.length) timers.shift()();
+  if(buttons[0].textContent!==initial)throw new Error(`${rel}: failure label did not reset`); checks++;
   return {rel,checks};
 }
 

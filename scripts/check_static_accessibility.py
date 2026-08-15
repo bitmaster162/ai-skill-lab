@@ -20,7 +20,7 @@ class Audit(HTMLParser):
             self._link={'href':a.get('href',''),'text':'','aria':a.get('aria-label',''),'target':a.get('target'),'rel':a.get('rel',''),'class':a.get('class','')}; self.links.append(self._link)
             if 'skip' in a.get('class','') and a.get('href')=='#main': self.has_skip=True
         if tag=='button':
-            self._button={'text':'','aria':a.get('aria-label','')}; self.buttons.append(self._button)
+            self._button={'text':'','aria':a.get('aria-label',''),'class':a.get('class',''),'live':a.get('aria-live','')}; self.buttons.append(self._button)
     def handle_endtag(self, tag):
         if tag=='a': self._link=None
         if tag=='button': self._button=None
@@ -52,6 +52,9 @@ for p in sorted(LIVE.rglob('*.html')):
     for button in a.buttons:
         checks += 1
         if not (button['text'].strip() or button['aria'].strip()): errors.append(f'{rel}: empty button')
+        if 'briefCopy' in button['class']:
+            checks += 1
+            if button['live'] != 'polite': errors.append(f'{rel}: briefCopy must use aria-live=polite')
 
 css=(LIVE/'style.css').read_text(encoding='utf-8')
 for marker in [':focus-visible{outline:3px solid #4f8cff', '@media(prefers-reduced-motion:reduce)', 'min-height:48px']:
