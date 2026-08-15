@@ -53,6 +53,8 @@ def main()->int:
       ('pilot_simulator_runtime',['node','scripts/check_pilot_simulator_runtime.mjs']),
       ('lab_discoverability',['python','scripts/check_lab_discoverability.py']),
       ('lab_hub',['python','scripts/check_lab_hub.py']),
+      ('hero_engine',['python','scripts/check_hero_engine.py']),
+      ('hero_engine_runtime',['node','scripts/check_hero_engine_runtime.mjs']),
       ('commercial_parity',['python','scripts/check_commercial_parity.py']),
       ('contact_funnel',['python','scripts/check_contact_funnel.py']),
       ('cta_semantics',['python','scripts/check_cta_semantics.py']),

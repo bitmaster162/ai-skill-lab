@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import { organizationSchemaRu, websiteSchema } from "@/lib/structured-data";
 import { Header } from "@/components/Header";
+import { HeroEngine } from "@/components/HeroEngine";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/", languages: { ru: "/", en: "/en" } },
@@ -89,23 +90,7 @@ export default function Home() {
                 <span>1:1 PERSONAL</span><span>PROJECT-BASED</span><span>RU / EN</span><span>NO FLUFF</span>
               </div>
             </div>
-            <div className="heroVisual" aria-label="Схема практического обучения AI">
-              <div className="visualTop"><span>YOUR AI STACK</span><span className="livePill">● BUILD</span></div>
-              <div className="visualCore">
-                <div className="coreRing ring1" />
-                <div className="coreRing ring2" />
-                <div className="coreCenter">AI</div>
-                <div className="node nodeA">RESEARCH</div>
-                <div className="node nodeB">CREATE</div>
-                <div className="node nodeC">AUTOMATE</div>
-                <div className="node nodeD">VERIFY</div>
-              </div>
-              <div className="visualBottom">
-                <div><span>01</span><b>ЦЕЛЬ</b></div><i />
-                <div><span>02</span><b>СИСТЕМА</b></div><i />
-                <div><span>03</span><b>РЕЗУЛЬТАТ</b></div>
-              </div>
-            </div>
+            <HeroEngine />
           </div>
         </section>
 
