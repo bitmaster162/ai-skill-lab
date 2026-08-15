@@ -32,6 +32,7 @@ def main()->int:
       ('structured_data',['python','scripts/check_structured_data.py']),
       ('faq_parity',['python','scripts/check_faq_parity.py']),
       ('session_scope',['python','scripts/check_session_scope.py']),
+      ('youth_policy_freshness',['python','scripts/check_youth_policy_freshness.py']),
       ('security_headers',['python','scripts/check_security_headers.py']),
       ('static_performance',['python','scripts/check_static_performance.py']),
       ('contrast_tokens',['python','scripts/check_contrast_tokens.py']),
