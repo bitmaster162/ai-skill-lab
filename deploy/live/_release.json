@@ -128,8 +128,8 @@
     },
     {
       "path": "kids.html",
-      "sha256": "f50a2e136b78d5c8b459b8ad34bcaf14042b68b1119c61542fdf2198be83ba08",
-      "size": 10478
+      "sha256": "c715f86ed5290db9a56949c611d7f84e1d3aad9c8517c956ad5171bb7e6cb7a7",
+      "size": 10481
     },
     {
       "path": "matcher.html",
@@ -222,7 +222,7 @@
       "size": 1530
     }
   ],
-  "payload_sha256": "f9a5d97637ca10ca4b46beefb2c48dc0fd426bbe13fbb677078c7e7e63e07e54",
-  "release_id": "R40",
+  "payload_sha256": "61c219c543660cb8d674404cb35d5f3ebc31e1e32bea2238c36a0ec254b9e45c",
+  "release_id": "R41",
   "schema": "ai-skill-lab.static-release.v1"
 }
