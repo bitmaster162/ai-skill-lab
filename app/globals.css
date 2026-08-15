@@ -283,3 +283,28 @@ button { cursor: pointer; }
   .button,.node,.programCard,.projectStudioCard,.projectFilter,.proofLabTab { transition: none !important; }
   .hero:before,.orbOne,.orbTwo,.coreCenter,.livePill { animation: none !important; }
 }
+
+/* R65 — product-scene hero: attention hierarchy inspired by live AI product workflows. */
+.engineScene { transform: none; overflow: hidden; }
+.engineLayout { display: grid; grid-template-columns: 108px 1fr; gap: 12px; flex: 1; margin: 24px 0 14px; min-height: 356px; }
+.engineModes { display: grid; gap: 8px; align-content: start; }
+.engineMode { appearance: none; min-height: 44px; padding: 0 12px; border: 1px solid #303840; border-radius: 12px; background: #12171c; color: #8e98a2; text-align: left; font: 850 9px/1 ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing: .1em; cursor: pointer; transition: background .16s ease,color .16s ease,border-color .16s ease; }
+.engineMode:hover { border-color: #65717c; color: #dce2e7; }
+.engineMode.isActive { background: var(--acid); border-color: var(--acid); color: #0b0d10; }
+.engineWorkbench { min-width: 0; display: flex; flex-direction: column; border: 1px solid #2a323a; border-radius: 22px; background: #090d11; padding: 18px; }
+.engineTask { display: grid; gap: 7px; padding-bottom: 18px; }
+.engineTask span,.engineReceipt span { color: #64707b; font: 850 8px/1 ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing: .12em; text-transform: uppercase; }
+.engineTask strong { color: #f3f6f8; font-size: 15px; letter-spacing: -.02em; }
+.engineTrack { display: grid; grid-template-columns: repeat(4,1fr); flex: 1; border-top: 1px solid #252c33; border-bottom: 1px solid #252c33; }
+.engineTrack article { min-width: 0; padding: 18px 12px; border-right: 1px solid #252c33; display: flex; flex-direction: column; gap: 9px; }
+.engineTrack article:last-child { border-right: 0; }
+.engineTrack article.isLive { background: linear-gradient(180deg,rgba(185,255,63,.09),transparent); }
+.engineTrack span { color: #5d6872; font: 800 8px/1 ui-monospace,SFMono-Regular,Consolas,monospace; }
+.engineTrack b { color: #dbe1e6; font-size: 10px; letter-spacing: .08em; }
+.engineTrack .isLive b { color: var(--acid); }
+.engineTrack small { margin-top: auto; color: #7f8a94; font-size: 9px; line-height: 1.45; }
+.engineReceipt { display: flex; align-items: center; gap: 9px; padding-top: 14px; }
+.engineReceipt b { color: #dce2e7; font: 850 8px/1 ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing: .08em; }
+.engineReceipt i { height: 1px; flex: 1; background: #293139; }
+@media(max-width:620px){.engineLayout{grid-template-columns:1fr;min-height:auto}.engineModes{grid-template-columns:repeat(4,1fr)}.engineMode{padding:0 8px;text-align:center}.engineTrack{grid-template-columns:1fr 1fr}.engineTrack article:nth-child(2){border-right:0}.engineTrack article:nth-child(-n+2){border-bottom:1px solid #252c33}.engineWorkbench{padding:15px}.engineReceipt{flex-wrap:wrap}.engineReceipt i{min-width:32px}}
+@media(prefers-reduced-motion:reduce){.engineMode{transition:none!important}}

@@ -83,8 +83,8 @@ export default function Home() {
                 Он должен делать вас сильнее. Учимся исследовать, создавать, автоматизировать и собирать собственные AI-процессы на реальных задачах.
               </p>
               <div className="heroActions">
-                <Link className="button buttonPrimary" href="/start">Подобрать программу <ArrowIcon /></Link>
-                <button className="textLink heroLabTrigger" type="button" data-lab-command-open aria-haspopup="dialog" aria-controls="lab-command">Открыть LAB · ⌘K</button>
+                <Link className="button buttonPrimary" href="/proof">Запустить Proof Lab <ArrowIcon /></Link>
+                <Link className="textLink heroLabTrigger" href="/start">Подобрать программу <ArrowIcon /></Link>
               </div>
               <div className="heroProofRow">
                 <span>0 PUBLIC FORMS</span><span>HASHED CSP</span><span>HUMAN-GATED</span><span>BYTE-EXACT</span>
@@ -103,13 +103,13 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="proofHome"><div className="shell proofHomeGrid"><div><span className="kicker">Site as proof</span><h2>Этот сайт не говорит,<br/><em>что мы умеем AI.</em><br/>Он это показывает.</h2><p>Source/static parity, privacy без trackers, hashed CSP, runtime smoke, release manifest и byte-exact reconstruction. Это реальные гейты проекта, а не декоративные бейджи.</p><div className="proofHomeActions"><Link className="button buttonLight" href="/proof">Открыть Proof Lab →</Link><a className="button buttonGhost" href="/_release.json">Release manifest ↗</a></div></div><div className="proofHomeBoard" aria-label="Проверки release-системы"><div className="proofBoardTop"><span>AI SKILL LAB / BUILD PROOF</span><b>● LOCAL VERIFIED</b></div><div className="proofBoardRows"><p><span>01</span><b>broken_links</b><strong className="ok">0 / PASS</strong></p><p><span>02</span><b>public_forms + trackers</b><strong className="ok">0 / PASS</strong></p><p><span>03</span><b>client_runtime</b><strong>SMOKE TESTED</strong></p><p><span>04</span><b>script_policy</b><strong>HASHED CSP</strong></p><p><span>05</span><b>release_payload</b><strong>SHA-256</strong></p><p><span>06</span><b>reconstruction</b><strong className="ok">BYTE-EXACT</strong></p></div><div className="proofBoardFoot"><span>DEFINE</span><i/><span>BUILD</span><i/><span>VERIFY</span><i/><span>SHIP</span></div></div></div></section>
+        <section className="proofHome"><div className="shell proofHomeGrid"><div><span className="kicker">01 / Site as proof</span><h2>Этот сайт не говорит,<br/><em>что мы умеем AI.</em><br/>Он это показывает.</h2><p>Source/static parity, privacy без trackers, hashed CSP, runtime smoke, release manifest и byte-exact reconstruction. Это реальные гейты проекта, а не декоративные бейджи.</p><div className="proofHomeActions"><Link className="button buttonLight" href="/proof">Открыть Proof Lab →</Link><a className="button buttonGhost" href="/_release.json">Release manifest ↗</a></div></div><div className="proofHomeBoard" aria-label="Проверки release-системы"><div className="proofBoardTop"><span>AI SKILL LAB / BUILD PROOF</span><b>● LOCAL VERIFIED</b></div><div className="proofBoardRows"><p><span>01</span><b>broken_links</b><strong className="ok">0 / PASS</strong></p><p><span>02</span><b>public_forms + trackers</b><strong className="ok">0 / PASS</strong></p><p><span>03</span><b>client_runtime</b><strong>SMOKE TESTED</strong></p><p><span>04</span><b>script_policy</b><strong>HASHED CSP</strong></p><p><span>05</span><b>release_payload</b><strong>SHA-256</strong></p><p><span>06</span><b>reconstruction</b><strong className="ok">BYTE-EXACT</strong></p></div><div className="proofBoardFoot"><span>DEFINE</span><i/><span>BUILD</span><i/><span>VERIFY</span><i/><span>SHIP</span></div></div></div></section>
 
         <section className="section" id="programs">
           <div className="shell">
             <div className="sectionHead splitHead">
               <div>
-                <span className="kicker">5 траекторий</span>
+                <span className="kicker">02 / CHOOSE A TRACK</span>
                 <h2>Один AI.<br />Совсем разные задачи.</h2>
               </div>
               <p>Не продаём одинаковую программу всем. Сначала определяем, какой результат должен появиться после обучения, затем собираем маршрут.</p>
@@ -132,7 +132,7 @@ export default function Home() {
         <section className="section sectionInk">
           <div className="shell">
             <div className="sectionHead splitHead sectionHeadLight">
-              <div><span className="kicker kickerLight">AI Capability Matrix</span><h2>Не набор промптов.<br /><em>Система от входа до результата.</em></h2></div>
+              <div><span className="kicker kickerLight">03 / AI Capability Matrix</span><h2>Не набор промптов.<br /><em>Система от входа до результата.</em></h2></div>
               <p>Четыре типа работы, которые мы учимся превращать в управляемый процесс. AI ускоряет слой сборки; человек владеет критериями, проверкой и выпуском.</p>
             </div>
             <div className="outcomeGrid">
@@ -204,7 +204,7 @@ export default function Home() {
         <section className="section" id="pricing">
           <div className="shell">
             <div className="sectionHead splitHead">
-              <div><span className="kicker">Форматы</span><h2>Можно проверить формат<br />до большого пакета</h2></div>
+              <div><span className="kicker">04 / ENGAGE</span><h2>Можно проверить формат<br />до большого пакета</h2></div>
               <p>Стоимость относится к персональному обучению 1-на-1. Детские и подростковые пакеты имеют собственные страницы.</p>
             </div>
             <div className="pricingGrid">

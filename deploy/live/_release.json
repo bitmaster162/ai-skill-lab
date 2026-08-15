@@ -28,8 +28,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "0b81e75cfcd5056938c3b99317e13d7a87cb1f1b2d2db147f56f4dd0960ae5ad",
-      "size": 17569
+      "sha256": "7830ea6df29bd03078a99ef7d20cf75d046dd02320ef78001941bb99cd799df2",
+      "size": 18694
     },
     {
       "path": "en/about.html",
@@ -138,8 +138,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "ca31e2e1d5971eea41cbf685b838e4880b57a4ec4c8327077bd46599fe68b568",
-      "size": 21679
+      "sha256": "5dfbcdb2c43e95faa81892698e2de3390316a94f37f77e6c130299a4c36f3ccd",
+      "size": 22809
     },
     {
       "path": "kids.html",
@@ -228,8 +228,8 @@
     },
     {
       "path": "style.css",
-      "sha256": "49bc7086501153529844e0c0a1f33ac53a41d85d8c03ba7760a1a7985a36e662",
-      "size": 35016
+      "sha256": "4e33af94ae7d20ca5830b97bacb4337e0276e9ab11f87b832fe64ff0c6b95461",
+      "size": 36671
     },
     {
       "path": "teens.html",
@@ -243,11 +243,11 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "9599d43f8c35a030d70d3758253ea387c8ba8ff4e9e0af2f84f6ad7ff2314304",
+      "sha256": "f2bcf49b492c13d5af30518aad8bbeb60b2f13162e8d4bd8c5c2c2f5ffac2747",
       "size": 2232
     }
   ],
-  "payload_sha256": "1b81f2394c1fbde274d17411dd5c41f90766e7a9690bb4f3861b8fad45d42421",
-  "release_id": "R64",
+  "payload_sha256": "4627c8e9df6813ddb612478e02ce12eefaf4b33861fbb04440698bb110b1db62",
+  "release_id": "R65",
   "schema": "ai-skill-lab.static-release.v1"
 }
