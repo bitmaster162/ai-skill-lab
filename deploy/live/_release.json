@@ -23,8 +23,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "ee314c80b9b173ca4bcf2946c1b8bf2b1c2b3c6797b3c37b312c25eba3582e0f",
-      "size": 13301
+      "sha256": "74db04df6c15531ef6732fc7bd1b8223f7069c2f8091f2cd442e656d2e205d41",
+      "size": 13294
     },
     {
       "path": "en/about.html",
@@ -48,8 +48,8 @@
     },
     {
       "path": "en/kids.html",
-      "sha256": "6db45329347ee4a7b8ef4af918583d6fd2344ebebb4966c8fd9a4470a4dd5591",
-      "size": 8274
+      "sha256": "2f05c403f5a12e81e67580698b4580c9bc8d9f34a9c05b8f13eeb3d34d9a6c44",
+      "size": 8267
     },
     {
       "path": "en/matcher.html",
@@ -103,8 +103,8 @@
     },
     {
       "path": "en/teens.html",
-      "sha256": "391522c1038888023688c85192179a6bcc693377d5a7ee683d9df3e626f2e688",
-      "size": 7408
+      "sha256": "3cc2e55874110444cd756e458135883f142eaa07cddf929bdbaf2bd0e3210523",
+      "size": 7401
     },
     {
       "path": "en/terms.html",
@@ -123,13 +123,13 @@
     },
     {
       "path": "index.html",
-      "sha256": "3c62b153a00a6957d00f5d873c521009309fefcff2d3951a44e7f0b4d53d6fe6",
-      "size": 16960
+      "sha256": "83b963679624c031b5102eb4308c2fdb85061da173c068f0394fb75594814990",
+      "size": 16955
     },
     {
       "path": "kids.html",
-      "sha256": "752701278036e20cb9ea88a76aa15810e00e611dbe066714057404b0fafd2a06",
-      "size": 10776
+      "sha256": "008b1f73661a3192ca4ab159c44b0006f092fd91ebf8d0f6878a266645339d99",
+      "size": 10767
     },
     {
       "path": "matcher.html",
@@ -208,8 +208,8 @@
     },
     {
       "path": "teens.html",
-      "sha256": "9cc335cce4e83c7bf8086976b5d3d8773f422ca6b6cd2ce55fb097cd0c964e9c",
-      "size": 8950
+      "sha256": "e4a9a7579fa09eeeeeb9dc9adceb0f1af7882eb7a13645b7b8d3be248b6f3af6",
+      "size": 8945
     },
     {
       "path": "terms.html",
@@ -222,7 +222,7 @@
       "size": 1530
     }
   ],
-  "payload_sha256": "e5a204538e2d14fa59a926e5036dad03ab3ff1abedb4a6cc0178b0dda868251f",
-  "release_id": "R46",
+  "payload_sha256": "1e6d56fcd605a717e264fb6c2a4b89915e9809966b4c0114ca3a4f3ae483aade",
+  "release_id": "R47",
   "schema": "ai-skill-lab.static-release.v1"
 }

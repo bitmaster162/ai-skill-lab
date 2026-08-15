@@ -45,6 +45,7 @@ def main()->int:
       ('start_runtime',['node','scripts/check_start_runtime.mjs']),
       ('commercial_parity',['python','scripts/check_commercial_parity.py']),
       ('contact_funnel',['python','scripts/check_contact_funnel.py']),
+      ('cta_semantics',['python','scripts/check_cta_semantics.py']),
       ('navigation_parity',['python','scripts/check_navigation_parity.py']),
       ('static_accessibility',['python','scripts/check_static_accessibility.py']),
       ('client_privacy',['python','scripts/check_client_privacy.py']),
