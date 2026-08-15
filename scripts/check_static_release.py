@@ -61,6 +61,10 @@ def main():
                 u=urlparse(href); target_route=u.path.rstrip('/') or '/'; anchor=u.fragment
             target=page_for_route(target_route,routes)
             if not target:
+                candidate=(LIVE / u.path.lstrip('/')).resolve() if not href.startswith('#') else None
+                live_root=LIVE.resolve()
+                if candidate is not None and candidate.is_file() and (candidate == live_root or live_root in candidate.parents):
+                    continue
                 problems.append(f'{route}: missing route {href}')
                 continue
             if anchor and anchor not in parsed.get(target_route, PageParser()).anchors:

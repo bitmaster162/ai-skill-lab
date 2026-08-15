@@ -1,5 +1,5 @@
 {
-  "file_count": 44,
+  "file_count": 46,
   "files": [
     {
       "path": "404.html",
@@ -23,8 +23,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "74db04df6c15531ef6732fc7bd1b8223f7069c2f8091f2cd442e656d2e205d41",
-      "size": 13294
+      "sha256": "b7280f2c8ecd2d66e2a3ea77989ff00ff2331ca6610da4c14e1981e4194e6833",
+      "size": 14643
     },
     {
       "path": "en/about.html",
@@ -92,6 +92,11 @@
       "size": 6631
     },
     {
+      "path": "en/proof.html",
+      "sha256": "fb087f87c8387db84032685f063037ab75435ee67fd93fa78100e00de86c62ba",
+      "size": 12427
+    },
+    {
       "path": "en/safety.html",
       "sha256": "df7850bbf989eee6646507ca98a27079f4d06b3b58a0da54ba66b94397749cce",
       "size": 5392
@@ -123,8 +128,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "83b963679624c031b5102eb4308c2fdb85061da173c068f0394fb75594814990",
-      "size": 16955
+      "sha256": "5eea47ed3b2bff3f82369879d3bc09ec16b26f033bb87bb127ba1d305a99baae",
+      "size": 18402
     },
     {
       "path": "kids.html",
@@ -177,6 +182,11 @@
       "size": 8297
     },
     {
+      "path": "proof.html",
+      "sha256": "f891b6df25201eadf62c8ad7d1e1b077a19372dbd00b96511b8128336031a21a",
+      "size": 15355
+    },
+    {
       "path": "robots.txt",
       "sha256": "ab7ab25e913aa90086e91785ef4517de7160bd0a081c776a71bd875c5414d071",
       "size": 76
@@ -193,8 +203,8 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "a0f64dc9774f54e4cd7f898408e27df7be96677c43134511c504a26b68ae2087",
-      "size": 2357
+      "sha256": "de6202103e6a3bf57d825f2020c1e23ca03acb0f245381a7815d9209a7849d93",
+      "size": 2480
     },
     {
       "path": "start.html",
@@ -203,8 +213,8 @@
     },
     {
       "path": "style.css",
-      "sha256": "ec24fb295fd2cf6ecd7af5bec4aa0396232a6f4f225baa3f0c8e8db8e95728b5",
-      "size": 21351
+      "sha256": "b282fc5776e851b3cf224f5ef688f29210fd932fcf5876df183798ffccc13686",
+      "size": 30255
     },
     {
       "path": "teens.html",
@@ -218,11 +228,11 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "fa5b5fd00488f4c427ff9d270b9562aae7b9b4ac8d9664f4d3c242f5a9b420f3",
-      "size": 1530
+      "sha256": "cf4cc5edadd30956ef9dcd398139e8cb7664ecb895343f694dde53b59aef35aa",
+      "size": 1638
     }
   ],
-  "payload_sha256": "1e6d56fcd605a717e264fb6c2a4b89915e9809966b4c0114ca3a4f3ae483aade",
-  "release_id": "R49",
+  "payload_sha256": "4a6612134ca3d18c511b4248a01f158b939841c04eb66ef29f0320dd268e1941",
+  "release_id": "R50",
   "schema": "ai-skill-lab.static-release.v1"
 }

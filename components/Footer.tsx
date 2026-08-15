@@ -27,6 +27,7 @@ export function Footer({ locale = "ru" }: { locale?: Locale }) {
           <Link href={`${base}/parents`}>{en ? "For parents" : "Родителям"}</Link>
           <Link href={`${base}/faq`}>FAQ</Link>
           <Link href={`${base}/matcher`}>{en ? "Program matcher" : "Подбор программы"}</Link>
+          <Link href={`${base}/proof`}>Proof Lab</Link>
           <Link href={`${base}/start`}>{en ? "Start" : "Начать"}</Link>
           <Link href={`${base}/personal`}>{en ? "Adults" : "Взрослым"}</Link>
           <Link href={`${base}/business`}>{en ? "Business" : "Бизнес"}</Link>

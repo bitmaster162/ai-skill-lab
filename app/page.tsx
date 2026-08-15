@@ -118,6 +118,8 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="proofHome"><div className="shell proofHomeGrid"><div><span className="kicker">Site as proof</span><h2>Этот сайт не говорит,<br/><em>что мы умеем AI.</em><br/>Он это показывает.</h2><p>Source/static parity, privacy без trackers, hashed CSP, runtime smoke, release manifest и byte-exact reconstruction. Это реальные гейты проекта, а не декоративные бейджи.</p><div className="proofHomeActions"><Link className="button buttonLight" href="/proof">Открыть Proof Lab →</Link><a className="button buttonGhost" href="/_release.json">Release manifest ↗</a></div></div><div className="proofHomeBoard" aria-label="Проверки release-системы"><div className="proofBoardTop"><span>AI SKILL LAB / BUILD PROOF</span><b>● LOCAL VERIFIED</b></div><div className="proofBoardRows"><p><span>01</span><b>broken_links</b><strong className="ok">0 / PASS</strong></p><p><span>02</span><b>public_forms + trackers</b><strong className="ok">0 / PASS</strong></p><p><span>03</span><b>client_runtime</b><strong>SMOKE TESTED</strong></p><p><span>04</span><b>script_policy</b><strong>HASHED CSP</strong></p><p><span>05</span><b>release_payload</b><strong>SHA-256</strong></p><p><span>06</span><b>reconstruction</b><strong className="ok">BYTE-EXACT</strong></p></div><div className="proofBoardFoot"><span>DEFINE</span><i/><span>BUILD</span><i/><span>VERIFY</span><i/><span>SHIP</span></div></div></div></section>
+
         <section className="section" id="programs">
           <div className="shell">
             <div className="sectionHead splitHead">
