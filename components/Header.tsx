@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
+import { LabCommand } from "./LabCommand";
 
 type Locale = "ru" | "en";
 
@@ -60,6 +61,7 @@ export function Header({ contactHref, locale = "ru", alternateHref }: HeaderProp
         </nav>
         <div className="headerActions">
           <Link className="langSwitch" href={`${base}/proof`} aria-label="Proof Lab">LAB</Link>
+          <LabCommand locale={locale} />
           <Link className="langSwitch" href={alternate}>{t.lang}</Link>
           <Link className="button buttonSmall buttonGhost headerCta" href={contact}>{t.cta}</Link>
           <details className="mobileMenu">
