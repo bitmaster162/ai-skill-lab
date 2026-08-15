@@ -247,3 +247,6 @@ button { cursor: pointer; }
 
 /* R29 matcher no-JS fallback */
 .matcherNoScript{margin:18px 0 24px;border:1px solid #d8dde0;border-radius:20px;padding:22px;background:#fff}.matcherNoScript strong{display:block;font-size:18px;letter-spacing:-.02em}.matcherNoScript p{color:#687079;line-height:1.6;margin:8px 0 0}
+
+/* R31 Start no-JS fallback */
+.briefNoScript{margin:0 0 24px;border:1px solid #d8dde0;border-radius:18px;padding:20px;background:#fff}.briefNoScript strong{display:block;font-size:17px}.briefNoScript p{color:#687079;line-height:1.6;margin:8px 0 16px}
