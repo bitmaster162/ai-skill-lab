@@ -38,6 +38,7 @@ def main()->int:
       ('parent_route_parity',['python','scripts/check_parent_route_parity.py']),
       ('trust_route_parity',['python','scripts/check_trust_route_parity.py']),
       ('business_decision_gate',['python','scripts/check_business_decision_gate.py']),
+      ('build_story',['python','scripts/check_build_story.py']),
       ('proof_route',['python','scripts/check_proof_route.py']),
       ('security_headers',['python','scripts/check_security_headers.py']),
       ('static_performance',['python','scripts/check_static_performance.py']),

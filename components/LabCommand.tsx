@@ -19,7 +19,8 @@ const copy = {
       ["03", "Pilot Simulator", "/business#pilot-simulator", "BUSINESS"],
       ["04", "Program Matcher", "/matcher", "MATCH"],
       ["05", "AI Challenge", "/challenge", "SYSTEM"],
-      ["06", "Start", "/start", "START"],
+      ["06", "Build Log", "/build", "PROVENANCE"],
+      ["07", "Start", "/start", "START"],
     ],
   },
   en: {
@@ -34,7 +35,8 @@ const copy = {
       ["03", "Pilot Simulator", "/en/business#pilot-simulator", "BUSINESS"],
       ["04", "Program Matcher", "/en/matcher", "MATCH"],
       ["05", "AI Challenge", "/en/challenge", "SYSTEM"],
-      ["06", "Start", "/en/start", "START"],
+      ["06", "Build Log", "/en/build", "PROVENANCE"],
+      ["07", "Start", "/en/start", "START"],
     ],
   },
 } as const;

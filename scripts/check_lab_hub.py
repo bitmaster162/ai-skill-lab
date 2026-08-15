@@ -8,7 +8,7 @@ for rel,en in surfaces:
  for marker in ['Live demo surfaces' if rel.startswith('app/') else 'LIVE DEMO SURFACES','Workflow Lab','Brief Compiler','Project Studio','AI Pilot Simulator']:
   checks+=1
   if marker.lower() not in text.lower():errors.append(f'{rel}: missing {marker}')
- expected=['#lab','#brief-compiler','/en/projects' if en else '/projects','/en/business#pilot-simulator' if en else '/business#pilot-simulator']
+ expected=['#lab','#brief-compiler','/en/projects' if en else '/projects','/en/business#pilot-simulator' if en else '/business#pilot-simulator','/en/build' if en else '/build']
  for href in expected:
   checks+=1
   if href not in text:errors.append(f'{rel}: missing {href}')
