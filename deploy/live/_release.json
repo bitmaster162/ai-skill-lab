@@ -43,8 +43,8 @@
     },
     {
       "path": "en/faq.html",
-      "sha256": "c3d53214531c67f0bd6555ac24650bdc17a3d9b31943cc56fdc398e51f82c611",
-      "size": 6133
+      "sha256": "4563e48e6c89aa8ee01a85ef0ce2344b5129375ae3efcefdeafacc3f455508a3",
+      "size": 6413
     },
     {
       "path": "en/kids.html",
@@ -78,8 +78,8 @@
     },
     {
       "path": "en/pricing.html",
-      "sha256": "fc2189f36c7cd6d513e63d2b2ff5c96819aa57e06ee4d2b5d28f1aa20534662d",
-      "size": 6780
+      "sha256": "ae6e141aff57f9c1c7909ec2707e0d469d1714ce4cfdc9d5059bce833712ad99",
+      "size": 6921
     },
     {
       "path": "en/privacy.html",
@@ -113,8 +113,8 @@
     },
     {
       "path": "faq.html",
-      "sha256": "fee77dda11f5aa99e592b650f1bea894dc656aabffa4c0715e7189c2c0ca5da1",
-      "size": 7794
+      "sha256": "59d7475f9c9c3f25ee4b1a2ff75068197ded9c56b4914ffd974e8df1504bbfb7",
+      "size": 8246
     },
     {
       "path": "favicon.svg",
@@ -163,8 +163,8 @@
     },
     {
       "path": "pricing.html",
-      "sha256": "128de3c79ef5842ca5cc78a8327284df25fe68538f7255a8da010fbc514b9363",
-      "size": 8219
+      "sha256": "07012fa1d2a82c7a14405f9cc182567bbd43253af8d845444393ba314462c407",
+      "size": 8445
     },
     {
       "path": "privacy.html",
@@ -222,7 +222,7 @@
       "size": 1530
     }
   ],
-  "payload_sha256": "7cb0267e361eada0cbd22f6d1930e71d184b79100c4c71062d0e1138eee6350e",
-  "release_id": "R39",
+  "payload_sha256": "f9a5d97637ca10ca4b46beefb2c48dc0fd426bbe13fbb677078c7e7e63e07e54",
+  "release_id": "R40",
   "schema": "ai-skill-lab.static-release.v1"
 }

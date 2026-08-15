@@ -5,8 +5,8 @@ import re, sys
 ROOT=Path(__file__).resolve().parents[1]
 checks=0
 required={
- 'ru':['Что происходит после сообщения в Telegram?','Когда и на каких условиях происходит оплата?'],
- 'en':['What happens after I message on Telegram?','When do I pay, and on what terms?'],
+ 'ru':['Что происходит после сообщения в Telegram?','Когда и на каких условиях происходит оплата?','Сколько длится одно занятие?'],
+ 'en':['What happens after I message on Telegram?','When do I pay, and on what terms?','How long is one session?'],
 }
 for lang,static_rel,source_rel in [
  ('ru','deploy/live/faq.html','app/faq/page.tsx'),
@@ -16,7 +16,7 @@ for lang,static_rel,source_rel in [
     qs=[' '.join(x.get_text(' ',strip=True).replace('+','').split()) for x in soup.select('.faqlist details > summary, .faqList details > summary')]
     src=(ROOT/source_rel).read_text(encoding='utf-8')
     src_qs=re.findall(r'\["([^"]+\?)",\s*"',src)
-    if len(qs)!=10 or len(src_qs)!=10:
+    if len(qs)!=11 or len(src_qs)!=11:
         print(f'FAQ_COUNT_FAIL {lang} static={len(qs)} source={len(src_qs)}'); sys.exit(1)
     checks+=2
     if qs!=src_qs:
@@ -26,4 +26,4 @@ for lang,static_rel,source_rel in [
         if q not in qs:
             print(f'FAQ_REQUIRED_FAIL {lang} {q}'); sys.exit(1)
         checks+=1
-print(f'FAQ_PARITY_PASS checks={checks} questions_ru=10 questions_en=10')
+print(f'FAQ_PARITY_PASS checks={checks} questions_ru=11 questions_en=11')
