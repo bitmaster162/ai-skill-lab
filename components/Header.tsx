@@ -59,6 +59,7 @@ export function Header({ contactHref, locale = "ru", alternateHref }: HeaderProp
           <Link href={`${base}/faq`}>{t.faq}</Link>
         </nav>
         <div className="headerActions">
+          <Link className="langSwitch" href={`${base}/proof`} aria-label="Proof Lab">LAB</Link>
           <Link className="langSwitch" href={alternate}>{t.lang}</Link>
           <Link className="button buttonSmall buttonGhost headerCta" href={contact}>{t.cta}</Link>
           <details className="mobileMenu">

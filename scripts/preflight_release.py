@@ -51,6 +51,7 @@ def main()->int:
       ('capability_matrix',['python','scripts/check_capability_matrix.py']),
       ('pilot_simulator',['python','scripts/check_pilot_simulator.py']),
       ('pilot_simulator_runtime',['node','scripts/check_pilot_simulator_runtime.mjs']),
+      ('lab_discoverability',['python','scripts/check_lab_discoverability.py']),
       ('commercial_parity',['python','scripts/check_commercial_parity.py']),
       ('contact_funnel',['python','scripts/check_contact_funnel.py']),
       ('cta_semantics',['python','scripts/check_cta_semantics.py']),
