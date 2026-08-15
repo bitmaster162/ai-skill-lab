@@ -48,6 +48,7 @@ def main()->int:
       ('proof_runtime',['node','scripts/check_proof_runtime.mjs']),
       ('project_studio',['python','scripts/check_project_studio.py']),
       ('project_studio_runtime',['node','scripts/check_project_studio_runtime.mjs']),
+      ('capability_matrix',['python','scripts/check_capability_matrix.py']),
       ('commercial_parity',['python','scripts/check_commercial_parity.py']),
       ('contact_funnel',['python','scripts/check_contact_funnel.py']),
       ('cta_semantics',['python','scripts/check_cta_semantics.py']),

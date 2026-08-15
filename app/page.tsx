@@ -50,11 +50,11 @@ const programs = [
   },
 ];
 
-const outcomes = [
-  ["PERSONAL OS", "Собственный набор AI-процессов для работы, учёбы или личных задач."],
-  ["RESEARCH", "Исследование с источниками, проверкой фактов и структурированным выводом."],
-  ["AI AGENT", "Рабочий ассистент или автоматизация под конкретный повторяемый процесс."],
-  ["PORTFOLIO", "Законченный проект, который можно показать клиенту, школе, команде или родителю."],
+const capabilities = [
+  { title: "RESEARCH", input: "Размытый вопрос, много источников, противоречия.", ai: "Поиск вариантов, сравнение evidence, synthesis и карта неопределённости.", human: "Качество источников, спорные места, допущения и финальное решение.", ship: "Source-backed brief + source map + next action." },
+  { title: "BUILD", input: "Идея продукта, ассистента или внутреннего инструмента.", ai: "Спецификация, варианты UI/code, прототипирование и test scaffolding.", human: "Scope, продуктовые решения, QA, ограничения и release gate.", ship: "Working prototype + tests + known limits + handoff." },
+  { title: "AUTOMATE", input: "Повторяемый процесс, который отнимает время и внимание.", ai: "Декомпозиция, routing, transformations, шаблоны и glue-code.", human: "Permissions, failure modes, rollback, owner и acceptance criteria.", ship: "Workflow / agent + fallback + operating instructions." },
+  { title: "TEACH", input: "Навык, который человек хочет уметь применять самостоятельно.", ai: "Объяснение, упражнения, варианты, критика черновиков и практика.", human: "Понимание, авторство, фактчекинг и способность защитить решение.", ship: "Project + explanation + repeatable process + checklist." },
 ];
 
 const faq = [
@@ -147,12 +147,12 @@ export default function Home() {
         <section className="section sectionInk">
           <div className="shell">
             <div className="sectionHead splitHead sectionHeadLight">
-              <div><span className="kicker kickerLight">Что считается результатом</span><h2>Не «я посмотрел уроки».<br /><em>Я умею это делать.</em></h2></div>
-              <p>Финальный проект выбирается под цель ученика. Ниже — типы результатов программы, а не выдуманные отзывы или обещания заработка.</p>
+              <div><span className="kicker kickerLight">AI Capability Matrix</span><h2>Не набор промптов.<br /><em>Система от входа до результата.</em></h2></div>
+              <p>Четыре типа работы, которые мы учимся превращать в управляемый процесс. AI ускоряет слой сборки; человек владеет критериями, проверкой и выпуском.</p>
             </div>
             <div className="outcomeGrid">
-              {outcomes.map(([title, text], index) => (
-                <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>
+              {capabilities.map((item, index) => (
+                <article key={item.title}><span>0{index + 1}</span><h3>{item.title}</h3><p><b>INPUT</b> {item.input}</p><p><b>AI LAYER</b> {item.ai}</p><p><b>HUMAN GATE</b> {item.human}</p><p><b>SHIP</b> {item.ship}</p></article>
               ))}
             </div>
           </div>
