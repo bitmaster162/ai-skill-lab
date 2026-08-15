@@ -37,7 +37,7 @@ export default function KidsPage() {
               <p>Это инструмент, с которым ребёнок может придумывать, исследовать, создавать и — главное — учиться задавать хорошие вопросы и проверять ответы.</p>
               <div className="heroActions">
                 <Link className="button buttonLight" href="/start">Обсудить с преподавателем <ArrowIcon /></Link>
-                <Link className="textLink textLinkLight" href="#curriculum">Смотреть 10 занятий <ArrowIcon /></Link>
+                <Link className="textLink textLinkLight" href="#curriculum">Смотреть программу Creator <ArrowIcon /></Link>
               </div>
               <div className="heroProofRow heroProofLight"><span>ADULT CONTACT</span><span>PRIVACY FIRST</span><span>PROJECT-BASED</span></div>
             </div>
@@ -49,7 +49,7 @@ export default function KidsPage() {
                 <div className="boardCard bc3">CREATE<br /><b>→</b></div>
                 <div className="boardCenter">MY<br />AI<br />PROJECT</div>
               </div>
-              <div className="boardFoot"><span>10 LESSONS</span><span>REAL OUTPUT</span></div>
+              <div className="boardFoot"><span>CREATOR CORE · 10 LESSONS</span><span>REAL OUTPUT</span></div>
             </div>
           </div>
         </section>
@@ -80,7 +80,7 @@ export default function KidsPage() {
 
         <section className="section sectionMuted" id="curriculum">
           <div className="shell">
-            <div className="sectionHead"><span className="kicker">Программа</span><h2>10 занятий → 1 законченный проект</h2><p className="sectionSub">Темы адаптируются под возраст и интересы: от космоса и животных до игр, искусства, музыки или техники.</p></div>
+            <div className="sectionHead"><span className="kicker">Программа</span><h2>Creator: 10 занятий → 1 законченный проект</h2><p className="sectionSub">Это ядро Creator. Mini берёт ключевые вводные блоки и мини-проект; Studio добавляет 2 занятия на глубину и финальный проект. Темы адаптируются под возраст и интересы.</p></div>
             <div className="curriculumList">
               {lessons.map(([num, title, text]) => (
                 <article key={num}><span>{num}</span><h3>{title}</h3><p>{text}</p></article>

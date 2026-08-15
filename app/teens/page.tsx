@@ -52,7 +52,7 @@ export default function TeensPage() {
 
         <section className="section" id="teen-program">
           <div className="shell">
-            <div className="sectionHead splitHead"><div><span className="kicker">Программа</span><h2>10 модулей от AI literacy<br />до portfolio project</h2></div><p>Глубина зависит от стартового уровня. Сильный ученик быстрее переходит к коду и автоматизациям; новичок получает больше времени на базовую систему работы.</p></div>
+            <div className="sectionHead splitHead"><div><span className="kicker">Программа</span><h2>Карта из 10 модулей: от AI literacy<br />до portfolio project</h2></div><p>Модули — карта содержания, а не обещание «один модуль = одно занятие». Explorer выбирает ключевые блоки за 6 занятий; Portfolio проходит полное ядро за 10; Builder добавляет 2 занятия на техническую глубину и проект.</p></div>
             <div className="curriculumList teenCurriculum">
               {modules.map(([num, title, text]) => <article key={num}><span>{num}</span><h3>{title}</h3><p>{text}</p></article>)}
             </div>

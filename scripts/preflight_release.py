@@ -34,6 +34,7 @@ def main()->int:
       ('session_scope',['python','scripts/check_session_scope.py']),
       ('youth_policy_freshness',['python','scripts/check_youth_policy_freshness.py']),
       ('youth_route_parity',['python','scripts/check_youth_route_parity.py']),
+      ('curriculum_package_mapping',['python','scripts/check_curriculum_package_mapping.py']),
       ('business_decision_gate',['python','scripts/check_business_decision_gate.py']),
       ('security_headers',['python','scripts/check_security_headers.py']),
       ('static_performance',['python','scripts/check_static_performance.py']),
