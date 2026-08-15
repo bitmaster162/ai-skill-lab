@@ -223,6 +223,6 @@
     }
   ],
   "payload_sha256": "c2a8fa233e58f4b1216d0643db2301c8fc62ea9f09de81787fd4023589080fe6",
-  "release_id": "R36",
+  "release_id": "R37",
   "schema": "ai-skill-lab.static-release.v1"
 }
