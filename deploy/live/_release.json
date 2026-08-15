@@ -43,8 +43,8 @@
     },
     {
       "path": "en/faq.html",
-      "sha256": "fad411f07fee035bc8176356c2c63e2169a85c31205e1228afa392791587bfd3",
-      "size": 5525
+      "sha256": "c3d53214531c67f0bd6555ac24650bdc17a3d9b31943cc56fdc398e51f82c611",
+      "size": 6133
     },
     {
       "path": "en/kids.html",
@@ -113,8 +113,8 @@
     },
     {
       "path": "faq.html",
-      "sha256": "840c6cd5a44f5cf33fe8fd859dc646880844159c51547005f1ac8fa1c74a5e53",
-      "size": 6775
+      "sha256": "fee77dda11f5aa99e592b650f1bea894dc656aabffa4c0715e7189c2c0ca5da1",
+      "size": 7794
     },
     {
       "path": "favicon.svg",
@@ -222,7 +222,7 @@
       "size": 1530
     }
   ],
-  "payload_sha256": "fef7dc7bf1f18b78bc6e2764feeda3d8c0548bebac6766018835cefe162ed784",
-  "release_id": "R38",
+  "payload_sha256": "7cb0267e361eada0cbd22f6d1930e71d184b79100c4c71062d0e1138eee6350e",
+  "release_id": "R39",
   "schema": "ai-skill-lab.static-release.v1"
 }
