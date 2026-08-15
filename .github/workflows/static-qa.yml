@@ -25,6 +25,8 @@ jobs:
         run: python scripts/check_inline_scripts.py
       - name: Smoke-test matcher runtime
         run: node scripts/check_matcher_runtime.mjs
+      - name: Smoke-test Start brief copy
+        run: node scripts/check_start_runtime.mjs
       - name: Validate commercial facts parity
         run: python scripts/check_commercial_parity.py
       - name: Validate contact funnel
