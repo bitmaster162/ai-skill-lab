@@ -13,13 +13,13 @@
     },
     {
       "path": "business.html",
-      "sha256": "832b0c64e7488617297e65e3c16ce7b73e46b5e1d89e62833d8f7cff2d2d4173",
-      "size": 9194
+      "sha256": "9faaf7acdc1e7280b48eaa0a607f2016483f3b97402cdba3e82b13e6cf45bacc",
+      "size": 9166
     },
     {
       "path": "curriculum.html",
-      "sha256": "7d7b73def014477aa6f7865944957c335b2039cffed570fdc076f8286b9b6a92",
-      "size": 9842
+      "sha256": "c05a4683e6ece745e0154c842b2b813ad4e7cb5a73b9748b269455445dec817e",
+      "size": 9814
     },
     {
       "path": "en.html",
@@ -33,13 +33,13 @@
     },
     {
       "path": "en/business.html",
-      "sha256": "0389108fb5594f184236f0393e3e0c567cd151ccf4e4ffb2c06a5a59b160df7c",
-      "size": 7499
+      "sha256": "f665aae64b997d3dbba7b667bef66bae0d1ddad4e9bac38b51bb1d137f16eeda",
+      "size": 7471
     },
     {
       "path": "en/curriculum.html",
-      "sha256": "d47b3f4c966dd09c92349093f8d64744571d482d5761ad31c4e114e3f766d019",
-      "size": 7923
+      "sha256": "7cd18c6e47515d62ce9a304a5e0ffbee149be50c0342fe8097678cceb053bcab",
+      "size": 7895
     },
     {
       "path": "en/faq.html",
@@ -48,8 +48,8 @@
     },
     {
       "path": "en/kids.html",
-      "sha256": "55d1a13aa891b1f364cbf3e84a21eb274b68407c69ccc86a4fa78cfd82943909",
-      "size": 8111
+      "sha256": "0c7584747a234d944de53b5ff7800a9621c5816363399ef36fded58d5bc9a961",
+      "size": 8083
     },
     {
       "path": "en/matcher.html",
@@ -103,8 +103,8 @@
     },
     {
       "path": "en/teens.html",
-      "sha256": "7b9e8d917e1cb597a407b55f5896bc5c3045338a58489584078b02a57a388e9b",
-      "size": 6542
+      "sha256": "44eb4e64553eb2e298975785376262347889067f9e566b1414b461a4be9e4c97",
+      "size": 6514
     },
     {
       "path": "en/terms.html",
@@ -128,8 +128,8 @@
     },
     {
       "path": "kids.html",
-      "sha256": "451bd4ad8f35d42dd878c67b0907f4ae550048d13dfea81cc7b12081c2bbe11f",
-      "size": 10506
+      "sha256": "f50a2e136b78d5c8b459b8ad34bcaf14042b68b1119c61542fdf2198be83ba08",
+      "size": 10478
     },
     {
       "path": "matcher.html",
@@ -203,13 +203,13 @@
     },
     {
       "path": "style.css",
-      "sha256": "278de3649f4b44baea754c8108d067c476a96eb3c3df31f43bfc61841163aad2",
-      "size": 20955
+      "sha256": "00d73bfd5256bb6b06030008a2f9fc6ed5f8cadbd84eead677c40328d360c113",
+      "size": 21046
     },
     {
       "path": "teens.html",
-      "sha256": "9bedb824d8c6651b93bed4f56cd563bb6136181a89f0df3b081f59a7b62c839a",
-      "size": 8331
+      "sha256": "68f02eda894c0a3199ce6802847c2df0040655dc1b17f07b4a162a300e98412d",
+      "size": 8303
     },
     {
       "path": "terms.html",
@@ -218,11 +218,11 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "df4620c08a95f63d5115dfbd612ea842ea6d34a338a2c81779774548ccde3830",
-      "size": 858
+      "sha256": "f85afbe154b9ab634050e69923bf99b3f5cfef036ac0e68e0a00536d8f29b0ca",
+      "size": 1530
     }
   ],
-  "payload_sha256": "1d3ad42d9462a6985a929aeef81849b0bd358f49eee0d514f79932c974ac529e",
-  "release_id": "R32",
+  "payload_sha256": "1b74f40deb5b35245367172b4a9a9b5b0309b53ad310fe8edfa870b3f17115c1",
+  "release_id": "R33",
   "schema": "ai-skill-lab.static-release.v1"
 }
