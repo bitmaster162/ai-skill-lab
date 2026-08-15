@@ -13,8 +13,8 @@
     },
     {
       "path": "business.html",
-      "sha256": "ad1b7fc7fbca297dfd3860c7283310edc3a9b6467fa552e0db5c6e1775a4949a",
-      "size": 10582
+      "sha256": "fc864c95fda8ed3ee1a14bab9383eb09ce135d235a485af9ee030f712160169f",
+      "size": 18648
     },
     {
       "path": "curriculum.html",
@@ -33,8 +33,8 @@
     },
     {
       "path": "en/business.html",
-      "sha256": "3aa900ca087bdcb577afb9cc625408ea3a026fc4df433fbb8b2cefe15e259bd7",
-      "size": 8495
+      "sha256": "837b06c158c8ffe553968c13724ce2fa219479a0ea5bb9bc60ef60129e3dda58",
+      "size": 14420
     },
     {
       "path": "en/curriculum.html",
@@ -228,11 +228,11 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "c17aa7ec488abf0041457b5a15b3095051f4734a9287fea707834daeaa8644ed",
-      "size": 1692
+      "sha256": "bb18e4a6995cdc40296602259c835ff55231523efb15882b655310e4f19e450c",
+      "size": 1800
     }
   ],
-  "payload_sha256": "dca00d17e7745ba03095993e67294c4338d3d0c56cda4085302b2bcc0d2e332e",
-  "release_id": "R52",
+  "payload_sha256": "040931b584baa9bb13973010b9da12dc0225210f9ac342a5739d7107335c3795",
+  "release_id": "R53",
   "schema": "ai-skill-lab.static-release.v1"
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { PilotSimulator } from "@/components/PilotSimulator";
 
 export const metadata: Metadata = {
   title: "AI for business",
@@ -46,6 +47,8 @@ export default function Page() {
       <section className="section"><div className="shell"><span className="kicker">Engagements</span><h2>Three ways to start</h2><div className="programGrid">{offers.map(([n,t,x])=><article className="programCard" key={n}><span className="cardIndex">{n}</span><div className="cardSpacer"/><h3>{t}</h3><p>{x}</p></article>)}</div></div></section>
 
       <section className="section sectionMuted"><div className="shell"><div className="sectionHead"><span className="kicker">Implementation pilot</span><h2>One workflow → a testable operating model.</h2><p className="sectionSub">The pilot is deliberately bounded. The goal is to prove that a process can be improved safely and repeatedly, not to produce a flashy demo nobody can maintain.</p></div><div className="steps">{pilot.map(([n,t,d])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{d}</p></article>)}</div></div></section>
+
+      <section className="section sectionInk"><div className="shell"><div className="sectionHead sectionHeadLight"><span className="kicker kickerLight">AI Pilot Simulator</span><h2>Scope the process before<br/>you fall in love with the demo.</h2><p>Choose a common workflow pattern. This deterministic local demo shows the candidate boundary, AI role, human checkpoint, success signal and the condition that should stop the pilot.</p></div><PilotSimulator locale="en"/></div></section>
 
       <section className="section"><div className="shell parentGrid"><div className="parentCard"><span className="kicker">Good candidate</span><h2>Where a pilot makes sense</h2><ul className="checkList checkDark">{good.map((x)=><li key={x}>{x}</li>)}</ul></div><div className="parentCard parentDark"><span className="kicker kickerLight">Stop signals</span><h2>Where another analysis comes first</h2><ul className="checkList">{bad.map((x)=><li key={x}>{x}</li>)}</ul></div></div></section>
 
