@@ -265,3 +265,21 @@ button { cursor: pointer; }
 
 /* R63 — visual system v3 */
 ::selection{background:var(--acid);color:#111}.siteHeader:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--acid),transparent);opacity:.22}.hero:before{content:"";position:absolute;inset:0;background-image:linear-gradient(#11108 1px,transparent 1px),linear-gradient(90deg,#11108 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(#0005,transparent 78%);pointer-events:none}.eyebrow,.heroProofRow span{background:rgba(255,255,255,.65);backdrop-filter:blur(8px)}.logoMark{box-shadow:inset 0 0 0 1px #fff1,0 10px 26px #1112}.button{transition:transform .18s ease,box-shadow .18s ease,background .18s ease}.button:hover{transform:translateY(-2px);box-shadow:0 12px 32px #1112}.button:active{transform:translateY(0)}.heroVisual{box-shadow:0 30px 80px #1113,inset 0 0 0 1px #fff08}.node{transition:background .15s ease,color .15s ease,border-color .15s ease,transform .15s ease}.node:hover{transform:translateY(-1px);border-color:#69727b}.programCard:hover{border-color:#b8c0b0}.projectStudioCard{transition:background .18s ease}.projectStudioCard:hover{background:#fff}.siteFooter{background:#0d1014;color:#8f98a1;border-top:1px solid #262c32}.siteFooter a:hover{color:var(--acid)}
+/* R64 — responsible motion */
+@keyframes labGridDrift{0%{background-position:0 0}100%{background-position:32px 18px}}
+@keyframes labOrbA{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-14px,10px,0) scale(1.04)}}
+@keyframes labOrbB{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(16px,-8px,0) scale(.97)}}
+@keyframes labCoreFloat{0%,100%{translate:0 0}50%{translate:0 -5px}}
+@keyframes labSignal{0%,100%{opacity:1}50%{opacity:.62}}
+@media (prefers-reduced-motion: no-preference) {
+  .hero:before { animation: labGridDrift 18s linear infinite alternate; }
+  .orbOne { animation: labOrbA 9s ease-in-out infinite alternate; }
+  .orbTwo { animation: labOrbB 11s ease-in-out infinite alternate; }
+  .coreCenter { animation: labCoreFloat 5.5s ease-in-out infinite; }
+  .livePill { animation: labSignal 2.6s ease-in-out infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .button,.node,.programCard,.projectStudioCard,.projectFilter,.proofLabTab { transition: none !important; }
+  .hero:before,.orbOne,.orbTwo,.coreCenter,.livePill { animation: none !important; }
+}
