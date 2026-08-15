@@ -93,8 +93,8 @@
     },
     {
       "path": "en/proof.html",
-      "sha256": "d7c4e12514ab831fac0fa139ce0ae1210f5e544778cdf2b65fa5da85a005eaae",
-      "size": 14856
+      "sha256": "70caef799ed9962e707fcc805981a8c8506dc6b1a3626c69592014d58b9b2f8d",
+      "size": 20921
     },
     {
       "path": "en/safety.html",
@@ -188,8 +188,8 @@
     },
     {
       "path": "proof.html",
-      "sha256": "3bcf880832ecc20177e3cd3be8ba4842cfcedd7231c9633254b168e9b7c688df",
-      "size": 17946
+      "sha256": "a6975473490811ae65077f9f35cc40ff56bc84757d33124e7297a81bdf3540d4",
+      "size": 24556
     },
     {
       "path": "robots.txt",
@@ -233,11 +233,11 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "9731b0e8fef8dc64b5d2b0a9578716aa741612a69f80075b985dbc9094b22730",
-      "size": 1908
+      "sha256": "fa18b3665b40d59e8bc54ce88f90884c0ae3ea03a348c1cc574382d3ca8e3f81",
+      "size": 2016
     }
   ],
-  "payload_sha256": "f4bef0136d4b58ad290ad3dd8ccbacca2f9c0705ccb2b345a7709452ea8362cf",
-  "release_id": "R57",
+  "payload_sha256": "7d24ef1e5a54858add682988c17416880dcc8f04dad94befe19964721977b260",
+  "release_id": "R58",
   "schema": "ai-skill-lab.static-release.v1"
 }

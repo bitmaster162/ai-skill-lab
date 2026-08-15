@@ -46,6 +46,8 @@ def main()->int:
       ('matcher_runtime',['node','scripts/check_matcher_runtime.mjs']),
       ('start_runtime',['node','scripts/check_start_runtime.mjs']),
       ('proof_runtime',['node','scripts/check_proof_runtime.mjs']),
+      ('brief_compiler',['python','scripts/check_brief_compiler.py']),
+      ('brief_compiler_runtime',['node','scripts/check_brief_compiler_runtime.mjs']),
       ('project_studio',['python','scripts/check_project_studio.py']),
       ('project_studio_runtime',['node','scripts/check_project_studio_runtime.mjs']),
       ('capability_matrix',['python','scripts/check_capability_matrix.py']),
