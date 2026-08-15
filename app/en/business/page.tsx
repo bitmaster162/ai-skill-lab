@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "AI for business",
   description: "Practical AI enablement and workflow pilots for founders and teams: process map, one testable prototype, QA, ownership and handoff.",
   alternates: { canonical: "/en/business", languages: { ru: "/business", en: "/en/business" } },
+  twitter: { card: "summary_large_image", title: "AI for business", description: "Practical AI enablement and workflow pilots for founders and teams: process map, one testable prototype, QA, ownership and handoff.", images: ["/opengraph-image"] },
 };
 
 const offers = [

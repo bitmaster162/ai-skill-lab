@@ -21,6 +21,8 @@ jobs:
           python-version: '3.12'
       - name: Validate static release
         run: python scripts/check_static_release.py
+      - name: Validate search metadata
+        run: python scripts/check_search_metadata.py
       - name: Validate inline client scripts
         run: python scripts/check_inline_scripts.py
       - name: Smoke-test matcher runtime

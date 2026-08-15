@@ -13,8 +13,8 @@
     },
     {
       "path": "business.html",
-      "sha256": "a0acc315f2cbab35069dc93e2e5c7f6ebdaec96a239b62069feb3a403784346c",
-      "size": 8778
+      "sha256": "832b0c64e7488617297e65e3c16ce7b73e46b5e1d89e62833d8f7cff2d2d4173",
+      "size": 9194
     },
     {
       "path": "curriculum.html",
@@ -33,8 +33,8 @@
     },
     {
       "path": "en/business.html",
-      "sha256": "7aa656b56282799397cbc5656405555c458ab06816cda41effaffa087ddeda0c",
-      "size": 7178
+      "sha256": "0389108fb5594f184236f0393e3e0c567cd151ccf4e4ffb2c06a5a59b160df7c",
+      "size": 7499
     },
     {
       "path": "en/curriculum.html",
@@ -53,8 +53,8 @@
     },
     {
       "path": "en/matcher.html",
-      "sha256": "ead8022ee5ab5371fef490bb83800bc26e3eee391dd16c391b5d4bdfd84db020",
-      "size": 11531
+      "sha256": "7f0696eef379da1fca3bc5d06bf91ed3d0da5eedcbc86c2ce4834339a3181ace",
+      "size": 11817
     },
     {
       "path": "en/method.html",
@@ -98,8 +98,8 @@
     },
     {
       "path": "en/start.html",
-      "sha256": "fa0655e7f1bbde38cc7f2be25715c30c8185023ad1046178b46a6c8fe1fce182",
-      "size": 7528
+      "sha256": "b425daf5bb9f1d52449b09c7419554fdef46201d85c66d3584138d4369a41acc",
+      "size": 7809
     },
     {
       "path": "en/teens.html",
@@ -133,8 +133,8 @@
     },
     {
       "path": "matcher.html",
-      "sha256": "1bacfc316abe479eeac56383f4c0cf7ed723240fe70d0ef5b084e80dea01362a",
-      "size": 13060
+      "sha256": "6222f54b2fef37b8ba772502041c54563dd8279925f0cf7840210f792cd39f93",
+      "size": 13461
     },
     {
       "path": "method.html",
@@ -198,8 +198,8 @@
     },
     {
       "path": "start.html",
-      "sha256": "8a71418a02c742607a4b6b81bc2c57000b1445924320320f9841d9f825f44d26",
-      "size": 9007
+      "sha256": "717f94f4ca983bbeb216834a25d5f69344f33f12eacd5c81b6e4784dc97577c6",
+      "size": 9386
     },
     {
       "path": "style.css",
@@ -222,7 +222,7 @@
       "size": 858
     }
   ],
-  "payload_sha256": "b0c98d6a51ea55f548edf6257f971ffad1a3f5ef23a7b7c71c0d6a2d338a7ecf",
-  "release_id": "LOCAL",
+  "payload_sha256": "1d3ad42d9462a6985a929aeef81849b0bd358f49eee0d514f79932c974ac529e",
+  "release_id": "R32",
   "schema": "ai-skill-lab.static-release.v1"
 }

@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Начать обучение",
   description: "Выберите тип запроса и отправьте короткий brief в Telegram: взрослый, ребёнок, подросток или business workflow.",
   alternates: { canonical: "/start", languages: { ru: "/start", en: "/en/start" } },
+  twitter: { card: "summary_large_image", title: "Начать обучение", description: "Выберите тип запроса и отправьте короткий brief в Telegram: взрослый, ребёнок, подросток или business workflow.", images: ["/opengraph-image"] },
 };
 
 const briefs = [

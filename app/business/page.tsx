@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "AI для бизнеса",
   description: "Практическое обучение AI и workflow-pilot для предпринимателей и команд: карта процесса, один проверяемый prototype, QA, ownership и handoff.",
   alternates: { canonical: "/business", languages: { ru: "/business", en: "/en/business" } },
+  twitter: { card: "summary_large_image", title: "AI для бизнеса", description: "Практическое обучение AI и workflow-pilot для предпринимателей и команд: карта процесса, один проверяемый prototype, QA, ownership и handoff.", images: ["/opengraph-image"] },
 };
 
 const offers = [
