@@ -59,6 +59,8 @@ def main()->int:
       ('lab_command_runtime',['node','scripts/check_lab_command_runtime.mjs']),
       ('hero_engine',['python','scripts/check_hero_engine.py']),
       ('hero_engine_runtime',['node','scripts/check_hero_engine_runtime.mjs']),
+      ('system_challenge',['python','scripts/check_system_challenge.py']),
+      ('system_challenge_runtime',['node','scripts/check_system_challenge_runtime.mjs']),
       ('commercial_parity',['python','scripts/check_commercial_parity.py']),
       ('contact_funnel',['python','scripts/check_contact_funnel.py']),
       ('cta_semantics',['python','scripts/check_cta_semantics.py']),

@@ -8,7 +8,7 @@ pages=[p for p in sorted(LIVE.rglob('*.html')) if p.name!='404.html']
 for p in pages:
     rel=p.relative_to(LIVE).as_posix();t=p.read_text(encoding='utf-8')
     en=rel=='en.html' or rel.startswith('en/')
-    expected=['/en/proof','/en/projects','/en/business#pilot-simulator','/en/matcher','/en/pricing','/en/start'] if en else ['/proof','/projects','/business#pilot-simulator','/matcher','/pricing','/start']
+    expected=['/en/proof','/en/projects','/en/business#pilot-simulator','/en/matcher','/en/challenge','/en/start'] if en else ['/proof','/projects','/business#pilot-simulator','/matcher','/challenge','/start']
     for token,count in [
         ('data-lab-command-open',1),('id="lab-command"',1),('data-lab-command-close',1),('src="/lab-command.js"',1),('aria-keyshortcuts="Control+K Meta+K"',1)
     ]:
@@ -24,7 +24,7 @@ for p in pages:
 
 src=(ROOT/'components'/'LabCommand.tsx').read_text(encoding='utf-8')
 header=(ROOT/'components'/'Header.tsx').read_text(encoding='utf-8')
-for marker in ['showModal()','event.metaKey || event.ctrlKey','aria-keyshortcuts="Control+K Meta+K"','Project Studio','Pilot Simulator','Program Matcher']:
+for marker in ['showModal()','event.metaKey || event.ctrlKey','aria-keyshortcuts="Control+K Meta+K"','Project Studio','Pilot Simulator','Program Matcher','AI Challenge']:
     checks+=1
     if marker not in src:errors.append(f'LabCommand.tsx: missing {marker}')
 checks+=1
