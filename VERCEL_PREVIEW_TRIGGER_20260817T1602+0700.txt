@@ -1,0 +1,6 @@
+AI Skill Lab R68 preview trigger only.
+Expected exact source HEAD: e5c4554516dbc61e139d15b2e08508b7c7360894
+Expected exact source tree: 7ced4f5e1f4fa17b86d8f8faf1eedf2744ed52ca
+Expected tar SHA-256: c6c62dd106ba63012dcc3be54a73c93f551148bbf56898039f094a4313efe9b3
+Expected static payload SHA-256: 569ce21a2db436332adb1133a856bb93ae773dd11c248d52af0943d8a22a7069
+Preview only. Main and production untouched.
