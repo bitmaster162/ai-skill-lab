@@ -26,11 +26,12 @@ body,.proofPage{background:var(--r69-paper);color:var(--r69-ink);font-family:Int
 .hero h1,.kidsHero h1,.teenHero h1,.proofHero h1,
 .sectionHead h2,.kidsBand h2,.contactSection h2,.parentCard h2,
 .safetyBandGrid h2,.familyConciergeGrid h2,.proofSplit h2,.proofHonesty h2{
-  font-family:Georgia,"Times New Roman",Times,serif;font-weight:600;letter-spacing:-.045em
+  font-family:Georgia,"Times New Roman",Times,serif;font-weight:600;letter-spacing:-.045em;text-wrap:balance
 }
 .hero h1,.kidsHero h1,.teenHero h1,.proofHero h1{line-height:.96;letter-spacing:-.052em}
 .hero h1 span{color:var(--r69-clay)}
 .sectionHead h2,.kidsBand h2,.contactSection h2,.parentCard h2,.safetyBandGrid h2,.familyConciergeGrid h2{line-height:1.03}
+.heroLead,.kidsHero p,.teenHero p,.sectionHead p,.sectionSub,.splitHead p,.proofHome p,.proofHero p,.contactSection p{text-wrap:pretty}
 
 /* Quiet public chrome. */
 .siteHeader{background:rgba(247,241,232,.92);border-color:var(--r69-rule)}
