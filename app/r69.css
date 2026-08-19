@@ -1,0 +1,157 @@
+/* R69 P0 — Trust-first warm editorial refinement.
+   Source-layer only. This file intentionally overrides R68 presentation without
+   changing routes, commercial facts, proof policy, runtime semantics or deploy artifacts. */
+
+:root{
+  --r69-paper:#f7f1e8;
+  --r69-paper-deep:#efe6da;
+  --r69-ink:#211b17;
+  --r69-muted:#70665e;
+  --r69-rule:#d8cec3;
+  --r69-clay:#a45133;
+  --r69-clay-soft:#ead7ca;
+  --r69-teal:#176f6b;
+  --r69-proof:#10211d;
+  --r69-proof-raised:#172c27;
+  --r69-proof-line:#2c443e;
+  --r69-proof-fg:#f5efe6;
+  --r69-proof-muted:#b8c4bf;
+  --r69-signal:#b9ff3f;
+}
+
+html{background:var(--r69-paper)}
+body{
+  background:var(--r69-paper);
+  color:var(--r69-ink);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  text-rendering:optimizeLegibility;
+}
+
+/* Editorial hierarchy: Cyrillic-safe system serif, no external font dependency. */
+.hero h1,.section h2,.program h3,.card h3,.agebox h3,.panel h3,.legal h2,
+.instructor h2,.faqgrid h2,.locationgrid h2,.cta h2{
+  font-family:Georgia,"Times New Roman",Times,serif;
+  font-weight:600;
+  letter-spacing:-.045em;
+}
+.hero h1{line-height:.98;letter-spacing:-.052em}
+.hero h1 span{color:var(--r69-clay)}
+.section h2{line-height:1.03}
+
+/* Warm public canvas + quieter chrome. */
+.nav{background:color-mix(in srgb,var(--r69-paper) 92%,transparent);border-color:var(--r69-rule)}
+.mark{background:var(--r69-ink);color:var(--r69-paper);border-radius:8px}
+.links{gap:22px}
+.links a{color:#4f463f}
+.btn{background:var(--r69-ink);color:var(--r69-paper);font-weight:760}
+.btn.ghost{background:transparent;color:var(--r69-ink);border-color:#c7baae}
+.btn.light{background:var(--r69-paper);color:var(--r69-ink)}
+.tag,.proofchips span,.chips span{border-color:var(--r69-rule);color:#665b52;background:#fbf7f1}
+
+.hero{padding-top:104px;padding-bottom:88px}
+.heroR6{background:
+  radial-gradient(circle at 88% 10%,#176f6b12,transparent 30%),
+  radial-gradient(circle at 12% 95%,#a4513310,transparent 28%),
+  var(--r69-paper)}
+.orbA,.orbB{opacity:.18}
+.lead,.intro,.panel p,.program p,.card p,.legal p,.legal li,.faqlist p{color:var(--r69-muted)}
+
+/* Signal acid becomes a status accent only. */
+.visualbar b,.outputs em{color:var(--r69-signal)}
+.label{background:var(--r69-clay-soft);color:var(--r69-ink)}
+.quote{border-left-color:var(--r69-clay)}
+.humanbadge{background:var(--r69-clay-soft);color:var(--r69-ink)}
+.program.acid,.card.acid,.agebox.acid{background:#f2e9dd;border-color:var(--r69-rule);color:var(--r69-ink)}
+.program.acid p,.card.acid p,.agebox.acid p{color:var(--r69-muted)}
+.skip{background:var(--r69-ink);color:var(--r69-paper)}
+
+/* Less SaaS-card repetition: ruled editorial groups and tighter radii. */
+.section{border-color:var(--r69-rule)}
+.trust{background:#fbf7f1;border-color:var(--r69-rule)}
+.trustgrid>div{border-color:var(--r69-rule)}
+.programgrid{gap:0;border-top:1px solid var(--r69-rule);border-bottom:1px solid var(--r69-rule)}
+.program,.card,.panel,.safe>div,.methodgrid article,.lesson{
+  border-color:var(--r69-rule);
+  border-radius:10px;
+  box-shadow:none;
+}
+.program{
+  background:transparent;
+  border:0;
+  border-right:1px solid var(--r69-rule);
+  border-radius:0;
+  min-height:300px;
+  padding:30px 28px;
+}
+.program:nth-child(3),.program:nth-child(5){border-right:0}
+.program:hover{transform:none;box-shadow:none;background:#fbf7f1}
+.program.darkcard{background:var(--r69-proof);border-color:var(--r69-proof);color:var(--r69-proof-fg)}
+.program.darkcard p{color:var(--r69-proof-muted)}
+.program.darkcard b{color:var(--r69-proof-fg)}
+
+.cards{gap:1px;background:var(--r69-rule);border:1px solid var(--r69-rule);border-radius:12px;overflow:hidden}
+.card{border:0;border-radius:0;background:#fbf7f1}
+.panel,.safe>div,.methodgrid article,.lesson{background:#fbf7f1}
+.muted{background:var(--r69-paper-deep)}
+.locationband{background:linear-gradient(135deg,#efe6da,#e5eeea)}
+.instructor{background:#f3ece2}
+
+/* Technical proof is contained, dark and explicit rather than spread everywhere. */
+.visual,.section.dark,.outputs,.proofHome,.cta{
+  background:var(--r69-proof);
+  color:var(--r69-proof-fg);
+}
+.visual{border:1px solid var(--r69-proof-line);border-radius:18px}
+.section.dark{border-color:var(--r69-proof)}
+.dark .intro,.dark .lead,.dark .safe ul,.outputgrid p,.cta p{color:var(--r69-proof-muted)}
+.outputgrid,.outputgrid article{border-color:var(--r69-proof-line)}
+.proofHome{border-top:1px solid var(--r69-proof-line);border-bottom:1px solid var(--r69-proof-line)}
+.proofHome .kicker,.proofHome p{color:var(--r69-proof-muted)}
+.proofHome h2{color:var(--r69-proof-fg)}
+.proofHome h2 em{color:#d49a72}
+.proofHomeBoard{border-color:var(--r69-proof-line);background:var(--r69-proof-raised);border-radius:12px}
+
+/* Pricing: preserve data, reduce highlighted-tier noise. */
+.price{font-family:Georgia,"Times New Roman",Times,serif;font-weight:600;color:var(--r69-ink)}
+.card.acid .price{color:var(--r69-clay)}
+.pricing .acid,.pricingGrid .acid,[data-price-card].acid{background:#f5eee6!important;border-color:#caa894!important}
+
+/* Parent/youth surfaces: calmer public grammar. */
+.agebox{border-radius:12px;border-color:var(--r69-proof-line)}
+.agebox.acid{background:#efe2d5;color:var(--r69-ink);border-color:#cdb9a7}
+.safe>div{padding:32px}
+.checklist div{background:#fbf7f1;border-color:var(--r69-rule);border-radius:8px}
+
+/* Motion discipline and keyboard clarity. */
+a:focus-visible,button:focus-visible,summary:focus-visible{
+  outline:3px solid var(--r69-teal);
+  outline-offset:3px;
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+}
+
+/* Mobile density: one clear visual beat per viewport segment. */
+@media(max-width:850px){
+  .hero{padding:66px 0 54px}
+  .hero h1{font-size:clamp(44px,13vw,62px);line-height:.98}
+  .lead{font-size:17px;line-height:1.5}
+  .section{padding:62px 0}
+  .sectiontop{gap:18px;margin-bottom:26px}
+  .programgrid{display:block}
+  .program,.program:nth-child(3),.program:nth-child(5){border-right:0;border-bottom:1px solid var(--r69-rule);min-height:0;padding:26px 4px}
+  .program:last-child{border-bottom:0}
+  .proofchips{margin-top:20px}
+  .trustgrid>div{padding-top:14px;padding-bottom:14px}
+}
+
+@media(max-width:520px){
+  .wrap{width:min(100% - 24px,1120px)}
+  .navin{height:62px}
+  .hero{padding-top:52px}
+  .hero h1{font-size:44px}
+  .actions{gap:8px;margin-top:22px}
+  .actions .btn{width:100%}
+  .section h2{font-size:36px}
+  .visual{min-height:330px;border-radius:14px}
+}
