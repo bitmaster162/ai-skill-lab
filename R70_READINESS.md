@@ -48,19 +48,22 @@ R70 is a separate development epoch. It does not mutate the validated R69 static
    - Telegram deep link contains only the user's selected assumptions and scenario result; nothing is sent automatically
    - styles are isolated in `app/r70.css`
 
-## Second Antigravity package — accepted for later static projection
+## Second Antigravity package — search / crawler conclusions
 
-### Full bilingual hreflang sitemap
+### Hreflang sitemap
 
-**ACCEPT, but not the supplied eight-URL sample.**
+**REJECT AS REDUNDANT FOR CURRENT ARCHITECTURE.**
 
-The validated R69 static sitemap already contains the full current route set. R70 release projection should preserve all current indexable routes and add reciprocal `xhtml:link rel="alternate" hreflang="ru|en"` entries for every real RU/EN pair, including self-references. Do not add fake or incomplete pairs.
+The validated static pages already carry reciprocal RU/EN/`x-default` `<link rel="alternate" hreflang="…">` tags and `scripts/check_search_metadata.py` enforces them for every public page. Google treats HTML hreflang, HTTP-header hreflang and sitemap hreflang as equivalent methods and states that implementing multiple methods provides no Search benefit while increasing maintenance complexity.
 
-- add the `xhtml` sitemap namespace
-- emit both RU and EN URL entries
-- each paired entry lists both alternatives including itself
-- do not rely on `<priority>` or `<changefreq>` as ranking controls
-- sitemap generation must remain deterministic and covered by a gate
+Therefore R70 keeps:
+
+- full sitemap route coverage through `sitemap.xml`
+- HTML `<head>` hreflang as the single localization authority
+- deterministic parity checks between actual public HTML routes and sitemap URLs
+- no `<priority>` / `<changefreq>` ranking claims
+
+Do not add a second hreflang implementation unless a concrete operational reason appears later.
 
 ### AI-search crawler policy
 
@@ -114,7 +117,6 @@ Compared with baseline `921681389ed8c372d86f19954c4eb11b8f43edff`, R70 source-pr
 - source behavioral tests for Matcher, Brief Compiler and Business Capacity Telegram URLs
 - source accessibility validation of added external links and range controls
 - source visual regression for `text-wrap` and Business Capacity UI at desktop and 390px
-- decide and implement deterministic full-route hreflang sitemap generation during static projection
 - regenerate or deliberately patch static RU/EN surfaces from the approved source delta
 - update static CSP hashes if inline scripts change
 - update static release manifest and payload SHA
