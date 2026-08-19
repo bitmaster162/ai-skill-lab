@@ -12,6 +12,7 @@ R70 is a separate development epoch. It does not mutate the validated R69 static
 - baseline tree: `2f6fa268ddafbb3c091334e095994a6f9568e112`
 - baseline meaning: GitHub merge commit for PR #3 containing the exact validated R69 candidate tree
 - R70 branch: `agent/r70-antigravity-synthesis`
+- evidence-hardening authority base: `a38eeaa7c79084b9ac2a5079d16336863255417f`
 
 ## Accepted R70 P0 scope
 
@@ -29,12 +30,14 @@ R70 is a separate development epoch. It does not mutate the validated R69 static
 3. **Real R69 Evidence Diff in Proof Lab**
    - no fabricated API or synthetic customer case
    - records the actual R69 dark-price contrast defect, human release gate, repaired CSS identity, final payload SHA, and merge tree
-   - evidence remains bounded to the verified R69 release chain
+   - evidence remains bounded to the verified R69 candidate chain
+   - public wording uses `validated candidate`, not a false R69 production claim
 
 4. **Progressive typography**
    - `text-wrap: balance` for editorial headings
    - `text-wrap: pretty` for selected prose surfaces
    - no global `color-scheme: dark`
+   - R70 typography remains isolated from frozen `app/r69.css`
 
 ## Accepted R70 P1 source scope
 
@@ -45,10 +48,59 @@ R70 is a separate development epoch. It does not mutate the validated R69 static
    - output is explicitly a sensitivity scenario, not a forecast, ROI guarantee or payroll-savings claim
    - no hard-coded assumption that AI automates 50% of work
    - no invented model/API-cost estimate
-   - Telegram deep link contains only the user's selected assumptions and scenario result; nothing is sent automatically
+   - Telegram deep link contains only the user's selected assumptions, scenario result, and a short status line; the long on-page disclaimer is not inserted into the Telegram payload
+   - nothing is sent automatically
    - styles are isolated in `app/r70.css`
 
-## Second Antigravity package — search / crawler conclusions
+## Evidence hardening after multi-agent adjudication
+
+The R70 source review used Antigravity A1, Claude C1, direct canonical-source readback and independent arithmetic adjudication. Neither external report is treated as authority by itself.
+
+### Corrected calculator determinism gate
+
+Added `scripts/check_r70_business_calculator.mjs`.
+
+The gate:
+
+- binds itself to the current `BusinessValueCalculator.tsx` formula and slider-bound source contracts
+- uses 20 reachable UI vectors
+- checks UI bounds and step alignment
+- checks finite arithmetic outputs
+- uses corrected expected values for the three vectors that were wrong in the earlier Antigravity proposal:
+  - `(18,14,75,45) -> 36855`
+  - `(7,9,55,25) -> 3753.75`
+  - `(11,22,65,35) -> 23857.166666666668`
+- prints `R70_BUSINESS_CALCULATOR_DETERMINISM_PASS` only if all checks actually execute successfully
+
+**Important evidence boundary:** the new gate is now present in canonical source, but its PASS token must not be claimed until raw execution output and exit code `0` are retained.
+
+### Runtime-harness portability
+
+The following inherited test harnesses used filesystem roots derived from `new URL(import.meta.url).pathname`, which is unsafe for Windows drive-letter paths and URL-percent-encoded checkout paths:
+
+- `scripts/check_matcher_runtime.mjs`
+- `scripts/check_brief_compiler_runtime.mjs`
+- `scripts/check_pilot_simulator_runtime.mjs`
+
+They now use `fileURLToPath(import.meta.url)` before converting to a filesystem path.
+
+Classification:
+
+- inherited verification-tool debt, not an R70 product regression
+- no shipped static/runtime behavior changed by this repair
+- the repaired gates still require actual execution evidence before being called green
+
+### Adjudication corrections retained
+
+- no `2000` percent-encoded Telegram URL gate is adopted
+- no hard-coded Telegram protocol budget is introduced into repository truth
+- no 320px padding change is made without measured overflow evidence
+- no accessibility failure is inferred merely from absence of a custom range `:focus-visible` rule; actual visible-focus behavior remains a browser/AT verification item
+- `aria-live` behavior remains a browser/AT verification item rather than a source-only PASS
+- no service worker / PWA is introduced
+- no security header is weakened
+
+## Search / crawler conclusions
 
 ### Hreflang sitemap
 
@@ -69,38 +121,33 @@ Do not add a second hreflang implementation unless a concrete operational reason
 
 **REVISE, no current robots mutation in source-prototype stage.**
 
-Current R69 `robots.txt` already allows `User-agent: *`, so search crawlers are not intentionally blocked. If R70 later makes crawler-specific groups explicit, distinguish search/retrieval bots from training crawlers:
+Current R69 `robots.txt` already allows `User-agent: *`, so search crawlers are not intentionally blocked. If R70 later makes crawler-specific groups explicit, distinguish search/retrieval bots from training crawlers and re-verify current official owner documentation at that time.
 
-- OpenAI search: `OAI-SearchBot`
-- Anthropic search: `Claude-SearchBot`
-- Anthropic user retrieval: `Claude-User`
-- Perplexity search: `PerplexityBot`
+Do not introduce crawler-specific groups unless they solve a concrete operational problem. If any specific group is introduced, duplicate intended path restrictions inside that group instead of assuming inheritance from the wildcard group.
 
-Do not describe `GPTBot` or `ClaudeBot` as search-index bots. They have different model-development/training purposes. If any crawler-specific group is introduced, duplicate intended path restrictions inside that specific group instead of assuming it inherits the wildcard group.
-
-## Explicitly rejected / deferred from Antigravity proposals
+## Explicitly rejected / deferred from external proposals
 
 - no service worker / offline cache in R70 P0/P1
 - no claim that Lighthouse will be `100/100`
 - no claim that structured data guarantees rich snippets
 - no Course/FAQ/address/Offer JSON-LD mutation in this slice
 - no invented testimonials, ratings, founder metadata, employee counts, or other unsupported schema claims
-- no pricing, route, commercial-fact, proof-authority, analytics, cookie, or tracking changes
+- no pricing, route, proof-authority, analytics, cookie, or tracking changes
 - no copy-paste of the proposed security `vercel.json`
   - existing static release already has strict CSP, frame blocking, no cross-origin connections and explicit cache policy
-  - Vercel supplies HSTS at the platform layer
   - do not add deprecated `X-XSS-Protection`
   - do not mark mutable unhashed CSS/JS as one-year `immutable`
 - no `LocalBusiness` schema until a real public business location, postal address, coordinates, business hours and intended public local-business identity are independently verified
 - no invented Phuket office hours, coordinates or `priceRange`
 
-## Scope audit after source edits
+## Current R70 delta scope
 
-Compared with baseline `921681389ed8c372d86f19954c4eb11b8f43edff`, R70 source-prototype work is intentionally limited to source/UI/readiness files. The current source delta includes:
+Compared with baseline `921681389ed8c372d86f19954c4eb11b8f43edff`, the intended R70 source/tooling delta is bounded to:
+
+### Product/source/readiness
 
 - `R70_READINESS.md`
 - `app/layout.tsx`
-- `app/r69.css`
 - `app/r70.css`
 - `app/business/page.tsx`
 - `app/en/business/page.tsx`
@@ -109,19 +156,42 @@ Compared with baseline `921681389ed8c372d86f19954c4eb11b8f43edff`, R70 source-pr
 - `components/ProgramMatcher.tsx`
 - `components/ProofLab.tsx`
 
+### Evidence/test hardening
+
+- `scripts/check_r70_business_calculator.mjs`
+- `scripts/check_matcher_runtime.mjs`
+- `scripts/check_brief_compiler_runtime.mjs`
+- `scripts/check_pilot_simulator_runtime.mjs`
+
+`app/r69.css` is expected to remain byte-identical to the R69 baseline and is not part of the intended R70 delta.
+
 `deploy/live/**` must remain byte-identical to R69 until the controlled source→static projection gate.
 
-## Gates still required before R70 can become a release candidate
+## Gates still required before source→static projection
 
-- source TypeScript/build validation
-- source behavioral tests for Matcher, Brief Compiler and Business Capacity Telegram URLs
-- source accessibility validation of added external links and range controls
-- source visual regression for `text-wrap` and Business Capacity UI at desktop and 390px
-- regenerate or deliberately patch static RU/EN surfaces from the approved source delta
-- update static CSP hashes if inline scripts change
-- update static release manifest and payload SHA
-- run full static release gate set
-- run browser/visual QA on exact static candidate
-- only then create a non-production Preview
+- fresh source authority receipt for the exact projection input HEAD/tree
+- raw `npm run build` output, environment versions, and exit code `0`
+- execute `scripts/check_r70_business_calculator.mjs` and retain raw PASS output + exit code `0`
+- re-run relevant source/runtime verification gates after the portability repair and retain raw output
+- source behavioral verification for Matcher, Brief Compiler and Business Capacity Telegram URLs
+- source accessibility/browser verification for external links, native range focus, live-region behavior, reduced motion, zoom/reflow and horizontal overflow
+- source visual regression for `text-wrap` and Business Capacity UI across desktop and narrow mobile viewports
+- complete the independent Manus/Gemini/Claude/tournament adjudication lane before freezing the design direction
 
-No merge, production promotion, Actions rerun, `main` write, or Vercel mutation is authorized by this R70 source-prototype work.
+## Future controlled source→static projection gate
+
+Projection is a later, separately evidenced phase. When authorized:
+
+1. freeze the exact source HEAD/tree
+2. regenerate or deliberately patch static RU/EN surfaces from the approved source delta
+3. rebuild CSP hashes from the actual inline scripts present in `deploy/live/**/*.html`
+4. preserve `connect-src 'none'`, `form-action 'none'`, `worker-src 'none'`, `frame-ancestors 'none'` and absence of `unsafe-inline`
+5. regenerate static release manifest, file sizes and payload SHA
+6. run the full static release gate set
+7. run exact browser/visual QA on the static candidate
+8. only then create an isolated non-production Preview
+9. perform served-byte/readback verification against that exact Preview
+
+CSP hash rotation is mandatory during projection if projected inline-script bytes change; it is not a reason to mutate the still-frozen R69 static layer during source hardening.
+
+No merge, production promotion, Actions rerun, `main` write, static projection, Preview creation, or Vercel mutation is authorized by this evidence-hardening batch.
