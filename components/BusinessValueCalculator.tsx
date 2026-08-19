@@ -77,7 +77,7 @@ export function BusinessValueCalculator({ locale = "ru" }: { locale?: Locale }) 
     <div className="businessValueSignal"><span aria-hidden="true">●</span>{t.local}</div>
     <div className="businessValueInputs">
       <label htmlFor="bv-team"><span>{t.team}</span><strong>{team}</strong><input id="bv-team" type="range" min="1" max="30" value={team} onChange={e => setTeam(Number(e.target.value))}/></label>
-      <label htmlFor="bv-hours"><span>{t.weeklyHours}</span><strong>{weeklyHours} h</strong><input id="bv-hours" type="range" min="1" max="40" value={weeklyHours} onChange={e => setWeeklyHours(Number(e.target.value))}/></label>
+      <label htmlFor="bv-hours"><span>{t.weeklyHours}</span><strong>{weeklyHours} {locale === "ru" ? "ч" : "h"}</strong><input id="bv-hours" type="range" min="1" max="40" value={weeklyHours} onChange={e => setWeeklyHours(Number(e.target.value))}/></label>
       <label htmlFor="bv-rate"><span>{t.rate}</span><strong>${rate}{t.perHour}</strong><input id="bv-rate" type="range" min="10" max="200" step="5" value={rate} onChange={e => setRate(Number(e.target.value))}/></label>
       <label htmlFor="bv-recoverable"><span>{t.recoverable}</span><strong>{recoverable}%</strong><input id="bv-recoverable" type="range" min="10" max="80" step="5" value={recoverable} onChange={e => setRecoverable(Number(e.target.value))}/></label>
     </div>
