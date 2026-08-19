@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { PilotSimulator } from "@/components/PilotSimulator";
+import { BusinessValueCalculator } from "@/components/BusinessValueCalculator";
 
 export const metadata: Metadata = {
   title: "AI for business",
@@ -50,10 +51,11 @@ export default function Page() {
 
       <section className="section sectionInk" id="pilot-simulator"><div className="shell"><div className="sectionHead sectionHeadLight"><span className="kicker kickerLight">AI Pilot Simulator</span><h2>Scope the process before<br/>you fall in love with the demo.</h2><p>Choose a common workflow pattern. This deterministic local demo shows the candidate boundary, AI role, human checkpoint, success signal and the condition that should stop the pilot.</p></div><PilotSimulator locale="en"/></div></section>
 
+      <section className="section" id="capacity-scenario"><div className="shell"><div className="sectionHead"><span className="kicker">Business economics · scenario</span><h2>Estimate the opportunity<br/>without pretending it is a forecast.</h2><p className="sectionSub">Set team size, routine hours, hourly value and your own assumption for the share of time that could realistically be recovered. The calculator only shows sensitivity to those inputs and does not promise savings.</p></div><BusinessValueCalculator locale="en"/></div></section>
+
       <section className="section"><div className="shell parentGrid"><div className="parentCard"><span className="kicker">Good candidate</span><h2>Where a pilot makes sense</h2><ul className="checkList checkDark">{good.map((x)=><li key={x}>{x}</li>)}</ul></div><div className="parentCard parentDark"><span className="kicker kickerLight">Stop signals</span><h2>Where another analysis comes first</h2><ul className="checkList">{bad.map((x)=><li key={x}>{x}</li>)}</ul></div></div></section>
 
       <section className="section sectionInk"><div className="shell splitHead"><div><span className="kicker kickerLight">What remains after the pilot</span><h2>Artifacts,<br/><em>not AI theatre.</em></h2></div><div><p>Current-state map · candidate backlog · prototype / automation · test cases · human checkpoints · privacy/data boundaries · owner & fallback · operating notes.</p><div className="heroActions"><Link className="button buttonLight" href="/en/projects">Example formats →</Link></div></div></div></section>
-
 
       <section className="section sectionMuted"><div className="shell"><div className="sectionHead"><span className="kicker">Decision gate</span><h2>Ship · Revise · Stop.</h2><p className="sectionSub">Before building, define what acceptable output means: output quality, required human review, acceptable failure modes, data boundaries, fallback and process owner. After testing, the decision follows those criteria rather than how impressive the demo looks.</p></div><div className="steps"><article><span>01</span><h3>Ship</h3><p>Verification criteria pass, the owner accepts the workflow and responsibility for ongoing review is clear.</p></article><article><span>02</span><h3>Revise</h3><p>There is value, but bounded quality, data, UX or operating-rule issues should be fixed in another iteration.</p></article><article><span>03</span><h3>Stop</h3><p>Risk, missing ownership, weak quality or data constraints make adoption worse than the current process. The pilot stops without an obligation to “implement AI”.</p></article></div></div></section>
 
