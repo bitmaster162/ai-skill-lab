@@ -57,7 +57,9 @@ export function BusinessValueCalculator({ locale = "ru" }: { locale?: Locale }) 
     return { monthlyRoutine, recoverableHours, grossValue };
   }, [team, weeklyHours, rate, recoverable]);
 
-  const number = (value: number) => new Intl.NumberFormat(locale === "ru" ? "ru-RU" : "en-US", { maximumFractionDigits: 0 }).format(value);
+  const number = (value: number) => new Intl.NumberFormat(locale === "ru" ? "ru-RU" : "en-US", {
+    maximumFractionDigits: Math.abs(value) > 0 && Math.abs(value) < 10 ? 1 : 0,
+  }).format(value);
   const money = (value: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
 
   const brief = [
