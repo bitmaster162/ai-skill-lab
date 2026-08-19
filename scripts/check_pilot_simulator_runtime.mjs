@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import fs from 'node:fs'; import path from 'node:path'; import vm from 'node:vm'; import process from 'node:process';
-const root=path.resolve(path.dirname(new URL(import.meta.url).pathname),'..');
+import fs from 'node:fs'; import path from 'node:path'; import vm from 'node:vm'; import process from 'node:process'; import { fileURLToPath } from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 class CL{constructor(el){this.el=el}toggle(name,on){const s=new Set((this.el.className||'').split(/\s+/).filter(Boolean));on?s.add(name):s.delete(name);this.el.className=[...s].join(' ')}}
 class E{constructor({key='',id=''}={}){this.dataset=key?{pilotKey:key}:{};this.id=id;this.attrs={};this.listeners={};this.textContent='';this.className=key==='knowledge'?'proofLabTab isActive':'proofLabTab';this.classList=new CL(this)}addEventListener(t,f){this.listeners[t]=f}setAttribute(k,v){this.attrs[k]=String(v)}getAttribute(k){return this.attrs[k]??null}trigger(){if(!this.listeners.click)throw new Error('listener missing');this.listeners.click.call(this,{target:this})}}
 function extract(file){const h=fs.readFileSync(file,'utf8');const scripts=[...h.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)].map(m=>m[1]);const js=scripts.find(x=>x.includes('[data-pilot-key]')&&x.includes("const D="));if(!js)throw new Error(`pilot script missing ${file}`);return js}
