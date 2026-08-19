@@ -3,7 +3,7 @@ from __future__ import annotations
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
-import sys
+import re, sys
 
 ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/'deploy'/'live'
@@ -13,6 +13,7 @@ MAX_HTML=24*1024
 MAX_CSS=36*1024
 MAX_IMAGE=128*1024
 MAX_INLINE_JS=24*1024
+IMPORT_RE=re.compile(r'@import\s+(?:url\()?["\']?([^"\')\s;]+)', re.I)
 
 class Audit(HTMLParser):
     def __init__(self):
@@ -50,8 +51,22 @@ total=sum(p.stat().st_size for p in files)
 checks+=1
 if total>MAX_TOTAL:errors.append(f'total payload {total} > {MAX_TOTAL}')
 
-css=LIVE/'style.css'; checks+=1
-if css.stat().st_size>MAX_CSS:errors.append(f'style.css {css.stat().st_size} > {MAX_CSS}')
+css_files=sorted(LIVE.rglob('*.css'))
+for css in css_files:
+    rel=css.relative_to(LIVE).as_posix(); checks+=1
+    if css.stat().st_size>MAX_CSS:errors.append(f'{rel} {css.stat().st_size} > {MAX_CSS}')
+    text=css.read_text(encoding='utf-8')
+    for raw in IMPORT_RE.findall(text):
+        checks+=1
+        if external(raw):
+            errors.append(f'{rel}: external CSS import {raw}')
+            continue
+        target=(LIVE/raw.split('?',1)[0].split('#',1)[0].lstrip('/')).resolve()
+        live=LIVE.resolve()
+        if target!=live and live not in target.parents:
+            errors.append(f'{rel}: CSS import escapes live root {raw}')
+        elif not target.is_file():
+            errors.append(f'{rel}: missing CSS import {raw}')
 
 for p in sorted(LIVE.rglob('*.html')):
     rel=p.relative_to(LIVE).as_posix(); size=p.stat().st_size; checks+=1
@@ -70,7 +85,7 @@ for p in sorted(LIVE.rglob('*')):
         checks+=1
         if p.stat().st_size>MAX_IMAGE:errors.append(f'{p.relative_to(LIVE)}: image {p.stat().st_size} > {MAX_IMAGE}')
 
-print(f'performance_checks={checks} total_bytes={total} css_bytes={css.stat().st_size} files={len(files)}')
+print(f'performance_checks={checks} total_bytes={total} css_files={len(css_files)} files={len(files)}')
 if errors:
     print('STATIC_PERFORMANCE_FAIL');[print('-',e) for e in errors];sys.exit(1)
 print('STATIC_PERFORMANCE_PASS')
