@@ -2,6 +2,7 @@
 from pathlib import Path
 import re
 import sys
+from css_graph import read_local_css_graph
 
 ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "deploy" / "live"
@@ -52,7 +53,7 @@ for path in sorted(LIVE.rglob("*.html")):
     if route in expected_main and header.count('aria-current="page"') != 2:
         errors.append(f"{rel}: active primary route must be marked in desktop+mobile nav")
 
-css=(LIVE / "style.css").read_text(encoding="utf-8")
+css=read_local_css_graph(LIVE / "style.css", LIVE)
 for marker in [".mobileNav{display:none}","min-height:48px","@media(max-width:980px){.links{display:none}.mobileNav{display:block}"]:
     checks += 1
     if marker not in css:

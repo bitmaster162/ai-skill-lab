@@ -22,7 +22,10 @@ for name,fg,bg,minr in checks:
     r=ratio(fg,bg)
     if r<minr:errors.append(f'{name}: {r:.2f} < {minr}')
 
-static=(ROOT/'deploy/live/style.css').read_text()
+from css_graph import read_local_css_graph
+
+LIVE=ROOT/'deploy/live'
+static=read_local_css_graph(LIVE/'style.css', LIVE)
 nextcss=(ROOT/'app/globals.css').read_text()
 for name,css in [('static',static),('next',nextcss)]:
     if '--micro:#626b74' not in css.replace(' ','') and '--micro: #626b74' not in css:

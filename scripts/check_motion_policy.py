@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 from pathlib import Path
+from css_graph import read_local_css_graph
 
 ROOT=Path(__file__).resolve().parents[1]
-static=(ROOT/'deploy/live/style.css').read_text(encoding='utf-8')
+LIVE=ROOT/'deploy/live'
+static=read_local_css_graph(LIVE/'style.css', LIVE)
 source=(ROOT/'app/globals.css').read_text(encoding='utf-8')
 checks=0
 for name,css in [('static',static),('source',source)]:
