@@ -1,5 +1,15 @@
 /* R70 source-prototype layer — isolated from the validated R69 release CSS. */
 
+/* Progressive typography belongs to R70, not the frozen R69 layer. */
+.hero h1,.kidsHero h1,.teenHero h1,.proofHero h1,
+.sectionHead h2,.kidsBand h2,.contactSection h2,.parentCard h2,
+.safetyBandGrid h2,.familyConciergeGrid h2,.proofSplit h2,.proofHonesty h2{
+  text-wrap:balance;
+}
+.heroLead,.kidsHero p,.teenHero p,.sectionHead p,.sectionSub,.splitHead p,.proofHome p,.proofHero p,.contactSection p{
+  text-wrap:pretty;
+}
+
 .businessValue{
   border:1px solid var(--r69-rule);
   border-radius:16px;
