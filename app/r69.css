@@ -1,6 +1,6 @@
-/* R69 P0 — Trust-first warm editorial refinement.
-   Source-layer only. This file intentionally overrides R68 presentation without
-   changing routes, commercial facts, proof policy, runtime semantics or deploy artifacts. */
+/* R69 P0.2 — Trust-first warm editorial refinement.
+   Bound to the current R68 DOM grammar and dark-context cascade.
+   Presentation only: no route, commercial-fact, proof-authority, runtime or deploy changes. */
 
 :root{
   --r69-paper:#f7f1e8;
@@ -20,138 +20,143 @@
 }
 
 html{background:var(--r69-paper)}
-body{
-  background:var(--r69-paper);
-  color:var(--r69-ink);
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  text-rendering:optimizeLegibility;
-}
+body,.proofPage{background:var(--r69-paper);color:var(--r69-ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;text-rendering:optimizeLegibility}
 
-/* Editorial hierarchy: Cyrillic-safe system serif, no external font dependency. */
-.hero h1,.section h2,.program h3,.card h3,.agebox h3,.panel h3,.legal h2,
-.instructor h2,.faqgrid h2,.locationgrid h2,.cta h2{
-  font-family:Georgia,"Times New Roman",Times,serif;
-  font-weight:600;
-  letter-spacing:-.045em;
+/* Editorial hierarchy — existing R68 classes only, Cyrillic-safe fallback. */
+.hero h1,.kidsHero h1,.teenHero h1,.proofHero h1,
+.sectionHead h2,.kidsBand h2,.contactSection h2,.parentCard h2,
+.safetyBandGrid h2,.familyConciergeGrid h2,.proofSplit h2,.proofHonesty h2{
+  font-family:Georgia,"Times New Roman",Times,serif;font-weight:600;letter-spacing:-.045em
 }
-.hero h1{line-height:.98;letter-spacing:-.052em}
+.hero h1,.kidsHero h1,.teenHero h1,.proofHero h1{line-height:.96;letter-spacing:-.052em}
 .hero h1 span{color:var(--r69-clay)}
-.section h2{line-height:1.03}
+.sectionHead h2,.kidsBand h2,.contactSection h2,.parentCard h2,.safetyBandGrid h2,.familyConciergeGrid h2{line-height:1.03}
 
-/* Warm public canvas + quieter chrome. */
-.nav{background:color-mix(in srgb,var(--r69-paper) 92%,transparent);border-color:var(--r69-rule)}
-.mark{background:var(--r69-ink);color:var(--r69-paper);border-radius:8px}
-.links{gap:22px}
-.links a{color:#4f463f}
-.btn{background:var(--r69-ink);color:var(--r69-paper);font-weight:760}
-.btn.ghost{background:transparent;color:var(--r69-ink);border-color:#c7baae}
-.btn.light{background:var(--r69-paper);color:var(--r69-ink)}
-.tag,.proofchips span,.chips span{border-color:var(--r69-rule);color:#665b52;background:#fbf7f1}
+/* Quiet public chrome. */
+.siteHeader{background:rgba(247,241,232,.92);border-color:var(--r69-rule)}
+.logoMark{background:var(--r69-ink);color:var(--r69-paper);border-radius:8px}
+.desktopNav{gap:22px;color:#4f463f}
+.button{font-weight:760}
+.buttonPrimary{background:var(--r69-ink);color:var(--r69-paper)}
+.buttonPrimary:hover{background:#3a312b}
+.buttonGhost{background:transparent;color:var(--r69-ink);border-color:#c7baae}
+.buttonGhost.buttonOnDark{background:transparent;color:var(--r69-proof-fg);border-color:var(--r69-proof-line)}
+.buttonLight{background:var(--r69-paper);color:var(--r69-ink)}
+.eyebrow{border-color:var(--r69-rule);background:#fbf7f1;color:#5d534b}
 
-.hero{padding-top:104px;padding-bottom:88px}
-.heroR6{background:
-  radial-gradient(circle at 88% 10%,#176f6b12,transparent 30%),
-  radial-gradient(circle at 12% 95%,#a4513310,transparent 28%),
-  var(--r69-paper)}
-.orbA,.orbB{opacity:.18}
-.lead,.intro,.panel p,.program p,.card p,.legal p,.legal li,.faqlist p{color:var(--r69-muted)}
-
-/* Signal acid becomes a status accent only. */
-.visualbar b,.outputs em{color:var(--r69-signal)}
-.label{background:var(--r69-clay-soft);color:var(--r69-ink)}
-.quote{border-left-color:var(--r69-clay)}
-.humanbadge{background:var(--r69-clay-soft);color:var(--r69-ink)}
-.program.acid,.card.acid,.agebox.acid{background:#f2e9dd;border-color:var(--r69-rule);color:var(--r69-ink)}
-.program.acid p,.card.acid p,.agebox.acid p{color:var(--r69-muted)}
-.skip{background:var(--r69-ink);color:var(--r69-paper)}
-
-/* Less SaaS-card repetition: ruled editorial groups and tighter radii. */
+/* Home: warm editorial canvas, restrained signal color. */
+.heroR2{background:radial-gradient(circle at 88% 10%,rgba(23,111,107,.08),transparent 30%),radial-gradient(circle at 12% 95%,rgba(164,81,51,.07),transparent 28%),var(--r69-paper)}
+.heroLead{color:var(--r69-muted)}
+.orbOne,.orbTwo{opacity:.18}
+.heroProofRow span{border-color:var(--r69-rule);color:#665b52;background:#fbf7f1}
+.trustStrip{background:#fbf7f1;border-color:var(--r69-rule)}
+.trustStripGrid>div{border-color:var(--r69-rule)}
+.trustStripGrid span{color:var(--r69-muted)}
+.trustStrip.trustStripDark{background:var(--r69-proof);border-color:var(--r69-proof-line);color:var(--r69-proof-fg)}
+.trustStripDark .trustStripGrid>div{border-color:var(--r69-proof-line)}
+.trustStripDark .trustStripGrid span{color:var(--r69-proof-muted)}
 .section{border-color:var(--r69-rule)}
-.trust{background:#fbf7f1;border-color:var(--r69-rule)}
-.trustgrid>div{border-color:var(--r69-rule)}
-.programgrid{gap:0;border-top:1px solid var(--r69-rule);border-bottom:1px solid var(--r69-rule)}
-.program,.card,.panel,.safe>div,.methodgrid article,.lesson{
-  border-color:var(--r69-rule);
-  border-radius:10px;
-  box-shadow:none;
-}
-.program{
-  background:transparent;
-  border:0;
-  border-right:1px solid var(--r69-rule);
-  border-radius:0;
-  min-height:300px;
-  padding:30px 28px;
-}
-.program:nth-child(3),.program:nth-child(5){border-right:0}
-.program:hover{transform:none;box-shadow:none;background:#fbf7f1}
-.program.darkcard{background:var(--r69-proof);border-color:var(--r69-proof);color:var(--r69-proof-fg)}
-.program.darkcard p{color:var(--r69-proof-muted)}
-.program.darkcard b{color:var(--r69-proof-fg)}
+.sectionMuted{background:var(--r69-paper-deep)}
+.sectionHead p,.sectionSub,.splitHead p{color:var(--r69-muted)}
 
-.cards{gap:1px;background:var(--r69-rule);border:1px solid var(--r69-rule);border-radius:12px;overflow:hidden}
-.card{border:0;border-radius:0;background:#fbf7f1}
-.panel,.safe>div,.methodgrid article,.lesson{background:#fbf7f1}
-.muted{background:var(--r69-paper-deep)}
-.locationband{background:linear-gradient(135deg,#efe6da,#e5eeea)}
-.instructor{background:#f3ece2}
+/* Reduce same-card SaaS treatment without changing grid semantics. */
+.programGrid{gap:12px}
+.programCard{background:#fbf7f1;border-color:var(--r69-rule);border-radius:12px;box-shadow:none}
+.programCard:hover{transform:none;box-shadow:none;background:#fffaf4}
+.programCard p{color:var(--r69-muted)}
+.cardLink{border-color:var(--r69-rule)}
+.programGridR2 .youthCard:nth-child(4){background:#efe2d5;border-color:#d9c1af;color:var(--r69-ink)}
+.programGridR2 .youthCard:nth-child(4) p,.programGridR2 .youthCard:nth-child(4) .cardMeta,.programGridR2 .youthCard:nth-child(4) .cardIndex{color:var(--r69-muted)}
+.programGridR2 .youthCard:nth-child(4) .cardLink{border-color:#d9c1af}
+.programGridR2 .youthCard:nth-child(5){background:var(--r69-proof);border-color:var(--r69-proof-line);color:var(--r69-proof-fg)}
+.programGridR2 .youthCard:nth-child(5) p,.programGridR2 .youthCard:nth-child(5) .cardMeta,.programGridR2 .youthCard:nth-child(5) .cardIndex{color:var(--r69-proof-muted)}
+.programGridR2 .youthCard:nth-child(5) .cardLink{border-color:var(--r69-proof-line)}
 
-/* Technical proof is contained, dark and explicit rather than spread everywhere. */
-.visual,.section.dark,.outputs,.proofHome,.cta{
-  background:var(--r69-proof);
-  color:var(--r69-proof-fg);
-}
-.visual{border:1px solid var(--r69-proof-line);border-radius:18px}
-.section.dark{border-color:var(--r69-proof)}
-.dark .intro,.dark .lead,.dark .safe ul,.outputgrid p,.cta p{color:var(--r69-proof-muted)}
-.outputgrid,.outputgrid article{border-color:var(--r69-proof-line)}
-.proofHome{border-top:1px solid var(--r69-proof-line);border-bottom:1px solid var(--r69-proof-line)}
-.proofHome .kicker,.proofHome p{color:var(--r69-proof-muted)}
-.proofHome h2{color:var(--r69-proof-fg)}
-.proofHome h2 em{color:#d49a72}
-.proofHomeBoard{border-color:var(--r69-proof-line);background:var(--r69-proof-raised);border-radius:12px}
+/* Technical proof is dark and contained. */
+.sectionInk,.proofHome,.proofHero,.contactSection{background:var(--r69-proof);color:var(--r69-proof-fg)}
+.sectionInk{border-color:var(--r69-proof)}
+.sectionHeadLight p,.proofHome p,.proofHero p,.contactSection p{color:var(--r69-proof-muted)}
+.sectionHeadLight h2 em,.proofHome h2 em,.proofHero h1 em{color:#d49a72;font-style:normal}
+.proofHome{border-color:var(--r69-proof-line)}
+.proofHome .kicker{color:var(--r69-proof-muted)}
+.proofHomeBoard,.proofConsole{background:var(--r69-proof-raised);border-color:var(--r69-proof-line);border-radius:14px;box-shadow:none}
+.proofBoardTop,.proofConsoleTop,.proofConsoleFoot{border-color:var(--r69-proof-line)}
+.proofBoardTop b,.proofConsoleTop b,.proofConsoleBody strong{color:var(--r69-signal)}
+.proofGateGrid article{background:#fbf7f1;border-color:var(--r69-rule);border-radius:12px}
+.proofSplit{background:var(--r69-paper-deep)}
+.proofHuman{background:var(--r69-proof)!important;color:var(--r69-proof-fg)}
 
-/* Pricing: preserve data, reduce highlighted-tier noise. */
-.price{font-family:Georgia,"Times New Roman",Times,serif;font-weight:600;color:var(--r69-ink)}
-.card.acid .price{color:var(--r69-clay)}
-.pricing .acid,.pricingGrid .acid,[data-price-card].acid{background:#f5eee6!important;border-color:#caa894!important}
+/* Pricing presentation only — values and packages remain untouched. */
+.pricingGrid{gap:12px}
+.priceCard{background:#fbf7f1;border-color:var(--r69-rule);border-radius:12px;box-shadow:none}
+.priceCard .price{font-family:Georgia,"Times New Roman",Times,serif;font-weight:600;color:var(--r69-ink)}
+.priceCard p{color:var(--r69-muted)}
+.featuredPrice{border:2px solid #c79d83;box-shadow:none;background:#f5eee6}
+.popular{background:var(--r69-clay-soft);color:var(--r69-ink)}
+.premiumPriceCard{background:var(--r69-proof);border-radius:14px}
 
-/* Parent/youth surfaces: calmer public grammar. */
-.agebox{border-radius:12px;border-color:var(--r69-proof-line)}
-.agebox.acid{background:#efe2d5;color:var(--r69-ink);border-color:#cdb9a7}
-.safe>div{padding:32px}
-.checklist div{background:#fbf7f1;border-color:var(--r69-rule);border-radius:8px}
+/* Kids / parents: warm, calm, adult-readable. */
+.kidsHero{background:linear-gradient(145deg,#f2e7dc,var(--r69-paper));color:var(--r69-ink)}
+.kidsHero h1 span{color:var(--r69-clay)}
+.kidsHero p{color:var(--r69-muted)}
+.kidsHero .eyebrowLight{border-color:#d8c7b9;color:#67584d;background:#fbf7f1}
+.kidsHero .dotLight{background:var(--r69-clay);box-shadow:0 0 0 4px rgba(164,81,51,.10)}
+.kidsHero .textLinkLight{color:var(--r69-ink)}
+.kidsHero .buttonLight{background:var(--r69-ink);color:var(--r69-paper)}
+.kidsHero .heroProofLight span{border-color:#d8c7b9;color:#67584d;background:#fbf7f1}
+.kidsHeroBoard{background:var(--r69-proof);border-color:var(--r69-proof-line);border-radius:16px;box-shadow:none}
+.boardCenter{background:var(--r69-clay-soft);color:var(--r69-ink)}
+.boardCard{background:var(--r69-proof-raised);border-color:var(--r69-proof-line);color:var(--r69-proof-muted)}
+.boardCard b{color:var(--r69-signal)}
+.kidsPrinciples article,.parentCard,.contactOnlyCard{background:#fbf7f1;border-color:var(--r69-rule);border-radius:12px}
+.parentDark{background:var(--r69-proof);color:var(--r69-proof-fg);border-color:var(--r69-proof)}
+.curriculumList,.curriculumList article{border-color:var(--r69-rule)}
+.checkDark li{color:var(--r69-muted)}
+.safetyBand{background:#eef1e8;border-color:#d6ddcf}
+.familyConciergeBand{background:var(--r69-proof);color:var(--r69-proof-fg)}
 
-/* Motion discipline and keyboard clarity. */
-a:focus-visible,button:focus-visible,summary:focus-visible{
-  outline:3px solid var(--r69-teal);
-  outline-offset:3px;
-}
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
-}
+/* Teens stay explicitly technical/autonomous. */
+.teenHero{background:var(--r69-proof);color:var(--r69-proof-fg)}
+.teenHero h1 span{color:#6fc9c3}
+.teenHero p{color:var(--r69-proof-muted)}
+.teenHero .eyebrowLight{background:transparent;border-color:var(--r69-proof-line);color:var(--r69-proof-muted)}
+.teenHero .heroProofLight span{background:transparent;border-color:var(--r69-proof-line);color:var(--r69-proof-muted)}
+.teenTerminal{background:var(--r69-proof-raised);border-color:var(--r69-proof-line);border-radius:16px;box-shadow:none}
+.terminalTop{border-color:var(--r69-proof-line)}
+.terminalTop span:last-child{color:#6fc9c3}
+.terminalLines span{background:#19302b;border-color:#29443e}
+.terminalOutput{background:linear-gradient(145deg,#6fc9c3,var(--r69-signal));color:#0d1a17}
 
-/* Mobile density: one clear visual beat per viewport segment. */
+/* Home youth bridge: keep signal accent constrained. */
+.kidsBand{background:var(--r69-proof);color:var(--r69-proof-fg);border-color:var(--r69-proof-line)}
+.kidsBand p{color:var(--r69-proof-muted)}
+.kidsBand h2 em{color:#d49a72}
+.agePanel{background:var(--r69-proof-raised);border-color:var(--r69-proof-line);border-radius:14px}
+.agePanelAcid{background:var(--r69-teal);color:#fff;border-color:var(--r69-teal)}
+.agePanelAcid>span{color:#fff}.agePanelAcid small{color:#d6e9e6}
+
+/* Keyboard and motion. */
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--r69-teal);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* Mobile scan: less vertical drag, existing responsive grids preserved. */
 @media(max-width:850px){
-  .hero{padding:66px 0 54px}
-  .hero h1{font-size:clamp(44px,13vw,62px);line-height:.98}
-  .lead{font-size:17px;line-height:1.5}
-  .section{padding:62px 0}
-  .sectiontop{gap:18px;margin-bottom:26px}
-  .programgrid{display:block}
-  .program,.program:nth-child(3),.program:nth-child(5){border-right:0;border-bottom:1px solid var(--r69-rule);min-height:0;padding:26px 4px}
-  .program:last-child{border-bottom:0}
-  .proofchips{margin-top:20px}
-  .trustgrid>div{padding-top:14px;padding-bottom:14px}
+  .hero{padding-top:66px;padding-bottom:54px}
+  .section{padding:70px 0}
+  .sectionHead{margin-bottom:30px}
+  .proofHome{padding:68px 0}
+  .programCard{min-height:300px}
 }
-
-@media(max-width:520px){
-  .wrap{width:min(100% - 24px,1120px)}
-  .navin{height:62px}
-  .hero{padding-top:52px}
-  .hero h1{font-size:44px}
-  .actions{gap:8px;margin-top:22px}
-  .actions .btn{width:100%}
-  .section h2{font-size:36px}
-  .visual{min-height:330px;border-radius:14px}
+@media(max-width:620px){
+  .shell{width:min(100% - 24px,1180px)}
+  .hero{padding:52px 0}
+  .hero h1,.kidsHero h1,.teenHero h1{font-size:44px}
+  .heroLead,.kidsHero p,.teenHero p{font-size:17px;line-height:1.5}
+  .heroActions{gap:8px;margin-top:22px}
+  .heroActions .button{width:100%}
+  .section,.kidsBand,.contactSection{padding:62px 0}
+  .sectionHead h2,.kidsBand h2,.contactSection h2,.parentCard h2,.safetyBandGrid h2{font-size:36px}
+  .programGrid,.pricingGrid{gap:10px}
+  .programCard,.priceCard{border-radius:10px}
+  .kidsHeroBoard,.teenTerminal,.proofHomeBoard,.proofConsole{border-radius:12px}
 }
