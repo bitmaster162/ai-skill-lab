@@ -28,6 +28,7 @@ const copy = {
     noResult: "Выберите по одному варианту в каждом блоке. Рекомендация считается только на этой странице и никуда не отправляется.",
     why: "Почему этот маршрут",
     note: "Это не автоматическое подтверждение fit. Перед оплатой вручную сверяем цель, уровень, расписание и scope.",
+    telegram: "Написать в Telegram с brief →",
     track: "Посмотреть направление →",
     start: "Отправить brief →",
     copy: "Скопировать brief",
@@ -53,6 +54,7 @@ const copy = {
     noResult: "Choose one option in each block. The recommendation is calculated only on this page and is not sent anywhere.",
     why: "Why this route",
     note: "This is not an automatic fit approval. Goal, level, schedule and scope are confirmed manually before payment.",
+    telegram: "Open Telegram with this brief →",
     track: "View the track →",
     start: "Send a brief →",
     copy: "Copy brief",
@@ -112,8 +114,8 @@ export function ProgramMatcher({ locale = "ru" }: { locale?: MatcherLocale }) {
     if (!audience || !goal || !depth) return null;
     if (audience === "business") {
       return {
-        title: locale === "ru" ? "Business workflow pilot" : "Business workflow pilot",
-        price: locale === "ru" ? "Custom scope" : "Custom scope",
+        title: "Business workflow pilot",
+        price: "Custom scope",
         length: locale === "ru" ? "1 процесс → ограниченный пилот" : "1 process → bounded pilot",
         reason: reasons[locale].business,
         path: `${base}/business`,
@@ -128,14 +130,13 @@ export function ProgramMatcher({ locale = "ru" }: { locale?: MatcherLocale }) {
     };
   }, [audience, goal, depth, locale, base]);
 
-
   const optionLabel = (kind: "audience" | "goal" | "depth", value: string) => {
     const list = kind === "audience" ? t.audienceOptions : kind === "goal" ? t.goalOptions : t.depthOptions;
     return list.find(([v]) => v === value)?.[1] || value;
   };
 
-  const copyBrief = async () => {
-    if (!result || !audience || !goal || !depth) return;
+  const buildBrief = () => {
+    if (!result || !audience || !goal || !depth) return "";
     const lines = locale === "ru"
       ? [
           "AI Skill Lab — запрос",
@@ -157,7 +158,12 @@ export function ProgramMatcher({ locale = "ru" }: { locale?: MatcherLocale }) {
           "Context: [1–2 sentences without sensitive data]",
           "Format: online / Phuket",
         ];
-    const text = lines.filter(Boolean).join("\n");
+    return lines.filter(Boolean).join("\n");
+  };
+
+  const copyBrief = async () => {
+    const text = buildBrief();
+    if (!text) return;
     try {
       await navigator.clipboard.writeText(text);
       setCopyState("done");
@@ -165,6 +171,8 @@ export function ProgramMatcher({ locale = "ru" }: { locale?: MatcherLocale }) {
       setCopyState("error");
     }
   };
+
+  const telegramHref = result ? `https://t.me/BiTFormer?text=${encodeURIComponent(buildBrief())}` : "https://t.me/BiTFormer";
 
   const choose = <T extends string>(value: T, current: T | null, setter: (v:T)=>void, label: string) => (
     <button type="button" className={`matcherOption ${current===value ? "isSelected" : ""}`} aria-pressed={current===value} onClick={() => setter(value)}>{label}</button>
@@ -181,7 +189,7 @@ export function ProgramMatcher({ locale = "ru" }: { locale?: MatcherLocale }) {
         <div className="matcherResultTop"><div><h2>{result.title}</h2><p>{result.length}</p></div><strong>{result.price}</strong></div>
         <div className="matcherReason"><b>{t.why}</b><p>{result.reason}</p></div>
         <p className="matcherNote">{t.note}</p>
-        <div className="heroActions"><Link className="button buttonPrimary" href={result.path}>{t.track}</Link><button type="button" className="button buttonGhost" onClick={copyBrief}>{copyState === "done" ? t.copied : copyState === "error" ? t.copyError : t.copy}</button><Link className="textLink matcherStartLink" href={`${base}/start`}>{t.start}</Link><button type="button" className="matcherReset" onClick={() => {setAudience(null);setGoal(null);setDepth(null);setCopyState("idle")}}>{t.reset}</button></div>
+        <div className="heroActions"><a className="button buttonPrimary" href={telegramHref} target="_blank" rel="noopener noreferrer">{t.telegram}</a><Link className="button buttonGhost" href={result.path}>{t.track}</Link><button type="button" className="button buttonGhost" onClick={copyBrief}>{copyState === "done" ? t.copied : copyState === "error" ? t.copyError : t.copy}</button><Link className="textLink matcherStartLink" href={`${base}/start`}>{t.start}</Link><button type="button" className="matcherReset" onClick={() => {setAudience(null);setGoal(null);setDepth(null);setCopyState("idle")}}>{t.reset}</button></div>
       </>}
     </section>
   </div>;
