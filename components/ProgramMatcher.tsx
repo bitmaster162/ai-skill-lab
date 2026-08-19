@@ -175,7 +175,7 @@ export function ProgramMatcher({ locale = "ru" }: { locale?: MatcherLocale }) {
   const telegramHref = result ? `https://t.me/BiTFormer?text=${encodeURIComponent(buildBrief())}` : "https://t.me/BiTFormer";
 
   const choose = <T extends string>(value: T, current: T | null, setter: (v:T)=>void, label: string) => (
-    <button type="button" className={`matcherOption ${current===value ? "isSelected" : ""}`} aria-pressed={current===value} onClick={() => setter(value)}>{label}</button>
+    <button type="button" className={`matcherOption ${current===value ? "isSelected" : ""}`} aria-pressed={current===value} onClick={() => {setter(value);setCopyState("idle")}}>{label}</button>
   );
 
   return <div className="matcherShell">
