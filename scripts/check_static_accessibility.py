@@ -3,6 +3,7 @@ from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
 import sys
+from css_graph import read_local_css_graph
 
 ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/'deploy'/'live'
@@ -56,7 +57,7 @@ for p in sorted(LIVE.rglob('*.html')):
             checks += 1
             if button['live'] != 'polite': errors.append(f'{rel}: briefCopy must use aria-live=polite')
 
-css=(LIVE/'style.css').read_text(encoding='utf-8')
+css=read_local_css_graph(LIVE/'style.css', LIVE)
 for marker in [':focus-visible{outline:3px solid #4f8cff', '@media(prefers-reduced-motion:reduce)', 'min-height:48px']:
     checks += 1
     if marker not in css: errors.append(f'style.css: missing accessibility marker {marker}')

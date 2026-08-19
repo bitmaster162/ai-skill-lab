@@ -1,5 +1,5 @@
 {
-  "file_count": 53,
+  "file_count": 55,
   "files": [
     {
       "path": "404.html",
@@ -217,6 +217,11 @@
       "size": 24036
     },
     {
+      "path": "r69-static.css",
+      "sha256": "6d284c8ee34b4733f64937dc598844775c93f45b3a1d3bbb5d639f5179f385a4",
+      "size": 2104
+    },
+    {
       "path": "robots.txt",
       "sha256": "ab7ab25e913aa90086e91785ef4517de7160bd0a081c776a71bd875c5414d071",
       "size": 76
@@ -247,9 +252,14 @@
       "size": 11275
     },
     {
-      "path": "style.css",
+      "path": "style-r68.css",
       "sha256": "4e33af94ae7d20ca5830b97bacb4337e0276e9ab11f87b832fe64ff0c6b95461",
       "size": 36671
+    },
+    {
+      "path": "style.css",
+      "sha256": "f8960a55448cddfd5656bba6c441b0819c10566dc4ceb9d683c27f0061555cd7",
+      "size": 62
     },
     {
       "path": "teens.html",
@@ -267,7 +277,7 @@
       "size": 2232
     }
   ],
-  "payload_sha256": "569ce21a2db436332adb1133a856bb93ae773dd11c248d52af0943d8a22a7069",
-  "release_id": "R68",
+  "payload_sha256": "d9e63c4cbdc9e033bcd8257d7582903ebdcb17f09540c646413481028d31470c",
+  "release_id": "R69",
   "schema": "ai-skill-lab.static-release.v1"
 }
