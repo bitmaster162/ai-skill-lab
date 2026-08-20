@@ -109,3 +109,39 @@
     overflow-wrap:anywhere;
   }
 }
+
+/* R70 Source Repair R1.1 — residual browser/axe fixes. */
+
+/* Constrain the matcher grid track and allow the RU privacy pill to wrap. */
+.matcherShell{
+  grid-template-columns:minmax(0,1fr);
+}
+.matcherPrivacy{
+  width:auto;
+  min-width:0;
+  max-width:100%;
+  justify-self:start;
+  flex-wrap:wrap;
+  overflow-wrap:anywhere;
+}
+
+/* Residual dark-surface contrast fixes using the existing R69 proof token. */
+.engineReceipt > span{
+  color:var(--r69-proof-muted);
+}
+.youthCard:not(:nth-child(5)) .cardIndex{
+  color:var(--r69-proof-muted);
+}
+.sectionInk .shell.splitHead p{
+  color:var(--r69-proof-muted);
+}
+
+/* Brief Compiler signal is on the light surface; do not recolor dark ProofLab signals. */
+#brief-compiler .proofLab > .proofLabSignal{
+  color:var(--r69-muted);
+}
+
+/* Only the light article in proofSplit; keep .proofHuman kickerLight untouched. */
+.proofSplit article:not(.proofHuman) > .kicker{
+  color:var(--r69-muted);
+}
