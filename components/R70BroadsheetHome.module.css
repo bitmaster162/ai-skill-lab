@@ -74,6 +74,7 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   flex: none;
+  min-height: 44px;
 }
 
 .wordmarkGlyph {
@@ -210,6 +211,9 @@
   padding: 8px 0;
   border-bottom: 1px solid var(--broadsheet-border);
   color: var(--broadsheet-ink) !important;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
 
 /* ----------------------------------------------------
@@ -595,6 +599,8 @@
   padding-bottom: 12px;
   border-bottom: 1px solid var(--broadsheet-dark-border);
   margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .proofBoardTitle {
@@ -1323,6 +1329,10 @@
   font-size: 13px;
   color: #94a3b8 !important;
   transition: color 0.15s ease;
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .footerLinks a:hover {
