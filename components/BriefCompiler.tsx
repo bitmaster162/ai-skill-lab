@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 type Locale="ru"|"en";
 type Group="goal"|"context"|"output"|"verify";
@@ -67,7 +67,7 @@ export function BriefCompiler({locale="ru"}:{locale?:Locale}){
   const [state,setState]=useState<Record<Group,string>>({...defaults});
   const [copyState,setCopyState]=useState<"idle"|"copied"|"failed">("idle");
   const d=DATA[locale];
-  const selected=(group:Group)=>d[group].find(x=>x.key===state[group])!;
+  const selected=useCallback((group:Group)=>d[group].find(x=>x.key===state[group])!,[d,state]);
   const brief=useMemo(()=>{
     const lines=locale==="ru"?[
       `GOAL: ${selected("goal").value}`,
@@ -83,7 +83,7 @@ export function BriefCompiler({locale="ru"}:{locale?:Locale}){
       "HUMAN GATE: do not ship until the verification criterion is confirmed by a person.",
     ];
     return lines.join("\n");
-  },[state,locale]);
+  },[locale,selected]);
   const labels=locale==="ru"?{goal:"01 · GOAL",context:"02 · CONTEXT",output:"03 · OUTPUT",verify:"04 · VERIFY",telegram:"Открыть Telegram с brief →",copy:"Скопировать brief",copied:"Скопировано",failed:"Не удалось скопировать",local:"Локальный compiler · ничего не отправляется"}:{goal:"01 · GOAL",context:"02 · CONTEXT",output:"03 · OUTPUT",verify:"04 · VERIFY",telegram:"Open Telegram with brief →",copy:"Copy brief",copied:"Copied",failed:"Copy failed",local:"Local compiler · nothing is sent"};
   const choose=(group:Group,key:string)=>{setState(s=>({...s,[group]:key}));setCopyState("idle")};
   const copy=async()=>{try{await navigator.clipboard.writeText(brief);setCopyState("copied")}catch{setCopyState("failed")}};
