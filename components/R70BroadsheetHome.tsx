@@ -734,7 +734,7 @@ export function R70BroadsheetHome({ locale = "ru" }: BroadsheetHomeProps) {
             <article className={`${styles.pricingCard} ${styles.pricingCardDark}`}>
               <span className={styles.pricingPlan}>Family Concierge</span>
               <div className={styles.pricingPrice}>$1,490</div>
-              <span className={styles.pricingLength}>{isRu ? "12 занятий + 2 родителям" : "12 learner + 2 parent"}</span>
+              <span className={styles.pricingLength}>{isRu ? "12 занятий + 2 сессии родителю" : "12 learner sessions + 2 parent sessions"}</span>
               <p className={styles.pricingDesc}>
                 {isRu
                   ? "Индивидуальный трек ребёнка, отдельные встречи со взрослым, семейные правила AI и защита проекта."
