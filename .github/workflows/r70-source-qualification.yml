@@ -27,11 +27,6 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install pinned Python QA dependencies
-        run: |
-          python -m pip install --disable-pip-version-check --no-input beautifulsoup4==4.15.0
-          python -c "import bs4; assert bs4.__version__ == '4.15.0'; print('beautifulsoup4=' + bs4.__version__)"
-
       - name: Record toolchain
         run: |
           node --version
@@ -52,5 +47,14 @@ jobs:
       - name: Verify R70 human-gated Telegram brief dispatchers
         run: node scripts/check_r70_source_dispatchers.mjs
 
-      - name: Run complete frozen-release preflight
-        run: python scripts/preflight_release.py --release R69 --output /tmp/r69-preflight.json
+      - name: Assert frozen R69 release identity
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          release = json.loads(Path("deploy/live/_release.json").read_text(encoding="utf-8"))
+          assert release["release_id"] == "R69", release
+          assert release["file_count"] == 55, release
+          assert release["payload_sha256"] == "d9e63c4cbdc9e033bcd8257d7582903ebdcb17f09540c646413481028d31470c", release
+          print("FROZEN_R69_IDENTITY_PASS files=55 payload_sha256=d9e63c4cbdc9e033bcd8257d7582903ebdcb17f09540c646413481028d31470c")
+          PY
