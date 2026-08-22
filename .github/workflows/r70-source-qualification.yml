@@ -4,9 +4,6 @@ on:
   pull_request:
     branches:
       - main
-  push:
-    branches:
-      - 'agent/r70-source-qualification-*'
 
 permissions:
   contents: read
@@ -25,7 +22,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
-          cache: npm
 
       - uses: actions/setup-python@v5
         with:
@@ -37,8 +33,10 @@ jobs:
           npm --version
           python --version
 
-      - name: Install exact JS dependencies
-        run: npm ci
+      - name: Install and record resolved JS dependencies
+        run: |
+          npm install --no-audit --no-fund --package-lock=false
+          npm ls --depth=0
 
       - name: Build R70 source application
         run: npm run build
