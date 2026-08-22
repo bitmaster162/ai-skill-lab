@@ -1,0 +1,101 @@
+name: R70 Current-Head Preprojection Evidence
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  current-head-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NEXT_PUBLIC_SITE_URL: https://ai-skill-lab.vercel.app
+      NEXT_PUBLIC_TELEGRAM_URL: https://t.me/BiTFormer
+      NEXT_PUBLIC_LEAD_FORM_ENABLED: "false"
+      R70_BROWSER_BASE_URL: http://127.0.0.1:4173
+      R70_BROWSER_EVIDENCE_DIR: artifacts/r70-current-head-browser
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Record exact candidate identity
+        run: |
+          echo "event_head=${{ github.event.pull_request.head.sha }}"
+          echo "checkout_head=$(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha }}"
+
+      - name: Install application dependencies
+        run: |
+          npm install --no-audit --no-fund --package-lock=false
+          npm ls --depth=0
+
+      - name: Install pinned browser evidence dependencies
+        run: |
+          npm install --no-save --package-lock=false playwright@1.62.1 axe-core@4.13.0
+          npx playwright install --with-deps chromium
+          node -e "console.log('playwright=' + require('playwright/package.json').version); console.log('axe-core=' + require('axe-core/package.json').version)"
+
+      - name: Lint and build exact R70 source
+        run: |
+          npm run lint
+          npm run build
+
+      - name: Deterministic calculator and source dispatcher gates
+        run: |
+          node scripts/check_r70_business_calculator.mjs
+          node scripts/check_r70_source_dispatchers.mjs
+
+      - name: Existing runtime harness census
+        run: |
+          node scripts/check_hero_engine_runtime.mjs
+          node scripts/check_lab_command_runtime.mjs
+          node scripts/check_matcher_runtime.mjs
+          node scripts/check_brief_compiler_runtime.mjs
+          node scripts/check_pilot_simulator_runtime.mjs
+          node scripts/check_project_studio_runtime.mjs
+          node scripts/check_proof_runtime.mjs
+          node scripts/check_skill_graph_runtime.mjs
+          node scripts/check_start_runtime.mjs
+          node scripts/check_system_challenge_runtime.mjs
+
+      - name: Start exact R70 source server
+        run: |
+          npm start -- --hostname 127.0.0.1 --port 4173 > /tmp/r70-next.log 2>&1 &
+          echo $! > /tmp/r70-next.pid
+          for i in $(seq 1 60); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then
+              echo "R70_SOURCE_SERVER_READY"
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/r70-next.log
+          exit 1
+
+      - name: Current-head browser accessibility interaction and visual evidence
+        run: node scripts/check_r70_current_head_browser.mjs
+
+      - name: Capture local server log
+        if: always()
+        run: |
+          mkdir -p artifacts/r70-current-head-browser
+          cp /tmp/r70-next.log artifacts/r70-current-head-browser/next-server.log || true
+          if [ -f /tmp/r70-next.pid ]; then kill "$(cat /tmp/r70-next.pid)" || true; fi
+
+      - name: Upload current-head evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: r70-current-head-preprojection-evidence
+          path: artifacts/r70-current-head-browser
+          if-no-files-found: error
+          retention-days: 14
