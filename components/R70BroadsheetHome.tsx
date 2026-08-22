@@ -67,8 +67,8 @@ export function R70BroadsheetHome({ locale = "ru" }: BroadsheetHomeProps) {
             </Link>
           </div>
 
-          <Link href={isRu ? "/proof" : "/en/proof"} className={styles.headerCta}>
-            {isRu ? "Запустить Proof Lab" : "Launch Proof Lab"}
+          <Link href={isRu ? "/start" : "/en/start"} className={styles.headerCta}>
+            {isRu ? "Подобрать программу" : "Find my program"}
           </Link>
 
           <button
@@ -103,18 +103,17 @@ export function R70BroadsheetHome({ locale = "ru" }: BroadsheetHomeProps) {
             MASTHEAD (HERO)
             ---------------------------------------------------- */}
         <section className={styles.masthead} id="top" aria-label={isRu ? "Заглавная страница" : "Masthead"}>
-          <aside className={styles.mastheadMarginalia} aria-label={isRu ? "Формат и гейты" : "Format and gates"}>
+          <aside className={styles.mastheadMarginalia} aria-label={isRu ? "Формат обучения" : "Learning format"}>
             <p className={styles.marginaliaLocation}>
               {isRu ? <>Персональное обучение AI<br />online / Phuket</> : <>Personal AI education<br />online / Phuket</>}
             </p>
             <ul className={styles.marginaliaGates}>
-              <li><span className={styles.gateMarker} aria-hidden="true">▸</span>0 PUBLIC FORMS</li>
-              <li><span className={styles.gateMarker} aria-hidden="true">▸</span>HASHED CSP</li>
-              <li><span className={styles.gateMarker} aria-hidden="true">▸</span>HUMAN-GATED</li>
-              <li><span className={styles.gateMarker} aria-hidden="true">▸</span>BYTE-EXACT</li>
+              <li><span className={styles.gateMarker} aria-hidden="true">01</span>{isRu ? "1-НА-1" : "1:1"}</li>
+              <li><span className={styles.gateMarker} aria-hidden="true">02</span>{isRu ? "ПРАКТИКА" : "HANDS-ON"}</li>
+              <li><span className={styles.gateMarker} aria-hidden="true">03</span>{isRu ? "СВОЙ ПРОЕКТ" : "YOUR PROJECT"}</li>
             </ul>
             <p className={styles.marginaliaMeta}>
-              Evidence class: <span className={styles.badgeGate}>GATE</span> — {isRu ? "автоматический гейт проекта" : "automated project gate"}
+              {isRu ? "Маршрут собирается под вашу задачу, уровень и результат." : "The route is built around your goal, level and intended outcome."}
             </p>
           </aside>
 
@@ -132,11 +131,11 @@ export function R70BroadsheetHome({ locale = "ru" }: BroadsheetHomeProps) {
                 : "It should make you more capable. Learn to research, create, automate and build reliable AI workflows around real tasks."}
             </p>
             <div className={styles.mastheadActions}>
-              <Link href={isRu ? "/proof" : "/en/proof"} className={styles.btnPrimaryLarge}>
-                {isRu ? "Запустить Proof Lab →" : "Launch Proof Lab →"}
+              <Link href={isRu ? "/start" : "/en/start"} className={styles.btnPrimaryLarge}>
+                {isRu ? "Подобрать программу →" : "Find my program →"}
               </Link>
-              <Link href={isRu ? "/start" : "/en/start"} className={styles.btnGhostLarge}>
-                {isRu ? "Подобрать программу" : "Find my program"}
+              <Link href="#programs" className={styles.btnGhostLarge}>
+                {isRu ? "Смотреть направления" : "Explore tracks"}
               </Link>
             </div>
           </div>

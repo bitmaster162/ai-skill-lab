@@ -1379,11 +1379,18 @@
     padding: 48px 24px;
     gap: 24px;
   }
+  .mastheadMain {
+    order: 1;
+  }
   .mastheadMarginalia {
+    order: 2;
     border-right: 0;
     border-bottom: 1px solid var(--broadsheet-border);
     padding-right: 0;
     padding-bottom: 16px;
+  }
+  .architectureCard {
+    order: 3;
   }
 
   .trustStrip {
@@ -1452,9 +1459,18 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .programIndex {
+    border-top: 0;
+    gap: 12px;
+  }
   .programRow {
     grid-template-columns: 36px minmax(0, 1fr);
     gap: 12px;
+    align-items: start;
+    padding: 20px 16px;
+    border: 1px solid var(--broadsheet-border);
+    border-radius: 4px;
+    background: #fff;
   }
   .programMetaGroup {
     grid-column: 2;
@@ -1467,6 +1483,16 @@
 
 /* Narrow mobile (< 640px) */
 @media (max-width: 640px) {
+  .mastheadActions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+  .btnPrimaryLarge,
+  .btnGhostLarge {
+    width: 100%;
+  }
+
   .trustStrip {
     grid-template-columns: minmax(0, 1fr);
   }
