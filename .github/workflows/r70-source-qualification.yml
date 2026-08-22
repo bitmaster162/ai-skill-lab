@@ -1,0 +1,53 @@
+name: R70 Source Qualification
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - 'agent/r70-source-qualification-*'
+
+permissions:
+  contents: read
+
+jobs:
+  source-qualification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEXT_PUBLIC_SITE_URL: https://ai-skill-lab.vercel.app
+      NEXT_PUBLIC_TELEGRAM_URL: https://t.me/BiTFormer
+      NEXT_PUBLIC_LEAD_FORM_ENABLED: "false"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Record toolchain
+        run: |
+          node --version
+          npm --version
+          python --version
+
+      - name: Install exact JS dependencies
+        run: npm ci
+
+      - name: Build R70 source application
+        run: npm run build
+
+      - name: Verify R70 business calculator determinism
+        run: node scripts/check_r70_business_calculator.mjs
+
+      - name: Verify R70 human-gated Telegram brief dispatchers
+        run: node scripts/check_r70_source_dispatchers.mjs
+
+      - name: Run complete frozen-release preflight
+        run: python scripts/preflight_release.py --release R69 --output /tmp/r69-preflight.json
