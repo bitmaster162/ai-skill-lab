@@ -1,5 +1,5 @@
 {
-  "file_count": 55,
+  "file_count": 56,
   "files": [
     {
       "path": "404.html",
@@ -28,13 +28,13 @@
     },
     {
       "path": "curriculum.html",
-      "sha256": "6c73a2114374999392f3899eac382fd32de8824c453528e9f790f32ad8fd9567",
-      "size": 14407
+      "sha256": "faebd815e0d9809f97b1a383f4ef324eeb6d589289c7eede2bba3a1c65b9cb4e",
+      "size": 14411
     },
     {
       "path": "en.html",
-      "sha256": "ab637c614a11263b106a7ce4b7caf148e89dbc085eb2ede2b34ca80e0e4114ac",
-      "size": 18889
+      "sha256": "f156792dbbfbd3257d6875e9ba7d1a51180562dec179fbeac03190a850dd742f",
+      "size": 19471
     },
     {
       "path": "en/about.html",
@@ -58,8 +58,8 @@
     },
     {
       "path": "en/curriculum.html",
-      "sha256": "04aaf0470ab7e1ceceb9ea6be68110c504f1f6ab5383bd231909da63ef79c42b",
-      "size": 11904
+      "sha256": "9bc05b3c4bddea86a3852245ac90586c6311a964f370cc5fc04d6218ba10929b",
+      "size": 11908
     },
     {
       "path": "en/faq.html",
@@ -98,8 +98,8 @@
     },
     {
       "path": "en/pricing.html",
-      "sha256": "b818da05543610b4f873cb17b7c7380b03409cf76232cd18520a55c884431ba2",
-      "size": 7311
+      "sha256": "bd7eaccc7e3f9f751854270185edbdf23fb15ab730c9ff2216040e5ca9da0a4a",
+      "size": 7315
     },
     {
       "path": "en/privacy.html",
@@ -153,8 +153,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "d5f052ba6f1922ced33e4d65cd2ffe01a807ed367a8e70a41906c7a1d67ad4eb",
-      "size": 23000
+      "sha256": "9ae2185077da6b88f979d0c4dd21f6a91c895b049a4a4643bfa0672487cf47a8",
+      "size": 22461
     },
     {
       "path": "kids.html",
@@ -198,8 +198,8 @@
     },
     {
       "path": "pricing.html",
-      "sha256": "b291c10989504bf5eadb2345a67b3acb98b9e92793709b0f0f37e0d757200bd0",
-      "size": 8842
+      "sha256": "230500004d8e8b262b93f9a07348e4ebb39e2aa6e10ce2fcab00088d726ecfd1",
+      "size": 8846
     },
     {
       "path": "privacy.html",
@@ -218,13 +218,18 @@
     },
     {
       "path": "r69-static.css",
-      "sha256": "6d284c8ee34b4733f64937dc598844775c93f45b3a1d3bbb5d639f5179f385a4",
-      "size": 2104
+      "sha256": "991a63da31710079fd3873e16d825cbbfc6ebb826e1ac183a7a079852c8e19e3",
+      "size": 2105
+    },
+    {
+      "path": "r70-broadsheet.css",
+      "sha256": "2a80fb422e1c2da3a1246619cb92a6589ccf9558f30a55ae59f32acaa9fa95df",
+      "size": 14814
     },
     {
       "path": "robots.txt",
-      "sha256": "ab7ab25e913aa90086e91785ef4517de7160bd0a081c776a71bd875c5414d071",
-      "size": 76
+      "sha256": "e4b9d3404c59d087f4cfbcc147771ffbc2d9cdfa9a457937c3cbeaff87ec418c",
+      "size": 79
     },
     {
       "path": "safety.html",
@@ -238,8 +243,8 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "6f1a4115d72302df779bbcc270d62bdc92a31318e0e05eb70104caa325204037",
-      "size": 2813
+      "sha256": "171bace19f149941005946c9da8b4298449a9f98713ca6d8e8d41430f53e119d",
+      "size": 2814
     },
     {
       "path": "start.html",
@@ -253,13 +258,13 @@
     },
     {
       "path": "style-r68.css",
-      "sha256": "4e33af94ae7d20ca5830b97bacb4337e0276e9ab11f87b832fe64ff0c6b95461",
-      "size": 36671
+      "sha256": "298307fe50b87b1a417515c261208e1077b95fa7244e3e5773864d09afd30ef9",
+      "size": 27407
     },
     {
       "path": "style.css",
-      "sha256": "f8960a55448cddfd5656bba6c441b0819c10566dc4ceb9d683c27f0061555cd7",
-      "size": 62
+      "sha256": "9ed94fb396a5f4124ffaf7fcbb9485dfff49483f26e0e39d1304df4424398371",
+      "size": 96
     },
     {
       "path": "teens.html",
@@ -273,11 +278,11 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "f2bcf49b492c13d5af30518aad8bbeb60b2f13162e8d4bd8c5c2c2f5ffac2747",
-      "size": 2232
+      "sha256": "1cc20f65a93d8bbd9fe5a57a5a804fb9337ee17d094515a3adb45022244f9d31",
+      "size": 2179
     }
   ],
-  "payload_sha256": "d9e63c4cbdc9e033bcd8257d7582903ebdcb17f09540c646413481028d31470c",
-  "release_id": "R69",
+  "payload_sha256": "2dab1942ddc053e2efcb55e62a9283915303a4a4a4cb57da2ba2399668b8167e",
+  "release_id": "R70",
   "schema": "ai-skill-lab.static-release.v1"
 }
