@@ -248,8 +248,8 @@ export function R70BroadsheetHome({ locale = "ru" }: BroadsheetHomeProps) {
             <div className={styles.proofRight}>
               <div className={styles.proofBoard} aria-label={isRu ? "Гейты релизной системы" : "Release system gates"}>
                 <div className={styles.proofBoardHeader}>
-                  <span className={styles.proofBoardTitle}>AI SKILL LAB / R69 VALIDATED CANDIDATE EVIDENCE</span>
-                  <span className={styles.proofBoardBadge}>● NOT R70 RELEASE</span>
+                  <span className={styles.proofBoardTitle}>AI SKILL LAB / R70 LIVE VERIFIED EVIDENCE</span>
+                  <span className={styles.proofBoardBadge}>● R70 LIVE VERIFIED</span>
                 </div>
                 <ul className={styles.proofGateList}>
                   <li className={styles.proofGateRow}>
@@ -289,8 +289,8 @@ export function R70BroadsheetHome({ locale = "ru" }: BroadsheetHomeProps) {
                 <span className={styles.defectTitle}>{isRu ? "Честное раскрытие дефектов" : "Defect Disclosure"}</span>
                 <p className={styles.defectText}>
                   {isRu
-                    ? "R69 VALIDATED CANDIDATE EVIDENCE. В ходе аудита R69 был выявлен и устранён дефект контрастности цен. Текущий R70 находится в фазе прототипа источника."
-                    : "R69 VALIDATED CANDIDATE EVIDENCE. During R69 audit, a pricing contrast defect was identified and resolved. Current R70 remains in source-prototype phase."}
+                    ? "R70 LIVE VERIFIED. В R69 был выявлен и устранён дефект контрастности цен. При promotion R70 Vercel отклонился от ожидаемого no-rebuild пути: был создан новый production deployment и выполнен server-side build. Production затем независимо проверен по exact R70 manifest и required route smoke."
+                    : "R70 LIVE VERIFIED. In R69, a pricing contrast defect was identified and resolved. During R70 promotion, Vercel diverged from the expected no-rebuild path: a new production deployment was created and a server-side build ran. Production was then independently verified against the exact R70 manifest and required route smoke."}
                 </p>
               </div>
             </div>
@@ -924,7 +924,7 @@ export function R70BroadsheetHome({ locale = "ru" }: BroadsheetHomeProps) {
 
         <div className={styles.footerBottom}>
           <span>© 2026 AI Skill Lab · online / Phuket</span>
-          <span>R70 SOURCE_PROTOTYPE_ONLY · NOT RELEASE-READY</span>
+          <span>R70 LIVE VERIFIED · PLATFORM DEVIATION DISCLOSED</span>
         </div>
       </footer>
     </div>
