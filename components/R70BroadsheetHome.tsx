@@ -248,8 +248,8 @@ export function R70BroadsheetHome({ locale = "ru" }: BroadsheetHomeProps) {
             <div className={styles.proofRight}>
               <div className={styles.proofBoard} aria-label={isRu ? "Гейты релизной системы" : "Release system gates"}>
                 <div className={styles.proofBoardHeader}>
-                  <span className={styles.proofBoardTitle}>AI SKILL LAB / R71 LIVE VERIFIED EVIDENCE</span>
-                  <span className={styles.proofBoardBadge}>● R71 LIVE VERIFIED</span>
+                  <span className={styles.proofBoardTitle}>AI SKILL LAB / R72 LIVE VERIFIED EVIDENCE</span>
+                  <span className={styles.proofBoardBadge}>● R72 LIVE VERIFIED</span>
                 </div>
                 <ul className={styles.proofGateList}>
                   <li className={styles.proofGateRow}>
@@ -289,8 +289,8 @@ export function R70BroadsheetHome({ locale = "ru" }: BroadsheetHomeProps) {
                 <span className={styles.defectTitle}>{isRu ? "Честное раскрытие дефектов" : "Defect Disclosure"}</span>
                 <p className={styles.defectText}>
                   {isRu
-                    ? "R71 LIVE VERIFIED. R71 был promoted одной SHA-bound попыткой из exact qualified Preview R2. Vercel создал новый production deployment, а platform metadata связывает его с exact Preview R2; production затем независимо проверен по exact R71 manifest и required 6/6 live route smoke."
-                    : "R71 LIVE VERIFIED. R71 was promoted in one SHA-bound attempt from the exact qualified Preview R2. Vercel created a new production deployment, and platform metadata binds it to that exact Preview R2; production was then independently verified against the exact R71 manifest and the required 6/6 live route smoke."}
+                    ? "R72 LIVE VERIFIED. R72 был promoted одной SHA-bound попыткой из exact qualified preview. Vercel создал новый production deployment, а platform metadata связывает его с exact qualified preview; production затем независимо проверен по exact R72 manifest и required 6/6 live route smoke."
+                    : "R72 LIVE VERIFIED. R72 was promoted in one SHA-bound attempt from the exact qualified preview. Vercel created a new production deployment, and platform metadata binds it to that exact qualified preview; production was then independently verified against the exact R72 manifest and the required 6/6 live route smoke."}
                 </p>
               </div>
             </div>
@@ -924,7 +924,7 @@ export function R70BroadsheetHome({ locale = "ru" }: BroadsheetHomeProps) {
 
         <div className={styles.footerBottom}>
           <span>© 2026 AI Skill Lab · online / Phuket</span>
-          <span>R71 LIVE VERIFIED · EXACT PREVIEW R2 BOUND</span>
+          <span>R72 LIVE VERIFIED · EXACT QUALIFIED PREVIEW BOUND</span>
         </div>
       </footer>
     </div>
