@@ -248,8 +248,8 @@ export function R70BroadsheetHome({ locale = "ru" }: BroadsheetHomeProps) {
             <div className={styles.proofRight}>
               <div className={styles.proofBoard} aria-label={isRu ? "Гейты релизной системы" : "Release system gates"}>
                 <div className={styles.proofBoardHeader}>
-                  <span className={styles.proofBoardTitle}>AI SKILL LAB / R74 LIVE VERIFIED EVIDENCE</span>
-                  <span className={styles.proofBoardBadge}>● R74 LIVE VERIFIED</span>
+                  <span className={styles.proofBoardTitle}>AI SKILL LAB / R75 LIVE VERIFIED EVIDENCE</span>
+                  <span className={styles.proofBoardBadge}>● R75 LIVE VERIFIED</span>
                 </div>
                 <ul className={styles.proofGateList}>
                   <li className={styles.proofGateRow}>
@@ -289,8 +289,8 @@ export function R70BroadsheetHome({ locale = "ru" }: BroadsheetHomeProps) {
                 <span className={styles.defectTitle}>{isRu ? "Честное раскрытие дефектов" : "Defect Disclosure"}</span>
                 <p className={styles.defectText}>
                   {isRu
-                    ? "R74 LIVE VERIFIED. R74 был promoted одной SHA-bound попыткой из exact qualified preview. Vercel создал новый production deployment, а platform metadata связывает его с exact qualified preview; production затем независимо проверен по exact R74 manifest и required 6/6 live route smoke."
-                    : "R74 LIVE VERIFIED. R74 was promoted in one SHA-bound attempt from the exact qualified preview. Vercel created a new production deployment, and platform metadata binds it to that exact qualified preview; production was then independently verified against the exact R74 manifest and the required 6/6 live route smoke."}
+                    ? "R75 LIVE VERIFIED. После одной видимой SHA-bound promotion-попытки из exact qualified preview Vercel зафиксировал два production deployment objects с matching provenance к exact preview. Обе canonical aliases резолвятся в более поздний serving deployment; serving production затем независимо проверен по exact R75 manifest и required 6/6 live route smoke. Redundant object оставлен untouched и зафиксирован как platform anomaly."
+                    : "R75 LIVE VERIFIED. After one visible SHA-bound promotion attempt from the exact qualified preview, Vercel recorded two production deployment objects with matching provenance to that exact preview. Both canonical aliases resolve to the later serving deployment; serving production was then independently verified against the exact R75 manifest and the required 6/6 live route smoke. The redundant object remains untouched and is recorded as a platform anomaly."}
                 </p>
               </div>
             </div>
@@ -924,7 +924,7 @@ export function R70BroadsheetHome({ locale = "ru" }: BroadsheetHomeProps) {
 
         <div className={styles.footerBottom}>
           <span>© 2026 AI Skill Lab · online / Phuket</span>
-          <span>R74 LIVE VERIFIED · EXACT QUALIFIED PREVIEW BOUND</span>
+          <span>R75 LIVE VERIFIED · EXACT QUALIFIED PREVIEW BOUND</span>
         </div>
       </footer>
     </div>
