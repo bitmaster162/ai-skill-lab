@@ -33,7 +33,7 @@
     },
     {
       "path": "en.html",
-      "sha256": "9cfe2e96fd6b96932c2507802578ce4797f46816714bbcea8dd765fa4693a071",
+      "sha256": "11c546c6dc2542940877be3e8ce73b201d104ed35d7276148bf8fa4d7f70de9a",
       "size": 19565
     },
     {
@@ -153,7 +153,7 @@
     },
     {
       "path": "index.html",
-      "sha256": "b2b0dd1e7c5643be5521db5d8b4d516ce951aab0156205c857ca9b4a33f9b6ab",
+      "sha256": "c6f3f6a0761f276f55c59a4990ede6e5316b2be7a9880a54b68e228dc4db7f6d",
       "size": 22505
     },
     {
@@ -282,7 +282,7 @@
       "size": 2179
     }
   ],
-  "payload_sha256": "020191c941d0f8458a4b441365f9f8742d79f97215494fd5616eeabf9be8599b",
-  "release_id": "R73",
+  "payload_sha256": "6e5a94a0d0666da7f5a6c5a55503c61f67353b79c05e822f882f885efa93f428",
+  "release_id": "R74",
   "schema": "ai-skill-lab.static-release.v1"
 }
