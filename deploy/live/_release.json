@@ -1,5 +1,5 @@
 {
-  "file_count": 56,
+  "file_count": 57,
   "files": [
     {
       "path": "404.html",
@@ -33,8 +33,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "96aee733bafbba22fe5149b20a1fde97f3da13796b8af81a779cd5b72ac62575",
-      "size": 19565
+      "sha256": "a45bcd7d311c66ab55bb9c52f2723c82d7df958d2dad286405d8400c39def549",
+      "size": 7874
     },
     {
       "path": "en/about.html",
@@ -153,8 +153,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "c278f509227c29e3be6b8dca2b15a2ffb6cba434a4917ff4a4c7a1b9f5a2f68c",
-      "size": 22505
+      "sha256": "5b0d1ff30a695511c67c1a58f55b6fefd2cf82ab9037af5ae1dafb5b184e04b6",
+      "size": 9605
     },
     {
       "path": "kids.html",
@@ -227,6 +227,11 @@
       "size": 14814
     },
     {
+      "path": "r77-commercial.css",
+      "sha256": "62922606879a294bbe5faa4f8f7193354bff19467b239c5360f93b1353c4ee99",
+      "size": 7497
+    },
+    {
       "path": "robots.txt",
       "sha256": "e4b9d3404c59d087f4cfbcc147771ffbc2d9cdfa9a457937c3cbeaff87ec418c",
       "size": 79
@@ -282,7 +287,7 @@
       "size": 2179
     }
   ],
-  "payload_sha256": "e94739900cee14c31dabbf0a631c6f2823857009f9d6ab9f532acbd3004e3c8b",
-  "release_id": "R75",
+  "payload_sha256": "0ec382f1c6a927050ea93d6b761295752e4f2baa9aa0a673fa862c3f7caf7a02",
+  "release_id": "R77",
   "schema": "ai-skill-lab.static-release.v1"
 }
