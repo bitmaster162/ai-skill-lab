@@ -308,3 +308,6 @@ button { cursor: pointer; }
 .engineReceipt i { height: 1px; flex: 1; background: #293139; }
 @media(max-width:620px){.engineLayout{grid-template-columns:1fr;min-height:auto}.engineModes{grid-template-columns:repeat(4,1fr)}.engineMode{padding:0 8px;text-align:center}.engineTrack{grid-template-columns:1fr 1fr}.engineTrack article:nth-child(2){border-right:0}.engineTrack article:nth-child(-n+2){border-bottom:1px solid #252c33}.engineWorkbench{padding:15px}.engineReceipt{flex-wrap:wrap}.engineReceipt i{min-width:32px}}
 @media(prefers-reduced-motion:reduce){.engineMode{transition:none!important}}
+
+/* Proof integrity P0 */
+.proofLabStage .proofLabTitleRow h2{color:#f2f4f7}

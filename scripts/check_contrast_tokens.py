@@ -16,6 +16,8 @@ checks=[
  ('static micro / white','#626b74','#ffffff',4.5),('static micro / paper','#626b74','#f6f7f3',4.5),
  ('dark micro / dark','#89919a','#101317',4.5),('dark micro / dark2','#89919a','#171b20',4.5),
  ('muted / paper','#687079','#f6f7f3',4.5),('acid micro','#526337','#b9ff3f',4.5),
+ ('proof ghost / proof hero','#ffffff','#10211d',4.5),
+ ('proof lab heading / dark panel','#f2f4f7','#101419',3.0),
 ]
 errors=[]
 for name,fg,bg,minr in checks:
@@ -39,6 +41,16 @@ for marker in required_static:
     token=marker.strip()
     pos=static.find(token)
     if pos<0 or 'var(--micro)' not in static[pos:pos+260]: errors.append(f'static selector {token} not bound to --micro')
+
+# Guard the two independently reproduced Proof contrast regressions.
+proof_rules=[
+    ('static proof ghost', static, r'\.btn\.ghost\.ghostOnDark\s*\{[^}]*color\s*:\s*#fff'),
+    ('static proof lab heading', static, r'\.proofLabStage\s+\.proofLabTitleRow\s+h2\s*\{[^}]*color\s*:\s*#f2f4f7'),
+    ('source proof dark button', nextcss, r'\.buttonOnDark\s*\{[^}]*color\s*:\s*#fff'),
+    ('source proof lab heading', nextcss, r'\.proofLabStage\s+\.proofLabTitleRow\s+h2\s*\{[^}]*color\s*:\s*#f2f4f7'),
+]
+for name,css,pattern in proof_rules:
+    if not re.search(pattern, css): errors.append(f'{name}: missing explicit contrast rule')
 
 print('contrast_ratios '+ ' '.join(f'{n}={ratio(f,b):.2f}' for n,f,b,_ in checks))
 if errors:
