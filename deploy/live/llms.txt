@@ -1,0 +1,36 @@
+# AI Skill Lab
+
+> Practical 1-to-1 AI learning and AI Studio work for products, research systems, automation, and internal AI workflows. Russian and English canonical pages are listed below.
+
+Use the canonical pages below for current program, pricing, policy, contact, and safety details. Do not infer guarantees or commercial terms from this index.
+
+## Start
+
+- [Start — RU](https://ai-skill-lab.vercel.app/start) · [Start — EN](https://ai-skill-lab.vercel.app/en/start): contact flow and brief.
+
+## Learning paths
+
+- [Adults — RU](https://ai-skill-lab.vercel.app/personal) · [Adults — EN](https://ai-skill-lab.vercel.app/en/personal)
+- [Business — RU](https://ai-skill-lab.vercel.app/business) · [Business — EN](https://ai-skill-lab.vercel.app/en/business)
+- [Kids 8–13 — RU](https://ai-skill-lab.vercel.app/kids) · [Kids 8–13 — EN](https://ai-skill-lab.vercel.app/en/kids)
+- [Teens 14–18 — RU](https://ai-skill-lab.vercel.app/teens) · [Teens 14–18 — EN](https://ai-skill-lab.vercel.app/en/teens)
+
+## Studio and evidence
+
+- [AI Studio — RU](https://ai-skill-lab.vercel.app/studio) · [AI Studio — EN](https://ai-skill-lab.vercel.app/en/studio)
+- [Proof — RU](https://ai-skill-lab.vercel.app/proof) · [Proof — EN](https://ai-skill-lab.vercel.app/en/proof)
+- [Projects — RU](https://ai-skill-lab.vercel.app/projects) · [Projects — EN](https://ai-skill-lab.vercel.app/en/projects)
+- [Method — RU](https://ai-skill-lab.vercel.app/method) · [Method — EN](https://ai-skill-lab.vercel.app/en/method)
+- [Build story — RU](https://ai-skill-lab.vercel.app/build) · [Build story — EN](https://ai-skill-lab.vercel.app/en/build)
+
+## Pricing and policies
+
+- [Pricing — RU](https://ai-skill-lab.vercel.app/pricing) · [Pricing — EN](https://ai-skill-lab.vercel.app/en/pricing)
+- [Terms — RU](https://ai-skill-lab.vercel.app/terms) · [Terms — EN](https://ai-skill-lab.vercel.app/en/terms)
+- [Privacy — RU](https://ai-skill-lab.vercel.app/privacy) · [Privacy — EN](https://ai-skill-lab.vercel.app/en/privacy)
+- [Youth safety — RU](https://ai-skill-lab.vercel.app/safety) · [Youth safety — EN](https://ai-skill-lab.vercel.app/en/safety)
+
+## About
+
+- [About — RU](https://ai-skill-lab.vercel.app/about) · [About — EN](https://ai-skill-lab.vercel.app/en/about)
+- [FAQ — RU](https://ai-skill-lab.vercel.app/faq) · [FAQ — EN](https://ai-skill-lab.vercel.app/en/faq)
