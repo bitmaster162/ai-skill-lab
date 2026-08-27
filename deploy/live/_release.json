@@ -1,5 +1,5 @@
 {
-  "file_count": 57,
+  "file_count": 58,
   "files": [
     {
       "path": "404.html",
@@ -167,6 +167,11 @@
       "size": 1552
     },
     {
+      "path": "llms.txt",
+      "sha256": "0e1eaf6462fac40ec4613eca2c4c523e541e595f4c7c643c423f77c52149fa6a",
+      "size": 2431
+    },
+    {
       "path": "matcher.html",
       "sha256": "aa1586c8646723aa5e2c5a5c70db16bcedb1f52fe6a8ad329b18827f8172299f",
       "size": 14088
@@ -287,7 +292,7 @@
       "size": 2178
     }
   ],
-  "payload_sha256": "5a5890a911caf9330e501fdcadb7adf54e0e1fb3ce57ca4a7c632c42980037f5",
+  "payload_sha256": "64be290e056dfcca4c2a99ae7701fc4020aa4ee4a3e292ffb543f7515ee7d1dd",
   "release_id": "R77",
   "schema": "ai-skill-lab.static-release.v1"
 }
