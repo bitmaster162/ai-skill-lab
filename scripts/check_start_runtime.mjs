@@ -35,7 +35,7 @@ function extract(file){
   const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)].map(m=>m[1]);
   const js=scripts.find(x=>x.includes('document.querySelectorAll(".briefCopy")'));
   if(!js)throw new Error(`brief copy script not found: ${file}`);
-  const blocks=[...html.matchAll(/<article class="card">([\s\S]*?)<\/article>/gi)].map(m=>m[1]);
+  const blocks=[...html.matchAll(/<article class="card"(?: id="studio-brief")?>([\s\S]*?)<\/article>/gi)].map(m=>m[1]);
   if(blocks.length!==5)throw new Error(`${file}: expected 5 brief cards, got ${blocks.length}`);
   const cards=blocks.map((block,i)=>{
     const h=block.match(/<h3>([\s\S]*?)<\/h3>/i);
