@@ -311,3 +311,5 @@ button { cursor: pointer; }
 
 /* Proof integrity P0 */
 .proofLabStage .proofLabTitleRow h2{color:#f2f4f7}
+/* Matcher conversion parity */
+.matcherStartLink,.matcherReset{min-height:44px}
