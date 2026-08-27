@@ -35,7 +35,7 @@ function extract(file){
   const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)].map(m=>m[1]);
   const js=scripts.find(x=>x.includes('document.querySelectorAll(".briefCopy")'));
   if(!js)throw new Error(`brief copy script not found: ${file}`);
-  const blocks=[...html.matchAll(/<article class="card"(?: id="studio-brief")?>([\s\S]*?)<\/article>/gi)].map(m=>m[1]);
+  const blocks=[...html.matchAll(/<article class="card"(?: id="(?:studio|business)-brief")?>([\s\S]*?)<\/article>/gi)].map(m=>m[1]);
   if(blocks.length!==5)throw new Error(`${file}: expected 5 brief cards, got ${blocks.length}`);
   const cards=blocks.map((block,i)=>{
     const h=block.match(/<h3>([\s\S]*?)<\/h3>/i);
@@ -43,7 +43,8 @@ function extract(file){
     if(!h||!list)throw new Error(`${file}: card${i+1} structure drift`);
     const title=cleanText(h[1]);
     const lines=[...list[1].matchAll(/<div>\s*\d+\.\s*([\s\S]*?)<\/div>/gi)].map(x=>cleanText(x[1]));
-    if(lines.length!==4)throw new Error(`${file}: card${i+1} expected 4 fields, got ${lines.length}`);
+    const expectedFields=i===4?6:4;
+    if(lines.length!==expectedFields)throw new Error(`${file}: card${i+1} expected ${expectedFields} fields, got ${lines.length}`);
     const link=block.match(/<a class="btn briefTelegramLink" href="([^"]+)" target="_blank" rel="noopener noreferrer">([^<]+)<\/a>/i);
     if(!link)throw new Error(`${file}: card${i+1} missing exact Telegram brief link`);
     return {title,lines,href:link[1],label:cleanText(link[2])};
@@ -106,11 +107,28 @@ async function run(rel,lang,{referrer='',source=''}={}){
     'Кто будет пользоваться и кто владелец результата',
     'Что считается готовым / где ошибка будет критична',
   ];
+  const expectedBusinessLines=isEn?[
+    'Which process you want to improve',
+    'Who performs and owns it',
+    'How often it repeats',
+    'Which inputs it uses',
+    'What a good output looks like',
+    'What happens if AI is wrong',
+  ]:[
+    'Какой процесс хотите улучшить',
+    'Кто его выполняет и кто владелец',
+    'Как часто он повторяется',
+    'Какие входные данные используются',
+    'Что считается хорошим выходом',
+    'Что произойдёт, если AI ошибётся',
+  ];
   let checks=0;
   const studio=cards[3];
   if(studio.title!=='AI Studio / build')throw new Error(`${rel}: card4 must be AI Studio / build`); checks++;
   if(JSON.stringify(studio.lines)!==JSON.stringify(expectedStudioLines))throw new Error(`${rel}: AI Studio brief fields drift`); checks++;
-  if(cards[4].title!=='Workflow pilot')throw new Error(`${rel}: AI Studio must remain immediately before BUSINESS`); checks++;
+  const business=cards[4];
+  if(business.title!=='Workflow pilot')throw new Error(`${rel}: AI Studio must remain immediately before BUSINESS`); checks++;
+  if(JSON.stringify(business.lines)!==JSON.stringify(expectedBusinessLines))throw new Error(`${rel}: BUSINESS brief fields drift`); checks++;
 
   const buttons=cards.map(({title,lines})=>new E({textContent:initial,card:new Card(title,lines)}));
   const anchors=cards.map(({href})=>({href}));
@@ -140,7 +158,7 @@ async function run(rel,lang,{referrer='',source=''}={}){
 
     clipboard=''; await buttons[i].trigger();
     if(clipboard!==expected)throw new Error(`${rel} card${i+1}: copied brief/source differs from expected bytes`); checks++;
-    if(clipboard.split('\n').length!==(source?7:6))throw new Error(`${rel} card${i+1}: unexpected brief line count`); checks++;
+    if(clipboard.split('\n').length!==lines.length+(source?3:2))throw new Error(`${rel} card${i+1}: unexpected brief line count`); checks++;
     if(source && clipboard.split('\n')[2]!==`${isEn?'Source':'Источник'}: ${source}`)throw new Error(`${rel} card${i+1}: source line position drift`); checks++;
     if(buttons[i].textContent !== (isEn?'Copied ✓':'Скопировано ✓'))throw new Error(`${rel} card${i+1}: missing success feedback`); checks++;
     while(timers.length) timers.shift()();
