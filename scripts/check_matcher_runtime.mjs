@@ -42,6 +42,12 @@ function makeHarness(lang) {
         if (html.includes(`id="${id}"`)) byId.set(id,new FakeElement({id,textContent:id}));
         else byId.delete(id);
       }
+      const tg=html.match(/<a class="btn light" id="mtelegram" href="([^"]+)" target="_blank" rel="noopener noreferrer">([^<]+)<\/a>/);
+      if (tg) {
+        const el=new FakeElement({id:'mtelegram',textContent:tg[2]});
+        el.setAttribute('href',tg[1]); el.setAttribute('target','_blank'); el.setAttribute('rel','noopener noreferrer');
+        byId.set('mtelegram',el);
+      } else byId.delete('mtelegram');
     }
   });
   byId.set('matcher-output',output);
@@ -90,10 +96,19 @@ async function runCase(rel,lang) {
     await el.trigger();
   };
 
+  if (h.context.document.getElementById('mtelegram')) throw new Error(`${rel}: Telegram CTA must be absent before recommendation`);
   await pick('audience','adult');
   await pick('goal','research');
   await pick('depth','core');
   if (!h.output.innerHTML.includes('Personal') || !h.output.innerHTML.includes('$890')) throw new Error(`${rel}: adult/core recommendation mismatch`);
+  const tg=h.context.document.getElementById('mtelegram');
+  if (!tg) throw new Error(`${rel}: Telegram CTA not rendered`);
+  const prefix='https://t.me/BiTFormer?text=';
+  const href=tg.getAttribute('href') || '';
+  if (!href.startsWith(prefix)) throw new Error(`${rel}: Telegram href prefix mismatch`);
+  if (tg.getAttribute('target') !== '_blank') throw new Error(`${rel}: Telegram target mismatch`);
+  const relTokens=new Set((tg.getAttribute('rel') || '').split(/\s+/));
+  if (!relTokens.has('noopener') || !relTokens.has('noreferrer')) throw new Error(`${rel}: Telegram rel mismatch`);
   const copy=h.context.document.getElementById('mcopy');
   if (!copy) throw new Error(`${rel}: copy button not rendered`);
   await copy.trigger();
@@ -101,6 +116,7 @@ async function runCase(rel,lang) {
   if (!clip.includes('Personal') || !clip.includes('$890') || !clip.includes('\n')) throw new Error(`${rel}: copied brief incomplete`);
   if (lang==='ru' && !clip.includes('AI Skill Lab — запрос')) throw new Error(`${rel}: RU copied brief mismatch`);
   if (lang==='en' && !clip.includes('AI Skill Lab — request')) throw new Error(`${rel}: EN copied brief mismatch`);
+  if (decodeURIComponent(href.slice(prefix.length)) !== clip) throw new Error(`${rel}: Telegram payload differs from copied brief`);
 
   const reset=h.context.document.getElementById('mreset');
   await reset.trigger();
@@ -111,7 +127,7 @@ async function runCase(rel,lang) {
   await pick('depth','deep');
   if (!h.output.innerHTML.includes('Business workflow pilot') || !h.output.innerHTML.includes('Custom scope')) throw new Error(`${rel}: business recommendation mismatch`);
 
-  return {rel,checks:8,clipboardLines:clip.split('\n').length};
+  return {rel,checks:14,clipboardLines:clip.split('\n').length};
 }
 
 const results=[];
