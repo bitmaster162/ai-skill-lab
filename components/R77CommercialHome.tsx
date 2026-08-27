@@ -30,7 +30,7 @@ export function R77CommercialHome({ locale = "ru" }: { locale?: R77Locale }) {
         ["Start", "$390", "4 sessions", "A practical AI workflow and first useful result."],
         ["Personal", "$890", "10 sessions", "A tailored learning path, reusable templates and a final project."],
         ["Intensive", "$1,290", "12 sessions + project", "Automation, an AI agent, product or portfolio project."],
-        ["Family Concierge", "$1,490", "12 sessions + 2 parent sessions", "Learning plus a practical family safety and usage framework."],
+        ["Family Concierge", "$1,490", "12 learner sessions + 2 parent sessions", "Learning plus a practical family safety and usage framework."],
       ];
 
   return (
