@@ -17,8 +17,8 @@ FILES={
     'kids_en':[ROOT/'app/en/kids/page.tsx',ROOT/'deploy/live/en/kids.html'],
     'teens_ru':[ROOT/'app/teens/page.tsx',ROOT/'deploy/live/teens.html'],
     'teens_en':[ROOT/'app/en/teens/page.tsx',ROOT/'deploy/live/en/teens.html'],
-    'home_ru':[ROOT/'components/R70BroadsheetHome.tsx',ROOT/'deploy/live/index.html'],
-    'home_en':[ROOT/'components/R70BroadsheetHome.tsx',ROOT/'deploy/live/en.html'],
+    'home_ru':[ROOT/'components/R77CommercialHome.tsx',ROOT/'deploy/live/index.html'],
+    'home_en':[ROOT/'components/R77CommercialHome.tsx',ROOT/'deploy/live/en.html'],
     'parents_ru':[ROOT/'app/parents/page.tsx',ROOT/'deploy/live/parents.html'],
     'parents_en':[ROOT/'app/en/parents/page.tsx',ROOT/'deploy/live/en/parents.html'],
 }
