@@ -8,9 +8,11 @@ import re
 import sys
 import xml.etree.ElementTree as ET
 
+from public_origin import PUBLIC_ORIGIN
+
 ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "deploy" / "live"
-ORIGIN = "https://ai-skill-lab.vercel.app"
+ORIGIN = PUBLIC_ORIGIN
 OG_IMAGE = f"{ORIGIN}/og.png"
 
 
