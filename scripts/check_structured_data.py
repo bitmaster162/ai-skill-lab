@@ -4,9 +4,11 @@ import json,re,sys
 from html.parser import HTMLParser
 from pathlib import Path
 
+from public_origin import PUBLIC_ORIGIN
+
 ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/'deploy'/'live'
-ORIGIN='https://ai-skill-lab.vercel.app'
+ORIGIN=PUBLIC_ORIGIN
 ORG_ID=f'{ORIGIN}/#organization'
 WEB_ID=f'{ORIGIN}/#website'
 TELEGRAM='https://t.me/BiTFormer'
