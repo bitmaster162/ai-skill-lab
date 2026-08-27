@@ -163,8 +163,8 @@
     },
     {
       "path": "lab-command.js",
-      "sha256": "970c2b9396e868fc9c8339b873e3ee118326e133d4e9c3f1ea748af0fbf2b93f",
-      "size": 1552
+      "sha256": "75ca4cd245d62522471a7077b6e17db735dc77ceed836094e6383d75f4813dba",
+      "size": 3435
     },
     {
       "path": "llms.txt",
@@ -292,7 +292,7 @@
       "size": 2178
     }
   ],
-  "payload_sha256": "64be290e056dfcca4c2a99ae7701fc4020aa4ee4a3e292ffb543f7515ee7d1dd",
+  "payload_sha256": "ad6776b652621dce1fcd9bc84e69102d9448d1d2941aa0e528052ffc84a6edb4",
   "release_id": "R77",
   "schema": "ai-skill-lab.static-release.v1"
 }

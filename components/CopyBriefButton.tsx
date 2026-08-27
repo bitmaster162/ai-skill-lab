@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type CopyBriefButtonProps = {
   title: string;
@@ -26,12 +26,31 @@ async function copyText(text: string) {
   }
 }
 
+function getSameOriginSource() {
+  if (typeof window === "undefined" || typeof document === "undefined" || !document.referrer) return "";
+  try {
+    const referrer = new URL(document.referrer);
+    if (referrer.origin !== window.location.origin) return "";
+    const path = referrer.pathname.replace(/\/+$/, "") || "/";
+    if (path === "/start" || path === "/en/start") return "";
+    return path;
+  } catch {
+    return "";
+  }
+}
+
 export function CopyBriefButton({ title, lines, locale = "ru" }: CopyBriefButtonProps) {
   const [copyState, setCopyState] = useState<"idle" | "done" | "error">("idle");
+  const [source, setSource] = useState("");
   const isEn = locale === "en";
+
+  useEffect(() => {
+    setSource(getSameOriginSource());
+  }, []);
   const text = [
     isEn ? "AI Skill Lab — brief" : "AI Skill Lab — запрос",
     `${isEn ? "Route" : "Маршрут"}: ${title}`,
+    ...(source ? [`${isEn ? "Source" : "Источник"}: ${source}`] : []),
     ...lines.map((line, index) => `${index + 1}. ${line}: `),
   ].join("\n");
   const telegramHref = `https://t.me/BiTFormer?text=${encodeURIComponent(text)}`;

@@ -8,12 +8,17 @@ const root=path.resolve(path.dirname(new URL(import.meta.url).pathname),'..');
 
 class E {
   constructor({textContent='',card=null}={}){this.textContent=textContent;this.card=card;this.listeners=new Map();this.style={};this.value='';}
-  addEventListener(t,fn){this.listeners.set(t,fn)}
+  addEventListener(t,fn,options=false){const list=this.listeners.get(t)||[];list.push({fn,capture:options===true||Boolean(options?.capture)});this.listeners.set(t,list)}
   closest(sel){return sel==='.card'?this.card:null}
   setAttribute(){}
   select(){}
   remove(){}
-  async trigger(){const fn=this.listeners.get('click');if(!fn)throw new Error('missing click listener');return await fn.call(this,{target:this})}
+  async trigger(){
+    const list=[...(this.listeners.get('click')||[])];
+    const ordered=[...list.filter(x=>x.capture),...list.filter(x=>!x.capture)];
+    const event={target:this,stopped:false,stopImmediatePropagation(){this.stopped=true}};
+    for(const {fn} of ordered){await fn.call(this,event);if(event.stopped)break}
+  }
 }
 class Card {
   constructor(title,lines){this.title=new E({textContent:title});this.lines=lines.map(x=>new E({textContent:x}));}
@@ -46,42 +51,82 @@ function extract(file){
   return {html,js,cards};
 }
 
-function buildBrief(title,lines,isEn){
+function attributionScript(){
+  const full=fs.readFileSync(path.join(root,'deploy/live/lab-command.js'),'utf8');
+  const marker='(()=>{"use strict";const START_PATHS=';
+  const at=full.indexOf(marker);
+  if(at<0)throw new Error('start source attribution runtime missing from lab-command.js');
+  const js=full.slice(at);
+  for(const forbidden of ['localStorage','sessionStorage','document.cookie','fetch(','XMLHttpRequest','sendBeacon']){
+    if(js.includes(forbidden))throw new Error(`start attribution must stay storage/network free: ${forbidden}`);
+  }
+  return js;
+}
+
+function assertSourceParity(){
+  const src=fs.readFileSync(path.join(root,'components/CopyBriefButton.tsx'),'utf8');
+  const required=[
+    'getSameOriginSource()',
+    'referrer.origin !== window.location.origin',
+    'path === "/start" || path === "/en/start"',
+    'setSource(getSameOriginSource())',
+    '`${isEn ? "Source" : "Источник"}: ${source}`',
+  ];
+  for(const token of required)if(!src.includes(token))throw new Error(`CopyBriefButton source-attribution parity missing: ${token}`);
+  for(const forbidden of ['localStorage','sessionStorage','document.cookie','fetch(','XMLHttpRequest','sendBeacon']){
+    if(src.includes(forbidden))throw new Error(`CopyBriefButton attribution must stay storage/network free: ${forbidden}`);
+  }
+  return required.length+6;
+}
+
+function buildBrief(title,lines,isEn,source=''){
   return [
     isEn?'AI Skill Lab — brief':'AI Skill Lab — запрос',
     `${isEn?'Route':'Маршрут'}: ${title}`,
+    ...(source?[`${isEn?'Source':'Источник'}: ${source}`]:[]),
     ...lines.map((line,index)=>`${index+1}. ${line}: `),
   ].join('\n');
 }
 
-async function run(rel,lang){
+async function run(rel,lang,{referrer='',source=''}={}){
   const file=path.join(root,rel);
   const {js,cards}=extract(file);
+  const sourceJs=attributionScript();
   const isEn=lang==='en';
   const initial=isEn?'Copy brief':'Скопировать brief';
   const expectedLabel=isEn?'Open Telegram with this brief →':'Написать в Telegram с brief →';
   let checks=0;
 
   const buttons=cards.map(({title,lines})=>new E({textContent:initial,card:new Card(title,lines)}));
+  const anchors=cards.map(({href})=>({href}));
   let clipboard=''; const timers=[];
-  const document={documentElement:{lang},body:{appendChild(){}},querySelectorAll(sel){return sel==='.briefCopy'?buttons:[]},createElement(){return new E()},execCommand(){return true}};
+  const pagePath=isEn?'/en/start':'/start';
+  const pageUrl=new URL(`https://ai-skill-lab.vercel.app${pagePath}`);
+  const document={
+    documentElement:{lang},referrer,
+    body:{appendChild(){}},
+    querySelectorAll(sel){if(sel==='.briefCopy')return buttons;if(sel==='.briefTelegramLink')return anchors;return[]},
+    createElement(){return new E()},execCommand(){return true},
+  };
   const navigator={clipboard:{async writeText(t){clipboard=String(t)}}};
-  const context={document,navigator,setTimeout(fn){timers.push(fn);return timers.length},clearTimeout(){},console};context.window=context;
+  const location={origin:pageUrl.origin,pathname:pageUrl.pathname};
+  const context={document,navigator,location,URL,setTimeout(fn){timers.push(fn);return timers.length},clearTimeout(){},console};context.window=context;
   vm.runInNewContext(js,context,{filename:rel,timeout:1000});
+  vm.runInNewContext(sourceJs,context,{filename:'deploy/live/lab-command.js#start-source-attribution',timeout:1000});
 
   for(let i=0;i<cards.length;i++){
-    const {title,lines,href,label}=cards[i];
-    const expected=buildBrief(title,lines,isEn);
-
+    const {title,lines,label}=cards[i];
+    const expected=buildBrief(title,lines,isEn,source);
+    const href=anchors[i].href;
     const u=new URL(href);
     if(u.protocol!=='https:'||u.hostname!=='t.me'||u.pathname!=='/BiTFormer')throw new Error(`${rel} card${i+1}: Telegram route drift`); checks++;
-    if(!href.startsWith('https://t.me/BiTFormer?text='))throw new Error(`${rel} card${i+1}: Telegram prefix drift`); checks++;
-    if(u.searchParams.get('text')!==expected)throw new Error(`${rel} card${i+1}: decoded Telegram brief differs from card bytes`); checks++;
+    if(u.searchParams.get('text')!==expected)throw new Error(`${rel} card${i+1}: decoded Telegram brief/source differs from expected bytes`); checks++;
     if(label!==expectedLabel)throw new Error(`${rel} card${i+1}: Telegram CTA label drift`); checks++;
 
     clipboard=''; await buttons[i].trigger();
-    if(clipboard!==expected)throw new Error(`${rel} card${i+1}: copied brief differs from card bytes`); checks++;
-    if(clipboard.split('\n').length!==6)throw new Error(`${rel} card${i+1}: expected 6 brief lines`); checks++;
+    if(clipboard!==expected)throw new Error(`${rel} card${i+1}: copied brief/source differs from expected bytes`); checks++;
+    if(clipboard.split('\n').length!==(source?7:6))throw new Error(`${rel} card${i+1}: unexpected brief line count`); checks++;
+    if(source && clipboard.split('\n')[2]!==`${isEn?'Source':'Источник'}: ${source}`)throw new Error(`${rel} card${i+1}: source line position drift`); checks++;
     if(buttons[i].textContent !== (isEn?'Copied ✓':'Скопировано ✓'))throw new Error(`${rel} card${i+1}: missing success feedback`); checks++;
     while(timers.length) timers.shift()();
     if(buttons[i].textContent!==initial)throw new Error(`${rel} card${i+1}: success label did not reset`); checks++;
@@ -94,12 +139,21 @@ async function run(rel,lang){
   while(timers.length) timers.shift()();
   if(buttons[0].textContent!==initial)throw new Error(`${rel}: failure label did not reset`); checks++;
 
-  return {rel,checks};
+  return {rel,checks,source:source||'NONE'};
 }
 
 try{
-  const results=[await run('deploy/live/start.html','ru'),await run('deploy/live/en/start.html','en')];
-  console.log(`start_runtime_checks=${results.reduce((n,x)=>n+x.checks,0)} pages=${results.length}`);
-  results.forEach(x=>console.log(`${x.rel}: PASS checks=${x.checks}`));
-  console.log('START_RUNTIME_TELEGRAM_PREFILL_PASS');
+  let checks=assertSourceParity();
+  const cases=[];
+  for(const [rel,lang] of [['deploy/live/start.html','ru'],['deploy/live/en/start.html','en']]){
+    cases.push(await run(rel,lang));
+    cases.push(await run(rel,lang,{referrer:'https://example.com/pricing'}));
+    cases.push(await run(rel,lang,{referrer:'https://ai-skill-lab.vercel.app/start'}));
+    cases.push(await run(rel,lang,{referrer:'https://ai-skill-lab.vercel.app/pricing?from=cta#plans',source:'/pricing'}));
+    cases.push(await run(rel,lang,{referrer:'https://ai-skill-lab.vercel.app/',source:'/'}));
+  }
+  checks+=cases.reduce((n,x)=>n+x.checks,0);
+  console.log(`start_runtime_checks=${checks} cases=${cases.length}`);
+  cases.forEach(x=>console.log(`${x.rel}: PASS source=${x.source} checks=${x.checks}`));
+  console.log('START_RUNTIME_TELEGRAM_PREFILL_SOURCE_ATTRIBUTION_PASS');
 }catch(err){console.error('FAIL:',err?.stack||err);process.exit(1)}
