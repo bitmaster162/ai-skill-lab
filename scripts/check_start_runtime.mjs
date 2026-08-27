@@ -36,7 +36,7 @@ function extract(file){
   const js=scripts.find(x=>x.includes('document.querySelectorAll(".briefCopy")'));
   if(!js)throw new Error(`brief copy script not found: ${file}`);
   const blocks=[...html.matchAll(/<article class="card">([\s\S]*?)<\/article>/gi)].map(m=>m[1]);
-  if(blocks.length!==4)throw new Error(`${file}: expected 4 brief cards, got ${blocks.length}`);
+  if(blocks.length!==5)throw new Error(`${file}: expected 5 brief cards, got ${blocks.length}`);
   const cards=blocks.map((block,i)=>{
     const h=block.match(/<h3>([\s\S]*?)<\/h3>/i);
     const list=block.match(/<div class="checklist">([\s\S]*?)<\/div><div class="briefCardActions">/i);
@@ -95,7 +95,22 @@ async function run(rel,lang,{referrer='',source=''}={}){
   const isEn=lang==='en';
   const initial=isEn?'Copy brief':'Скопировать brief';
   const expectedLabel=isEn?'Open Telegram with this brief →':'Написать в Telegram с brief →';
+  const expectedStudioLines=isEn?[
+    'What you want to build or change',
+    'What happens today / what already exists',
+    'Who will use it and who owns the outcome',
+    'What counts as done / where failure would be costly',
+  ]:[
+    'Что хотите собрать или изменить',
+    'Что происходит сейчас / что уже есть',
+    'Кто будет пользоваться и кто владелец результата',
+    'Что считается готовым / где ошибка будет критична',
+  ];
   let checks=0;
+  const studio=cards[3];
+  if(studio.title!=='AI Studio / build')throw new Error(`${rel}: card4 must be AI Studio / build`); checks++;
+  if(JSON.stringify(studio.lines)!==JSON.stringify(expectedStudioLines))throw new Error(`${rel}: AI Studio brief fields drift`); checks++;
+  if(cards[4].title!=='Workflow pilot')throw new Error(`${rel}: AI Studio must remain immediately before BUSINESS`); checks++;
 
   const buttons=cards.map(({title,lines})=>new E({textContent:initial,card:new Card(title,lines)}));
   const anchors=cards.map(({href})=>({href}));
