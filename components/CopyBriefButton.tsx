@@ -34,23 +34,34 @@ export function CopyBriefButton({ title, lines, locale = "ru" }: CopyBriefButton
     `${isEn ? "Route" : "Маршрут"}: ${title}`,
     ...lines.map((line, index) => `${index + 1}. ${line}: `),
   ].join("\n");
+  const telegramHref = `https://t.me/BiTFormer?text=${encodeURIComponent(text)}`;
 
   return (
-    <button
-      className="button buttonSmall buttonGhost briefCopyButton"
-      type="button"
-      onClick={async () => {
-        const ok = await copyText(text);
-        setCopyState(ok ? "done" : "error");
-        window.setTimeout(() => setCopyState("idle"), 1800);
-      }}
-      aria-live="polite"
-    >
-      {copyState === "done"
-        ? (isEn ? "Copied ✓" : "Скопировано ✓")
-        : copyState === "error"
-          ? (isEn ? "Copy failed" : "Не удалось скопировать")
-          : (isEn ? "Copy brief" : "Скопировать brief")}
-    </button>
+    <>
+      <button
+        className="button buttonSmall buttonGhost briefCopyButton"
+        type="button"
+        onClick={async () => {
+          const ok = await copyText(text);
+          setCopyState(ok ? "done" : "error");
+          window.setTimeout(() => setCopyState("idle"), 1800);
+        }}
+        aria-live="polite"
+      >
+        {copyState === "done"
+          ? (isEn ? "Copied ✓" : "Скопировано ✓")
+          : copyState === "error"
+            ? (isEn ? "Copy failed" : "Не удалось скопировать")
+            : (isEn ? "Copy brief" : "Скопировать brief")}
+      </button>
+      <a
+        className="button buttonSmall buttonPrimary briefTelegramLink"
+        href={telegramHref}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {isEn ? "Open Telegram with this brief →" : "Написать в Telegram с brief →"}
+      </a>
+    </>
   );
 }
