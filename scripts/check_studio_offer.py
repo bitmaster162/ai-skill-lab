@@ -14,6 +14,10 @@ for rel,en in surfaces:
     if re.search(r'\$\s?[0-9]',t): errors.append(f'{rel}: AI Studio must remain custom-scope, found hard-coded price')
     expect='/en/start' if en else '/start'; checks+=1
     if expect not in t: errors.append(f'{rel}: missing Start route {expect}')
+    for anchor in ['studio-offers','studio-delivery','studio-fit','studio-claims','studio-brief']:
+        checks+=2
+        if f'id="{anchor}"' not in t: errors.append(f'{rel}: missing section anchor {anchor}')
+        if f'href="#{anchor}"' not in t: errors.append(f'{rel}: missing inner-nav link #{anchor}')
     # Required claims discipline: negatives must be explicit, not implied.
     neg = ['guaranteed ROI','autonomous critical business decision'] if en else ['гарантированного ROI','автономного решения критичных бизнес-вопросов']
     for m in neg:
