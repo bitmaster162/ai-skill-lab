@@ -4,11 +4,13 @@ from pathlib import Path
 from urllib.parse import urlparse
 import re, sys
 
+from public_origin import PUBLIC_ORIGIN
+
 ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/'deploy'/'live'
 LLMS=LIVE/'llms.txt'
 SITEMAP=LIVE/'sitemap.xml'
-BASE='https://ai-skill-lab.vercel.app'
+BASE=PUBLIC_ORIGIN
 MAX_BYTES=4096
 
 errors=[]; checks=0
