@@ -10,4 +10,8 @@ main:has(#pilot-simulator) .steps h3{margin-top:38px}
 main:has(#business-brief) .contactSection{padding:60px 0}
 main:has(#business-brief) .contactOnlyCard{min-height:0}
 main:has(#business-brief) .briefCardActions .textLink{display:flex;align-items:center;min-height:44px}
+.projectStudioHero h1{font-size:48px}
+.projectStudioStatus{flex-wrap:wrap}
+.projectStudioStatus span{width:100%}
+.projectStudioCard h2{margin-top:28px}
 }
