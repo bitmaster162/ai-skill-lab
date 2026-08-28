@@ -35,6 +35,8 @@ jobs:
         run: python scripts/check_contrast_tokens.py
       - name: Validate motion policy
         run: python scripts/check_motion_policy.py
+      - name: Validate static accessibility
+        run: python scripts/check_static_accessibility.py
       - name: Validate inline client scripts
         run: python scripts/check_inline_scripts.py
       - name: Smoke-test matcher runtime

@@ -34,7 +34,8 @@ export function R77CommercialHome({ locale = "ru" }: { locale?: R77Locale }) {
       ];
 
   return (
-    <main className={styles.page}>
+    <div className={styles.page}>
+      <a className="skipLink" href="#main">{ru ? "К содержанию" : "Skip to content"}</a>
       <header className={styles.header}>
         <Link href={ru ? "/" : "/en"} className={styles.brand}>
           <span className={styles.mark}>◢◤</span>
@@ -54,6 +55,7 @@ export function R77CommercialHome({ locale = "ru" }: { locale?: R77Locale }) {
         </div>
       </header>
 
+      <main id="main">
       <section className={styles.hero}>
         <div className={styles.heroCopy}>
           <div className={styles.eyebrow}>{ru ? "ПЕРСОНАЛЬНО · ONLINE / PHUKET · RU / EN" : "ONE-TO-ONE · ONLINE / PHUKET · RU / EN"}</div>
@@ -154,6 +156,8 @@ export function R77CommercialHome({ locale = "ru" }: { locale?: R77Locale }) {
         <Link href={p("/start")} className={styles.primary}>{ru ? "Начать →" : "Start →"}</Link>
       </section>
 
+      </main>
+
       <footer className={styles.footer}>
         <strong>AI Skill Lab</strong>
         <span>© 2026 · Phuket / online</span>
@@ -165,6 +169,6 @@ export function R77CommercialHome({ locale = "ru" }: { locale?: R77Locale }) {
           <Link href={p("/proof")}>Proof</Link>
         </nav>
       </footer>
-    </main>
+    </div>
   );
 }
