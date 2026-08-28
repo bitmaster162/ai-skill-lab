@@ -13,8 +13,10 @@ for p in files:
     checks+=1
     if '<form' in t.lower(): errors.append(f'{p.relative_to(ROOT)}: unexpected form')
     if p.name=='start.html':
-        checks+=2
-        if t.count('class="btn ghost briefCopy"') != 4: errors.append(f'{p.relative_to(ROOT)}: expected 4 copy buttons')
+        checks+=4
+        if t.count('class="btn ghost briefCopy"') != 5: errors.append(f'{p.relative_to(ROOT)}: expected 5 copy buttons')
+        if t.count('class="btn briefTelegramLink"') != 5: errors.append(f'{p.relative_to(ROOT)}: expected 5 Telegram brief links')
+        if 'id="business-brief"' not in t: errors.append(f'{p.relative_to(ROOT)}: business brief anchor missing')
         if 'navigator.clipboard.writeText' not in t: errors.append(f'{p.relative_to(ROOT)}: clipboard helper missing')
 print(f'client_privacy_checks={checks}')
 if errors:
