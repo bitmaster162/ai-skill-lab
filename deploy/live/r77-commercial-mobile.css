@@ -1,0 +1,1 @@
+@media(max-width:620px){main:is(:has(.cards .price),:has(#pilot-simulator),:has(#business-brief)) .card{min-height:0;padding:20px}main:has(#pilot-simulator) .visual{min-height:300px}}

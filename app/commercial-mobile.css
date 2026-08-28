@@ -1,0 +1,13 @@
+@media(max-width:620px){
+main:has(.pricingGrid) .heroR2{min-height:auto;padding:48px 0 54px}
+main:is(:has(.pricingGrid),:has(#pilot-simulator),:has(#business-brief)) .section{padding:60px 0}
+main:has(.pricingGrid) .priceCard{min-height:0;padding:22px}
+main:has(.pricingGrid) .priceCard .price{margin:12px 0 14px}
+main:has(#pilot-simulator) .teenHero{min-height:auto;padding:56px 0}
+main:is(:has(#pilot-simulator),:has(#business-brief)) .programCard{min-height:0}
+main:has(#pilot-simulator) .steps article{min-height:180px}
+main:has(#pilot-simulator) .steps h3{margin-top:38px}
+main:has(#business-brief) .contactSection{padding:60px 0}
+main:has(#business-brief) .contactOnlyCard{min-height:0}
+main:has(#business-brief) .briefCardActions .textLink{display:flex;align-items:center;min-height:44px}
+}
