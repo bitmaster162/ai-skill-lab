@@ -43,7 +43,7 @@ export default function Page() {
   return <>
     <Header locale="en" contactHref="/en/start" alternateHref="/business" />
     <main id="main">
-      <section className="teenHero"><div className="shell teenHeroGrid"><div><span className="eyebrow">Founders · teams · operators</span><h1>Do not “add AI”.<br/><span>Change one process.</span></h1><p>Start from recurring work, quality and risk. Then choose one workflow that can be tested, handed to an owner and improved over time.</p><div className="heroActions"><Link className="button buttonLight" href="/en/start#business-brief">Discuss business scope</Link><Link className="button buttonGhost buttonOnDark" href="/en/method">Method →</Link></div></div></div></section>
+      <section className="teenHero"><div className="shell teenHeroGrid"><div><span className="eyebrow">Founders · teams · operators</span><h1>Do not “add AI”.<br/><span>Change one process.</span></h1><p>Start from recurring work, quality and risk. Then choose one workflow that can be tested, handed to an owner and improved over time.</p><div className="heroActions"><Link className="button buttonLight" href="/en/start#business-brief">Prepare business brief →</Link><Link className="button buttonGhost buttonOnDark" href="/en/proof">Verify in Proof Lab →</Link></div></div></div></section>
 
       <section className="section"><div className="shell"><span className="kicker">Engagements</span><h2>Three ways to start</h2><div className="programGrid">{offers.map(([n,t,x])=><article className="programCard" key={n}><span className="cardIndex">{n}</span><div className="cardSpacer"/><h3>{t}</h3><p>{x}</p></article>)}</div></div></section>
 

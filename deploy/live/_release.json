@@ -8,8 +8,8 @@
     },
     {
       "path": "about.html",
-      "sha256": "3240d1aeb83b392d3cd7bb9481f4526e0ee51bbc2c08825bfbf3216762b3a54a",
-      "size": 7422
+      "sha256": "3a570d71b7754380ffedfafff800aaa53b24df47854851f41d2e49edce6dfbbb",
+      "size": 7500
     },
     {
       "path": "build.html",
@@ -18,8 +18,8 @@
     },
     {
       "path": "business.html",
-      "sha256": "4be8a63b58604ad1be206a67298013c655ce309e5383a02af84c7814715b565b",
-      "size": 19096
+      "sha256": "c16b6c3a8bc5db2fe4d09608ab99cd71f2180b7f5dc04a941b329fecb4b8980c",
+      "size": 19119
     },
     {
       "path": "challenge.html",
@@ -38,8 +38,8 @@
     },
     {
       "path": "en/about.html",
-      "sha256": "b98f5ecb76fc9ea10e9ed2d08366725e0dcea233081ab1360076873a31d6e0be",
-      "size": 6313
+      "sha256": "090c62cf2cc50f972215ac02ac541da2e8cb371856ed61f5b2bf1445a706cba9",
+      "size": 6377
     },
     {
       "path": "en/build.html",
@@ -48,8 +48,8 @@
     },
     {
       "path": "en/business.html",
-      "sha256": "79f219825b5312075abf1efa53331d1cb089f97ffa48b2dd038258c762469e0a",
-      "size": 14861
+      "sha256": "1bfb164d88de60fa6d97f0b3c6fdad5c20b8254d2dec4b2694825adc6c5a71eb",
+      "size": 14873
     },
     {
       "path": "en/challenge.html",
@@ -292,7 +292,7 @@
       "size": 2178
     }
   ],
-  "payload_sha256": "1fd04ed1cca56a9461ef15de6b27d45efb4984262dc8906313754cc4b23567c7",
+  "payload_sha256": "242bc4c0af8efb032505a22ce277d4a68ba3f71b10350c3151bf2a4cf347e672",
   "release_id": "R77",
   "schema": "ai-skill-lab.static-release.v1"
 }
