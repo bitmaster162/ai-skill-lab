@@ -43,7 +43,7 @@ export default function Page() {
   return <>
     <Header contactHref="/start" alternateHref="/en/business" />
     <main id="main">
-      <section className="teenHero"><div className="shell teenHeroGrid"><div><span className="eyebrow">Founders · teams · operators</span><h1>Не «добавить AI».<br/><span>Изменить один процесс.</span></h1><p>Начинаем с повторяемой работы, качества и рисков. Потом выбираем один workflow, который можно проверить, передать владельцу и улучшать дальше.</p><div className="heroActions"><Link className="button buttonLight" href="/start#business-brief">Обсудить business scope</Link><Link className="button buttonGhost buttonOnDark" href="/method">Метод →</Link></div></div></div></section>
+      <section className="teenHero"><div className="shell teenHeroGrid"><div><span className="eyebrow">Founders · teams · operators</span><h1>Не «добавить AI».<br/><span>Изменить один процесс.</span></h1><p>Начинаем с повторяемой работы, качества и рисков. Потом выбираем один workflow, который можно проверить, передать владельцу и улучшать дальше.</p><div className="heroActions"><a className="button buttonLight" href="https://t.me/BiTFormer" target="_blank" rel="noopener noreferrer">Написать в Telegram →</a><Link className="button buttonGhost buttonOnDark" href="/start#business-brief">Подготовить brief →</Link></div></div></div></section>
 
       <section className="section"><div className="shell"><span className="kicker">Форматы</span><h2>Три способа начать</h2><div className="programGrid">{offers.map(([n,t,x])=><article className="programCard" key={n}><span className="cardIndex">{n}</span><div className="cardSpacer"/><h3>{t}</h3><p>{x}</p></article>)}</div></div></section>
 
