@@ -1,1 +1,1 @@
-@media(max-width:620px){main:is(:has(.cards .price),:has(#pilot-simulator),:has(#business-brief)) .card{min-height:0;padding:20px}main:has(#pilot-simulator) .visual{min-height:300px}}
+@media(max-width:620px){main:is(:has(.cards .price),:has(#pilot-simulator),:has(#business-brief)) .card{min-height:0;padding:20px}main:has(#pilot-simulator) .visual{min-height:300px}.projectStudioHero h1{font-size:48px}.projectStudioStatus{flex-wrap:wrap}.projectStudioStatus span{width:100%}.projectStudioCard h2{margin-top:28px}}
