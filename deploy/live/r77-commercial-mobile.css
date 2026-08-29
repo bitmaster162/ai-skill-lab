@@ -4,4 +4,5 @@
 @media(min-width:621px) and (max-width:980px){main:has(#pilot-simulator) .curr{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:621px) and (max-width:980px){.proofLabTabs{grid-template-columns:repeat(4,1fr)}}
 @media(min-width:901px) and (max-width:980px){.proofGateGrid{grid-template-columns:repeat(3,1fr)}.proofFlow{grid-template-columns:repeat(4,1fr)}.proofSplitGrid{grid-template-columns:1fr 1fr}}
+@media(min-width:851px) and (max-width:980px){main:has(.methodgrid) #builder .split{grid-template-columns:1fr}}
 @media(min-width:981px){.outputgrid article:nth-child(2){border-right:1px solid var(--line)}}
