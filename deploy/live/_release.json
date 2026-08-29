@@ -1,5 +1,5 @@
 {
-  "file_count": 58,
+  "file_count": 59,
   "files": [
     {
       "path": "404.html",
@@ -237,6 +237,11 @@
       "size": 2242
     },
     {
+      "path": "r77-commercial.css",
+      "sha256": "cab5cc10c1c77a5b93133ca64d16024a7fddd6252fb5ef09fafb5baf1698df0c",
+      "size": 5999
+    },
+    {
       "path": "robots.txt",
       "sha256": "e4b9d3404c59d087f4cfbcc147771ffbc2d9cdfa9a457937c3cbeaff87ec418c",
       "size": 79
@@ -292,7 +297,7 @@
       "size": 2178
     }
   ],
-  "payload_sha256": "a8af56c6677af3a9407766e31e9d88fcae3cb27b6395842e6961eff551e3d9b8",
+  "payload_sha256": "1417d33db361b6bcc6b75f9416ae4a065855c2b2ea6c7ea703d0d000bb225835",
   "release_id": "R77",
   "schema": "ai-skill-lab.static-release.v1"
 }
