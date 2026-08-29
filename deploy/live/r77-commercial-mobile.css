@@ -3,7 +3,7 @@
 @media(min-width:851px){main:has(#pilot-simulator) .curr{grid-template-columns:repeat(4,1fr)}}
 @media(min-width:621px) and (max-width:980px){.curr{grid-template-columns:1fr 1fr}.proofLabTabs{grid-template-columns:repeat(4,1fr)}:has(.nav :is([href$=phuket],[href$=curriculum])) .cards{grid-template-columns:1fr 1fr}}
 @media(min-width:901px) and (max-width:980px){.proofGateGrid{grid-template-columns:repeat(3,1fr)}.proofFlow{grid-template-columns:repeat(4,1fr)}.proofSplitGrid{grid-template-columns:1fr 1fr}}
-@media(min-width:851px) and (max-width:980px){main:has(.methodgrid) #builder .split{grid-template-columns:1fr}}
+@media(min-width:851px) and (max-width:980px){.split{grid-template-columns:1fr}}
 @media(min-width:851px) and (max-width:1100px){main:has(.parentScore) .wrap.split:has(.price){grid-template-columns:1fr}}
 @media(min-width:851px) and (max-width:980px){main:has(> .hero.heroR6 .actions a[href$="/method"]) .cards{grid-template-columns:1fr}}
 @media(min-width:981px) and (max-width:1100px){main:has(> .hero.dark .actions a[href="#program"]) .herogrid{grid-template-columns:1fr}}
