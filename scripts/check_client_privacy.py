@@ -5,6 +5,8 @@ ROOT=Path(__file__).resolve().parents[1]/'deploy'/'live'
 files=[ROOT/'start.html',ROOT/'en'/'start.html',ROOT/'matcher.html',ROOT/'en'/'matcher.html']
 forbidden=['fetch(', 'XMLHttpRequest', 'localStorage', 'sessionStorage', 'document.cookie', 'sendBeacon(', 'WebSocket(']
 errors=[]; checks=0
+brief_js=ROOT/'start-brief.js'
+brief=brief_js.read_text(encoding='utf-8')
 for p in files:
     t=p.read_text(encoding='utf-8')
     for token in forbidden:
@@ -17,7 +19,12 @@ for p in files:
         if t.count('class="btn ghost briefCopy"') != 5: errors.append(f'{p.relative_to(ROOT)}: expected 5 copy buttons')
         if t.count('class="btn briefTelegramLink"') != 5: errors.append(f'{p.relative_to(ROOT)}: expected 5 Telegram brief links')
         if 'id="business-brief"' not in t: errors.append(f'{p.relative_to(ROOT)}: business brief anchor missing')
-        if 'navigator.clipboard.writeText' not in t: errors.append(f'{p.relative_to(ROOT)}: clipboard helper missing')
+        if '<script src="/start-brief.js"></script>' not in t: errors.append(f'{p.relative_to(ROOT)}: shared clipboard helper missing')
+for token in forbidden:
+    checks+=1
+    if token in brief: errors.append(f'start-brief.js: forbidden client persistence/network primitive {token}')
+checks+=1
+if 'navigator.clipboard.writeText' not in brief: errors.append('start-brief.js: clipboard helper missing')
 print(f'client_privacy_checks={checks}')
 if errors:
     for e in errors: print('FAIL:',e)

@@ -1,5 +1,5 @@
 {
-  "file_count": 60,
+  "file_count": 61,
   "files": [
     {
       "path": "404.html",
@@ -123,8 +123,8 @@
     },
     {
       "path": "en/start.html",
-      "sha256": "b63f376c2dd946e1f70b9ddd8770f131fd0527b594544ff296628e60a8f8f95e",
-      "size": 11269
+      "sha256": "3492b4eeecaa58b6e63e60b856b9db2fb9fbb0c1ce09f014a2a1c7ecad951527",
+      "size": 10110
     },
     {
       "path": "en/studio.html",
@@ -267,9 +267,14 @@
       "size": 2814
     },
     {
+      "path": "start-brief.js",
+      "sha256": "16d5f805235af408e3d62dd71e80bb0bab16fae60353a497499de1bcfc1ac769",
+      "size": 1181
+    },
+    {
       "path": "start.html",
-      "sha256": "9478fb54dcce7fb4bf7a43a91eacda9f6501ffacd8f5864c71ccae14a059fce4",
-      "size": 16113
+      "sha256": "7fa72d749beff17122f526088ed26619da403abba2b14d50c546e912d8fbcd1b",
+      "size": 14954
     },
     {
       "path": "studio.html",
@@ -298,11 +303,11 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "4f667680a07f503920b77345af0d19b5a3855efb91504de07102fa963c297eb5",
-      "size": 2124
+      "sha256": "7fa03e56741676e4395e41b00cb8137116f6620406c3b6cfb4bd78d6818106bb",
+      "size": 2070
     }
   ],
-  "payload_sha256": "18b87cd0d8e3b3e9dc3d25c31d3dc34120a9af9d79ebfc557e16d5b3c9bacba5",
+  "payload_sha256": "e006607629a08d9403899cdcb35a9be02d009b8f564a0362b3cb9e3f6d53c26d",
   "release_id": "R77",
   "schema": "ai-skill-lab.static-release.v1"
 }
