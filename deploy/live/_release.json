@@ -288,8 +288,8 @@
     },
     {
       "path": "teens.html",
-      "sha256": "0c4aa29ce0ea8a6abc5665b97d8fe0ff8133018a1bbaa627757ba55ef9f13386",
-      "size": 9342
+      "sha256": "dfb529bee92ce87a97ecca6811cd3c1867eaa9a5d0702fd855e54e9900d4d566",
+      "size": 10438
     },
     {
       "path": "terms.html",
@@ -302,7 +302,7 @@
       "size": 2124
     }
   ],
-  "payload_sha256": "f6599eaf87935848f898f2140edda676ce262c36b936610498549b98fd52dfc6",
+  "payload_sha256": "18b87cd0d8e3b3e9dc3d25c31d3dc34120a9af9d79ebfc557e16d5b3c9bacba5",
   "release_id": "R77",
   "schema": "ai-skill-lab.static-release.v1"
 }
