@@ -228,8 +228,8 @@
     },
     {
       "path": "r70-broadsheet.css",
-      "sha256": "2a80fb422e1c2da3a1246619cb92a6589ccf9558f30a55ae59f32acaa9fa95df",
-      "size": 14814
+      "sha256": "f74bc7b4c6df9da48627406f54a342e4f82d9d0d3e44bb68d9e200881b375208",
+      "size": 14511
     },
     {
       "path": "r77-commercial-mobile.css",
@@ -297,7 +297,7 @@
       "size": 2178
     }
   ],
-  "payload_sha256": "671d569ebd3e131e292395942dea388f3fa5efb0dd98498bec8b6368162a44ec",
+  "payload_sha256": "e2f274be193da930b0306d73be52aed4eb03ae3a2b7661efac4dffed922b452f",
   "release_id": "R77",
   "schema": "ai-skill-lab.static-release.v1"
 }
