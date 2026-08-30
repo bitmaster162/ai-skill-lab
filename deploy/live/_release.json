@@ -1,5 +1,5 @@
 {
-  "file_count": 59,
+  "file_count": 60,
   "files": [
     {
       "path": "404.html",
@@ -108,8 +108,8 @@
     },
     {
       "path": "en/projects.html",
-      "sha256": "d2442e15b467adf368048bf0c4a043468c7070f9af13932d930205d8769e59b4",
-      "size": 14249
+      "sha256": "e18cd4fd8b2df719a25c44f2dfbf5916822768972e3b2ea548a1a1761247b839",
+      "size": 13560
     },
     {
       "path": "en/proof.html",
@@ -168,8 +168,8 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "0e1eaf6462fac40ec4613eca2c4c523e541e595f4c7c643c423f77c52149fa6a",
-      "size": 2431
+      "sha256": "0ea9d5c49a5d0545be8e7699e85db5a329f57b7755c60c06a1d1662b7e8c00a0",
+      "size": 1721
     },
     {
       "path": "matcher.html",
@@ -212,9 +212,14 @@
       "size": 6089
     },
     {
+      "path": "project-filter.js",
+      "sha256": "9ffbc90afc98556eb1539629ede2876362e2a00f2b84fe20df315fc09997dc28",
+      "size": 714
+    },
+    {
       "path": "projects.html",
-      "sha256": "67a7274f86bca2096869564049db16f9f5d194c5f21710da80fac7bbbdc51938",
-      "size": 17656
+      "sha256": "9c3224a5d25c61e1b8610dcfd9c6f6dc0edc4f500e81d65b3cb27a0a70ebaa49",
+      "size": 16967
     },
     {
       "path": "proof.html",
@@ -293,11 +298,11 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "0c8b416294afd510bbc2a36a91e5de4966114429dcde69e18e9b98d568f329b8",
-      "size": 2178
+      "sha256": "4f667680a07f503920b77345af0d19b5a3855efb91504de07102fa963c297eb5",
+      "size": 2124
     }
   ],
-  "payload_sha256": "3fb6540efbcb82eaeb3d4f7f59098ac9022395c64a0a33d20b3616778bdcc80a",
+  "payload_sha256": "f6599eaf87935848f898f2140edda676ce262c36b936610498549b98fd52dfc6",
   "release_id": "R77",
   "schema": "ai-skill-lab.static-release.v1"
 }
