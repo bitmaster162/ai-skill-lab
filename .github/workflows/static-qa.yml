@@ -53,3 +53,5 @@ jobs:
         run: python scripts/check_contact_funnel.py
       - name: Validate FAQ source-static parity
         run: python scripts/check_faq_parity.py
+      - name: Validate parent RU/EN route parity
+        run: python scripts/check_parent_route_parity.py
