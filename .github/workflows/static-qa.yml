@@ -57,6 +57,8 @@ jobs:
         run: python scripts/check_cta_semantics.py
       - name: Validate AI Studio offer
         run: python scripts/check_studio_offer.py
+      - name: Validate Build Story provenance
+        run: python scripts/check_build_story.py
       - name: Validate FAQ source-static parity
         run: python scripts/check_faq_parity.py
       - name: Validate parent RU/EN route parity
