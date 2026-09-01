@@ -1,35 +1,63 @@
 #!/usr/bin/env python3
-from pathlib import Path
 from datetime import date
-from bs4 import BeautifulSoup
-import re,sys
-ROOT=Path(__file__).resolve().parents[1]
-expected_age='https://help.openai.com/en/articles/8313401'
-expected_parent='https://help.openai.com/en/articles/12315553-parental-controls-on-chatgpt-faq/'
-max_age_days=90
-checks=0
-for rel in ['deploy/live/safety.html','deploy/live/en/safety.html']:
-    p=ROOT/rel; soup=BeautifulSoup(p.read_text(encoding='utf-8'),'html.parser')
-    node=soup.select_one('[data-policy-verified]')
-    if not node:
-        print(f'YOUTH_POLICY_DATE_MISSING {rel}'); sys.exit(1)
-    try: d=date.fromisoformat(node.get('data-policy-verified'))
-    except Exception:
-        print(f'YOUTH_POLICY_DATE_INVALID {rel}'); sys.exit(1)
-    age=(date.today()-d).days
-    if age<0 or age>max_age_days:
-        print(f'YOUTH_POLICY_STALE {rel} age_days={age} max={max_age_days}'); sys.exit(1)
-    checks+=1
-    hrefs={a.get('href') for a in soup.find_all('a')}
-    for u in [expected_age,expected_parent]:
-        if u not in hrefs:
-            print(f'YOUTH_POLICY_SOURCE_MISSING {rel} {u}'); sys.exit(1)
-        checks+=1
-# Source pages must carry the same provenance date and both official source URLs.
-for rel in ['app/safety/page.tsx','app/en/safety/page.tsx']:
-    text=(ROOT/rel).read_text(encoding='utf-8')
-    for token in ['data-policy-verified="2026-08-15"',expected_age,expected_parent]:
-        if token not in text:
-            print(f'YOUTH_POLICY_SOURCE_PARITY_FAIL {rel} {token}'); sys.exit(1)
-        checks+=1
-print(f'YOUTH_POLICY_FRESHNESS_PASS checks={checks} verified=2026-08-15 max_age_days={max_age_days}')
+from pathlib import Path
+import re
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+SURFACES = [
+    "app/safety/page.tsx",
+    "app/en/safety/page.tsx",
+    "deploy/live/safety.html",
+    "deploy/live/en/safety.html",
+]
+OFFICIAL_SOURCES = [
+    "https://help.openai.com/en/articles/8313401",
+    "https://help.openai.com/en/articles/12315553-parental-controls-on-chatgpt-faq/",
+]
+MAX_AGE_DAYS = 30
+DATE_RE = re.compile(r'data-policy-verified=["\'](\d{4}-\d{2}-\d{2})["\']')
+
+checks = 0
+verified = {}
+
+for rel in SURFACES:
+    text = (ROOT / rel).read_text(encoding="utf-8")
+    matches = DATE_RE.findall(text)
+    if len(matches) != 1:
+        print(f"YOUTH_POLICY_DATE_COUNT_FAIL {rel} count={len(matches)}")
+        sys.exit(1)
+    raw = matches[0]
+    try:
+        verified_date = date.fromisoformat(raw)
+    except ValueError:
+        print(f"YOUTH_POLICY_DATE_INVALID {rel} value={raw}")
+        sys.exit(1)
+    age = (date.today() - verified_date).days
+    if age < 0:
+        print(f"YOUTH_POLICY_DATE_FUTURE {rel} verified={raw} age_days={age}")
+        sys.exit(1)
+    if age > MAX_AGE_DAYS:
+        print(f"YOUTH_POLICY_STALE {rel} verified={raw} age_days={age} max={MAX_AGE_DAYS}")
+        sys.exit(1)
+    verified[rel] = raw
+    checks += 1
+    for url in OFFICIAL_SOURCES:
+        if url not in text:
+            print(f"YOUTH_POLICY_SOURCE_MISSING {rel} {url}")
+            sys.exit(1)
+        checks += 1
+
+dates = set(verified.values())
+checks += 1
+if len(dates) != 1:
+    detail = ",".join(f"{rel}={value}" for rel, value in verified.items())
+    print(f"YOUTH_POLICY_DATE_PARITY_FAIL {detail}")
+    sys.exit(1)
+
+verified_date = next(iter(dates))
+age_days = (date.today() - date.fromisoformat(verified_date)).days
+print(
+    f"YOUTH_POLICY_FRESHNESS_PASS checks={checks} surfaces={len(SURFACES)} "
+    f"verified={verified_date} age_days={age_days} max_age_days={MAX_AGE_DAYS}"
+)

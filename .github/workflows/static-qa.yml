@@ -67,6 +67,8 @@ jobs:
         run: python scripts/check_trust_route_parity.py
       - name: Validate youth route parity
         run: python scripts/check_youth_route_parity.py
+      - name: Validate youth policy freshness
+        run: python scripts/check_youth_policy_freshness.py
       - name: Validate navigation parity
         run: python scripts/check_navigation_parity.py
       - name: Validate Lab Command parity
