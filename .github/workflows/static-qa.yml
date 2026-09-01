@@ -65,6 +65,12 @@ jobs:
         run: python scripts/check_trust_route_parity.py
       - name: Validate youth route parity
         run: python scripts/check_youth_route_parity.py
+      - name: Validate navigation parity
+        run: python scripts/check_navigation_parity.py
+      - name: Validate Lab Command parity
+        run: python scripts/check_lab_command.py
+      - name: Validate Lab discoverability
+        run: python scripts/check_lab_discoverability.py
       - name: Validate Project Studio parity
         run: python scripts/check_project_studio.py
       - name: Smoke-test Project Studio runtime

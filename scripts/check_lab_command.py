@@ -4,9 +4,19 @@ import sys
 ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/'deploy'/'live'
 errors=[];checks=0
+R77_HOMES={'index.html','en.html'}
 pages=[p for p in sorted(LIVE.rglob('*.html')) if p.name!='404.html']
+legacy_pages=0
 for p in pages:
     rel=p.relative_to(LIVE).as_posix();t=p.read_text(encoding='utf-8')
+    if rel in R77_HOMES:
+        for token in ['id="lab-command"','src="/lab-command.js"','data-lab-command-open']:
+            checks+=1
+            if token in t:errors.append(f'{rel}: R77 commercial home must not mount legacy Lab Command token {token}')
+        checks+=1
+        if '<header class="header">' not in t:errors.append(f'{rel}: R77 commercial header missing')
+        continue
+    legacy_pages+=1
     for token,count in [('id="lab-command"',1),('src="/lab-command.js"',1),('aria-keyshortcuts="Control+K Meta+K"',1)]:
         checks+=1
         if t.count(token)!=count:errors.append(f'{rel}: {token} count={t.count(token)} expected={count}')
@@ -32,7 +42,7 @@ for forbidden in ['fetch(','XMLHttpRequest','localStorage','sessionStorage','doc
     checks+=1
     if forbidden in js:errors.append(f'lab-command.js: forbidden primitive {forbidden}')
 
-print(f'lab_command_checks={checks} pages={len(pages)}')
+print(f'lab_command_checks={checks} legacy_pages={legacy_pages} r77_homes={len(R77_HOMES)}')
 if errors:
     for e in errors:print('FAIL:',e)
     sys.exit(1)
