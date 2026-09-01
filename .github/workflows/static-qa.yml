@@ -67,6 +67,8 @@ jobs:
         run: python scripts/check_youth_route_parity.py
       - name: Validate Project Studio parity
         run: python scripts/check_project_studio.py
+      - name: Smoke-test Project Studio runtime
+        run: node scripts/check_project_studio_runtime.mjs
       - name: Validate AI Pilot Simulator parity
         run: python scripts/check_pilot_simulator.py
       - name: Smoke-test AI Pilot Simulator runtime
@@ -89,3 +91,5 @@ jobs:
         run: node scripts/check_system_challenge_runtime.mjs
       - name: Validate Lab Hub
         run: python scripts/check_lab_hub.py
+      - name: Smoke-test Lab Command runtime
+        run: node scripts/check_lab_command_runtime.mjs
