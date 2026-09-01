@@ -1,43 +1,129 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import re,sys
-ROOT=Path(__file__).resolve().parents[1]
-errors=[];checks=0
-surfaces=[('app/studio/page.tsx',False),('app/en/studio/page.tsx',True),('deploy/live/studio.html',False),('deploy/live/en/studio.html',True)]
-common=['AI STUDIO / BUILD WITH US','CUSTOM SCOPE','AI PRODUCT / WEBSITE','RESEARCH / DECISION','AUTOMATION / AGENT','TEAM ENABLEMENT','DIAGNOSE','SCOPE','BUILD','VERIFY','SHIP','TRANSFER','Ship / Revise / Stop','/build']
-for rel,en in surfaces:
-    t=(ROOT/rel).read_text(encoding='utf-8')
+import re
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+errors = []
+checks = 0
+
+studio_surfaces = [
+    ("app/studio/page.tsx", False),
+    ("app/en/studio/page.tsx", True),
+    ("deploy/live/studio.html", False),
+    ("deploy/live/en/studio.html", True),
+]
+common = [
+    "AI STUDIO / BUILD WITH US",
+    "CUSTOM SCOPE",
+    "AI PRODUCT / WEBSITE",
+    "RESEARCH / DECISION",
+    "AUTOMATION / AGENT",
+    "TEAM ENABLEMENT",
+    "DIAGNOSE",
+    "SCOPE",
+    "BUILD",
+    "VERIFY",
+    "SHIP",
+    "TRANSFER",
+    "Ship / Revise / Stop",
+    "/build",
+]
+
+for rel, en in studio_surfaces:
+    text = (ROOT / rel).read_text(encoding="utf-8")
     for marker in common:
-        checks+=1
-        if marker.lower() not in t.lower(): errors.append(f'{rel}: missing {marker}')
-    checks+=1
-    if re.search(r'\$\s?[0-9]',t): errors.append(f'{rel}: AI Studio must remain custom-scope, found hard-coded price')
-    expect='/en/start' if en else '/start'; checks+=1
-    if expect not in t: errors.append(f'{rel}: missing Start route {expect}')
-    for anchor in ['studio-offers','studio-delivery','studio-fit','studio-claims','studio-brief']:
-        checks+=2
-        if f'id="{anchor}"' not in t: errors.append(f'{rel}: missing section anchor {anchor}')
-        if f'href="#{anchor}"' not in t: errors.append(f'{rel}: missing inner-nav link #{anchor}')
-    # Required claims discipline: negatives must be explicit, not implied.
-    neg = ['guaranteed ROI','autonomous critical business decision'] if en else ['гарантированного ROI','автономного решения критичных бизнес-вопросов']
-    for m in neg:
-        checks+=1
-        if m.lower() not in t.lower(): errors.append(f'{rel}: missing claims boundary {m}')
-# Discoverability
-for rel,markers in {
- 'app/page.tsx':['/studio','Собрать с нами'],
- 'app/en/page.tsx':['/en/studio','Build with us'],
- 'deploy/live/index.html':['/studio','Собрать с нами'],
- 'deploy/live/en.html':['/en/studio','Build with us'],
- 'components/LabCommand.tsx':['AI Studio','/studio','/en/studio','BUILD WITH US'],
- 'deploy/live/lab-command.js':['AI Studio',"b+'/studio'",'BUILD WITH US'],
-}.items():
-    t=(ROOT/rel).read_text(encoding='utf-8')
-    for m in markers:
-        checks+=1
-        if m not in t: errors.append(f'{rel}: missing discoverability marker {m}')
-print(f'studio_offer_checks={checks} surfaces={len(surfaces)}')
+        checks += 1
+        if marker.casefold() not in text.casefold():
+            errors.append(f"{rel}: missing {marker}")
+    checks += 1
+    if re.search(r"\$\s?[0-9]", text):
+        errors.append(f"{rel}: AI Studio must remain custom-scope, found hard-coded price")
+    start_route = "/en/start" if en else "/start"
+    checks += 1
+    if start_route not in text:
+        errors.append(f"{rel}: missing Start route {start_route}")
+    for anchor in [
+        "studio-offers",
+        "studio-delivery",
+        "studio-fit",
+        "studio-claims",
+        "studio-brief",
+    ]:
+        checks += 2
+        if f'id="{anchor}"' not in text:
+            errors.append(f"{rel}: missing section anchor {anchor}")
+        if f'href="#{anchor}"' not in text:
+            errors.append(f"{rel}: missing inner-nav link #{anchor}")
+    claims = (
+        ["guaranteed ROI", "autonomous critical business decision"]
+        if en
+        else ["гарантированного ROI", "автономного решения критичных бизнес-вопросов"]
+    )
+    for marker in claims:
+        checks += 1
+        if marker.casefold() not in text.casefold():
+            errors.append(f"{rel}: missing claims boundary {marker}")
+
+mounts = {
+    "app/page.tsx": '<R77CommercialHome locale="ru" />',
+    "app/en/page.tsx": '<R77CommercialHome locale="en" />',
+}
+for rel, marker in mounts.items():
+    checks += 1
+    if marker not in (ROOT / rel).read_text(encoding="utf-8"):
+        errors.append(f"{rel}: R77 home mount missing")
+
+component = (ROOT / "components/R77CommercialHome.tsx").read_text(encoding="utf-8")
+for marker in [
+    "/studio",
+    "/en/studio",
+    "Открыть Studio →",
+    "Open Studio →",
+    "Studio для ассистента",
+    "Studio for an assistant",
+]:
+    checks += 1
+    if marker not in component:
+        errors.append(f"components/R77CommercialHome.tsx: missing {marker!r}")
+
+static_homes = {
+    "deploy/live/index.html": [
+        'href="/studio"',
+        "Открыть Studio →",
+        "Studio для ассистента",
+    ],
+    "deploy/live/en.html": [
+        'href="/en/studio"',
+        "Open Studio →",
+        "Studio for an assistant",
+    ],
+}
+for rel, markers in static_homes.items():
+    text = (ROOT / rel).read_text(encoding="utf-8")
+    for marker in markers:
+        checks += 1
+        if marker not in text:
+            errors.append(f"{rel}: missing Studio discoverability {marker!r}")
+
+lab_command = (ROOT / "components/LabCommand.tsx").read_text(encoding="utf-8")
+for marker in ["AI Studio", "/studio", "/en/studio", "BUILD WITH US"]:
+    checks += 1
+    if marker not in lab_command:
+        errors.append(f"components/LabCommand.tsx: missing {marker!r}")
+
+static_command = (ROOT / "deploy/live/lab-command.js").read_text(encoding="utf-8")
+for marker in ["AI Studio", "b+'/studio'", "BUILD WITH US"]:
+    checks += 1
+    if marker not in static_command:
+        errors.append(f"deploy/live/lab-command.js: missing {marker!r}")
+
+print(
+    f"studio_offer_checks={checks} studio_surfaces={len(studio_surfaces)} "
+    "discovery_surfaces=7"
+)
 if errors:
-    for e in errors: print('FAIL:',e)
+    for error in errors:
+        print("FAIL:", error)
     sys.exit(1)
-print('AI_STUDIO_OFFER_PASS')
+print("AI_STUDIO_OFFER_PASS")
