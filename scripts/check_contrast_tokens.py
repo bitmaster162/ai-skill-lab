@@ -18,6 +18,8 @@ checks=[
  ('muted / paper','#687079','#f6f7f3',4.5),('acid micro','#526337','#b9ff3f',4.5),
  ('proof ghost / proof hero','#ffffff','#10211d',4.5),
  ('proof lab heading / dark panel','#f2f4f7','#101419',3.0),
+ ('static proof gate index / white','#626b74','#ffffff',4.5),
+ ('source proof gate index / warm card','#626b74','#fbf7f1',4.5),
 ]
 errors=[]
 for name,fg,bg,minr in checks:
@@ -28,7 +30,12 @@ from css_graph import read_local_css_graph
 
 LIVE=ROOT/'deploy/live'
 static=read_local_css_graph(LIVE/'style.css', LIVE)
-nextcss=(ROOT/'app/globals.css').read_text()
+source_files=('globals.css','r69.css','r70.css','commercial-mobile.css','proof-contrast.css')
+nextcss='\n'.join((ROOT/'app'/name).read_text() for name in source_files)
+layout=(ROOT/'app/layout.tsx').read_text()
+if 'import "./proof-contrast.css";' not in layout:
+    errors.append('source: proof-contrast.css not imported after existing global CSS')
+
 for name,css in [('static',static),('next',nextcss)]:
     if '--micro:#626b74' not in css.replace(' ','') and '--micro: #626b74' not in css:
         errors.append(f'{name}: missing --micro token')
@@ -42,7 +49,7 @@ for marker in required_static:
     pos=static.find(token)
     if pos<0 or 'var(--micro)' not in static[pos:pos+260]: errors.append(f'static selector {token} not bound to --micro')
 
-# Guard the two independently reproduced Proof contrast regressions.
+# Guard independently reproduced Proof contrast regressions.
 proof_rules=[
     ('static proof ghost', static, r'\.btn\.ghost\.ghostOnDark\s*\{[^}]*color\s*:\s*#fff'),
     ('static proof lab heading', static, r'\.proofLabStage\s+\.proofLabTitleRow\s+h2\s*\{[^}]*color\s*:\s*#f2f4f7'),
@@ -51,6 +58,25 @@ proof_rules=[
 ]
 for name,css,pattern in proof_rules:
     if not re.search(pattern, css): errors.append(f'{name}: missing explicit contrast rule')
+
+# The Proof Gate backgrounds currently differ between static and source presentation
+# layers, so guard both actual background assumptions independently.
+background_rules=[
+    ('static proof gate card', static, '.proofGateGrid article{', 'background:#fff'),
+    ('source proof gate card', nextcss, '.proofGateGrid article{', 'background:#fbf7f1'),
+]
+for name,css,marker,expected in background_rules:
+    pos=css.rfind(marker)
+    if pos<0 or expected not in css[pos:pos+220].replace(' ',''):
+        errors.append(f'{name}: effective background drift')
+
+# The earlier R50 declaration may remain, but the effective last declaration must use
+# the verified --micro token on both source and static CSS graphs.
+for name,css in [('static proof gate index',static),('source proof gate index',nextcss)]:
+    marker='.proofGateGrid article>span'
+    pos=css.rfind(marker)
+    if pos<0 or 'color:var(--micro)' not in css[pos:pos+180].replace(' ',''):
+        errors.append(f'{name}: effective rule not bound to --micro')
 
 print('contrast_ratios '+ ' '.join(f'{n}={ratio(f,b):.2f}' for n,f,b,_ in checks))
 if errors:
