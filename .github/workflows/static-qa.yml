@@ -65,3 +65,11 @@ jobs:
         run: python scripts/check_trust_route_parity.py
       - name: Validate youth route parity
         run: python scripts/check_youth_route_parity.py
+      - name: Validate Project Studio parity
+        run: python scripts/check_project_studio.py
+      - name: Validate AI Pilot Simulator parity
+        run: python scripts/check_pilot_simulator.py
+      - name: Smoke-test AI Pilot Simulator runtime
+        run: node scripts/check_pilot_simulator_runtime.mjs
+      - name: Validate Business calculator determinism
+        run: node scripts/check_r70_business_calculator.mjs
