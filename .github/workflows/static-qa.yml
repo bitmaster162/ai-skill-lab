@@ -65,6 +65,8 @@ jobs:
         run: python scripts/check_business_decision_gate.py
       - name: Validate trust route parity
         run: python scripts/check_trust_route_parity.py
+      - name: Validate Proof route parity
+        run: python scripts/check_proof_route.py
       - name: Validate youth route parity
         run: python scripts/check_youth_route_parity.py
       - name: Validate youth policy freshness
