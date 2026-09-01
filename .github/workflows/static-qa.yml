@@ -73,3 +73,21 @@ jobs:
         run: node scripts/check_pilot_simulator_runtime.mjs
       - name: Validate Business calculator determinism
         run: node scripts/check_r70_business_calculator.mjs
+      - name: Validate curriculum package mapping
+        run: python scripts/check_curriculum_package_mapping.py
+      - name: Validate session duration policy
+        run: python scripts/check_session_scope.py
+      - name: Smoke-test Proof Lab runtime
+        run: node scripts/check_proof_runtime.mjs
+      - name: Validate AI Skill Graph parity
+        run: python scripts/check_skill_graph.py
+      - name: Smoke-test AI Skill Graph runtime
+        run: node scripts/check_skill_graph_runtime.mjs
+      - name: Validate AI System Challenge parity
+        run: python scripts/check_system_challenge.py
+      - name: Smoke-test AI System Challenge runtime
+        run: node scripts/check_system_challenge_runtime.mjs
+      - name: Validate Lab Hub
+        run: python scripts/check_lab_hub.py
+      - name: Enforce transfer performance budget
+        run: node scripts/check_transfer_performance.mjs
