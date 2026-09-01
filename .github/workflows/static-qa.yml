@@ -59,3 +59,5 @@ jobs:
         run: python scripts/check_brief_compiler.py
       - name: Smoke-test Brief Compiler runtime
         run: node scripts/check_brief_compiler_runtime.mjs
+      - name: Validate Business decision gate
+        run: python scripts/check_business_decision_gate.py
