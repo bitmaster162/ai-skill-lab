@@ -8,14 +8,28 @@ ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "deploy" / "live"
 errors=[]
 checks=0
+R77_HOMES={
+    "index.html":{"start":"/start","lang":"/en"},
+    "en.html":{"start":"/en/start","lang":"/"},
+}
 
 for path in sorted(LIVE.rglob("*.html")):
     if path.name == "404.html":
         continue
     rel=path.relative_to(LIVE).as_posix()
     text=path.read_text(encoding="utf-8")
-    en = rel == "en.html" or rel.startswith("en/")
-    route = "/en" if rel == "en.html" else ("/" if rel == "index.html" else ("/en/" + rel[3:-5] if en else "/" + rel[:-5]))
+    if rel in R77_HOMES:
+        expected=R77_HOMES[rel]
+        for marker in ['<header class="header">','class="headerActions"',f'href="{expected["start"]}" class="topCta"',f'href="{expected["lang"]}" class="lang"']:
+            checks += 1
+            if marker not in text:
+                errors.append(f"{rel}: missing R77 home marker {marker}")
+        checks += 1
+        if '<header class="nav">' in text:
+            errors.append(f"{rel}: legacy .nav header must not return")
+        continue
+    en = rel.startswith("en/")
+    route = "/en/" + rel[3:-5] if en else "/" + rel[:-5]
     expected_main = [
         "/en/personal","/en/business","/en/kids","/en/teens","/en/pricing","/en/about","/en/faq"
     ] if en else [
@@ -64,5 +78,5 @@ if errors:
     for e in errors:
         print("FAIL:",e)
     sys.exit(1)
-print(f"navigation_parity_checks={checks}")
+print(f"navigation_parity_checks={checks} legacy_pages=42 r77_homes=2")
 print("NAVIGATION_PARITY_PASS")
