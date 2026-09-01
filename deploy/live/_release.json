@@ -163,8 +163,8 @@
     },
     {
       "path": "lab-command.js",
-      "sha256": "75ca4cd245d62522471a7077b6e17db735dc77ceed836094e6383d75f4813dba",
-      "size": 3435
+      "sha256": "16835b5e85db24ef8f97eb2efa2b408221c725bd9334dee940723e3d816a7702",
+      "size": 1725
     },
     {
       "path": "llms.txt",
@@ -268,8 +268,8 @@
     },
     {
       "path": "start-brief.js",
-      "sha256": "16d5f805235af408e3d62dd71e80bb0bab16fae60353a497499de1bcfc1ac769",
-      "size": 1181
+      "sha256": "1db1cb38358d3afbce5eada67b12a8d8d98858d3c0943fe690d4f726ad16d791",
+      "size": 1847
     },
     {
       "path": "start.html",
@@ -288,8 +288,8 @@
     },
     {
       "path": "style.css",
-      "sha256": "21a73d30988252fd02f2fad1a3d0dc24cd26eb40a0294707e6a2871c5666894b",
-      "size": 138
+      "sha256": "6db111dc0e353debc35858065dff42f302b84ba987cbc44dfd64ad7c5b539485",
+      "size": 103
     },
     {
       "path": "teens.html",
@@ -307,7 +307,7 @@
       "size": 2070
     }
   ],
-  "payload_sha256": "24d2024e458b25fc66759840c969685c6af5e3fd30eed4c07622019a62e40132",
+  "payload_sha256": "f968a445311123f91a86ee29c60e1e4c7151b38921f9817fffc03de2401e622b",
   "release_id": "R77",
   "schema": "ai-skill-lab.static-release.v1"
 }
