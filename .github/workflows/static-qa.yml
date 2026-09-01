@@ -61,3 +61,7 @@ jobs:
         run: node scripts/check_brief_compiler_runtime.mjs
       - name: Validate Business decision gate
         run: python scripts/check_business_decision_gate.py
+      - name: Validate trust route parity
+        run: python scripts/check_trust_route_parity.py
+      - name: Validate youth route parity
+        run: python scripts/check_youth_route_parity.py
