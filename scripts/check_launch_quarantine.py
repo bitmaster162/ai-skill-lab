@@ -21,9 +21,16 @@ EVIDENCE_MARKERS = [
 ]
 FORBIDDEN_PACKAGE_KEYS = {"check:launch", "build:launch"}
 FORBIDDEN_LAUNCH_CALLS = ["check-launch.mjs", "npm run check:launch"]
+README_FORBIDDEN_SEMANTICS = [
+    "The launch gate then requires",
+    "R4 supports two explicit operating modes:",
+]
 README_REQUIRED_MARKERS = [
     "static-release",
     "python scripts/preflight_release.py --release",
+    "current public routes are contact-only",
+    "`NEXT_PUBLIC_LEAD_FORM_ENABLED=true` is not a release approval",
+    "do not validate deployment-specific ENV values",
 ]
 EXPECTED_CORE_SCRIPTS = {
     "dev": "next dev",
@@ -83,6 +90,11 @@ for owner, text in [
         checks += 1
         if marker in text:
             errors.append(f"{owner}: ENV-bound launch path must remain quarantined: {marker!r}")
+
+for marker in README_FORBIDDEN_SEMANTICS:
+    checks += 1
+    if marker in readme_text:
+        errors.append(f"operator README stale launch semantics must remain quarantined: {marker!r}")
 
 for marker in README_REQUIRED_MARKERS:
     checks += 1
