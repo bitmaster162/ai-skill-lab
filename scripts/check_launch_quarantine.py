@@ -11,6 +11,7 @@ LAUNCH = ROOT / "scripts/check-launch.mjs"
 WORKFLOW = ROOT / ".github/workflows/static-qa.yml"
 PREFLIGHT = ROOT / "scripts/preflight_release.py"
 README = ROOT / "README.md"
+ENV_EXAMPLE = ROOT / ".env.example"
 
 EVIDENCE_MARKERS = [
     "NEXT_PUBLIC_SITE_URL",
@@ -31,6 +32,19 @@ README_REQUIRED_MARKERS = [
     "current public routes are contact-only",
     "`NEXT_PUBLIC_LEAD_FORM_ENABLED=true` is not a release approval",
     "do not validate deployment-specific ENV values",
+]
+ENV_EXAMPLE_FORBIDDEN_SEMANTICS = [
+    "# Public legal/operator details. Fill these before public deployment.",
+]
+ENV_EXAMPLE_REQUIRED_MARKERS = [
+    "# Lead-form legal/operator details. Keep blank for contact-only public mode.",
+    "# Provision and verify these before any form-enabled deployment.",
+    "NEXT_PUBLIC_LEGAL_OPERATOR_NAME=",
+    "NEXT_PUBLIC_LEGAL_CONTACT_EMAIL=",
+    "NEXT_PUBLIC_LEGAL_JURISDICTION=",
+    "LEAD_WEBHOOK_URL=",
+    "LEAD_WEBHOOK_SECRET=",
+    "NEXT_PUBLIC_LEAD_FORM_ENABLED=false",
 ]
 EXPECTED_CORE_SCRIPTS = {
     "dev": "next dev",
@@ -80,6 +94,7 @@ for key, expected in EXPECTED_CORE_SCRIPTS.items():
 workflow_text = WORKFLOW.read_text(encoding="utf-8")
 preflight_text = PREFLIGHT.read_text(encoding="utf-8")
 readme_text = README.read_text(encoding="utf-8")
+env_example_text = ENV_EXAMPLE.read_text(encoding="utf-8")
 
 for owner, text in [
     ("required workflow", workflow_text),
@@ -100,6 +115,16 @@ for marker in README_REQUIRED_MARKERS:
     checks += 1
     if marker not in readme_text:
         errors.append(f"operator README required release-QA marker missing {marker!r}")
+
+for marker in ENV_EXAMPLE_FORBIDDEN_SEMANTICS:
+    checks += 1
+    if marker in env_example_text:
+        errors.append(f"operator env example stale deployment semantics must remain quarantined: {marker!r}")
+
+for marker in ENV_EXAMPLE_REQUIRED_MARKERS:
+    checks += 1
+    if marker not in env_example_text:
+        errors.append(f"operator env example required lead-form boundary marker missing {marker!r}")
 
 checks += 1
 if workflow_text.count("python scripts/check_launch_quarantine.py") != 1:
