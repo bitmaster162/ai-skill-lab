@@ -6,9 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
-    "check:launch": "node scripts/check-launch.mjs",
-    "build:launch": "npm run check:launch && next build"
+    "lint": "eslint ."
   },
   "dependencies": {
     "next": "^16.0.0",
