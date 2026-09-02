@@ -32,6 +32,7 @@ CHECKS = [
     ("build_story", ["python", "scripts/check_build_story.py"]),
     ("preflight_safety", ["python", "scripts/check_preflight_safety.py"]),
     ("live_verifier_safety", ["python", "scripts/check_live_verifier_safety.py"]),
+    ("legacy_qa_quarantine", ["python", "scripts/check_legacy_qa_quarantine.py"]),
     ("faq_parity", ["python", "scripts/check_faq_parity.py"]),
     ("parent_route_parity", ["python", "scripts/check_parent_route_parity.py"]),
     ("brief_compiler", ["python", "scripts/check_brief_compiler.py"]),
