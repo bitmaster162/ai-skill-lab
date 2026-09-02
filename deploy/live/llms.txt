@@ -4,6 +4,9 @@
 
 Do not infer guarantees or commercial terms from this index.
 
+## Home
+- [RU](https://ai-skill-lab.vercel.app/) [EN](https://ai-skill-lab.vercel.app/en)
+
 ## Start
 - [RU](https://ai-skill-lab.vercel.app/start) [EN](https://ai-skill-lab.vercel.app/en/start)
 
@@ -12,6 +15,13 @@ Do not infer guarantees or commercial terms from this index.
 - [RU](https://ai-skill-lab.vercel.app/business) [EN](https://ai-skill-lab.vercel.app/en/business)
 - [RU](https://ai-skill-lab.vercel.app/kids) [EN](https://ai-skill-lab.vercel.app/en/kids)
 - [RU](https://ai-skill-lab.vercel.app/teens) [EN](https://ai-skill-lab.vercel.app/en/teens)
+- [RU](https://ai-skill-lab.vercel.app/curriculum) [EN](https://ai-skill-lab.vercel.app/en/curriculum)
+- [RU](https://ai-skill-lab.vercel.app/parents) [EN](https://ai-skill-lab.vercel.app/en/parents)
+- [RU](https://ai-skill-lab.vercel.app/phuket) [EN](https://ai-skill-lab.vercel.app/en/phuket)
+
+## Interactive tools
+- [RU](https://ai-skill-lab.vercel.app/matcher) [EN](https://ai-skill-lab.vercel.app/en/matcher)
+- [RU](https://ai-skill-lab.vercel.app/challenge) [EN](https://ai-skill-lab.vercel.app/en/challenge)
 
 ## Studio and evidence
 - [RU](https://ai-skill-lab.vercel.app/studio) [EN](https://ai-skill-lab.vercel.app/en/studio)

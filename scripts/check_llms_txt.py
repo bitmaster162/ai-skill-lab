@@ -30,7 +30,7 @@ if not text.startswith('# AI Skill Lab\n\n> '): errors.append('invalid H1/summar
 checks+=1
 if len(re.findall(r'(?m)^# ',text)) != 1: errors.append('expected exactly one H1')
 
-required_sections=['Start','Learning paths','Studio and evidence','Pricing and policies','About']
+required_sections=['Home','Start','Learning paths','Interactive tools','Studio and evidence','Pricing and policies','About']
 for section in required_sections:
     checks+=1
     if f'## {section}' not in text: errors.append(f'missing section: {section}')
@@ -49,12 +49,18 @@ if re.search(r'(?mi)^(?:User-agent|Allow|Disallow)\s*:',text):
 
 urls=re.findall(r'\]\((https?://[^)]+)\)',text)
 checks+=1
-if len(urls) != 32: errors.append(f'expected 32 canonical links, got {len(urls)}')
+if len(urls) != len(set(urls)): errors.append('duplicate canonical URL found')
 for url in urls:
     checks+=1
     if not url.startswith(BASE+'/'): errors.append(f'non-canonical URL: {url}')
 
 locs=set(re.findall(r'<loc>(https?://[^<]+)</loc>',SITEMAP.read_text(encoding='utf-8')))
+checks+=1
+if set(urls) != locs:
+    errors.append(
+        f'llms.txt/sitemap parity mismatch missing={sorted(locs-set(urls))} '
+        f'extra={sorted(set(urls)-locs)}'
+    )
 for url in urls:
     checks+=1
     if url not in locs: errors.append(f'URL not present in sitemap: {url}')
