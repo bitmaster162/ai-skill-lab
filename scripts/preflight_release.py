@@ -31,6 +31,7 @@ CHECKS = [
     ("studio_offer", ["python", "scripts/check_studio_offer.py"]),
     ("build_story", ["python", "scripts/check_build_story.py"]),
     ("preflight_safety", ["python", "scripts/check_preflight_safety.py"]),
+    ("live_verifier_safety", ["python", "scripts/check_live_verifier_safety.py"]),
     ("faq_parity", ["python", "scripts/check_faq_parity.py"]),
     ("parent_route_parity", ["python", "scripts/check_parent_route_parity.py"]),
     ("brief_compiler", ["python", "scripts/check_brief_compiler.py"]),
