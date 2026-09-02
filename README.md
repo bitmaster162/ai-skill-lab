@@ -6,7 +6,7 @@ Bilingual Next.js website for practical one-to-one AI education: adults, AI buil
 
 The repository contains two operating capabilities, but the current public routes are contact-only:
 
-1. **Contact-only (current public mode)** — the site does not collect lead data. All primary contact CTAs open the configured Telegram URL. This mode does not require a webhook.
+1. **Contact-only (current public mode)** — the site does not collect lead data. Primary contact CTAs route through `/start` / `/en/start`; only those Start pages expose the configured Telegram exit. This mode does not require a webhook.
 2. **Lead-form capability (dormant on current public routes)** — `NEXT_PUBLIC_LEAD_FORM_ENABLED=true` is not a release approval. Before any form-enabled deployment, separately provision and verify the real operator identity, legal/privacy email, jurisdiction, HTTPS webhook and webhook signing secret. Required `static-release` and the local read-only preflight do not validate deployment-specific ENV values.
 
 This keeps the live site useful without silently exposing a broken form or treating static QA as ENV/deployment approval.

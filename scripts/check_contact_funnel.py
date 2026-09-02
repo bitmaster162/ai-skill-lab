@@ -3,6 +3,7 @@ from pathlib import Path
 import re, sys
 ROOT=Path(__file__).resolve().parents[1]
 TG='https://t.me/BiTFormer'
+README=ROOT/'README.md'
 problems=[]; checked=0
 # Static: external Telegram href is allowed only on Start pages.
 for p in sorted((ROOT/'deploy/live').rglob('*.html')):
@@ -28,6 +29,17 @@ for p in sorted((ROOT/'app/en').rglob('page.tsx')):
 for p in sorted((ROOT/'deploy/live/en').rglob('*.html')):
     text=p.read_text(encoding='utf-8'); checked += 1
     if p.relative_to(ROOT/'deploy/live').as_posix() != 'en/start.html' and re.search(r'href=["\']/start["\']',text): problems.append(f'{p.relative_to(ROOT)}: bare /start link on EN static page')
+readme=README.read_text(encoding='utf-8')
+checked += 1
+if 'All primary contact CTAs open the configured Telegram URL.' in readme:
+    problems.append('README: stale direct-Telegram contact-flow claim')
+for marker in [
+    'Primary contact CTAs route through `/start` / `/en/start`',
+    'only those Start pages expose the configured Telegram exit',
+]:
+    checked += 1
+    if marker not in readme:
+        problems.append(f'README: required contact-funnel marker missing {marker!r}')
 component=ROOT/'components/ContactButtons.tsx'
 ct=component.read_text(encoding='utf-8'); checked += 1
 if 'site.telegram' in ct or TG in ct: problems.append('components/ContactButtons.tsx: external messenger exit is not allowed')
