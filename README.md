@@ -13,8 +13,8 @@ This keeps the live site useful without silently exposing a broken form or treat
 
 ## Routes
 
-- RU: `/`, `/personal`, `/business`, `/kids`, `/teens`, `/about`, `/pricing`, `/method`, `/phuket`, `/projects`, `/parents`, `/faq`, `/start`, `/privacy`, `/terms`, `/safety`
-- EN: `/en`, `/en/personal`, `/en/business`, `/en/kids`, `/en/teens`, `/en/about`, `/en/pricing`, `/en/method`, `/en/phuket`, `/en/projects`, `/en/parents`, `/en/faq`, `/en/start`, `/en/privacy`, `/en/terms`, `/en/safety`
+- RU: `/`, `/about`, `/build`, `/business`, `/challenge`, `/curriculum`, `/faq`, `/kids`, `/matcher`, `/method`, `/parents`, `/personal`, `/phuket`, `/pricing`, `/privacy`, `/projects`, `/proof`, `/safety`, `/start`, `/studio`, `/teens`, `/terms`
+- EN: `/en`, `/en/about`, `/en/build`, `/en/business`, `/en/challenge`, `/en/curriculum`, `/en/faq`, `/en/kids`, `/en/matcher`, `/en/method`, `/en/parents`, `/en/personal`, `/en/phuket`, `/en/pricing`, `/en/privacy`, `/en/projects`, `/en/proof`, `/en/safety`, `/en/start`, `/en/studio`, `/en/teens`, `/en/terms`
 
 ## Environment
 
