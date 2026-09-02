@@ -37,15 +37,15 @@ LEAD_WEBHOOK_SECRET=<24+ chars secret>
 
 The lead payload schema is `ai-skill-lab.lead.v2`. When a secret is configured, the exact JSON body is signed in `X-AI-Skill-Lab-Signature` as `sha256=<hex>`.
 
-## Launch gate
+## Release QA
+
+Required repository release QA is the `static-release` workflow. The local read-only equivalent is:
 
 ```bash
-npm run check:launch
-npm run build
-npm run lint
+python scripts/preflight_release.py --release <receipt-label>
 ```
 
-The gate validates the public site/contact in contact-only mode. If lead collection is enabled it becomes stricter and blocks missing operator/privacy/webhook configuration.
+R87 intentionally quarantines the ENV-bound launch checker from required and operator release surfaces. It remains repository evidence only and is not an operator release command. Lead-form mode still requires real operator/legal/webhook configuration before deployment; those deployment-specific values are not part of static release QA.
 
 ## Youth safety
 

@@ -10,6 +10,7 @@ PACKAGE = ROOT / "package.json"
 LAUNCH = ROOT / "scripts/check-launch.mjs"
 WORKFLOW = ROOT / ".github/workflows/static-qa.yml"
 PREFLIGHT = ROOT / "scripts/preflight_release.py"
+README = ROOT / "README.md"
 
 EVIDENCE_MARKERS = [
     "NEXT_PUBLIC_SITE_URL",
@@ -20,6 +21,10 @@ EVIDENCE_MARKERS = [
 ]
 FORBIDDEN_PACKAGE_KEYS = {"check:launch", "build:launch"}
 FORBIDDEN_LAUNCH_CALLS = ["check-launch.mjs", "npm run check:launch"]
+README_REQUIRED_MARKERS = [
+    "static-release",
+    "python scripts/preflight_release.py --release",
+]
 EXPECTED_CORE_SCRIPTS = {
     "dev": "next dev",
     "build": "next build",
@@ -67,15 +72,22 @@ for key, expected in EXPECTED_CORE_SCRIPTS.items():
 
 workflow_text = WORKFLOW.read_text(encoding="utf-8")
 preflight_text = PREFLIGHT.read_text(encoding="utf-8")
+readme_text = README.read_text(encoding="utf-8")
 
 for owner, text in [
     ("required workflow", workflow_text),
     ("release preflight", preflight_text),
+    ("operator README", readme_text),
 ]:
-    for marker in ["check-launch.mjs", "check:launch"]:
+    for marker in ["check-launch.mjs", "check:launch", "build:launch"]:
         checks += 1
         if marker in text:
             errors.append(f"{owner}: ENV-bound launch path must remain quarantined: {marker!r}")
+
+for marker in README_REQUIRED_MARKERS:
+    checks += 1
+    if marker not in readme_text:
+        errors.append(f"operator README required release-QA marker missing {marker!r}")
 
 checks += 1
 if workflow_text.count("python scripts/check_launch_quarantine.py") != 1:
