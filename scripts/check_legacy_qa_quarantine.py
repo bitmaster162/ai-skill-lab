@@ -6,6 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github/workflows/static-qa.yml"
 PREFLIGHT = ROOT / "scripts/preflight_release.py"
 PACKAGE = ROOT / "package.json"
+README = ROOT / "README.md"
 
 LEGACY_CHECKERS = {
     "scripts/check_capability_matrix.py": "AI Capability Matrix",
@@ -13,12 +14,39 @@ LEGACY_CHECKERS = {
     "scripts/check_hero_engine_runtime.mjs": "[data-engine-key]",
 }
 
+READINESS_ARCHIVE_REQUIRED_MARKERS = [
+    "Root-level `R*_READINESS.md` files are historical evidence snapshots from earlier release epochs.",
+    "They are not current operator instructions, release authority, production-state authority, or approval to run legacy commands.",
+    "Do not execute commands or rely on deployment/status claims from those files as current truth.",
+    "Current repository release authority is the required `static-release` workflow and the local read-only preflight above.",
+]
+
 errors = []
 checks = 0
 
 workflow_text = WORKFLOW.read_text(encoding="utf-8")
 preflight_text = PREFLIGHT.read_text(encoding="utf-8")
 package_text = PACKAGE.read_text(encoding="utf-8")
+readme_text = README.read_text(encoding="utf-8")
+readiness_files = sorted(ROOT.glob("R*_READINESS.md"))
+
+checks += 1
+if not readiness_files:
+    errors.append("historical readiness evidence snapshots are missing")
+
+for marker in READINESS_ARCHIVE_REQUIRED_MARKERS:
+    checks += 1
+    if marker not in readme_text:
+        errors.append(f"README: historical readiness authority boundary marker missing {marker!r}")
+
+for owner, owner_text in [
+    ("required workflow", workflow_text),
+    ("release preflight", preflight_text),
+    ("package scripts", package_text),
+]:
+    checks += 1
+    if any(path.name in owner_text for path in readiness_files):
+        errors.append(f"{owner}: historical readiness snapshot must remain outside current release authority")
 
 for rel, evidence_marker in LEGACY_CHECKERS.items():
     path = ROOT / rel
@@ -78,7 +106,7 @@ if preflight_text.count('"scripts/check_legacy_qa_quarantine.py"') != 1:
 
 print(
     f"legacy_qa_quarantine_checks={checks} legacy_checkers={len(LEGACY_CHECKERS)} "
-    f"home_surfaces={len(source_homes) + 2}"
+    f"home_surfaces={len(source_homes) + 2} readiness_snapshots={len(readiness_files)}"
 )
 if errors:
     for error in errors:

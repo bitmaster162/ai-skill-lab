@@ -47,6 +47,10 @@ python scripts/preflight_release.py --release <receipt-label>
 
 R87 intentionally quarantines the ENV-bound launch checker from required and operator release surfaces. It remains repository evidence only and is not an operator release command. Lead-form mode still requires real operator/legal/webhook configuration before deployment; those deployment-specific values are not part of static release QA.
 
+### Historical readiness archive
+
+Root-level `R*_READINESS.md` files are historical evidence snapshots from earlier release epochs. They are not current operator instructions, release authority, production-state authority, or approval to run legacy commands. Do not execute commands or rely on deployment/status claims from those files as current truth. Current repository release authority is the required `static-release` workflow and the local read-only preflight above.
+
 ## Youth safety
 
 - Youth applications/communication use an adult contact.
