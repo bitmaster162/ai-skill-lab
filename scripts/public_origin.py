@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import os
 from urllib.parse import urlsplit
 
 DEFAULT_PUBLIC_ORIGIN = "https://ai-skill-lab.vercel.app"
@@ -22,6 +21,4 @@ def normalize_public_origin(value: str) -> str:
     return f"https://{parsed.netloc.lower()}"
 
 
-PUBLIC_ORIGIN = normalize_public_origin(
-    os.environ.get("NEXT_PUBLIC_SITE_URL", DEFAULT_PUBLIC_ORIGIN)
-)
+PUBLIC_ORIGIN = normalize_public_origin(DEFAULT_PUBLIC_ORIGIN)
