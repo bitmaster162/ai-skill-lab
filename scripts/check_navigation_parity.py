@@ -6,8 +6,10 @@ from css_graph import read_local_css_graph
 
 ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "deploy" / "live"
+README = ROOT / "README.md"
 errors=[]
 checks=0
+public_routes=set()
 R77_HOMES={
     "index.html":{"start":"/start","lang":"/en"},
     "en.html":{"start":"/en/start","lang":"/"},
@@ -17,6 +19,14 @@ for path in sorted(LIVE.rglob("*.html")):
     if path.name == "404.html":
         continue
     rel=path.relative_to(LIVE).as_posix()
+    if rel == "index.html":
+        public_routes.add("/")
+    elif rel == "en.html":
+        public_routes.add("/en")
+    elif rel.startswith("en/"):
+        public_routes.add("/en/" + rel[3:-5])
+    else:
+        public_routes.add("/" + rel[:-5])
     text=path.read_text(encoding="utf-8")
     if rel in R77_HOMES:
         expected=R77_HOMES[rel]
@@ -66,6 +76,24 @@ for path in sorted(LIVE.rglob("*.html")):
     checks += 1
     if route in expected_main and header.count('aria-current="page"') != 2:
         errors.append(f"{rel}: active primary route must be marked in desktop+mobile nav")
+
+readme_text=README.read_text(encoding="utf-8")
+route_inventory=[
+    ("RU",{route for route in public_routes if route == "/" or not route.startswith("/en")}),
+    ("EN",{route for route in public_routes if route == "/en" or route.startswith("/en/")}),
+]
+for label,expected_routes in route_inventory:
+    checks += 1
+    match=re.search(rf"^- {label}: (.+)$",readme_text,re.M)
+    if not match:
+        errors.append(f"README: missing {label} route inventory")
+        continue
+    listed=set(re.findall(r"`([^`]+)`",match.group(1)))
+    if listed != expected_routes:
+        errors.append(
+            f"README: {label} route inventory mismatch "
+            f"missing={sorted(expected_routes-listed)} extra={sorted(listed-expected_routes)}"
+        )
 
 css=read_local_css_graph(LIVE / "style.css", LIVE)
 rules=re.findall(r"([^{}]+)\{([^{}]*)\}",css)
