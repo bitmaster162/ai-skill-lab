@@ -68,14 +68,14 @@ for rel, evidence_marker in LEGACY_CHECKERS.items():
             errors.append(f"{owner}: legacy checker must remain quarantined: {rel}")
 
 source_homes = {
-    "app/page.tsx": '<R77CommercialHome locale="ru" />',
-    "app/en/page.tsx": '<R77CommercialHome locale="en" />',
+    "app/page.tsx": '<WorkshopHome locale="ru" />',
+    "app/en/page.tsx": '<WorkshopHome locale="en" />',
 }
 for rel, mount in source_homes.items():
     text = (ROOT / rel).read_text(encoding="utf-8")
     checks += 1
     if mount not in text:
-        errors.append(f"{rel}: current R77 home mount missing")
+        errors.append(f"{rel}: current Workshop home mount missing")
     for forbidden in ["HeroEngine", "AI Capability Matrix"]:
         checks += 1
         if forbidden in text:
@@ -84,8 +84,8 @@ for rel, mount in source_homes.items():
 for rel in ["deploy/live/index.html", "deploy/live/en.html"]:
     text = (ROOT / rel).read_text(encoding="utf-8")
     checks += 1
-    if "r77-commercial.css" not in text:
-        errors.append(f"{rel}: R77 commercial static surface missing")
+    if "workshop.css" not in text:
+        errors.append(f"{rel}: Workshop static surface missing")
     for forbidden in [
         "data-hero-engine",
         "data-engine-key=",

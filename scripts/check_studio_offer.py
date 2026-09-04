@@ -66,15 +66,15 @@ for rel, en in studio_surfaces:
             errors.append(f"{rel}: missing claims boundary {marker}")
 
 mounts = {
-    "app/page.tsx": '<R77CommercialHome locale="ru" />',
-    "app/en/page.tsx": '<R77CommercialHome locale="en" />',
+    "app/page.tsx": '<WorkshopHome locale="ru" />',
+    "app/en/page.tsx": '<WorkshopHome locale="en" />',
 }
 for rel, marker in mounts.items():
     checks += 1
     if marker not in (ROOT / rel).read_text(encoding="utf-8"):
-        errors.append(f"{rel}: R77 home mount missing")
+        errors.append(f"{rel}: Workshop home mount missing")
 
-component = (ROOT / "components/R77CommercialHome.tsx").read_text(encoding="utf-8")
+component = (ROOT / "components/workshop/WorkshopHome.tsx").read_text(encoding="utf-8")
 for marker in [
     "/studio",
     "/en/studio",
@@ -85,7 +85,7 @@ for marker in [
 ]:
     checks += 1
     if marker not in component:
-        errors.append(f"components/R77CommercialHome.tsx: missing {marker!r}")
+        errors.append(f"components/workshop/WorkshopHome.tsx: missing {marker!r}")
 
 static_homes = {
     "deploy/live/index.html": [
