@@ -8,6 +8,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 PREFLIGHT = ROOT / "scripts/preflight_release.py"
 WORKFLOW = ROOT / ".github/workflows/static-qa.yml"
+PUBLIC_ORIGIN_HELPER = ROOT / "scripts/public_origin.py"
 
 FORBIDDEN = [
     "build_csp.py",
@@ -28,11 +29,22 @@ checks = 0
 
 preflight_text = PREFLIGHT.read_text(encoding="utf-8")
 workflow_text = WORKFLOW.read_text(encoding="utf-8")
+public_origin_text = PUBLIC_ORIGIN_HELPER.read_text(encoding="utf-8")
 
 for marker in FORBIDDEN:
     checks += 1
     if marker in preflight_text:
         errors.append(f"preflight contains forbidden mutating/env-bound marker {marker!r}")
+
+
+for marker in ("NEXT_PUBLIC_SITE_URL", "import os", "from os import"):
+    checks += 1
+    if marker in public_origin_text:
+        errors.append(f"public_origin.py contains forbidden ENV-bound marker {marker!r}")
+
+checks += 1
+if "PUBLIC_ORIGIN = normalize_public_origin(DEFAULT_PUBLIC_ORIGIN)" not in public_origin_text:
+    errors.append("public_origin.py must bind static QA to DEFAULT_PUBLIC_ORIGIN")
 
 checks += 1
 if "check-launch.mjs" in workflow_text or "check:launch" in workflow_text:
