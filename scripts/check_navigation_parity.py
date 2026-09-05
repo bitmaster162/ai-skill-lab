@@ -2,7 +2,7 @@
 from pathlib import Path
 import re,sys
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';README=ROOT/'README.md';errors=[];checks=0
-WORKSHOP={'index.html':('/start','/en',False),'en.html':('/en/start','/',True),'start.html':('#contact-channels','/en/start',False),'en/start.html':('#contact-channels','/start',True),'pricing.html':('/start','/en/pricing',False),'en/pricing.html':('/en/start','/pricing',True),'family.html':('/start','/en/family',False),'en/family.html':('/en/start','/family',True)}
+WORKSHOP={'index.html': ('/start', '/en', False), 'en.html': ('/en/start', '/', True), 'start.html': ('#contact-channels', '/en/start', False), 'en/start.html': ('#contact-channels', '/start', True), 'pricing.html': ('/start', '/en/pricing', False), 'en/pricing.html': ('/en/start', '/pricing', True), 'family.html': ('/start', '/en/family', False), 'en/family.html': ('/en/start', '/family', True), 'personal.html': ('/start', '/en/personal', False), 'teens.html': ('/start', '/en/teens', False), 'kids.html': ('/start', '/en/kids', False), 'business.html': ('/start#business-brief', '/en/business', False), 'faq.html': ('/start', '/en/faq', False), 'en/personal.html': ('/en/start', '/personal', True), 'en/teens.html': ('/en/start', '/teens', True), 'en/kids.html': ('/en/start', '/kids', True), 'en/business.html': ('/en/start#business-brief', '/business', True), 'en/faq.html': ('/en/start', '/faq', True)}
 public=set();legacy=0
 for p in sorted(LIVE.rglob('*.html')):
  if p.name=='404.html':continue

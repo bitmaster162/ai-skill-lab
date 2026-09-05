@@ -1,32 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowIcon } from "@/components/ArrowIcon";
-import { ContactButtons } from "@/components/ContactButtons";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-
-export const metadata: Metadata = { title: "AI for teens ages 14–18", description: "One-to-one AI education for ages 14–18: research, code, automation, portfolio work and a final AI project.", alternates: { canonical: "/en/teens", languages: { ru: "/teens", en: "/en/teens" } } };
-
-const modules = [
-  ["01","AI literacy","How modern models work, where they help and why outputs still need verification."],
-  ["02","Research system","Sources, comparison, argumentation and concise evidence-based conclusions."],
-  ["03","Prompting as specification","Context, criteria, constraints and iteration instead of magic prompt recipes."],
-  ["04","Create & present","Writing, visuals and presentations with transparent authorship."],
-  ["05","Code with AI","Read, modify and test simple code with AI support even when programming is new."],
-  ["06","Automation","Turn repeatable steps into a workflow and identify unsafe automation boundaries."],
-  ["07","Product thinking","Problem, user, scenario, prototype and usefulness before features."],
-  ["08","Portfolio build","Assemble the project with decisions, sources, limitations and personal contribution documented."],
-  ["09","Stress-test","Check failure modes, edge cases, source quality and whether the project actually works."],
-  ["10","Demo & next step","Present the work and map the next skill path: code, design, research or automation."],
-];
-
-export default function EnglishTeens() {
-  return <><Header locale="en" contactHref="/en/start" alternateHref="/teens"/><main>
-    <section className="teenHero"><div className="shell teenHeroGrid"><div><div className="eyebrow eyebrowLight"><span className="dot dotLight"/> Ages 14–18 · portfolio track</div><h1>Do not only prepare for the future.<br/><span>Start building it.</span></h1><p>AI as a practical skill: research, code, automation, presentations and a project that can actually be shown.</p><div className="heroActions"><Link className="button buttonLight" href="/en/start">Find a track <ArrowIcon/></Link><Link className="textLink textLinkLight" href="#teen-program">See curriculum <ArrowIcon/></Link></div></div><div className="teenTerminal"><div className="terminalTop"><span>portfolio_project.ai</span><span>● ACTIVE</span></div><div className="terminalLines"><span><i>01</i> DEFINE PROBLEM</span><span><i>02</i> RESEARCH SOURCES</span><span><i>03</i> BUILD PROTOTYPE</span><span><i>04</i> TEST OUTPUT</span><span><i>05</i> EXPLAIN DECISIONS</span></div><div className="terminalOutput"><small>OUTPUT</small><b>PROJECT THAT CAN BE SHOWN.</b></div></div></div></section>
-    <section className="section" id="teen-program"><div className="shell"><div className="sectionHead splitHead"><div><span className="kicker">Curriculum</span><h2>A 10-module map from AI literacy<br/>to portfolio project</h2></div><p>Modules are a content map, not a promise that one module equals one session. Explorer selects the essential blocks in 6 sessions; Portfolio covers the full core in 10; Builder adds 2 sessions for technical depth and project work.</p></div><div className="curriculumList">{modules.map(([n,t,x])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{x}</p></article>)}</div></div></section>
-    <section className="section sectionMuted"><div className="shell"><div className="sectionHead splitHead"><div><span className="kicker">Pricing</span><h2>Three levels of depth</h2></div><p>Start shorter and move into Builder only if the format and interest fit.</p></div><div className="pricingGrid"><article className="priceCard"><span className="cardMeta">Explorer</span><h3>6 sessions</h3><div className="price">$490</div><p>AI literacy + research + one small project.</p><Link className="button buttonGhost buttonWide" href="/en/start">Choose Explorer</Link></article><article className="priceCard featuredPrice"><span className="popular">Core</span><span className="cardMeta">Portfolio</span><h3>10 sessions</h3><div className="price">$890</div><p>Full route with a finished project and a personal next-step map.</p><Link className="button buttonPrimary buttonWide" href="/en/start">Choose Portfolio</Link></article><article className="priceCard"><span className="cardMeta">Builder</span><h3>12 sessions</h3><div className="price">$1,290</div><p>More code, automation and time for a technical or product project.</p><Link className="button buttonGhost buttonWide" href="/en/start">Choose Builder</Link></article></div></div></section>
-    <section className="section safetyBand"><div className="shell safetyBandGrid"><div><span className="kicker">Ages 13–17 and AI services</span><h2>Adult permission is part of the process.</h2></div><div><p>Organizational contact remains with an adult. Every AI provider has its own age rules; ChatGPT users under 18 require permission from a parent or legal guardian.</p><Link className="textLink" href="/en/safety">See safety rules <ArrowIcon/></Link></div></div></section>
-
-    <section className="contactSection" id="teens-contact"><div className="shell contactGrid"><div><span className="kicker kickerLight">Start</span><h2>Tell us what the teenager is already curious about.</h2><p>Code, design, games, science, content, business — or no clear direction yet. That is enough to design the first route. For minors, contact and organization go through an adult.</p><ContactButtons fallbackHref="/en/start" locale="en"/></div><div className="contactOnlyCard"><span className="cardMeta">Adult contact</span><h3>Start with the goal and interests</h3><p>Age, current level and interests are enough. Organizational communication for a minor goes through an adult.</p><Link className="button buttonPrimary buttonWide" href="/en/start">What to send →</Link></div></div></section>
-  </main><Footer locale="en"/></>;
-}
+import { WorkshopAudience } from "@/components/workshop/WorkshopAudience";
+export const metadata: Metadata = { title: "AI for teens ages 14–18", description: "AI for ages 14–18: research, code, portfolios and adult contact.", alternates: { canonical: "/en/teens", languages: { ru: "/teens", en: "/en/teens" } } };
+export default function Page(){return <WorkshopAudience audience="teens" locale="en"/>;}
