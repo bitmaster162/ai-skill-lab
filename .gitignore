@@ -4,8 +4,13 @@ out/
 .vercel/
 .env*
 !.env.example
+.DS_Store
+*.log
+preview/
+review/
 coverage/
 dist/
 deploy/preview/
 __pycache__/
 *.py[cod]
+*.tsbuildinfo
