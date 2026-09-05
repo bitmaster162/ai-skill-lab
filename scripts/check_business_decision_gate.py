@@ -2,14 +2,9 @@
 from pathlib import Path
 import sys
 ROOT=Path(__file__).resolve().parents[1]
-required={
- 'app/business/page.tsx':['Ship · Revise · Stop.','human review','failure modes','data boundaries','fallback','Stop'],
- 'app/en/business/page.tsx':['Ship · Revise · Stop.','human review','failure modes','data boundaries','fallback','Stop'],
- 'deploy/live/business.html':['Ship · Revise · Stop.','human review','failure modes','data boundaries','fallback','STOP'],
- 'deploy/live/en/business.html':['Ship · Revise · Stop.','human review','failure modes','data boundaries','fallback','STOP'],
-}
+required=[('components/workshop/WorkshopBusiness.tsx', ['Ship · Revise · Stop.', 'human review', 'failure modes', 'data boundaries', 'fallback', 'Stop']), ('components/workshop/WorkshopBusiness.tsx', ['Ship · Revise · Stop.', 'human review', 'failure modes', 'data boundaries', 'fallback', 'Stop']), ('deploy/live/business.html', ['Ship · Revise · Stop.', 'human review', 'failure modes', 'data boundaries', 'fallback', 'STOP']), ('deploy/live/en/business.html', ['Ship · Revise · Stop.', 'human review', 'failure modes', 'data boundaries', 'fallback', 'STOP'])]
 checks=0
-for rel,needles in required.items():
+for rel,needles in required:
     text=(ROOT/rel).read_text(encoding='utf-8')
     for n in needles:
         if n not in text:
