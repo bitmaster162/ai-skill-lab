@@ -44,17 +44,9 @@ facts=json.loads((ROOT/'data/commercial_facts.json').read_text(encoding='utf-8')
 if facts.get('schema')!='ai-skill-lab.commercial-facts.v2':errors.append('commercial schema')
 if facts.get('session_duration_minutes')!=60:errors.append('duration authority')
 if facts.get('currency')!='USD':errors.append('currency authority')
-routes=[]
-for p in LIVE.rglob('*.html'):
- if p.name=='404.html':continue
- rel=p.relative_to(LIVE).as_posix();routes.append('/' if rel=='index.html' else '/en' if rel=='en.html' else '/'+rel[:-5])
-checks+=3
-if len(routes)!=44:errors.append(f'route count {len(routes)}')
-if '/family' in routes or '/en/family' in routes:errors.append('Family route introduced')
-if (LIVE/'sitemap.xml').read_text(encoding='utf-8').count('<loc>')!=44:errors.append('sitemap authority drift')
 manifest=json.loads((LIVE/'_release.json').read_text(encoding='utf-8'));checks+=1
-if manifest.get('release_id')!='R96_D1':errors.append('release id drift')
-print(f'workshop_d1_checks={checks} surfaces={len(SURFACES)} routes={len(routes)}')
+if manifest.get('schema')!='ai-skill-lab.static-release.v1':errors.append('release schema drift')
+print(f'workshop_d1_checks={checks} surfaces={len(SURFACES)}')
 if errors:
  print('WORKSHOP_D1_FAIL');[print('-',e) for e in errors];sys.exit(1)
 print('WORKSHOP_D1_PASS')

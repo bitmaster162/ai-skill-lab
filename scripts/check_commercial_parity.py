@@ -48,8 +48,8 @@ for track,plans in FACTS['tracks'].items():
    for rel in legacy[track][locale]:require(rel,[plan['name'],plan['price'],plan[f'sessions_{locale}']])
 family=FACTS['family']
 for locale,paths in {
- 'ru':['app/parents/page.tsx','deploy/live/parents.html'],
- 'en':['app/en/parents/page.tsx','deploy/live/en/parents.html'],
+ 'ru':['app/parents/page.tsx','deploy/live/parents.html','deploy/live/family.html'],
+ 'en':['app/en/parents/page.tsx','deploy/live/en/parents.html','deploy/live/en/family.html'],
 }.items():
  for rel in paths:require(rel,[family['name'],family['price'],family[f'sessions_{locale}']])
 for rel in ['components/ProgramMatcher.tsx','deploy/live/matcher.html','deploy/live/en/matcher.html']:
@@ -57,6 +57,7 @@ for rel in ['components/ProgramMatcher.tsx','deploy/live/matcher.html','deploy/l
 
 # Workshop source binds to the typed authority; static output carries exact rendered facts.
 require('components/workshop/WorkshopHome.tsx',['commercialFacts.tracks.adult','commercialFacts.family','sessionDurationMinutes','adult.map','family.price'])
+require('components/workshop/WorkshopFamily.tsx',['commercialFacts.family','sessionDurationMinutes','ONE LEARNER','ОДИН УЧЕНИК','14 ×'])
 require('components/workshop/WorkshopPricing.tsx',[
  'commercialFacts.tracks.adult','commercialFacts.tracks.kids','commercialFacts.tracks.teens','commercialFacts.diagnostic',
  'business.workflow_audit.price','business.team_training.price_from_per_session','business.team_training.total_from',

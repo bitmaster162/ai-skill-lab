@@ -17,6 +17,7 @@ Do not infer guarantees or commercial terms from this index.
 - [RU](https://ai-skill-lab.vercel.app/teens) [EN](https://ai-skill-lab.vercel.app/en/teens)
 - [RU](https://ai-skill-lab.vercel.app/curriculum) [EN](https://ai-skill-lab.vercel.app/en/curriculum)
 - [RU](https://ai-skill-lab.vercel.app/parents) [EN](https://ai-skill-lab.vercel.app/en/parents)
+- [RU](https://ai-skill-lab.vercel.app/family) [EN](https://ai-skill-lab.vercel.app/en/family)
 - [RU](https://ai-skill-lab.vercel.app/phuket) [EN](https://ai-skill-lab.vercel.app/en/phuket)
 
 ## Interactive tools

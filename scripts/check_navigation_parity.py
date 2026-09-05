@@ -2,7 +2,7 @@
 from pathlib import Path
 import re,sys
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';README=ROOT/'README.md';errors=[];checks=0
-WORKSHOP={'index.html':('/start','/en',False),'en.html':('/en/start','/',True),'start.html':('#contact-channels','/en/start',False),'en/start.html':('#contact-channels','/start',True),'pricing.html':('/start','/en/pricing',False),'en/pricing.html':('/en/start','/pricing',True)}
+WORKSHOP={'index.html':('/start','/en',False),'en.html':('/en/start','/',True),'start.html':('#contact-channels','/en/start',False),'en/start.html':('#contact-channels','/start',True),'pricing.html':('/start','/en/pricing',False),'en/pricing.html':('/en/start','/pricing',True),'family.html':('/start','/en/family',False),'en/family.html':('/en/start','/family',True)}
 public=set();legacy=0
 for p in sorted(LIVE.rglob('*.html')):
  if p.name=='404.html':continue

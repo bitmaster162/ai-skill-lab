@@ -24,6 +24,8 @@ required={
  'deploy/live/faq.html':['60 минут'],'deploy/live/en/faq.html':['60 minutes'],
  'app/kids/page.tsx':['60 минут'],'app/en/kids/page.tsx':['60 minutes'],
  'deploy/live/kids.html':['60 минут'],'deploy/live/en/kids.html':['60 minutes'],
+ 'components/workshop/WorkshopFamily.tsx':['sessionDurationMinutes','MINUTES','МИНУТ'],
+ 'deploy/live/family.html':['60 МИНУТ'],'deploy/live/en/family.html':['60 MINUTES'],
 }
 checks=0
 for rel,needles in required.items():

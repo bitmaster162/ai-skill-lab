@@ -67,7 +67,7 @@ for url in urls:
 
 required_paths=[
     '/start','/en/start','/personal','/en/personal','/business','/en/business',
-    '/kids','/en/kids','/teens','/en/teens','/studio','/en/studio',
+    '/kids','/en/kids','/teens','/en/teens','/family','/en/family','/studio','/en/studio',
     '/proof','/en/proof','/projects','/en/projects','/pricing','/en/pricing',
     '/terms','/en/terms','/privacy','/en/privacy','/safety','/en/safety'
 ]
