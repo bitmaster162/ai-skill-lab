@@ -43,15 +43,15 @@ for rel, en, label in proof_surfaces:
             errors.append(f"{label}: forbidden {forbidden}")
 
 mounts = {
-    "app/page.tsx": '<R77CommercialHome locale="ru" />',
-    "app/en/page.tsx": '<R77CommercialHome locale="en" />',
+    "app/page.tsx": '<WorkshopHome locale="ru" />',
+    "app/en/page.tsx": '<WorkshopHome locale="en" />',
 }
 for rel, marker in mounts.items():
     checks += 1
     if marker not in (ROOT / rel).read_text(encoding="utf-8"):
-        errors.append(f"{rel}: R77 home mount missing")
+        errors.append(f"{rel}: Workshop home mount missing")
 
-home_component = (ROOT / "components/R77CommercialHome.tsx").read_text(encoding="utf-8")
+home_component = (ROOT / "components/workshop/WorkshopHome.tsx").read_text(encoding="utf-8")
 for marker in [
     'p("/proof")',
     "ПРОВЕРЯЕМЫЙ ПОДХОД",
@@ -62,7 +62,7 @@ for marker in [
 ]:
     checks += 1
     if marker not in home_component:
-        errors.append(f"components/R77CommercialHome.tsx: missing {marker!r}")
+        errors.append(f"components/workshop/WorkshopHome.tsx: missing {marker!r}")
 
 home_static = {
     "deploy/live/index.html": ['href="/proof"', "ПРОВЕРЯЕМЫЙ ПОДХОД", "Открыть Proof Lab →", "Proof остаётся"],

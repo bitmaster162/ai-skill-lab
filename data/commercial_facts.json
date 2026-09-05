@@ -1,23 +1,161 @@
 {
-  "schema": "ai-skill-lab.commercial-facts.v1",
+  "schema": "ai-skill-lab.commercial-facts.v2",
+  "version": 2,
   "currency": "USD",
+  "session_duration_minutes": 60,
   "tracks": {
     "adult": [
-      {"id":"start","name":"Start","price":"$390","sessions_ru":"4 занятия","sessions_en":"4 sessions"},
-      {"id":"personal","name":"Personal","price":"$890","sessions_ru":"10 занятий","sessions_en":"10 sessions"},
-      {"id":"intensive","name":"Intensive","price":"$1,290","sessions_ru":"12 занятий + проект","sessions_en":"12 sessions + project"}
+      {
+        "id": "start",
+        "name": "Start",
+        "price": "$390",
+        "sessions_ru": "4 занятия",
+        "sessions_en": "4 sessions",
+        "summary_ru": "Базовый AI-процесс и первый полезный результат.",
+        "summary_en": "A practical AI workflow and a first useful result."
+      },
+      {
+        "id": "personal",
+        "name": "Personal",
+        "price": "$890",
+        "sessions_ru": "10 занятий",
+        "sessions_en": "10 sessions",
+        "summary_ru": "Персональная траектория, шаблоны и итоговый проект.",
+        "summary_en": "A tailored route, reusable templates and a final project."
+      },
+      {
+        "id": "intensive",
+        "name": "Intensive",
+        "price": "$1,290",
+        "sessions_ru": "12 занятий + проект",
+        "sessions_en": "12 sessions + project",
+        "summary_ru": "Автоматизация, AI-агент, продукт или portfolio.",
+        "summary_en": "Automation, an AI agent, product or portfolio project."
+      }
     ],
     "kids": [
-      {"id":"mini","name":"Mini","price":"$290","sessions_ru":"4 занятия","sessions_en":"4 sessions"},
-      {"id":"creator","name":"Creator","price":"$890","sessions_ru":"10 занятий","sessions_en":"10 sessions"},
-      {"id":"studio","name":"Studio","price":"$1,190","sessions_ru":"12 занятий","sessions_en":"12 sessions"}
+      {
+        "id": "mini",
+        "name": "Mini",
+        "price": "$290",
+        "sessions_ru": "4 занятия",
+        "sessions_en": "4 sessions",
+        "summary_ru": "Знакомство с AI и небольшой проект.",
+        "summary_en": "An introduction to AI and a small project."
+      },
+      {
+        "id": "creator",
+        "name": "Creator",
+        "price": "$890",
+        "sessions_ru": "10 занятий",
+        "sessions_en": "10 sessions",
+        "summary_ru": "Полный маршрут с самостоятельной презентацией.",
+        "summary_en": "A full route with an independent final presentation."
+      },
+      {
+        "id": "studio",
+        "name": "Studio",
+        "price": "$1,190",
+        "sessions_ru": "12 занятий",
+        "sessions_en": "12 sessions",
+        "summary_ru": "Больше времени на сложный проект.",
+        "summary_en": "More time for a complex project."
+      }
     ],
     "teens": [
-      {"id":"explorer","name":"Explorer","price":"$490","sessions_ru":"6 занятий","sessions_en":"6 sessions"},
-      {"id":"portfolio","name":"Portfolio","price":"$890","sessions_ru":"10 занятий","sessions_en":"10 sessions"},
-      {"id":"builder","name":"Builder","price":"$1,290","sessions_ru":"12 занятий","sessions_en":"12 sessions"}
+      {
+        "id": "explorer",
+        "name": "Explorer",
+        "price": "$490",
+        "sessions_ru": "6 занятий",
+        "sessions_en": "6 sessions",
+        "summary_ru": "AI literacy, research и небольшой проект.",
+        "summary_en": "AI literacy, research and a small project."
+      },
+      {
+        "id": "portfolio",
+        "name": "Portfolio",
+        "price": "$890",
+        "sessions_ru": "10 занятий",
+        "sessions_en": "10 sessions",
+        "summary_ru": "Полный маршрут с законченной работой.",
+        "summary_en": "A full route with a finished artifact."
+      },
+      {
+        "id": "builder",
+        "name": "Builder",
+        "price": "$1,290",
+        "sessions_ru": "12 занятий",
+        "sessions_en": "12 sessions",
+        "summary_ru": "Больше кода, automation и product thinking.",
+        "summary_en": "More code, automation and product thinking."
+      }
     ]
   },
-  "family": {"name":"Family Concierge","price":"$1,490","sessions_ru":"12 занятий + 2 сессии родителю","sessions_en":"12 learner sessions + 2 parent sessions"},
-  "business": {"price_mode":"custom_scope","display":"Custom scope"}
+  "family": {
+    "id": "family",
+    "name": "Family Concierge",
+    "price": "$1,490",
+    "sessions_ru": "12 занятий + 2 сессии родителю",
+    "sessions_en": "12 learner sessions + 2 parent sessions",
+    "summary_ru": "Обучение плюс семейные правила безопасного использования AI.",
+    "summary_en": "Learning plus a practical family AI-safety framework."
+  },
+  "diagnostic": {
+    "name_ru": "Диагностическая сессия",
+    "name_en": "Diagnostic session",
+    "price": "$120",
+    "credit_days": 14,
+    "credit_ru": "Зачтём в стоимость пакета при покупке в течение 14 дней.",
+    "credit_en": "Credited toward a package purchased within 14 days."
+  },
+  "business": {
+    "display": "Custom scope",
+    "workflow_audit": {
+      "name_ru": "Workflow audit",
+      "name_en": "Workflow audit",
+      "price": "$890",
+      "price_mode": "fixed"
+    },
+    "team_training": {
+      "name_ru": "Обучение команды",
+      "name_en": "Team training",
+      "price_from_per_session": "$390",
+      "max_people": 5,
+      "min_sessions": 4,
+      "total_from": "$1,560"
+    },
+    "implementation_pilot": {
+      "name_ru": "Implementation pilot",
+      "name_en": "Implementation pilot",
+      "price_from": "$4,900",
+      "scope_cap_hours": 35
+    }
+  },
+  "recurring": {
+    "operating_support": {
+      "name_ru": "Operating support",
+      "name_en": "Operating support",
+      "price_monthly": "$490",
+      "hours": 4
+    },
+    "operating_partner": {
+      "name_ru": "Operating partner",
+      "name_en": "Operating partner",
+      "price_monthly": "$890",
+      "hours": 8
+    },
+    "office_hours": {
+      "name_ru": "Office hours",
+      "name_en": "Office hours",
+      "price_monthly": "$178",
+      "sessions": 2
+    }
+  },
+  "pair": {
+    "name_ru": "Парный формат",
+    "name_en": "Pair format",
+    "multiplier": 1.6,
+    "participant_discount_percent": 20
+  }
 }

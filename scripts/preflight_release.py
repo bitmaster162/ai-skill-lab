@@ -21,6 +21,8 @@ CHECKS = [
     ("motion_policy", ["python", "scripts/check_motion_policy.py"]),
     ("static_accessibility", ["python", "scripts/check_static_accessibility.py"]),
     ("attention_hierarchy", ["python", "scripts/check_attention_hierarchy.py"]),
+    ("workshop_d1", ["python", "scripts/check_workshop_d1.py"]),
+    ("tracked_python_artifacts", ["python", "scripts/check_tracked_python_artifacts.py"]),
     ("client_privacy", ["python", "scripts/check_client_privacy.py"]),
     ("inline_scripts", ["python", "scripts/check_inline_scripts.py"]),
     ("matcher_runtime", ["node", "scripts/check_matcher_runtime.mjs"]),

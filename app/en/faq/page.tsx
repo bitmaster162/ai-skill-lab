@@ -20,7 +20,7 @@ const items = [
   ["Can the program focus on a business problem?", "Yes. Adult and team routes can focus on research, automation, an AI assistant, workflows or an internal mini-product."],
   ["What happens after I message on Telegram?", "First we confirm the goal and format. Then we recommend a suitable package or a smaller starting point, confirm scope, schedule, payment and rescheduling terms in writing, and only then does the program start."],
   ["When do I pay, and on what terms?", "Payment is accepted only after the specific service is agreed. Final scope and price, payment method and provider details, plus rescheduling, cancellation and refund terms must be documented before payment."],
-  ["How long is one session?", "The package fixes the number of sessions, not a hidden standard duration. The exact duration of each session and the schedule are agreed and documented before payment as part of the specific scope."],
+  ["How long is one session?", "One session is 60 minutes. The package states the number of sessions; the schedule and remaining terms are documented before payment as part of the specific scope."],
 ];
 
 export default function FaqPage() {
