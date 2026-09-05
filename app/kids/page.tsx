@@ -56,7 +56,7 @@ export default function KidsPage() {
 
         <section className="trustStrip trustStripDark">
           <div className="shell trustStripGrid">
-            <div><b>Длительность по scope</b><span>Фиксируем до оплаты</span></div>
+            <div><b>60 минут</b><span>Одна сессия</span></div>
             <div><b>1-на-1</b><span>Темп не диктует группа</span></div>
             <div><b>Контакт взрослого</b><span>Без прямого маркетинга ребёнку</span></div>
             <div><b>Свой проект</b><span>Ребёнок презентует результат сам</span></div>
@@ -118,7 +118,7 @@ export default function KidsPage() {
 
         <section className="section sectionMuted">
           <div className="shell">
-            <div className="sectionHead splitHead"><div><span className="kicker">Формат и стоимость</span><h2>Выбираем глубину программы</h2></div><p>Индивидуально. Длительность сессии, расписание и темп фиксируются до оплаты под возраст, задачу и формат.</p></div>
+            <div className="sectionHead splitHead"><div><span className="kicker">Формат и стоимость</span><h2>Выбираем глубину программы</h2></div><p>Индивидуально. Одна сессия длится 60 минут; расписание и темп фиксируются до оплаты под возраст, задачу и формат.</p></div>
             <div className="pricingGrid kidsPricing">
               <article className="priceCard"><span className="cardMeta">Mini</span><h3>4 занятия</h3><div className="price">$290</div><p>Первое знакомство с AI через творчество и небольшой мини-проект.</p><Link className="button buttonGhost buttonWide" href="/start">Выбрать Mini</Link></article>
               <article className="priceCard featuredPrice"><span className="popular">Основная программа</span><span className="cardMeta">Creator</span><h3>10 занятий</h3><div className="price">$890</div><p>Полный маршрут от основ до самостоятельной презентации итогового AI-проекта.</p><Link className="button buttonPrimary buttonWide" href="/start">Выбрать Creator</Link></article>

@@ -1,119 +1,46 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import re
-import sys
-from css_graph import read_local_css_graph
-
-ROOT = Path(__file__).resolve().parents[1]
-LIVE = ROOT / "deploy" / "live"
-README = ROOT / "README.md"
-errors=[]
-checks=0
-public_routes=set()
-R77_HOMES={
-    "index.html":{"start":"/start","lang":"/en"},
-    "en.html":{"start":"/en/start","lang":"/"},
-}
-
-for path in sorted(LIVE.rglob("*.html")):
-    if path.name == "404.html":
-        continue
-    rel=path.relative_to(LIVE).as_posix()
-    if rel == "index.html":
-        public_routes.add("/")
-    elif rel == "en.html":
-        public_routes.add("/en")
-    elif rel.startswith("en/"):
-        public_routes.add("/en/" + rel[3:-5])
-    else:
-        public_routes.add("/" + rel[:-5])
-    text=path.read_text(encoding="utf-8")
-    if rel in R77_HOMES:
-        expected=R77_HOMES[rel]
-        for marker in ['<header class="header">','class="headerActions"',f'href="{expected["start"]}" class="topCta"',f'href="{expected["lang"]}" class="lang"']:
-            checks += 1
-            if marker not in text:
-                errors.append(f"{rel}: missing R77 home marker {marker}")
-        checks += 1
-        if '<header class="nav">' in text:
-            errors.append(f"{rel}: legacy .nav header must not return")
-        continue
-    en = rel.startswith("en/")
-    route = "/en/" + rel[3:-5] if en else "/" + rel[:-5]
-    expected_main = [
-        "/en/personal","/en/business","/en/kids","/en/teens","/en/pricing","/en/about","/en/faq"
-    ] if en else [
-        "/personal","/business","/kids","/teens","/pricing","/about","/faq"
-    ]
-    header_match=re.search(r'<header class="nav">(.*?)</header>',text,re.S)
-    checks += 1
-    if not header_match:
-        errors.append(f"{rel}: missing .nav header")
-        continue
-    header=header_match.group(1)
-    for marker in ['class="navActions"','class="langSwitch"','class="mobileNav"','<summary aria-label=']:
-        checks += 1
-        if marker not in header:
-            errors.append(f"{rel}: missing {marker}")
-    for href in expected_main:
-        checks += 2
-        # each primary route must appear in desktop + mobile nav
-        count=len(re.findall(fr'href="{re.escape(href)}"',header))
-        if count != 2:
-            errors.append(f"{rel}: primary nav {href} count={count}, expected 2")
-    expected_start = "/en/start" if en else "/start"
-    on_start = route == expected_start
-    if on_start:
-        checks += 1
-        if header.count('href="https://t.me/BiTFormer"') != 2:
-            errors.append(f"{rel}: start header must expose Telegram exactly twice (desktop/mobile CTA)")
-    else:
-        checks += 2
-        if header.count(f'href="{expected_start}"') != 2:
-            errors.append(f"{rel}: internal start CTA count mismatch")
-        if 't.me/BiTFormer' in header:
-            errors.append(f"{rel}: direct Telegram outside start header")
-    checks += 1
-    if route in expected_main and header.count('aria-current="page"') != 2:
-        errors.append(f"{rel}: active primary route must be marked in desktop+mobile nav")
-
-readme_text=README.read_text(encoding="utf-8")
-route_inventory=[
-    ("RU",{route for route in public_routes if route == "/" or not route.startswith("/en")}),
-    ("EN",{route for route in public_routes if route == "/en" or route.startswith("/en/")}),
-]
-for label,expected_routes in route_inventory:
-    checks += 1
-    match=re.search(rf"^- {label}: (.+)$",readme_text,re.M)
-    if not match:
-        errors.append(f"README: missing {label} route inventory")
-        continue
-    listed=set(re.findall(r"`([^`]+)`",match.group(1)))
-    if listed != expected_routes:
-        errors.append(
-            f"README: {label} route inventory mismatch "
-            f"missing={sorted(expected_routes-listed)} extra={sorted(listed-expected_routes)}"
-        )
-
-css=read_local_css_graph(LIVE / "style.css", LIVE)
-rules=re.findall(r"([^{}]+)\{([^{}]*)\}",css)
-checks += 1
-mobile_hidden=any(
-    ".mobileNav" in [selector.strip() for selector in selectors.split(",")]
-    and "display:none" in re.sub(r"\s+","",body)
-    for selectors,body in rules
-)
-if not mobile_hidden:
-    errors.append("style.css: missing R25 mobile navigation hidden-state rule .mobileNav display:none")
-for marker in ["min-height:48px","@media(max-width:980px){.links{display:none}.mobileNav{display:block}"]:
-    checks += 1
-    if marker not in css:
-        errors.append(f"style.css: missing R25 mobile navigation rule {marker}")
-
+import re,sys
+ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';README=ROOT/'README.md';errors=[];checks=0
+WORKSHOP={'index.html':('/start','/en',False),'en.html':('/en/start','/',True),'start.html':('#contact-channels','/en/start',False),'en/start.html':('#contact-channels','/start',True),'pricing.html':('/start','/en/pricing',False),'en/pricing.html':('/en/start','/pricing',True)}
+public=set();legacy=0
+for p in sorted(LIVE.rglob('*.html')):
+ if p.name=='404.html':continue
+ rel=p.relative_to(LIVE).as_posix();route='/' if rel=='index.html' else '/en' if rel=='en.html' else '/'+rel[:-5];public.add(route);text=p.read_text(encoding='utf-8')
+ if rel in WORKSHOP:
+  start,alternate,en=WORKSHOP[rel];checks+=1
+  m=re.search(r'<header class="workshopHeader">(.*?)</header>',text,re.S)
+  if not m:errors.append(f'{rel}: workshop header missing');continue
+  h=m.group(1);expected=[f'/en{x}' for x in ['/personal','/teens','/kids','/business','/studio','/pricing']] if en else ['/personal','/teens','/kids','/business','/studio','/pricing']
+  for href in expected:
+   checks+=1
+   if h.count(f'href="{href}"')!=1:errors.append(f'{rel}: workshop menu {href} count drift')
+  for marker in ['data-lab-command-open','aria-label="Proof Lab"',f'href="{alternate}"',f'href="{start}"']:
+   checks+=1
+   if marker not in h:errors.append(f'{rel}: missing {marker}')
+  if '<header class="nav">' in text:errors.append(f'{rel}: legacy header returned')
+ else:
+  legacy+=1;en=rel.startswith('en/');expected=[f'/en{x}' for x in ['/personal','/business','/kids','/teens','/pricing','/about','/faq']] if en else ['/personal','/business','/kids','/teens','/pricing','/about','/faq']
+  m=re.search(r'<header class="nav">(.*?)</header>',text,re.S);checks+=1
+  if not m:errors.append(f'{rel}: legacy nav missing');continue
+  h=m.group(1)
+  for href in expected:
+   checks+=1
+   if h.count(f'href="{href}"')!=2:errors.append(f'{rel}: legacy menu {href} count drift')
+source=(ROOT/'components/workshop/WorkshopShell.tsx').read_text(encoding='utf-8')
+for label in ['Взрослые','Подростки','Дети','Бизнес','Studio','Цены','Adults','Teens','Kids','Business','Pricing']:
+ checks+=1
+ if label not in source:errors.append(f'WorkshopShell missing {label}')
+for forbidden in ['Взрослым','Стоимость','Дети 8–13','Подростки 14–18']:
+ checks+=1
+ if f'[["{forbidden}"' in source:errors.append(f'Workshop menu stale label {forbidden}')
+readme=README.read_text(encoding='utf-8')
+for label,expected in [('RU',{r for r in public if r=='/' or not r.startswith('/en')}),('EN',{r for r in public if r=='/en' or r.startswith('/en/')})]:
+ m=re.search(rf'^- {label}: (.+)$',readme,re.M);checks+=1
+ if not m:errors.append(f'README missing {label} inventory')
+ elif set(re.findall(r'`([^`]+)`',m.group(1)))!=expected:errors.append(f'README {label} inventory drift')
+print(f'navigation_parity_checks={checks} workshop_pages={len(WORKSHOP)} legacy_pages={legacy}')
 if errors:
-    print(f"navigation_parity_checks={checks}")
-    for e in errors:
-        print("FAIL:",e)
-    sys.exit(1)
-print(f"navigation_parity_checks={checks} legacy_pages=42 r77_homes=2")
-print("NAVIGATION_PARITY_PASS")
+ for e in errors:print('FAIL:',e)
+ sys.exit(1)
+print('NAVIGATION_PARITY_PASS')

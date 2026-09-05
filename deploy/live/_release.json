@@ -1,5 +1,5 @@
 {
-  "file_count": 61,
+  "file_count": 62,
   "files": [
     {
       "path": "404.html",
@@ -33,8 +33,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "4be1e8873c262a78e475c13689afcd0a34691159ae7a92eef47832e870f31d9b",
-      "size": 7943
+      "sha256": "787b5e846ebd9c54f773da20e4d521da4e3f15b65faf6398185f138013060b7f",
+      "size": 7652
     },
     {
       "path": "en/about.html",
@@ -63,13 +63,13 @@
     },
     {
       "path": "en/faq.html",
-      "sha256": "e1b135fa494d372ca67299b9ffe19dea423ef70934aedbfe53321305caeda485",
-      "size": 6896
+      "sha256": "579bdc49ce20cec3a22f1382c51b22f94403c7b59de03b314b23d222ee3578df",
+      "size": 6862
     },
     {
       "path": "en/kids.html",
-      "sha256": "f157a358dd0b41950be152cfaab4783353366b70179f5a2b0381ce2eca3418f5",
-      "size": 9211
+      "sha256": "a4b64e6a51a277a8be7d2b20372b38bff350be94e206183395c8ed395625a724",
+      "size": 9225
     },
     {
       "path": "en/matcher.html",
@@ -98,8 +98,8 @@
     },
     {
       "path": "en/pricing.html",
-      "sha256": "854b23533df6a51700a66f197259dd1bf6adf02814666eb27e7362588755df5f",
-      "size": 7534
+      "sha256": "159b438901d834fe66ba66984391a48b3d4a67c35c1fc8c2a1c5e19ed800f74f",
+      "size": 8124
     },
     {
       "path": "en/privacy.html",
@@ -123,8 +123,8 @@
     },
     {
       "path": "en/start.html",
-      "sha256": "3492b4eeecaa58b6e63e60b856b9db2fb9fbb0c1ce09f014a2a1c7ecad951527",
-      "size": 10110
+      "sha256": "e3c16574cd6395590bf7adfa7b1dcbe40e2ae8788f65f6dc8e84270e5cbbc71f",
+      "size": 9921
     },
     {
       "path": "en/studio.html",
@@ -143,8 +143,8 @@
     },
     {
       "path": "faq.html",
-      "sha256": "7af1f9edcde208f049b74c972bcf079b4ed667ed954a586c1ba84d23825fb2fd",
-      "size": 8849
+      "sha256": "beeabe49f553953db5e69db878214b5f5b9eae32e420c2c97e6fad94081bf0e8",
+      "size": 8772
     },
     {
       "path": "favicon.svg",
@@ -153,13 +153,13 @@
     },
     {
       "path": "index.html",
-      "sha256": "3671b95483435c3d03cc00e6b23af05e3e8290b0781847931426d288a559ea5c",
-      "size": 9682
+      "sha256": "15c7dc761d0c9a05d817cf66883f38998ecbfa132c1a6221aa7063d817b5fffb",
+      "size": 9174
     },
     {
       "path": "kids.html",
-      "sha256": "54ccdeb62a1b15aa78c4b6963b5ae076c4e97e6640d48871de567cbb8cd9bf6f",
-      "size": 12014
+      "sha256": "d40a8d4bf12261de1eb04c40aa9a6446cac1eee9c23fa0759475b5ef5fcf57cd",
+      "size": 12031
     },
     {
       "path": "lab-command.js",
@@ -203,8 +203,8 @@
     },
     {
       "path": "pricing.html",
-      "sha256": "ffce153f86cec06ae45a35d03c3053a43b20efc0023af7f572d124bb175cebec",
-      "size": 9160
+      "sha256": "24a06f8f20f2542d9937dd0b1a964d097682fea49ec2dbc2dcbabeb2ce14c0cf",
+      "size": 9706
     },
     {
       "path": "privacy.html",
@@ -268,13 +268,13 @@
     },
     {
       "path": "start-brief.js",
-      "sha256": "1db1cb38358d3afbce5eada67b12a8d8d98858d3c0943fe690d4f726ad16d791",
-      "size": 1847
+      "sha256": "87275446d2d5770021d6f39dac2036a9349609d761d62f13ce14a7eb41173a01",
+      "size": 1843
     },
     {
       "path": "start.html",
-      "sha256": "7fa72d749beff17122f526088ed26619da403abba2b14d50c546e912d8fbcd1b",
-      "size": 14954
+      "sha256": "320e5d2788cdcbd94fb7f76806ce75148c0491297367d98a5309942f2dd830ab",
+      "size": 14581
     },
     {
       "path": "studio.html",
@@ -305,9 +305,14 @@
       "path": "vercel.json",
       "sha256": "7fa03e56741676e4395e41b00cb8137116f6620406c3b6cfb4bd78d6818106bb",
       "size": 2070
+    },
+    {
+      "path": "workshop.css",
+      "sha256": "d93cb78de94ec0ab5b5cb5f6ae32e912aab45b630ef99685eca1cdbb29376f9b",
+      "size": 2656
     }
   ],
-  "payload_sha256": "1da4628e6dfab0d5245add7453d4a4075cdb8510f493b2dd3c1c9d84585ee0dc",
-  "release_id": "R77",
+  "payload_sha256": "f24adc0676601d77b714ec03b997a665dfe149929ae7f8070a15400a95ef099a",
+  "release_id": "R96_D1",
   "schema": "ai-skill-lab.static-release.v1"
 }

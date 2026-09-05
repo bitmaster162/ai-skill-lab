@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 
 type CopyBriefButtonProps = {
   title: string;
@@ -39,14 +39,23 @@ function getSameOriginSource() {
   }
 }
 
+function subscribeSameOriginSource() {
+  return () => {};
+}
+
+function getServerSource() {
+  return "";
+}
+
 export function CopyBriefButton({ title, lines, locale = "ru" }: CopyBriefButtonProps) {
   const [copyState, setCopyState] = useState<"idle" | "done" | "error">("idle");
-  const [source, setSource] = useState("");
+  const source = useSyncExternalStore(
+    subscribeSameOriginSource,
+    getSameOriginSource,
+    getServerSource,
+  );
   const isEn = locale === "en";
 
-  useEffect(() => {
-    setSource(getSameOriginSource());
-  }, []);
   const text = [
     isEn ? "AI Skill Lab — brief" : "AI Skill Lab — запрос",
     `${isEn ? "Route" : "Маршрут"}: ${title}`,
@@ -56,9 +65,9 @@ export function CopyBriefButton({ title, lines, locale = "ru" }: CopyBriefButton
   const telegramHref = `https://t.me/BiTFormer?text=${encodeURIComponent(text)}`;
 
   return (
-    <>
+    <div className="briefActions">
       <button
-        className="button buttonSmall buttonGhost briefCopyButton"
+        className="workshopButton workshopButtonSecondary briefCopy"
         type="button"
         onClick={async () => {
           const ok = await copyText(text);
@@ -74,13 +83,13 @@ export function CopyBriefButton({ title, lines, locale = "ru" }: CopyBriefButton
             : (isEn ? "Copy brief" : "Скопировать brief")}
       </button>
       <a
-        className="button buttonSmall buttonPrimary briefTelegramLink"
+        className="workshopButton workshopButtonPrimary briefSendLink"
         href={telegramHref}
         target="_blank"
         rel="noopener noreferrer"
       >
-        {isEn ? "Open Telegram with this brief →" : "Написать в Telegram с brief →"}
+        {isEn ? "Send in Telegram →" : "Отправить в Telegram →"}
       </a>
-    </>
+    </div>
   );
 }

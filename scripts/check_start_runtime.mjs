@@ -3,8 +3,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 
-const root=path.resolve(path.dirname(new URL(import.meta.url).pathname),'..');
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 
 class E {
   constructor({textContent='',card=null}={}){this.textContent=textContent;this.card=card;this.listeners=new Map();this.style={};this.value='';}
@@ -48,8 +49,8 @@ function extract(file){
     const lines=[...list[1].matchAll(/<div>\s*\d+\.\s*([\s\S]*?)<\/div>/gi)].map(x=>cleanText(x[1]));
     const expectedFields=i===4?6:4;
     if(lines.length!==expectedFields)throw new Error(`${file}: card${i+1} expected ${expectedFields} fields, got ${lines.length}`);
-    const link=block.match(/<a class="btn briefTelegramLink" href="([^"]+)" target="_blank" rel="noopener noreferrer">([^<]+)<\/a>/i);
-    if(!link)throw new Error(`${file}: card${i+1} missing exact Telegram brief link`);
+    const link=block.match(/<a class="workshopButton workshopButtonPrimary briefSendLink" href="([^"]+)" target="_blank" rel="noopener noreferrer">([^<]+)<\/a>/i);
+    if(!link)throw new Error(`${file}: card${i+1} missing exact brief send link`);
     return {title,lines,href:link[1],label:cleanText(link[2])};
   });
   return {html,js,cards};
@@ -73,7 +74,10 @@ function assertSourceParity(){
     'getSameOriginSource()',
     'referrer.origin !== window.location.origin',
     'path === "/start" || path === "/en/start"',
-    'setSource(getSameOriginSource())',
+    'const source = useSyncExternalStore(',
+    'subscribeSameOriginSource,',
+    'getSameOriginSource,',
+    'getServerSource,',
     '`${isEn ? "Source" : "Источник"}: ${source}`',
   ];
   for(const token of required)if(!src.includes(token))throw new Error(`CopyBriefButton source-attribution parity missing: ${token}`);
@@ -98,7 +102,7 @@ async function run(rel,lang,{referrer='',source=''}={}){
   const sourceJs=attributionScript();
   const isEn=lang==='en';
   const initial=isEn?'Copy brief':'Скопировать brief';
-  const expectedLabel=isEn?'Open Telegram with this brief →':'Написать в Telegram с brief →';
+  const expectedLabel=isEn?'Send in Telegram →':'Отправить в Telegram →';
   const expectedStudioLines=isEn?[
     'What you want to build or change',
     'What happens today / what already exists',
@@ -141,7 +145,7 @@ async function run(rel,lang,{referrer='',source=''}={}){
   const document={
     documentElement:{lang},referrer,
     body:{appendChild(){}},
-    querySelectorAll(sel){if(sel==='.briefCopy')return buttons;if(sel==='.briefTelegramLink')return anchors;return[]},
+    querySelectorAll(sel){if(sel==='.briefCopy')return buttons;if(sel==='.briefSendLink')return anchors;return[]},
     createElement(){return new E()},execCommand(){return true},
   };
   const navigator={clipboard:{async writeText(t){clipboard=String(t)}}};
