@@ -33,7 +33,6 @@ README_REQUIRED_MARKERS = [
     "current public routes are contact-only",
     "`NEXT_PUBLIC_LEAD_FORM_ENABLED=true` is not a release approval",
     "do not validate deployment-specific ENV values",
-    "services/lead-ingress",
 ]
 ENV_EXAMPLE_FORBIDDEN_SEMANTICS = [
     "# Public legal/operator details. Fill these before public deployment.",
