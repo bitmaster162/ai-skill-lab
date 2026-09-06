@@ -45,6 +45,8 @@ jobs:
         run: python scripts/check_workshop_d1.py
       - name: Validate Workshop D2 Family authority
         run: python scripts/check_workshop_d2.py
+      - name: Validate Workshop D3 audience business FAQ authority
+        run: python scripts/check_workshop_d3.py
       - name: Validate tracked Python artifact quarantine
         run: python scripts/check_tracked_python_artifacts.py
       - name: Validate client privacy boundary
@@ -107,6 +109,8 @@ jobs:
         run: node scripts/check_pilot_simulator_runtime.mjs
       - name: Validate Business calculator determinism
         run: node scripts/check_r70_business_calculator.mjs
+      - name: Validate shipped Business calculator runtime
+        run: node scripts/check_business_calculator_runtime.mjs
       - name: Validate curriculum package mapping
         run: python scripts/check_curriculum_package_mapping.py
       - name: Validate session duration policy

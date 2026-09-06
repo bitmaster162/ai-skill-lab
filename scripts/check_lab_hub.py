@@ -12,7 +12,7 @@ for rel,en in surfaces:
  for href in expected:
   checks+=1
   if href not in text:errors.append(f'{rel}: missing {href}')
-for rel in ['app/business/page.tsx','app/en/business/page.tsx','deploy/live/business.html','deploy/live/en/business.html']:
+for rel in ['components/workshop/WorkshopBusiness.tsx','components/workshop/WorkshopBusiness.tsx','deploy/live/business.html','deploy/live/en/business.html']:
  text=(ROOT/rel).read_text(encoding='utf-8');checks+=1
  if 'id="pilot-simulator"' not in text:errors.append(f'{rel}: pilot simulator anchor missing')
 if errors:

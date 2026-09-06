@@ -29,7 +29,7 @@ for marker in ['site.telegram','site.email','site.whatsapp','site.line','id="con
 start=(ROOT/'components/workshop/WorkshopStart.tsx').read_text(encoding='utf-8');checks+=2
 if '<ChannelLinks locale={locale}/>' not in start:errors.append('WorkshopStart missing ChannelLinks')
 if 'contactHref="#contact-channels"' not in start:errors.append('WorkshopStart header CTA must remain same-page/internal')
-for rel in ['components/ContactButtons.tsx','components/workshop/WorkshopHome.tsx','components/workshop/WorkshopPricing.tsx','components/workshop/WorkshopFamily.tsx']:
+for rel in ['components/ContactButtons.tsx','components/workshop/WorkshopHome.tsx','components/workshop/WorkshopPricing.tsx','components/workshop/WorkshopFamily.tsx','components/workshop/WorkshopAudience.tsx','components/workshop/WorkshopBusiness.tsx','components/workshop/WorkshopFaq.tsx','components/BusinessValueCalculator.tsx']:
  text=(ROOT/rel).read_text(encoding='utf-8');checks+=1
  if any(v in text for v in channels.values()) or 'site.telegram' in text:errors.append(f'{rel}: external channel leakage')
 print(f'contact_funnel_checks={checks}')

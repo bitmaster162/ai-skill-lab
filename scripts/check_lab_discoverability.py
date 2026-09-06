@@ -2,7 +2,7 @@
 from pathlib import Path
 import re,sys
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';errors=[];checks=0
-WORKSHOP={'index.html','en.html','start.html','en/start.html','pricing.html','en/pricing.html','family.html','en/family.html'};legacy=0
+WORKSHOP={'business.html','en.html','en/business.html','en/family.html','en/faq.html','en/kids.html','en/personal.html','en/pricing.html','en/start.html','en/teens.html','family.html','faq.html','index.html','kids.html','personal.html','pricing.html','start.html','teens.html'};legacy=0
 for p in sorted(LIVE.rglob('*.html')):
  if p.name=='404.html':continue
  rel=p.relative_to(LIVE).as_posix();text=p.read_text(encoding='utf-8');en=rel=='en.html' or rel.startswith('en/');expect='/en/proof' if en else '/proof'

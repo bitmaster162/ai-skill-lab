@@ -2,7 +2,7 @@
 from pathlib import Path
 import sys
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';errors=[];checks=0
-WORKSHOP={'index.html','en.html','start.html','en/start.html','pricing.html','en/pricing.html','family.html','en/family.html'}
+WORKSHOP={'business.html','en.html','en/business.html','en/family.html','en/faq.html','en/kids.html','en/personal.html','en/pricing.html','en/start.html','en/teens.html','family.html','faq.html','index.html','kids.html','personal.html','pricing.html','start.html','teens.html'}
 pages=[p for p in sorted(LIVE.rglob('*.html')) if p.name!='404.html'];legacy=0
 for p in pages:
  rel=p.relative_to(LIVE).as_posix();t=p.read_text(encoding='utf-8')

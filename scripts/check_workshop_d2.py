@@ -100,9 +100,9 @@ for rel in ['deploy/live/r70-broadsheet.css','deploy/live/r77-commercial.css']:
  if (ROOT/rel).is_file():errors.append(f'unreferenced static asset present: {rel}')
 checks+=1
 if not (ROOT/'deploy/live/r77-commercial-mobile.css').is_file():errors.append('active r77-commercial-mobile.css missing')
-manifest=json.loads((LIVE/'_release.json').read_text(encoding='utf-8'));checks+=6
+manifest=json.loads((LIVE/'_release.json').read_text(encoding='utf-8'));checks+=5
 if manifest.get('schema')!='ai-skill-lab.static-release.v1':errors.append('release manifest schema drift')
-if manifest.get('release_id')!='R97_D2':errors.append(f'release id {manifest.get("release_id")!r}')
+# Current release identity is owned by the D3 release checker.
 if manifest.get('file_count')!=62:errors.append(f'manifest file_count {manifest.get("file_count")} != 62')
 listed={x.get('path') for x in manifest.get('files',[])}
 if not {'family.html','en/family.html'}<=listed:errors.append('manifest missing Family static pages')

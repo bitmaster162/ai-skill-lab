@@ -36,11 +36,15 @@ for path,value in expected_numbers.items():
  if node!=value:errors.append(f'authority {".".join(path)}={node!r}, expected {value!r}')
 adapter=require('lib/commercial.ts',['commercialFacts = facts','sessionDurationMinutes','facts.schema !== "ai-skill-lab.commercial-facts.v2"','facts.session_duration_minutes !== 60'])
 
-# Existing packages remain exact on legacy matcher/track/parent surfaces.
+
+require('components/workshop/WorkshopAudience.tsx',['commercialFacts.tracks[audience]','sessionDurationMinutes','plans.map','plan.name','plan.price','plan.sessions_en','plan.sessions_ru'])
+require('components/workshop/WorkshopBusiness.tsx',['commercialFacts','business.workflow_audit.price','business.team_training.price_from_per_session','business.team_training.total_from','business.team_training.max_people','business.team_training.min_sessions','business.implementation_pilot.price_from','business.implementation_pilot.scope_cap_hours','recurring.operating_support','recurring.operating_partner','sessionDurationMinutes'])
+
+# Existing rendered packages and unmigrated sources remain exact.
 legacy={
- 'adult':{'ru':['components/ProgramMatcher.tsx','deploy/live/matcher.html','app/personal/page.tsx','deploy/live/personal.html'],'en':['components/ProgramMatcher.tsx','deploy/live/en/matcher.html','app/en/personal/page.tsx','deploy/live/en/personal.html']},
- 'kids':{'ru':['components/ProgramMatcher.tsx','deploy/live/matcher.html','app/kids/page.tsx','deploy/live/kids.html','app/parents/page.tsx','deploy/live/parents.html'],'en':['components/ProgramMatcher.tsx','deploy/live/en/matcher.html','app/en/kids/page.tsx','deploy/live/en/kids.html','app/en/parents/page.tsx','deploy/live/en/parents.html']},
- 'teens':{'ru':['components/ProgramMatcher.tsx','deploy/live/matcher.html','app/teens/page.tsx','deploy/live/teens.html','app/parents/page.tsx','deploy/live/parents.html'],'en':['components/ProgramMatcher.tsx','deploy/live/en/matcher.html','app/en/teens/page.tsx','deploy/live/en/teens.html','app/en/parents/page.tsx','deploy/live/en/parents.html']},
+ 'adult':{'ru':['components/ProgramMatcher.tsx','deploy/live/matcher.html','deploy/live/personal.html'],'en':['components/ProgramMatcher.tsx','deploy/live/en/matcher.html','deploy/live/en/personal.html']},
+ 'kids':{'ru':['components/ProgramMatcher.tsx','deploy/live/matcher.html','deploy/live/kids.html','app/parents/page.tsx','deploy/live/parents.html'],'en':['components/ProgramMatcher.tsx','deploy/live/en/matcher.html','deploy/live/en/kids.html','app/en/parents/page.tsx','deploy/live/en/parents.html']},
+ 'teens':{'ru':['components/ProgramMatcher.tsx','deploy/live/matcher.html','deploy/live/teens.html','app/parents/page.tsx','deploy/live/parents.html'],'en':['components/ProgramMatcher.tsx','deploy/live/en/matcher.html','deploy/live/en/teens.html','app/en/parents/page.tsx','deploy/live/en/parents.html']},
 }
 for track,plans in FACTS['tracks'].items():
  for plan in plans:

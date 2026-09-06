@@ -27,8 +27,8 @@ def source_items(text):
     return re.findall(r'\["([^"]+\?)",\s*"([^"]*)"\]', text)
 
 required={
- 'ru':['Что происходит после сообщения в Telegram?','Когда и на каких условиях происходит оплата?','Сколько длится одно занятие?'],
- 'en':['What happens after I message on Telegram?','When do I pay, and on what terms?','How long is one session?'],
+ 'ru':['Что происходит после первого сообщения?','Когда и на каких условиях происходит оплата?','Сколько длится одно занятие?'],
+ 'en':['What happens after my first message?','When do I pay, and on what terms?','How long is one session?'],
 }
 checks=0
 for lang,static_rel,source_rel in [

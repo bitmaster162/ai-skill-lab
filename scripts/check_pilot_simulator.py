@@ -5,13 +5,13 @@ ROOT=Path(__file__).resolve().parents[1]
 errors=[];checks=0
 surfaces=[
  ('components/PilotSimulator.tsx','source shared'),
- ('app/business/page.tsx','source RU'),('app/en/business/page.tsx','source EN'),
+ ('components/workshop/WorkshopBusiness.tsx','source RU'),('components/workshop/WorkshopBusiness.tsx','source EN'),
  ('deploy/live/business.html','static RU'),('deploy/live/en/business.html','static EN')]
 markers=['AI Pilot Simulator','knowledge','documents','routing','decision']
 for rel,label in surfaces:
  text=html.unescape((ROOT/rel).read_text(encoding='utf-8'))
  for marker in markers:
-  if rel.startswith('app/') and marker!='AI Pilot Simulator': continue
+  if label in ('source RU','source EN') and marker!='AI Pilot Simulator': continue
   if rel=='components/PilotSimulator.tsx' and marker=='AI Pilot Simulator': continue
   checks+=1
   if marker.lower() not in text.lower():errors.append(f'{label}: missing {marker!r}')
