@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
+import { WorkshopEditorial } from "@/components/workshop/WorkshopEditorial";
 import Link from "next/link";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-
 export const metadata: Metadata = {
   title: "Build Log — how AI Skill Lab was built with AI",
   description: "The open build log of AI Skill Lab: real iterations, failures, AI roles, human gates, automated verification and release engineering.",
@@ -30,7 +28,7 @@ const failures = [
 ] as const;
 
 export default function BuildPage() {
-  return <><Header locale="en" alternateHref="/build"/><main id="main" className="proofPage">
+  return <WorkshopEditorial locale="en" alternateHref="/build"><main id="main" className="proofPage">
     <section className="proofHero"><div className="shell proofHeroGrid"><div>
       <span className="proofEyebrow"><i/> BUILD STORY / OPEN PROVENANCE</span>
       <h1>This site is<br/><em>our own case study.</em></h1>
@@ -47,5 +45,5 @@ export default function BuildPage() {
     <section className="section"><div className="shell"><div className="sectionHead splitHead"><div><span className="kicker">Failure log</span><h2>The system grew most<br/>when something broke.</h2></div><p>Failures are not removed from the case study. A useful failure changes the system so that the same class cannot pass unnoticed again.</p></div><div className="programGrid">{failures.map(([title,problem,fix],i)=><article className="programCard" key={title}><span className="cardIndex">0{i+1}</span><div className="cardSpacer"/><span className="cardMeta">FAILURE → CONTROL</span><h3>{title}</h3><p>{problem}</p><p><strong>→ {fix}</strong></p></article>)}</div></div></section>
 
     <section className="section sectionMuted"><div className="shell proofHonesty"><div><span className="kicker">What this proves</span><h2>Not “AI built a website.”<br/><em>We can govern an AI build.</em></h2></div><div><p>The evidence is not the number of generated lines. It is the ability to evolve, verify, recover, constrain and release a product without losing commercial or semantic truth.</p><p>That is the same discipline behind our training and AI projects: <strong>Define → Build → Verify → Ship.</strong></p><div className="heroActions"><Link className="button buttonPrimary" href="/en/proof">Open Proof Lab →</Link><Link className="textLink" href="/en/projects">Project Studio →</Link></div></div></div></section>
-  </main><Footer locale="en"/></>;
+  </main></WorkshopEditorial>;
 }

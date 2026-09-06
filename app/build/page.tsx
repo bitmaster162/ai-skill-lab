@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
+import { WorkshopEditorial } from "@/components/workshop/WorkshopEditorial";
 import Link from "next/link";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-
 export const metadata: Metadata = {
   title: "Build Log — как AI Skill Lab построен с AI",
   description: "Открытый build log AI Skill Lab: реальные итерации, ошибки, AI-роль, human gates, автоматические проверки и release engineering.",
@@ -30,7 +28,7 @@ const failures = [
 ] as const;
 
 export default function BuildPage() {
-  return <><Header alternateHref="/en/build"/><main id="main" className="proofPage">
+  return <WorkshopEditorial locale="ru" alternateHref="/en/build"><main id="main" className="proofPage">
     <section className="proofHero"><div className="shell proofHeroGrid"><div>
       <span className="proofEyebrow"><i/> BUILD STORY / OPEN PROVENANCE</span>
       <h1>Этот сайт —<br/><em>наш собственный кейс.</em></h1>
@@ -47,5 +45,5 @@ export default function BuildPage() {
     <section className="section"><div className="shell"><div className="sectionHead splitHead"><div><span className="kicker">Failure log</span><h2>Сильнее всего<br/>система выросла на ошибках.</h2></div><p>Мы не прячем failures из case study. Полезная ошибка должна менять систему так, чтобы её класс больше не проходил незамеченным.</p></div><div className="programGrid">{failures.map(([title,problem,fix],i)=><article className="programCard" key={title}><span className="cardIndex">0{i+1}</span><div className="cardSpacer"/><span className="cardMeta">FAILURE → CONTROL</span><h3>{title}</h3><p>{problem}</p><p><strong>→ {fix}</strong></p></article>)}</div></div></section>
 
     <section className="section sectionMuted"><div className="shell proofHonesty"><div><span className="kicker">Что это доказывает</span><h2>Не «AI сделал сайт».<br/><em>Мы умеем управлять AI-сборкой.</em></h2></div><div><p>Доказательство не в количестве сгенерированных строк. Оно в том, что продукт можно развивать, проверять, восстанавливать, ограничивать и выпускать без потери коммерческой и смысловой правды.</p><p>Это та же дисциплина, которую мы продаём в обучении и AI-проектах: <strong>Define → Build → Verify → Ship.</strong></p><div className="heroActions"><Link className="button buttonPrimary" href="/proof">Открыть Proof Lab →</Link><Link className="textLink" href="/projects">Project Studio →</Link></div></div></div></section>
-  </main><Footer/></>;
+  </main></WorkshopEditorial>;
 }

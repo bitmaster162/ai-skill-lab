@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
+import { WorkshopInteractive } from "@/components/workshop/WorkshopInteractive";
 import Link from "next/link";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
 import { SkillGraph } from "@/components/SkillGraph";
 
 export const metadata: Metadata = {
@@ -38,8 +37,7 @@ const youth = [
 ];
 
 export default function CurriculumPage() {
-  return <>
-    <Header locale="en" contactHref="/en/start" alternateHref="/curriculum" />
+  return <WorkshopInteractive locale="en" alternateHref="/curriculum">
     <main id="main">
       <section className="hero heroR2"><div className="shell"><div className="eyebrow"><span className="dot" /> CURRICULUM · OUTCOME FIRST</div><h1>Not a list of buttons.<br/><span>A path to an outcome.</span></h1><p className="heroLead">Topics adapt to level and goal. The structure below shows what is learned and what should exist at the end before anyone commits to a package.</p><div className="heroActions"><Link className="button buttonPrimary" href="/en/pricing">Compare packages →</Link><Link className="button buttonGhost" href="/en/start">Choose a program →</Link></div></div></section>
       <section className="section"><div className="shell"><div className="sectionHead"><span className="kicker">Three tracks</span><h2>One principle: learn on a real task.</h2></div><div className="programGrid">{tracks.map((track)=><article className="programCard" key={track.title}><span className="cardMeta">{track.meta}</span><h3>{track.title}</h3><p>{track.text}</p><p><b>{track.output}</b></p><Link className="textLink" href={track.href}>Open the track →</Link></article>)}</div></div></section>
@@ -47,6 +45,5 @@ export default function CurriculumPage() {
       <section className="section"><div className="shell"><div className="sectionHead"><span className="kicker">Youth · logic of a 10-session route</span><h2>Understand → create → verify → explain.</h2><p className="sectionSub">Kids and Teens differ in complexity, independence and technical depth; organizational contact for minors stays with an adult.</p></div><div className="curriculumList">{youth.map(([n,t,d])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{d}</p></article>)}</div><div className="heroActions"><Link className="button buttonGhost" href="/en/kids">Kids 8–13 →</Link><Link className="button buttonGhost" href="/en/teens">Teens 14–18 →</Link><Link className="button buttonGhost" href="/en/parents">For parents →</Link></div></div></section>
       <section className="section sectionInk"><div className="shell splitHead"><div><span className="kicker kickerLight">How progress is measured</span><h2>Artifact + explanation.<br/><em>Not prompt count.</em></h2></div><div><p>The learner should be able to define the task, explain the decision, verify the result, name limitations and repeat the process without constant instructor prompting.</p><div className="heroActions"><Link className="button buttonLight" href="/en/projects">Example projects →</Link><Link className="button buttonGhost buttonOnDark" href="/en/method">Learning method →</Link></div></div></div></section>
     </main>
-    <Footer locale="en" />
-  </>;
+    </WorkshopInteractive>;
 }
