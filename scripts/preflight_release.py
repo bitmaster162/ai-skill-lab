@@ -25,6 +25,7 @@ CHECKS = [
     ("workshop_d2", ["python", "scripts/check_workshop_d2.py"]),
     ("workshop_d3", ["python", "scripts/check_workshop_d3.py"]),
     ("workshop_d4", ["python", "scripts/check_workshop_d4.py"]),
+    ("workshop_d5", ["python", "scripts/check_workshop_d5.py"]),
     ("tracked_python_artifacts", ["python", "scripts/check_tracked_python_artifacts.py"]),
     ("client_privacy", ["python", "scripts/check_client_privacy.py"]),
     ("inline_scripts", ["python", "scripts/check_inline_scripts.py"]),
