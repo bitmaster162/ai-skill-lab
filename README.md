@@ -6,8 +6,8 @@ Bilingual Next.js website for practical one-to-one AI education: adults, AI buil
 
 The repository contains two operating capabilities, but the current public routes are contact-only:
 
-1. **Contact-only (current public mode)** — the site does not collect lead data. Primary contact CTAs route through `/start` / `/en/start`; only those Start pages expose the configured Telegram exit. This mode does not require a webhook.
-2. **Lead-form capability (dormant on current public routes)** — `NEXT_PUBLIC_LEAD_FORM_ENABLED=true` is not a release approval. Before any form-enabled deployment, separately provision and verify the real operator identity, legal/privacy email, jurisdiction, HTTPS webhook and webhook signing secret. Required `static-release` and the local read-only preflight do not validate deployment-specific ENV values.
+1. **Contact-only (current public mode)** — the site does not collect lead data. Primary contact CTAs route through `/start` / `/en/start`; only those Start pages expose the configured direct contact exits. This mode does not require a webhook.
+2. **Lead-form capability (dormant on current public routes)** — `NEXT_PUBLIC_LEAD_FORM_ENABLED=true` is not a release approval. The browser form remains dormant until a separate activation release. Server-side intake is isolated under `services/lead-ingress/**`, defaults disabled, and is not part of the current static public release. Before any form-enabled deployment, separately provision and verify the real operator identity, legal/privacy email, jurisdiction, dedicated ingress project, HTTPS downstream receiver, mandatory signing secret, allowed origins, and provider-level rate limiting. Required `static-release` and the local read-only preflight do not validate deployment-specific ENV values.
 
 This keeps the live site useful without silently exposing a broken form or treating static QA as ENV/deployment approval.
 
@@ -18,6 +18,8 @@ This keeps the live site useful without silently exposing a broken form or treat
 
 ## Environment
 
+Public static project:
+
 ```bash
 NEXT_PUBLIC_SITE_URL=https://ai-skill-lab.vercel.app
 NEXT_PUBLIC_TELEGRAM_URL=https://t.me/BiTFormer
@@ -25,17 +27,17 @@ NEXT_PUBLIC_WHATSAPP_URL=
 NEXT_PUBLIC_LEAD_FORM_ENABLED=false
 ```
 
-Only when enabling the internal lead form:
+Public legal/privacy values remain blank until the activation facts are frozen:
 
 ```bash
 NEXT_PUBLIC_LEGAL_OPERATOR_NAME=<real operator>
 NEXT_PUBLIC_LEGAL_CONTACT_EMAIL=<real legal/privacy email>
 NEXT_PUBLIC_LEGAL_JURISDICTION=<real jurisdiction>
-LEAD_WEBHOOK_URL=https://...
-LEAD_WEBHOOK_SECRET=<24+ chars secret>
 ```
 
-The lead payload schema is `ai-skill-lab.lead.v2`. When a secret is configured, the exact JSON body is signed in `X-AI-Skill-Lab-Signature` as `sha256=<hex>`.
+Private receiver/signing configuration is not a public-project ENV contract. It lives only in `services/lead-ingress/.env.example` and the future dedicated ingress Vercel project. The ingress additionally requires an explicit server-side enable flag, allowed HTTPS origins, the exact legal operator/jurisdiction/privacy contact, the frozen retention value, and verified provider-level rate limiting before forwarding can become available.
+
+The lead payload schema remains `ai-skill-lab.lead.v2`. The isolated ingress adds `requestId`, `receivedAt`, and optional `sourcePath`. It signs the exact JSON body using `X-AI-Skill-Lab-Timestamp`, `X-AI-Skill-Lab-Request-Id`, and `X-AI-Skill-Lab-Signature: v1=<hex>`, where the HMAC input is `timestamp + "." + requestId + "." + raw_json_body`.
 
 ## Release QA
 
@@ -45,7 +47,7 @@ Required repository release QA is the `static-release` workflow. The local read-
 python scripts/preflight_release.py --release <receipt-label>
 ```
 
-R87 intentionally quarantines the ENV-bound launch checker from required and operator release surfaces. It remains repository evidence only and is not an operator release command. Lead-form mode still requires real operator/legal/webhook configuration before deployment; those deployment-specific values are not part of static release QA.
+R87 intentionally quarantines the ENV-bound launch checker from required and operator release surfaces. It remains repository evidence only and is not an operator release command. Lead-form activation still requires real operator/legal/receiver/rate-limit configuration before deployment; those deployment-specific values are not part of static release QA.
 
 ### Historical readiness archive
 
@@ -64,7 +66,7 @@ No fabricated testimonials, student counts, income claims or unverified instruct
 
 ## R7 conversion layer
 
-- `/start` and `/en/start` provide a no-form lead brief before Telegram contact.
+- `/start` and `/en/start` provide a no-form lead brief before direct contact.
 - `/about` and `/en/about` make the teaching method and claims discipline explicit.
 - Static release adds skip navigation, focus-visible treatment, reduced-motion handling and a real 404 page.
 - No testimonials, student counts or outcome guarantees were added.
@@ -84,7 +86,7 @@ No fabricated testimonials, student counts, income claims or unverified instruct
 
 ## R10 contact-flow cleanup
 
-The public Next.js pages now mirror the contact-only operating model used by the static release: buyer and youth CTAs route through `/start` / `/en/start`, and no public page renders the dormant first-party `LeadForm`. The form/API implementation remains available for a future explicit form-enabled launch after legal and webhook configuration.
+The public Next.js pages mirror the contact-only operating model used by the static release: buyer and youth CTAs route through `/start` / `/en/start`, and no public page renders the dormant first-party `LeadForm`. The old in-app `app/api/lead/route.ts` intake is intentionally retired by the R101 hardening candidate in favor of the isolated disabled ingress service. Public form activation remains a separate release after legal, receiver, rate-limit, privacy, Proof, CSP, rewrite, and delivery verification.
 
 ## R11 discoverability layer
 

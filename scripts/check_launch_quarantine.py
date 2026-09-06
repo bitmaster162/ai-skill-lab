@@ -12,6 +12,7 @@ WORKFLOW = ROOT / ".github/workflows/static-qa.yml"
 PREFLIGHT = ROOT / "scripts/preflight_release.py"
 README = ROOT / "README.md"
 ENV_EXAMPLE = ROOT / ".env.example"
+INGRESS_ENV_EXAMPLE = ROOT / "services/lead-ingress/.env.example"
 
 EVIDENCE_MARKERS = [
     "NEXT_PUBLIC_SITE_URL",
@@ -32,6 +33,7 @@ README_REQUIRED_MARKERS = [
     "current public routes are contact-only",
     "`NEXT_PUBLIC_LEAD_FORM_ENABLED=true` is not a release approval",
     "do not validate deployment-specific ENV values",
+    "services/lead-ingress",
 ]
 ENV_EXAMPLE_FORBIDDEN_SEMANTICS = [
     "# Public legal/operator details. Fill these before public deployment.",
@@ -42,9 +44,24 @@ ENV_EXAMPLE_REQUIRED_MARKERS = [
     "NEXT_PUBLIC_LEGAL_OPERATOR_NAME=",
     "NEXT_PUBLIC_LEGAL_CONTACT_EMAIL=",
     "NEXT_PUBLIC_LEGAL_JURISDICTION=",
+    "NEXT_PUBLIC_LEAD_FORM_ENABLED=false",
+    "services/lead-ingress/.env.example",
+]
+ENV_EXAMPLE_FORBIDDEN_PRIVATE_MARKERS = [
+    "\nLEAD_WEBHOOK_URL=",
+    "\nLEAD_WEBHOOK_SECRET=",
+    "\nLEAD_INGRESS_ENABLED=",
+]
+INGRESS_ENV_REQUIRED_MARKERS = [
+    "LEAD_INGRESS_ENABLED=false",
+    "LEAD_ALLOWED_ORIGINS=https://ai-skill-lab.vercel.app",
     "LEAD_WEBHOOK_URL=",
     "LEAD_WEBHOOK_SECRET=",
-    "NEXT_PUBLIC_LEAD_FORM_ENABLED=false",
+    "LEAD_LEGAL_OPERATOR_NAME=",
+    "LEAD_LEGAL_JURISDICTION=",
+    "LEAD_PRIVACY_CONTACT=robert@aiskillab.work",
+    "LEAD_RETENTION_DAYS=30",
+    "LEAD_RATE_LIMIT_READY=false",
 ]
 EXPECTED_CORE_SCRIPTS = {
     "dev": "next dev",
@@ -96,6 +113,13 @@ preflight_text = PREFLIGHT.read_text(encoding="utf-8")
 readme_text = README.read_text(encoding="utf-8")
 env_example_text = ENV_EXAMPLE.read_text(encoding="utf-8")
 
+checks += 1
+if not INGRESS_ENV_EXAMPLE.is_file():
+    errors.append("isolated ingress env example is missing")
+    ingress_env_text = ""
+else:
+    ingress_env_text = INGRESS_ENV_EXAMPLE.read_text(encoding="utf-8")
+
 for owner, text in [
     ("required workflow", workflow_text),
     ("release preflight", preflight_text),
@@ -126,6 +150,16 @@ for marker in ENV_EXAMPLE_REQUIRED_MARKERS:
     if marker not in env_example_text:
         errors.append(f"operator env example required lead-form boundary marker missing {marker!r}")
 
+for marker in ENV_EXAMPLE_FORBIDDEN_PRIVATE_MARKERS:
+    checks += 1
+    if marker in env_example_text:
+        errors.append(f"public env example must not own private ingress marker {marker.strip()!r}")
+
+for marker in INGRESS_ENV_REQUIRED_MARKERS:
+    checks += 1
+    if marker not in ingress_env_text:
+        errors.append(f"isolated ingress env example marker missing {marker!r}")
+
 checks += 1
 if workflow_text.count("python scripts/check_launch_quarantine.py") != 1:
     errors.append("required workflow must invoke launch quarantine exactly once")
@@ -136,7 +170,7 @@ if preflight_text.count('"scripts/check_launch_quarantine.py"') != 1:
 
 print(
     f"launch_quarantine_checks={checks} package_scripts={len(scripts)} "
-    f"evidence_markers={len(EVIDENCE_MARKERS)}"
+    f"evidence_markers={len(EVIDENCE_MARKERS)} ingress_env_markers={len(INGRESS_ENV_REQUIRED_MARKERS)}"
 )
 if errors:
     for error in errors:
