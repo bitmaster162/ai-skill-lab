@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
+import { WorkshopEditorial } from "@/components/workshop/WorkshopEditorial";
 import Link from "next/link";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-
 export const metadata: Metadata = {
   title: "For parents",
   description: "How one-to-one AI learning works for ages 8–18: visible progress, age rules, youth tracks and a separate family layer.",
@@ -10,8 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <>
-    <Header locale="en" contactHref="/en/start" alternateHref="/parents" />
+  return <WorkshopEditorial locale="en" alternateHref="/parents">
     <main id="main">
       <section className="kidsHero"><div className="shell kidsHeroGrid"><div>
         <div className="eyebrow eyebrowLight"><span className="dot dotLight" /> FOR PARENTS · 8–18</div>
@@ -74,6 +71,5 @@ export default function Page() {
         <Link className="button buttonPrimary" href="/en/start">How to start →</Link>
       </div></div></section>
     </main>
-    <Footer locale="en" />
-  </>;
+    </WorkshopEditorial>;
 }

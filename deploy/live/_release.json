@@ -13,8 +13,8 @@
     },
     {
       "path": "build.html",
-      "sha256": "b317034568a39b04991b3285909cde2f637e82a57ef6378af4a7cf0e325b7275",
-      "size": 13897
+      "sha256": "f089a257202e29d8f56d963dc5a7c5a26363e072ecf33fd9d34c7bed91c9eeef",
+      "size": 13238
     },
     {
       "path": "business.html",
@@ -23,13 +23,13 @@
     },
     {
       "path": "challenge.html",
-      "sha256": "0affe75cbba28a040ed13d49881dc3cf1631c2e11d852ddd84d30f337138871d",
-      "size": 11014
+      "sha256": "3d6f5c7e87967b99a700ab41c90a6df36faed981a58df201916f3e485579096e",
+      "size": 10326
     },
     {
       "path": "curriculum.html",
-      "sha256": "faebd815e0d9809f97b1a383f4ef324eeb6d589289c7eede2bba3a1c65b9cb4e",
-      "size": 14411
+      "sha256": "11a16f3969de614eaa90fe84c49f5eb7e3f9de0926ed3c089caa6112760f98dd",
+      "size": 13684
     },
     {
       "path": "en.html",
@@ -43,8 +43,8 @@
     },
     {
       "path": "en/build.html",
-      "sha256": "3f711f64c3f3d327d8bd6c70e7caf9abc7a358c2560bbd8c4830733adaa9ebb8",
-      "size": 11766
+      "sha256": "3dadc4df54662015ab478ab9cccf2d15cca4e97323c3919ca4e94cd0cf4c42f1",
+      "size": 11236
     },
     {
       "path": "en/business.html",
@@ -53,13 +53,13 @@
     },
     {
       "path": "en/challenge.html",
-      "sha256": "910d3d16ea4e0e3a0de915f86ca6d618795d7ed9087cfec008acc394c2d8642a",
-      "size": 9527
+      "sha256": "a216741181f50f4552f71194b78e2b345eea0738c4b1ece742ea08b77d789aea",
+      "size": 8956
     },
     {
       "path": "en/curriculum.html",
-      "sha256": "9bc05b3c4bddea86a3852245ac90586c6311a964f370cc5fc04d6218ba10929b",
-      "size": 11908
+      "sha256": "a74a3fd9614dae831c62eada9eaf97a2cf5be9612a54f85338c6ec248145b2c6",
+      "size": 11301
     },
     {
       "path": "en/family.html",
@@ -78,8 +78,8 @@
     },
     {
       "path": "en/matcher.html",
-      "sha256": "afded39030e8a06cd6824db1a23253638a9f6b2864f5368e524405bc8d45d4b3",
-      "size": 12429
+      "sha256": "b9b173db54cbb4f4b328cd6eed35e2f89850d5dcc0f63fa5e4f409509bafdfae",
+      "size": 12029
     },
     {
       "path": "en/method.html",
@@ -88,8 +88,8 @@
     },
     {
       "path": "en/parents.html",
-      "sha256": "9d796fa18fdb128930872175623d36cc730293ce031de73dd96d7ed8d9fbad55",
-      "size": 8032
+      "sha256": "81525610284bc61c2168fe15d517ee2944957fde0b104d75421cd2141731cd44",
+      "size": 7461
     },
     {
       "path": "en/personal.html",
@@ -98,8 +98,8 @@
     },
     {
       "path": "en/phuket.html",
-      "sha256": "b2c9b87b46fa1f502923077d0b88d32776d8180d391cca789ed9748716d9e053",
-      "size": 4857
+      "sha256": "1b8f05a060af0fed309a9d089e69a56aedb866d08061c534a5ad796e9f9b4318",
+      "size": 4182
     },
     {
       "path": "en/pricing.html",
@@ -113,13 +113,13 @@
     },
     {
       "path": "en/projects.html",
-      "sha256": "e18cd4fd8b2df719a25c44f2dfbf5916822768972e3b2ea548a1a1761247b839",
-      "size": 13560
+      "sha256": "3f0982b9aa92c3cabc6ccf47b0c2d396f3c8d48e9c490d0fc9aece4beae765b9",
+      "size": 12989
     },
     {
       "path": "en/proof.html",
-      "sha256": "ad5b03eaa79820433dbce1a4eb2d3cd11bc4b2f3ea5e1b72da44126bc2ec201e",
-      "size": 20332
+      "sha256": "8bae93b9928974ba85b3a796d6003bb78b1ea5f190bde199bb9ed017ba299bed",
+      "size": 19616
     },
     {
       "path": "en/safety.html",
@@ -133,8 +133,8 @@
     },
     {
       "path": "en/studio.html",
-      "sha256": "0d110c1516d4b2bccdda8987f05567c9763ffb93887b684d16d49caaa0ee16af",
-      "size": 10057
+      "sha256": "0b800b73575ddd96940ba1ad454fd9310e446ec9ce4ff1f3ee3da9e0dcc0f98a",
+      "size": 9527
     },
     {
       "path": "en/teens.html",
@@ -183,8 +183,8 @@
     },
     {
       "path": "matcher.html",
-      "sha256": "aa1586c8646723aa5e2c5a5c70db16bcedb1f52fe6a8ad329b18827f8172299f",
-      "size": 14088
+      "sha256": "8588a5dd145cb82646ad2dc033e6de565f576184705a7587157a6548f900d1aa",
+      "size": 13572
     },
     {
       "path": "method.html",
@@ -198,8 +198,8 @@
     },
     {
       "path": "parents.html",
-      "sha256": "610ce8c86f6f9041d05843e5f642258ac7b5f307b464bf0c21ea248151c921ef",
-      "size": 9807
+      "sha256": "1e92c0998ebec7a72e6413f2c2a49612751337d636def0550bbc079a38fc6aa3",
+      "size": 9119
     },
     {
       "path": "personal.html",
@@ -208,8 +208,8 @@
     },
     {
       "path": "phuket.html",
-      "sha256": "8aea52acf7fba8d32b38baa25ea1a8999ba5f0b37ffc860364340e78e5ea453b",
-      "size": 5822
+      "sha256": "1bed3a0e91afdce8a9179e86e4c78433bd66d403a334c78557ea4c1853e05057",
+      "size": 5024
     },
     {
       "path": "pricing.html",
@@ -228,13 +228,13 @@
     },
     {
       "path": "projects.html",
-      "sha256": "9c3224a5d25c61e1b8610dcfd9c6f6dc0edc4f500e81d65b3cb27a0a70ebaa49",
-      "size": 16967
+      "sha256": "0cd7e9f4fce9153f75b6627b4a91fdf37407a1b09b7f26a56fddb62ef2a2c2f6",
+      "size": 16279
     },
     {
       "path": "proof.html",
-      "sha256": "411be41f9553c71af6b48ec64410100a9ea29982dfae2e50204dde879829dd53",
-      "size": 24036
+      "sha256": "fa4b1bb6821d986e7ec0cc10079e904d0256628a5f7383cab45fd96bef659d5c",
+      "size": 23193
     },
     {
       "path": "r69-static.css",
@@ -278,8 +278,8 @@
     },
     {
       "path": "studio.html",
-      "sha256": "4020b52d2d333eeaa299467bc29f66644a1e476a35bc437f792f1ee4715f70cf",
-      "size": 11816
+      "sha256": "7dc854e849d3b56b8e9c2e0bc816e276aaf75f287158d83b51d2f718073a0889",
+      "size": 11157
     },
     {
       "path": "style-r68.css",
@@ -308,11 +308,11 @@
     },
     {
       "path": "workshop.css",
-      "sha256": "24d5bb085a1091c3b74cda993829f82eb2f23b4e0692ebca930c51a2fd651a81",
-      "size": 10882
+      "sha256": "e9626063730fd264a769512535f65a2aa57d3dae9c1e78558fad783858faf916",
+      "size": 16425
     }
   ],
-  "payload_sha256": "c7498b2118e2bbcc3b58b6ce00f443d87ce5be987f471fea8f796bc1a26e4bbf",
-  "release_id": "R98_D3_C1",
+  "payload_sha256": "f93cfbaf7c4273723161b02fe95571820e423b9b5989eb497eed8187bbc7bb68",
+  "release_id": "R99_D4",
   "schema": "ai-skill-lab.static-release.v1"
 }

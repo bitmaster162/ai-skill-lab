@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
+import { WorkshopInteractive } from "@/components/workshop/WorkshopInteractive";
 import Link from "next/link";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
 import { SkillGraph } from "@/components/SkillGraph";
 
 export const metadata: Metadata = {
@@ -56,8 +55,7 @@ const youth = [
 ];
 
 export default function CurriculumPage() {
-  return <>
-    <Header contactHref="/start" alternateHref="/en/curriculum" />
+  return <WorkshopInteractive locale="ru" alternateHref="/en/curriculum">
     <main id="main">
       <section className="hero heroR2"><div className="shell"><div className="eyebrow"><span className="dot" /> CURRICULUM · OUTCOME FIRST</div><h1>Не список кнопок.<br/><span>Траектория до результата.</span></h1><p className="heroLead">Темы адаптируются под уровень и задачу. Ниже — базовая структура, чтобы до старта было понятно, чему именно учимся и что должно появиться на выходе.</p><div className="heroActions"><Link className="button buttonPrimary" href="/pricing">Сравнить пакеты →</Link><Link className="button buttonGhost" href="/start">Подобрать программу →</Link></div></div></section>
       <section className="section"><div className="shell"><div className="sectionHead"><span className="kicker">Три траектории</span><h2>Один принцип: учиться на реальной задаче.</h2></div><div className="programGrid">{tracks.map((track)=><article className="programCard" key={track.title}><span className="cardMeta">{track.meta}</span><h3>{track.title}</h3><p>{track.text}</p><p><b>{track.output}</b></p><Link className="textLink" href={track.href}>Открыть программу →</Link></article>)}</div></div></section>
@@ -65,6 +63,5 @@ export default function CurriculumPage() {
       <section className="section"><div className="shell"><div className="sectionHead"><span className="kicker">Youth · логика 10-занятного маршрута</span><h2>Понять → создать → проверить → объяснить.</h2><p className="sectionSub">Kids и Teens различаются сложностью, самостоятельностью и технической глубиной; организационный контакт для несовершеннолетних идёт через взрослого.</p></div><div className="curriculumList">{youth.map(([n,t,d])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{d}</p></article>)}</div><div className="heroActions"><Link className="button buttonGhost" href="/kids">Дети 8–13 →</Link><Link className="button buttonGhost" href="/teens">Подростки 14–18 →</Link><Link className="button buttonGhost" href="/parents">Родителям →</Link></div></div></section>
       <section className="section sectionInk"><div className="shell splitHead"><div><span className="kicker kickerLight">Как измеряем прогресс</span><h2>Артефакт + объяснение.<br/><em>Не количество промптов.</em></h2></div><div><p>Человек должен уметь поставить задачу, объяснить решение, проверить результат, назвать ограничения и повторить процесс без постоянной подсказки преподавателя.</p><div className="heroActions"><Link className="button buttonLight" href="/projects">Примеры проектов →</Link><Link className="button buttonGhost buttonOnDark" href="/method">Метод обучения →</Link></div></div></div></section>
     </main>
-    <Footer />
-  </>;
+    </WorkshopInteractive>;
 }

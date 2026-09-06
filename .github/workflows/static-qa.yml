@@ -47,6 +47,8 @@ jobs:
         run: python scripts/check_workshop_d2.py
       - name: Validate Workshop D3 audience business FAQ authority
         run: python scripts/check_workshop_d3.py
+      - name: Validate Workshop D4 remaining product and interactive authority
+        run: python scripts/check_workshop_d4.py
       - name: Validate tracked Python artifact quarantine
         run: python scripts/check_tracked_python_artifacts.py
       - name: Validate client privacy boundary

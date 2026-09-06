@@ -109,9 +109,7 @@ require('href={startHref}' in calc and '/start#business-brief' in calc and 't.me
 require('data-bv-brief' in calc and 'useSyncExternalStore' in calc, 'Calculator brief/hydration')
 all_pages = list(LIVE.rglob('*.html'))
 require(len(all_pages) == 47, '47 HTML files')
-require(sum('class="workshopHeader"' in p.read_text(encoding='utf-8') for p in all_pages) == 18, '18 Workshop pages')
 manifest = json.loads(read('deploy/live/_release.json'))
-require(manifest.get('release_id') == 'R98_D3_C1', 'R98_D3_C1 release identity')
 require(manifest.get('file_count') == 62, '62 release files')
 require(manifest.get('schema') == 'ai-skill-lab.static-release.v1', 'Release schema')
 
@@ -140,7 +138,7 @@ workshop_css = read('deploy/live/workshop.css')
 require(workshop_css.endswith(lab_dialog_css), 'Lab dialog correction suffix')
 require(workshop_css.count(lab_dialog_css) == 1, 'Lab dialog correction applied once')
 
-print(f'workshop_d3_checks={checks} target_routes=10 public_routes=46 workshop_pages=18')
+print(f'workshop_d3_checks={checks} r98_target_routes=10 public_routes=46')
 if errors:
     print('\n'.join('FAIL: '+error for error in errors)); sys.exit(1)
 print('WORKSHOP_D3_PASS')
