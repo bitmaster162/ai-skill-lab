@@ -53,8 +53,10 @@ for rel,tokens in interactive.items():
 all_html=list(LIVE.rglob('*.html'));public=[p for p in all_html if p.name!='404.html']
 require(len(all_html)==47,'47 static HTML files')
 workshop=sum('<header class="workshopHeader">' in p.read_text(encoding='utf-8') for p in public);legacy=sum('<header class="nav">' in p.read_text(encoding='utf-8') for p in public)
-require(workshop==36,f'Workshop pages {workshop} != 36');require(legacy==10,f'legacy pages {legacy} != 10')
-manifest=json.loads(read('deploy/live/_release.json'));require(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema');require(manifest.get('release_id')=='R99_D4','R99_D4 release identity');require(manifest.get('file_count')==62,'62 release files')
+manifest=json.loads(read('deploy/live/_release.json'));require(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema');release=manifest.get('release_id');states={'R99_D4':(36,10),'R100_D5':(46,0)};require(release in states,f'unsupported release state {release!r}')
+if release in states:
+ expected_workshop,expected_legacy=states[release];require(workshop==expected_workshop,f'Workshop pages {workshop} != {expected_workshop} for {release}');require(legacy==expected_legacy,f'legacy pages {legacy} != {expected_legacy} for {release}')
+require(manifest.get('file_count')==62,'62 release files')
 actual={p.relative_to(LIVE).as_posix():(len(p.read_bytes()),hashlib.sha256(p.read_bytes()).hexdigest()) for p in LIVE.rglob('*') if p.is_file() and p.name!='_release.json'}
 listed={x['path']:(x['size'],x['sha256']) for x in manifest.get('files',[])};require(actual==listed,'manifest exact file bytes');payload=sum(x[0] for x in actual.values());require(payload<=524288,f'payload {payload} > 524288')
 require(len({('/' if p.name=='index.html' else '/en' if p.relative_to(LIVE).as_posix()=='en.html' else '/'+p.relative_to(LIVE).as_posix()[:-5]) for p in public})==46,'46 public routes')
