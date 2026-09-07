@@ -10,6 +10,16 @@
   "vars": {
     "LEAD_RECEIVER_ENABLED": "false"
   },
+  "ratelimits": [
+    {
+      "name": "LEAD_RATE_LIMITER",
+      "namespace_id": "1535251417",
+      "simple": {
+        "limit": 10,
+        "period": 60
+      }
+    }
+  ],
   "d1_databases": [
     {
       "binding": "DB",

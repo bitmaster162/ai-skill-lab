@@ -29,6 +29,18 @@ function makeDb({ changes = 1, fail = false } = {}) {
   return db;
 }
 
+function makeRateLimiter({ success = true, fail = false } = {}) {
+  const calls = [];
+  return {
+    calls,
+    async limit(input) {
+      calls.push(input);
+      if (fail) throw new Error("rate limiter failure");
+      return { success };
+    },
+  };
+}
+
 function basePayload(requestId = randomUUID()) {
   return {
     schema: "ai-skill-lab.lead.v2",
@@ -69,8 +81,13 @@ async function json(response) {
   return JSON.parse(await response.text());
 }
 
-function env(db = makeDb()) {
-  return { LEAD_RECEIVER_ENABLED: "true", LEAD_WEBHOOK_SECRET: secret, DB: db };
+function env(db = makeDb(), rateLimiter = makeRateLimiter()) {
+  return {
+    LEAD_RECEIVER_ENABLED: "true",
+    LEAD_WEBHOOK_SECRET: secret,
+    DB: db,
+    LEAD_RATE_LIMITER: rateLimiter,
+  };
 }
 
 test("disabled receiver is fail-closed 404", async () => {
@@ -78,10 +95,11 @@ test("disabled receiver is fail-closed 404", async () => {
   assert.equal(response.status, 404);
 });
 
-test("enabled receiver without secret or D1 binding returns 503", async () => {
+test("enabled receiver without secret, D1, or rate limiter binding returns 503", async () => {
   const request = signedRequest(basePayload());
   assert.equal((await handleReceiver(request.clone(), { LEAD_RECEIVER_ENABLED: "true" }, nowMs)).status, 503);
   assert.equal((await handleReceiver(request.clone(), { LEAD_RECEIVER_ENABLED: "true", LEAD_WEBHOOK_SECRET: secret }, nowMs)).status, 503);
+  assert.equal((await handleReceiver(request.clone(), { LEAD_RECEIVER_ENABLED: "true", LEAD_WEBHOOK_SECRET: secret, DB: makeDb() }, nowMs)).status, 503);
 });
 
 test("wrong path and non-POST are rejected", async () => {
@@ -116,13 +134,15 @@ test("HMAC binds exact raw body bytes", async () => {
   assert.equal(response.status, 401);
 });
 
-test("valid signed lead inserts exactly once with 30-day expiry", async () => {
+test("valid signed lead passes rate limiter and inserts exactly once with 30-day expiry", async () => {
   const db = makeDb();
+  const rateLimiter = makeRateLimiter();
   const payload = basePayload();
-  const response = await handleReceiver(signedRequest(payload), env(db), nowMs);
+  const response = await handleReceiver(signedRequest(payload), env(db, rateLimiter), nowMs);
   assert.equal(response.status, 200);
   assert.deepEqual(await json(response), { ok: true, requestId: payload.requestId });
   assert.equal(response.headers.get("cache-control"), "no-store, max-age=0");
+  assert.deepEqual(rateLimiter.calls, [{ key: "lead-intake" }]);
   assert.equal(db.calls.length, 1);
   assert.match(db.calls[0].sql, /INSERT INTO lead_intake_r101b/);
   assert.match(db.calls[0].sql, /ON CONFLICT\(request_id\) DO NOTHING/);
@@ -130,6 +150,27 @@ test("valid signed lead inserts exactly once with 30-day expiry", async () => {
   assert.equal(db.calls[0].bindings[1], payload.receivedAt);
   assert.equal(db.calls[0].bindings[2], "2026-10-07T09:00:00.000Z");
   assert.equal(db.calls[0].bindings[13], "/start");
+});
+
+test("rate limiter rejection returns 429 before D1 write", async () => {
+  const db = makeDb();
+  const rateLimiter = makeRateLimiter({ success: false });
+  const response = await handleReceiver(signedRequest(basePayload()), env(db, rateLimiter), nowMs);
+  assert.equal(response.status, 429);
+  assert.equal(response.headers.get("retry-after"), "60");
+  assert.deepEqual(await json(response), { ok: false, error: "Too many requests" });
+  assert.deepEqual(rateLimiter.calls, [{ key: "lead-intake" }]);
+  assert.equal(db.calls.length, 0);
+});
+
+test("rate limiter failure returns generic 503 before D1 write", async () => {
+  const db = makeDb();
+  const rateLimiter = makeRateLimiter({ fail: true });
+  const response = await handleReceiver(signedRequest(basePayload()), env(db, rateLimiter), nowMs);
+  assert.equal(response.status, 503);
+  assert.deepEqual(await json(response), { ok: false, error: "Receiver unavailable" });
+  assert.deepEqual(rateLimiter.calls, [{ key: "lead-intake" }]);
+  assert.equal(db.calls.length, 0);
 });
 
 test("duplicate request id returns 409 without a second operation", async () => {
@@ -141,11 +182,13 @@ test("duplicate request id returns 409 without a second operation", async () => 
   assert.equal(db.calls.length, 1);
 });
 
-test("invalid payload is rejected before D1 write", async () => {
+test("invalid payload is rejected before rate limiter and D1 write", async () => {
   const db = makeDb();
+  const rateLimiter = makeRateLimiter();
   const payload = { ...basePayload(), privacyConsent: false };
-  const response = await handleReceiver(signedRequest(payload), env(db), nowMs);
+  const response = await handleReceiver(signedRequest(payload), env(db, rateLimiter), nowMs);
   assert.equal(response.status, 400);
+  assert.equal(rateLimiter.calls.length, 0);
   assert.equal(db.calls.length, 0);
 });
 
