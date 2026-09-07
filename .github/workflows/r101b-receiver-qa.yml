@@ -1,0 +1,30 @@
+name: R101B Cloudflare receiver QA
+
+on:
+  pull_request:
+    paths:
+      - 'services/lead-receiver-cloudflare/**'
+      - '.github/workflows/r101b-receiver-qa.yml'
+  push:
+    branches:
+      - 'agent/r101b-cloudflare-receiver-source-r1'
+    paths:
+      - 'services/lead-receiver-cloudflare/**'
+      - '.github/workflows/r101b-receiver-qa.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  receiver-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check receiver syntax
+        run: node --check services/lead-receiver-cloudflare/src/index.js
+      - name: Test Cloudflare lead receiver
+        run: node --test services/lead-receiver-cloudflare/test/receiver.test.mjs
