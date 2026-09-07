@@ -1,0 +1,8 @@
+{
+  "name": "ai-skill-lab-lead-ingress",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/lead.test.mjs"
+  }
+}

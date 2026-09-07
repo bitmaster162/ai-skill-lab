@@ -28,6 +28,7 @@ CHECKS = [
     ("workshop_d5", ["python", "scripts/check_workshop_d5.py"]),
     ("tracked_python_artifacts", ["python", "scripts/check_tracked_python_artifacts.py"]),
     ("client_privacy", ["python", "scripts/check_client_privacy.py"]),
+    ("lead_ingress", ["node", "--test", "services/lead-ingress/test/lead.test.mjs"]),
     ("inline_scripts", ["python", "scripts/check_inline_scripts.py"]),
     ("matcher_runtime", ["node", "scripts/check_matcher_runtime.mjs"]),
     ("start_runtime", ["node", "scripts/check_start_runtime.mjs"]),
