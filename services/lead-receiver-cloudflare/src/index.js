@@ -2,6 +2,7 @@ const MAX_BODY_BYTES = 20_000;
 const MIN_SECRET_BYTES = 32;
 const MAX_SKEW_SECONDS = 300;
 const RETENTION_DAYS = 30;
+const RATE_LIMIT_KEY = "lead-intake";
 const ALLOWED_AUDIENCES = new Set(["adult", "parent", "teen", "business"]);
 const ALLOWED_LOCALES = new Set(["ru", "en"]);
 const UUID_V4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -54,8 +55,11 @@ function config(env) {
   if (env?.LEAD_RECEIVER_ENABLED !== "true") return { enabled: false };
   const secret = typeof env?.LEAD_WEBHOOK_SECRET === "string" ? env.LEAD_WEBHOOK_SECRET : "";
   const db = env?.DB;
-  const ready = utf8Bytes(secret) >= MIN_SECRET_BYTES && db && typeof db.prepare === "function";
-  return { enabled: true, ready, secret, db };
+  const rateLimiter = env?.LEAD_RATE_LIMITER;
+  const ready = utf8Bytes(secret) >= MIN_SECRET_BYTES
+    && db && typeof db.prepare === "function"
+    && rateLimiter && typeof rateLimiter.limit === "function";
+  return { enabled: true, ready, secret, db, rateLimiter };
 }
 
 function validatePayload(payload, headerRequestId, timestampSeconds) {
@@ -153,6 +157,16 @@ export async function handleReceiver(request, env = {}, nowMs = Date.now()) {
 
   const row = validatePayload(payload, requestId, timestampSeconds);
   if (!row) return json({ ok: false, error: "Invalid application" }, 400);
+
+  let limitResult;
+  try {
+    limitResult = await cfg.rateLimiter.limit({ key: RATE_LIMIT_KEY });
+  } catch {
+    return json({ ok: false, error: "Receiver unavailable" }, 503);
+  }
+  if (!limitResult?.success) {
+    return json({ ok: false, error: "Too many requests" }, 429, { "Retry-After": "60" });
+  }
 
   let result;
   try {
