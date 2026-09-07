@@ -1,0 +1,11 @@
+{
+  "name": "ai-skill-lab-lead-receiver-cloudflare",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/receiver.test.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "4.129.0"
+  }
+}
