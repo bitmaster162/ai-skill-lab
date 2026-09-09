@@ -73,7 +73,11 @@ def main():
                 if tp is None:
                     tp=PageParser(); tp.feed(target.read_text(encoding='utf-8'))
                 if anchor not in tp.anchors: problems.append(f'{route}: missing anchor {href}')
-    if forms: problems.append(f'public static forms present: {forms}')
+    allowed_form_routes={'/start','/en/start'}
+    for route,parser in parsed.items():
+        expected=1 if route in allowed_form_routes else 0
+        if parser.forms!=expected: problems.append(f'{route}: forms {parser.forms} != {expected}')
+    if forms!=2: problems.append(f'public static form count {forms} != 2')
 
     canonical_base='https://ai-skill-lab.vercel.app'
     for route,parser in parsed.items():

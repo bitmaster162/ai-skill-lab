@@ -42,7 +42,7 @@ csp='; '.join([
     "style-src 'self'",
     "img-src 'self' data:",
     "font-src 'self'",
-    "connect-src 'none'",
+    "connect-src 'self'",
     "media-src 'none'",
     "object-src 'none'",
     "frame-src 'none'",
