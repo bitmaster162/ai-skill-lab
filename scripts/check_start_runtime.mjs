@@ -145,6 +145,7 @@ async function run(rel,lang,{referrer='',source=''}={}){
   const document={
     documentElement:{lang},referrer,
     body:{appendChild(){}},
+    querySelector(sel){if(sel==="#application-form")return null;return null},
     querySelectorAll(sel){if(sel==='.briefCopy')return buttons;if(sel==='.briefSendLink')return anchors;return[]},
     createElement(){return new E()},execCommand(){return true},
   };

@@ -30,16 +30,17 @@ README_FORBIDDEN_SEMANTICS = [
 README_REQUIRED_MARKERS = [
     "static-release",
     "python scripts/preflight_release.py --release",
-    "current public routes are contact-only",
-    "`NEXT_PUBLIC_LEAD_FORM_ENABLED=true` is not a release approval",
-    "do not validate deployment-specific ENV values",
+    "current public static release exposes two deliberate contact paths",
+    "`NEXT_PUBLIC_LEAD_FORM_ENABLED=true` remains an ENV-bound Next-runtime capability",
+    "Private receiver/signing configuration belongs only",
 ]
 ENV_EXAMPLE_FORBIDDEN_SEMANTICS = [
     "# Public legal/operator details. Fill these before public deployment.",
 ]
 ENV_EXAMPLE_REQUIRED_MARKERS = [
-    "# Lead-form legal/operator details. Keep blank for contact-only public mode.",
-    "# Provision and verify these before any form-enabled deployment.",
+    "# Optional Next-runtime lead-form details. The committed static public release does not read this file.",
+    "# Keep blank unless explicitly testing a separate NEXT_PUBLIC_LEAD_FORM_ENABLED=true runtime.",
+    "# This flag is not public static-release authority.",
     "NEXT_PUBLIC_LEGAL_OPERATOR_NAME=",
     "NEXT_PUBLIC_LEGAL_CONTACT_EMAIL=",
     "NEXT_PUBLIC_LEGAL_JURISDICTION=",
@@ -53,7 +54,7 @@ ENV_EXAMPLE_FORBIDDEN_PRIVATE_MARKERS = [
 ]
 INGRESS_ENV_REQUIRED_MARKERS = [
     "LEAD_INGRESS_ENABLED=false",
-    "LEAD_ALLOWED_ORIGINS=https://ai-skill-lab.vercel.app",
+    "LEAD_ALLOWED_ORIGINS=https://aiskillab.work,https://ai-skill-lab.vercel.app",
     "LEAD_WEBHOOK_URL=",
     "LEAD_WEBHOOK_SECRET=",
     "LEAD_LEGAL_OPERATOR_NAME=",

@@ -108,8 +108,8 @@
     },
     {
       "path": "en/privacy.html",
-      "sha256": "46855f551a80f4102e467c754a87ef2899ac616abceac5df1b2c6913cb9ab71e",
-      "size": 4287
+      "sha256": "e615136cfbc86e2307ca1686358186a599ee403039f6739cb0e7be0901d49694",
+      "size": 4858
     },
     {
       "path": "en/projects.html",
@@ -128,8 +128,8 @@
     },
     {
       "path": "en/start.html",
-      "sha256": "e3c16574cd6395590bf7adfa7b1dcbe40e2ae8788f65f6dc8e84270e5cbbc71f",
-      "size": 9921
+      "sha256": "dca7f807d449b88433efef891bb6159ec69966aa63e0d59bace9246e8d205713",
+      "size": 11982
     },
     {
       "path": "en/studio.html",
@@ -218,8 +218,8 @@
     },
     {
       "path": "privacy.html",
-      "sha256": "4af1b26591b46d58cd4ebaca7fa59c52c4ceed0d2398e335f0fb8a4122f0e330",
-      "size": 5325
+      "sha256": "7aea609572d211754eea422c010a128be2895a8ac0a7e2b09fae5a349a6659ef",
+      "size": 6133
     },
     {
       "path": "project-filter.js",
@@ -268,13 +268,13 @@
     },
     {
       "path": "start-brief.js",
-      "sha256": "87275446d2d5770021d6f39dac2036a9349609d761d62f13ce14a7eb41173a01",
-      "size": 1843
+      "sha256": "a887dc23a871aeac2b4326c7adfae3bc22a0fd8c769921336482c590c5b976fc",
+      "size": 3590
     },
     {
       "path": "start.html",
-      "sha256": "320e5d2788cdcbd94fb7f76806ce75148c0491297367d98a5309942f2dd830ab",
-      "size": 14581
+      "sha256": "bbd914ddb03a1cc3ecdf4c8d5492ab3a798273a8b28bd04b8bde886cbe3edb3f",
+      "size": 17247
     },
     {
       "path": "studio.html",
@@ -303,16 +303,16 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "b7437ba32e26c367662673e9ece46c476f0c299474a0e9b7c45351bec08281fc",
-      "size": 2124
+      "sha256": "b3384aa20e38e505f0a210289227f83a658055af6a8373a889c5bec4f1430dcc",
+      "size": 2225
     },
     {
       "path": "workshop.css",
-      "sha256": "c36dd3e90fcc295a564463544ea63e93ded76797e30c51435ef2fdecb86523ac",
-      "size": 18283
+      "sha256": "846108b3c0680633a9fdcd88290457a1fca5ef4bc35fd3740a52a9a1e44b07cd",
+      "size": 19688
     }
   ],
-  "payload_sha256": "374ef642abfdf025115d31b404b7ea2aecb58f2965c056b1d8aa2d337f97a28a",
-  "release_id": "R100_D5",
+  "payload_sha256": "0645eda2a80337fd5415bad2271d96184ebaa387efe5cec31a5c4bd788e1b91d",
+  "release_id": "R101B_D6_PUBLIC_FORM",
   "schema": "ai-skill-lab.static-release.v1"
 }

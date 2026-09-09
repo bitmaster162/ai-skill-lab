@@ -2,14 +2,15 @@
 
 Bilingual Next.js website for practical one-to-one AI education: adults, AI builders, teams, kids 8–13 and teens 14–18.
 
-## Operating modes
+## Operating mode
 
-The repository contains two operating capabilities, but the current public routes are contact-only:
+The current public static release exposes two deliberate contact paths on `/start` / `/en/start`:
 
-1. **Contact-only (current public mode)** — the site does not collect lead data. Primary contact CTAs route through `/start` / `/en/start`; only those Start pages expose the configured Telegram exit. This mode does not require a webhook.
-2. **Lead-form capability (dormant on current public routes)** — `NEXT_PUBLIC_LEAD_FORM_ENABLED=true` is not a release approval. Before any form-enabled deployment, separately provision and verify the real operator identity, legal/privacy email, jurisdiction, HTTPS webhook and webhook signing secret. Required `static-release` and the local read-only preflight do not validate deployment-specific ENV values.
+1. **First-party application form (current public mode)** — the browser submits JSON only to same-origin `/api/lead`. `deploy/live/vercel.json` proxies that path to the separately deployed `ai-skill-lab-ingress` service. The public static project owns no webhook/signing secret.
+2. **Direct-contact fallback** — Telegram, email, WhatsApp and LINE remain available if the form cannot be used. Youth applications and organizational communication use an adult contact only.
+3. **Isolated ingress authority** — operator identity, privacy contact, jurisdiction, allowlisted origins, 30-day retention, rate-limit readiness, webhook URL and signing secret are provisioned and verified on the ingress project, not the public static project.
 
-This keeps the live site useful without silently exposing a broken form or treating static QA as ENV/deployment approval.
+`NEXT_PUBLIC_LEAD_FORM_ENABLED=true` remains an ENV-bound Next-runtime capability and is not public static-release authority. The public form is activated only by the committed static release plus required `static-release` QA and a separately approved production release.
 
 ## Routes
 
@@ -25,17 +26,9 @@ NEXT_PUBLIC_WHATSAPP_URL=
 NEXT_PUBLIC_LEAD_FORM_ENABLED=false
 ```
 
-Only when enabling the internal lead form:
+The `.env.example` block above is for the optional Next.js runtime and defaults its form flag to false. The committed public static release does not require public-project ENV values for the form. Private receiver/signing configuration belongs only to `services/lead-ingress/.env.example` and the isolated ingress project.
 
-```bash
-NEXT_PUBLIC_LEGAL_OPERATOR_NAME=<real operator>
-NEXT_PUBLIC_LEGAL_CONTACT_EMAIL=<real legal/privacy email>
-NEXT_PUBLIC_LEGAL_JURISDICTION=<real jurisdiction>
-LEAD_WEBHOOK_URL=https://...
-LEAD_WEBHOOK_SECRET=<24+ chars secret>
-```
-
-The lead payload schema is `ai-skill-lab.lead.v2`. When a secret is configured, the exact JSON body is signed in `X-AI-Skill-Lab-Signature` as `sha256=<hex>`.
+The lead payload schema is `ai-skill-lab.lead.v2`. The ingress signs the exact downstream JSON body with its private signing secret; that secret is never shipped in the public static release.
 
 ## Release QA
 
@@ -64,7 +57,7 @@ No fabricated testimonials, student counts, income claims or unverified instruct
 
 ## R7 conversion layer
 
-- `/start` and `/en/start` provide a no-form lead brief before Telegram contact.
+- Historical R7 state used a no-form lead brief; the current D6 release adds the first-party form while preserving the brief and direct-contact fallback.
 - `/about` and `/en/about` make the teaching method and claims discipline explicit.
 - Static release adds skip navigation, focus-visible treatment, reduced-motion handling and a real 404 page.
 - No testimonials, student counts or outcome guarantees were added.
@@ -84,7 +77,7 @@ No fabricated testimonials, student counts, income claims or unverified instruct
 
 ## R10 contact-flow cleanup
 
-The public Next.js pages now mirror the contact-only operating model used by the static release: buyer and youth CTAs route through `/start` / `/en/start`, and no public page renders the dormant first-party `LeadForm`. The form/API implementation remains available for a future explicit form-enabled launch after legal and webhook configuration.
+Historical R10 removed the first-party form from public routes. The current D6 static release supersedes that contact-only state after the isolated ingress, legal/privacy configuration, rate limit and enabled-branch E2E were separately verified.
 
 ## R11 discoverability layer
 

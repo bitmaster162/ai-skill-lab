@@ -23,7 +23,7 @@ required={
 for k,v in required.items():
     if headers.get(k)!=v: errors.append(f'{k} mismatch')
 csp=headers.get('Content-Security-Policy','')
-for directive in ["default-src 'self'","style-src 'self'","connect-src 'none'","object-src 'none'","frame-ancestors 'none'","form-action 'none'","base-uri 'self'"]:
+for directive in ["default-src 'self'","style-src 'self'","connect-src 'self'","object-src 'none'","frame-ancestors 'none'","form-action 'none'","base-uri 'self'"]:
     if directive not in csp: errors.append(f'CSP missing {directive}')
 if "'unsafe-inline'" in csp: errors.append('CSP must not use unsafe-inline')
 if "'unsafe-eval'" in csp: errors.append('CSP must not use unsafe-eval')

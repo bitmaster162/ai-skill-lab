@@ -16,7 +16,8 @@ for rel in SURFACES:
  for marker in ['class="workshopPage"','class="workshopHeader"','class="workshopMenu"','class="workshopFooter"','id="lab-command"','src="/lab-command.js"']:
   checks+=1
   if marker not in text:errors.append(f'{rel}: missing {marker}')
- if p.forms:errors.append(f'{rel}: public form present')
+ expected_forms=1 if rel in {'start.html','en/start.html'} else 0;checks+=1
+ if p.forms!=expected_forms:errors.append(f'{rel}: forms {p.forms} != {expected_forms}')
  if any(h=='#' for h in p.links):errors.append(f'{rel}: placeholder href')
  if any(x in text for x in ['sc-for','sc-if','x-dc','support.js','fonts.googleapis.com','fonts.gstatic.com']):errors.append(f'{rel}: forbidden design-export primitive')
 css=(LIVE/'workshop.css').read_text(encoding='utf-8')
