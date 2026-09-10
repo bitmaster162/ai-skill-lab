@@ -5,7 +5,17 @@
   "compatibility_date": "2026-09-07",
   "workers_dev": true,
   "observability": {
-    "enabled": false
+    "enabled": true,
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true,
+      "head_sampling_rate": 1,
+      "persist": true
+    },
+    "traces": {
+      "enabled": false
+    },
+    "redact_query_string": true
   },
   "vars": {
     "LEAD_RECEIVER_ENABLED": "false"
@@ -26,5 +36,10 @@
       "database_name": "ai-skill-lab-leads-r101b",
       "database_id": "1de9ec7f-5d92-4edd-a069-ec5296b54b82"
     }
-  ]
+  ],
+  "triggers": {
+    "crons": [
+      "17 * * * *"
+    ]
+  }
 }

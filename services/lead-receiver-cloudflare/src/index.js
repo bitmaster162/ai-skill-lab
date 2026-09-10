@@ -7,6 +7,17 @@ const ALLOWED_AUDIENCES = new Set(["adult", "parent", "teen", "business"]);
 const ALLOWED_LOCALES = new Set(["ru", "en"]);
 const UUID_V4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const SIGNATURE_V1 = /^v1=([0-9a-f]{64})$/;
+const INTAKE_EVENT_SCHEMA = "ai-skill-lab.intake-event.v1";
+const RECEIVER_EVENT_FIELDS = new Set(["requestId", "status", "deleted"]);
+
+function logReceiver(level, event, fields = {}) {
+  const record = { schema: INTAKE_EVENT_SCHEMA, component: "receiver", event };
+  for (const [key, value] of Object.entries(fields)) {
+    if (RECEIVER_EVENT_FIELDS.has(key) && value !== undefined) record[key] = value;
+  }
+  const writer = level === "error" ? console.error : level === "warn" ? console.warn : console.log;
+  writer(record);
+}
 
 function json(body, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(body), {
@@ -162,9 +173,11 @@ export async function handleReceiver(request, env = {}, nowMs = Date.now()) {
   try {
     limitResult = await cfg.rateLimiter.limit({ key: RATE_LIMIT_KEY });
   } catch {
+    logReceiver("error", "rate_limit_error", { requestId, status: 503 });
     return json({ ok: false, error: "Receiver unavailable" }, 503);
   }
   if (!limitResult?.success) {
+    logReceiver("warn", "rate_limited", { requestId, status: 429 });
     return json({ ok: false, error: "Too many requests" }, 429, { "Retry-After": "60" });
   }
 
@@ -193,10 +206,15 @@ export async function handleReceiver(request, env = {}, nowMs = Date.now()) {
       row.sourcePath,
     ).run();
   } catch {
+    logReceiver("error", "db_error", { requestId, status: 503 });
     return json({ ok: false, error: "Receiver unavailable" }, 503);
   }
 
-  if (result?.meta?.changes !== 1) return json({ ok: false, error: "Duplicate request" }, 409);
+  if (result?.meta?.changes !== 1) {
+    logReceiver("warn", "duplicate", { requestId, status: 409 });
+    return json({ ok: false, error: "Duplicate request" }, 409);
+  }
+  logReceiver("info", "inserted", { requestId, status: 200 });
   return json({ ok: true, requestId });
 }
 
@@ -204,7 +222,9 @@ export async function cleanupExpired(env = {}, nowMs = Date.now()) {
   if (env?.LEAD_RECEIVER_ENABLED !== "true") return { skipped: true };
   if (!env?.DB || typeof env.DB.prepare !== "function") return { skipped: true };
   const cutoff = new Date(nowMs).toISOString();
-  return env.DB.prepare("DELETE FROM lead_intake_r101b WHERE expires_at <= ?").bind(cutoff).run();
+  const result = await env.DB.prepare("DELETE FROM lead_intake_r101b WHERE expires_at <= ?").bind(cutoff).run();
+  logReceiver("info", "retention_cleanup", { deleted: Number(result?.meta?.changes ?? 0) });
+  return result;
 }
 
 export default {

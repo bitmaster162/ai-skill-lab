@@ -60,6 +60,13 @@ function captureDownstream(status = 200) {
   return calls;
 }
 
+function captureConsole() {
+  const entries = [];
+  const original = { log: console.log, warn: console.warn, error: console.error };
+  for (const level of Object.keys(original)) console[level] = (...args) => entries.push({ level, args });
+  return { entries, restore() { Object.assign(console, original); } };
+}
+
 test("disabled ingress returns 404 and never forwards", async () => {
   const calls = captureDownstream();
   const response = await handleLead(req(), { ...baseEnv, LEAD_INGRESS_ENABLED: "false" });
@@ -197,6 +204,40 @@ test("success signs exact raw downstream body and returns request id", async () 
     .update(`${timestamp}.${requestId}.${downstreamBody}`)
     .digest("hex");
   assert.equal(calls[0].init.headers["X-AI-Skill-Lab-Signature"], `v1=${expected}`);
+});
+
+test("structured ingress events correlate outcomes without lead data or secrets", async () => {
+  const audit = captureConsole();
+  try {
+    captureDownstream();
+    const response = await handleLead(req(valid), baseEnv);
+    const result = await body(response);
+    const records = audit.entries.map((entry) => entry.args[0]);
+    assert.deepEqual(records.map((record) => record.event), ["forward_start", "forward_ok"]);
+    assert.equal(records[0].requestId, result.requestId);
+    assert.equal(records[1].requestId, result.requestId);
+    assert.deepEqual(Object.keys(records[1]).sort(), ["component", "downstreamStatus", "event", "requestId", "schema", "status"].sort());
+    const serialized = JSON.stringify(records);
+    for (const forbidden of [valid.name, valid.contact, valid.goal, baseEnv.LEAD_WEBHOOK_URL, secret, "https://aiskillab.work"]) {
+      assert.equal(serialized.includes(forbidden), false, forbidden);
+    }
+  } finally {
+    audit.restore();
+  }
+});
+
+test("downstream rejection logs status only and still returns generic 502", async () => {
+  const audit = captureConsole();
+  try {
+    captureDownstream(500);
+    const response = await handleLead(req(valid), baseEnv);
+    assert.equal(response.status, 502);
+    const rejected = audit.entries.map((entry) => entry.args[0]).find((record) => record.event === "downstream_rejected");
+    assert.equal(rejected.status, 502);
+    assert.equal(rejected.downstreamStatus, 500);
+  } finally {
+    audit.restore();
+  }
 });
 
 test("downstream non-2xx returns generic 502", async () => {

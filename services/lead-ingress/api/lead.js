@@ -6,6 +6,17 @@ const MIN_SECRET_BYTES = 32;
 const ALLOWED_AUDIENCES = new Set(["adult", "parent", "teen", "business"]);
 const ALLOWED_LOCALES = new Set(["ru", "en"]);
 const YOUTH_PROGRAM_PREFIXES = ["kids-", "teens-"];
+const INTAKE_EVENT_SCHEMA = "ai-skill-lab.intake-event.v1";
+const INGRESS_EVENT_FIELDS = new Set(["requestId", "status", "downstreamStatus"]);
+
+function logIngress(level, event, fields = {}) {
+  const record = { schema: INTAKE_EVENT_SCHEMA, component: "ingress", event };
+  for (const [key, value] of Object.entries(fields)) {
+    if (INGRESS_EVENT_FIELDS.has(key) && value !== undefined) record[key] = value;
+  }
+  const writer = level === "error" ? console.error : level === "warn" ? console.warn : console.log;
+  writer(record);
+}
 
 function json(body, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(body), {
@@ -188,6 +199,7 @@ export async function handleLead(request, env = process.env) {
   const body = JSON.stringify(payload);
   const timestamp = Math.floor(Date.now() / 1000).toString();
   const digest = signature(cfg.secret, timestamp, requestId, body);
+  logIngress("info", "forward_start", { requestId });
 
   let downstream;
   try {
@@ -203,10 +215,15 @@ export async function handleLead(request, env = process.env) {
       signal: AbortSignal.timeout(WEBHOOK_TIMEOUT_MS),
     });
   } catch {
+    logIngress("error", "downstream_error", { requestId, status: 502 });
     return json({ ok: false, error: "Application channel unavailable" }, 502);
   }
 
-  if (!downstream.ok) return json({ ok: false, error: "Application channel unavailable" }, 502);
+  if (!downstream.ok) {
+    logIngress("warn", "downstream_rejected", { requestId, status: 502, downstreamStatus: downstream.status });
+    return json({ ok: false, error: "Application channel unavailable" }, 502);
+  }
+  logIngress("info", "forward_ok", { requestId, status: 200, downstreamStatus: downstream.status });
   return json({ ok: true, requestId });
 }
 

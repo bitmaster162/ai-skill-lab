@@ -81,6 +81,13 @@ async function json(response) {
   return JSON.parse(await response.text());
 }
 
+function captureConsole() {
+  const entries = [];
+  const original = { log: console.log, warn: console.warn, error: console.error };
+  for (const level of Object.keys(original)) console[level] = (...args) => entries.push({ level, args });
+  return { entries, restore() { Object.assign(console, original); } };
+}
+
 function env(db = makeDb(), rateLimiter = makeRateLimiter()) {
   return {
     LEAD_RECEIVER_ENABLED: "true",
@@ -152,6 +159,29 @@ test("valid signed lead passes rate limiter and inserts exactly once with 30-day
   assert.equal(db.calls[0].bindings[13], "/start");
 });
 
+test("receiver events correlate insert without logging lead fields or HMAC material", async () => {
+  const audit = captureConsole();
+  try {
+    const payload = basePayload();
+    const response = await handleReceiver(signedRequest(payload), env(), nowMs);
+    assert.equal(response.status, 200);
+    const inserted = audit.entries.map((entry) => entry.args[0]).find((record) => record.event === "inserted");
+    assert.deepEqual(inserted, {
+      schema: "ai-skill-lab.intake-event.v1",
+      component: "receiver",
+      event: "inserted",
+      requestId: payload.requestId,
+      status: 200,
+    });
+    const serialized = JSON.stringify(audit.entries);
+    for (const forbidden of [payload.name, payload.contact, payload.goal, secret, "v1="]) {
+      assert.equal(serialized.includes(forbidden), false, forbidden);
+    }
+  } finally {
+    audit.restore();
+  }
+});
+
 test("rate limiter rejection returns 429 before D1 write", async () => {
   const db = makeDb();
   const rateLimiter = makeRateLimiter({ success: false });
@@ -207,6 +237,25 @@ test("D1 failure returns generic 503", async () => {
   const response = await handleReceiver(signedRequest(basePayload()), env(makeDb({ fail: true })), nowMs);
   assert.equal(response.status, 503);
   assert.deepEqual(await json(response), { ok: false, error: "Receiver unavailable" });
+});
+
+test("rate-limit outcome event contains only correlation and status", async () => {
+  const audit = captureConsole();
+  try {
+    const payload = basePayload();
+    const response = await handleReceiver(signedRequest(payload), env(makeDb(), makeRateLimiter({ success: false })), nowMs);
+    assert.equal(response.status, 429);
+    const event = audit.entries.map((entry) => entry.args[0]).find((record) => record.event === "rate_limited");
+    assert.deepEqual(event, {
+      schema: "ai-skill-lab.intake-event.v1",
+      component: "receiver",
+      event: "rate_limited",
+      requestId: payload.requestId,
+      status: 429,
+    });
+  } finally {
+    audit.restore();
+  }
 });
 
 test("cleanup is disabled by default and deletes expired rows only when enabled", async () => {
