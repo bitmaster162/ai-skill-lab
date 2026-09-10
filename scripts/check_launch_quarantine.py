@@ -52,9 +52,12 @@ ENV_EXAMPLE_FORBIDDEN_PRIVATE_MARKERS = [
     "\nLEAD_WEBHOOK_SECRET=",
     "\nLEAD_INGRESS_ENABLED=",
 ]
+INGRESS_ENV_FORBIDDEN_MARKERS = [
+    "https://ai-skill-lab.vercel.app",
+]
 INGRESS_ENV_REQUIRED_MARKERS = [
     "LEAD_INGRESS_ENABLED=false",
-    "LEAD_ALLOWED_ORIGINS=https://aiskillab.work,https://ai-skill-lab.vercel.app",
+    "LEAD_ALLOWED_ORIGINS=https://aiskillab.work",
     "LEAD_WEBHOOK_URL=",
     "LEAD_WEBHOOK_SECRET=",
     "LEAD_LEGAL_OPERATOR_NAME=",
@@ -154,6 +157,11 @@ for marker in ENV_EXAMPLE_FORBIDDEN_PRIVATE_MARKERS:
     checks += 1
     if marker in env_example_text:
         errors.append(f"public env example must not own private ingress marker {marker.strip()!r}")
+
+for marker in INGRESS_ENV_FORBIDDEN_MARKERS:
+    checks += 1
+    if marker in ingress_env_text:
+        errors.append(f"isolated ingress env example forbidden marker present {marker!r}")
 
 for marker in INGRESS_ENV_REQUIRED_MARKERS:
     checks += 1
