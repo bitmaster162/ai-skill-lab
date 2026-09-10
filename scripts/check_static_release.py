@@ -100,6 +100,16 @@ def main():
             if parser.alternates.get(lang) != expected:
                 problems.append(f'{route}: hreflang {lang} mismatch {parser.alternates.get(lang)!r} != {expected!r}')
 
+    config=json.loads((LIVE/'vercel.json').read_text(encoding='utf-8'))
+    expected_redirects=[{
+        'source':'/:path*',
+        'has':[{'type':'header','key':'host','value':'ai-skill-lab.vercel.app'}],
+        'destination':PUBLIC_ORIGIN+'/:path*',
+        'permanent':True,
+    }]
+    if config.get('redirects') != expected_redirects:
+        problems.append(f'legacy public host redirect mismatch: {config.get("redirects")!r}')
+
     sitemap=LIVE/'sitemap.xml'
     if not sitemap.exists(): problems.append('missing sitemap.xml')
     else:

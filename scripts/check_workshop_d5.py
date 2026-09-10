@@ -20,8 +20,13 @@ R102_PROTECTED_OVERRIDES={
 'deploy/live/robots.txt':'332cbcca130fa5d82115641450e6b05b939f5a02243a141c7795281b5286af88',
 'deploy/live/vercel.json':'fb878a7891f9d5a8d60223ac6ff72a7a3977fafacafa977a32ffc73b4057b19d',
 }
+R103_PROTECTED_OVERRIDES={
+'README.md':'da13c9fe649f2a2f6b9a4a31d178c2d77f0c5c0f34c79bfb6113152cceaf9f0f',
+'deploy/live/vercel.json':'96c9a11a515a00ae45ff61baa88ac7dd51291b3aaf058166a6ea8a0ec2736919',
+}
 protected=dict(PROTECTED)
-if release=='R102_D7_CUSTOM_DOMAIN_CANONICAL':protected.update(R102_PROTECTED_OVERRIDES)
+if release in {'R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT'}:protected.update(R102_PROTECTED_OVERRIDES)
+if release=='R103_D8_LEGACY_PUBLIC_HOST_REDIRECT':protected.update(R103_PROTECTED_OVERRIDES)
 def main_digest(text):
  m=re.search(r'<main id="main".*?</main>',text,re.S)
  return hashlib.sha256(m.group(0).encode()).hexdigest() if m else None
@@ -49,7 +54,7 @@ for rel in ['app/method/page.tsx','app/en/method/page.tsx','deploy/live/method.h
 all_html=list(LIVE.rglob('*.html')); public=[p for p in all_html if p.name!='404.html']; req(len(all_html)==47,'47 html including 404')
 workshop=sum('<header class="workshopHeader">' in p.read_text(encoding='utf-8') for p in public); legacy=sum('<header class="nav">' in p.read_text(encoding='utf-8') for p in public); req(workshop==46,f'Workshop pages {workshop} != 46'); req(legacy==0,f'legacy pages {legacy} != 0')
 routes={('/' if p.name=='index.html' else '/en' if p.relative_to(LIVE).as_posix()=='en.html' else '/'+p.relative_to(LIVE).as_posix()[:-5]) for p in public}; req(len(routes)==46,'46 public routes')
-req(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema'); req(release in {'R101B_D6_PUBLIC_FORM','R102_D7_CUSTOM_DOMAIN_CANONICAL'},'D6-or-newer release'); req(manifest.get('file_count')==62,'62 release files')
+req(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema'); req(release in {'R101B_D6_PUBLIC_FORM','R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT'},'D6-or-newer release'); req(manifest.get('file_count')==62,'62 release files')
 actual={p.relative_to(LIVE).as_posix():(len(p.read_bytes()),hashlib.sha256(p.read_bytes()).hexdigest()) for p in LIVE.rglob('*') if p.is_file() and p.name!='_release.json'}; listed={x['path']:(x['size'],x['sha256']) for x in manifest.get('files',[])}; req(actual==listed,'manifest exact bytes'); payload=sum(x[0] for x in actual.values()); req(payload<=524288,f'payload {payload} > 524288')
 workflow=read('.github/workflows/static-qa.yml'); preflight=read('scripts/preflight_release.py'); req(workflow.count('python scripts/check_workshop_d5.py')==1,'workflow D5 once'); req(preflight.count('scripts/check_workshop_d5.py')==1,'preflight D5 once')
 print(f'workshop_d5_checks={checks} target_pages=10 workshop_pages={workshop} legacy_pages={legacy} routes={len(routes)} html={len(all_html)} files={manifest.get("file_count")} payload_bytes={payload} headroom={524288-payload}')
