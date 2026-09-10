@@ -6,6 +6,8 @@ This directory is the isolated server-side ingress for the future AI Skill Lab f
 
 The service is fail-closed. `LEAD_INGRESS_ENABLED` defaults to `false`. Even when enabled, forwarding remains unavailable unless all required server-only configuration is present: an HTTPS receiver, a HMAC secret of at least 32 UTF-8 bytes, one or more HTTPS allowed origins, the exact legal operator and jurisdiction, a monitored privacy contact, the frozen 30-day unconverted-lead retention value, and an explicit `LEAD_RATE_LIMIT_READY=true` attestation after provider-level rate limiting has been verified.
 
+Production origin trust is canonical-only: `LEAD_ALLOWED_ORIGINS=https://aiskillab.work`. The legacy `https://ai-skill-lab.vercel.app` hostname is redirect-only compatibility and must not be trusted by the ingress.
+
 Do not store production secrets in Git. Configure runtime values only in the dedicated ingress project. The public static project must not receive `LEAD_WEBHOOK_SECRET`.
 
 ## Request contract

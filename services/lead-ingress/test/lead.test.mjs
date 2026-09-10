@@ -6,7 +6,7 @@ import { handleLead } from "../api/lead.js";
 const secret = "0123456789abcdef0123456789abcdef";
 const baseEnv = {
   LEAD_INGRESS_ENABLED: "true",
-  LEAD_ALLOWED_ORIGINS: "https://ai-skill-lab.vercel.app,https://aiskillab.work",
+  LEAD_ALLOWED_ORIGINS: "https://aiskillab.work",
   LEAD_WEBHOOK_URL: "https://receiver.example.test/lead",
   LEAD_WEBHOOK_SECRET: secret,
   LEAD_LEGAL_OPERATOR_NAME: "Example Operator",
@@ -40,7 +40,7 @@ function req(body = valid, options = {}) {
     method: options.method ?? "POST",
     headers: {
       "Content-Type": options.contentType ?? "application/json",
-      Origin: options.origin ?? "https://ai-skill-lab.vercel.app",
+      Origin: options.origin ?? "https://aiskillab.work",
       ...(options.headers || {}),
     },
     body: ["GET", "HEAD"].includes(options.method) ? undefined : payload,
@@ -85,8 +85,8 @@ test("rejects weak secret, non-HTTPS webhook, and malformed allowed origins", as
   for (const env of [
     { ...baseEnv, LEAD_WEBHOOK_SECRET: "short" },
     { ...baseEnv, LEAD_WEBHOOK_URL: "http://receiver.example.test/lead" },
-    { ...baseEnv, LEAD_ALLOWED_ORIGINS: "http://ai-skill-lab.vercel.app" },
-    { ...baseEnv, LEAD_ALLOWED_ORIGINS: "https://ai-skill-lab.vercel.app/path" },
+    { ...baseEnv, LEAD_ALLOWED_ORIGINS: "http://aiskillab.work" },
+    { ...baseEnv, LEAD_ALLOWED_ORIGINS: "https://aiskillab.work/path" },
   ]) {
     const response = await handleLead(req(), env);
     assert.equal(response.status, 503);
@@ -101,6 +101,13 @@ test("rejects missing or disallowed Origin", async () => {
   });
   assert.equal((await handleLead(missing, baseEnv)).status, 403);
   assert.equal((await handleLead(req(valid, { origin: "https://evil.example" }), baseEnv)).status, 403);
+});
+
+test("rejects legacy redirect-only origin without forwarding", async () => {
+  const calls = captureDownstream();
+  const response = await handleLead(req(valid, { origin: "https://ai-skill-lab.vercel.app" }), baseEnv);
+  assert.equal(response.status, 403);
+  assert.equal(calls.length, 0);
 });
 
 test("rejects non-JSON content type", async () => {
