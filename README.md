@@ -12,6 +12,8 @@ The current public static release exposes two deliberate contact paths on `/star
 
 `NEXT_PUBLIC_LEAD_FORM_ENABLED=true` remains an ENV-bound Next-runtime capability and is not public static-release authority. The public form is activated only by the committed static release plus required `static-release` QA and a separately approved production release.
 
+The canonical production host is `https://aiskillab.work`. The legacy public Vercel hostname `https://ai-skill-lab.vercel.app` is routing compatibility only and must permanently redirect to the canonical host while preserving the requested path.
+
 ## Routes
 
 - RU: `/`, `/about`, `/build`, `/business`, `/challenge`, `/curriculum`, `/family`, `/faq`, `/kids`, `/matcher`, `/method`, `/parents`, `/personal`, `/phuket`, `/pricing`, `/privacy`, `/projects`, `/proof`, `/safety`, `/start`, `/studio`, `/teens`, `/terms`
