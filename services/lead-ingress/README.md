@@ -22,7 +22,7 @@ Endpoint: `POST /api/lead`
 - youth submissions require adult confirmation; a `kids-*` program requires `audience=parent`
 - the honeypot field `website` returns success without forwarding
 - direct requests without an allowed `Origin` are rejected
-- no request-body, contact, goal, secret, or downstream payload logging is implemented
+- structured operational events are limited to correlation/outcome metadata (`requestId`, status, downstream status); request body, name, contact, goal, Origin, webhook URL, signatures, and secrets are never emitted by custom logs
 - no automatic retry is performed, avoiding duplicate lead creation
 - downstream timeout: 8 seconds
 
