@@ -1,6 +1,6 @@
 export const site = {
   name: "AI Skill Lab",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://ai-skill-lab.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://aiskillab.work",
   telegram: process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/BiTFormer",
   email: "robert@aiskillab.work",
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_URL || "https://wa.me/66649701204",

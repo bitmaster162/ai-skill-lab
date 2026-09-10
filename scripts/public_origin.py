@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from urllib.parse import urlsplit
 
-DEFAULT_PUBLIC_ORIGIN = "https://ai-skill-lab.vercel.app"
+DEFAULT_PUBLIC_ORIGIN = "https://aiskillab.work"
 
 
 def normalize_public_origin(value: str) -> str:

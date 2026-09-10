@@ -6,6 +6,7 @@ from urllib.parse import urlsplit
 import json
 import re
 import sys
+from public_origin import PUBLIC_ORIGIN
 ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / 'deploy/live'
 errors = []
@@ -54,7 +55,7 @@ for track, count in [('adult', 5), ('teens', 10), ('kids', 10)]:
         require(len(programs.get(track, {}).get(locale, [])) == count, f'{track}/{locale} curriculum count')
 for token in ('commercialFacts.tracks[audience]', 'sessionDurationMinutes', 'plans.map', 'href={p("/start")}', 'href={p("/safety")}', 'href={p("/parents")}', 'href={p("/family")}'):
     require(token in source, f'Audience contract: {token}')
-origin = 'https://ai-skill-lab.vercel.app'
+origin = PUBLIC_ORIGIN
 for locale, prefix in [('ru', ''), ('en', 'en/')]:
     for route in ('personal', 'teens', 'kids', 'business', 'faq'):
         rel = f'deploy/live/{prefix}{route}.html'

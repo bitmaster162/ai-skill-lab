@@ -20,7 +20,7 @@ The current public static release exposes two deliberate contact paths on `/star
 ## Environment
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://ai-skill-lab.vercel.app
+NEXT_PUBLIC_SITE_URL=https://aiskillab.work
 NEXT_PUBLIC_TELEGRAM_URL=https://t.me/BiTFormer
 NEXT_PUBLIC_WHATSAPP_URL=
 NEXT_PUBLIC_LEAD_FORM_ENABLED=false
