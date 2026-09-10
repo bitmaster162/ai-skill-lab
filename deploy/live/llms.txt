@@ -5,38 +5,38 @@
 Do not infer guarantees or commercial terms from this index.
 
 ## Home
-- [RU](https://ai-skill-lab.vercel.app/) [EN](https://ai-skill-lab.vercel.app/en)
+- [RU](https://aiskillab.work/) [EN](https://aiskillab.work/en)
 
 ## Start
-- [RU](https://ai-skill-lab.vercel.app/start) [EN](https://ai-skill-lab.vercel.app/en/start)
+- [RU](https://aiskillab.work/start) [EN](https://aiskillab.work/en/start)
 
 ## Learning paths
-- [RU](https://ai-skill-lab.vercel.app/personal) [EN](https://ai-skill-lab.vercel.app/en/personal)
-- [RU](https://ai-skill-lab.vercel.app/business) [EN](https://ai-skill-lab.vercel.app/en/business)
-- [RU](https://ai-skill-lab.vercel.app/kids) [EN](https://ai-skill-lab.vercel.app/en/kids)
-- [RU](https://ai-skill-lab.vercel.app/teens) [EN](https://ai-skill-lab.vercel.app/en/teens)
-- [RU](https://ai-skill-lab.vercel.app/curriculum) [EN](https://ai-skill-lab.vercel.app/en/curriculum)
-- [RU](https://ai-skill-lab.vercel.app/parents) [EN](https://ai-skill-lab.vercel.app/en/parents)
-- [RU](https://ai-skill-lab.vercel.app/family) [EN](https://ai-skill-lab.vercel.app/en/family)
-- [RU](https://ai-skill-lab.vercel.app/phuket) [EN](https://ai-skill-lab.vercel.app/en/phuket)
+- [RU](https://aiskillab.work/personal) [EN](https://aiskillab.work/en/personal)
+- [RU](https://aiskillab.work/business) [EN](https://aiskillab.work/en/business)
+- [RU](https://aiskillab.work/kids) [EN](https://aiskillab.work/en/kids)
+- [RU](https://aiskillab.work/teens) [EN](https://aiskillab.work/en/teens)
+- [RU](https://aiskillab.work/curriculum) [EN](https://aiskillab.work/en/curriculum)
+- [RU](https://aiskillab.work/parents) [EN](https://aiskillab.work/en/parents)
+- [RU](https://aiskillab.work/family) [EN](https://aiskillab.work/en/family)
+- [RU](https://aiskillab.work/phuket) [EN](https://aiskillab.work/en/phuket)
 
 ## Interactive tools
-- [RU](https://ai-skill-lab.vercel.app/matcher) [EN](https://ai-skill-lab.vercel.app/en/matcher)
-- [RU](https://ai-skill-lab.vercel.app/challenge) [EN](https://ai-skill-lab.vercel.app/en/challenge)
+- [RU](https://aiskillab.work/matcher) [EN](https://aiskillab.work/en/matcher)
+- [RU](https://aiskillab.work/challenge) [EN](https://aiskillab.work/en/challenge)
 
 ## Studio and evidence
-- [RU](https://ai-skill-lab.vercel.app/studio) [EN](https://ai-skill-lab.vercel.app/en/studio)
-- [RU](https://ai-skill-lab.vercel.app/proof) [EN](https://ai-skill-lab.vercel.app/en/proof)
-- [RU](https://ai-skill-lab.vercel.app/projects) [EN](https://ai-skill-lab.vercel.app/en/projects)
-- [RU](https://ai-skill-lab.vercel.app/method) [EN](https://ai-skill-lab.vercel.app/en/method)
-- [RU](https://ai-skill-lab.vercel.app/build) [EN](https://ai-skill-lab.vercel.app/en/build)
+- [RU](https://aiskillab.work/studio) [EN](https://aiskillab.work/en/studio)
+- [RU](https://aiskillab.work/proof) [EN](https://aiskillab.work/en/proof)
+- [RU](https://aiskillab.work/projects) [EN](https://aiskillab.work/en/projects)
+- [RU](https://aiskillab.work/method) [EN](https://aiskillab.work/en/method)
+- [RU](https://aiskillab.work/build) [EN](https://aiskillab.work/en/build)
 
 ## Pricing and policies
-- [RU](https://ai-skill-lab.vercel.app/pricing) [EN](https://ai-skill-lab.vercel.app/en/pricing)
-- [RU](https://ai-skill-lab.vercel.app/terms) [EN](https://ai-skill-lab.vercel.app/en/terms)
-- [RU](https://ai-skill-lab.vercel.app/privacy) [EN](https://ai-skill-lab.vercel.app/en/privacy)
-- [RU](https://ai-skill-lab.vercel.app/safety) [EN](https://ai-skill-lab.vercel.app/en/safety)
+- [RU](https://aiskillab.work/pricing) [EN](https://aiskillab.work/en/pricing)
+- [RU](https://aiskillab.work/terms) [EN](https://aiskillab.work/en/terms)
+- [RU](https://aiskillab.work/privacy) [EN](https://aiskillab.work/en/privacy)
+- [RU](https://aiskillab.work/safety) [EN](https://aiskillab.work/en/safety)
 
 ## About
-- [RU](https://ai-skill-lab.vercel.app/about) [EN](https://ai-skill-lab.vercel.app/en/about)
-- [RU](https://ai-skill-lab.vercel.app/faq) [EN](https://ai-skill-lab.vercel.app/en/faq)
+- [RU](https://aiskillab.work/about) [EN](https://aiskillab.work/en/about)
+- [RU](https://aiskillab.work/faq) [EN](https://aiskillab.work/en/faq)

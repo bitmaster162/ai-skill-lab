@@ -13,7 +13,17 @@ def require(c,m):
  if not c:errors.append(m)
 def read(rel):return (ROOT/rel).read_text(encoding='utf-8')
 def sha(rel):return hashlib.sha256((ROOT/rel).read_bytes()).hexdigest()
-for rel,digest in PROTECTED.items():require(sha(rel)==digest,f'protected byte drift {rel}')
+manifest=json.loads(read('deploy/live/_release.json'));release=manifest.get('release_id')
+R102_PROTECTED_OVERRIDES={
+'README.md':'53e1deb7042b138a1f8548f41ef4e8005d8f2c557f8b1087d097634072737bd7',
+'deploy/live/sitemap.xml':'81f4f83bce0b84ac79e4c7f0a8913c2b0f6a532d057771a3b802f46c0c2a2486',
+'deploy/live/llms.txt':'dfb1f672dd46713ae7e9fd696223a57042dc56eaee0774be3a0323c75fa28042',
+'deploy/live/robots.txt':'332cbcca130fa5d82115641450e6b05b939f5a02243a141c7795281b5286af88',
+'deploy/live/vercel.json':'fb878a7891f9d5a8d60223ac6ff72a7a3977fafacafa977a32ffc73b4057b19d',
+}
+protected=dict(PROTECTED)
+if release=='R102_D7_CUSTOM_DOMAIN_CANONICAL':protected.update(R102_PROTECTED_OVERRIDES)
+for rel,digest in protected.items():require(sha(rel)==digest,f'protected byte drift {rel}')
 for locale in ('ru','en'):
  en=locale=='en'; prefix='en/' if en else ''
  for route in ROUTES:
@@ -53,7 +63,7 @@ for rel,tokens in interactive.items():
 all_html=list(LIVE.rglob('*.html'));public=[p for p in all_html if p.name!='404.html']
 require(len(all_html)==47,'47 static HTML files')
 workshop=sum('<header class="workshopHeader">' in p.read_text(encoding='utf-8') for p in public);legacy=sum('<header class="nav">' in p.read_text(encoding='utf-8') for p in public)
-manifest=json.loads(read('deploy/live/_release.json'));require(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema');release=manifest.get('release_id');states={'R99_D4':(36,10),'R100_D5':(46,0),'R101B_D6_PUBLIC_FORM':(46,0)};require(release in states,f'unsupported release state {release!r}')
+require(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema');states={'R99_D4':(36,10),'R100_D5':(46,0),'R101B_D6_PUBLIC_FORM':(46,0),'R102_D7_CUSTOM_DOMAIN_CANONICAL':(46,0)};require(release in states,f'unsupported release state {release!r}')
 if release in states:
  expected_workshop,expected_legacy=states[release];require(workshop==expected_workshop,f'Workshop pages {workshop} != {expected_workshop} for {release}');require(legacy==expected_legacy,f'legacy pages {legacy} != {expected_legacy} for {release}')
 require(manifest.get('file_count')==62,'62 release files')

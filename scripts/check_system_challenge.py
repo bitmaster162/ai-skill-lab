@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import sys
+from public_origin import PUBLIC_ORIGIN
 ROOT=Path(__file__).resolve().parents[1];errors=[];checks=0
 component=(ROOT/'components/SystemChallenge.tsx').read_text(encoding='utf-8')
 for marker in ['research','product','automation','learning','SOURCE-BOUND','SHIPPABLE','REPEATABLE','TRANSFERABLE','data-system-challenge','data-challenge-key']:
@@ -28,8 +29,8 @@ for rel,en in [('deploy/live/challenge.html',False),('deploy/live/en/challenge.h
     checks+=3
     route='/en/challenge' if en else '/challenge'
     pair='/challenge' if en else '/en/challenge'
-    if f'<link rel="canonical" href="https://ai-skill-lab.vercel.app{route}">' not in t:errors.append(f'{rel}: canonical mismatch')
-    if f'href="https://ai-skill-lab.vercel.app{pair}"' not in t:errors.append(f'{rel}: hreflang pair missing')
+    if f'<link rel="canonical" href="{PUBLIC_ORIGIN}{route}">' not in t:errors.append(f'{rel}: canonical mismatch')
+    if f'href="{PUBLIC_ORIGIN}{pair}"' not in t:errors.append(f'{rel}: hreflang pair missing')
     if 'aria-current="page"' in t:errors.append(f'{rel}: inherited active nav marker')
 for rel in ['app/sitemap.ts','deploy/live/sitemap.xml']:
     t=(ROOT/rel).read_text(encoding='utf-8')

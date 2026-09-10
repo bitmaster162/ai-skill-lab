@@ -4,7 +4,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
 import json,re,sys
-ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';ORIGIN='https://ai-skill-lab.vercel.app'
+from public_origin import PUBLIC_ORIGIN
+ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';ORIGIN=PUBLIC_ORIGIN
 errors=[];checks=0
 class Audit(HTMLParser):
  def __init__(self):super().__init__(convert_charrefs=True);self.hrefs=[];self.forms=0;self.h1=0;self.ids=set();self.styles=[];self.canonical=[];self.alts={}
@@ -80,7 +81,7 @@ if len(html_files)!=47:errors.append(f'static HTML count {len(html_files)} != 47
 sitemap=(LIVE/'sitemap.xml').read_text(encoding='utf-8');locs=set(re.findall(r'<loc>(https?://[^<]+)</loc>',sitemap));expected={ORIGIN+('/' if r=='/' else r) for r in routes};checks+=2
 if locs!=expected:errors.append(f'sitemap authority mismatch missing={sorted(expected-locs)} extra={sorted(locs-expected)}')
 llms=(LIVE/'llms.txt').read_text(encoding='utf-8');checks+=3
-for marker in ['[RU](https://ai-skill-lab.vercel.app/family)','[EN](https://ai-skill-lab.vercel.app/en/family)']:
+for marker in [f'[RU]({ORIGIN}/family)',f'[EN]({ORIGIN}/en/family)']:
  if marker not in llms:errors.append(f'llms.txt missing {marker}')
 if len(re.findall(r'\]\((https?://[^)]+)\)',llms))!=46:errors.append('llms.txt URL count drift')
 readme=(ROOT/'README.md').read_text(encoding='utf-8');checks+=2

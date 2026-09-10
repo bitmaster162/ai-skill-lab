@@ -36,7 +36,7 @@ readme=read('README.md')
 for marker in ['current public static release exposes two deliberate contact paths','First-party application form (current public mode)','same-origin `/api/lead`','NEXT_PUBLIC_LEAD_FORM_ENABLED=true` remains an ENV-bound Next-runtime capability']:
  req(marker in readme,f'README marker {marker}')
 req('current public routes are contact-only' not in readme,'stale current contact-only README')
-manifest=json.loads(read('deploy/live/_release.json')); req(manifest.get('schema')=='ai-skill-lab.static-release.v1','manifest schema'); req(manifest.get('release_id')=='R101B_D6_PUBLIC_FORM','release id'); req(manifest.get('file_count')==62,'62 release files')
+manifest=json.loads(read('deploy/live/_release.json')); req(manifest.get('schema')=='ai-skill-lab.static-release.v1','manifest schema'); req(manifest.get('release_id') in {'R101B_D6_PUBLIC_FORM','R102_D7_CUSTOM_DOMAIN_CANONICAL'},'D6-or-newer release id'); req(manifest.get('file_count')==62,'62 release files')
 actual={p.relative_to(LIVE).as_posix():(len(p.read_bytes()),hashlib.sha256(p.read_bytes()).hexdigest()) for p in LIVE.rglob('*') if p.is_file() and p.name!='_release.json'}; listed={x['path']:(x['size'],x['sha256']) for x in manifest.get('files',[])}; req(actual==listed,'manifest exact map'); aggregate=''.join(f'{p}\t{s}\t{h}\n' for p,(s,h) in sorted(actual.items())).encode(); req(hashlib.sha256(aggregate).hexdigest()==manifest.get('payload_sha256'),'manifest payload digest')
 workflow=read('.github/workflows/static-qa.yml'); preflight=read('scripts/preflight_release.py')
 for target in ['python scripts/check_workshop_d6.py','node scripts/check_public_form_runtime.mjs']:

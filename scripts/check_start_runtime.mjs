@@ -141,7 +141,7 @@ async function run(rel,lang,{referrer='',source=''}={}){
   const anchors=cards.map(({href})=>({href}));
   let clipboard=''; const timers=[];
   const pagePath=isEn?'/en/start':'/start';
-  const pageUrl=new URL(`https://ai-skill-lab.vercel.app${pagePath}`);
+  const pageUrl=new URL(`https://aiskillab.work${pagePath}`);
   const document={
     documentElement:{lang},referrer,
     body:{appendChild(){}},
@@ -189,9 +189,9 @@ try{
   for(const [rel,lang] of [['deploy/live/start.html','ru'],['deploy/live/en/start.html','en']]){
     cases.push(await run(rel,lang));
     cases.push(await run(rel,lang,{referrer:'https://example.com/pricing'}));
-    cases.push(await run(rel,lang,{referrer:'https://ai-skill-lab.vercel.app/start'}));
-    cases.push(await run(rel,lang,{referrer:'https://ai-skill-lab.vercel.app/pricing?from=cta#plans',source:'/pricing'}));
-    cases.push(await run(rel,lang,{referrer:'https://ai-skill-lab.vercel.app/',source:'/'}));
+    cases.push(await run(rel,lang,{referrer:'https://aiskillab.work/start'}));
+    cases.push(await run(rel,lang,{referrer:'https://aiskillab.work/pricing?from=cta#plans',source:'/pricing'}));
+    cases.push(await run(rel,lang,{referrer:'https://aiskillab.work/',source:'/'}));
   }
   checks+=cases.reduce((n,x)=>n+x.checks,0);
   console.log(`start_runtime_checks=${checks} cases=${cases.length}`);

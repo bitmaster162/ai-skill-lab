@@ -4,6 +4,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
 import json, re, sys
+from public_origin import PUBLIC_ORIGIN
 
 ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / 'deploy' / 'live'
@@ -79,7 +80,7 @@ def main():
         if parser.forms!=expected: problems.append(f'{route}: forms {parser.forms} != {expected}')
     if forms!=2: problems.append(f'public static form count {forms} != 2')
 
-    canonical_base='https://ai-skill-lab.vercel.app'
+    canonical_base=PUBLIC_ORIGIN
     for route,parser in parsed.items():
         expected_canonical=canonical_base + ('/' if route == '/' else route)
         if parser.canonical != [expected_canonical]:

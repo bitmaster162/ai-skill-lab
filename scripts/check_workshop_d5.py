@@ -12,11 +12,21 @@ def req(c,m):
  if not c: errors.append(m)
 def read(rel): return (ROOT/rel).read_text(encoding='utf-8')
 def sha(rel): return hashlib.sha256((ROOT/rel).read_bytes()).hexdigest()
+manifest=json.loads(read('deploy/live/_release.json'));release=manifest.get('release_id')
+R102_PROTECTED_OVERRIDES={
+'README.md':'53e1deb7042b138a1f8548f41ef4e8005d8f2c557f8b1087d097634072737bd7',
+'deploy/live/sitemap.xml':'81f4f83bce0b84ac79e4c7f0a8913c2b0f6a532d057771a3b802f46c0c2a2486',
+'deploy/live/llms.txt':'dfb1f672dd46713ae7e9fd696223a57042dc56eaee0774be3a0323c75fa28042',
+'deploy/live/robots.txt':'332cbcca130fa5d82115641450e6b05b939f5a02243a141c7795281b5286af88',
+'deploy/live/vercel.json':'fb878a7891f9d5a8d60223ac6ff72a7a3977fafacafa977a32ffc73b4057b19d',
+}
+protected=dict(PROTECTED)
+if release=='R102_D7_CUSTOM_DOMAIN_CANONICAL':protected.update(R102_PROTECTED_OVERRIDES)
 def main_digest(text):
  m=re.search(r'<main id="main".*?</main>',text,re.S)
  return hashlib.sha256(m.group(0).encode()).hexdigest() if m else None
 for rel,d in LEGAL.items(): req(sha(rel)==d,f'legal source byte drift {rel}')
-for rel,d in PROTECTED.items(): req(sha(rel)==d,f'protected byte drift {rel}')
+for rel,d in protected.items(): req(sha(rel)==d,f'protected byte drift {rel}')
 for rel,d in SOURCE_MAIN.items():
  t=read(rel); req(main_digest(t)==d,f'source main drift {rel}'); req('WorkshopEditorial' in t and 'Header' not in t and 'Footer' not in t,f'source Workshop shell {rel}')
 legalpage=read('components/LegalPage.tsx'); req('WorkshopEditorial' in legalpage and '<main id="main" className="legalMain">' in legalpage,'LegalPage Workshop shell/id'); req('Header' not in legalpage and 'Footer' not in legalpage,'LegalPage legacy shell')
@@ -39,7 +49,7 @@ for rel in ['app/method/page.tsx','app/en/method/page.tsx','deploy/live/method.h
 all_html=list(LIVE.rglob('*.html')); public=[p for p in all_html if p.name!='404.html']; req(len(all_html)==47,'47 html including 404')
 workshop=sum('<header class="workshopHeader">' in p.read_text(encoding='utf-8') for p in public); legacy=sum('<header class="nav">' in p.read_text(encoding='utf-8') for p in public); req(workshop==46,f'Workshop pages {workshop} != 46'); req(legacy==0,f'legacy pages {legacy} != 0')
 routes={('/' if p.name=='index.html' else '/en' if p.relative_to(LIVE).as_posix()=='en.html' else '/'+p.relative_to(LIVE).as_posix()[:-5]) for p in public}; req(len(routes)==46,'46 public routes')
-manifest=json.loads(read('deploy/live/_release.json')); req(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema'); req(manifest.get('release_id')=='R101B_D6_PUBLIC_FORM','R101B_D6_PUBLIC_FORM release'); req(manifest.get('file_count')==62,'62 release files')
+req(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema'); req(release in {'R101B_D6_PUBLIC_FORM','R102_D7_CUSTOM_DOMAIN_CANONICAL'},'D6-or-newer release'); req(manifest.get('file_count')==62,'62 release files')
 actual={p.relative_to(LIVE).as_posix():(len(p.read_bytes()),hashlib.sha256(p.read_bytes()).hexdigest()) for p in LIVE.rglob('*') if p.is_file() and p.name!='_release.json'}; listed={x['path']:(x['size'],x['sha256']) for x in manifest.get('files',[])}; req(actual==listed,'manifest exact bytes'); payload=sum(x[0] for x in actual.values()); req(payload<=524288,f'payload {payload} > 524288')
 workflow=read('.github/workflows/static-qa.yml'); preflight=read('scripts/preflight_release.py'); req(workflow.count('python scripts/check_workshop_d5.py')==1,'workflow D5 once'); req(preflight.count('scripts/check_workshop_d5.py')==1,'preflight D5 once')
 print(f'workshop_d5_checks={checks} target_pages=10 workshop_pages={workshop} legacy_pages={legacy} routes={len(routes)} html={len(all_html)} files={manifest.get("file_count")} payload_bytes={payload} headroom={524288-payload}')
