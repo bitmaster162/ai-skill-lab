@@ -32,6 +32,7 @@ CHECKS = [
     ("lead_ingress", ["node", "--test", "services/lead-ingress/test/lead.test.mjs"]),
     ("lead_receiver", ["node", "--test", "services/lead-receiver-cloudflare/test/receiver.test.mjs"]),
     ("intake_operations", ["python", "scripts/check_intake_operations.py"]),
+    ("lead_inbox", ["python", "scripts/check_lead_inbox.py"]),
     ("inline_scripts", ["python", "scripts/check_inline_scripts.py"]),
     ("matcher_runtime", ["node", "scripts/check_matcher_runtime.mjs"]),
     ("start_runtime", ["node", "scripts/check_start_runtime.mjs"]),
