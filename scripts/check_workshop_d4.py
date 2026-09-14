@@ -26,8 +26,8 @@ R103_PROTECTED_OVERRIDES={
 'deploy/live/vercel.json':'96c9a11a515a00ae45ff61baa88ac7dd51291b3aaf058166a6ea8a0ec2736919',
 }
 protected=dict(PROTECTED)
-if release in {'R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT'}:protected.update(R102_PROTECTED_OVERRIDES)
-if release=='R103_D8_LEGACY_PUBLIC_HOST_REDIRECT':protected.update(R103_PROTECTED_OVERRIDES)
+if release in {'R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR'}:protected.update(R102_PROTECTED_OVERRIDES)
+if release in {'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR'}:protected.update(R103_PROTECTED_OVERRIDES)
 for rel,digest in protected.items():require(sha(rel)==digest,f'protected byte drift {rel}')
 for locale in ('ru','en'):
  en=locale=='en'; prefix='en/' if en else ''
@@ -68,7 +68,7 @@ for rel,tokens in interactive.items():
 all_html=list(LIVE.rglob('*.html'));public=[p for p in all_html if p.name!='404.html']
 require(len(all_html)==47,'47 static HTML files')
 workshop=sum('<header class="workshopHeader">' in p.read_text(encoding='utf-8') for p in public);legacy=sum('<header class="nav">' in p.read_text(encoding='utf-8') for p in public)
-require(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema');states={'R99_D4':(36,10),'R100_D5':(46,0),'R101B_D6_PUBLIC_FORM':(46,0),'R102_D7_CUSTOM_DOMAIN_CANONICAL':(46,0),'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT':(46,0)};require(release in states,f'unsupported release state {release!r}')
+require(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema');states={'R99_D4':(36,10),'R100_D5':(46,0),'R101B_D6_PUBLIC_FORM':(46,0),'R102_D7_CUSTOM_DOMAIN_CANONICAL':(46,0),'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT':(46,0),'R109A_CRITICAL_VISUAL_FIX':(46,0),'R109A_REVIEW_REPAIR':(46,0)};require(release in states,f'unsupported release state {release!r}')
 if release in states:
  expected_workshop,expected_legacy=states[release];require(workshop==expected_workshop,f'Workshop pages {workshop} != {expected_workshop} for {release}');require(legacy==expected_legacy,f'legacy pages {legacy} != {expected_legacy} for {release}')
 require(manifest.get('file_count')==62,'62 release files')
