@@ -68,8 +68,8 @@
     },
     {
       "path": "en/faq.html",
-      "sha256": "ff3e6d8bd0f05cfe87f75eff14430251b5df4ad1ac3c65af9abb6c83abc72397",
-      "size": 5598
+      "sha256": "6b2fb14df7579e8908c2feface9d429d8923e73ba9bc5e76096416a1285cabf9",
+      "size": 5709
     },
     {
       "path": "en/kids.html",
@@ -123,8 +123,8 @@
     },
     {
       "path": "en/safety.html",
-      "sha256": "27c6b101a777aed5885f9e57481f84181eb54525f175cab0852d1292082256d5",
-      "size": 5083
+      "sha256": "e39173549c493bde894fcc35e043c31caa6f29cca8159dbf497132094fe2eff6",
+      "size": 5127
     },
     {
       "path": "en/start.html",
@@ -143,8 +143,8 @@
     },
     {
       "path": "en/terms.html",
-      "sha256": "4c45c7447c51799d41c06dd48d2abd1b8eb8b9e8f77d1a2854d8ec75409be225",
-      "size": 4494
+      "sha256": "7613b584beeb0728e2ec0622ff990d7846baa3fcb85fe9514babafafcef00e40",
+      "size": 4650
     },
     {
       "path": "family.html",
@@ -153,8 +153,8 @@
     },
     {
       "path": "faq.html",
-      "sha256": "127584f0eea1c343cad61c874262572f4293a1efd3b35d11047e9fb7ec48a087",
-      "size": 7324
+      "sha256": "0f71e736957717194b61dca60f6ada341dabe3544ac3c357628dd3ef6a1c8015",
+      "size": 7468
     },
     {
       "path": "favicon.svg",
@@ -243,8 +243,8 @@
     },
     {
       "path": "safety.html",
-      "sha256": "9f3ce994cf1baaeb9c481b9eec690a355fde94043badb82655f3f1d176fa8a85",
-      "size": 6755
+      "sha256": "48e0babcea2ad1f575bf495fb61eb4f87fa010683caa11cb40678b5417d6fc9c",
+      "size": 6830
     },
     {
       "path": "site.webmanifest",
@@ -278,8 +278,8 @@
     },
     {
       "path": "terms.html",
-      "sha256": "486d551c3b80e44e12d8b526779010dc4ec9c9f3722e110d2b997dec813cc6c3",
-      "size": 5775
+      "sha256": "2d564612b48b6232e77c2efe81037ef6173d879cba8ebdeea767c64ab738677b",
+      "size": 6047
     },
     {
       "path": "vercel.json",
@@ -292,7 +292,7 @@
       "size": 20661
     }
   ],
-  "payload_sha256": "83cda09d5421b2e6f5c7ad016398ac8aacf3f2025e6341aee0bd4296c6d7beab",
-  "release_id": "R109D_404_LEGACY_HOST",
+  "payload_sha256": "e1a11ef389d6bbadbd3a0a999749a63522a709ab64330f76339a798301b4474f",
+  "release_id": "R109B_TRUTH_FORM_ALIGNMENT",
   "schema": "ai-skill-lab.static-release.v1"
 }
