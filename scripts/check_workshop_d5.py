@@ -29,7 +29,7 @@ if release in {'R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_RED
 if release in {'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR'}:protected.update(R103_PROTECTED_OVERRIDES)
 legal=dict(LEGAL); static_main=dict(STATIC_MAIN)
 if release=='R109A_REVIEW_REPAIR':
- legal.update({'app/safety/page.tsx': '67c1e37347f8f38d09bcf03d986558ac0955f1b518e3287d01b458daa053332f', 'app/en/safety/page.tsx': '802539a50cfbc30449eaa192d0ec078610c8d0dbb8e52becd095a0a571f00c0f'}); static_main.update({'safety.html': '44a93016d5966deadbb071f20fff9f9e51f1509dcc61e0dd21983b5aa8796168', 'en/safety.html': '44d824ded2fb8406100c5d6337c562555aee4d9f08e8884af74c5c6a781c1885'})
+ legal.update({'app/safety/page.tsx': '644a48fbd7a10c2822649b2968015d990e07056b4ca6f1f5d7510ca5e9148e29', 'app/en/safety/page.tsx': 'ccd8f60727b6d1f6896c34b8229903286178548b2f65ee4ad56be8366b6d5f06'}); static_main.update({'safety.html': '464b2639f32ccb0eb07c53b73a1a823d516112cd63178f1f0f61a6364bd41a8a', 'en/safety.html': '79f1cd2e4e37066be8c23788438b2c965b9b88b3d926f6a9168a054d7c6c25b3'})
 def main_digest(text):
  m=re.search(r'<main id="main".*?</main>',text,re.S)
  return hashlib.sha256(m.group(0).encode()).hexdigest() if m else None
@@ -44,7 +44,7 @@ for rel,d in static_main.items():
  req('<link rel="stylesheet" href="/workshop.css">' in t and 'href="/style.css"' not in t,f'Workshop stylesheet {rel}'); req(t.count('data-lab-command-open')==1 and t.count('src="/lab-command.js"')==1,f'LAB runtime {rel}'); req(f'href="{alt}"' in t and f'href="{start}"' in t,f'alt/start {rel}')
  for bad in ('<form','fetch(','XMLHttpRequest','WebSocket(','localStorage','sessionStorage','document.cookie','sendBeacon('): req(bad not in t,f'forbidden client primitive {rel} {bad}')
 
-policy_date='2026-09-15' if release=='R109A_REVIEW_REPAIR' else '2026-08-15'
+policy_date='2026-09-14' if release=='R109A_REVIEW_REPAIR' else '2026-08-15'
 for rel in ['app/safety/page.tsx','app/en/safety/page.tsx','deploy/live/safety.html','deploy/live/en/safety.html']:
  t=read(rel); req(t.count(f'data-policy-verified="{policy_date}"')==1,f'policy date {rel}'); req('https://help.openai.com/en/articles/8313401' in t,f'age source {rel}'); req('https://help.openai.com/en/articles/12315553-parental-controls-on-chatgpt-faq/' in t,f'parental source {rel}')
 for rel in ['app/privacy/page.tsx','app/en/privacy/page.tsx']:
