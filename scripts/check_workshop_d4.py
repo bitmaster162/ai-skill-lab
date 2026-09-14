@@ -29,9 +29,9 @@ R109D_PROTECTED_OVERRIDES={
 'deploy/live/vercel.json':'9f8fcc3e5970b44f1fdb0aadfaad31fbf0109624f176b3fbcd9b57bb02e2a6c3',
 }
 protected=dict(PROTECTED)
-if release in {'R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST'}:protected.update(R102_PROTECTED_OVERRIDES)
-if release in {'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST'}:protected.update(R103_PROTECTED_OVERRIDES)
-if release=='R109D_404_LEGACY_HOST':protected.update(R109D_PROTECTED_OVERRIDES)
+if release in {'R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT'}:protected.update(R102_PROTECTED_OVERRIDES)
+if release in {'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT'}:protected.update(R103_PROTECTED_OVERRIDES)
+if release in {'R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT'}:protected.update(R109D_PROTECTED_OVERRIDES)
 for rel,digest in protected.items():require(sha(rel)==digest,f'protected byte drift {rel}')
 for locale in ('ru','en'):
  en=locale=='en'; prefix='en/' if en else ''
@@ -72,7 +72,7 @@ for rel,tokens in interactive.items():
 all_html=list(LIVE.rglob('*.html'));public=[p for p in all_html if p.name!='404.html']
 require(len(all_html)==47,'47 static HTML files')
 workshop=sum('<header class="workshopHeader">' in p.read_text(encoding='utf-8') for p in public);legacy=sum('<header class="nav">' in p.read_text(encoding='utf-8') for p in public)
-require(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema');states={'R99_D4':(36,10),'R100_D5':(46,0),'R101B_D6_PUBLIC_FORM':(46,0),'R102_D7_CUSTOM_DOMAIN_CANONICAL':(46,0),'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT':(46,0),'R109A_CRITICAL_VISUAL_FIX':(46,0),'R109A_REVIEW_REPAIR':(46,0),'R109D_404_LEGACY_HOST':(46,0)};require(release in states,f'unsupported release state {release!r}')
+require(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema');states={'R99_D4':(36,10),'R100_D5':(46,0),'R101B_D6_PUBLIC_FORM':(46,0),'R102_D7_CUSTOM_DOMAIN_CANONICAL':(46,0),'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT':(46,0),'R109A_CRITICAL_VISUAL_FIX':(46,0),'R109A_REVIEW_REPAIR':(46,0),'R109D_404_LEGACY_HOST':(46,0),'R109B_TRUTH_FORM_ALIGNMENT':(46,0)};require(release in states,f'unsupported release state {release!r}')
 if release in states:
  expected_workshop,expected_legacy=states[release];require(workshop==expected_workshop,f'Workshop pages {workshop} != {expected_workshop} for {release}');require(legacy==expected_legacy,f'legacy pages {legacy} != {expected_legacy} for {release}')
 require(manifest.get('file_count')==58,'58 release files')
