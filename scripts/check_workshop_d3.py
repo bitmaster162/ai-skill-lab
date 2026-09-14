@@ -111,7 +111,7 @@ require('data-bv-brief' in calc and 'useSyncExternalStore' in calc, 'Calculator 
 all_pages = list(LIVE.rglob('*.html'))
 require(len(all_pages) == 47, '47 HTML files')
 manifest = json.loads(read('deploy/live/_release.json'))
-require(manifest.get('file_count') == 62, '62 release files')
+require(manifest.get('file_count') == 58, '58 release files')
 require(manifest.get('schema') == 'ai-skill-lab.static-release.v1', 'Release schema')
 
 def luminance(value):

@@ -4,8 +4,9 @@ from css_graph import read_local_css_graph
 
 ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/'deploy/live'
-static=read_local_css_graph(LIVE/'style.css', LIVE)
-static_r68=(LIVE/'style-r68.css').read_text(encoding='utf-8')
+LEGACY=ROOT/'archive/legacy-static-css'
+static=read_local_css_graph(LEGACY/'style.css', LEGACY)
+static_r68=(LEGACY/'style-r68.css').read_text(encoding='utf-8')
 source=(ROOT/'app/globals.css').read_text(encoding='utf-8')
 
 def structural_view(css: str) -> str:
@@ -106,5 +107,15 @@ for marker in [
     if marker not in static_r68:
         raise SystemExit(f'MOTION_POLICY_FAIL static-r68 missing {marker}')
 
-print(f'motion_policy_checks={checks} surfaces=2 structural=style-r68.css')
+# R109D: independently guard the currently shipped Workshop motion surface.
+workshop=(LIVE/'workshop.css').read_text(encoding='utf-8')
+checks+=1
+if 'animation:' in workshop:
+    raise SystemExit('MOTION_POLICY_FAIL workshop.css unexpected animation')
+for marker in ['@media(prefers-reduced-motion:reduce)', '.trackCard,.channel{transition:none!important}', '.familyCard,.familyItem{transition:none!important}']:
+    checks+=1
+    if marker not in workshop.replace(' ',''):
+        raise SystemExit(f'MOTION_POLICY_FAIL workshop missing {marker}')
+
+print(f'motion_policy_checks={checks} surfaces=3 structural=style-r68.css+workshop.css')
 print('MOTION_POLICY_PASS')

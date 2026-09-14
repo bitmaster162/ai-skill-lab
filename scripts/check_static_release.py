@@ -103,7 +103,7 @@ def main():
     config=json.loads((LIVE/'vercel.json').read_text(encoding='utf-8'))
     expected_redirects=[{
         'source':'/:path*',
-        'has':[{'type':'header','key':'host','value':'ai-skill-lab.vercel.app'}],
+        'has':[{'type':'host','value':'ai-skill-lab.vercel.app'}],
         'destination':PUBLIC_ORIGIN+'/:path*',
         'permanent':True,
     }]

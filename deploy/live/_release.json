@@ -1,10 +1,10 @@
 {
-  "file_count": 62,
+  "file_count": 58,
   "files": [
     {
       "path": "404.html",
-      "sha256": "d664c981bb855f48af1cd85f5a20db3da5fa6565e03002ee7bc6ec0525fc11f3",
-      "size": 694
+      "sha256": "2babd487b2278ab279f51e7210beb2f0cbc58ca0cb01f7965541f06343f6fc76",
+      "size": 1549
     },
     {
       "path": "about.html",
@@ -237,16 +237,6 @@
       "size": 23130
     },
     {
-      "path": "r69-static.css",
-      "sha256": "00ba3a8b84475ccfc0aa1e027bf22da7e778de13c4497285499c814b01da8d0f",
-      "size": 2152
-    },
-    {
-      "path": "r77-commercial-mobile.css",
-      "sha256": "4a43f39aaa6173929732138f223eb3afc6402e948f24c75d461c328cbe4caff4",
-      "size": 2242
-    },
-    {
       "path": "robots.txt",
       "sha256": "332cbcca130fa5d82115641450e6b05b939f5a02243a141c7795281b5286af88",
       "size": 67
@@ -282,16 +272,6 @@
       "size": 11094
     },
     {
-      "path": "style-r68.css",
-      "sha256": "05006fca5ec0f93d5ad7a967a9fe4ac462268c8309b3d34f71f7149c8f097329",
-      "size": 26276
-    },
-    {
-      "path": "style.css",
-      "sha256": "6db111dc0e353debc35858065dff42f302b84ba987cbc44dfd64ad7c5b539485",
-      "size": 103
-    },
-    {
       "path": "teens.html",
       "sha256": "c3893542a93db37330ff1b0e37d20dc91ab7631798ba879dc14d956f65b93e98",
       "size": 9668
@@ -303,8 +283,8 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "96c9a11a515a00ae45ff61baa88ac7dd51291b3aaf058166a6ea8a0ec2736919",
-      "size": 2396
+      "sha256": "9f8fcc3e5970b44f1fdb0aadfaad31fbf0109624f176b3fbcd9b57bb02e2a6c3",
+      "size": 2273
     },
     {
       "path": "workshop.css",
@@ -312,7 +292,7 @@
       "size": 20661
     }
   ],
-  "payload_sha256": "ae28bad82196d7e00a97371ee26e8a3786f4529c93c90fbac3c44f58367c6b5d",
-  "release_id": "R109A_REVIEW_REPAIR",
+  "payload_sha256": "83cda09d5421b2e6f5c7ad016398ac8aacf3f2025e6341aee0bd4296c6d7beab",
+  "release_id": "R109D_404_LEGACY_HOST",
   "schema": "ai-skill-lab.static-release.v1"
 }

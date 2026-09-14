@@ -96,19 +96,22 @@ for rel,href in [('deploy/live/index.html','/family'),('deploy/live/en.html','/e
  text=(ROOT/rel).read_text(encoding='utf-8');checks+=1
  actual=text.count('href="'+href+'"')
  if actual!=1:errors.append(f'{rel}: Family inbound link count={actual}')
-for rel in ['deploy/live/r70-broadsheet.css','deploy/live/r77-commercial.css']:
- checks+=1
- if (ROOT/rel).is_file():errors.append(f'unreferenced static asset present: {rel}')
-checks+=1
-if not (ROOT/'deploy/live/r77-commercial-mobile.css').is_file():errors.append('active r77-commercial-mobile.css missing')
+legacy_css=['style.css','style-r68.css','r69-static.css','r77-commercial-mobile.css']
+for name in legacy_css:
+ checks+=2
+ if (LIVE/name).is_file():errors.append(f'retired public CSS still present: {name}')
+ if not (ROOT/'archive/legacy-static-css'/name).is_file():errors.append(f'legacy CSS archive missing: {name}')
 manifest=json.loads((LIVE/'_release.json').read_text(encoding='utf-8'));checks+=5
 if manifest.get('schema')!='ai-skill-lab.static-release.v1':errors.append('release manifest schema drift')
 # Current release identity is owned by the D3 release checker.
-if manifest.get('file_count')!=62:errors.append(f'manifest file_count {manifest.get("file_count")} != 62')
+if manifest.get('file_count')!=58:errors.append(f'manifest file_count {manifest.get("file_count")} != 58')
 listed={x.get('path') for x in manifest.get('files',[])}
 if not {'family.html','en/family.html'}<=listed:errors.append('manifest missing Family static pages')
-if {'r70-broadsheet.css','r77-commercial.css'}&listed:errors.append('manifest contains unreferenced assets')
-if 'r77-commercial-mobile.css' not in listed:errors.append('manifest missing active mobile CSS')
+if set(legacy_css)&listed:errors.append('manifest contains retired legacy CSS')
+checks+=2
+notfound=(LIVE/'404.html').read_text(encoding='utf-8')
+if 'href="/workshop.css"' not in notfound or 'href="/style.css"' in notfound:errors.append('404 must use workshop.css only')
+if 'noindex,nofollow' not in notfound:errors.append('404 must remain noindex,nofollow')
 print(f'workshop_d2_checks={checks} routes={len(routes)} ru={len(ru)} en={len(en)} html={len(html_files)} family_contrast_dark={ratio("#ff9ecb","#2b0a1c"):.2f} family_contrast_panel={ratio("#ff9ecb","#241522"):.2f}')
 if errors:
  print('WORKSHOP_D2_FAIL')
