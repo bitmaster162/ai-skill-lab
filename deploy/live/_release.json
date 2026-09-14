@@ -123,8 +123,8 @@
     },
     {
       "path": "en/safety.html",
-      "sha256": "3dd7a053acc7e5e0fda75c058e620b8015e7c96505dd0f4d417e9336fc45773b",
-      "size": 5080
+      "sha256": "69f19124292b6d16edc4e789eef57c271ea8c1a910ba09b8bdf4b6f40685e302",
+      "size": 5083
     },
     {
       "path": "en/start.html",
@@ -253,8 +253,8 @@
     },
     {
       "path": "safety.html",
-      "sha256": "57d46746e0335f5b731a1532566cc1268ca1707ad223fdc6182a0a0361ae36f7",
-      "size": 6753
+      "sha256": "3c4104dd8379cf14dae0706308e4b1043e67ae82a636de32d44bf8879f04e81e",
+      "size": 6755
     },
     {
       "path": "site.webmanifest",
@@ -308,11 +308,11 @@
     },
     {
       "path": "workshop.css",
-      "sha256": "6448b7223e1391d4e6c570d38e647063d548af8c7bfb20a1853fe2292b1bb778",
-      "size": 20597
+      "sha256": "cdeecd01e1a294d697424360304bce115e1cb3feb7cbba6020c986778dfba4f7",
+      "size": 20661
     }
   ],
-  "payload_sha256": "284235074e8bdf7611961cc99d908f875ab5fae619e4ef3fabc660d27494e255",
-  "release_id": "R109A_CRITICAL_VISUAL_FIX",
+  "payload_sha256": "cd9e3c1bc4d73d6eefec7aa16cc492bd580153d4b81ceb891db73a168dafc3b7",
+  "release_id": "R109A_REVIEW_REPAIR",
   "schema": "ai-skill-lab.static-release.v1"
 }
