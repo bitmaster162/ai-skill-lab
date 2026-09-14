@@ -3,7 +3,6 @@ from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
 import sys
-from css_graph import read_local_css_graph
 
 ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/'deploy'/'live'
@@ -36,11 +35,10 @@ for p in sorted(LIVE.rglob('*.html')):
     a=Audit(); a.feed(p.read_text(encoding='utf-8'))
     checks += 1
     if a.lang not in {'ru','en'}: errors.append(f'{rel}: invalid/missing html lang {a.lang!r}')
-    if rel!='404.html':
-        checks += 3
-        if a.h1 != 1: errors.append(f'{rel}: h1 count={a.h1}, expected 1')
-        if not a.has_main: errors.append(f'{rel}: missing main')
-        if not a.has_skip: errors.append(f'{rel}: missing skip link to #main')
+    checks += 3
+    if a.h1 != 1: errors.append(f'{rel}: h1 count={a.h1}, expected 1')
+    if not a.has_main: errors.append(f'{rel}: missing main')
+    if not a.has_skip: errors.append(f'{rel}: missing skip link to #main')
     dup=[x for x,n in Counter(a.ids).items() if n>1]
     checks += 1
     if dup: errors.append(f'{rel}: duplicate ids {dup}')
@@ -57,10 +55,10 @@ for p in sorted(LIVE.rglob('*.html')):
             checks += 1
             if button['live'] != 'polite': errors.append(f'{rel}: briefCopy must use aria-live=polite')
 
-css=read_local_css_graph(LIVE/'style.css', LIVE)
-for marker in [':focus-visible{outline:3px solid #4f8cff', '@media(prefers-reduced-motion:reduce)', 'min-height:48px']:
+css=(LIVE/'workshop.css').read_text(encoding='utf-8')
+for marker in ['.workshopPage :focus-visible{outline:3px solid var(--acid)', '@media(prefers-reduced-motion:reduce)', 'min-height:44px']:
     checks += 1
-    if marker not in css: errors.append(f'style.css: missing accessibility marker {marker}')
+    if marker not in css: errors.append(f'workshop.css: missing accessibility marker {marker}')
 
 print(f'accessibility_checks={checks} pages={pages}')
 if errors:

@@ -24,11 +24,15 @@ R103_PROTECTED_OVERRIDES={
 'README.md':'da13c9fe649f2a2f6b9a4a31d178c2d77f0c5c0f34c79bfb6113152cceaf9f0f',
 'deploy/live/vercel.json':'96c9a11a515a00ae45ff61baa88ac7dd51291b3aaf058166a6ea8a0ec2736919',
 }
+R109D_PROTECTED_OVERRIDES={
+'deploy/live/vercel.json':'9f8fcc3e5970b44f1fdb0aadfaad31fbf0109624f176b3fbcd9b57bb02e2a6c3',
+}
 protected=dict(PROTECTED)
-if release in {'R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR'}:protected.update(R102_PROTECTED_OVERRIDES)
-if release in {'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR'}:protected.update(R103_PROTECTED_OVERRIDES)
+if release in {'R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST'}:protected.update(R102_PROTECTED_OVERRIDES)
+if release in {'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST'}:protected.update(R103_PROTECTED_OVERRIDES)
+if release=='R109D_404_LEGACY_HOST':protected.update(R109D_PROTECTED_OVERRIDES)
 legal=dict(LEGAL); static_main=dict(STATIC_MAIN)
-if release=='R109A_REVIEW_REPAIR':
+if release in {'R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST'}:
  legal.update({'app/safety/page.tsx': '644a48fbd7a10c2822649b2968015d990e07056b4ca6f1f5d7510ca5e9148e29', 'app/en/safety/page.tsx': 'ccd8f60727b6d1f6896c34b8229903286178548b2f65ee4ad56be8366b6d5f06'}); static_main.update({'safety.html': '464b2639f32ccb0eb07c53b73a1a823d516112cd63178f1f0f61a6364bd41a8a', 'en/safety.html': '79f1cd2e4e37066be8c23788438b2c965b9b88b3d926f6a9168a054d7c6c25b3'})
 def main_digest(text):
  m=re.search(r'<main id="main".*?</main>',text,re.S)
@@ -44,7 +48,7 @@ for rel,d in static_main.items():
  req('<link rel="stylesheet" href="/workshop.css">' in t and 'href="/style.css"' not in t,f'Workshop stylesheet {rel}'); req(t.count('data-lab-command-open')==1 and t.count('src="/lab-command.js"')==1,f'LAB runtime {rel}'); req(f'href="{alt}"' in t and f'href="{start}"' in t,f'alt/start {rel}')
  for bad in ('<form','fetch(','XMLHttpRequest','WebSocket(','localStorage','sessionStorage','document.cookie','sendBeacon('): req(bad not in t,f'forbidden client primitive {rel} {bad}')
 
-policy_date='2026-09-14' if release=='R109A_REVIEW_REPAIR' else '2026-08-15'
+policy_date='2026-09-14' if release in {'R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST'} else '2026-08-15'
 for rel in ['app/safety/page.tsx','app/en/safety/page.tsx','deploy/live/safety.html','deploy/live/en/safety.html']:
  t=read(rel); req(t.count(f'data-policy-verified="{policy_date}"')==1,f'policy date {rel}'); req('https://help.openai.com/en/articles/8313401' in t,f'age source {rel}'); req('https://help.openai.com/en/articles/12315553-parental-controls-on-chatgpt-faq/' in t,f'parental source {rel}')
 for rel in ['app/privacy/page.tsx','app/en/privacy/page.tsx']:
@@ -58,7 +62,7 @@ for rel in ['app/method/page.tsx','app/en/method/page.tsx','deploy/live/method.h
 all_html=list(LIVE.rglob('*.html')); public=[p for p in all_html if p.name!='404.html']; req(len(all_html)==47,'47 html including 404')
 workshop=sum('<header class="workshopHeader">' in p.read_text(encoding='utf-8') for p in public); legacy=sum('<header class="nav">' in p.read_text(encoding='utf-8') for p in public); req(workshop==46,f'Workshop pages {workshop} != 46'); req(legacy==0,f'legacy pages {legacy} != 0')
 routes={('/' if p.name=='index.html' else '/en' if p.relative_to(LIVE).as_posix()=='en.html' else '/'+p.relative_to(LIVE).as_posix()[:-5]) for p in public}; req(len(routes)==46,'46 public routes')
-req(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema'); req(release in {'R101B_D6_PUBLIC_FORM','R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR'} ,'D6-or-newer release'); req(manifest.get('file_count')==62,'62 release files')
+req(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema'); req(release in {'R101B_D6_PUBLIC_FORM','R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST'} ,'D6-or-newer release'); req(manifest.get('file_count')==58,'58 release files')
 actual={p.relative_to(LIVE).as_posix():(len(p.read_bytes()),hashlib.sha256(p.read_bytes()).hexdigest()) for p in LIVE.rglob('*') if p.is_file() and p.name!='_release.json'}; listed={x['path']:(x['size'],x['sha256']) for x in manifest.get('files',[])}; req(actual==listed,'manifest exact bytes'); payload=sum(x[0] for x in actual.values()); req(payload<=524288,f'payload {payload} > 524288')
 workflow=read('.github/workflows/static-qa.yml'); preflight=read('scripts/preflight_release.py'); req(workflow.count('python scripts/check_workshop_d5.py')==1,'workflow D5 once'); req(preflight.count('scripts/check_workshop_d5.py')==1,'preflight D5 once')
 print(f'workshop_d5_checks={checks} target_pages=10 workshop_pages={workshop} legacy_pages={legacy} routes={len(routes)} html={len(all_html)} files={manifest.get("file_count")} payload_bytes={payload} headroom={524288-payload}')

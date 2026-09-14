@@ -25,9 +25,13 @@ R103_PROTECTED_OVERRIDES={
 'README.md':'da13c9fe649f2a2f6b9a4a31d178c2d77f0c5c0f34c79bfb6113152cceaf9f0f',
 'deploy/live/vercel.json':'96c9a11a515a00ae45ff61baa88ac7dd51291b3aaf058166a6ea8a0ec2736919',
 }
+R109D_PROTECTED_OVERRIDES={
+'deploy/live/vercel.json':'9f8fcc3e5970b44f1fdb0aadfaad31fbf0109624f176b3fbcd9b57bb02e2a6c3',
+}
 protected=dict(PROTECTED)
-if release in {'R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR'}:protected.update(R102_PROTECTED_OVERRIDES)
-if release in {'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR'}:protected.update(R103_PROTECTED_OVERRIDES)
+if release in {'R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST'}:protected.update(R102_PROTECTED_OVERRIDES)
+if release in {'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST'}:protected.update(R103_PROTECTED_OVERRIDES)
+if release=='R109D_404_LEGACY_HOST':protected.update(R109D_PROTECTED_OVERRIDES)
 for rel,digest in protected.items():require(sha(rel)==digest,f'protected byte drift {rel}')
 for locale in ('ru','en'):
  en=locale=='en'; prefix='en/' if en else ''
@@ -68,17 +72,17 @@ for rel,tokens in interactive.items():
 all_html=list(LIVE.rglob('*.html'));public=[p for p in all_html if p.name!='404.html']
 require(len(all_html)==47,'47 static HTML files')
 workshop=sum('<header class="workshopHeader">' in p.read_text(encoding='utf-8') for p in public);legacy=sum('<header class="nav">' in p.read_text(encoding='utf-8') for p in public)
-require(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema');states={'R99_D4':(36,10),'R100_D5':(46,0),'R101B_D6_PUBLIC_FORM':(46,0),'R102_D7_CUSTOM_DOMAIN_CANONICAL':(46,0),'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT':(46,0),'R109A_CRITICAL_VISUAL_FIX':(46,0),'R109A_REVIEW_REPAIR':(46,0)};require(release in states,f'unsupported release state {release!r}')
+require(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema');states={'R99_D4':(36,10),'R100_D5':(46,0),'R101B_D6_PUBLIC_FORM':(46,0),'R102_D7_CUSTOM_DOMAIN_CANONICAL':(46,0),'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT':(46,0),'R109A_CRITICAL_VISUAL_FIX':(46,0),'R109A_REVIEW_REPAIR':(46,0),'R109D_404_LEGACY_HOST':(46,0)};require(release in states,f'unsupported release state {release!r}')
 if release in states:
  expected_workshop,expected_legacy=states[release];require(workshop==expected_workshop,f'Workshop pages {workshop} != {expected_workshop} for {release}');require(legacy==expected_legacy,f'legacy pages {legacy} != {expected_legacy} for {release}')
-require(manifest.get('file_count')==62,'62 release files')
+require(manifest.get('file_count')==58,'58 release files')
 actual={p.relative_to(LIVE).as_posix():(len(p.read_bytes()),hashlib.sha256(p.read_bytes()).hexdigest()) for p in LIVE.rglob('*') if p.is_file() and p.name!='_release.json'}
 listed={x['path']:(x['size'],x['sha256']) for x in manifest.get('files',[])};require(actual==listed,'manifest exact file bytes');payload=sum(x[0] for x in actual.values());require(payload<=524288,f'payload {payload} > 524288')
 require(len({('/' if p.name=='index.html' else '/en' if p.relative_to(LIVE).as_posix()=='en.html' else '/'+p.relative_to(LIVE).as_posix()[:-5]) for p in public})==46,'46 public routes')
 css=read('deploy/live/workshop.css');guard='.labDialog :is(p,.proofConsoleTop,.proofConsoleFoot){display:flex;gap:8px;flex-wrap:wrap}.labDialog :is(a,button){padding:13px}'
 require(css.count(guard)==1,'C1 Lab spacing guard exactly once');require('@import' not in css and 'fonts.googleapis.com' not in css and 'fonts.gstatic.com' not in css,'Workshop CSS self-contained')
 workflow=read('.github/workflows/static-qa.yml');preflight=read('scripts/preflight_release.py');require(workflow.count('python scripts/check_workshop_d4.py')==1,'workflow D4 exactly once');require(preflight.count('scripts/check_workshop_d4.py')==1,'preflight D4 exactly once')
-print(f'workshop_d4_checks={checks} target_pages=18 workshop_pages={workshop} legacy_pages={legacy} routes=46 html=47 files=62 payload_bytes={payload} headroom={524288-payload}')
+print(f'workshop_d4_checks={checks} target_pages=18 workshop_pages={workshop} legacy_pages={legacy} routes=46 html=47 files=58 payload_bytes={payload} headroom={524288-payload}')
 if errors:
  print('WORKSHOP_D4_FAIL');[print('FAIL:',e) for e in errors];sys.exit(1)
 print('WORKSHOP_D4_PASS')

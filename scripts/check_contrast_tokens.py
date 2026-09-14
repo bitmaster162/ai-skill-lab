@@ -29,7 +29,8 @@ for name,fg,bg,minr in checks:
 from css_graph import read_local_css_graph
 
 LIVE=ROOT/'deploy/live'
-static=read_local_css_graph(LIVE/'style.css', LIVE)
+LEGACY=ROOT/'archive/legacy-static-css'
+static=read_local_css_graph(LEGACY/'style.css', LEGACY)
 source_files=('globals.css','r69.css','r70.css','commercial-mobile.css','proof-contrast.css')
 nextcss='\n'.join((ROOT/'app'/name).read_text() for name in source_files)
 layout=(ROOT/'app/layout.tsx').read_text()
@@ -77,6 +78,23 @@ for name,css in [('static proof gate index',static),('source proof gate index',n
     pos=css.rfind(marker)
     if pos<0 or 'color:var(--micro)' not in css[pos:pos+180].replace(' ',''):
         errors.append(f'{name}: effective rule not bound to --micro')
+
+# R109D: the public payload now ships workshop.css only. Guard its effective tokens and key foreground/background pairs directly.
+workshop=(LIVE/'workshop.css').read_text(encoding='utf-8')
+compact=workshop.replace(' ','')
+for token,value in {'--g':'#0b0d10','--c':'#171b21','--i':'#f5f7f9','--i2':'#c3cad2','--m':'#919aa4','--acid':'#b9ff3f'}.items():
+    if f'{token}:{value}' not in compact: errors.append(f'workshop: token drift {token}={value}')
+for name,fg,bg,minr in [
+    ('workshop primary text / page','#f5f7f9','#0b0d10',4.5),
+    ('workshop secondary text / page','#c3cad2','#0b0d10',4.5),
+    ('workshop muted / page','#919aa4','#0b0d10',4.5),
+    ('workshop card text / card','#f5f7f9','#171b21',4.5),
+    ('workshop dark text / acid','#0b0d10','#b9ff3f',4.5),
+]:
+    r=ratio(fg,bg)
+    if r<minr: errors.append(f'{name}: {r:.2f} < {minr}')
+for marker in ['.trackCard,.priceCard,.channel,.briefCard,.card,.nextStepsli{background:var(--c);color:var(--i)', '.workshopPage:focus-visible{outline:3pxsolidvar(--acid)']:
+    if marker not in compact: errors.append(f'workshop: missing current contrast/focus rule {marker}')
 
 print('contrast_ratios '+ ' '.join(f'{n}={ratio(f,b):.2f}' for n,f,b,_ in checks))
 if errors:
