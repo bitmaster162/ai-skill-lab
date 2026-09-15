@@ -1,11 +1,13 @@
 import assert from "node:assert/strict";
 import { createHmac, randomUUID } from "node:crypto";
-import { test } from "node:test";
+import { afterEach, test } from "node:test";
 import { cleanupExpired, handleReceiver } from "../src/index.js";
 
 const secret = "0123456789abcdef0123456789abcdef";
 const nowMs = Date.parse("2026-09-07T09:00:00.000Z");
 const timestamp = String(Math.floor(nowMs / 1000));
+const realFetch = globalThis.fetch;
+afterEach(() => { globalThis.fetch = realFetch; });
 
 function makeDb({ changes = 1, fail = false } = {}) {
   const calls = [];
@@ -88,12 +90,13 @@ function captureConsole() {
   return { entries, restore() { Object.assign(console, original); } };
 }
 
-function env(db = makeDb(), rateLimiter = makeRateLimiter()) {
+function env(db = makeDb(), rateLimiter = makeRateLimiter(), notify = {}) {
   return {
     LEAD_RECEIVER_ENABLED: "true",
     LEAD_WEBHOOK_SECRET: secret,
     DB: db,
     LEAD_RATE_LIMITER: rateLimiter,
+    ...notify,
   };
 }
 
@@ -157,6 +160,58 @@ test("valid signed lead passes rate limiter and inserts exactly once with 30-day
   assert.equal(db.calls[0].bindings[1], payload.receivedAt);
   assert.equal(db.calls[0].bindings[2], "2026-10-07T09:00:00.000Z");
   assert.equal(db.calls[0].bindings[13], "/start");
+});
+
+test("notification is skipped when Telegram secrets are absent", async () => {
+  const db = makeDb();
+  let externalCalls = 0;
+  globalThis.fetch = async () => { externalCalls += 1; throw new Error("unexpected fetch"); };
+  const payload = basePayload();
+  const response = await handleReceiver(signedRequest(payload), env(db), nowMs);
+  assert.equal(response.status, 200);
+  assert.equal(db.calls.length, 1);
+  assert.equal(externalCalls, 0);
+});
+
+test("successful Telegram notification is metadata-only and scheduled after insert", async () => {
+  const db = makeDb();
+  const calls = [];
+  globalThis.fetch = async (url, init) => { calls.push({ url, init }); return new Response("{}", { status: 200 }); };
+  const payload = { ...basePayload(), sourcePath: "/private-looking/path@example.com" };
+  const pending = [];
+  const ctx = { waitUntil(promise) { pending.push(promise); } };
+  const response = await handleReceiver(signedRequest(payload), env(db, makeRateLimiter(), {
+    LEAD_NOTIFY_BOT_TOKEN: "bot-token-secret",
+    LEAD_NOTIFY_CHAT_ID: "123456",
+  }), nowMs, ctx);
+  assert.equal(response.status, 200);
+  assert.equal(db.calls.length, 1);
+  assert.equal(pending.length, 1);
+  await pending[0];
+  assert.equal(calls.length, 1);
+  assert.match(calls[0].url, /^https:\/\/api\.telegram\.org\/bot[^/]+\/sendMessage$/);
+  const body = JSON.parse(calls[0].init.body);
+  assert.equal(body.chat_id, "123456");
+  for (const expected of [payload.requestId, payload.receivedAt, payload.audience, payload.locale]) assert.equal(body.text.includes(expected), true);
+  for (const forbidden of [payload.name, payload.contact, payload.goal, payload.program, payload.sourcePath, "bot-token-secret"].filter(Boolean)) {
+    assert.equal(body.text.includes(forbidden), false, forbidden);
+  }
+});
+
+test("Telegram failure never rolls back an inserted lead", async () => {
+  for (const mode of ["http", "throw"]) {
+    const db = makeDb();
+    globalThis.fetch = async () => {
+      if (mode === "throw") throw new Error("telegram unavailable");
+      return new Response("{}", { status: 500 });
+    };
+    const payload = basePayload();
+    const response = await handleReceiver(signedRequest(payload), env(db, makeRateLimiter(), {
+      LEAD_NOTIFY_BOT_TOKEN: "bot-token-secret", LEAD_NOTIFY_CHAT_ID: "123456",
+    }), nowMs);
+    assert.equal(response.status, 200);
+    assert.equal(db.calls.length, 1);
+  }
 });
 
 test("receiver events correlate insert without logging lead fields or HMAC material", async () => {

@@ -108,8 +108,8 @@
     },
     {
       "path": "en/privacy.html",
-      "sha256": "8ca3ce3f38497697623e64b1d32d769198f9ee6d0fa25d88a72f91faecceebd3",
-      "size": 4795
+      "sha256": "1bb410d4d4f41ef96e22a64f6949f488aab2e87d194b5e4b29b1ef803e482053",
+      "size": 5080
     },
     {
       "path": "en/projects.html",
@@ -218,8 +218,8 @@
     },
     {
       "path": "privacy.html",
-      "sha256": "aa5720eb6b698fec9d1fcc79049b5bc2e3f42cdca1fd715c608a106cb840329f",
-      "size": 6070
+      "sha256": "dea488f199d1c54dc1f84299a9810de00ec41b36309543b86eb245452d02021b",
+      "size": 6547
     },
     {
       "path": "project-filter.js",
@@ -292,7 +292,7 @@
       "size": 21826
     }
   ],
-  "payload_sha256": "c9b77c7b7dfac40e9ae0413b93fe16245ab05305d40391220e59b6ab289ae11a",
-  "release_id": "R110A_OPERATOR_LEAD_INBOX",
+  "payload_sha256": "fd1a18faeb4b23cc85f460ac1ae633e9572eea099c9eb6e8a688aa41fa619dda",
+  "release_id": "R110B_LEAD_TELEGRAM_NOTIFICATION",
   "schema": "ai-skill-lab.static-release.v1"
 }
