@@ -128,8 +128,8 @@
     },
     {
       "path": "en/start.html",
-      "sha256": "619779d32eb2528eb3838d42ab12fdf3c524f863186091b6fdd989418b235abb",
-      "size": 11919
+      "sha256": "50782c7fb4a22d836dd4d5affdb04bca5cdff3a49ea973b733b6664b9519af99",
+      "size": 12103
     },
     {
       "path": "en/studio.html",
@@ -268,8 +268,8 @@
     },
     {
       "path": "start.html",
-      "sha256": "d974de94cbe2bea2dfa449f403d7436d243fceb66acc1efb8151e84f82a5bd17",
-      "size": 17184
+      "sha256": "46fc0f6bfcfa1c3e9d72777232d19750f1e0c14be96e449dc02530890f5f040b",
+      "size": 17453
     },
     {
       "path": "studio.html",
@@ -297,7 +297,7 @@
       "size": 21826
     }
   ],
-  "payload_sha256": "42b5b2d8cbaecf4091fe33abbb0715afa47bec37bf4410ff1fc423686f38a091",
-  "release_id": "R110C_BRAND_LOGO",
+  "payload_sha256": "6b02e1e7da6df0de7370c1956d3f1d6317146551ece2606cf91b88f7d222b8b9",
+  "release_id": "R111A_NOSCRIPT_FORM_FALLBACK",
   "schema": "ai-skill-lab.static-release.v1"
 }
