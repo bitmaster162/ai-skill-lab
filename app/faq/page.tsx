@@ -3,7 +3,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { faqPageSchema } from "@/lib/structured-data";
 import { WorkshopFaq } from "@/components/workshop/WorkshopFaq";
 export const metadata: Metadata = {
-  title: "FAQ",
+  title: { absolute: "Вопросы и ответы — AI Skill Lab" },
   description: "11 ответов о занятиях, проектах, оплате и старте AI Skill Lab.",
   alternates: { canonical: "/faq", languages: { ru: "/faq", en: "/en/faq" } },
 };
