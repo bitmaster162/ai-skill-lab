@@ -107,6 +107,37 @@ checks += 1
 if "--output" in preflight_text:
     errors.append("preflight must not expose a file-output option")
 
+main_node = next((n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == "main"), None)
+checks += 1
+if main_node is None:
+    errors.append("preflight main() is missing")
+else:
+    identity_index = None
+    gate_loop_index = None
+    canonical_receipt = False
+    for idx, node in enumerate(main_node.body):
+        if isinstance(node, ast.Try):
+            for stmt in node.body:
+                if isinstance(stmt, ast.Assign) and any(isinstance(t, ast.Name) and t.id == "release" for t in stmt.targets):
+                    call = stmt.value
+                    if isinstance(call, ast.Call) and isinstance(call.func, ast.Name) and call.func.id == "require_release_identity":
+                        identity_index = idx
+        if isinstance(node, ast.For) and isinstance(node.iter, ast.Name) and node.iter.id == "CHECKS":
+            gate_loop_index = idx
+        if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == "receipt" for t in node.targets) and isinstance(node.value, ast.Dict):
+            for key, value in zip(node.value.keys, node.value.values):
+                if isinstance(key, ast.Constant) and key.value == "release" and isinstance(value, ast.Name) and value.id == "release":
+                    canonical_receipt = True
+    checks += 1
+    if identity_index is None or gate_loop_index is None or identity_index >= gate_loop_index:
+        errors.append("release identity validation must occur before CHECKS gate loop")
+    checks += 1
+    if not canonical_receipt:
+        errors.append("preflight receipt must use canonical validated release variable")
+checks += 1
+if 'RELEASE_PREFLIGHT_IDENTITY_FAIL' not in preflight_text or 'return 2' not in preflight_text:
+    errors.append("preflight identity mismatch must retain explicit fail-closed marker and exit code 2")
+
 print(
     f"preflight_safety_checks={checks} workflow_commands={len(workflow_commands)} "
     f"preflight_commands={len(preflight_commands)}"

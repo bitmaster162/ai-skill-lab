@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+MANIFEST = ROOT / "deploy/live/_release.json"
 
 CHECKS = [
     ("static_release", ["python", "scripts/check_static_release.py"]),
@@ -94,12 +95,27 @@ def git(*args: str) -> str:
     return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
 
 
+def require_release_identity(requested: str) -> str:
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    release = manifest.get("release_id")
+    if not isinstance(release, str) or not release:
+        raise ValueError("release manifest must contain a non-empty release_id")
+    if requested != release:
+        raise ValueError(f"--release {requested!r} does not match manifest release_id {release!r}")
+    return release
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Run the repository's read-only release QA without building or deploying."
     )
-    parser.add_argument("--release", required=True, help="Receipt label only; no files are written.")
+    parser.add_argument("--release", required=True, help="Release ID; must exactly match deploy/live/_release.json release_id.")
     args = parser.parse_args()
+    try:
+        release = require_release_identity(args.release)
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
+        print(f"RELEASE_PREFLIGHT_IDENTITY_FAIL {exc}")
+        return 2
 
     gates = []
     for name, cmd in CHECKS:
@@ -114,7 +130,7 @@ def main() -> int:
     status = "PASS" if all(gate["status"] == "PASS" for gate in gates) else "FAIL"
     receipt = {
         "schema": "ai-skill-lab.preflight.v2",
-        "release": args.release,
+        "release": release,
         "status": status,
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "git": {
@@ -125,7 +141,7 @@ def main() -> int:
         "gates": gates,
     }
     print("PREFLIGHT_RECEIPT=" + json.dumps(receipt, ensure_ascii=False, separators=(",", ":")))
-    print(f"RELEASE_PREFLIGHT_{status} release={args.release} gates={len(gates)}")
+    print(f"RELEASE_PREFLIGHT_{status} release={release} gates={len(gates)}")
     return 0 if status == "PASS" else 1
 
 
