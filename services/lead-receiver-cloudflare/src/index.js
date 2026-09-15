@@ -3,6 +3,7 @@ const MIN_SECRET_BYTES = 32;
 const MAX_SKEW_SECONDS = 300;
 const RETENTION_DAYS = 30;
 const RATE_LIMIT_KEY = "lead-intake";
+const NOTIFY_TIMEOUT_MS = 5_000;
 const ALLOWED_AUDIENCES = new Set(["adult", "parent", "teen", "business"]);
 const ALLOWED_LOCALES = new Set(["ru", "en"]);
 const UUID_V4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -120,7 +121,42 @@ function validatePayload(payload, headerRequestId, timestampSeconds) {
   };
 }
 
-export async function handleReceiver(request, env = {}, nowMs = Date.now()) {
+async function notifyNewLead(env, row) {
+  const token = typeof env?.LEAD_NOTIFY_BOT_TOKEN === "string" ? env.LEAD_NOTIFY_BOT_TOKEN : "";
+  const chatId = typeof env?.LEAD_NOTIFY_CHAT_ID === "string" ? env.LEAD_NOTIFY_CHAT_ID : "";
+  if (!token || !chatId) return { skipped: true };
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), NOTIFY_TIMEOUT_MS);
+  try {
+    const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: [
+          "AI Skill Lab: new application",
+          `requestId: ${row.requestId}`,
+          `receivedAt: ${row.receivedAt}`,
+          `audience: ${row.audience}`,
+          `locale: ${row.locale}`,
+        ].join("\n"),
+        disable_web_page_preview: true,
+      }),
+      signal: controller.signal,
+    });
+    if (!response.ok) throw new Error("notify response not ok");
+    logReceiver("info", "notify_sent", { requestId: row.requestId, status: response.status });
+    return { sent: true };
+  } catch {
+    logReceiver("warn", "notify_failed", { requestId: row.requestId, status: 0 });
+    return { sent: false };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+export async function handleReceiver(request, env = {}, nowMs = Date.now(), ctx = null) {
   const cfg = config(env);
   if (!cfg.enabled) return json({ ok: false, error: "Not found" }, 404);
   if (!cfg.ready) return json({ ok: false, error: "Receiver unavailable" }, 503);
@@ -215,6 +251,9 @@ export async function handleReceiver(request, env = {}, nowMs = Date.now()) {
     return json({ ok: false, error: "Duplicate request" }, 409);
   }
   logReceiver("info", "inserted", { requestId, status: 200 });
+  const notification = notifyNewLead(env, row);
+  if (ctx && typeof ctx.waitUntil === "function") ctx.waitUntil(notification);
+  else await notification;
   return json({ ok: true, requestId });
 }
 
@@ -228,8 +267,8 @@ export async function cleanupExpired(env = {}, nowMs = Date.now()) {
 }
 
 export default {
-  fetch(request, env) {
-    return handleReceiver(request, env);
+  fetch(request, env, ctx) {
+    return handleReceiver(request, env, Date.now(), ctx);
   },
   scheduled(_controller, env, ctx) {
     ctx.waitUntil(cleanupExpired(env));
