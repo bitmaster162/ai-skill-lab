@@ -25,7 +25,7 @@ export function WorkshopShell({ locale = "ru", alternateHref, contactHref, child
       <a className={styles.skip} href="#main">{en ? "Skip to content" : "К содержанию"}</a>
       <header className={styles.header}>
         <Link className={styles.brand} href={home} aria-label="AI Skill Lab — Home">
-          <span className={styles.mark} aria-hidden="true">A</span><span>AI SKILL LAB</span>
+          <span className={styles.mark} aria-hidden="true"><svg viewBox="0 0 24 24"><path fillRule="evenodd" d="M12 1 23 23H1Zm-1 9h2L16 14H8Zm-1.5 6h5L19 23H5Z" /></svg></span><span>AI SKILL LAB</span>
         </Link>
         <nav className={styles.menu} aria-label={en ? "Main navigation" : "Основная навигация"}>
           {menu[locale].map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
