@@ -63,6 +63,8 @@ jobs:
         run: node --test services/lead-receiver-cloudflare/test/receiver.test.mjs
       - name: Validate intake operational contract
         run: python scripts/check_intake_operations.py
+      - name: Validate read-only operator lead inbox
+        run: python scripts/check_lead_inbox.py
       - name: Validate inline client scripts
         run: python scripts/check_inline_scripts.py
       - name: Smoke-test matcher runtime
