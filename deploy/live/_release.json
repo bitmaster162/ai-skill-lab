@@ -8,8 +8,8 @@
     },
     {
       "path": "about.html",
-      "sha256": "ab702c0052f32c340a9bd5b5a4e1e5a9d0e21e2b95c1d9d4581f38035763c277",
-      "size": 6709
+      "sha256": "84f39be86004e9cc4b4256b5244a012e2905d28d268f0e834df63af5a3f02786",
+      "size": 7183
     },
     {
       "path": "build.html",
@@ -33,13 +33,13 @@
     },
     {
       "path": "en.html",
-      "sha256": "8d108156ffabc56fc75c07be6672348db6c9d122b2bbefca9fd7a9d99379aab5",
-      "size": 7561
+      "sha256": "5be377fe961a52ac7f87edda7e6016838395c70b439b0d47991f70f62ee6c111",
+      "size": 7879
     },
     {
       "path": "en/about.html",
-      "sha256": "6e3669f807c02b0f79c8309c379d3a355a9108706c7a6b55972389ef6f793c38",
-      "size": 5703
+      "sha256": "7dd4345f87df1130f91c3cf7a6f2727ae63a39cf1ffcd2e6203bc5903a8d590d",
+      "size": 6177
     },
     {
       "path": "en/build.html",
@@ -68,8 +68,8 @@
     },
     {
       "path": "en/faq.html",
-      "sha256": "6b2fb14df7579e8908c2feface9d429d8923e73ba9bc5e76096416a1285cabf9",
-      "size": 5709
+      "sha256": "319a390318bd6bd1832b1d81b9b1e2dcd1c6d822171ded79d02efb521f3408d2",
+      "size": 8628
     },
     {
       "path": "en/kids.html",
@@ -103,8 +103,8 @@
     },
     {
       "path": "en/pricing.html",
-      "sha256": "b683b234df87e5baefad9c51b30ba0525e88c3e85d4ba31c46d42a418be15e55",
-      "size": 8065
+      "sha256": "8d865e9ad666c14821fb1bea938a15714a282aef4da9308a93b1e70b2d8b5482",
+      "size": 12074
     },
     {
       "path": "en/privacy.html",
@@ -153,8 +153,8 @@
     },
     {
       "path": "faq.html",
-      "sha256": "0f71e736957717194b61dca60f6ada341dabe3544ac3c357628dd3ef6a1c8015",
-      "size": 7468
+      "sha256": "6bf6e8314bc65283558862983963bda031f7640ba1ba420d753c9dc73201ac3f",
+      "size": 11955
     },
     {
       "path": "favicon.svg",
@@ -163,8 +163,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "cc27d832ddec0ba42d8dd4f98ebabcc341d8364eb705daa001bc8408ceba8469",
-      "size": 9080
+      "sha256": "16195abf2b0c6e0adc2d65ff65602be54638ba9d678120e0538eb7754e5d104f",
+      "size": 9398
     },
     {
       "path": "kids.html",
@@ -213,8 +213,8 @@
     },
     {
       "path": "pricing.html",
-      "sha256": "3ba35757341c919023b9ff5c1c787445fddc422ea609cd3d091b9af71f64ada7",
-      "size": 9642
+      "sha256": "104ed7504674fb497f5ef6561fcb88d37b1654db5b4d68a0409f5fb60929b25e",
+      "size": 13839
     },
     {
       "path": "privacy.html",
@@ -283,8 +283,8 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "9f8fcc3e5970b44f1fdb0aadfaad31fbf0109624f176b3fbcd9b57bb02e2a6c3",
-      "size": 2273
+      "sha256": "c65f4ad6c49ee7e40b7f2eff9fcb96cfb69893222e179148218e408df260e0ac",
+      "size": 2651
     },
     {
       "path": "workshop.css",
@@ -292,7 +292,7 @@
       "size": 21826
     }
   ],
-  "payload_sha256": "9ce0cb1f096e4407d39f18490ee868416be4a0b379727cf3ce9f30642fd32bab",
-  "release_id": "R109E_GLYPH_SPACING_VISUAL",
+  "payload_sha256": "c9b77c7b7dfac40e9ae0413b93fe16245ab05305d40391220e59b6ab289ae11a",
+  "release_id": "R109F_STRUCTURED_DATA",
   "schema": "ai-skill-lab.static-release.v1"
 }
