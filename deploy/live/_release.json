@@ -293,6 +293,6 @@
     }
   ],
   "payload_sha256": "c9b77c7b7dfac40e9ae0413b93fe16245ab05305d40391220e59b6ab289ae11a",
-  "release_id": "R109F_STRUCTURED_DATA",
+  "release_id": "R110A_OPERATOR_LEAD_INBOX",
   "schema": "ai-skill-lab.static-release.v1"
 }
