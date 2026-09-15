@@ -71,7 +71,9 @@ export function LeadForm({
   }
 
   return (
-    <form className="leadForm" onSubmit={onSubmit}>
+    <>
+      <noscript><p className="formNote">{en ? "The application form requires JavaScript. Contact us directly instead — Telegram, WhatsApp, LINE or email, all listed below on this page." : "Форма заявки работает только с включённым JavaScript. Напишите напрямую — Telegram, WhatsApp, LINE или email, контакты ниже на этой странице."}</p></noscript>
+      <form className="leadForm" onSubmit={onSubmit}>
       <input type="hidden" name="locale" value={locale} />
       <input type="hidden" name="program" value={program} />
       <div className="formRow">
@@ -128,6 +130,7 @@ export function LeadForm({
         {en ? "For minors, applications and organizational communication use an adult contact only." : "Для несовершеннолетних заявка и организационная коммуникация идут только через взрослого."}
       </p>
       {message ? <p className={state === "sent" ? "formMessage success" : "formMessage error"}>{message}</p> : null}
-    </form>
+      </form>
+    </>
   );
 }
