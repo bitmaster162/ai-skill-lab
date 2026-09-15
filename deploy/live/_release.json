@@ -288,11 +288,11 @@
     },
     {
       "path": "workshop.css",
-      "sha256": "cdeecd01e1a294d697424360304bce115e1cb3feb7cbba6020c986778dfba4f7",
-      "size": 20661
+      "sha256": "276436d5a1c914eccbdda01c65f2c573c6f812440c960a9688becdbfde3ba203",
+      "size": 21826
     }
   ],
-  "payload_sha256": "e1a11ef389d6bbadbd3a0a999749a63522a709ab64330f76339a798301b4474f",
-  "release_id": "R109B_TRUTH_FORM_ALIGNMENT",
+  "payload_sha256": "9ce0cb1f096e4407d39f18490ee868416be4a0b379727cf3ce9f30642fd32bab",
+  "release_id": "R109E_GLYPH_SPACING_VISUAL",
   "schema": "ai-skill-lab.static-release.v1"
 }

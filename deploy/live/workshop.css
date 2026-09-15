@@ -20,4 +20,24 @@
 .workshopMark{display:inline-grid;place-items:center;width:26px;height:26px;margin-right:10px;background:var(--acid);color:var(--g);font-weight:800;font-size:15px;line-height:1;border-radius:6px;flex:none}.workshopBrand{display:inline-flex;align-items:center}
 .workshopUtility,.workshopButtonSecondary,.mreset,.langSwitch{background:transparent;color:var(--i);font:inherit}
 .workshopButton,.workshopPage main button.btn{font:inherit}
+.workshopFooter>div{display:flex;flex-direction:column}
+.workshopFooter strong{color:var(--i)}
+.workshopFooter nav{display:flex;flex-wrap:wrap;gap:16px}
+.workshopFooter nav a{min-height:44px;display:inline-flex;align-items:center}
+.workshopFooter{border-bottom:0;border-top:1px solid var(--b)}
+.bandSteps{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--b)}
+.bandSteps span{min-height:64px;display:grid;place-items:center;background:var(--c);font-weight:900;color:var(--i2)}
+.heroActions,.sectionActions{display:flex;flex-wrap:wrap;gap:10px}
+.bandActions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.heroCopy{max-width:900px}
+.dataNote{max-width:850px;color:var(--m);margin-top:24px}
+.familyRow{display:flex;justify-content:space-between;gap:30px;align-items:center}
+@media(max-width:620px){
+  .familyRow{flex-direction:column;align-items:flex-start}
+}
+.proofFlow article>span,.proofFlow article>b{display:block}
+.proofFlow article>b{margin-top:6px}
+.proofMiniCard>span,.proofMiniCard>strong,.proofMiniCard>small{display:block}
+.proofMiniCard>strong{margin:8px 0}
+.projectStudioStatus>strong,.projectStudioStatus>span{display:block}
 .labDialog :is(p,.proofConsoleTop,.proofConsoleFoot){display:flex;gap:8px;flex-wrap:wrap}.labDialog :is(a,button){padding:13px}
