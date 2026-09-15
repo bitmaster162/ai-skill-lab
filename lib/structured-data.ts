@@ -19,7 +19,7 @@ const baseOrganizationSchema = {
   url: site.url,
   email: site.email,
   telephone: "+66649701204",
-  logo: `${site.url}/og.png`,
+  logo: `${site.url}/logo.png`,
   areaServed: [
     { "@type": "Place", name: "Phuket, Thailand" },
     { "@type": "Place", name: "Worldwide (online)" },
