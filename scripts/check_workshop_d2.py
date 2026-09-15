@@ -104,7 +104,8 @@ for name in legacy_css:
 manifest=json.loads((LIVE/'_release.json').read_text(encoding='utf-8'));checks+=5
 if manifest.get('schema')!='ai-skill-lab.static-release.v1':errors.append('release manifest schema drift')
 # Current release identity is owned by the D3 release checker.
-if manifest.get('file_count')!=58:errors.append(f'manifest file_count {manifest.get("file_count")} != 58')
+expected_files=59 if manifest.get('release_id')=='R110C_BRAND_LOGO' else 58
+if manifest.get('file_count')!=expected_files:errors.append(f'manifest file_count {manifest.get("file_count")} != {expected_files}')
 listed={x.get('path') for x in manifest.get('files',[])}
 if not {'family.html','en/family.html'}<=listed:errors.append('manifest missing Family static pages')
 if set(legacy_css)&listed:errors.append('manifest contains retired legacy CSS')

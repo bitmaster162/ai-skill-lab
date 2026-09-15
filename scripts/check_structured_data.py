@@ -42,7 +42,7 @@ def website():
  return {'@context':'https://schema.org','@type':'WebSite','@id':WEB_ID,'url':ORIGIN,'name':'AI Skill Lab','inLanguage':['ru','en'],'publisher':{'@id':ORG_ID}}
 
 def organization(lang):
- return {'@context':'https://schema.org','@type':'EducationalOrganization','@id':ORG_ID,'name':'AI Skill Lab','url':ORIGIN,'description':DESCRIPTIONS[lang],'email':'robert@aiskillab.work','telephone':'+66649701204','logo':f'{ORIGIN}/og.png','areaServed':[{'@type':'Place','name':'Phuket, Thailand'},{'@type':'Place','name':'Worldwide (online)'}],'founder':{'@id':PERSON_ID},'sameAs':[TELEGRAM,WHATSAPP,LINE]}
+ return {'@context':'https://schema.org','@type':'EducationalOrganization','@id':ORG_ID,'name':'AI Skill Lab','url':ORIGIN,'description':DESCRIPTIONS[lang],'email':'robert@aiskillab.work','telephone':'+66649701204','logo':f'{ORIGIN}/logo.png','areaServed':[{'@type':'Place','name':'Phuket, Thailand'},{'@type':'Place','name':'Worldwide (online)'}],'founder':{'@id':PERSON_ID},'sameAs':[TELEGRAM,WHATSAPP,LINE]}
 
 def person():
  return {'@context':'https://schema.org','@type':'Person','@id':PERSON_ID,'name':'Dumanyan Robert','jobTitle':'Founder / instructor','worksFor':{'@id':ORG_ID},'url':f'{ORIGIN}/about','email':'robert@aiskillab.work','knowsAbout':['AI systems','Research workflows','AI agents','Automation','Decision workflows','Digital products'],'sameAs':[TELEGRAM]}

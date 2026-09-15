@@ -30,15 +30,19 @@ R109D_PROTECTED_OVERRIDES={
 R109F_PROTECTED_OVERRIDES={
 'deploy/live/vercel.json':'c65f4ad6c49ee7e40b7f2eff9fcb96cfb69893222e179148218e408df260e0ac',
 }
+R110C_PROTECTED_OVERRIDES={
+'deploy/live/vercel.json':'0cc0517ab4581253c944148a5f6573353ed9159db030fa864fdaee408aca2316',
+}
 protected=dict(PROTECTED)
-if release in {'R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION'}:protected.update(R102_PROTECTED_OVERRIDES)
-if release in {'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION'}:protected.update(R103_PROTECTED_OVERRIDES)
-if release in {'R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION'}:protected.update(R109D_PROTECTED_OVERRIDES)
-if release in {'R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION'}:protected.update(R109F_PROTECTED_OVERRIDES)
+if release in {'R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO'}:protected.update(R102_PROTECTED_OVERRIDES)
+if release in {'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO'}:protected.update(R103_PROTECTED_OVERRIDES)
+if release in {'R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO'}:protected.update(R109D_PROTECTED_OVERRIDES)
+if release in {'R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO'}:protected.update(R109F_PROTECTED_OVERRIDES)
+if release=='R110C_BRAND_LOGO':protected.update(R110C_PROTECTED_OVERRIDES)
 legal=dict(LEGAL); static_main=dict(STATIC_MAIN)
 if release in {'R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST'}:
  legal.update({'app/safety/page.tsx': '644a48fbd7a10c2822649b2968015d990e07056b4ca6f1f5d7510ca5e9148e29', 'app/en/safety/page.tsx': 'ccd8f60727b6d1f6896c34b8229903286178548b2f65ee4ad56be8366b6d5f06'}); static_main.update({'safety.html': '464b2639f32ccb0eb07c53b73a1a823d516112cd63178f1f0f61a6364bd41a8a', 'en/safety.html': '79f1cd2e4e37066be8c23788438b2c965b9b88b3d926f6a9168a054d7c6c25b3'})
-if release in {'R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION'}:
+if release in {'R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO'}:
  legal.update({'app/safety/page.tsx':'a490cdc90298db70f247b5a8b55cf8b972dd9f0ed7bb4d312c893ca7b944a044','app/en/safety/page.tsx':'da5f276c6a95cc4d553cedb1731d063bb86181507e2c4d9a8f1993f81e761d3d'}); static_main.update({'safety.html':'6a9c89da1f6ffba2a842a4f35e04f42dc8edc5627e4f5b86b6544ed9269e92af','en/safety.html':'37f38ad15a191cd0d94070ca18a99a0552b688e1359bb8cd3a8c0faac7b62f49','terms.html':'22188c4e458ff37f8b34dc4c67781268cd813bdeac25d533a89df791585f572a','en/terms.html':'5a82ccc6a8ca2d0c756666e7bb780a0712d608dee4b16e80443df92ca83b6d9c'})
 def main_digest(text):
  m=re.search(r'<main id="main".*?</main>',text,re.S)
@@ -54,7 +58,7 @@ for rel,d in static_main.items():
  req('<link rel="stylesheet" href="/workshop.css">' in t and 'href="/style.css"' not in t,f'Workshop stylesheet {rel}'); req(t.count('data-lab-command-open')==1 and t.count('src="/lab-command.js"')==1,f'LAB runtime {rel}'); req(f'href="{alt}"' in t and f'href="{start}"' in t,f'alt/start {rel}')
  for bad in ('<form','fetch(','XMLHttpRequest','WebSocket(','localStorage','sessionStorage','document.cookie','sendBeacon('): req(bad not in t,f'forbidden client primitive {rel} {bad}')
 
-policy_date='2026-09-14' if release in {'R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION'} else '2026-08-15'
+policy_date='2026-09-14' if release in {'R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO'} else '2026-08-15'
 for rel in ['app/safety/page.tsx','app/en/safety/page.tsx','deploy/live/safety.html','deploy/live/en/safety.html']:
  t=read(rel); req(t.count(f'data-policy-verified="{policy_date}"')==1,f'policy date {rel}'); req('https://help.openai.com/en/articles/8313401' in t,f'age source {rel}'); req('https://help.openai.com/en/articles/12315553-parental-controls-on-chatgpt-faq/' in t,f'parental source {rel}')
 for rel in ['app/privacy/page.tsx','app/en/privacy/page.tsx']:
@@ -68,7 +72,7 @@ for rel in ['app/method/page.tsx','app/en/method/page.tsx','deploy/live/method.h
 all_html=list(LIVE.rglob('*.html')); public=[p for p in all_html if p.name!='404.html']; req(len(all_html)==47,'47 html including 404')
 workshop=sum('<header class="workshopHeader">' in p.read_text(encoding='utf-8') for p in public); legacy=sum('<header class="nav">' in p.read_text(encoding='utf-8') for p in public); req(workshop==46,f'Workshop pages {workshop} != 46'); req(legacy==0,f'legacy pages {legacy} != 0')
 routes={('/' if p.name=='index.html' else '/en' if p.relative_to(LIVE).as_posix()=='en.html' else '/'+p.relative_to(LIVE).as_posix()[:-5]) for p in public}; req(len(routes)==46,'46 public routes')
-req(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema'); req(release in {'R101B_D6_PUBLIC_FORM','R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION'} ,'D6-or-newer release'); req(manifest.get('file_count')==58,'58 release files')
+req(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema'); req(release in {'R101B_D6_PUBLIC_FORM','R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO'} ,'D6-or-newer release'); expected_files=59 if release=='R110C_BRAND_LOGO' else 58; req(manifest.get('file_count')==expected_files,f'{expected_files} release files')
 actual={p.relative_to(LIVE).as_posix():(len(p.read_bytes()),hashlib.sha256(p.read_bytes()).hexdigest()) for p in LIVE.rglob('*') if p.is_file() and p.name!='_release.json'}; listed={x['path']:(x['size'],x['sha256']) for x in manifest.get('files',[])}; req(actual==listed,'manifest exact bytes'); payload=sum(x[0] for x in actual.values()); req(payload<=524288,f'payload {payload} > 524288')
 workflow=read('.github/workflows/static-qa.yml'); preflight=read('scripts/preflight_release.py'); req(workflow.count('python scripts/check_workshop_d5.py')==1,'workflow D5 once'); req(preflight.count('scripts/check_workshop_d5.py')==1,'preflight D5 once')
 print(f'workshop_d5_checks={checks} target_pages=10 workshop_pages={workshop} legacy_pages={legacy} routes={len(routes)} html={len(all_html)} files={manifest.get("file_count")} payload_bytes={payload} headroom={524288-payload}')

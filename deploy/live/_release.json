@@ -1,5 +1,5 @@
 {
-  "file_count": 58,
+  "file_count": 59,
   "files": [
     {
       "path": "404.html",
@@ -33,8 +33,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "5be377fe961a52ac7f87edda7e6016838395c70b439b0d47991f70f62ee6c111",
-      "size": 7879
+      "sha256": "ad5f5370d7b7cd3456ea2c27093fef616273d74368489c2fe3c24ceb2107eb1a",
+      "size": 7881
     },
     {
       "path": "en/about.html",
@@ -163,8 +163,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "16195abf2b0c6e0adc2d65ff65602be54638ba9d678120e0538eb7754e5d104f",
-      "size": 9398
+      "sha256": "f7f6d8b4a29df72425ed14d33d3480b010066cf332dac0c95824d8570e7a714f",
+      "size": 9400
     },
     {
       "path": "kids.html",
@@ -180,6 +180,11 @@
       "path": "llms.txt",
       "sha256": "dfb1f672dd46713ae7e9fd696223a57042dc56eaee0774be3a0323c75fa28042",
       "size": 2008
+    },
+    {
+      "path": "logo.png",
+      "sha256": "80b1e1966105ece5fa5e8727d5be472bff2c9efdc0ecbf8ea0af61fc7fe52a07",
+      "size": 7465
     },
     {
       "path": "matcher.html",
@@ -283,8 +288,8 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "c65f4ad6c49ee7e40b7f2eff9fcb96cfb69893222e179148218e408df260e0ac",
-      "size": 2651
+      "sha256": "0cc0517ab4581253c944148a5f6573353ed9159db030fa864fdaee408aca2316",
+      "size": 2543
     },
     {
       "path": "workshop.css",
@@ -292,7 +297,7 @@
       "size": 21826
     }
   ],
-  "payload_sha256": "fd1a18faeb4b23cc85f460ac1ae633e9572eea099c9eb6e8a688aa41fa619dda",
-  "release_id": "R110B_LEAD_TELEGRAM_NOTIFICATION",
+  "payload_sha256": "42b5b2d8cbaecf4091fe33abbb0715afa47bec37bf4410ff1fc423686f38a091",
+  "release_id": "R110C_BRAND_LOGO",
   "schema": "ai-skill-lab.static-release.v1"
 }
