@@ -153,8 +153,8 @@
     },
     {
       "path": "faq.html",
-      "sha256": "6d0ce7a415249d3beb8f0942b7afc14c4b0c111af5b3b50ea3a209224fabcbb5",
-      "size": 12065
+      "sha256": "90611d58287fae9718162be28de5e39bc93019cb3b4084c00de210198de95d86",
+      "size": 12146
     },
     {
       "path": "favicon.svg",
@@ -223,8 +223,8 @@
     },
     {
       "path": "privacy.html",
-      "sha256": "8aca25a5300c3687d1a4d0a7b576187d1c6d80bdc2bbdedac209703edcfe536a",
-      "size": 6657
+      "sha256": "1aa2c747df561355fa16107d3c0a4b7b10cd4f62bf95912c2199389f69a92bd4",
+      "size": 6753
     },
     {
       "path": "project-filter.js",
@@ -248,8 +248,8 @@
     },
     {
       "path": "safety.html",
-      "sha256": "5e6dfd77b54d0492465a270e15cae542047c15f31069867c1a9b318ce2884af8",
-      "size": 6940
+      "sha256": "b837e0329543659064c6225f86377a3d3e546093eb0d6c183dc5376ae7765f5b",
+      "size": 7072
     },
     {
       "path": "site.webmanifest",
@@ -283,8 +283,8 @@
     },
     {
       "path": "terms.html",
-      "sha256": "4f2a545cf06f07528615f5a1596d7cf9e22d5da044eba44c2599ae46f00e5087",
-      "size": 6157
+      "sha256": "92e14a0a5315b1e37cd0ea59b520d8222d2345d8cac7a859240946bb0201d68e",
+      "size": 6235
     },
     {
       "path": "vercel.json",
@@ -297,7 +297,7 @@
       "size": 21797
     }
   ],
-  "payload_sha256": "96e85146ffdfb3083fbe5ae8f7b6eefcb4d34efa5fa45a8679df408440e9e030",
-  "release_id": "R111B_BRAND_MARK_FAVICON",
+  "payload_sha256": "a331dffd13986936f6d2a81ec6f0b96712e40bc9d1dcbffc7dc9692a4040c9f6",
+  "release_id": "R111C_RU_TITLE_LOCALIZATION",
   "schema": "ai-skill-lab.static-release.v1"
 }

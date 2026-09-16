@@ -14,6 +14,13 @@ ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "deploy" / "live"
 ORIGIN = PUBLIC_ORIGIN
 OG_IMAGE = f"{ORIGIN}/og.png"
+RU_TITLE_CONTRACT = {
+    "/faq": 'Вопросы и ответы — AI Skill Lab',
+    "/privacy": 'Политика приватности — AI Skill Lab',
+    "/safety": 'Безопасность детей и подростков — AI Skill Lab',
+    "/terms": 'Условия обучения — AI Skill Lab',
+}
+RU_TITLE_SOURCE = {route: "app" + route + "/page.tsx" for route in RU_TITLE_CONTRACT}
 
 
 def route_for(path: Path) -> str:
@@ -115,6 +122,14 @@ def main() -> int:
 
         title = re.sub(r"\s+", " ", parser.title).strip()
         desc = parser.meta_name.get("description", "").strip()
+        expected_title = RU_TITLE_CONTRACT.get(route)
+        if expected_title is not None:
+            if title != expected_title:
+                fail(errors, route, f"title {title!r} != {expected_title!r}")
+            source = read_source = (ROOT / RU_TITLE_SOURCE[route]).read_text(encoding="utf-8")
+            marker = f'title: {{ absolute: "{expected_title}" }}'
+            if marker not in source:
+                fail(errors, route, "source absolute title contract missing")
         if not (15 <= len(title) <= 65):
             fail(errors, route, f"title length {len(title)} outside 15..65")
         if not (50 <= len(desc) <= 160):
