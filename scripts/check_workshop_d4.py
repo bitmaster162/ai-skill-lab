@@ -37,13 +37,18 @@ R110C_PROTECTED_OVERRIDES={
 R111B_PROTECTED_OVERRIDES={
 'components/workshop/WorkshopShell.tsx':'ec60729cf919f2a343089db39d7e60385e7531c07dca2ebfa87af0c81e63b04c',
 }
+R111D_PROTECTED_OVERRIDES={
+'app/sitemap.ts':'05d7359e632e82c93fdc4aa45aba452a02f665508e061a74d45b45a81127322b',
+'deploy/live/sitemap.xml':'094adc77931971aaacf7fea64fb6d04f5220b11b5b38762a55d9656af60ec9cf',
+}
 protected=dict(PROTECTED)
-if release in {'R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION'}:protected.update(R102_PROTECTED_OVERRIDES)
-if release in {'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION'}:protected.update(R103_PROTECTED_OVERRIDES)
-if release in {'R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION'}:protected.update(R109D_PROTECTED_OVERRIDES)
-if release in {'R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION'}:protected.update(R109F_PROTECTED_OVERRIDES)
-if release in {'R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION'}:protected.update(R110C_PROTECTED_OVERRIDES)
-if release in {'R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION'}:protected.update(R111B_PROTECTED_OVERRIDES)
+if release in {'R102_D7_CUSTOM_DOMAIN_CANONICAL','R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION','R111D_SITEMAP_LASTMOD'}:protected.update(R102_PROTECTED_OVERRIDES)
+if release in {'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT','R109A_CRITICAL_VISUAL_FIX','R109A_REVIEW_REPAIR','R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION','R111D_SITEMAP_LASTMOD'}:protected.update(R103_PROTECTED_OVERRIDES)
+if release in {'R109D_404_LEGACY_HOST','R109B_TRUTH_FORM_ALIGNMENT','R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION','R111D_SITEMAP_LASTMOD'}:protected.update(R109D_PROTECTED_OVERRIDES)
+if release in {'R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION','R111D_SITEMAP_LASTMOD'}:protected.update(R109F_PROTECTED_OVERRIDES)
+if release in {'R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION','R111D_SITEMAP_LASTMOD'}:protected.update(R110C_PROTECTED_OVERRIDES)
+if release in {'R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION','R111D_SITEMAP_LASTMOD'}:protected.update(R111B_PROTECTED_OVERRIDES)
+if release == 'R111D_SITEMAP_LASTMOD':protected.update(R111D_PROTECTED_OVERRIDES)
 for rel,digest in protected.items():require(sha(rel)==digest,f'protected byte drift {rel}')
 for locale in ('ru','en'):
  en=locale=='en'; prefix='en/' if en else ''
@@ -81,7 +86,7 @@ interactive={
 for rel,tokens in interactive.items():
  text=read('deploy/live/'+rel)
  for token in tokens:require(token in text,f'{rel}: interactive {token}')
-if release in {'R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION'}:
+if release in {'R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION','R111D_SITEMAP_LASTMOD'}:
  brand_path='M12 1 23 23H1Zm-1 9h2L16 14H8Zm-1.5 6h5L19 23H5Z'
  source_shell=read('components/workshop/WorkshopShell.tsx')
  source_mark=f'<span className={{styles.mark}} aria-hidden="true"><svg viewBox="0 0 24 24"><path fillRule="evenodd" d="{brand_path}" /></svg></span><span>AI SKILL LAB</span>'
@@ -102,17 +107,17 @@ if release in {'R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION'}:
 all_html=list(LIVE.rglob('*.html'));public=[p for p in all_html if p.name!='404.html']
 require(len(all_html)==47,'47 static HTML files')
 workshop=sum('<header class="workshopHeader">' in p.read_text(encoding='utf-8') for p in public);legacy=sum('<header class="nav">' in p.read_text(encoding='utf-8') for p in public)
-require(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema');states={'R99_D4':(36,10),'R100_D5':(46,0),'R101B_D6_PUBLIC_FORM':(46,0),'R102_D7_CUSTOM_DOMAIN_CANONICAL':(46,0),'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT':(46,0),'R109A_CRITICAL_VISUAL_FIX':(46,0),'R109A_REVIEW_REPAIR':(46,0),'R109D_404_LEGACY_HOST':(46,0),'R109B_TRUTH_FORM_ALIGNMENT':(46,0),'R109E_GLYPH_SPACING_VISUAL':(46,0),'R109F_STRUCTURED_DATA':(46,0),'R110A_OPERATOR_LEAD_INBOX':(46,0),'R110B_LEAD_TELEGRAM_NOTIFICATION':(46,0),'R110C_BRAND_LOGO':(46,0),'R111A_NOSCRIPT_FORM_FALLBACK':(46,0),'R111B_BRAND_MARK_FAVICON':(46,0),'R111C_RU_TITLE_LOCALIZATION':(46,0)};require(release in states,f'unsupported release state {release!r}')
+require(manifest.get('schema')=='ai-skill-lab.static-release.v1','release schema');states={'R99_D4':(36,10),'R100_D5':(46,0),'R101B_D6_PUBLIC_FORM':(46,0),'R102_D7_CUSTOM_DOMAIN_CANONICAL':(46,0),'R103_D8_LEGACY_PUBLIC_HOST_REDIRECT':(46,0),'R109A_CRITICAL_VISUAL_FIX':(46,0),'R109A_REVIEW_REPAIR':(46,0),'R109D_404_LEGACY_HOST':(46,0),'R109B_TRUTH_FORM_ALIGNMENT':(46,0),'R109E_GLYPH_SPACING_VISUAL':(46,0),'R109F_STRUCTURED_DATA':(46,0),'R110A_OPERATOR_LEAD_INBOX':(46,0),'R110B_LEAD_TELEGRAM_NOTIFICATION':(46,0),'R110C_BRAND_LOGO':(46,0),'R111A_NOSCRIPT_FORM_FALLBACK':(46,0),'R111B_BRAND_MARK_FAVICON':(46,0),'R111C_RU_TITLE_LOCALIZATION':(46,0),'R111D_SITEMAP_LASTMOD':(46,0)};require(release in states,f'unsupported release state {release!r}')
 if release in states:
  expected_workshop,expected_legacy=states[release];require(workshop==expected_workshop,f'Workshop pages {workshop} != {expected_workshop} for {release}');require(legacy==expected_legacy,f'legacy pages {legacy} != {expected_legacy} for {release}')
-expected_files=59 if release in {'R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION'} else 58;require(manifest.get('file_count')==expected_files,f'{expected_files} release files')
+expected_files=59 if release in {'R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION','R111D_SITEMAP_LASTMOD'} else 58;require(manifest.get('file_count')==expected_files,f'{expected_files} release files')
 actual={p.relative_to(LIVE).as_posix():(len(p.read_bytes()),hashlib.sha256(p.read_bytes()).hexdigest()) for p in LIVE.rglob('*') if p.is_file() and p.name!='_release.json'}
 listed={x['path']:(x['size'],x['sha256']) for x in manifest.get('files',[])};require(actual==listed,'manifest exact file bytes');payload=sum(x[0] for x in actual.values());require(payload<=524288,f'payload {payload} > 524288')
 require(len({('/' if p.name=='index.html' else '/en' if p.relative_to(LIVE).as_posix()=='en.html' else '/'+p.relative_to(LIVE).as_posix()[:-5]) for p in public})==46,'46 public routes')
 css=read('deploy/live/workshop.css');guard='.labDialog :is(p,.proofConsoleTop,.proofConsoleFoot){display:flex;gap:8px;flex-wrap:wrap}.labDialog :is(a,button){padding:13px}'
 require(css.count(guard)==1,'C1 Lab spacing guard exactly once');require('@import' not in css and 'fonts.googleapis.com' not in css and 'fonts.gstatic.com' not in css,'Workshop CSS self-contained')
 r109e_guards=['.workshopFooter>div{display:flex;flex-direction:column}','.workshopFooter nav{display:flex;flex-wrap:wrap;gap:16px}','.workshopFooter{border-bottom:0;border-top:1px solid var(--b)}','.bandSteps{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--b)}','.heroActions,.sectionActions{display:flex;flex-wrap:wrap;gap:10px}','.proofFlow article>span,.proofFlow article>b{display:block}','.projectStudioStatus>strong,.projectStudioStatus>span{display:block}']
-if release in {'R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION'}:
+if release in {'R109E_GLYPH_SPACING_VISUAL','R109F_STRUCTURED_DATA','R110A_OPERATOR_LEAD_INBOX','R110B_LEAD_TELEGRAM_NOTIFICATION','R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION','R111D_SITEMAP_LASTMOD'}:
  for visual_guard in r109e_guards:require(visual_guard in css,f'R109E visual guard {visual_guard}')
 workflow=read('.github/workflows/static-qa.yml');preflight=read('scripts/preflight_release.py');require(workflow.count('python scripts/check_workshop_d4.py')==1,'workflow D4 exactly once');require(preflight.count('scripts/check_workshop_d4.py')==1,'preflight D4 exactly once')
 print(f'workshop_d4_checks={checks} target_pages=18 workshop_pages={workshop} legacy_pages={legacy} routes=46 html=47 files={expected_files} payload_bytes={payload} headroom={524288-payload}')

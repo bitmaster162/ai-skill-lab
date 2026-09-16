@@ -7,6 +7,7 @@ from urllib.parse import urlparse
 import re
 import sys
 import xml.etree.ElementTree as ET
+from datetime import date
 
 from public_origin import PUBLIC_ORIGIN
 
@@ -185,6 +186,30 @@ def main() -> int:
         missing = sorted(expected_urls - sitemap_urls)
         extra = sorted(sitemap_urls - expected_urls)
         errors.append(f"sitemap mismatch missing={missing} extra={extra}")
+
+    source_sitemap = (ROOT / "app/sitemap.ts").read_text(encoding="utf-8")
+    source_lastmod = re.search(r'const lastModified = "(\d{4}-\d{2}-\d{2})";', source_sitemap)
+    if not source_lastmod or source_sitemap.count("lastModified,") != 1:
+        errors.append("source sitemap must expose one stable lastModified value")
+    expected_lastmod = source_lastmod.group(1) if source_lastmod else None
+    lastmod_urls = set()
+    for entry in root.findall("sm:url", ns):
+        loc = entry.find("sm:loc", ns)
+        lastmod = entry.find("sm:lastmod", ns)
+        if loc is None or not loc.text or lastmod is None or not lastmod.text:
+            errors.append("every sitemap url must include loc and lastmod")
+            continue
+        loc_text = loc.text.strip()
+        value = lastmod.text.strip()
+        try:
+            date.fromisoformat(value)
+        except ValueError:
+            errors.append(f"invalid sitemap lastmod {loc_text}: {value}")
+        if expected_lastmod and value != expected_lastmod:
+            errors.append(f"sitemap lastmod/source mismatch {loc_text}: {value} != {expected_lastmod}")
+        lastmod_urls.add(loc_text)
+    if lastmod_urls != expected_urls:
+        errors.append("sitemap lastmod coverage must equal public route coverage")
 
     robots = (LIVE / "robots.txt").read_text(encoding="utf-8")
     if "User-agent: *" not in robots or "Allow: /" not in robots:
