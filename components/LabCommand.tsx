@@ -53,6 +53,7 @@ export function LabCommand({ locale = "ru" }: LabCommandProps) {
   };
 
   useEffect(() => {
+    if (/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent)) document.querySelectorAll<HTMLElement>("[data-kbd-mod]").forEach((el) => { el.textContent = "⌘"; });
     const onKey = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
@@ -79,7 +80,7 @@ export function LabCommand({ locale = "ru" }: LabCommandProps) {
         aria-keyshortcuts="Control+K Meta+K"
         onClick={open}
       >
-        ⌘K
+        <span data-kbd-mod="">Ctrl</span> K
       </button>
       <dialog className="labDialog" id="lab-command" ref={dialogRef} aria-label={t.open}>
         <div className="proofConsole">

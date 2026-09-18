@@ -22,6 +22,15 @@ RU_TITLE_CONTRACT = {
     "/terms": 'Условия обучения — AI Skill Lab',
 }
 RU_TITLE_SOURCE = {route: "app" + route + "/page.tsx" for route in RU_TITLE_CONTRACT}
+TITLE_CONTRACT = {
+    "/en/faq": "FAQ — sessions, projects and payment | AI Skill Lab",
+    "/en/about": "About the practice and the method | AI Skill Lab",
+    "/en/start": "Start — pick a track and a first task | AI Skill Lab",
+    "/en/terms": "Terms of service | AI Skill Lab",
+    "/en/privacy": "Privacy policy and data handling | AI Skill Lab",
+    "/about": "О проекте: как устроены занятия | AI Skill Lab",
+    "/parents": "Родителям: как проходят занятия и где участие взрослого.",
+}
 
 
 def route_for(path: Path) -> str:
@@ -123,6 +132,9 @@ def main() -> int:
 
         title = re.sub(r"\s+", " ", parser.title).strip()
         desc = parser.meta_name.get("description", "").strip()
+        contracted_title = TITLE_CONTRACT.get(route)
+        if contracted_title is not None and title != contracted_title:
+            fail(errors, route, f"title {title!r} != contracted {contracted_title!r}")
         expected_title = RU_TITLE_CONTRACT.get(route)
         if expected_title is not None:
             if title != expected_title:
