@@ -56,9 +56,16 @@ for p in sorted(LIVE.rglob('*.html')):
             if button['live'] != 'polite': errors.append(f'{rel}: briefCopy must use aria-live=polite')
 
 css=(LIVE/'workshop.css').read_text(encoding='utf-8')
+source_css=(ROOT/'components/workshop/WorkshopShell.module.css').read_text(encoding='utf-8')
 for marker in ['.workshopPage :focus-visible{outline:3px solid var(--acid)', '@media(prefers-reduced-motion:reduce)', 'min-height:44px']:
     checks += 1
     if marker not in css: errors.append(f'workshop.css: missing accessibility marker {marker}')
+for label,text,marker in [
+    ('source brand target', source_css, '.brand{min-height:44px;'),
+    ('static brand target', css, '.workshopBrand{min-height:44px;'),
+]:
+    checks += 1
+    if marker not in text: errors.append(f'{label}: missing 44px minimum target')
 
 print(f'accessibility_checks={checks} pages={pages}')
 if errors:

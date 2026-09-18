@@ -17,7 +17,7 @@
 .priceCard>span,.priceCard>strong,.priceCard>b{display:block}.priceCard>span{color:var(--m);font-size:14px;letter-spacing:.08em;text-transform:uppercase}.priceCard>strong{font-size:28px;margin:6px 0 2px;font-variant-numeric:tabular-nums}.priceCard>b{color:var(--i2);font-weight:400;font-size:14px;margin-bottom:10px}
 .workshopPage .sectionHead h2{font-size:clamp(2rem,4vw,4rem)}.workshopPage .sectionHead{grid-template-columns:.62fr 1.38fr}
 @media(max-width:700px){.workshopPage h1,.workshopPage h2{overflow-wrap:anywhere}}
-.workshopMark{display:inline-flex;width:26px;height:26px;margin-right:10px;flex:none;color:var(--acid)}.workshopMark svg{display:block;width:100%;height:100%;fill:currentColor}.workshopBrand{display:inline-flex;align-items:center}
+.workshopMark{display:inline-flex;width:26px;height:26px;margin-right:10px;flex:none;color:var(--acid)}.workshopMark svg{display:block;width:100%;height:100%;fill:currentColor}.workshopBrand{min-height:44px;display:inline-flex;align-items:center}
 .workshopUtility,.workshopButtonSecondary,.mreset,.langSwitch{background:transparent;color:var(--i);font:inherit}
 .workshopButton,.workshopPage main button.btn{font:inherit}
 .workshopFooter>div{display:flex;flex-direction:column}
