@@ -6,12 +6,14 @@ import vm from 'node:vm';
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+// Keep a finite runaway guard without flaking on loaded CI runners.
+const VM_TIMEOUT_MS=5000;
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const source=read('components/BusinessValueCalculator.tsx');
 const historical=read('scripts/check_r70_business_calculator.mjs');
 const vectorText=historical.match(/const vectors = (\[[\s\S]*?\n\]);/);
 assert.ok(vectorText,'Original vector set');
-const vectors=vm.runInNewContext('('+vectorText[1]+')',{}, {timeout:1000});
+const vectors=vm.runInNewContext('('+vectorText[1]+')',{}, {timeout:VM_TIMEOUT_MS});
 assert.equal(vectors.length,20);
 const arithmetic=['monthlyRoutine','recoverableHours','grossValue'].map(name=>{
  const match=source.match(new RegExp('const '+name+' = [^;]+;'));
@@ -47,7 +49,7 @@ for(const locale of ['ru','en']) {
   const m=selector.match(/^\[data-bv-result="([^"]+)"\]$/);assert.ok(m,selector);assert.ok(results.has(m[1]));return results.get(m[1]);
  }};
  const document={querySelector:s=>{assert.equal(s,'[data-business-value]');return widget;},getElementById:id=>inputs.get(id)};
- vm.runInNewContext(block[1],{document,Intl}, {timeout:1000});
+ vm.runInNewContext(block[1],{document,Intl}, {timeout:VM_TIMEOUT_MS});
  assert.ok([...inputs.values()].every(x=>!x.disabled&&typeof x.events.input==='function'));
  for(const v of vectors) {
   const values=[v.team,v.weeklyHours,v.rate,v.recoverable];
