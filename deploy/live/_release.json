@@ -293,11 +293,11 @@
     },
     {
       "path": "workshop.css",
-      "sha256": "b646311ae0e5e1d6eb81ca4d59835cbb2eea1ac5fcb168bd023da4948db8434d",
-      "size": 21894
+      "sha256": "807ca3c9599b5d25b627570367784f2e3ede4c900b96a2fd899c545f5d077d17",
+      "size": 21910
     }
   ],
-  "payload_sha256": "e5f2463b0e992c6e64773663cb3168b769b7b5b761b95d3670e25a5d8eea1af1",
-  "release_id": "R112_PLATFORM_SHORTCUT_TITLES",
+  "payload_sha256": "1f84762be145ab2e8ecb95e2797e8999975fed7361cef23334c6cec3eeeceeb0",
+  "release_id": "R114_BRAND_TOUCH_TARGET",
   "schema": "ai-skill-lab.static-release.v1"
 }
