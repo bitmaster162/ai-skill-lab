@@ -8,7 +8,7 @@ import re, sys
 ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/'deploy'/'live'
 
-MAX_TOTAL=512*1024
+MAX_TOTAL=516*1024  # R112 bounded allowance for 46-route platform shortcut markup + title clarity
 MAX_HTML=24*1024
 MAX_CSS=36*1024
 MAX_IMAGE=128*1024

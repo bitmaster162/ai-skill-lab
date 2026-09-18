@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { WorkshopEditorial } from "@/components/workshop/WorkshopEditorial";
 import Link from "next/link";
 export const metadata: Metadata = {
-  title: "Родителям",
+  title: { absolute: "Родителям: как проходят занятия и где участие взрослого." },
   description: "Как устроено обучение AI для детей и подростков 8–18: видимый прогресс, возрастные правила, форматы 1-на-1 и семейный контур.",
   alternates: { canonical: "/parents", languages: { ru: "/parents", en: "/en/parents" } },
 };
