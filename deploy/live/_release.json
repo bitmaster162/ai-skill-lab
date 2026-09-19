@@ -268,7 +268,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "094adc77931971aaacf7fea64fb6d04f5220b11b5b38762a55d9656af60ec9cf",
+      "sha256": "c6090e1980b6dc31b71eff57013ee67dec109089ba71859e3b83e8f30bb9f214",
       "size": 3856
     },
     {
@@ -307,7 +307,7 @@
       "size": 23873
     }
   ],
-  "payload_sha256": "ed6668e0fdb7615412ecfe8823397580640a2f09af2071f94b32405703b3a8cd",
-  "release_id": "R117_GLYPH_FALLBACK",
+  "payload_sha256": "6712aa35c7c1a58545d0155186e54750812e2de00b816fc3a9e982e92ddfcd01",
+  "release_id": "R121_SITEMAP_LASTMOD_REFRESH",
   "schema": "ai-skill-lab.static-release.v1"
 }
