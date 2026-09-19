@@ -4,7 +4,9 @@ from __future__ import annotations
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
+import os
 import re
+import subprocess
 import sys
 import xml.etree.ElementTree as ET
 from datetime import date
@@ -151,6 +153,39 @@ def source_alternates(route: str) -> tuple[str | None, dict[str, str]]:
             if match:
                 languages[lang] = match.group(2).strip()
     return canonical, languages
+
+
+def git(*args: str) -> str:
+    return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
+
+
+def latest_public_html_commit_date(paths: list[Path], errors: list[str]) -> date | None:
+    try:
+        shallow = git("rev-parse", "--is-shallow-repository").lower() == "true"
+    except (OSError, subprocess.CalledProcessError) as exc:
+        errors.append(f"cannot inspect git history for sitemap freshness: {exc}")
+        return None
+    if shallow:
+        if os.environ.get("CI", "").lower() == "true":
+            errors.append("CI checkout must provide full git history for sitemap freshness")
+        return None
+
+    dates: list[date] = []
+    for path in paths:
+        rel = path.relative_to(ROOT).as_posix()
+        try:
+            raw = git("log", "-1", "--format=%cs", "--", rel)
+        except subprocess.CalledProcessError as exc:
+            errors.append(f"cannot read git history for {rel}: {exc}")
+            continue
+        if not raw:
+            errors.append(f"missing git commit history for {rel}")
+            continue
+        try:
+            dates.append(date.fromisoformat(raw))
+        except ValueError:
+            errors.append(f"invalid git commit date for {rel}: {raw}")
+    return max(dates) if dates else None
 
 
 def fail(errors: list[str], route: str, msg: str) -> None:
@@ -315,6 +350,14 @@ def main() -> int:
     if not source_lastmod or source_sitemap.count("lastModified,") != 1:
         errors.append("source sitemap must expose one stable lastModified value")
     expected_lastmod = source_lastmod.group(1) if source_lastmod else None
+    public_html_paths = [path for path in pages if route_for(path) != "/404"]
+    latest_html_date = latest_public_html_commit_date(public_html_paths, errors)
+    if expected_lastmod and latest_html_date is not None:
+        source_lastmod_date = date.fromisoformat(expected_lastmod)
+        if source_lastmod_date < latest_html_date:
+            errors.append(
+                f"sitemap lastmod {expected_lastmod} older than latest public HTML commit {latest_html_date.isoformat()}"
+            )
     lastmod_urls = set()
     for entry in root.findall("sm:url", ns):
         loc = entry.find("sm:loc", ns)
@@ -346,7 +389,11 @@ def main() -> int:
             print("-", e)
         return 1
 
-    print(f"SEARCH_METADATA_PASS pages={checked} public_routes={len(public_routes)} sitemap={len(sitemap_urls)}")
+    freshness = latest_html_date.isoformat() if latest_html_date is not None else "SKIPPED_SHALLOW"
+    print(
+        f"SEARCH_METADATA_PASS pages={checked} public_routes={len(public_routes)} "
+        f"sitemap={len(sitemap_urls)} freshness={freshness}"
+    )
     return 0
 
 
