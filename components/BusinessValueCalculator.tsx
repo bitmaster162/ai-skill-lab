@@ -81,7 +81,7 @@ export function BusinessValueCalculator({ locale = "ru" }: { locale?: Locale }) 
   const startHref = locale === "ru" ? "/start#business-brief" : "/en/start#business-brief";
 
   return <div className="businessValue" data-business-value data-locale={locale}>
-    <div className="businessValueSignal"><span aria-hidden="true">●</span>{t.local}</div>
+    <div className="businessValueSignal statusDot">{t.local}</div>
     <div className="businessValueInputs">
       <label htmlFor="bv-team"><span>{t.team}</span><strong>{team}</strong><input disabled={!interactive} id="bv-team" type="range" min="1" max="30" value={team} onChange={e => setTeam(Number(e.target.value))}/></label>
       <label htmlFor="bv-hours"><span>{t.weeklyHours}</span><strong>{weeklyHours} {locale === "ru" ? "ч" : "h"}</strong><input disabled={!interactive} id="bv-hours" type="range" min="1" max="40" value={weeklyHours} onChange={e => setWeeklyHours(Number(e.target.value))}/></label>
