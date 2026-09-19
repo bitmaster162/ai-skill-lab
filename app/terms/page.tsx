@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
 
-export const metadata: Metadata = { title: { absolute: "Условия обучения — AI Skill Lab" }, description: "Базовые условия образовательных программ AI Skill Lab." };
+export const metadata: Metadata = { title: { absolute: "Условия обучения — AI Skill Lab" }, description: "Условия образовательных программ AI Skill Lab: заявка на сайте, оплата и правила до начала обучения." };
 
 export default function TermsPage() {
   return <LegalPage path="terms" title="Условия обучения" intro="Базовые правила использования сайта и заказа индивидуального обучения. Конкретные коммерческие условия фиксируются до оплаты.">
