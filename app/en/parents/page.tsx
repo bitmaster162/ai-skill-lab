@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { WorkshopEditorial } from "@/components/workshop/WorkshopEditorial";
 import Link from "next/link";
 export const metadata: Metadata = {
-  title: "For parents",
+  title: { absolute: "For parents — AI Skill Lab" },
   description: "What parents get from an AI program for ages 8–18: visible progress, a project, safety rules and a clear adult role.",
   alternates: { canonical: "/en/parents", languages: { ru: "/parents", en: "/en/parents" } },
 };

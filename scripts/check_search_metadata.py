@@ -118,6 +118,22 @@ def source_description(route: str) -> str | None:
     return match.group(2).strip() if match else None
 
 
+def source_title(route: str) -> str | None:
+    raw = source_page_for(route).read_text(encoding="utf-8")
+    block = re.search(r"export const metadata[\s\S]*?=\s*\{([\s\S]*?)\};", raw)
+    if not block:
+        return None
+    text = block.group(0)
+    absolute = re.search(r"\btitle\s*:\s*\{\s*absolute\s*:\s*([\"'])(.*?)\1\s*\}", text)
+    if absolute:
+        return absolute.group(2).strip()
+    simple = re.search(r"\btitle\s*:\s*([\"'])(.*?)\1", text)
+    if not simple:
+        return None
+    value = simple.group(2).strip()
+    return value if route == "/" else f"{value} | AI Skill Lab"
+
+
 def fail(errors: list[str], route: str, msg: str) -> None:
     errors.append(f"{route}: {msg}")
 
@@ -147,6 +163,9 @@ def main() -> int:
 
         title = re.sub(r"\s+", " ", parser.title).strip()
         desc = parser.meta_name.get("description", "").strip()
+        source_title_value = source_title(route)
+        if source_title_value != title:
+            fail(errors, route, f"source title {source_title_value!r} != static {title!r}")
         source_desc = source_description(route)
         if source_desc != desc:
             fail(errors, route, f"source description {source_desc!r} != static {desc!r}")

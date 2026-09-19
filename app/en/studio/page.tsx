@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { WorkshopEditorial } from "@/components/workshop/WorkshopEditorial";
 import Link from "next/link";
 export const metadata: Metadata = {
-  title: "AI Studio — AI systems, products and automation",
+  title: { absolute: "AI Studio — AI systems, products and automation" },
   description: "AI Studio by AI Skill Lab: research systems, AI products, websites, automation and team enablement with human gates, QA and clear handoff.",
   alternates: { canonical: "/en/studio", languages: { ru: "/studio", en: "/en/studio" } },
 };

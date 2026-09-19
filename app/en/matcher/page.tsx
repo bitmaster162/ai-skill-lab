@@ -3,7 +3,7 @@ import { WorkshopInteractive } from "@/components/workshop/WorkshopInteractive";
 import { ProgramMatcher } from "@/components/ProgramMatcher";
 
 export const metadata: Metadata = {
-  title: "Find an AI program",
+  title: { absolute: "Find an AI program — AI Skill Lab" },
   description: "Local program matcher for adults, kids, teens or a business pilot. Nothing is sent or stored.",
   alternates: { canonical: "/en/matcher", languages: { ru: "/matcher", en: "/en/matcher" } },
   twitter: { card: "summary_large_image", title: "Find an AI program", description: "Local program matcher for adults, kids, teens or a business pilot. Nothing is sent or stored.", images: ["/opengraph-image"] },

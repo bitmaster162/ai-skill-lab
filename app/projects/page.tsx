@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ProjectStudio } from "@/components/ProjectStudio";
 
 export const metadata: Metadata = {
-  title: "Project Studio — примерные AI-проекты",
+  title: { absolute: "Project Studio — примерные AI-проекты — AI Skill Lab" },
   description: "Интерактивная витрина примерных AI-проектов: задача, роль AI, human verification и итоговый артефакт. Это примеры, не клиентские кейсы.",
   alternates: { canonical: "/projects", languages: { ru: "/projects", en: "/en/projects" } },
 };
