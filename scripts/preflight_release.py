@@ -36,6 +36,7 @@ CHECKS = [
     ("intake_operations", ["python", "scripts/check_intake_operations.py"]),
     ("lead_inbox", ["python", "scripts/check_lead_inbox.py"]),
     ("inline_scripts", ["python", "scripts/check_inline_scripts.py"]),
+    ("runtime_gate_inventory", ["python", "scripts/check_runtime_gate_inventory.py"]),
     ("matcher_runtime", ["node", "scripts/check_matcher_runtime.mjs"]),
     ("start_runtime", ["node", "scripts/check_start_runtime.mjs"]),
     ("public_form_runtime", ["node", "scripts/check_public_form_runtime.mjs"]),
