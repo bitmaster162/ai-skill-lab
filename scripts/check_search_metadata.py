@@ -180,6 +180,32 @@ def main() -> int:
     elif public_og.read_bytes() != live_og.read_bytes():
         errors.append("public/og.png must be byte-identical to deploy/live/og.png")
 
+    if 'manifest: "/site.webmanifest"' not in source_layout:
+        errors.append("source layout must declare /site.webmanifest")
+    if 'url: "/favicon.svg"' not in source_layout:
+        errors.append("source layout must declare /favicon.svg as icon authority")
+    if 'themeColor: "#0b0d10"' not in source_layout:
+        errors.append("source viewport must declare production theme color #0b0d10")
+    for family_source in (ROOT / "app" / "family" / "page.tsx", ROOT / "app" / "en" / "family" / "page.tsx"):
+        family_text = family_source.read_text(encoding="utf-8")
+        if 'themeColor: "#2b0a1c"' not in family_text:
+            errors.append(f"{family_source.relative_to(ROOT)} must declare family theme color #2b0a1c")
+    file_icon = ROOT / "app" / "icon.svg"
+    if file_icon.exists():
+        errors.append("app/icon.svg must remain absent; /favicon.svg is the canonical icon authority")
+    public_favicon = ROOT / "public" / "favicon.svg"
+    live_favicon = LIVE / "favicon.svg"
+    if not public_favicon.exists():
+        errors.append("public/favicon.svg is required for Next favicon parity")
+    elif public_favicon.read_bytes() != live_favicon.read_bytes():
+        errors.append("public/favicon.svg must be byte-identical to deploy/live/favicon.svg")
+    public_manifest = ROOT / "public" / "site.webmanifest"
+    live_manifest = LIVE / "site.webmanifest"
+    if not public_manifest.exists():
+        errors.append("public/site.webmanifest is required for Next manifest parity")
+    elif public_manifest.read_bytes() != live_manifest.read_bytes():
+        errors.append("public/site.webmanifest must be byte-identical to deploy/live/site.webmanifest")
+
     pages = sorted(LIVE.rglob("*.html"))
     for path in pages:
         route = route_for(path)

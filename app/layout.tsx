@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./r69.css";
 import "./r70.css";
@@ -28,7 +28,17 @@ export const metadata: Metadata = {
     description: "Практические AI-навыки через реальные задачи и проекты.",
     images: ["/og.png"],
   },
+  manifest: "/site.webmanifest",
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+  },
   robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0b0d10",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
