@@ -4,6 +4,6 @@ export const metadata: Metadata = {
   title: { absolute: "AI for business — AI Skill Lab" },
   description: "Business AI: workflow audit, team training, bounded pilots and QA.",
   alternates: { canonical: "/en/business", languages: { ru: "/business", en: "/en/business" } },
-  twitter: { card: "summary_large_image", title: "AI for business", description: "Business AI: workflow audit, team training, bounded pilots and QA.", images: ["/opengraph-image"] },
+  twitter: { card: "summary_large_image", title: "AI for business", description: "Business AI: workflow audit, team training, bounded pilots and QA.", images: ["/og.png"] },
 };
 export default function Page(){return <WorkshopBusiness locale="en"/>;}
