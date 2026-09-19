@@ -146,6 +146,28 @@ async function waitForFile(p, timeoutMs) {
   }
   throw new Error('timeout waiting for ' + p);
 }
+async function freePort() {
+  return await new Promise((resolve, reject) => {
+    const probe = http.createServer();
+    probe.on('error', reject);
+    probe.listen(0, '127.0.0.1', () => {
+      const port = probe.address().port;
+      probe.close(() => resolve(port));
+    });
+  });
+}
+async function waitForCdp(port, timeoutMs, stderrLines) {
+  const start = Date.now();
+  const url = 'http://127.0.0.1:' + port + '/json/version';
+  while (Date.now() - start < timeoutMs) {
+    try {
+      const response = await fetch(url);
+      if (response.ok) return await response.json();
+    } catch {}
+    await sleep(100);
+  }
+  throw new Error('timeout waiting for CDP on port ' + port + ' stderr=' + stderrLines.join(' | ').slice(0, 2000));
+}
 async function openSocket(url) {
   const ws = new WebSocket(url);
   await new Promise((resolve, reject) => {
@@ -173,16 +195,30 @@ async function openSocket(url) {
 
 if (chrome) {
   profile = fs.mkdtempSync(path.join(os.tmpdir(), 'asl-cdp-'));
+  const stderrLines = [];
+  let port = 0;
+  const fixedPort = process.platform !== 'win32';
+  if (fixedPort) port = await freePort();
   const args = [
-    '--headless=new', '--disable-gpu', '--no-sandbox', '--remote-debugging-address=127.0.0.1',
-    '--remote-debugging-port=0', '--user-data-dir=' + profile, 'about:blank'
+    '--headless=new', '--disable-gpu', '--disable-dev-shm-usage', '--no-sandbox', '--remote-debugging-address=127.0.0.1',
+    '--remote-debugging-port=' + port, '--user-data-dir=' + profile, 'about:blank'
   ];
-  chromeProc = spawn(chrome, args, { stdio: 'ignore' });
+  chromeProc = spawn(chrome, args, { stdio: ['ignore', 'ignore', 'pipe'] });
+  chromeProc.stderr?.setEncoding('utf8');
+  chromeProc.stderr?.on('data', (chunk) => {
+    for (const line of String(chunk).split(/\r?\n/).filter(Boolean)) {
+      if (stderrLines.length < 40) stderrLines.push(line);
+    }
+  });
   try {
-    const active = path.join(profile, 'DevToolsActivePort');
-    await waitForFile(active, 10000);
-    const lines = fs.readFileSync(active, 'utf8').trim().split(/\r?\n/);
-    const port = Number(lines[0]);
+    if (fixedPort) {
+      await waitForCdp(port, 20000, stderrLines);
+    } else {
+      const active = path.join(profile, 'DevToolsActivePort');
+      await waitForFile(active, 15000);
+      const lines = fs.readFileSync(active, 'utf8').trim().split(/\r?\n/);
+      port = Number(lines[0]);
+    }
     const createUrl = 'http://127.0.0.1:' + port + '/json/new?about:blank';
     const created = await fetch(createUrl, { method: 'PUT' }).then((r) => r.json());
     const cdp = await openSocket(created.webSocketDebuggerUrl);
