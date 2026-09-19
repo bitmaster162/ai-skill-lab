@@ -4,7 +4,7 @@ import Link from "next/link";
 import { SkillGraph } from "@/components/SkillGraph";
 
 export const metadata: Metadata = {
-  title: "AI learning curriculum",
+  title: { absolute: "AI learning curriculum — AI Skill Lab" },
   description: "Compare tracks for adults, kids 8–13 and teens 14–18: topics, format, artifacts and depth.",
   alternates: { canonical: "/en/curriculum", languages: { ru: "/curriculum", en: "/en/curriculum" } },
 };

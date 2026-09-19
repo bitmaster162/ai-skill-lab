@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { WorkshopEditorial } from "@/components/workshop/WorkshopEditorial";
 import Link from "next/link";
 export const metadata: Metadata = {
-  title: "Build Log — how AI Skill Lab was built with AI",
+  title: { absolute: "Build Log — how AI Skill Lab was built with AI" },
   description: "The open build log of AI Skill Lab: real iterations, failures, AI roles, human gates, automated verification and release engineering.",
   alternates: { canonical: "/en/build", languages: { ru: "/build", en: "/en/build" } },
 };

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { WorkshopAudience } from "@/components/workshop/WorkshopAudience";
 export const metadata: Metadata = {
-  title: "AI для детей 8–13 лет",
+  title: { absolute: "AI для детей 8–13 — AI Skill Lab" },
   description: "AI 8–13: творчество, свой проект, приватность и участие взрослого.",
   alternates: { canonical: "/kids", languages: { ru: "/kids", en: "/en/kids" } },
 };
