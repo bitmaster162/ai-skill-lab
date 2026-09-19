@@ -21,6 +21,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Validate locked npm install
+        run: npm ci --ignore-scripts --audit=false --fund=false
       - name: Validate static release
         run: python scripts/check_static_release.py
       - name: Validate search metadata
