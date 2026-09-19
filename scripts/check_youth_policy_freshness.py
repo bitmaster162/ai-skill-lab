@@ -42,6 +42,13 @@ for rel in SURFACES:
         sys.exit(1)
     verified[rel] = raw
     checks += 1
+    if "13–18" not in text:
+        print(f"YOUTH_POLICY_AGE_RANGE_MISSING {rel} expected=13–18")
+        sys.exit(1)
+    checks += 1
+    if "13–17" in text:
+        print(f"YOUTH_POLICY_STALE_AGE_RANGE {rel} forbidden=13–17")
+        sys.exit(1)
     for url in OFFICIAL_SOURCES:
         if url not in text:
             print(f"YOUTH_POLICY_SOURCE_MISSING {rel} {url}")
