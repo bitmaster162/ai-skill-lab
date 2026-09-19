@@ -63,6 +63,31 @@ for (const hp of htmls) {
   req((t.match(/rel="preload" href="\/fonts\/Unbounded-ru-en\.woff2" as="font" type="font\/woff2" crossorigin/g) || []).length === 1, rel + ': Unbounded preload');
 }
 
+const staticMoney = [
+  ['parents.html', /class="price"/g, 7],
+  ['en/parents.html', /class="price"/g, 7],
+  ['kids.html', /class="moneyLine"/g, 1],
+  ['en/kids.html', /class="moneyLine"/g, 1],
+  ['business.html', /<label for="bv-rate">[\s\S]*?<strong>\$25\/ч<\/strong>/g, 1],
+  ['en/business.html', /<label for="bv-rate">[\s\S]*?<strong>\$25\/h<\/strong>/g, 1],
+  ['business.html', /data-bv-result="grossValue"/g, 1],
+  ['en/business.html', /data-bv-result="grossValue"/g, 1],
+  ['pricing.html', /<article class="diagnostic">[\s\S]*?<strong>\$120<\/strong>/g, 1],
+  ['en/pricing.html', /<article class="diagnostic">[\s\S]*?<strong>\$120<\/strong>/g, 1],
+];
+let staticMoneyNodes = 0;
+for (const [rel, pattern, expectedCount] of staticMoney) {
+  const text = fs.readFileSync(path.join(LIVE, rel), 'utf8');
+  const count = (text.match(pattern) || []).length;
+  req(count === expectedCount, rel + ': dedicated money structure ' + count + ' != ' + expectedCount);
+  staticMoneyNodes += count;
+}
+req(staticMoneyNodes === 22, 'static dedicated monetary nodes ' + staticMoneyNodes + ' != 22');
+for (const rel of ['business.html','en/business.html','pricing.html','en/pricing.html']) {
+  const text = fs.readFileSync(path.join(LIVE, rel), 'utf8');
+  req((text.match(/\$1,560/g) || []).length >= 1, rel + ': inline prose money marker missing');
+}
+
 function mime(p) {
   if (p.endsWith('.css')) return 'text/css; charset=utf-8';
   if (p.endsWith('.woff2')) return 'font/woff2';
@@ -73,7 +98,7 @@ const server = http.createServer((request, response) => {
   const u = new URL(request.url || '/', 'http://127.0.0.1');
   if (u.pathname === '/__typography_probe') {
     const lang = u.searchParams.get('lang') === 'en' ? 'en' : 'ru';
-    const body = '<!doctype html><html lang="' + lang + '"><head><meta charset="utf-8"><link rel="stylesheet" href="/workshop.css"></head><body><div class="workshopPage"><main><section class="workshopHero"><h1 id="heading">Русский AI headline</h1><p id="copy">Body text</p><article class="priceCard"><strong id="price">$1,490</strong></article><button id="shortcut" class="workshopUtility" data-lab-command-open><span id="mod">Ctrl</span> K</button></section></main></div></body></html>';
+    const body = '<!doctype html><html lang="' + lang + '"><head><meta charset="utf-8"><link rel="stylesheet" href="/workshop.css"></head><body><div class="workshopPage"><main><section class="workshopHero"><h1 id="heading">Русский AI headline</h1><p id="copy">Body text</p><article class="priceCard"><strong id="price">$1,490</strong></article><div class="price" id="legacyPrice">$290</div><article class="diagnostic"><strong id="diagnosticPrice">$120</strong></article><p class="moneyLine" id="moneyLine">$1,490 · family package</p><div class="businessValueInputs"><label for="bv-rate"><strong id="ratePrice">$25/h</strong></label></div><div class="businessValueResults"><strong id="grossValue" data-bv-result="grossValue">~$975 / month</strong></div><p id="moneyProse">Minimum engagement from $1,560.</p><button id="shortcut" class="workshopUtility" data-lab-command-open><span id="mod">Ctrl</span> K</button></section></main></div></body></html>';
     response.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': Buffer.byteLength(body) });
     response.end(body);
     return;
@@ -121,6 +146,28 @@ async function waitForFile(p, timeoutMs) {
   }
   throw new Error('timeout waiting for ' + p);
 }
+async function freePort() {
+  return await new Promise((resolve, reject) => {
+    const probe = http.createServer();
+    probe.on('error', reject);
+    probe.listen(0, '127.0.0.1', () => {
+      const port = probe.address().port;
+      probe.close(() => resolve(port));
+    });
+  });
+}
+async function waitForCdp(port, timeoutMs, stderrLines) {
+  const start = Date.now();
+  const url = 'http://127.0.0.1:' + port + '/json/version';
+  while (Date.now() - start < timeoutMs) {
+    try {
+      const response = await fetch(url);
+      if (response.ok) return await response.json();
+    } catch {}
+    await sleep(100);
+  }
+  throw new Error('timeout waiting for CDP on port ' + port + ' stderr=' + stderrLines.join(' | ').slice(0, 2000));
+}
 async function openSocket(url) {
   const ws = new WebSocket(url);
   await new Promise((resolve, reject) => {
@@ -148,16 +195,30 @@ async function openSocket(url) {
 
 if (chrome) {
   profile = fs.mkdtempSync(path.join(os.tmpdir(), 'asl-cdp-'));
+  const stderrLines = [];
+  let port = 0;
+  const fixedPort = process.platform !== 'win32';
+  if (fixedPort) port = await freePort();
   const args = [
-    '--headless=new', '--disable-gpu', '--no-sandbox', '--remote-debugging-address=127.0.0.1',
-    '--remote-debugging-port=0', '--user-data-dir=' + profile, 'about:blank'
+    '--headless=new', '--disable-gpu', '--disable-dev-shm-usage', '--no-sandbox', '--remote-debugging-address=127.0.0.1',
+    '--remote-debugging-port=' + port, '--user-data-dir=' + profile, 'about:blank'
   ];
-  chromeProc = spawn(chrome, args, { stdio: 'ignore' });
+  chromeProc = spawn(chrome, args, { stdio: ['ignore', 'ignore', 'pipe'] });
+  chromeProc.stderr?.setEncoding('utf8');
+  chromeProc.stderr?.on('data', (chunk) => {
+    for (const line of String(chunk).split(/\r?\n/).filter(Boolean)) {
+      if (stderrLines.length < 40) stderrLines.push(line);
+    }
+  });
   try {
-    const active = path.join(profile, 'DevToolsActivePort');
-    await waitForFile(active, 10000);
-    const lines = fs.readFileSync(active, 'utf8').trim().split(/\r?\n/);
-    const port = Number(lines[0]);
+    if (fixedPort) {
+      await waitForCdp(port, 20000, stderrLines);
+    } else {
+      const active = path.join(profile, 'DevToolsActivePort');
+      await waitForFile(active, 15000);
+      const lines = fs.readFileSync(active, 'utf8').trim().split(/\r?\n/);
+      port = Number(lines[0]);
+    }
     const createUrl = 'http://127.0.0.1:' + port + '/json/new?about:blank';
     const created = await fetch(createUrl, { method: 'PUT' }).then((r) => r.json());
     const cdp = await openSocket(created.webSocketDebuggerUrl);
@@ -169,7 +230,7 @@ if (chrome) {
       const beforeEvents = cdp.events.length;
       await cdp.send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: false });
       await cdp.send('Page.navigate', { url: origin + '/__typography_probe?lang=' + lang });
-      const expression = '(async()=>{if(document.readyState==="loading")await new Promise(r=>document.addEventListener("DOMContentLoaded",r,{once:true}));await document.fonts.ready;const g=id=>getComputedStyle(document.getElementById(id));const sh=document.getElementById("shortcut"),mod=document.getElementById("mod"),tn=sh.childNodes[1],range=document.createRange();range.selectNodeContents(tn);return {fontCount:document.fonts.size,onest:document.fonts.check("400 16px Onest"),unbounded:document.fonts.check("600 32px Unbounded"),bodyFamily:getComputedStyle(document.body).fontFamily,hFamily:g("heading").fontFamily,pFamily:g("copy").fontFamily,priceFamily:g("price").fontFamily,hTrack:g("heading").letterSpacing,priceTrack:g("price").letterSpacing,shortcutGap:range.getBoundingClientRect().left-mod.getBoundingClientRect().right,columnGap:getComputedStyle(sh).columnGap};})()';
+      const expression = '(async()=>{if(document.readyState==="loading")await new Promise(r=>document.addEventListener("DOMContentLoaded",r,{once:true}));await document.fonts.ready;const g=id=>getComputedStyle(document.getElementById(id));const sh=document.getElementById("shortcut"),mod=document.getElementById("mod"),tn=sh.childNodes[1],range=document.createRange();range.selectNodeContents(tn);return {fontCount:document.fonts.size,onest:document.fonts.check("400 16px Onest"),unbounded:document.fonts.check("600 32px Unbounded"),bodyFamily:getComputedStyle(document.body).fontFamily,hFamily:g("heading").fontFamily,pFamily:g("copy").fontFamily,priceFamily:g("price").fontFamily,hTrack:g("heading").letterSpacing,priceTrack:g("price").letterSpacing,moneyNodes:["legacyPrice","diagnosticPrice","moneyLine","ratePrice","grossValue"].map(id=>({id,family:g(id).fontFamily,track:g(id).letterSpacing})),moneyProseFamily:g("moneyProse").fontFamily,shortcutGap:range.getBoundingClientRect().left-mod.getBoundingClientRect().right,columnGap:getComputedStyle(sh).columnGap};})()';
       const result = await cdp.send('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true });
       const v = result.result && result.result.value ? result.result.value : {};
       req(Number(v.fontCount || 0) > 0, lang + '/' + width + ': document.fonts.size zero');
@@ -181,6 +242,12 @@ if (chrome) {
       req(String(v.priceFamily || '').includes('Unbounded'), lang + '/' + width + ': price family ' + v.priceFamily);
       req(String(v.hTrack || '') !== 'normal' && String(v.hTrack || '').startsWith('-'), lang + '/' + width + ': h1 tracking ' + v.hTrack);
       req(String(v.priceTrack || '') !== 'normal' && String(v.priceTrack || '').startsWith('-'), lang + '/' + width + ': price tracking ' + v.priceTrack);
+      req(Array.isArray(v.moneyNodes) && v.moneyNodes.length === 5, lang + '/' + width + ': R116 money probe count');
+      for (const node of (v.moneyNodes || [])) {
+        req(String(node.family || '').includes('Unbounded'), lang + '/' + width + ': R116 money family ' + node.id + ' ' + node.family);
+        req(String(node.track || '') !== 'normal' && String(node.track || '').startsWith('-'), lang + '/' + width + ': R116 money tracking ' + node.id + ' ' + node.track);
+      }
+      req(String(v.moneyProseFamily || '').includes('Onest'), lang + '/' + width + ': inline money prose must remain Onest, got ' + v.moneyProseFamily);
       req(Number(v.shortcutGap || 0) > 1, lang + '/' + width + ': Ctrl/K gap ' + v.shortcutGap);
       req(v.columnGap !== 'normal' && v.columnGap !== '0px', lang + '/' + width + ': column gap ' + v.columnGap);
 
@@ -191,6 +258,8 @@ if (chrome) {
       const external = urls.filter((u) => !u.startsWith(origin + '/') && !u.startsWith('data:'));
       req(external.length === 0, lang + '/' + width + ': external requests ' + JSON.stringify(external));
     }
+
+
     cdp.ws.close();
   } catch (e) {
     errors.push('CDP runtime: ' + (e && e.stack ? e.stack : String(e)));
@@ -202,7 +271,7 @@ if (chrome) {
 }
 await new Promise((resolve) => server.close(resolve));
 
-console.log('typography_runtime_checks=' + checks + ' fonts=2 html=' + htmls.length + ' browser_cases=4');
+console.log('typography_runtime_checks=' + checks + ' fonts=2 html=' + htmls.length + ' browser_cases=4 static_money_nodes=22 runtime_money_types=5 inline_money_prose=Onest');
 if (errors.length) {
   console.log('WORKSHOP_TYPOGRAPHY_RUNTIME_FAIL');
   for (const e of errors) console.log('FAIL:', e);
