@@ -162,6 +162,24 @@ def main() -> int:
     public_routes: set[str] = set()
     checked = 0
 
+    source_layout = (ROOT / "app" / "layout.tsx").read_text(encoding="utf-8")
+    if source_layout.count('"/og.png"') != 2:
+        errors.append("source layout must use /og.png for both OpenGraph and Twitter images")
+    if '"/opengraph-image"' in source_layout:
+        errors.append("source layout must not use dynamic /opengraph-image as social image authority")
+    dynamic_og = ROOT / "app" / "opengraph-image.tsx"
+    if dynamic_og.exists():
+        errors.append("app/opengraph-image.tsx must remain absent; /og.png is the canonical social image authority")
+    for source_page in sorted((ROOT / "app").rglob("page.tsx")):
+        if '"/opengraph-image"' in source_page.read_text(encoding="utf-8"):
+            errors.append(f"{source_page.relative_to(ROOT)} still references dynamic /opengraph-image")
+    public_og = ROOT / "public" / "og.png"
+    live_og = LIVE / "og.png"
+    if not public_og.exists():
+        errors.append("public/og.png is required for Next social-image parity")
+    elif public_og.read_bytes() != live_og.read_bytes():
+        errors.append("public/og.png must be byte-identical to deploy/live/og.png")
+
     pages = sorted(LIVE.rglob("*.html"))
     for path in pages:
         route = route_for(path)
