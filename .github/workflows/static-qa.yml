@@ -69,8 +69,8 @@ jobs:
         run: python scripts/check_lead_inbox.py
       - name: Validate inline client scripts
         run: python scripts/check_inline_scripts.py
-      - name: Validate runtime gate inventory
-        run: python scripts/check_runtime_gate_inventory.py
+      - name: Validate QA gate inventory
+        run: python scripts/check_qa_gate_inventory.py
       - name: Smoke-test matcher runtime
         run: node scripts/check_matcher_runtime.mjs
       - name: Smoke-test Start brief copy
