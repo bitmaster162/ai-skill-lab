@@ -134,6 +134,25 @@ def source_title(route: str) -> str | None:
     return value if route == "/" else f"{value} | AI Skill Lab"
 
 
+def source_alternates(route: str) -> tuple[str | None, dict[str, str]]:
+    raw = source_page_for(route).read_text(encoding="utf-8")
+    block = re.search(r"export const metadata[\s\S]*?=\s*\{([\s\S]*?)\};", raw)
+    if not block:
+        return None, {}
+    text = block.group(0)
+    canonical_match = re.search(r"\bcanonical\s*:\s*([\"'])(.*?)\1", text)
+    canonical = canonical_match.group(2).strip() if canonical_match else None
+    languages_match = re.search(r"\blanguages\s*:\s*\{([\s\S]*?)\}", text)
+    languages: dict[str, str] = {}
+    if languages_match:
+        lang_text = languages_match.group(1)
+        for lang in ("ru", "en"):
+            match = re.search(rf"\b{lang}\s*:\s*([\"'])(.*?)\1", lang_text)
+            if match:
+                languages[lang] = match.group(2).strip()
+    return canonical, languages
+
+
 def fail(errors: list[str], route: str, msg: str) -> None:
     errors.append(f"{route}: {msg}")
 
@@ -169,6 +188,17 @@ def main() -> int:
         source_desc = source_description(route)
         if source_desc != desc:
             fail(errors, route, f"source description {source_desc!r} != static {desc!r}")
+        source_canonical, source_languages = source_alternates(route)
+        expected_source_canonical = "/" if route == "/" else route
+        if source_canonical != expected_source_canonical:
+            fail(errors, route, f"source canonical {source_canonical!r} != {expected_source_canonical!r}")
+        source_ru, source_en, _ = paired_routes(route)
+        expected_source_languages = {
+            "ru": "/" if source_ru == "/" else source_ru,
+            "en": source_en,
+        }
+        if source_languages != expected_source_languages:
+            fail(errors, route, f"source languages {source_languages!r} != {expected_source_languages!r}")
         contracted_title = TITLE_CONTRACT.get(route)
         if contracted_title is not None and title != contracted_title:
             fail(errors, route, f"title {title!r} != contracted {contracted_title!r}")
