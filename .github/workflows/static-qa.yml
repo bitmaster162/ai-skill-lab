@@ -13,7 +13,7 @@ permissions:
 jobs:
   static-release:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
@@ -24,6 +24,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Validate locked npm install
+        run: npm ci --ignore-scripts --audit=false --fund=false
       - name: Validate static release
         run: python scripts/check_static_release.py
       - name: Validate search metadata
@@ -154,27 +158,3 @@ jobs:
         run: python scripts/check_lab_hub.py
       - name: Smoke-test Lab Command runtime
         run: node scripts/check_lab_command_runtime.mjs
-      - name: R128 resolve package lock
-        if: github.ref == 'refs/heads/agent/r128-lockfile-resolve-r1'
-        run: |
-          node --version
-          npm --version
-          npm install --package-lock-only --ignore-scripts
-      - name: R128 verify npm ci
-        if: github.ref == 'refs/heads/agent/r128-lockfile-resolve-r1'
-        run: npm ci
-      - name: R128 verify Next build
-        if: github.ref == 'refs/heads/agent/r128-lockfile-resolve-r1'
-        run: npm run build
-      - name: R128 capture resolution
-        if: github.ref == 'refs/heads/agent/r128-lockfile-resolve-r1'
-        run: npm ls --depth=0 > r128-resolution.txt
-      - uses: actions/upload-artifact@v4
-        if: github.ref == 'refs/heads/agent/r128-lockfile-resolve-r1'
-        with:
-          name: r128-lockfile
-          path: |
-            package-lock.json
-            r128-resolution.txt
-          if-no-files-found: error
-          retention-days: 1
