@@ -317,3 +317,6 @@ button { cursor: pointer; }
 @font-face{font-family:"Onest";src:url("/fonts/Onest-ru-en.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
 @font-face{font-family:"Unbounded";src:url("/fonts/Unbounded-ru-en.woff2") format("woff2");font-style:normal;font-weight:200 900;font-display:swap}
 body{font-family:"Onest",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+/* R116 dedicated monetary typography; inline prose with amounts remains Onest. */
+.price,.diagnostic strong,.moneyLine,.businessValueInputs label[for="bv-rate"] strong,.businessValueResults strong[data-bv-result="grossValue"]{font-family:"Unbounded",system-ui,sans-serif;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+html[lang="en"] .price,html[lang="en"] .diagnostic strong,html[lang="en"] .moneyLine,html[lang="en"] .businessValueInputs label[for="bv-rate"] strong,html[lang="en"] .businessValueResults strong[data-bv-result="grossValue"]{letter-spacing:-.005em}

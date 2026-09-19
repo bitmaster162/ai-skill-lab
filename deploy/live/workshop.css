@@ -48,3 +48,6 @@ body,.workshopPage{font-family:"Onest",system-ui,-apple-system,BlinkMacSystemFon
 .workshopPage main :is(h1,h2,h3),.workshopPage .priceCard>strong,.workshopPage .familyPrice strong,.workshopPage .audiencePrices strong{font-family:"Unbounded",system-ui,sans-serif;letter-spacing:-.01em}
 html[lang="en"] .workshopPage main :is(h1,h2,h3),html[lang="en"] .workshopPage .priceCard>strong,html[lang="en"] .workshopPage .familyPrice strong,html[lang="en"] .workshopPage .audiencePrices strong{letter-spacing:-.005em}
 .workshopUtility[data-lab-command-open]{column-gap:.25em}
+/* R116 dedicated monetary typography; inline prose with amounts remains Onest. */
+.workshopPage .price,.workshopPage .diagnostic strong,.workshopPage .moneyLine,.workshopPage .businessValueInputs label[for="bv-rate"] strong,.workshopPage .businessValueResults strong[data-bv-result="grossValue"]{font-family:"Unbounded",system-ui,sans-serif;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+html[lang="en"] .workshopPage .price,html[lang="en"] .workshopPage .diagnostic strong,html[lang="en"] .workshopPage .moneyLine,html[lang="en"] .workshopPage .businessValueInputs label[for="bv-rate"] strong,html[lang="en"] .workshopPage .businessValueResults strong[data-bv-result="grossValue"]{letter-spacing:-.005em}

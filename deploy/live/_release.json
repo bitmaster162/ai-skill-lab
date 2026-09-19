@@ -73,8 +73,8 @@
     },
     {
       "path": "en/kids.html",
-      "sha256": "31762337f9e1ba62a00e1409ca9ba128619b2479c3cd2dbf73d03fa8395fd348",
-      "size": 8089
+      "sha256": "666e0f0fab1f6ba95d6e7b1be73a0d5a9a698a2da3562b1a08262a7fa93dfde9",
+      "size": 8107
     },
     {
       "path": "en/matcher.html",
@@ -178,8 +178,8 @@
     },
     {
       "path": "kids.html",
-      "sha256": "e4c58f87c18b46ab6c924b27da36b34441638beae0615ea19e309b5293945f09",
-      "size": 10308
+      "sha256": "8b6965ec0232ee001e3199d32f401775ec92fd5e07afbe1d51c09aaadc77cae9",
+      "size": 10326
     },
     {
       "path": "lab-command.js",
@@ -303,11 +303,11 @@
     },
     {
       "path": "workshop.css",
-      "sha256": "a6e4a841cc032c9736ae0b7f5a88b9723c728be5d0a2c3c067e66c2b5aace9b2",
-      "size": 22875
+      "sha256": "ce55ec1e1b69f3bd604a419d0c575850181afb0327adeccd6e4929af0e5c378f",
+      "size": 23592
     }
   ],
-  "payload_sha256": "97d108ab1bbabc877d5892d618266bd36a0ac64fd2d38df4434deb96ee97cb72",
-  "release_id": "R115_WORKSHOP_TYPOGRAPHY",
+  "payload_sha256": "65a5dd705cec4945e20cf71762bdb13df5aa430d1b5f1e5ca3aefdf288b7ae2f",
+  "release_id": "R116_MONETARY_TYPOGRAPHY",
   "schema": "ai-skill-lab.static-release.v1"
 }
