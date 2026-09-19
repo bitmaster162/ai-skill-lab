@@ -116,7 +116,8 @@ if release in {'R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION','R111D_S
  static_css='.workshopMark{display:inline-flex;width:26px;height:26px;margin-right:10px;flex:none;color:var(--acid)}.workshopMark svg{display:block;width:100%;height:100%;fill:currentColor}'
  require(static_css in read('deploy/live/workshop.css'),'R111B static mark CSS')
  fav='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><style>path{fill:#b9ff3f}@media(prefers-color-scheme:light){path{fill:#0b0d10}}</style><path fill-rule="evenodd" d="'+brand_path+'"/></svg>'+chr(10)
- require(read('app/icon.svg')==fav,'R111B source favicon exact')
+ require(not (ROOT/'app/icon.svg').exists(),'R126 file-based source favicon absent')
+ require(read('public/favicon.svg')==fav,'R126 source favicon exact')
  require(read('deploy/live/favicon.svg')==fav,'R111B static favicon exact')
 all_html=list(LIVE.rglob('*.html'));public=[p for p in all_html if p.name!='404.html']
 require(len(all_html)==47,'47 static HTML files')

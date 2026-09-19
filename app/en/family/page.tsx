@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { WorkshopFamily } from "@/components/workshop/WorkshopFamily";
+export const viewport: Viewport = { themeColor: "#2b0a1c" };
 export const metadata: Metadata = { title: { absolute: "Family Concierge — family AI program" }, description: "Family Concierge: 12 learner sessions, 2 parent sessions, a final project and written household rules for safer, more independent AI use.", alternates: { canonical: "/en/family", languages: { ru: "/family", en: "/en/family" } } };
 export default function FamilyPage(){return <WorkshopFamily locale="en"/>}
