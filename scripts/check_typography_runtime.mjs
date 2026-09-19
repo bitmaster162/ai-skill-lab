@@ -56,6 +56,34 @@ const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) =
 });
 const htmls = walk(LIVE).filter((p) => p.endsWith('.html')).sort();
 req(htmls.length === 47, 'html surfaces ' + htmls.length + ' != 47');
+
+const forbiddenStatusGlyph = String.fromCodePoint(0x25CF);
+const decodeText = (raw) => raw
+  .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+  .replace(/&#([0-9]+);/g, (_, d) => String.fromCodePoint(parseInt(d, 10)))
+  .replace(/&amp;/gi, '&').replace(/&lt;/gi, '<').replace(/&gt;/gi, '>').replace(/&quot;/gi, '"').replace(/&copy;/gi, '©');
+const corpusSet = new Set();
+for (const hp of htmls) {
+  let body = fs.readFileSync(hp, 'utf8').match(/<body[^>]*>([\s\S]*?)<\/body>/i)?.[1] || '';
+  body = body
+    .replace(/<script\b[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style\b[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<svg\b[\s\S]*?<\/svg>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ');
+  body = decodeText(body);
+  req(!body.includes(forbiddenStatusGlyph), path.relative(LIVE, hp).replaceAll('\\', '/') + ': U+25CF must not remain in public text');
+  for (const ch of body) if (!/\s/u.test(ch)) corpusSet.add(ch);
+}
+const glyphCorpus = [...corpusSet].sort((a,b) => a.codePointAt(0)-b.codePointAt(0)).join('');
+req(glyphCorpus.length > 100, 'glyph corpus unexpectedly small: ' + glyphCorpus.length);
+
+const activeUiFiles = [
+  ...walk(path.join(ROOT, 'app')).filter((p) => /\.(tsx|ts|css)$/.test(p)),
+  ...walk(path.join(ROOT, 'components')).filter((p) => /\.(tsx|ts|css)$/.test(p)),
+];
+for (const fp of activeUiFiles) {
+  req(!fs.readFileSync(fp, 'utf8').includes(forbiddenStatusGlyph), path.relative(ROOT, fp).replaceAll('\\','/') + ': U+25CF literal in active UI source');
+}
 for (const hp of htmls) {
   const t = fs.readFileSync(hp, 'utf8');
   const rel = path.relative(LIVE, hp).replaceAll('\\', '/');
@@ -98,7 +126,8 @@ const server = http.createServer((request, response) => {
   const u = new URL(request.url || '/', 'http://127.0.0.1');
   if (u.pathname === '/__typography_probe') {
     const lang = u.searchParams.get('lang') === 'en' ? 'en' : 'ru';
-    const body = '<!doctype html><html lang="' + lang + '"><head><meta charset="utf-8"><link rel="stylesheet" href="/workshop.css"></head><body><div class="workshopPage"><main><section class="workshopHero"><h1 id="heading">Русский AI headline</h1><p id="copy">Body text</p><article class="priceCard"><strong id="price">$1,490</strong></article><div class="price" id="legacyPrice">$290</div><article class="diagnostic"><strong id="diagnosticPrice">$120</strong></article><p class="moneyLine" id="moneyLine">$1,490 · family package</p><div class="businessValueInputs"><label for="bv-rate"><strong id="ratePrice">$25/h</strong></label></div><div class="businessValueResults"><strong id="grossValue" data-bv-result="grossValue">~$975 / month</strong></div><p id="moneyProse">Minimum engagement from $1,560.</p><button id="shortcut" class="workshopUtility" data-lab-command-open><span id="mod">Ctrl</span> K</button></section></main></div></body></html>';
+    const corpusB64 = Buffer.from(glyphCorpus, 'utf8').toString('base64');
+    const body = '<!doctype html><html lang="' + lang + '"><head><meta charset="utf-8"><link rel="stylesheet" href="/workshop.css"></head><body><div class="workshopPage"><main><section class="workshopHero"><h1 id="heading">Русский AI headline</h1><p id="copy">Body text</p><article class="priceCard"><strong id="price">$1,490</strong></article><div class="price" id="legacyPrice">$290</div><article class="diagnostic"><strong id="diagnosticPrice">$120</strong></article><p class="moneyLine" id="moneyLine">$1,490 · family package</p><div class="businessValueInputs"><label for="bv-rate"><strong id="ratePrice">$25/h</strong></label></div><div class="businessValueResults"><strong id="grossValue" data-bv-result="grossValue">~$975 / month</strong></div><p id="moneyProse">Minimum engagement from $1,560.</p><span id="statusDot" class="statusDot">STATUS</span><span id="glyphCorpus" hidden data-corpus="' + corpusB64 + '"></span><button id="shortcut" class="workshopUtility" data-lab-command-open><span id="mod">Ctrl</span> K</button></section></main></div></body></html>';
     response.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': Buffer.byteLength(body) });
     response.end(body);
     return;
@@ -230,7 +259,7 @@ if (chrome) {
       const beforeEvents = cdp.events.length;
       await cdp.send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: false });
       await cdp.send('Page.navigate', { url: origin + '/__typography_probe?lang=' + lang });
-      const expression = '(async()=>{if(document.readyState==="loading")await new Promise(r=>document.addEventListener("DOMContentLoaded",r,{once:true}));await document.fonts.ready;const g=id=>getComputedStyle(document.getElementById(id));const sh=document.getElementById("shortcut"),mod=document.getElementById("mod"),tn=sh.childNodes[1],range=document.createRange();range.selectNodeContents(tn);return {fontCount:document.fonts.size,onest:document.fonts.check("400 16px Onest"),unbounded:document.fonts.check("600 32px Unbounded"),bodyFamily:getComputedStyle(document.body).fontFamily,hFamily:g("heading").fontFamily,pFamily:g("copy").fontFamily,priceFamily:g("price").fontFamily,hTrack:g("heading").letterSpacing,priceTrack:g("price").letterSpacing,moneyNodes:["legacyPrice","diagnosticPrice","moneyLine","ratePrice","grossValue"].map(id=>({id,family:g(id).fontFamily,track:g(id).letterSpacing})),moneyProseFamily:g("moneyProse").fontFamily,shortcutGap:range.getBoundingClientRect().left-mod.getBoundingClientRect().right,columnGap:getComputedStyle(sh).columnGap};})()';
+      const expression = '(async()=>{if(document.readyState==="loading")await new Promise(r=>document.addEventListener("DOMContentLoaded",r,{once:true}));await document.fonts.ready;const g=id=>getComputedStyle(document.getElementById(id));const sh=document.getElementById("shortcut"),mod=document.getElementById("mod"),tn=sh.childNodes[1],range=document.createRange();range.selectNodeContents(tn);return {fontCount:document.fonts.size,onest:document.fonts.check("400 16px Onest"),unbounded:document.fonts.check("600 32px Unbounded"),bodyFamily:getComputedStyle(document.body).fontFamily,hFamily:g("heading").fontFamily,pFamily:g("copy").fontFamily,priceFamily:g("price").fontFamily,hTrack:g("heading").letterSpacing,priceTrack:g("price").letterSpacing,moneyNodes:["legacyPrice","diagnosticPrice","moneyLine","ratePrice","grossValue"].map(id=>({id,family:g(id).fontFamily,track:g(id).letterSpacing})),moneyProseFamily:g("moneyProse").fontFamily,statusDot:(()=>{const e=document.getElementById("statusDot"),p=getComputedStyle(e,"::before");return {text:e.textContent,content:p.content,width:p.width,height:p.height,radius:p.borderRadius,bg:p.backgroundColor}})(),glyphCoverage:(()=>{const raw=atob(document.getElementById("glyphCorpus").dataset.corpus),bytes=Uint8Array.from(raw,c=>c.charCodeAt(0)),corpus=new TextDecoder().decode(bytes),canvas=document.createElement("canvas"),x=canvas.getContext("2d"),miss={Onest:[],Unbounded:[]};for(const fam of ["Onest","Unbounded"]){for(const ch of [...corpus]){const widths=[];for(const fb of ["monospace","serif","sans-serif"]){x.font="32px "+fam+", "+fb;widths.push(x.measureText(ch).width)}if(Math.max(...widths)-Math.min(...widths)>.01)miss[fam].push({ch,cp:ch.codePointAt(0),widths})}}return miss})(),shortcutGap:range.getBoundingClientRect().left-mod.getBoundingClientRect().right,columnGap:getComputedStyle(sh).columnGap};})()';
       const result = await cdp.send('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true });
       const v = result.result && result.result.value ? result.result.value : {};
       req(Number(v.fontCount || 0) > 0, lang + '/' + width + ': document.fonts.size zero');
@@ -248,6 +277,11 @@ if (chrome) {
         req(String(node.track || '') !== 'normal' && String(node.track || '').startsWith('-'), lang + '/' + width + ': R116 money tracking ' + node.id + ' ' + node.track);
       }
       req(String(v.moneyProseFamily || '').includes('Onest'), lang + '/' + width + ': inline money prose must remain Onest, got ' + v.moneyProseFamily);
+      req(v.statusDot && v.statusDot.text === 'STATUS', lang + '/' + width + ': statusDot text drift');
+      req(v.statusDot && v.statusDot.content === '""', lang + '/' + width + ': statusDot pseudo content ' + (v.statusDot && v.statusDot.content));
+      req(v.statusDot && parseFloat(v.statusDot.width) > 0 && parseFloat(v.statusDot.height) > 0, lang + '/' + width + ': statusDot shape missing');
+      req(v.glyphCoverage && Array.isArray(v.glyphCoverage.Onest) && v.glyphCoverage.Onest.length === 0, lang + '/' + width + ': Onest fallback glyphs ' + JSON.stringify(v.glyphCoverage && v.glyphCoverage.Onest));
+      req(v.glyphCoverage && Array.isArray(v.glyphCoverage.Unbounded) && v.glyphCoverage.Unbounded.length === 0, lang + '/' + width + ': Unbounded fallback glyphs ' + JSON.stringify(v.glyphCoverage && v.glyphCoverage.Unbounded));
       req(Number(v.shortcutGap || 0) > 1, lang + '/' + width + ': Ctrl/K gap ' + v.shortcutGap);
       req(v.columnGap !== 'normal' && v.columnGap !== '0px', lang + '/' + width + ': column gap ' + v.columnGap);
 
@@ -271,7 +305,7 @@ if (chrome) {
 }
 await new Promise((resolve) => server.close(resolve));
 
-console.log('typography_runtime_checks=' + checks + ' fonts=2 html=' + htmls.length + ' browser_cases=4 static_money_nodes=22 runtime_money_types=5 inline_money_prose=Onest');
+console.log('typography_runtime_checks=' + checks + ' fonts=2 html=' + htmls.length + ' browser_cases=4 static_money_nodes=22 runtime_money_types=5 inline_money_prose=Onest glyph_corpus=' + glyphCorpus.length + ' fallback_glyphs=0');
 if (errors.length) {
   console.log('WORKSHOP_TYPOGRAPHY_RUNTIME_FAIL');
   for (const e of errors) console.log('FAIL:', e);

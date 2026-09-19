@@ -13,18 +13,18 @@
     },
     {
       "path": "build.html",
-      "sha256": "0c3124bd895add2725f446f635114dbf401c393e26ed5e33306956f09f581a77",
-      "size": 13501
+      "sha256": "508338ba65a8bd3951a991dddede268ac9407f5a4e269b370c073a1188f68c98",
+      "size": 13515
     },
     {
       "path": "business.html",
-      "sha256": "ccc336ab4da229f968bf380e9e484b6a6313bc4222c12980606ea9e1f40720d6",
-      "size": 23106
+      "sha256": "61cb54398e8539bcb9a7220a3da823243f4c17c28223add46c81a67230b9a799",
+      "size": 23081
     },
     {
       "path": "challenge.html",
-      "sha256": "3d994d3713489c08692cfbb3b7eb5fb0ce8b853c3be1cf33ce46f7da22910f26",
-      "size": 10589
+      "sha256": "dbcaad357ddae75e454b96105ff3ed775390e7aad3ff908b5701375b187da06a",
+      "size": 10603
     },
     {
       "path": "curriculum.html",
@@ -43,18 +43,18 @@
     },
     {
       "path": "en/build.html",
-      "sha256": "301f0825c0bcfc192dde0766b71bf4fe35a27893f8957a4ee52d3ff4e3d3927c",
-      "size": 11499
+      "sha256": "729d74c7983abc1214f0191081efb29e97f8ad0ef97051b97e516f24305a797c",
+      "size": 11513
     },
     {
       "path": "en/business.html",
-      "sha256": "e670d23e3918b007788ba3196557c22339a9bcc76c57755b06c56fcac42533e2",
-      "size": 18405
+      "sha256": "98917e210a88f2e0269ac897b21b60d6178073382d4915b968273d0853f10ece",
+      "size": 18380
     },
     {
       "path": "en/challenge.html",
-      "sha256": "18b3a000eae86c3b1721b1d3889c774b4512e91fa496b7117e3853cdb3f1f6b1",
-      "size": 9219
+      "sha256": "2acb9aed4bf35830f7f13183c8f2fbd3951b024a6fe6765fdc3bb2cee05b19fb",
+      "size": 9233
     },
     {
       "path": "en/curriculum.html",
@@ -78,8 +78,8 @@
     },
     {
       "path": "en/matcher.html",
-      "sha256": "25716979474bf9d96138066699f39d5c234e49ec039cb53d3c8f9ad26f235444",
-      "size": 12292
+      "sha256": "1314dad42c209623eb052394f70b865fef1ff9c2e6bd0096e0c53977a6a7d8eb",
+      "size": 12286
     },
     {
       "path": "en/method.html",
@@ -118,8 +118,8 @@
     },
     {
       "path": "en/proof.html",
-      "sha256": "47c66f75fcf1f337edc6b3a3e749e02fde602a0ea26b3474b5140e7ab7cfa292",
-      "size": 19879
+      "sha256": "b00e32f1dd5133eb2a5156b9b39ac999ba7124480cf8965c892d5861ce101818",
+      "size": 19893
     },
     {
       "path": "en/safety.html",
@@ -133,8 +133,8 @@
     },
     {
       "path": "en/studio.html",
-      "sha256": "d49fe3048a317c98fc8b3cce03a59f89093725932216c6876ef8c8e9e918f39f",
-      "size": 9790
+      "sha256": "ef62d2bfc14da0ee19d31ba738c64120eeb49e711ab25c27a9f9df316b85687d",
+      "size": 9804
     },
     {
       "path": "en/teens.html",
@@ -198,8 +198,8 @@
     },
     {
       "path": "matcher.html",
-      "sha256": "7fffcb127d85a7aee154fd9ae3e2c87e1f319e57061d7b5eacb3774b8bb3bc12",
-      "size": 13835
+      "sha256": "7f3274f50f0440e07af3a4f25b368cf1f25eea932c5c93bb332c27f0234351d2",
+      "size": 13829
     },
     {
       "path": "method.html",
@@ -248,8 +248,8 @@
     },
     {
       "path": "proof.html",
-      "sha256": "8230fa9307b0c186ea2daab12f2a972533ef5e9f984917bfa6b3b6e8b77b0080",
-      "size": 23456
+      "sha256": "912bef4a8abb22c997d4474ea7e22515dbd5a3a37652dd05aaf49a5b9549e69a",
+      "size": 23470
     },
     {
       "path": "robots.txt",
@@ -283,8 +283,8 @@
     },
     {
       "path": "studio.html",
-      "sha256": "a9b2075458a015595f44a5e975be776e41de5215a867ac2572f95ea68df6c827",
-      "size": 11420
+      "sha256": "0d32d0a0aa331706d4316c778816c1b0cecaa6a451ae137f875512289e56d14f",
+      "size": 11434
     },
     {
       "path": "teens.html",
@@ -303,11 +303,11 @@
     },
     {
       "path": "workshop.css",
-      "sha256": "ce55ec1e1b69f3bd604a419d0c575850181afb0327adeccd6e4929af0e5c378f",
-      "size": 23592
+      "sha256": "dd00956a43cd85508bb672f83352cdb4c1bc819fee3ddde74fa6269ccbff7173",
+      "size": 23873
     }
   ],
-  "payload_sha256": "65a5dd705cec4945e20cf71762bdb13df5aa430d1b5f1e5ca3aefdf288b7ae2f",
-  "release_id": "R116_MONETARY_TYPOGRAPHY",
+  "payload_sha256": "ed6668e0fdb7615412ecfe8823397580640a2f09af2071f94b32405703b3a8cd",
+  "release_id": "R117_GLYPH_FALLBACK",
   "schema": "ai-skill-lab.static-release.v1"
 }

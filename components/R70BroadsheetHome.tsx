@@ -249,7 +249,7 @@ export function R70BroadsheetHome({ locale = "ru" }: BroadsheetHomeProps) {
               <div className={styles.proofBoard} aria-label={isRu ? "Гейты релизной системы" : "Release system gates"}>
                 <div className={styles.proofBoardHeader}>
                   <span className={styles.proofBoardTitle}>AI SKILL LAB / R75 LIVE VERIFIED EVIDENCE</span>
-                  <span className={styles.proofBoardBadge}>● R75 LIVE VERIFIED</span>
+                  <span className={`${styles.proofBoardBadge} statusDot`}>R75 LIVE VERIFIED</span>
                 </div>
                 <ul className={styles.proofGateList}>
                   <li className={styles.proofGateRow}>
