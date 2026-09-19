@@ -313,3 +313,7 @@ button { cursor: pointer; }
 .proofLabStage .proofLabTitleRow h2{color:#f2f4f7}
 /* Matcher conversion parity */
 .matcherStartLink,.matcherReset{min-height:44px}
+/* R115 Workshop typography: self-hosted RU+EN variable subsets. */
+@font-face{font-family:"Onest";src:url("/fonts/Onest-ru-en.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
+@font-face{font-family:"Unbounded";src:url("/fonts/Unbounded-ru-en.woff2") format("woff2");font-style:normal;font-weight:200 900;font-display:swap}
+body{font-family:"Onest",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}

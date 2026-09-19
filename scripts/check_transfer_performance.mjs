@@ -13,6 +13,8 @@ const MAX_CSS_BR = 8 * 1024;
 const MAX_SHARED_JS_BR = 1 * 1024;
 const MAX_FIRST_VIEW_BR = 16 * 1024;
 const MAX_FIRST_VIEW_GZIP = 20 * 1024;
+const MAX_PRELOAD_FONT_BYTES = 84 * 1024;
+const MAX_FIRST_VIEW_WITH_FONTS = 100 * 1024;
 const IMPORT_RE = /@import\s+(?:url\()?[\"']?([^\"')\s;]+)/gi;
 const LINK_RE = /<link\b[^>]*>/gi;
 const SCRIPT_RE = /<script\b[^>]*>/gi;
@@ -67,11 +69,13 @@ function cssGraph(entry, seen = new Set()) {
 
 function pageAssets(page, html) {
   const cssEntries = [];
+  const fontEntries = [];
   LINK_RE.lastIndex = 0;
   for (let m; (m = LINK_RE.exec(html)); ) {
     const rel = (attr(m[0], 'rel') || '').toLowerCase().split(/\s+/).filter(Boolean);
     const href = attr(m[0], 'href');
     if (rel.includes('stylesheet') && href) cssEntries.push(localAsset(href, page, 'stylesheet'));
+    else if (rel.includes('preload') && (attr(m[0], 'as') || '').toLowerCase() === 'font' && href) fontEntries.push(localAsset(href, page, 'font-preload'));
   }
 
   const cssSeen = new Set();
@@ -89,7 +93,14 @@ function pageAssets(page, html) {
     jsSeen.add(full);
     js.push({ path: full, buf: fs.readFileSync(full) });
   }
-  return { css, js };
+  const fontSeen = new Set();
+  const fonts = [];
+  for (const full of fontEntries) {
+    if (fontSeen.has(full)) continue;
+    fontSeen.add(full);
+    fonts.push({ path: full, buf: fs.readFileSync(full) });
+  }
+  return { css, js, fonts };
 }
 
 const errors = [];
@@ -104,22 +115,28 @@ let largestCssBr = { bytes: 0, route: '', files: 0 };
 let largestJsBr = { bytes: 0, route: '', files: 0 };
 let worstBr = { bytes: 0, route: '' };
 let worstGz = { bytes: 0, route: '' };
+let worstWithFonts = { bytes: 0, route: '', fontBytes: 0 };
 const pages = walk(LIVE).filter((p) => p.endsWith('.html')).sort();
 
 for (const page of pages) {
   const rel = path.relative(LIVE, page).replaceAll('\\', '/');
   const htmlBuf = fs.readFileSync(page);
   const html = htmlBuf.toString('utf8');
-  const { css, js } = pageAssets(page, html);
+  const { css, js, fonts } = pageAssets(page, html);
   const htmlBr = br(htmlBuf);
   const htmlGz = gz(htmlBuf);
   const cssBr = sum(css, br);
   const cssGz = sum(css, gz);
   const jsBr = sum(js, br);
   const jsGz = sum(js, gz);
+  const fontBytes = fonts.reduce((n, item) => n + item.buf.length, 0);
   const firstBr = htmlBr + cssBr + jsBr;
   const firstGz = htmlGz + cssGz + jsGz;
+  const firstWithFonts = firstBr + fontBytes;
 
+  checks++; if (fonts.length !== 2) errors.push(rel + ': font preloads ' + fonts.length + ' != 2');
+  checks++; if (fontBytes > MAX_PRELOAD_FONT_BYTES) errors.push(rel + ': preload font bytes ' + fontBytes + ' > ' + MAX_PRELOAD_FONT_BYTES);
+  checks++; if (firstWithFonts > MAX_FIRST_VIEW_WITH_FONTS) errors.push(rel + ': first-view with fonts ' + firstWithFonts + ' > ' + MAX_FIRST_VIEW_WITH_FONTS);
   checks++; if (htmlBr > MAX_HTML_BR) errors.push(`${rel}: HTML brotli ${htmlBr} > ${MAX_HTML_BR}`);
   checks++; if (cssBr > MAX_CSS_BR) errors.push(`${rel}: CSS brotli ${cssBr} > ${MAX_CSS_BR}`);
   checks++; if (firstBr > MAX_FIRST_VIEW_BR) errors.push(`${rel}: first-view brotli ${firstBr} > ${MAX_FIRST_VIEW_BR}`);
@@ -130,6 +147,7 @@ for (const page of pages) {
   if (jsBr > largestJsBr.bytes) largestJsBr = { bytes: jsBr, route: rel, files: js.length };
   if (firstBr > worstBr.bytes) worstBr = { bytes: firstBr, route: rel };
   if (firstGz > worstGz.bytes) worstGz = { bytes: firstGz, route: rel };
+  if (firstWithFonts > worstWithFonts.bytes) worstWithFonts = { bytes: firstWithFonts, route: rel, fontBytes };
 }
 
 console.log(`transfer_performance_checks=${checks} pages=${pages.length} shared_lab_br=${sharedLabBr}`);
@@ -138,6 +156,7 @@ console.log(`largest_css_br=${largestCssBr.bytes} route=${largestCssBr.route} fi
 console.log(`largest_js_br=${largestJsBr.bytes} route=${largestJsBr.route} files=${largestJsBr.files}`);
 console.log(`worst_first_view_br=${worstBr.bytes} route=${worstBr.route} budget=${MAX_FIRST_VIEW_BR}`);
 console.log(`worst_first_view_gzip=${worstGz.bytes} route=${worstGz.route} budget=${MAX_FIRST_VIEW_GZIP}`);
+console.log('worst_first_view_with_fonts=' + worstWithFonts.bytes + ' route=' + worstWithFonts.route + ' font_bytes=' + worstWithFonts.fontBytes + ' budget=' + MAX_FIRST_VIEW_WITH_FONTS);
 if (errors.length) {
   console.log('TRANSFER_PERFORMANCE_FAIL');
   for (const error of errors) console.log('-', error);
