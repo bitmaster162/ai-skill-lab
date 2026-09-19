@@ -33,6 +33,8 @@ jobs:
         run: python scripts/check_static_performance.py
       - name: Enforce transfer performance budget
         run: node scripts/check_transfer_performance.mjs
+      - name: Validate Workshop typography runtime
+        run: node --experimental-websocket scripts/check_typography_runtime.mjs
       - name: Validate contrast tokens
         run: python scripts/check_contrast_tokens.py
       - name: Validate motion policy

@@ -18,6 +18,7 @@ CHECKS = [
     ("security_headers", ["python", "scripts/check_security_headers.py"]),
     ("static_performance", ["python", "scripts/check_static_performance.py"]),
     ("transfer_performance", ["node", "scripts/check_transfer_performance.mjs"]),
+    ("typography_runtime", ["node", "--experimental-websocket", "scripts/check_typography_runtime.mjs"]),
     ("contrast_tokens", ["python", "scripts/check_contrast_tokens.py"]),
     ("motion_policy", ["python", "scripts/check_motion_policy.py"]),
     ("static_accessibility", ["python", "scripts/check_static_accessibility.py"]),

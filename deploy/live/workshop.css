@@ -41,3 +41,10 @@
 .proofMiniCard>strong{margin:8px 0}
 .projectStudioStatus>strong,.projectStudioStatus>span{display:block}
 .labDialog :is(p,.proofConsoleTop,.proofConsoleFoot){display:flex;gap:8px;flex-wrap:wrap}.labDialog :is(a,button){padding:13px}
+/* R115 Workshop v1 typography roles; existing size scale intentionally unchanged. */
+@font-face{font-family:"Onest";src:url("/fonts/Onest-ru-en.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
+@font-face{font-family:"Unbounded";src:url("/fonts/Unbounded-ru-en.woff2") format("woff2");font-style:normal;font-weight:200 900;font-display:swap}
+body,.workshopPage{font-family:"Onest",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.workshopPage main :is(h1,h2,h3),.workshopPage .priceCard>strong,.workshopPage .familyPrice strong,.workshopPage .audiencePrices strong{font-family:"Unbounded",system-ui,sans-serif;letter-spacing:-.01em}
+html[lang="en"] .workshopPage main :is(h1,h2,h3),html[lang="en"] .workshopPage .priceCard>strong,html[lang="en"] .workshopPage .familyPrice strong,html[lang="en"] .workshopPage .audiencePrices strong{letter-spacing:-.005em}
+.workshopUtility[data-lab-command-open]{column-gap:.25em}

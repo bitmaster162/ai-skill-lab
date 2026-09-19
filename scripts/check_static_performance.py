@@ -8,7 +8,9 @@ import re, sys
 ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/'deploy'/'live'
 
-MAX_TOTAL=516*1024  # R112 bounded allowance for 46-route platform shortcut markup + title clarity
+MAX_NON_FONT_TOTAL=526*1024  # R115: R114 payload + bounded 47-surface preload markup + typography CSS
+MAX_FONT_TOTAL=84*1024
+MAX_FONT_FILE=54*1024
 MAX_HTML=24*1024
 MAX_CSS=36*1024
 MAX_IMAGE=128*1024
@@ -47,9 +49,19 @@ def external(url:str)->bool:
 
 errors=[]; checks=0
 files=[p for p in LIVE.rglob('*') if p.is_file() and p.name!='_release.json']
-total=sum(p.stat().st_size for p in files)
+font_files=[p for p in files if p.suffix.lower()=='.woff2']
+font_total=sum(p.stat().st_size for p in font_files)
+non_font_total=sum(p.stat().st_size for p in files if p not in font_files)
+total=font_total+non_font_total
 checks+=1
-if total>MAX_TOTAL:errors.append(f'total payload {total} > {MAX_TOTAL}')
+if non_font_total>MAX_NON_FONT_TOTAL:errors.append(f'non-font payload {non_font_total} > {MAX_NON_FONT_TOTAL}')
+checks+=1
+if font_total>MAX_FONT_TOTAL:errors.append(f'font payload {font_total} > {MAX_FONT_TOTAL}')
+checks+=1
+if len(font_files)!=2:errors.append(f'woff2 files {len(font_files)} != 2')
+for font in font_files:
+    checks+=1
+    if font.stat().st_size>MAX_FONT_FILE:errors.append(f'{font.relative_to(LIVE)} {font.stat().st_size} > {MAX_FONT_FILE}')
 
 css_files=sorted(LIVE.rglob('*.css'))
 for css in css_files:
@@ -85,7 +97,7 @@ for p in sorted(LIVE.rglob('*')):
         checks+=1
         if p.stat().st_size>MAX_IMAGE:errors.append(f'{p.relative_to(LIVE)}: image {p.stat().st_size} > {MAX_IMAGE}')
 
-print(f'performance_checks={checks} total_bytes={total} css_files={len(css_files)} files={len(files)}')
+print(f'performance_checks={checks} total_bytes={total} non_font_bytes={non_font_total} font_bytes={font_total} css_files={len(css_files)} files={len(files)}')
 if errors:
     print('STATIC_PERFORMANCE_FAIL');[print('-',e) for e in errors];sys.exit(1)
 print('STATIC_PERFORMANCE_PASS')
