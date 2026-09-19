@@ -103,6 +103,21 @@ def one_link(p: HeadParser, rel: str, hreflang: str | None = None) -> str | None
     return found[0] if len(found) == 1 else None
 
 
+def source_page_for(route: str) -> Path:
+    if route == "/":
+        return ROOT / "app" / "page.tsx"
+    return ROOT / "app" / route.lstrip("/") / "page.tsx"
+
+
+def source_description(route: str) -> str | None:
+    raw = source_page_for(route).read_text(encoding="utf-8")
+    block = re.search(r"export const metadata[\s\S]*?=\s*\{([\s\S]*?)\};", raw)
+    if not block:
+        return None
+    match = re.search(r"\bdescription\s*:\s*([\"'])(.*?)\1", block.group(0))
+    return match.group(2).strip() if match else None
+
+
 def fail(errors: list[str], route: str, msg: str) -> None:
     errors.append(f"{route}: {msg}")
 
@@ -132,6 +147,9 @@ def main() -> int:
 
         title = re.sub(r"\s+", " ", parser.title).strip()
         desc = parser.meta_name.get("description", "").strip()
+        source_desc = source_description(route)
+        if source_desc != desc:
+            fail(errors, route, f"source description {source_desc!r} != static {desc!r}")
         contracted_title = TITLE_CONTRACT.get(route)
         if contracted_title is not None and title != contracted_title:
             fail(errors, route, f"title {title!r} != contracted {contracted_title!r}")

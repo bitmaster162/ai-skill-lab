@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
 
-export const metadata: Metadata = { title: "Youth AI safety", description: "Age rules, privacy, verification and adult involvement for AI Skill Lab learners ages 8–18." };
+export const metadata: Metadata = { title: "Youth AI safety", description: "Age rules, privacy and adult involvement for AI Skill Lab youth programs." };
 
 export default function SafetyPageEn() {
   return <LegalPage locale="en" path="safety" title="Youth AI safety" intro="Rules for ages 8–18: an adult stays in the loop, personal data is minimized and model outputs are verified.">

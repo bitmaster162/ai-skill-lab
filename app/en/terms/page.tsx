@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
 
-export const metadata: Metadata = { title: "Terms of service", description: "Baseline terms for AI Skill Lab education programs." };
+export const metadata: Metadata = { title: "Terms of service", description: "Terms for AI Skill Lab educational programs: website application, payment and conditions before training starts." };
 
 export default function TermsPageEn() {
   return <LegalPage locale="en" path="terms" title="Learning terms" intro="Baseline rules for using the site and arranging one-to-one AI training. Final commercial terms are confirmed before payment.">

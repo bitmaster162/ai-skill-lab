@@ -3,7 +3,7 @@ import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = { title: "Privacy policy and data handling", description: "How AI Skill Lab handles application data and protects minors' privacy." };
+export const metadata: Metadata = { title: "Privacy policy and data handling", description: "AI Skill Lab privacy policy for the public application form and direct contact routes." };
 
 export default function PrivacyPageEn() {
   return <LegalPage locale="en" path="privacy" title="Privacy" intro="How the site handles data in the current launch mode and what changes if the built-in application form is enabled.">

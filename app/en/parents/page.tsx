@@ -3,7 +3,7 @@ import { WorkshopEditorial } from "@/components/workshop/WorkshopEditorial";
 import Link from "next/link";
 export const metadata: Metadata = {
   title: "For parents",
-  description: "How one-to-one AI learning works for ages 8–18: visible progress, age rules, youth tracks and a separate family layer.",
+  description: "What parents get from an AI program for ages 8–18: visible progress, a project, safety rules and a clear adult role.",
   alternates: { canonical: "/en/parents", languages: { ru: "/parents", en: "/en/parents" } },
 };
 
