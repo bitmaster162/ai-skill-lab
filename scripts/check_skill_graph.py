@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
+from source_paths import source_path
 import sys
 ROOT=Path(__file__).resolve().parents[1];errors=[];checks=0
 component=(ROOT/'components/SkillGraph.tsx').read_text(encoding='utf-8')
@@ -7,7 +8,7 @@ for marker in ['adult','kids','teens','business','INDEPENDENT','EXPLAINABLE','PO
  checks+=1
  if marker not in component:errors.append(f'SkillGraph.tsx: missing {marker}')
 for rel,en in [('app/curriculum/page.tsx',False),('app/en/curriculum/page.tsx',True)]:
- t=(ROOT/rel).read_text(encoding='utf-8')
+ t=source_path(ROOT, rel).read_text(encoding='utf-8')
  for marker in ['AI Skill Graph','SkillGraph','THINK','BUILD','VERIFY','SHIP']:
   checks+=1
   if marker.lower() not in t.lower():errors.append(f'{rel}: missing {marker}')
@@ -15,7 +16,7 @@ for rel,en in [('app/curriculum/page.tsx',False),('app/en/curriculum/page.tsx',T
  checks+=1
  if expected not in t:errors.append(f'{rel}: locale mount missing')
 for rel in ['deploy/live/curriculum.html','deploy/live/en/curriculum.html']:
- t=(ROOT/rel).read_text(encoding='utf-8')
+ t=source_path(ROOT, rel).read_text(encoding='utf-8')
  for marker in ['AI SKILL GRAPH','id="skill-graph"','data-skill-graph','data-skill-key="adult"','data-skill-key="kids"','data-skill-key="teens"','data-skill-key="business"','id="skill-signal"','id="skill-think"','id="skill-build"','id="skill-verify"','id="skill-ship"']:
   checks+=1
   if marker not in t:errors.append(f'{rel}: missing {marker}')

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
+from source_paths import source_path
 import re,sys
 ROOT=Path(__file__).resolve().parents[1]
 scan=[*ROOT.joinpath('app').rglob('*.tsx'),*ROOT.joinpath('components').rglob('*.tsx'),*ROOT.joinpath('deploy/live').rglob('*.html')]
@@ -30,7 +31,7 @@ required={
 }
 checks=0
 for rel,needles in required.items():
- text=(ROOT/rel).read_text(encoding='utf-8')
+ text=source_path(ROOT, rel).read_text(encoding='utf-8')
  for needle in needles:
   checks+=1
   if needle not in text:errors.append(f'{rel}: missing {needle!r}')

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
+from source_paths import source_path
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,7 +24,7 @@ common = [
     "Release manifest",
 ]
 for rel, en, label in proof_surfaces:
-    text = (ROOT / rel).read_text(encoding="utf-8")
+    text = source_path(ROOT, rel).read_text(encoding="utf-8")
     for marker in common:
         checks += 1
         if marker not in text:
@@ -48,7 +49,7 @@ mounts = {
 }
 for rel, marker in mounts.items():
     checks += 1
-    if marker not in (ROOT / rel).read_text(encoding="utf-8"):
+    if marker not in source_path(ROOT, rel).read_text(encoding="utf-8"):
         errors.append(f"{rel}: Workshop home mount missing")
 
 home_component = (ROOT / "components/workshop/WorkshopHome.tsx").read_text(encoding="utf-8")
@@ -69,7 +70,7 @@ home_static = {
     "deploy/live/en.html": ['href="/en/proof"', "VERIFIABLE PRACTICE", "Open Proof Lab →", "Proof stays"],
 }
 for rel, markers in home_static.items():
-    text = (ROOT / rel).read_text(encoding="utf-8")
+    text = source_path(ROOT, rel).read_text(encoding="utf-8")
     for marker in markers:
         checks += 1
         if marker not in text:

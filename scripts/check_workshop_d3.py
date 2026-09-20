@@ -12,6 +12,12 @@ LIVE = ROOT / 'deploy/live'
 errors = []
 checks = 0
 
+def source_path(rel):
+ grouped=(ROOT/'app'/'(ru)'/'layout.tsx').exists() and (ROOT/'app'/'(en)'/'layout.tsx').exists()
+ if not grouped or not rel.startswith('app/') or not rel.endswith('page.tsx'):return ROOT/rel
+ if rel.startswith('app/en/'):return ROOT/('app/(en)/en/'+rel.removeprefix('app/en/'))
+ return ROOT/('app/(ru)/'+rel.removeprefix('app/'))
+
 def require(condition, message):
     global checks
     checks += 1
@@ -19,7 +25,7 @@ def require(condition, message):
         errors.append(message)
 
 def read(path):
-    return (ROOT / path).read_text(encoding='utf-8')
+    return source_path(path).read_text(encoding='utf-8')
 
 class Page(HTMLParser):
     def __init__(self):

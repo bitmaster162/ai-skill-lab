@@ -105,10 +105,32 @@ def one_link(p: HeadParser, rel: str, hreflang: str | None = None) -> str | None
     return found[0] if len(found) == 1 else None
 
 
+def source_layout_contract() -> tuple[list[Path], bool]:
+    app = ROOT / "app"
+    single = app / "layout.tsx"
+    ru = app / "(ru)" / "layout.tsx"
+    en = app / "(en)" / "layout.tsx"
+    if single.exists():
+        return [single], False
+    if ru.exists() and en.exists():
+        return [ru, en], True
+    return [], False
+
+
 def source_page_for(route: str) -> Path:
+    app = ROOT / "app"
+    _, grouped = source_layout_contract()
+    if grouped:
+        if route == "/":
+            return app / "(ru)" / "page.tsx"
+        if route == "/en":
+            return app / "(en)" / "en" / "page.tsx"
+        if route.startswith("/en/"):
+            return app / "(en)" / "en" / route.removeprefix("/en/") / "page.tsx"
+        return app / "(ru)" / route.lstrip("/") / "page.tsx"
     if route == "/":
-        return ROOT / "app" / "page.tsx"
-    return ROOT / "app" / route.lstrip("/") / "page.tsx"
+        return app / "page.tsx"
+    return app / route.lstrip("/") / "page.tsx"
 
 
 def source_description(route: str) -> str | None:
@@ -197,11 +219,32 @@ def main() -> int:
     public_routes: set[str] = set()
     checked = 0
 
-    source_layout = (ROOT / "app" / "layout.tsx").read_text(encoding="utf-8")
-    if source_layout.count('"/og.png"') != 2:
-        errors.append("source layout must use /og.png for both OpenGraph and Twitter images")
-    if '"/opengraph-image"' in source_layout:
-        errors.append("source layout must not use dynamic /opengraph-image as social image authority")
+    source_layout_paths, grouped_layouts = source_layout_contract()
+    if not source_layout_paths:
+        errors.append("source root layout contract missing")
+        source_layouts: list[tuple[Path, str]] = []
+    else:
+        source_layouts = [(path, path.read_text(encoding="utf-8")) for path in source_layout_paths]
+
+    for source_layout_path, source_layout in source_layouts:
+        rel_layout = source_layout_path.relative_to(ROOT)
+        if source_layout.count('"/og.png"') != 2:
+            errors.append(f"{rel_layout} must use /og.png for both OpenGraph and Twitter images")
+        if '"/opengraph-image"' in source_layout:
+            errors.append(f"{rel_layout} must not use dynamic /opengraph-image as social image authority")
+        if 'manifest: "/site.webmanifest"' not in source_layout:
+            errors.append(f"{rel_layout} must declare /site.webmanifest")
+        if 'url: "/favicon.svg"' not in source_layout:
+            errors.append(f"{rel_layout} must declare /favicon.svg as icon authority")
+        if 'themeColor: "#0b0d10"' not in source_layout:
+            errors.append(f"{rel_layout} must declare production theme color #0b0d10")
+
+    if grouped_layouts:
+        grouped = {path.parent.name: text for path, text in source_layouts}
+        if '<html lang="ru">' not in grouped.get("(ru)", ""):
+            errors.append("app/(ru)/layout.tsx must declare html lang=ru")
+        if '<html lang="en">' not in grouped.get("(en)", ""):
+            errors.append("app/(en)/layout.tsx must declare html lang=en")
     dynamic_og = ROOT / "app" / "opengraph-image.tsx"
     if dynamic_og.exists():
         errors.append("app/opengraph-image.tsx must remain absent; /og.png is the canonical social image authority")
@@ -215,13 +258,7 @@ def main() -> int:
     elif public_og.read_bytes() != live_og.read_bytes():
         errors.append("public/og.png must be byte-identical to deploy/live/og.png")
 
-    if 'manifest: "/site.webmanifest"' not in source_layout:
-        errors.append("source layout must declare /site.webmanifest")
-    if 'url: "/favicon.svg"' not in source_layout:
-        errors.append("source layout must declare /favicon.svg as icon authority")
-    if 'themeColor: "#0b0d10"' not in source_layout:
-        errors.append("source viewport must declare production theme color #0b0d10")
-    for family_source in (ROOT / "app" / "family" / "page.tsx", ROOT / "app" / "en" / "family" / "page.tsx"):
+    for family_source in (source_page_for("/family"), source_page_for("/en/family")):
         family_text = family_source.read_text(encoding="utf-8")
         if 'themeColor: "#2b0a1c"' not in family_text:
             errors.append(f"{family_source.relative_to(ROOT)} must declare family theme color #2b0a1c")
@@ -285,7 +322,7 @@ def main() -> int:
         if expected_title is not None:
             if title != expected_title:
                 fail(errors, route, f"title {title!r} != {expected_title!r}")
-            source = read_source = (ROOT / RU_TITLE_SOURCE[route]).read_text(encoding="utf-8")
+            source = source_page_for(route).read_text(encoding="utf-8")
             marker = f'title: {{ absolute: "{expected_title}" }}'
             if marker not in source:
                 fail(errors, route, "source absolute title contract missing")
