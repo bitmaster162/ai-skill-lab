@@ -8,6 +8,16 @@ PREFLIGHT = ROOT / "scripts/preflight_release.py"
 PACKAGE = ROOT / "package.json"
 README = ROOT / "README.md"
 
+def source_path(rel: str) -> Path:
+    grouped = (ROOT / "app" / "(ru)" / "layout.tsx").exists() and (ROOT / "app" / "(en)" / "layout.tsx").exists()
+    if not grouped:
+        return ROOT / rel
+    if rel.startswith("app/en/"):
+        return ROOT / ("app/(en)/en/" + rel.removeprefix("app/en/"))
+    if rel.startswith("app/"):
+        return ROOT / ("app/(ru)/" + rel.removeprefix("app/"))
+    return ROOT / rel
+
 LEGACY_CHECKERS = {
     "scripts/check_capability_matrix.py": "AI Capability Matrix",
     "scripts/check_hero_engine.py": '<HeroEngine',
@@ -72,7 +82,7 @@ source_homes = {
     "app/en/page.tsx": '<WorkshopHome locale="en" />',
 }
 for rel, mount in source_homes.items():
-    text = (ROOT / rel).read_text(encoding="utf-8")
+    text = source_path(rel).read_text(encoding="utf-8")
     checks += 1
     if mount not in text:
         errors.append(f"{rel}: current Workshop home mount missing")
