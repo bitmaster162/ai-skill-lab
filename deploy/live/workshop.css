@@ -41,6 +41,7 @@
 .proofMiniCard>strong{margin:8px 0}
 .projectStudioStatus>strong,.projectStudioStatus>span{display:block}
 .labDialog :is(p,.proofConsoleTop,.proofConsoleFoot){display:flex;gap:8px;flex-wrap:wrap}.labDialog :is(a,button){padding:13px}
+/* R130 static scoped heading overflow guard */.workshopPage main .projectStudioCard h2{font-size:clamp(28px,3vw,42px);overflow-wrap:anywhere}.workshopPage main .legal h2{font-size:28px;letter-spacing:-.035em;overflow-wrap:anywhere}@media(max-width:760px){.workshopPage main .legal h2{font-size:24px}}
 /* R115 Workshop v1 typography roles; existing size scale intentionally unchanged. */
 @font-face{font-family:"Onest";src:url("/fonts/Onest-ru-en.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
 @font-face{font-family:"Unbounded";src:url("/fonts/Unbounded-ru-en.woff2") format("woff2");font-style:normal;font-weight:200 900;font-display:swap}
