@@ -33,9 +33,16 @@ LEGACY=ROOT/'archive/legacy-static-css'
 static=read_local_css_graph(LEGACY/'style.css', LEGACY)
 source_files=('globals.css','r69.css','r70.css','commercial-mobile.css','proof-contrast.css')
 nextcss='\n'.join((ROOT/'app'/name).read_text() for name in source_files)
-layout=(ROOT/'app/layout.tsx').read_text()
-if 'import "./proof-contrast.css";' not in layout:
-    errors.append('source: proof-contrast.css not imported after existing global CSS')
+layout_paths=[ROOT/'app/layout.tsx']
+if not layout_paths[0].exists():
+    layout_paths=[ROOT/'app'/'(ru)'/'layout.tsx',ROOT/'app'/'(en)'/'layout.tsx']
+for layout_path in layout_paths:
+    if not layout_path.exists():
+        errors.append(f'source: missing root layout {layout_path.relative_to(ROOT)}')
+        continue
+    layout=layout_path.read_text()
+    if 'proof-contrast.css";' not in layout:
+        errors.append(f'source: {layout_path.relative_to(ROOT)} missing proof-contrast.css import')
 
 for name,css in [('static',static),('next',nextcss)]:
     if '--micro:#626b74' not in css.replace(' ','') and '--micro: #626b74' not in css:

@@ -6,9 +6,16 @@ ROOT=Path(__file__).resolve().parents[1]
 FACTS=json.loads((ROOT/'data/commercial_facts.json').read_text(encoding='utf-8'))
 errors=[];checks=0
 
+def source_path(rel:str)->Path:
+ grouped=(ROOT/'app'/'(ru)'/'layout.tsx').exists() and (ROOT/'app'/'(en)'/'layout.tsx').exists()
+ if not grouped:return ROOT/rel
+ if rel.startswith('app/en/'):return ROOT/('app/(en)/en/'+rel.removeprefix('app/en/'))
+ if rel.startswith('app/'):return ROOT/('app/(ru)/'+rel.removeprefix('app/'))
+ return ROOT/rel
+
 def require(rel, needles):
  global checks
- text=(ROOT/rel).read_text(encoding='utf-8')
+ text=source_path(rel).read_text(encoding='utf-8')
  for needle in needles:
   checks+=1
   if str(needle).casefold() not in text.casefold():errors.append(f'{rel}: missing {needle!r}')
@@ -81,7 +88,7 @@ for locale,home,pricing in [('ru','deploy/live/index.html','deploy/live/pricing.
  if locale=='en':require(pricing,['14 days','5 people','4 sessions','1.6×'])
  else:require(pricing,['14 дней','5 человек','4 занятия','1,6×'])
 for rel in ['components/workshop/WorkshopPricing.tsx','deploy/live/pricing.html','deploy/live/en/pricing.html']:
- text=(ROOT/rel).read_text(encoding='utf-8')
+ text=source_path(rel).read_text(encoding='utf-8')
  for marker in ['$89/hour','$89 / hour','$89 в час']:
   checks+=1
   if marker in text:errors.append(f'{rel}: publishes internal hourly math')

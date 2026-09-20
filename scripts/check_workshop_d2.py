@@ -6,6 +6,11 @@ from urllib.parse import urlparse
 import json,re,sys
 from public_origin import PUBLIC_ORIGIN
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';ORIGIN=PUBLIC_ORIGIN
+def source_path(rel):
+ grouped=(ROOT/'app'/'(ru)'/'layout.tsx').exists() and (ROOT/'app'/'(en)'/'layout.tsx').exists()
+ if not grouped or not rel.startswith('app/') or not rel.endswith('page.tsx'):return ROOT/rel
+ if rel.startswith('app/en/'):return ROOT/('app/(en)/en/'+rel.removeprefix('app/en/'))
+ return ROOT/('app/(ru)/'+rel.removeprefix('app/'))
 errors=[];checks=0
 class Audit(HTMLParser):
  def __init__(self):super().__init__(convert_charrefs=True);self.hrefs=[];self.forms=0;self.h1=0;self.ids=set();self.styles=[];self.canonical=[];self.alts={}
@@ -28,7 +33,7 @@ def ratio(a,b):
  x,y=sorted((lum(a),lum(b)),reverse=True);return (x+.05)/(y+.05)
 def need(rel,tokens):
  global checks
- text=(ROOT/rel).read_text(encoding='utf-8')
+ text=source_path(rel).read_text(encoding='utf-8')
  for token in tokens:
   checks+=1
   if token not in text:errors.append(f'{rel}: missing {token!r}')
@@ -93,7 +98,7 @@ for route in ['"/family"','"/en/family"']:
 need('components/workshop/WorkshopHome.tsx',['href={p("/family")}','styles.familyCard'])
 need('components/workshop/WorkshopPricing.tsx',['href={p("/family")}','Open Family route','Открыть Family'])
 for rel,href in [('deploy/live/index.html','/family'),('deploy/live/en.html','/en/family'),('deploy/live/pricing.html','/family'),('deploy/live/en/pricing.html','/en/family')]:
- text=(ROOT/rel).read_text(encoding='utf-8');checks+=1
+ text=source_path(rel).read_text(encoding='utf-8');checks+=1
  actual=text.count('href="'+href+'"')
  if actual!=1:errors.append(f'{rel}: Family inbound link count={actual}')
 legacy_css=['style.css','style-r68.css','r69-static.css','r77-commercial-mobile.css']

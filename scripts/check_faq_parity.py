@@ -4,6 +4,16 @@ from html.parser import HTMLParser
 import re, sys
 ROOT=Path(__file__).resolve().parents[1]
 
+def source_path(rel: str) -> Path:
+    grouped = (ROOT / "app" / "(ru)" / "layout.tsx").exists() and (ROOT / "app" / "(en)" / "layout.tsx").exists()
+    if not grouped:
+        return ROOT / rel
+    if rel.startswith("app/en/"):
+        return ROOT / ("app/(en)/en/" + rel.removeprefix("app/en/"))
+    if rel.startswith("app/"):
+        return ROOT / ("app/(ru)/" + rel.removeprefix("app/"))
+    return ROOT / rel
+
 class FAQParser(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
@@ -36,7 +46,7 @@ for lang,static_rel,source_rel in [
  ('en','deploy/live/en/faq.html','app/en/faq/page.tsx')]:
     parser=FAQParser(); parser.feed((ROOT/static_rel).read_text(encoding='utf-8'))
     static_items=parser.items
-    source=source_items((ROOT/source_rel).read_text(encoding='utf-8'))
+    source=source_items(source_path(source_rel).read_text(encoding='utf-8'))
     if len(static_items)!=11 or len(source)!=11:
         print(f'FAQ_COUNT_FAIL {lang} static={len(static_items)} source={len(source)}'); sys.exit(1)
     checks+=2

@@ -21,6 +21,13 @@ DESCRIPTIONS={
  'en':'Practical one-to-one AI education for adults, business, kids and teens — online worldwide and in Phuket by arrangement.',
 }
 
+def source_path(rel:str)->Path:
+ grouped=(ROOT/'app'/'(ru)'/'layout.tsx').exists() and (ROOT/'app'/'(en)'/'layout.tsx').exists()
+ if not grouped:return ROOT/rel
+ if rel.startswith('app/en/'):return ROOT/('app/(en)/en/'+rel.removeprefix('app/en/'))
+ if rel.startswith('app/'):return ROOT/('app/(ru)/'+rel.removeprefix('app/'))
+ return ROOT/rel
+
 class LDParser(HTMLParser):
  def __init__(self): super().__init__(convert_charrefs=True);self.capture=False;self.buf=[];self.blocks=[]
  def handle_starttag(self,tag,attrs):
@@ -108,7 +115,7 @@ def main()->int:
   'app/en/about/page.tsx':['<JsonLd data={personSchema} />'],
  }
  for rel,tokens in source_checks.items():
-  text=(ROOT/rel).read_text(encoding='utf-8')
+  text=source_path(rel).read_text(encoding='utf-8')
   for token in tokens:
    if token not in text:errors.append(f'{rel}: source parity missing {token}')
  lib=(ROOT/'lib/structured-data.ts').read_text(encoding='utf-8')
