@@ -7,6 +7,16 @@ ROOT = Path(__file__).resolve().parents[1]
 errors = []
 checks = 0
 
+def source_path(rel: str) -> Path:
+    grouped = (ROOT / "app" / "(ru)" / "layout.tsx").exists() and (ROOT / "app" / "(en)" / "layout.tsx").exists()
+    if not grouped:
+        return ROOT / rel
+    if rel.startswith("app/en/"):
+        return ROOT / ("app/(en)/en/" + rel.removeprefix("app/en/"))
+    if rel.startswith("app/"):
+        return ROOT / ("app/(ru)/" + rel.removeprefix("app/"))
+    return ROOT / rel
+
 studio_surfaces = [
     ("app/studio/page.tsx", False),
     ("app/en/studio/page.tsx", True),
@@ -31,7 +41,7 @@ common = [
 ]
 
 for rel, en in studio_surfaces:
-    text = (ROOT / rel).read_text(encoding="utf-8")
+    text = source_path(rel).read_text(encoding="utf-8")
     for marker in common:
         checks += 1
         if marker.casefold() not in text.casefold():
@@ -71,7 +81,7 @@ mounts = {
 }
 for rel, marker in mounts.items():
     checks += 1
-    if marker not in (ROOT / rel).read_text(encoding="utf-8"):
+    if marker not in source_path(rel).read_text(encoding="utf-8"):
         errors.append(f"{rel}: Workshop home mount missing")
 
 component = (ROOT / "components/workshop/WorkshopHome.tsx").read_text(encoding="utf-8")
@@ -100,7 +110,7 @@ static_homes = {
     ],
 }
 for rel, markers in static_homes.items():
-    text = (ROOT / rel).read_text(encoding="utf-8")
+    text = source_path(rel).read_text(encoding="utf-8")
     for marker in markers:
         checks += 1
         if marker not in text:
