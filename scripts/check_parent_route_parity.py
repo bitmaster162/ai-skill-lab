@@ -2,6 +2,13 @@
 from pathlib import Path
 import sys
 ROOT=Path(__file__).resolve().parents[1]
+
+def source_path(rel: str) -> Path:
+    grouped=(ROOT/'app'/'(ru)'/'layout.tsx').exists() and (ROOT/'app'/'(en)'/'layout.tsx').exists()
+    if not grouped:return ROOT/rel
+    if rel.startswith('app/en/'):return ROOT/('app/(en)/en/'+rel.removeprefix('app/en/'))
+    if rel.startswith('app/'):return ROOT/('app/(ru)/'+rel.removeprefix('app/'))
+    return ROOT/rel
 checks={
  'app/parents/page.tsx':['FOR PARENTS · 8–18','Сам формулирует цель','Проверяет утверждения','Объясняет, что сделал сам','Защищает финальный проект','Что покупает семья','Возрастные правила','Форматы 8–13','Форматы 14–18','Family Concierge','Возраст + интерес + цель'],
  'deploy/live/parents.html':['FOR PARENTS · 8–18','Сам формулирует цель','Проверяет утверждения','Объясняет, что сделал сам','Защищает финальный проект','Что покупает семья','ChatGPT и возраст','Форматы 8–13','Форматы 14–18','Family Concierge','Возраст + интерес + цель'],
@@ -10,7 +17,7 @@ checks={
 }
 problems=[]; count=0
 for rel,needles in checks.items():
-    text=(ROOT/rel).read_text(encoding='utf-8')
+    text=source_path(rel).read_text(encoding='utf-8')
     for n in needles:
         count+=1
         if n not in text: problems.append(f'{rel} missing {n!r}')
