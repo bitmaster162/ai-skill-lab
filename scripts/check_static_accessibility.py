@@ -60,6 +60,13 @@ source_css=(ROOT/'components/workshop/WorkshopShell.module.css').read_text(encod
 for marker in ['.workshopPage :focus-visible{outline:3px solid var(--acid)', '@media(prefers-reduced-motion:reduce)', 'min-height:44px']:
     checks += 1
     if marker not in css: errors.append(f'workshop.css: missing accessibility marker {marker}')
+for marker in [
+    '.workshopPage main .projectStudioCard h2{font-size:clamp(28px,3vw,42px);overflow-wrap:anywhere}',
+    '.workshopPage main .legal h2{font-size:28px;letter-spacing:-.035em;overflow-wrap:anywhere}',
+    '@media(max-width:760px){.workshopPage main .legal h2{font-size:24px}}',
+]:
+    checks += 1
+    if marker not in css: errors.append(f'workshop.css: missing scoped heading overflow guard {marker}')
 for label,text,marker in [
     ('source brand target', source_css, '.brand{min-height:44px;'),
     ('static brand target', css, '.workshopBrand{min-height:44px;'),

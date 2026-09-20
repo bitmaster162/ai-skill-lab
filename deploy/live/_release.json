@@ -303,11 +303,11 @@
     },
     {
       "path": "workshop.css",
-      "sha256": "dd00956a43cd85508bb672f83352cdb4c1bc819fee3ddde74fa6269ccbff7173",
-      "size": 23873
+      "sha256": "06e76304b7b4cdb0e6485603786d8906c42d088cbb31a118af2c48f98e1eeed4",
+      "size": 24175
     }
   ],
-  "payload_sha256": "6712aa35c7c1a58545d0155186e54750812e2de00b816fc3a9e982e92ddfcd01",
-  "release_id": "R121_SITEMAP_LASTMOD_REFRESH",
+  "payload_sha256": "bf8d51cc5fcaab0e48e0e1da822343af5d24c707c5c32061361cfd230eb4e3a5",
+  "release_id": "R130_STATIC_H2_OVERFLOW_GUARD",
   "schema": "ai-skill-lab.static-release.v1"
 }
