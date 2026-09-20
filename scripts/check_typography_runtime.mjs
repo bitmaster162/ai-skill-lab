@@ -77,9 +77,9 @@ const corpusSet = new Set();
 for (const hp of htmls) {
   let body = fs.readFileSync(hp, 'utf8').match(/<body[^>]*>([\s\S]*?)<\/body>/i)?.[1] || '';
   body = body
-    .replace(/<script\b[\s\S]*?<\\/script\\s*>/gi, ' ')
-    .replace(/<style\b[\s\S]*?<\\/style\\s*>/gi, ' ')
-    .replace(/<svg\b[\s\S]*?<\\/svg\\s*>/gi, ' ')
+    .replace(/<script\b[\s\S]*?<\/script\s*>/gi, ' ')
+    .replace(/<style\b[\s\S]*?<\/style\s*>/gi, ' ')
+    .replace(/<svg\b[\s\S]*?<\/svg\s*>/gi, ' ')
     .replace(/<[^>]+>/g, ' ');
   body = decodeText(body);
   req(!body.includes(forbiddenStatusGlyph), path.relative(LIVE, hp).replaceAll('\\', '/') + ': U+25CF must not remain in public text');
