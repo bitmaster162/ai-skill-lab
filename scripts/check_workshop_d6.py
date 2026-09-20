@@ -2,10 +2,15 @@
 from pathlib import Path
 import hashlib,json,sys
 ROOT=Path(__file__).resolve().parents[1]; LIVE=ROOT/'deploy/live'; errors=[]; checks=0
+def source_path(rel):
+ grouped=(ROOT/'app'/'(ru)'/'layout.tsx').exists() and (ROOT/'app'/'(en)'/'layout.tsx').exists()
+ if not grouped or not rel.startswith('app/'):return ROOT/rel
+ if rel.startswith('app/en/'):return ROOT/('app/(en)/en/'+rel.removeprefix('app/en/'))
+ return ROOT/('app/(ru)/'+rel.removeprefix('app/'))
 def req(c,m):
  global checks; checks+=1
  if not c: errors.append(m)
-def read(rel): return (ROOT/rel).read_text(encoding='utf-8')
+def read(rel): return source_path(rel).read_text(encoding='utf-8')
 source=read('components/workshop/WorkshopStart.tsx')
 for marker in ['import { LeadForm } from "@/components/LeadForm";','<LeadForm locale={locale}/>','START · APPLICATION + CONTACT','START · ЗАЯВКА + КОНТАКТ']:
  req(marker in source,f'WorkshopStart missing {marker}')
