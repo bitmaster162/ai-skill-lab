@@ -79,10 +79,13 @@ function makeHarness(lang) {
 
 function extractInlineJs(file) {
   const html=fs.readFileSync(file,'utf8');
-  const matches=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)];
-  const js=matches.map(m=>m[1]).find(x=>x.includes('const S={audience:null'));
-  if (!js) throw new Error(`matcher script not found in ${file}`);
-  return js;
+  const marker='const S={audience:null';
+  const markerAt=html.indexOf(marker);
+  if (markerAt < 0 || html.indexOf(marker, markerAt + marker.length) >= 0) throw new Error(`matcher script marker drift in ${file}`);
+  const openAt=html.lastIndexOf('<script>', markerAt);
+  const closeAt=html.indexOf('</script>', markerAt);
+  if (openAt < 0 || closeAt < 0 || openAt > markerAt) throw new Error(`matcher script boundaries drift in ${file}`);
+  return html.slice(openAt + '<script>'.length, closeAt);
 }
 
 async function runCase(rel,lang) {

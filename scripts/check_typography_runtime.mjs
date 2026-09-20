@@ -44,10 +44,18 @@ for (const marker of [
   'letter-spacing:-.01em', 'letter-spacing:-.005em', '.workshopUtility[data-lab-command-open]{column-gap:.25em}'
 ]) req(css.includes(marker), 'workshop.css missing ' + marker);
 req(sourceCss.includes(':global(.labCommandTrigger){column-gap:.25em}'), 'source Lab Command gap missing');
+const forbiddenFontHosts = new Set(['fonts.googleapis.com', 'fonts.gstatic.com']);
+function referencesForbiddenFontHost(text) {
+  const absoluteUrls = text.match(/https?:\/\/[^\s"'()]+/g) || [];
+  return absoluteUrls.some((raw) => {
+    try { return forbiddenFontHosts.has(new URL(raw).hostname); }
+    catch { return true; }
+  });
+}
 for (const [text, label] of [[css, 'static CSS'], [sourceCss, 'source CSS']]) {
   const block = text.split('R115 Workshop v1 typography roles').slice(-1)[0];
   req(!block.includes('font-size:'), label + ': R115 overrides size scale');
-  req(!text.includes('fonts.googleapis.com') && !text.includes('fonts.gstatic.com'), label + ': external font host');
+  req(!referencesForbiddenFontHost(text), label + ': external font host');
 }
 
 const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
@@ -58,17 +66,20 @@ const htmls = walk(LIVE).filter((p) => p.endsWith('.html')).sort();
 req(htmls.length === 47, 'html surfaces ' + htmls.length + ' != 47');
 
 const forbiddenStatusGlyph = String.fromCodePoint(0x25CF);
-const decodeText = (raw) => raw
-  .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
-  .replace(/&#([0-9]+);/g, (_, d) => String.fromCodePoint(parseInt(d, 10)))
-  .replace(/&amp;/gi, '&').replace(/&lt;/gi, '<').replace(/&gt;/gi, '>').replace(/&quot;/gi, '"').replace(/&copy;/gi, '©');
+const namedEntities = new Map([['&amp;', '&'], ['&lt;', '<'], ['&gt;', '>'], ['&quot;', '"'], ['&copy;', '©']]);
+const decodeText = (raw) => raw.replace(/&#x[0-9a-f]+;|&#[0-9]+;|&(amp|lt|gt|quot|copy);/gi, (entity) => {
+  const lower = entity.toLowerCase();
+  if (lower.startsWith('&#x')) return String.fromCodePoint(parseInt(lower.slice(3, -1), 16));
+  if (lower.startsWith('&#')) return String.fromCodePoint(parseInt(lower.slice(2, -1), 10));
+  return namedEntities.get(lower) ?? entity;
+});
 const corpusSet = new Set();
 for (const hp of htmls) {
   let body = fs.readFileSync(hp, 'utf8').match(/<body[^>]*>([\s\S]*?)<\/body>/i)?.[1] || '';
   body = body
-    .replace(/<script\b[\s\S]*?<\/script>/gi, ' ')
-    .replace(/<style\b[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<svg\b[\s\S]*?<\/svg>/gi, ' ')
+    .replace(/<script\b[\s\S]*?<\\/script\\s*>/gi, ' ')
+    .replace(/<style\b[\s\S]*?<\\/style\\s*>/gi, ' ')
+    .replace(/<svg\b[\s\S]*?<\\/svg\\s*>/gi, ' ')
     .replace(/<[^>]+>/g, ' ');
   body = decodeText(body);
   req(!body.includes(forbiddenStatusGlyph), path.relative(LIVE, hp).replaceAll('\\', '/') + ': U+25CF must not remain in public text');

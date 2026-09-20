@@ -18,7 +18,12 @@ for (const key of ["NEXT_PUBLIC_SITE_URL", "NEXT_PUBLIC_TELEGRAM_URL"]) {
   }
 }
 
-if (process.env.NEXT_PUBLIC_SITE_URL?.includes("example.com")) errors.push("NEXT_PUBLIC_SITE_URL still uses example.com");
+if (process.env.NEXT_PUBLIC_SITE_URL) {
+  try {
+    const { hostname } = new URL(process.env.NEXT_PUBLIC_SITE_URL);
+    if (hostname === "example.com" || hostname.endsWith(".example.com")) errors.push("NEXT_PUBLIC_SITE_URL still uses example.com");
+  } catch {}
+}
 
 if (formEnabled) {
   const requiredForForm = [
