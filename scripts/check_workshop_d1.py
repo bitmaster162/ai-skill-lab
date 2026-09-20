@@ -4,6 +4,11 @@ from html.parser import HTMLParser
 from pathlib import Path
 import json,re,sys
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';errors=[];checks=0
+def source_path(rel):
+ grouped=(ROOT/'app'/'(ru)'/'layout.tsx').exists() and (ROOT/'app'/'(en)'/'layout.tsx').exists()
+ if not grouped or not rel.startswith('app/'):return ROOT/rel
+ if rel.startswith('app/en/'):return ROOT/('app/(en)/en/'+rel.removeprefix('app/en/'))
+ return ROOT/('app/(ru)/'+rel.removeprefix('app/'))
 SURFACES=['index.html','en.html','start.html','en/start.html','pricing.html','en/pricing.html']
 class A(HTMLParser):
  def __init__(self):super().__init__();self.links=[];self.forms=0
@@ -34,13 +39,13 @@ for marker in ['outline:3px solid var(--acid)','.trackCard:nth-child(1){--track:
  if marker not in css:errors.append(f'workshop.css missing {marker}')
 for rel in ['app/page.tsx','app/en/page.tsx']:
  checks+=1
- if '<WorkshopHome' not in (ROOT/rel).read_text(encoding='utf-8'):errors.append(f'{rel}: WorkshopHome mount missing')
+ if '<WorkshopHome' not in source_path(rel).read_text(encoding='utf-8'):errors.append(f'{rel}: WorkshopHome mount missing')
 for rel in ['app/start/page.tsx','app/en/start/page.tsx']:
  checks+=1
- if '<WorkshopStart' not in (ROOT/rel).read_text(encoding='utf-8'):errors.append(f'{rel}: WorkshopStart mount missing')
+ if '<WorkshopStart' not in source_path(rel).read_text(encoding='utf-8'):errors.append(f'{rel}: WorkshopStart mount missing')
 for rel in ['app/pricing/page.tsx','app/en/pricing/page.tsx']:
  checks+=1
- if '<WorkshopPricing' not in (ROOT/rel).read_text(encoding='utf-8'):errors.append(f'{rel}: WorkshopPricing mount missing')
+ if '<WorkshopPricing' not in source_path(rel).read_text(encoding='utf-8'):errors.append(f'{rel}: WorkshopPricing mount missing')
 facts=json.loads((ROOT/'data/commercial_facts.json').read_text(encoding='utf-8'));checks+=3
 if facts.get('schema')!='ai-skill-lab.commercial-facts.v2':errors.append('commercial schema')
 if facts.get('session_duration_minutes')!=60:errors.append('duration authority')
