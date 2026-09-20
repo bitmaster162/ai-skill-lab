@@ -322,7 +322,7 @@ def main() -> int:
         if expected_title is not None:
             if title != expected_title:
                 fail(errors, route, f"title {title!r} != {expected_title!r}")
-            source = read_source = (ROOT / RU_TITLE_SOURCE[route]).read_text(encoding="utf-8")
+            source = source_page_for(route).read_text(encoding="utf-8")
             marker = f'title: {{ absolute: "{expected_title}" }}'
             if marker not in source:
                 fail(errors, route, "source absolute title contract missing")
