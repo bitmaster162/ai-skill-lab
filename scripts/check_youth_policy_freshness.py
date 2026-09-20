@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from datetime import date
 from pathlib import Path
+from source_paths import source_path
 import re
 import sys
 
@@ -22,7 +23,7 @@ checks = 0
 verified = {}
 
 for rel in SURFACES:
-    text = (ROOT / rel).read_text(encoding="utf-8")
+    text = source_path(ROOT, rel).read_text(encoding="utf-8")
     matches = DATE_RE.findall(text)
     if len(matches) != 1:
         print(f"YOUTH_POLICY_DATE_COUNT_FAIL {rel} count={len(matches)}")
