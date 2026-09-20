@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 from pathlib import Path
+from source_paths import source_path
 import re, sys, html
 ROOT=Path(__file__).resolve().parents[1]
 errors=[]; checks=0
 source=(ROOT/'components/ProjectStudio.tsx').read_text(encoding='utf-8')
-ru_page=(ROOT/'app/projects/page.tsx').read_text(encoding='utf-8')
-en_page=(ROOT/'app/en/projects/page.tsx').read_text(encoding='utf-8')
+ru_page=source_path(ROOT,'app/projects/page.tsx').read_text(encoding='utf-8')
+en_page=source_path(ROOT,'app/en/projects/page.tsx').read_text(encoding='utf-8')
 ru_static=html.unescape((ROOT/'deploy/live/projects.html').read_text(encoding='utf-8'))
 en_static=html.unescape((ROOT/'deploy/live/en/projects.html').read_text(encoding='utf-8'))
 
