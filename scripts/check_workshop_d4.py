@@ -5,14 +5,19 @@ import hashlib,json,re,sys
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';errors=[];checks=0
 ROUTES=['parents','curriculum','phuket','studio','build','matcher','challenge','proof','projects']
 TARGET=[r+'.html' for r in ROUTES]+['en/'+r+'.html' for r in ROUTES]
+def source_path(rel):
+ grouped=(ROOT/'app'/'(ru)'/'layout.tsx').exists() and (ROOT/'app'/'(en)'/'layout.tsx').exists()
+ if not grouped or not rel.startswith('app/'):return ROOT/rel
+ if rel.startswith('app/en/'):return ROOT/('app/(en)/en/'+rel.removeprefix('app/en/'))
+ return ROOT/('app/(ru)/'+rel.removeprefix('app/'))
 PROTECTED={
 'data/commercial_facts.json':'f747296d269fd57940e24a22e7d08f988ede5e43460549afdb39e3ef5857fc77','README.md':'10c11d027870ef87f8a384409207ad8c928c08e168401e35e467637115d52d55','app/sitemap.ts':'612cf6960059a719cfba459c54bbd54fab38711bca3f43875edc8a42ff43509d','deploy/live/sitemap.xml':'13bd4157b2ec5b88ae4f1fb2c361a79614a0c10bf4cc2008c9bd056cd4ff75fe','deploy/live/llms.txt':'b581164e977efe097589024dec3ff95265835b0ae8df216e3dd7494c62b3e1f4','deploy/live/robots.txt':'e4b9d3404c59d087f4cfbcc147771ffbc2d9cdfa9a457937c3cbeaff87ec418c','deploy/live/vercel.json':'b3384aa20e38e505f0a210289227f83a658055af6a8373a889c5bec4f1430dcc','deploy/live/lab-command.js':'16835b5e85db24ef8f97eb2efa2b408221c725bd9334dee940723e3d816a7702','deploy/live/project-filter.js':'9ffbc90afc98556eb1539629ede2876362e2a00f2b84fe20df315fc09997dc28',
 'components/ProgramMatcher.tsx':'28ad6aa4f8f9c662a2da491327eca3ca5eff95a539c0916509d0ad4f6b2561d2','components/SystemChallenge.tsx':'953826dad2ffe1ddfe16887d84aec19cd1dd24521a2a1b03592d7741a92de2b4','components/ProofLab.tsx':'ed01fbf773b423f26afe20ba4358fc1991be8968b84c756bb5203f6399169469','components/BriefCompiler.tsx':'156478fa6e9b38af1b2df7b97f460cbeaedb06e28215d7da03d9849db52da89d','components/ProjectStudio.tsx':'68b3fb0d29b584470046e7d742ef6a71f3089f85f5a424fc747c4df30d1bb8b1','components/SkillGraph.tsx':'9145c854d743820752e1b423a2e4f485966c974c0f2e9756f0e6ace32cbf953f','components/Header.tsx':'589c9e9223162fe1f280fb3f49c9a5bf18eca74279de3607f8398d1371fcfec6','components/Footer.tsx':'1f544c0ca63e2b0e1b2309761f9edb38fd292c747279bc8cd5f16f5988a9bb35','components/LabCommand.tsx':'0f9cccaea8dd1d8a1fb2be28aa125f66ec97fe49f83f641fa898afad878ac57a','components/workshop/WorkshopShell.tsx':'24a9fa79c55d5ebfcce38d2e3c16e6aab566fcfc214a773747e5230d1a79c61c'}
 def require(c,m):
  global checks;checks+=1
  if not c:errors.append(m)
-def read(rel):return (ROOT/rel).read_text(encoding='utf-8')
-def sha(rel):return hashlib.sha256((ROOT/rel).read_bytes()).hexdigest()
+def read(rel):return source_path(rel).read_text(encoding='utf-8')
+def sha(rel):return hashlib.sha256(source_path(rel).read_bytes()).hexdigest()
 manifest=json.loads(read('deploy/live/_release.json'));release=manifest.get('release_id')
 R102_PROTECTED_OVERRIDES={
 'README.md':'53e1deb7042b138a1f8548f41ef4e8005d8f2c557f8b1087d097634072737bd7',
