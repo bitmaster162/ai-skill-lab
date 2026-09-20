@@ -1,0 +1,89 @@
+name: Next renderer language parity
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'agent/**'
+
+permissions:
+  contents: read
+
+jobs:
+  language-parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Clean install
+        run: npm ci --ignore-scripts --audit=false --fund=false
+      - name: Build Next renderer
+        run: npm run build
+      - name: Verify generated html lang by canonical route
+        shell: python
+        run: |
+          from pathlib import Path
+          from html.parser import HTMLParser
+          from urllib.parse import urlparse
+
+          class P(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.lang = None
+                  self.canonical = None
+
+              def handle_starttag(self, tag, attrs):
+                  a = {k: (v or "") for k, v in attrs}
+                  if tag == "html" and self.lang is None:
+                      self.lang = a.get("lang")
+                  if tag == "link" and "canonical" in a.get("rel", "").lower().split():
+                      self.canonical = a.get("href")
+
+          rows = {}
+          for path in Path(".next/server/app").rglob("*.html"):
+              parser = P()
+              parser.feed(path.read_text(encoding="utf-8"))
+              if not parser.canonical or "aiskillab.work" not in parser.canonical:
+                  continue
+              route = urlparse(parser.canonical).path or "/"
+              if route != "/" and route.endswith("/"):
+                  route = route.rstrip("/")
+              if route in rows:
+                  raise SystemExit(
+                      f"LANG_PARITY_DUPLICATE_CANONICAL {route} {rows[route][0]} {path}"
+                  )
+              rows[route] = (path.as_posix(), parser.lang)
+
+          if len(rows) != 46:
+              raise SystemExit(
+                  f"LANG_PARITY_ROUTE_COUNT_FAIL expected=46 actual={len(rows)} routes={sorted(rows)}"
+              )
+
+          bad = []
+          ru = en = 0
+          for route, (path, lang) in sorted(rows.items()):
+              expected = "en" if route == "/en" or route.startswith("/en/") else "ru"
+              if expected == "en":
+                  en += 1
+              else:
+                  ru += 1
+              if lang != expected:
+                  bad.append((route, path, lang, expected))
+
+          if ru != 23 or en != 23:
+              raise SystemExit(f"LANG_PARITY_LOCALE_COUNT_FAIL ru={ru} en={en}")
+          if bad:
+              for row in bad:
+                  print("LANG_PARITY_FAIL", *row)
+              raise SystemExit(1)
+
+          print(f"LANG_PARITY_PASS routes={len(rows)} ru={ru} en={en} mismatches=0")
