@@ -6,6 +6,16 @@ ROOT = Path(__file__).resolve().parents[1]
 errors = []
 checks = 0
 
+def source_path(rel: str) -> Path:
+    grouped = (ROOT / "app" / "(ru)" / "layout.tsx").exists() and (ROOT / "app" / "(en)" / "layout.tsx").exists()
+    if not grouped:
+        return ROOT / rel
+    if rel.startswith("app/en/"):
+        return ROOT / ("app/(en)/en/" + rel.removeprefix("app/en/"))
+    if rel.startswith("app/"):
+        return ROOT / ("app/(ru)/" + rel.removeprefix("app/"))
+    return ROOT / rel
+
 build_surfaces = [
     ("app/build/page.tsx", False, "source RU"),
     ("app/en/build/page.tsx", True, "source EN"),
@@ -38,7 +48,7 @@ common = [
     "/_release.json",
 ]
 for rel, en, label in build_surfaces:
-    text = (ROOT / rel).read_text(encoding="utf-8")
+    text = source_path(rel).read_text(encoding="utf-8")
     for marker in common:
         checks += 1
         if marker not in text:
@@ -68,7 +78,7 @@ mounts = {
 }
 for rel, marker in mounts.items():
     checks += 1
-    if marker not in (ROOT / rel).read_text(encoding="utf-8"):
+    if marker not in source_path(rel).read_text(encoding="utf-8"):
         errors.append(f"{rel}: Workshop home mount missing")
 
 home_component = (ROOT / "components/workshop/WorkshopHome.tsx").read_text(encoding="utf-8")
@@ -84,7 +94,7 @@ proof_discovery = {
     "deploy/live/en/proof.html": ["/en/build", "Build Log", "PROVENANCE"],
 }
 for rel, markers in proof_discovery.items():
-    text = (ROOT / rel).read_text(encoding="utf-8")
+    text = source_path(rel).read_text(encoding="utf-8")
     for marker in markers:
         checks += 1
         if marker not in text:
