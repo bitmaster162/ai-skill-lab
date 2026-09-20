@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
+from source_paths import source_path
 import sys, html
 ROOT=Path(__file__).resolve().parents[1]
 required={
@@ -15,7 +16,7 @@ required={
 }
 problems=[]; n=0
 for rel,needles in required.items():
- text=html.unescape((ROOT/rel).read_text(encoding='utf-8')).lower()
+ text=html.unescape(source_path(ROOT, rel).read_text(encoding='utf-8')).lower()
  for needle in needles:
   n+=1
   if needle.lower() not in text: problems.append(f'{rel} missing {needle!r}')
