@@ -4,7 +4,7 @@ import hashlib,json,re,sys
 ROOT=Path(__file__).resolve().parents[1]; LIVE=ROOT/'deploy/live'; errors=[]; checks=0
 def source_path(rel):
  grouped=(ROOT/'app'/'(ru)'/'layout.tsx').exists() and (ROOT/'app'/'(en)'/'layout.tsx').exists()
- if not grouped or not rel.startswith('app/'):return ROOT/rel
+ if not grouped or not rel.startswith('app/') or not rel.endswith('page.tsx'):return ROOT/rel
  if rel.startswith('app/en/'):return ROOT/('app/(en)/en/'+rel.removeprefix('app/en/'))
  return ROOT/('app/(ru)/'+rel.removeprefix('app/'))
 LEGAL={'app/safety/page.tsx': 'a87ef90f849331c9ca7337dfbb62902c13406a8e4fbff87dbd2770187cc0a235', 'app/en/safety/page.tsx': 'c7c9cd312876ab66d10525b647d5a890aed7cdd5bd32191a00468c6f036b833d', 'app/privacy/page.tsx': '1aa109660a508512a4d8885155ec6cbc7a57cfbf2792a80932e63f62c5c147b0', 'app/en/privacy/page.tsx': '7e6c2196fa022ad8833d2812b323f68519a5beff011e6d52bc6706ee19cd18cf', 'app/terms/page.tsx': '41f77ed8739c7b139d0e86e5e2affcd2e6db2b2be15af1990695b155f3770949', 'app/en/terms/page.tsx': '0513b79541e543187eeca99a83fc335916c0c44e19a75a85e1b43e41d25ee957'}
