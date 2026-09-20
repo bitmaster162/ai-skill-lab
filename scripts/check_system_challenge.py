@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
+from source_paths import source_path
 import sys
 from public_origin import PUBLIC_ORIGIN
 ROOT=Path(__file__).resolve().parents[1];errors=[];checks=0
@@ -8,7 +9,7 @@ for marker in ['research','product','automation','learning','SOURCE-BOUND','SHIP
     checks+=1
     if marker not in component:errors.append(f'SystemChallenge.tsx: missing {marker}')
 for rel,en in [('app/challenge/page.tsx',False),('app/en/challenge/page.tsx',True)]:
-    t=(ROOT/rel).read_text(encoding='utf-8')
+    t=source_path(ROOT, rel).read_text(encoding='utf-8')
     for marker in ['AI SYSTEM CHALLENGE','SystemChallenge','id="challenge"','Brief Compiler','stop condition' if en else 'stop condition']:
         checks+=1
         if marker.lower() not in t.lower():errors.append(f'{rel}: missing {marker}')
@@ -16,7 +17,7 @@ for rel,en in [('app/challenge/page.tsx',False),('app/en/challenge/page.tsx',Tru
     expected='<SystemChallenge locale="en"/>' if en else '<SystemChallenge locale="ru"/>'
     if expected not in t:errors.append(f'{rel}: locale mount missing')
 for rel,en in [('deploy/live/challenge.html',False),('deploy/live/en/challenge.html',True)]:
-    t=(ROOT/rel).read_text(encoding='utf-8')
+    t=source_path(ROOT, rel).read_text(encoding='utf-8')
     for marker in ['AI SYSTEM CHALLENGE','data-system-challenge','data-challenge-key="research"','data-challenge-key="product"','data-challenge-key="automation"','data-challenge-key="learning"','id="challenge-weak"','id="challenge-title"','id="challenge-signal"','VAGUE → SYSTEMIZED']:
         checks+=1
         if marker not in t:errors.append(f'{rel}: missing {marker}')
@@ -33,7 +34,7 @@ for rel,en in [('deploy/live/challenge.html',False),('deploy/live/en/challenge.h
     if f'href="{PUBLIC_ORIGIN}{pair}"' not in t:errors.append(f'{rel}: hreflang pair missing')
     if 'aria-current="page"' in t:errors.append(f'{rel}: inherited active nav marker')
 for rel in ['app/sitemap.ts','deploy/live/sitemap.xml']:
-    t=(ROOT/rel).read_text(encoding='utf-8')
+    t=source_path(ROOT, rel).read_text(encoding='utf-8')
     for route in ['/challenge','/en/challenge']:
         checks+=1
         if route not in t:errors.append(f'{rel}: missing {route}')
