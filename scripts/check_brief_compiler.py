@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
+from source_paths import source_path
 import sys
 ROOT=Path(__file__).resolve().parents[1]
 errors=[];checks=0
@@ -8,12 +9,12 @@ for marker in ['data-brief-compiler','goal','context','output','verify','Researc
     checks+=1
     if marker not in component:errors.append(f'BriefCompiler.tsx: missing {marker}')
 for rel,en in [('app/proof/page.tsx',False),('app/en/proof/page.tsx',True)]:
-    t=(ROOT/rel).read_text(encoding='utf-8')
+    t=source_path(ROOT, rel).read_text(encoding='utf-8')
     for marker in ['BriefCompiler','id="brief-compiler"', '<BriefCompiler locale="en"/>' if en else '<BriefCompiler locale="ru"/>']:
         checks+=1
         if marker not in t:errors.append(f'{rel}: missing {marker}')
 for rel,en in [('deploy/live/proof.html',False),('deploy/live/en/proof.html',True)]:
-    t=(ROOT/rel).read_text(encoding='utf-8')
+    t=source_path(ROOT, rel).read_text(encoding='utf-8')
     for marker in ['Brief Compiler','id="brief-compiler"','data-brief-compiler','data-brief-group="goal"','data-brief-group="context"','data-brief-group="output"','data-brief-group="verify"','id="brief-copy"','id="brief-copy-status"','navigator.clipboard.writeText','HUMAN GATE:']:
         checks+=1
         if marker not in t:errors.append(f'{rel}: missing {marker}')
