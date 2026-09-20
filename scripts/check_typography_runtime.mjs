@@ -73,14 +73,36 @@ const decodeText = (raw) => raw.replace(/&#x[0-9a-f]+;|&#[0-9]+;|&(amp|lt|gt|quo
   if (lower.startsWith('&#')) return String.fromCodePoint(parseInt(lower.slice(2, -1), 10));
   return namedEntities.get(lower) ?? entity;
 });
+function stripElementBlocks(raw, tag) {
+  const needleOpen = '<' + tag;
+  const needleClose = '</' + tag;
+  let source = raw;
+  let lower = source.toLowerCase();
+  let cursor = 0;
+  let output = '';
+  while (true) {
+    const openAt = lower.indexOf(needleOpen, cursor);
+    if (openAt < 0) {
+      output += source.slice(cursor);
+      return output;
+    }
+    const openEnd = lower.indexOf('>', openAt + needleOpen.length);
+    if (openEnd < 0) throw new Error('unterminated <' + tag + '> element');
+    const closeAt = lower.indexOf(needleClose, openEnd + 1);
+    if (closeAt < 0) throw new Error('missing </' + tag + '> element');
+    const closeEnd = lower.indexOf('>', closeAt + needleClose.length);
+    if (closeEnd < 0) throw new Error('unterminated </' + tag + '> element');
+    output += source.slice(cursor, openAt) + ' ';
+    cursor = closeEnd + 1;
+  }
+}
 const corpusSet = new Set();
 for (const hp of htmls) {
   let body = fs.readFileSync(hp, 'utf8').match(/<body[^>]*>([\s\S]*?)<\/body>/i)?.[1] || '';
-  body = body
-    .replace(/<script\b[\s\S]*?<\/script\s*>/gi, ' ')
-    .replace(/<style\b[\s\S]*?<\/style\s*>/gi, ' ')
-    .replace(/<svg\b[\s\S]*?<\/svg\s*>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ');
+  body = stripElementBlocks(body, 'script');
+  body = stripElementBlocks(body, 'style');
+  body = stripElementBlocks(body, 'svg');
+  body = body.replace(/<[^>]+>/g, ' ');
   body = decodeText(body);
   req(!body.includes(forbiddenStatusGlyph), path.relative(LIVE, hp).replaceAll('\\', '/') + ': U+25CF must not remain in public text');
   for (const ch of body) if (!/\s/u.test(ch)) corpusSet.add(ch);
