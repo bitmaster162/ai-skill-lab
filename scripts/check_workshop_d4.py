@@ -7,7 +7,7 @@ ROUTES=['parents','curriculum','phuket','studio','build','matcher','challenge','
 TARGET=[r+'.html' for r in ROUTES]+['en/'+r+'.html' for r in ROUTES]
 def source_path(rel):
  grouped=(ROOT/'app'/'(ru)'/'layout.tsx').exists() and (ROOT/'app'/'(en)'/'layout.tsx').exists()
- if not grouped or not rel.startswith('app/'):return ROOT/rel
+ if not grouped or not rel.startswith('app/') or not rel.endswith('page.tsx'):return ROOT/rel
  if rel.startswith('app/en/'):return ROOT/('app/(en)/en/'+rel.removeprefix('app/en/'))
  return ROOT/('app/(ru)/'+rel.removeprefix('app/'))
 PROTECTED={
