@@ -1,12 +1,62 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+from html.parser import HTMLParser
 from pathlib import Path
-import re, subprocess, sys, tempfile
+import subprocess
+import sys
+import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / 'deploy' / 'live'
-SCRIPT_RE = re.compile(r'<script(?:\s[^>]*)?>(.*?)</script>', re.S | re.I)
-TYPE_RE = re.compile(r'<script(?:\s[^>]*)?\btype=["\']([^"\']+)["\'][^>]*>', re.I)
+JS_TYPES = {'text/javascript', 'application/javascript', 'module'}
+
+
+class ScriptCollector(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=False)
+        self.scripts: list[tuple[str | None, str]] = []
+        self._script_type: str | None = None
+        self._parts: list[str] | None = None
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag.lower() != 'script':
+            return
+        if self._parts is not None:
+            raise ValueError('nested script element')
+        attr_map = {key.lower(): value for key, value in attrs}
+        self._script_type = attr_map.get('type')
+        self._parts = []
+
+    def handle_data(self, data: str) -> None:
+        if self._parts is not None:
+            self._parts.append(data)
+
+    def handle_entityref(self, name: str) -> None:
+        if self._parts is not None:
+            self._parts.append(f'&{name};')
+
+    def handle_charref(self, name: str) -> None:
+        if self._parts is not None:
+            self._parts.append(f'&#{name};')
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.lower() != 'script' or self._parts is None:
+            return
+        self.scripts.append((self._script_type, ''.join(self._parts)))
+        self._script_type = None
+        self._parts = None
+
+    def close(self) -> None:
+        super().close()
+        if self._parts is not None:
+            raise ValueError('unterminated script element')
+
+
+def collect_scripts(text: str) -> list[tuple[str | None, str]]:
+    parser = ScriptCollector()
+    parser.feed(text)
+    parser.close()
+    return parser.scripts
 
 
 def main() -> int:
@@ -15,12 +65,14 @@ def main() -> int:
     failures: list[str] = []
     for page in sorted(LIVE.rglob('*.html')):
         text = page.read_text(encoding='utf-8')
-        # preserve opening tag so JSON-LD/non-JS scripts can be skipped safely
-        for idx, match in enumerate(re.finditer(r'(<script(?:\s[^>]*)?>)(.*?)</script>', text, re.S | re.I), 1):
-            opening, body = match.group(1), match.group(2)
+        try:
+            scripts = collect_scripts(text)
+        except ValueError as exc:
+            failures.append(f'{page.relative_to(ROOT)}: {exc}')
+            continue
+        for idx, (script_type, body) in enumerate(scripts, 1):
             total += 1
-            tm = TYPE_RE.search(opening)
-            if tm and tm.group(1).lower() not in {'text/javascript', 'application/javascript', 'module'}:
+            if script_type and script_type.lower() not in JS_TYPES:
                 continue
             checked += 1
             with tempfile.NamedTemporaryFile('w', suffix='.js', delete=False, encoding='utf-8') as fh:

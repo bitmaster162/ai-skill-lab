@@ -28,14 +28,13 @@ class Card {
 }
 
 function cleanText(s){
-  return s.replace(/<[^>]*>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').trim();
+  if (/[<>]/.test(s)) throw new Error('unexpected nested markup in brief text');
+  return s.trim();
 }
 
 function extract(file){
   const html=fs.readFileSync(file,'utf8');
-  const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)].map(m=>m[1]);
-  const inline=scripts.find(x=>x.includes('document.querySelectorAll(".briefCopy")'));
-  if(inline)throw new Error(`brief copy runtime must be externalized: ${file}`);
+  if(html.includes('document.querySelectorAll(".briefCopy")'))throw new Error(`brief copy runtime must be externalized: ${file}`);
   if(!html.includes('<script src="/start-brief.js"></script>'))throw new Error(`brief copy external script missing: ${file}`);
   const js=fs.readFileSync(path.join(root,'deploy/live/start-brief.js'),'utf8');
   if(!js.includes('document.querySelectorAll(".briefCopy")'))throw new Error('start-brief.js runtime missing');
