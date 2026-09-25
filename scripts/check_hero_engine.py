@@ -24,7 +24,7 @@ for rel in ['deploy/live/index.html','deploy/live/en.html']:
   checks+=1
   if marker not in text:errors.append(f'{rel}: proof-first hero missing {marker!r}')
 
-corpus=component+'\n'+(ROOT/'deploy/live/index.html').read_text()+'\n'+(ROOT/'deploy/live/en.html').read_text()
+corpus=component+'\n'+(ROOT/'deploy/live/index.html').read_text(encoding='utf-8')+'\n'+(ROOT/'deploy/live/en.html').read_text(encoding='utf-8')
 for bad in ['live model call','hidden AI call','sends your input','отправляет ваш ввод']:
  checks+=1
  if bad.lower() in corpus.lower():errors.append(f'hero engine forbidden claim {bad!r}')

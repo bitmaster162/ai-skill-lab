@@ -32,7 +32,7 @@ LIVE=ROOT/'deploy/live'
 LEGACY=ROOT/'archive/legacy-static-css'
 static=read_local_css_graph(LEGACY/'style.css', LEGACY)
 source_files=('globals.css','r69.css','r70.css','commercial-mobile.css','proof-contrast.css')
-nextcss='\n'.join((ROOT/'app'/name).read_text() for name in source_files)
+nextcss='\n'.join((ROOT/'app'/name).read_text(encoding='utf-8') for name in source_files)
 layout_paths=[ROOT/'app/layout.tsx']
 if not layout_paths[0].exists():
     layout_paths=[ROOT/'app'/'(ru)'/'layout.tsx',ROOT/'app'/'(en)'/'layout.tsx']
@@ -40,7 +40,7 @@ for layout_path in layout_paths:
     if not layout_path.exists():
         errors.append(f'source: missing root layout {layout_path.relative_to(ROOT)}')
         continue
-    layout=layout_path.read_text()
+    layout=layout_path.read_text(encoding='utf-8')
     if 'proof-contrast.css";' not in layout:
         errors.append(f'source: {layout_path.relative_to(ROOT)} missing proof-contrast.css import')
 

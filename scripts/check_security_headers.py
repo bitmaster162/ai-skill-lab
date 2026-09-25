@@ -13,7 +13,7 @@ class P(HTMLParser):
     def handle_endtag(self,t):
         if t=='script' and self.on:self.s.append(''.join(self.buf));self.on=False;self.buf=[]
 def h(s): return "'sha256-"+base64.b64encode(hashlib.sha256(s.encode()).digest()).decode()+"'"
-obj=json.loads((LIVE/'vercel.json').read_text())
+obj=json.loads((LIVE/'vercel.json').read_text(encoding='utf-8'))
 rule=next((x for x in obj.get('headers',[]) if x.get('source')=='/(.*)'),{})
 headers={x.get('key'):x.get('value') for x in rule.get('headers',[])}
 errors=[]

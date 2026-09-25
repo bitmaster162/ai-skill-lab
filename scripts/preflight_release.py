@@ -30,6 +30,7 @@ CHECKS = [
     ("workshop_d5", ["python", "scripts/check_workshop_d5.py"]),
     ("workshop_d6", ["python", "scripts/check_workshop_d6.py"]),
     ("tracked_python_artifacts", ["python", "scripts/check_tracked_python_artifacts.py"]),
+    ("python_text_encoding", ["python", "scripts/check_python_text_encoding.py"]),
     ("client_privacy", ["python", "scripts/check_client_privacy.py"]),
     ("lead_ingress", ["node", "--test", "services/lead-ingress/test/lead.test.mjs"]),
     ("lead_receiver", ["node", "--test", "services/lead-receiver-cloudflare/test/receiver.test.mjs"]),
