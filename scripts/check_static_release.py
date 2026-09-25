@@ -46,6 +46,23 @@ def main():
     routes={route_for(p):p for p in html_files if p.name != '404.html'}
     parsed={}
     problems=[]; link_count=0; forms=0; jsonld_count=0
+    attributes=ROOT/'.gitattributes'
+    release_policies=[
+        'README.md text eol=lf',
+        'app/** text=auto eol=lf',
+        'components/** text=auto eol=lf',
+        'data/** text=auto eol=lf',
+        'schema/** text=auto eol=lf',
+        'public/** text=auto eol=lf',
+        'deploy/live/** text=auto eol=lf',
+    ]
+    if not attributes.exists():
+        problems.append('missing .gitattributes release EOL policy')
+    else:
+        attr_lines=[line.strip() for line in attributes.read_text(encoding='utf-8').splitlines() if line.strip() and not line.lstrip().startswith('#')]
+        release_roots={'README.md','app/**','components/**','data/**','schema/**','public/**','deploy/live/**'}
+        release_rules=[line for line in attr_lines if line.split()[0] in release_roots]
+        if release_rules != release_policies: problems.append(f'release EOL policy mismatch: {release_rules!r}')
     for route,path in routes.items():
         parser=PageParser(); parser.feed(path.read_text(encoding='utf-8'))
         parsed[route]=parser; forms += parser.forms
