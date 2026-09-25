@@ -23,3 +23,7 @@ It checks the captured constraints, the receiver's actual INSERT/deduplication a
 This snapshot is not a data backup, migration history, or proof of live delivery, retention execution, or disaster recovery. It does not modify or normalize existing production constraints. Do not apply it to the existing production database. Any future migration needs its own evidence, compatibility review, and approval.
 
 CI and release preflight run the offline check. Changing the captured SQL requires a new, independently obtained schema readback and fingerprint.
+
+## Recovery
+
+For the evidence boundary and approval-gated D1 Time Travel procedure, see `schema/D1_RECOVERY.md`.
