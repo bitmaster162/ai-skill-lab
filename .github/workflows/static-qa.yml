@@ -72,6 +72,8 @@ jobs:
         run: node --test services/lead-ingress/test/lead.test.mjs
       - name: Test Cloudflare lead receiver
         run: node --test services/lead-receiver-cloudflare/test/receiver.test.mjs
+      - name: Validate captured D1 schema offline
+        run: python scripts/check_lead_schema.py
       - name: Validate intake operational contract
         run: python scripts/check_intake_operations.py
       - name: Validate read-only operator lead inbox

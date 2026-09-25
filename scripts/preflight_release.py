@@ -33,6 +33,7 @@ CHECKS = [
     ("client_privacy", ["python", "scripts/check_client_privacy.py"]),
     ("lead_ingress", ["node", "--test", "services/lead-ingress/test/lead.test.mjs"]),
     ("lead_receiver", ["node", "--test", "services/lead-receiver-cloudflare/test/receiver.test.mjs"]),
+    ("lead_schema", ["python", "scripts/check_lead_schema.py"]),
     ("intake_operations", ["python", "scripts/check_intake_operations.py"]),
     ("lead_inbox", ["python", "scripts/check_lead_inbox.py"]),
     ("inline_scripts", ["python", "scripts/check_inline_scripts.py"]),
