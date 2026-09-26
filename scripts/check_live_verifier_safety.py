@@ -4,13 +4,15 @@ from __future__ import annotations
 import ast
 from pathlib import Path
 import sys
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 VERIFIER = ROOT / "scripts/verify_live_static.py"
 WORKFLOW = ROOT / ".github/workflows/static-qa.yml"
 PREFLIGHT = ROOT / "scripts/preflight_release.py"
+PUBLIC_ORIGIN_HELPER = ROOT / "scripts/public_origin.py"
 
-EXPECTED_EXACT_HOSTS = {"ai-skill-lab.vercel.app"}
+EXPECTED_EXACT_HOSTS = {"ai-skill-lab.vercel.app", "aiskillab.work"}
 EXPECTED_HOST_SUFFIXES = ("-bitevo-s-projects.vercel.app",)
 
 errors = []
@@ -19,6 +21,18 @@ checks = 0
 verifier_text = VERIFIER.read_text(encoding="utf-8")
 workflow_text = WORKFLOW.read_text(encoding="utf-8")
 preflight_text = PREFLIGHT.read_text(encoding="utf-8")
+public_origin_text = PUBLIC_ORIGIN_HELPER.read_text(encoding="utf-8")
+public_origin_tree = ast.parse(public_origin_text, filename=str(PUBLIC_ORIGIN_HELPER))
+default_public_origin = next(
+    (
+        ast.literal_eval(node.value)
+        for node in public_origin_tree.body
+        if isinstance(node, ast.Assign)
+        and any(isinstance(target, ast.Name) and target.id == "DEFAULT_PUBLIC_ORIGIN" for target in node.targets)
+    ),
+    None,
+)
+canonical_public_host = urlsplit(default_public_origin).hostname if isinstance(default_public_origin, str) else None
 
 required_markers = [
     "urlsplit",
@@ -70,6 +84,13 @@ if assignments.get("ALLOWED_HOST_SUFFIXES") != EXPECTED_HOST_SUFFIXES:
     errors.append(
         "live verifier host-suffix allowlist drift "
         f"{assignments.get('ALLOWED_HOST_SUFFIXES')!r}"
+    )
+
+checks += 1
+if not canonical_public_host or canonical_public_host not in assignments.get("ALLOWED_EXACT_HOSTS", set()):
+    errors.append(
+        "live verifier must allow canonical DEFAULT_PUBLIC_ORIGIN host "
+        f"{canonical_public_host!r}"
     )
 
 checks += 1
