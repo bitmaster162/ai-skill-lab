@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "deploy/live/_release.json"
 
 CHECKS = [
+    ("eslint", ["python", "scripts/check_eslint_gate.py"]),
     ("static_release", ["python", "scripts/check_static_release.py"]),
     ("search_metadata", ["python", "scripts/check_search_metadata.py"]),
     ("llms_txt", ["python", "scripts/check_llms_txt.py"]),
