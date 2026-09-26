@@ -24,6 +24,9 @@ required={
 for k,v in required.items():
     if headers.get(k)!=v: errors.append(f'{k} mismatch')
 cache_expected={
+    '/favicon.svg':'public, max-age=86400, must-revalidate',
+    '/favicon.ico':'public, max-age=86400, must-revalidate',
+    '/apple-touch-icon.png':'public, max-age=86400, must-revalidate',
     '/fonts/(.*).woff2':'public, max-age=604800',
     '/(.*).js':'public, max-age=604800',
     '/(.*).css':'public, max-age=604800',

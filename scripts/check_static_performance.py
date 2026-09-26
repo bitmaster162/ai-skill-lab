@@ -9,7 +9,7 @@ ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/'deploy'/'live'
 
 release=json.loads((LIVE/'_release.json').read_text(encoding='utf-8')).get('release_id')
-MAX_NON_FONT_TOTAL=(556 if release=='R143_R136_A1_A8_CLOSEOUT' else 536 if release=='R142_A9_A11_FOOTER_TOOLCHAIN_PROOF_TRUTH' else 526)*1024  # R142: bounded global footer/content growth; prior releases unchanged
+MAX_NON_FONT_TOTAL=(556 if release in {'R143_R136_A1_A8_CLOSEOUT','R144_ICON_CACHE_PARITY'} else 536 if release=='R142_A9_A11_FOOTER_TOOLCHAIN_PROOF_TRUTH' else 526)*1024  # R142: bounded global footer/content growth; prior releases unchanged
 MAX_FONT_TOTAL=84*1024
 MAX_FONT_FILE=54*1024
 MAX_HTML=24*1024

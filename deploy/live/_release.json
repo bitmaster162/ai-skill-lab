@@ -308,8 +308,8 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "6a0f935f41d4994fbd37227a8acd1824368b8da163358826ef9f2fe0631d8ba4",
-      "size": 2885
+      "sha256": "65120a23604e13b4098e52c4858dbd7623fb920a4a54ee8e8999a37a74299bff",
+      "size": 3116
     },
     {
       "path": "workshop.css",
@@ -317,7 +317,7 @@
       "size": 24442
     }
   ],
-  "payload_sha256": "58155524e1831b2ad9db28f39915b23ed99a5d1f5dc381ac8e95fc7a9027a944",
-  "release_id": "R143_R136_A1_A8_CLOSEOUT",
+  "payload_sha256": "686f85d518752ecc34a711043a1045d48e870746ca5b8c84cc2dba10379459d7",
+  "release_id": "R144_ICON_CACHE_PARITY",
   "schema": "ai-skill-lab.static-release.v1"
 }
