@@ -17,6 +17,32 @@ ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "deploy" / "live"
 ORIGIN = PUBLIC_ORIGIN
 OG_IMAGE = f"{ORIGIN}/og.png"
+DESCRIPTION_120_155 = {
+    "/business",
+    "/teens",
+    "/faq",
+    "/personal",
+    "/en/teens",
+    "/kids",
+    "/en/business",
+    "/en/kids",
+    "/en/personal",
+    "/en/faq",
+    "/en/phuket",
+    "/en/safety",
+    "/method",
+    "/privacy",
+    "/en/method",
+    "/en/privacy",
+    "/en/curriculum",
+    "/en/matcher",
+    "/curriculum",
+    "/phuket",
+    "/terms",
+    "/proof",
+    "/safety",
+    "/en/start",
+}
 RU_TITLE_CONTRACT = {
     "/faq": 'Вопросы и ответы — AI Skill Lab',
     "/privacy": 'Политика приватности — AI Skill Lab',
@@ -236,6 +262,10 @@ def main() -> int:
             errors.append(f"{rel_layout} must declare /site.webmanifest")
         if 'url: "/favicon.svg"' not in source_layout:
             errors.append(f"{rel_layout} must declare /favicon.svg as icon authority")
+        if 'url: "/favicon.ico"' not in source_layout:
+            errors.append(f"{rel_layout} must declare /favicon.ico fallback")
+        if 'url: "/apple-touch-icon.png"' not in source_layout:
+            errors.append(f"{rel_layout} must declare /apple-touch-icon.png")
         if 'themeColor: "#0b0d10"' not in source_layout:
             errors.append(f"{rel_layout} must declare production theme color #0b0d10")
 
@@ -271,6 +301,30 @@ def main() -> int:
         errors.append("public/favicon.svg is required for Next favicon parity")
     elif public_favicon.read_bytes() != live_favicon.read_bytes():
         errors.append("public/favicon.svg must be byte-identical to deploy/live/favicon.svg")
+    for icon_name in ("favicon.ico", "apple-touch-icon.png"):
+        public_icon = ROOT / "public" / icon_name
+        live_icon = LIVE / icon_name
+        if not public_icon.exists() or not live_icon.exists():
+            errors.append(f"{icon_name} must exist in public and deploy/live")
+            continue
+        if public_icon.read_bytes() != live_icon.read_bytes():
+            errors.append(f"public/{icon_name} must be byte-identical to deploy/live/{icon_name}")
+    apple = LIVE / "apple-touch-icon.png"
+    if apple.exists():
+        raw = apple.read_bytes()
+        if not raw.startswith(b"\x89PNG\r\n\x1a\n") or len(raw) < 24:
+            errors.append("apple-touch-icon.png must decode as PNG")
+        else:
+            width = int.from_bytes(raw[16:20], "big")
+            height = int.from_bytes(raw[20:24], "big")
+            if (width, height) != (180, 180):
+                errors.append(f"apple-touch-icon.png dimensions {(width,height)} != (180,180)")
+    ico = LIVE / "favicon.ico"
+    if ico.exists():
+        raw = ico.read_bytes()
+        if len(raw) < 6 or raw[:4] != b"\x00\x00\x01\x00" or int.from_bytes(raw[4:6], "little") < 1:
+            errors.append("favicon.ico must decode as ICO")
+
     public_manifest = ROOT / "public" / "site.webmanifest"
     live_manifest = LIVE / "site.webmanifest"
     if not public_manifest.exists():
@@ -328,7 +382,10 @@ def main() -> int:
                 fail(errors, route, "source absolute title contract missing")
         if not (15 <= len(title) <= 65):
             fail(errors, route, f"title length {len(title)} outside 15..65")
-        if not (50 <= len(desc) <= 160):
+        if route in DESCRIPTION_120_155:
+            if not (120 <= len(desc) <= 155):
+                fail(errors, route, f"description length {len(desc)} outside contracted 120..155")
+        elif not (50 <= len(desc) <= 160):
             fail(errors, route, f"description length {len(desc)} outside 50..160")
 
         expected_url = ORIGIN + ("/" if route == "/" else route)
@@ -348,6 +405,13 @@ def main() -> int:
                 fail(errors, route, f"hreflang {lang} {actual!r} != {expected!r}")
 
         og = parser.meta_property
+        favicon_ico = [link for link in parser.links if "icon" in set(link.get("rel", "").lower().split()) and link.get("href") == "/favicon.ico"]
+        apple_icon = [link for link in parser.links if "apple-touch-icon" in set(link.get("rel", "").lower().split()) and link.get("href") == "/apple-touch-icon.png"]
+        if len(favicon_ico) != 1:
+            fail(errors, route, f"favicon.ico link count {len(favicon_ico)} != 1")
+        if len(apple_icon) != 1 or apple_icon[0].get("sizes") != "180x180":
+            fail(errors, route, "apple-touch-icon 180x180 link missing")
+
         if og.get("og:type") != "website":
             fail(errors, route, "og:type must be website")
         if og.get("og:site_name") != "AI Skill Lab":

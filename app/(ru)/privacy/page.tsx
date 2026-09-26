@@ -3,7 +3,7 @@ import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = { title: { absolute: "Политика приватности — AI Skill Lab" }, description: "Политика приватности AI Skill Lab для публичной формы заявки и прямых каналов связи.", alternates: { canonical: "/privacy", languages: { ru: "/privacy", en: "/en/privacy" } } };
+export const metadata: Metadata = { title: { absolute: "Политика приватности — AI Skill Lab" }, description: "Политика приватности AI Skill Lab: какие данные обрабатывает публичная форма заявки, как работают прямые каналы связи и какие данные мы не собираем.", alternates: { canonical: "/privacy", languages: { ru: "/privacy", en: "/en/privacy" } } };
 
 export default function PrivacyPage() {
   return <LegalPage path="privacy" title="Конфиденциальность" intro="Как сайт работает с данными в текущем режиме запуска и что изменится, если будет включена собственная форма заявки.">

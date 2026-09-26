@@ -5,7 +5,7 @@ import { SkillGraph } from "@/components/SkillGraph";
 
 export const metadata: Metadata = {
   title: { absolute: "Программы обучения AI — AI Skill Lab" },
-  description: "Сравнение программ для взрослых, детей 8–13 и подростков 14–18: темы, формат, артефакты и глубина.",
+  description: "Сравните программы AI Skill Lab для взрослых, детей 8–13 и подростков 14–18: темы, формат занятий, глубину, практику и итоговые артефакты.",
   alternates: { canonical: "/curriculum", languages: { ru: "/curriculum", en: "/en/curriculum" } },
 };
 

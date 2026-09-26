@@ -19,9 +19,23 @@ headers={x.get('key'):x.get('value') for x in rule.get('headers',[])}
 errors=[]
 required={
  'X-Content-Type-Options':'nosniff','Referrer-Policy':'strict-origin-when-cross-origin','X-Frame-Options':'DENY',
- 'Permissions-Policy':'camera=(), microphone=(), geolocation=()','X-Permitted-Cross-Domain-Policies':'none'}
+ 'Permissions-Policy':'camera=(), microphone=(), geolocation=()','X-Permitted-Cross-Domain-Policies':'none',
+ 'Cross-Origin-Opener-Policy':'same-origin'}
 for k,v in required.items():
     if headers.get(k)!=v: errors.append(f'{k} mismatch')
+cache_expected={
+    '/fonts/(.*).woff2':'public, max-age=604800',
+    '/(.*).js':'public, max-age=604800',
+    '/(.*).css':'public, max-age=604800',
+}
+for source,value in cache_expected.items():
+    match=next((x for x in obj.get('headers',[]) if x.get('source')==source),None)
+    if match is None:
+        errors.append(f'cache rule missing {source}')
+        continue
+    rule_headers={x.get('key'):x.get('value') for x in match.get('headers',[])}
+    if rule_headers.get('Cache-Control')!=value:
+        errors.append(f'cache rule mismatch {source}')
 csp=headers.get('Content-Security-Policy','')
 for directive in ["default-src 'self'","style-src 'self'","connect-src 'self'","object-src 'none'","frame-ancestors 'none'","form-action 'none'","base-uri 'self'"]:
     if directive not in csp: errors.append(f'CSP missing {directive}')

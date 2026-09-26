@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import sys
-ROOT=Path(__file__).resolve().parents[1]/'deploy'/'live'
+REPO=Path(__file__).resolve().parents[1]
+ROOT=REPO/'deploy'/'live'
 starts=[ROOT/'start.html',ROOT/'en'/'start.html']; matchers=[ROOT/'matcher.html',ROOT/'en'/'matcher.html']
 errors=[]; checks=0
 for p in [*starts,*matchers]:
@@ -27,6 +28,16 @@ for token in ['XMLHttpRequest','localStorage','sessionStorage','document.cookie'
 for marker in ['navigator.clipboard.writeText','document.querySelectorAll(".briefSendLink")','document.querySelectorAll(".briefCopy")','new FormData(form)','"Content-Type":"application/json"','data-adult-confirmation']:
  checks+=1
  if marker not in brief: errors.append(f'start-brief.js missing {marker}')
+static_css=(ROOT/'workshop.css').read_text(encoding='utf-8')
+checks+=2
+if '.leadForm .consentRow{grid-template-columns:24px 1fr;min-height:24px;padding:3px 0;' not in static_css:
+ errors.append('workshop.css consent target must be >=24px')
+if '.leadForm .consentRow input{width:18px;min-height:18px;height:18px;' not in static_css:
+ errors.append('workshop.css visual checkbox size drift')
+source_css=(REPO/'app/globals.css').read_text(encoding='utf-8')
+checks+=1
+if 'grid-template-columns: 24px 1fr; min-height: 24px; padding: 3px 0;' not in source_css:
+ errors.append('source consent label target must be >=24px')
 proofs=[
  (ROOT/'proof.html',"Публичный сайт не использует analytics, cookies и trackers. Единственная форма — заявка на /start, она отправляется на /api/lead."),
  (ROOT/'en'/'proof.html',"The public site uses no analytics, cookies or trackers. The only form is the request form on /start; it submits to /api/lead."),

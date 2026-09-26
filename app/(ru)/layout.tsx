@@ -31,6 +31,8 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    shortcut: [{ url: "/favicon.ico" }],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   robots: { index: true, follow: true },
 };
