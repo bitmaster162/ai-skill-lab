@@ -24,21 +24,24 @@ required={
 for k,v in required.items():
     if headers.get(k)!=v: errors.append(f'{k} mismatch')
 cache_expected={
+    '/og.png':'public, max-age=86400, must-revalidate',
     '/favicon.svg':'public, max-age=86400, must-revalidate',
     '/favicon.ico':'public, max-age=86400, must-revalidate',
     '/apple-touch-icon.png':'public, max-age=86400, must-revalidate',
     '/icon-192.png':'public, max-age=86400, must-revalidate',
     '/icon-512.png':'public, max-age=86400, must-revalidate',
+    '/site.webmanifest':'public, max-age=86400, must-revalidate',
+    '/_release.json':'no-store, max-age=0',
     '/fonts/(.*).woff2':'public, max-age=604800',
     '/(.*).js':'public, max-age=604800',
     '/(.*).css':'public, max-age=604800',
 }
 for source,value in cache_expected.items():
-    match=next((x for x in obj.get('headers',[]) if x.get('source')==source),None)
-    if match is None:
-        errors.append(f'cache rule missing {source}')
+    matches=[x for x in obj.get('headers',[]) if x.get('source')==source]
+    if len(matches)!=1:
+        errors.append(f'cache rule count {source}={len(matches)}, expected 1')
         continue
-    rule_headers={x.get('key'):x.get('value') for x in match.get('headers',[])}
+    rule_headers={x.get('key'):x.get('value') for x in matches[0].get('headers',[])}
     if rule_headers.get('Cache-Control')!=value:
         errors.append(f'cache rule mismatch {source}')
 csp=headers.get('Content-Security-Policy','')
