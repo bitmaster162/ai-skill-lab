@@ -10,6 +10,7 @@ PREFLIGHT = ROOT / "scripts/preflight_release.py"
 WORKFLOW = ROOT / ".github/workflows/static-qa.yml"
 PUBLIC_ORIGIN_HELPER = ROOT / "scripts/public_origin.py"
 README = ROOT / "README.md"
+WORKFLOW_DIR = ROOT / ".github" / "workflows"
 
 FORBIDDEN = [
     "build_csp.py",
@@ -34,6 +35,7 @@ public_origin_text = PUBLIC_ORIGIN_HELPER.read_text(encoding="utf-8")
 readme_text = README.read_text(encoding="utf-8")
 locked_install_command = "npm ci --ignore-scripts --audit=false --fund=false"
 local_preflight_command = "python scripts/preflight_release.py --release <receipt-label>"
+workflow_files = sorted(WORKFLOW_DIR.glob("*.yml"))
 
 for marker in FORBIDDEN:
     checks += 1
@@ -53,6 +55,18 @@ if "PUBLIC_ORIGIN = normalize_public_origin(DEFAULT_PUBLIC_ORIGIN)" not in publi
 checks += 1
 if "check-launch.mjs" in workflow_text or "check:launch" in workflow_text:
     errors.append("required static-release workflow must not invoke ENV-bound launch check")
+
+checks += 1
+if len(workflow_files) != 3:
+    errors.append(f"workflow inventory drift expected=3 actual={len(workflow_files)}")
+for workflow_path in workflow_files:
+    workflow_source = workflow_path.read_text(encoding="utf-8")
+    checks += 1
+    if "ubuntu-latest" in workflow_source:
+        errors.append(f"{workflow_path.name}: floating ubuntu-latest runner is forbidden")
+    checks += 1
+    if workflow_source.count("runs-on: ubuntu-24.04") != 1:
+        errors.append(f"{workflow_path.name}: expected exactly one ubuntu-24.04 runner binding")
 
 checks += 1
 if readme_text.count(locked_install_command) != 1:
