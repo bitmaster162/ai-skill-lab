@@ -19,6 +19,15 @@ for p in sorted(LIVE.rglob('*.html')):
    checks+=1
    if marker not in h:errors.append(f'{rel}: missing {marker}')
   if '<header class="nav">' in text:errors.append(f'{rel}: legacy header returned')
+  f=re.search(r'<footer class="workshopFooter">(.*?)</footer>',text,re.S);checks+=1
+  if not f: errors.append(f'{rel}: workshop footer missing')
+  else:
+   footer=f.group(1)
+   targets=[('/en/method','Method'),('/en/curriculum','Curriculum'),('/en/phuket','Phuket')] if en else [('/method','Метод'),('/curriculum','Программа'),('/phuket','Пхукет')]
+   for href,label in targets:
+    checks+=2
+    if footer.count(f'href="{href}"')!=1: errors.append(f'{rel}: footer {href} count drift')
+    if f'>{label}</a>' not in footer: errors.append(f'{rel}: footer label {label} missing')
  else:
   legacy+=1;en=rel.startswith('en/');expected=[f'/en{x}' for x in ['/personal','/business','/kids','/teens','/pricing','/about','/faq']] if en else ['/personal','/business','/kids','/teens','/pricing','/about','/faq']
   m=re.search(r'<header class="nav">(.*?)</header>',text,re.S);checks+=1
@@ -34,6 +43,21 @@ for label in ['Взрослые','Подростки','Дети','Бизнес',
 for forbidden in ['Взрослым','Стоимость','Дети 8–13','Подростки 14–18']:
  checks+=1
  if f'[["{forbidden}"' in source:errors.append(f'Workshop menu stale label {forbidden}')
+for marker in ['/method','/curriculum','/phuket','/en/method','/en/curriculum','/en/phuket','Метод','Программа','Пхукет','Method','Curriculum','Phuket']:
+ checks+=1
+ if marker not in source:errors.append(f'WorkshopShell footer discovery missing {marker}')
+incoming_targets=['/curriculum','/en/curriculum','/phuket','/en/phuket','/method','/en/method']
+incoming={target:set() for target in incoming_targets}
+for p in sorted(LIVE.rglob('*.html')):
+ if p.name=='404.html': continue
+ rel=p.relative_to(LIVE).as_posix(); route='/' if rel=='index.html' else '/en' if rel=='en.html' else '/'+rel[:-5]
+ text=p.read_text(encoding='utf-8')
+ for href in re.findall(r'href="([^"]+)"',text):
+  path=href.split('#',1)[0]
+  if path in incoming and route!=path: incoming[path].add(route)
+for target in incoming_targets:
+ checks+=1
+ if len(incoming[target])<10: errors.append(f'inlinks {target}={len(incoming[target])}, expected >=10')
 readme=README.read_text(encoding='utf-8')
 for label,expected in [('RU',{r for r in public if r=='/' or not r.startswith('/en')}),('EN',{r for r in public if r=='/en' or r.startswith('/en/')})]:
  m=re.search(rf'^- {label}: (.+)$',readme,re.M);checks+=1

@@ -47,6 +47,11 @@ export function WorkshopShell({ locale = "ru", alternateHref, contactHref, child
           <Link href={en ? "/en/build" : "/build"}>Build Log</Link>
           <Link href={en ? "/en/proof" : "/proof"}>Proof Lab</Link>
         </nav>
+        <nav className={styles.footerExplore} aria-label={en ? "Method, curriculum and Phuket" : "Метод, программа и Пхукет"}>
+          <Link href={en ? "/en/method" : "/method"}>{en ? "Method" : "Метод"}</Link>
+          <Link href={en ? "/en/curriculum" : "/curriculum"}>{en ? "Curriculum" : "Программа"}</Link>
+          <Link href={en ? "/en/phuket" : "/phuket"}>{en ? "Phuket" : "Пхукет"}</Link>
+        </nav>
         <span>© 2026</span>
       </footer>
     </div>

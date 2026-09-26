@@ -40,6 +40,7 @@ common = [
     "GIT / BUNDLES",
     "VERCEL",
     "HUMAN REVIEW",
+    "CLAUDE",
     "STATIC JS BROKE",
     "METADATA DRIFT",
     "WRAPPER CORRUPTED",
@@ -54,9 +55,11 @@ for rel, en, label in build_surfaces:
         if marker not in text:
             errors.append(f"{label}: missing {marker}")
     locale_markers = (
-        ["AI did", "Human owned", "We can govern an AI build."]
+        ["AI did", "Human owned", "We can govern an AI build.",
+         "Live-site audits and measurements, fact checks against primary sources, task specifications for the implementer. Claude Design — the “Workshop” design system: palette, typography, brand mark."]
         if en
-        else ["AI did", "Human owned", "Мы умеем управлять AI-сборкой."]
+        else ["AI did", "Human owned", "Мы умеем управлять AI-сборкой.",
+              "Аудит и замеры живого сайта, проверка фактов по первоисточникам, спецификации задач для исполнителя. Claude Design — дизайн-система «Мастерская»: палитра, типографика, знак."]
     )
     for marker in locale_markers:
         checks += 1

@@ -23,6 +23,7 @@
 .workshopFooter>div{display:flex;flex-direction:column}
 .workshopFooter strong{color:var(--i)}
 .workshopFooter nav{display:flex;flex-wrap:wrap;gap:16px}
+.workshopFooter nav.workshopFooterExplore{flex-direction:column;align-items:flex-start;gap:0}
 .workshopFooter nav a{min-height:44px;display:inline-flex;align-items:center}
 .workshopFooter{border-bottom:0;border-top:1px solid var(--b)}
 .bandSteps{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--b)}
