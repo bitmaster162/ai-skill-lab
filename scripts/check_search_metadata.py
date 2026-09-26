@@ -345,6 +345,10 @@ def main() -> int:
             ]
             if manifest_data.get("icons") != expected_icons:
                 errors.append(f"site.webmanifest installability icons drift: {manifest_data.get('icons')!r}")
+            if manifest_data.get("background_color") != "#0b0d10":
+                errors.append(f"site.webmanifest background_color {manifest_data.get('background_color')!r} != '#0b0d10'")
+            if manifest_data.get("theme_color") != "#0b0d10":
+                errors.append(f"site.webmanifest theme_color {manifest_data.get('theme_color')!r} != '#0b0d10'")
             for icon_name, expected_size in (("icon-192.png", 192), ("icon-512.png", 512)):
                 public_icon = ROOT / "public" / icon_name
                 live_icon = LIVE / icon_name

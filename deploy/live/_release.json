@@ -283,7 +283,7 @@
     },
     {
       "path": "site.webmanifest",
-      "sha256": "7d8b45a4ae875618cff3e21d21fe9ca41ef011a9e0c23a14f561f6f17270e8c9",
+      "sha256": "e81aa3eab6c8b595a0c90e7f42325e4baa8e379e463dd5207693194c0648268d",
       "size": 336
     },
     {
@@ -327,7 +327,7 @@
       "size": 24442
     }
   ],
-  "payload_sha256": "a6dd136bb200bb4f2920b350533b0a97b87cc30beb4e77a1aa419a9aa4d4fe97",
-  "release_id": "R145_PWA_INSTALLABILITY",
+  "payload_sha256": "6052c66131091ca26bf43ed3ab82a9c16ca852385bc153de5eb9184ad0e422fe",
+  "release_id": "R147_C2_DEPLOYMENT_FILTER_PWA_BACKGROUND",
   "schema": "ai-skill-lab.static-release.v1"
 }
