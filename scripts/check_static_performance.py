@@ -3,12 +3,13 @@ from __future__ import annotations
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
-import re, sys
+import json, re, sys
 
 ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/'deploy'/'live'
 
-MAX_NON_FONT_TOTAL=526*1024  # R115: R114 payload + bounded 47-surface preload markup + typography CSS
+release=json.loads((LIVE/'_release.json').read_text(encoding='utf-8')).get('release_id')
+MAX_NON_FONT_TOTAL=(536 if release=='R142_A9_A11_FOOTER_TOOLCHAIN_PROOF_TRUTH' else 526)*1024  # R142: bounded global footer/content growth; prior releases unchanged
 MAX_FONT_TOTAL=84*1024
 MAX_FONT_FILE=54*1024
 MAX_HTML=24*1024

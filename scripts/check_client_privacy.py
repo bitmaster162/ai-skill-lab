@@ -27,6 +27,16 @@ for token in ['XMLHttpRequest','localStorage','sessionStorage','document.cookie'
 for marker in ['navigator.clipboard.writeText','document.querySelectorAll(".briefSendLink")','document.querySelectorAll(".briefCopy")','new FormData(form)','"Content-Type":"application/json"','data-adult-confirmation']:
  checks+=1
  if marker not in brief: errors.append(f'start-brief.js missing {marker}')
+proofs=[
+ (ROOT/'proof.html',"Публичный сайт не использует analytics, cookies и trackers. Единственная форма — заявка на /start, она отправляется на /api/lead."),
+ (ROOT/'en'/'proof.html',"The public site uses no analytics, cookies or trackers. The only form is the request form on /start; it submits to /api/lead."),
+]
+for p,privacy in proofs:
+ t=p.read_text(encoding='utf-8'); checks+=4
+ if '<b>public_forms</b><strong>1</strong>' not in t: errors.append(f'{p.relative_to(ROOT)}: public_forms must equal 1')
+ if '<b>public_forms</b><strong>0</strong>' in t: errors.append(f'{p.relative_to(ROOT)}: stale public_forms 0')
+ if privacy not in t: errors.append(f'{p.relative_to(ROOT)}: current privacy statement missing')
+ if 'first-party lead forms' in t or 'first-party lead forms' in t.lower(): errors.append(f'{p.relative_to(ROOT)}: stale no-form claim')
 print(f'client_privacy_checks={checks}')
 if errors:
  [print('FAIL:',e) for e in errors]; sys.exit(1)

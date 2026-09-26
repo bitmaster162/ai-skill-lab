@@ -42,6 +42,18 @@ for rel, en, label in proof_surfaces:
         checks += 1
         if forbidden.lower() in text.lower():
             errors.append(f"{label}: forbidden {forbidden}")
+    privacy = (
+        "The public site uses no analytics, cookies or trackers. The only form is the request form on /start; it submits to /api/lead."
+        if en
+        else "Публичный сайт не использует analytics, cookies и trackers. Единственная форма — заявка на /start, она отправляется на /api/lead."
+    )
+    checks += 3
+    if privacy not in text:
+        errors.append(f"{label}: current client-privacy fact missing")
+    if "<b>public_forms</b><strong>1</strong>" not in text:
+        errors.append(f"{label}: public_forms must equal 1")
+    if "<b>public_forms</b><strong>0</strong>" in text:
+        errors.append(f"{label}: stale public_forms 0")
 
 mounts = {
     "app/page.tsx": '<WorkshopHome locale="ru" />',
