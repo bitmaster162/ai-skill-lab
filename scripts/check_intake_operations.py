@@ -11,6 +11,7 @@ INGRESS = ROOT / "services/lead-ingress/api/lead.js"
 RECEIVER = ROOT / "services/lead-receiver-cloudflare/src/index.js"
 WORKFLOW = ROOT / ".github/workflows/static-qa.yml"
 PREFLIGHT = ROOT / "scripts/preflight_release.py"
+INGRESS_VERCEL = ROOT / "services/lead-ingress/vercel.json"
 
 errors = []
 checks = 0
@@ -26,6 +27,7 @@ ingress = INGRESS.read_text(encoding="utf-8")
 receiver = RECEIVER.read_text(encoding="utf-8")
 workflow = WORKFLOW.read_text(encoding="utf-8")
 preflight = PREFLIGHT.read_text(encoding="utf-8")
+ingress_vercel = json.loads(INGRESS_VERCEL.read_text(encoding="utf-8"))
 
 require(cfg.get("triggers") == {"crons": ["17 * * * *"]}, "receiver cron contract drift")
 obs = cfg.get("observability") or {}
@@ -38,6 +40,12 @@ require(logs.get("head_sampling_rate") == 1, "receiver log sampling must be 100%
 require(logs.get("persist") is True, "receiver logs must persist")
 require(obs.get("redact_query_string") is True, "receiver query strings must be redacted")
 require(traces.get("enabled") is False, "receiver traces must remain disabled")
+
+require(
+    ingress_vercel.get("git", {}).get("deploymentEnabled")
+    == {"agent/**": False, "agent/ingress-*": True},
+    "ingress git.deploymentEnabled branch contract drift",
+)
 
 require('const INTAKE_EVENT_SCHEMA = "ai-skill-lab.intake-event.v1";' in ingress, "ingress event schema missing")
 require('const INGRESS_EVENT_FIELDS = new Set(["requestId", "status", "downstreamStatus"]);' in ingress, "ingress event allowlist drift")
