@@ -331,6 +331,36 @@ def main() -> int:
         errors.append("public/site.webmanifest is required for Next manifest parity")
     elif public_manifest.read_bytes() != live_manifest.read_bytes():
         errors.append("public/site.webmanifest must be byte-identical to deploy/live/site.webmanifest")
+    if public_manifest.exists() and live_manifest.exists():
+        try:
+            import json
+            manifest_data = json.loads(live_manifest.read_text(encoding="utf-8"))
+        except Exception as exc:
+            errors.append(f"site.webmanifest invalid JSON: {exc}")
+        else:
+            expected_icons = [
+                {"src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml"},
+                {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png"},
+                {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png"},
+            ]
+            if manifest_data.get("icons") != expected_icons:
+                errors.append(f"site.webmanifest installability icons drift: {manifest_data.get('icons')!r}")
+            for icon_name, expected_size in (("icon-192.png", 192), ("icon-512.png", 512)):
+                public_icon = ROOT / "public" / icon_name
+                live_icon = LIVE / icon_name
+                if not public_icon.exists() or not live_icon.exists():
+                    errors.append(f"{icon_name} must exist in public and deploy/live")
+                    continue
+                if public_icon.read_bytes() != live_icon.read_bytes():
+                    errors.append(f"public/{icon_name} must be byte-identical to deploy/live/{icon_name}")
+                raw = live_icon.read_bytes()
+                if not raw.startswith(b"\x89PNG\r\n\x1a\n") or len(raw) < 24:
+                    errors.append(f"{icon_name} must decode as PNG")
+                else:
+                    width = int.from_bytes(raw[16:20], "big")
+                    height = int.from_bytes(raw[20:24], "big")
+                    if (width, height) != (expected_size, expected_size):
+                        errors.append(f"{icon_name} dimensions {(width,height)} != {(expected_size,expected_size)}")
 
     pages = sorted(LIVE.rglob("*.html"))
     for path in pages:

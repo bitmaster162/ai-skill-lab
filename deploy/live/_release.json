@@ -1,5 +1,5 @@
 {
-  "file_count": 63,
+  "file_count": 65,
   "files": [
     {
       "path": "404.html",
@@ -182,6 +182,16 @@
       "size": 52016
     },
     {
+      "path": "icon-192.png",
+      "sha256": "9493b6adadc37e7a0a3408e0a9e6ec014e7502c15e7adec20c49cf40a4d8f09c",
+      "size": 858
+    },
+    {
+      "path": "icon-512.png",
+      "sha256": "d06c3ab86ab5268a5648eeeeb68a013298839d519e58bb2bed4139884c81f823",
+      "size": 2432
+    },
+    {
       "path": "index.html",
       "sha256": "7271762db7dea65aad4ab174595c150662b4bced4024c8a34105d60f6b7f7a3c",
       "size": 10087
@@ -273,8 +283,8 @@
     },
     {
       "path": "site.webmanifest",
-      "sha256": "35e2e443de72b31a2a83a066375853e72b722b15c3aaca60cf12dbbb80286dd2",
-      "size": 231
+      "sha256": "7d8b45a4ae875618cff3e21d21fe9ca41ef011a9e0c23a14f561f6f17270e8c9",
+      "size": 336
     },
     {
       "path": "sitemap.xml",
@@ -308,8 +318,8 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "65120a23604e13b4098e52c4858dbd7623fb920a4a54ee8e8999a37a74299bff",
-      "size": 3116
+      "sha256": "1dce71e973bd07ad20b64135af865d4ab0a67bf9791d996c60207cbdc4370f51",
+      "size": 3340
     },
     {
       "path": "workshop.css",
@@ -317,7 +327,7 @@
       "size": 24442
     }
   ],
-  "payload_sha256": "686f85d518752ecc34a711043a1045d48e870746ca5b8c84cc2dba10379459d7",
-  "release_id": "R144_ICON_CACHE_PARITY",
+  "payload_sha256": "a6dd136bb200bb4f2920b350533b0a97b87cc30beb4e77a1aa419a9aa4d4fe97",
+  "release_id": "R145_PWA_INSTALLABILITY",
   "schema": "ai-skill-lab.static-release.v1"
 }
