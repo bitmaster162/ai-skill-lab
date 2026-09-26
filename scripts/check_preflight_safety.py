@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PREFLIGHT = ROOT / "scripts/preflight_release.py"
 WORKFLOW = ROOT / ".github/workflows/static-qa.yml"
 PUBLIC_ORIGIN_HELPER = ROOT / "scripts/public_origin.py"
+README = ROOT / "README.md"
 
 FORBIDDEN = [
     "build_csp.py",
@@ -30,6 +31,9 @@ checks = 0
 preflight_text = PREFLIGHT.read_text(encoding="utf-8")
 workflow_text = WORKFLOW.read_text(encoding="utf-8")
 public_origin_text = PUBLIC_ORIGIN_HELPER.read_text(encoding="utf-8")
+readme_text = README.read_text(encoding="utf-8")
+locked_install_command = "npm ci --ignore-scripts --audit=false --fund=false"
+local_preflight_command = "python scripts/preflight_release.py --release <receipt-label>"
 
 for marker in FORBIDDEN:
     checks += 1
@@ -49,6 +53,17 @@ if "PUBLIC_ORIGIN = normalize_public_origin(DEFAULT_PUBLIC_ORIGIN)" not in publi
 checks += 1
 if "check-launch.mjs" in workflow_text or "check:launch" in workflow_text:
     errors.append("required static-release workflow must not invoke ENV-bound launch check")
+
+checks += 1
+if readme_text.count(locked_install_command) != 1:
+    errors.append("README must contain the locked npm install command exactly once")
+checks += 1
+if readme_text.count(local_preflight_command) != 1:
+    errors.append("README must contain the local preflight command exactly once")
+checks += 1
+if locked_install_command in readme_text and local_preflight_command in readme_text:
+    if readme_text.index(locked_install_command) > readme_text.index(local_preflight_command):
+        errors.append("README must install locked npm dependencies before local preflight")
 
 tree = ast.parse(preflight_text, filename=str(PREFLIGHT))
 checks_node = None

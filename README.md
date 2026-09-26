@@ -34,9 +34,10 @@ The lead payload schema is `ai-skill-lab.lead.v2`. The ingress signs the exact d
 
 ## Release QA
 
-Required repository release QA is the `static-release` workflow. The local read-only equivalent is:
+Required repository release QA is the `static-release` workflow. On a fresh checkout, install the locked npm dependency graph before running the local read-only equivalent:
 
 ```bash
+npm ci --ignore-scripts --audit=false --fund=false
 python scripts/preflight_release.py --release <receipt-label>
 ```
 
