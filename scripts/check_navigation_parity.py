@@ -18,6 +18,9 @@ for p in sorted(LIVE.rglob('*.html')):
   for marker in ['data-lab-command-open','aria-label="Proof Lab"',f'href="{alternate}"',f'href="{start}"']:
    checks+=1
    if marker not in h:errors.append(f'{rel}: missing {marker}')
+  lab_label='LAB — open Lab Command (Ctrl K)' if en else 'LAB — открыть Lab Command (Ctrl K)'
+  checks+=1
+  if f'aria-label="{lab_label}"' not in h: errors.append(f'{rel}: LAB label-in-name drift')
   if '<header class="nav">' in text:errors.append(f'{rel}: legacy header returned')
   f=re.search(r'<footer class="workshopFooter">(.*?)</footer>',text,re.S);checks+=1
   if not f: errors.append(f'{rel}: workshop footer missing')
@@ -43,6 +46,18 @@ for label in ['Взрослые','Подростки','Дети','Бизнес',
 for forbidden in ['Взрослым','Стоимость','Дети 8–13','Подростки 14–18']:
  checks+=1
  if f'[["{forbidden}"' in source:errors.append(f'Workshop menu stale label {forbidden}')
+lab_source=(ROOT/'components/LabCommand.tsx').read_text(encoding='utf-8')
+for marker in ['LAB — открыть Lab Command (Ctrl K)','LAB — open Lab Command (Ctrl K)']:
+ checks+=1
+ if marker not in lab_source:errors.append(f'LabCommand source label missing {marker}')
+for rel,expected_h2 in [('method.html',5),('en/method.html',5),('phuket.html',3),('en/phuket.html',3)]:
+ t=(LIVE/rel).read_text(encoding='utf-8'); checks+=2
+ if '<h3' in t: errors.append(f'{rel}: h3 remains after h1')
+ if t.count('<h2') < expected_h2: errors.append(f'{rel}: h2 count {t.count("<h2")} < {expected_h2}')
+for rel in ['app/(ru)/method/page.tsx','app/(en)/en/method/page.tsx','app/(ru)/phuket/page.tsx','app/(en)/en/phuket/page.tsx']:
+ t=(ROOT/rel).read_text(encoding='utf-8'); checks+=2
+ if '<h3' in t: errors.append(f'{rel}: source h3 remains')
+ if '<h2' not in t: errors.append(f'{rel}: source h2 missing')
 for marker in ['/method','/curriculum','/phuket','/en/method','/en/curriculum','/en/phuket','Метод','Программа','Пхукет','Method','Curriculum','Phuket']:
  checks+=1
  if marker not in source:errors.append(f'WorkshopShell footer discovery missing {marker}')

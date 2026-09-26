@@ -8,7 +8,7 @@ type LabCommandProps = { locale?: Locale };
 
 const copy = {
   ru: {
-    open: "Открыть Lab Command",
+    open: "LAB — открыть Lab Command (Ctrl K)",
     close: "Закрыть Lab Command",
     title: "AI SKILL LAB / COMMAND",
     hint: "CTRL / ⌘ + K",
@@ -25,7 +25,7 @@ const copy = {
     ],
   },
   en: {
-    open: "Open Lab Command",
+    open: "LAB — open Lab Command (Ctrl K)",
     close: "Close Lab Command",
     title: "AI SKILL LAB / COMMAND",
     hint: "CTRL / ⌘ + K",

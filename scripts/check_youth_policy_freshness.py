@@ -55,6 +55,12 @@ for rel in SURFACES:
             print(f"YOUTH_POLICY_SOURCE_MISSING {rel} {url}")
             sys.exit(1)
         checks += 1
+    lower = text.lower()
+    for marker in ("study hours", "quiet hours"):
+        checks += 1
+        if marker not in lower:
+            print(f"YOUTH_POLICY_CONTROL_MISSING {rel} {marker}")
+            sys.exit(1)
 
 dates = set(verified.values())
 checks += 1
