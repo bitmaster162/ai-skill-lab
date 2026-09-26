@@ -28,6 +28,8 @@ jobs:
           cache-dependency-path: package-lock.json
       - name: Validate locked npm install
         run: npm ci --ignore-scripts --audit=false --fund=false
+      - name: Validate ESLint
+        run: python scripts/check_eslint_gate.py
       - name: Validate static release
         run: python scripts/check_static_release.py
       - name: Validate search metadata
