@@ -17,7 +17,7 @@ SECURITY_HEADERS = {
     "x-frame-options": "DENY",
     "permissions-policy": "camera=(), microphone=(), geolocation=()",
 }
-ALLOWED_EXACT_HOSTS = {"ai-skill-lab.vercel.app"}
+ALLOWED_EXACT_HOSTS = {"ai-skill-lab.vercel.app", "aiskillab.work"}
 ALLOWED_HOST_SUFFIXES = ("-bitevo-s-projects.vercel.app",)
 
 
