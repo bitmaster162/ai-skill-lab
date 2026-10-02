@@ -9,6 +9,7 @@ const OPENROUTER_TIMEOUT_MS = 8_000;
 const RATE_GATE_TIMEOUT_MS = 4_000;
 const MIN_SECRET_BYTES = 32;
 const HOURLY_ROUTE_LIMIT = 5;
+const MAX_OPENROUTER_CALLS_PER_ROUTE = 3;
 const ALLOWED_AUDIENCES = new Set(["adult", "kids", "teens", "business"]);
 const ALLOWED_LOCALES = new Set(["ru", "en"]);
 const EVENT_SCHEMA = "ai-skill-lab.route-event.v1";
@@ -87,6 +88,7 @@ function config(env) {
   const webhook = parseHttpsUrl(env.LEAD_WEBHOOK_URL);
   const secret = typeof env.LEAD_WEBHOOK_SECRET === "string" ? env.LEAD_WEBHOOK_SECRET : "";
   const dailyLimit = positiveInteger(env.ROUTE_DAILY_LIMIT);
+  const providerDailyBudget = positiveInteger(env.OPENROUTER_DAILY_REQUEST_BUDGET);
   const key = typeof env.OPENROUTER_API_KEY === "string" ? env.OPENROUTER_API_KEY.trim() : "";
   const models = configuredModels(env.OPENROUTER_MODELS);
   const rateGate = webhook ? new URL("/r159/route-limit", webhook.origin) : null;
@@ -100,6 +102,8 @@ function config(env) {
       rateGate &&
       Buffer.byteLength(secret, "utf8") >= MIN_SECRET_BYTES &&
       dailyLimit &&
+      providerDailyBudget &&
+      dailyLimit * MAX_OPENROUTER_CALLS_PER_ROUTE <= providerDailyBudget &&
       key &&
       models.length,
     ),
@@ -108,6 +112,7 @@ function config(env) {
     models,
     secret,
     dailyLimit,
+    providerDailyBudget,
     rateGate,
   };
 }
@@ -328,8 +333,11 @@ async function checkRouteRate(request, cfg, fetchImpl) {
 async function callOpenRouter(cfg, input, table, fetchImpl) {
   if (!cfg.key || cfg.models.length === 0) return null;
   const system = promptFor(input, table);
+  let providerCalls = 0;
   for (const model of cfg.models) {
     for (let attempt = 0; attempt < 2; attempt += 1) {
+      if (providerCalls >= MAX_OPENROUTER_CALLS_PER_ROUTE) return null;
+      providerCalls += 1;
       let response;
       try {
         response = await fetchImpl("https://openrouter.ai/api/v1/chat/completions", {

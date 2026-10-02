@@ -16,6 +16,7 @@ const baseEnv = {
   ROUTE_DAILY_LIMIT_READY: "true",
   ROUTE_PRIVACY_READY: "true",
   ROUTE_DAILY_LIMIT: "77",
+  OPENROUTER_DAILY_REQUEST_BUDGET: "500",
   LEAD_WEBHOOK_URL: "https://receiver.example/r101b/lead",
   LEAD_WEBHOOK_SECRET: secret,
   OPENROUTER_API_KEY: "test-openrouter-key",
@@ -94,6 +95,9 @@ test("activation requires every provider/config gate and an explicit daily integ
     ["LEAD_WEBHOOK_SECRET", "short"],
     ["OPENROUTER_API_KEY", ""],
     ["OPENROUTER_MODELS", "paid/model"],
+    ["OPENROUTER_DAILY_REQUEST_BUDGET", ""],
+    ["OPENROUTER_DAILY_REQUEST_BUDGET", "0"],
+    ["OPENROUTER_DAILY_REQUEST_BUDGET", "200"],
   ];
   for (const [key, value] of cases) {
     let calls = 0;
@@ -260,6 +264,44 @@ test("unavailable first model falls through to the next free model", async () =>
   assert.equal(body.status, "ok");
   assert.deepEqual(calls.map((x) => x.kind), ["rate", "model", "model"]);
   assert.deepEqual(calls.filter((x) => x.kind === "model").map((x) => JSON.parse(x.options.body).model), ["bad/model:free", "good/model:free"]);
+});
+
+test("provider-call budget caps one route at three OpenRouter attempts across retries and fallbacks", async () => {
+  const env = {
+    ...baseEnv,
+    OPENROUTER_MODELS: "one/model:free,two/model:free,three/model:free,four/model:free",
+    ROUTE_DAILY_LIMIT: "10",
+    OPENROUTER_DAILY_REQUEST_BUDGET: "30",
+  };
+  const calls = [];
+  const response = await handleRoute(
+    req(profile("adult", "research", "core", "Research", "en")),
+    env,
+    fetchWithRateGate(async () => new Response(
+      JSON.stringify({ choices: [{ message: { content: "{not-json" } }] }),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    ), calls),
+  );
+  const body = await response.json();
+  assert.equal(response.status, 200);
+  assert.equal(body.status, "fallback");
+  assert.equal(calls.filter((x) => x.kind === "model").length, 3);
+  assert.deepEqual(
+    calls.filter((x) => x.kind === "model").map((x) => JSON.parse(x.options.body).model),
+    ["one/model:free", "one/model:free", "two/model:free"],
+  );
+});
+
+test("activation rejects a route daily cap whose worst-case provider calls exceed the verified account budget", async () => {
+  const env = { ...baseEnv, ROUTE_DAILY_LIMIT: "17", OPENROUTER_DAILY_REQUEST_BUDGET: "50" };
+  let calls = 0;
+  const response = await handleRoute(
+    req(profile("adult", "research", "core", "Research")),
+    env,
+    async () => { calls += 1; throw new Error("must not call"); },
+  );
+  assert.equal(response.status, 503);
+  assert.equal(calls, 0);
 });
 
 test("input contract requires audience plus exactly three answers", async () => {
