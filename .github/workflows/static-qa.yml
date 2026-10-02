@@ -32,6 +32,10 @@ jobs:
         run: python scripts/check_eslint_gate.py
       - name: Validate static release
         run: python scripts/check_static_release.py
+      - name: Validate D1 text parity
+        run: python check_text_parity.py compare --dir deploy/live --baseline baseline_live_20260926.json --allow allow_d1.json
+      - name: Validate D1 Workshop shell
+        run: python scripts/check_d1_shell.py
       - name: Validate search metadata
         run: python scripts/check_search_metadata.py
       - name: Validate llms.txt AEO directory

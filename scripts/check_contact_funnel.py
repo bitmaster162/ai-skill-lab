@@ -8,16 +8,32 @@ class Links(HTMLParser):
  def __init__(self):super().__init__();self.hrefs=[]
  def handle_starttag(self,tag,attrs):
   if tag=='a':self.hrefs.append(dict(attrs).get('href',''))
+light={'privacy.html','terms.html','en/privacy.html','en/terms.html'}
+start_routes={'start.html','en/start.html'}
+reach_routes=0
 for p in sorted(LIVE.rglob('*.html')):
  rel=p.relative_to(LIVE).as_posix();text=p.read_text(encoding='utf-8');parser=Links();parser.feed(text);checks+=1
- hits=[url for url in channels.values() if url in parser.hrefs or any(h.startswith(url+'?') for h in parser.hrefs)]
- if rel in {'start.html','en/start.html'}:
-  for name,url in channels.items():
+ counts={name:sum(1 for h in parser.hrefs if h==url or h.startswith(url+'?')) for name,url in channels.items()}
+ if rel in start_routes:
+  for name,count in counts.items():
    checks+=1
-   if not (url in parser.hrefs or any(h.startswith(url+'?') for h in parser.hrefs)):errors.append(f'{rel}: missing {name}')
+   if count<1:errors.append(f'{rel}: missing {name}')
   if text.count('briefSendLink')!=5:errors.append(f'{rel}: expected five briefSendLink hooks')
   if 'briefTelegramLink' in text:errors.append(f'{rel}: stale channel-specific hook')
- elif hits:errors.append(f'{rel}: direct channel anchors outside Start {hits}')
+  if 'class="reachBlock"' in text:errors.append(f'{rel}: duplicate D1 reach block')
+ elif rel in light:
+  checks+=1
+  if any(counts.values()):errors.append(f'{rel}: direct channels forbidden on legal light page {counts}')
+  if 'class="reachBlock"' in text:errors.append(f'{rel}: D1 reach block forbidden on legal light page')
+ elif rel!='404.html':
+  reach_routes+=1
+  for name,count in counts.items():
+   checks+=1
+   if count!=1:errors.append(f'{rel}: approved D1 {name} count={count}, expected 1')
+  block_count=text.count('class="reachBlock"')
+  if block_count!=1:errors.append(f'{rel}: D1 reach block count={block_count}, expected 1')
+checks+=1
+if reach_routes!=40:errors.append(f'D1 reach-route count={reach_routes}, expected 40')
 for p in sorted((ROOT/'app').rglob('page.tsx')):
  rel=p.relative_to(ROOT).as_posix();text=p.read_text(encoding='utf-8');checks+=1
  if any(v in text for v in channels.values()) or 'site.telegram' in text or 'site.whatsapp' in text or 'site.line' in text:
@@ -26,9 +42,19 @@ channel=(ROOT/'components/workshop/ChannelLinks.tsx').read_text(encoding='utf-8'
 for marker in ['site.telegram','site.email','site.whatsapp','site.line','id="contact-channels"']:
  checks+=1
  if marker not in channel:errors.append(f'ChannelLinks missing {marker}')
-start=(ROOT/'components/workshop/WorkshopStart.tsx').read_text(encoding='utf-8');checks+=2
+start=(ROOT/'components/workshop/WorkshopStart.tsx').read_text(encoding='utf-8');checks+=4
 if '<ChannelLinks locale={locale}/>' not in start:errors.append('WorkshopStart missing ChannelLinks')
-if 'contactHref="#contact-channels"' not in start:errors.append('WorkshopStart header CTA must remain same-page/internal')
+if 'showReach={false}' not in start:errors.append('WorkshopStart must suppress duplicate D1 reach block')
+if 'contactHref=' in start:errors.append('WorkshopStart header CTA must use canonical /start route, not a fragment override')
+if 'Reply within 1–2 business days.' not in start or 'Ответ в течение 1–2 рабочих дней.' not in start:errors.append('WorkshopStart missing approved D1 reply time')
+shell=(ROOT/'components/workshop/WorkshopShell.tsx').read_text(encoding='utf-8')
+checks+=10
+for url in channels.values():
+ if shell.count(url)!=1:errors.append(f'WorkshopShell approved D1 channel count for {url}={shell.count(url)}, expected 1')
+for marker in ['showReach ? <ReachBlock locale={locale} /> : null','Как написать','How to reach us','Ответ в течение 1–2 рабочих дней.','Reply within 1–2 business days.','href={en ? "/en/start" : "/start"}']:
+ if marker not in shell:errors.append(f'WorkshopShell missing D1 contact marker {marker!r}')
+business=(ROOT/'components/workshop/WorkshopBusiness.tsx').read_text(encoding='utf-8');checks+=1
+if 'contactHref=' in business:errors.append('WorkshopBusiness header CTA must use canonical /start route, not business fragment')
 for rel in ['components/ContactButtons.tsx','components/workshop/WorkshopHome.tsx','components/workshop/WorkshopPricing.tsx','components/workshop/WorkshopFamily.tsx','components/workshop/WorkshopAudience.tsx','components/workshop/WorkshopBusiness.tsx','components/workshop/WorkshopFaq.tsx','components/BusinessValueCalculator.tsx']:
  text=(ROOT/rel).read_text(encoding='utf-8');checks+=1
  if any(v in text for v in channels.values()) or 'site.telegram' in text:errors.append(f'{rel}: external channel leakage')

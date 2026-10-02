@@ -13,6 +13,8 @@ MANIFEST = ROOT / "deploy/live/_release.json"
 CHECKS = [
     ("eslint", ["python", "scripts/check_eslint_gate.py"]),
     ("static_release", ["python", "scripts/check_static_release.py"]),
+    ("d1_text_parity", ["python", "check_text_parity.py", "compare", "--dir", "deploy/live", "--baseline", "baseline_live_20260926.json", "--allow", "allow_d1.json"]),
+    ("d1_shell", ["python", "scripts/check_d1_shell.py"]),
     ("search_metadata", ["python", "scripts/check_search_metadata.py"]),
     ("llms_txt", ["python", "scripts/check_llms_txt.py"]),
     ("structured_data", ["python", "scripts/check_structured_data.py"]),

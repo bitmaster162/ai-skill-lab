@@ -9,10 +9,10 @@ ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/'deploy'/'live'
 
 release=json.loads((LIVE/'_release.json').read_text(encoding='utf-8')).get('release_id')
-MAX_NON_FONT_TOTAL=(556 if release in {'R143_R136_A1_A8_CLOSEOUT','R144_ICON_CACHE_PARITY','R145_PWA_INSTALLABILITY','R147_C2_DEPLOYMENT_FILTER_PWA_BACKGROUND'} else 536 if release=='R142_A9_A11_FOOTER_TOOLCHAIN_PROOF_TRUTH' else 526)*1024  # R142: bounded global footer/content growth; prior releases unchanged
+MAX_NON_FONT_TOTAL=(596 if release=='R149_D1_0_WORKSHOP_SHELL' else 556 if release in {'R143_R136_A1_A8_CLOSEOUT','R144_ICON_CACHE_PARITY','R145_PWA_INSTALLABILITY','R147_C2_DEPLOYMENT_FILTER_PWA_BACKGROUND'} else 536 if release=='R142_A9_A11_FOOTER_TOOLCHAIN_PROOF_TRUTH' else 526)*1024  # R149: approved D1.0 reach-block growth; earlier releases unchanged
 MAX_FONT_TOTAL=84*1024
 MAX_FONT_FILE=54*1024
-MAX_HTML=24*1024
+MAX_HTML=(25 if release=='R149_D1_0_WORKSHOP_SHELL' else 24)*1024
 MAX_CSS=36*1024
 MAX_IMAGE=128*1024
 MAX_INLINE_JS=24*1024

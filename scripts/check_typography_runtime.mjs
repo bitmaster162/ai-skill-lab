@@ -38,6 +38,7 @@ for (const rel of ['licenses/Onest-OFL.txt', 'licenses/Unbounded-OFL.txt']) {
 
 const css = fs.readFileSync(path.join(LIVE, 'workshop.css'), 'utf8');
 const sourceCss = fs.readFileSync(path.join(ROOT, 'components', 'workshop', 'WorkshopShell.module.css'), 'utf8');
+const release = JSON.parse(fs.readFileSync(path.join(LIVE, '_release.json'), 'utf8')).release_id;
 for (const marker of [
   '@font-face{font-family:"Onest"', 'font-weight:100 900', '@font-face{font-family:"Unbounded"',
   'font-weight:200 900', 'font-display:swap', 'font-family:"Onest"', 'font-family:"Unbounded"',
@@ -54,7 +55,41 @@ function referencesForbiddenFontHost(text) {
 }
 for (const [text, label] of [[css, 'static CSS'], [sourceCss, 'source CSS']]) {
   const block = text.split('R115 Workshop v1 typography roles').slice(-1)[0];
-  req(!block.includes('font-size:'), label + ': R115 overrides size scale');
+  if (release === 'R149_D1_0_WORKSHOP_SHELL') {
+    const compact = text.replace(/\s+/g, '');
+    const required = label === 'static CSS'
+      ? [
+          '.workshopBrand{font-family:"Unbounded"',
+          '.workshopMenua{min-height:48px',
+          'font-size:16px',
+          '.workshopUtility{min-height:44px',
+          'font-size:15px',
+          '.reachIntroh2{margin:0;font-family:"Unbounded"',
+          '.reachIntrop{max-width:720px',
+          'font-size:17px',
+          '.reachReply{grid-column:1/-1',
+          'font-size:16px',
+          '@media(max-width:620px){.workshopHeader{padding:7px18px}',
+          '.workshopMenua{min-height:44px;padding:010px;font-size:15px',
+        ]
+      : [
+          '.brand{font-family:"Unbounded"',
+          '.menua{min-height:48px',
+          'font-size:16px',
+          '.utility{min-height:44px',
+          'font-size:15px',
+          '.reachIntroh2{margin:0;font-family:"Unbounded"',
+          '.reachIntrop{max-width:720px',
+          'font-size:17px',
+          '.reachReply{grid-column:1/-1',
+          'font-size:16px',
+          '@media(max-width:620px){.header{padding:7px18px}',
+          '.menua{min-height:44px;padding:010px;font-size:15px',
+        ];
+    for (const marker of required) req(compact.includes(marker), label + ': D1 typography marker ' + marker);
+  } else {
+    req(!block.includes('font-size:'), label + ': R115 overrides size scale');
+  }
   req(!referencesForbiddenFontHost(text), label + ': external font host');
 }
 

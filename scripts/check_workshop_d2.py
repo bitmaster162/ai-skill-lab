@@ -12,6 +12,7 @@ def source_path(rel):
  if rel.startswith('app/en/'):return ROOT/('app/(en)/en/'+rel.removeprefix('app/en/'))
  return ROOT/('app/(ru)/'+rel.removeprefix('app/'))
 errors=[];checks=0
+CONTACT_URLS=['https://t.me/BiTFormer','https://wa.me/66649701204','https://line.me/ti/p/~iwf555','mailto:robert@aiskillab.work']
 class Audit(HTMLParser):
  def __init__(self):super().__init__(convert_charrefs=True);self.hrefs=[];self.forms=0;self.h1=0;self.ids=set();self.styles=[];self.canonical=[];self.alts={}
  def handle_starttag(self,tag,attrs):
@@ -72,8 +73,9 @@ for rel,cfg in pages.items():
  if a.canonical!=[expected]:errors.append(f'{rel}: canonical drift {a.canonical}')
  if a.alts!={'ru':ORIGIN+'/family','en':ORIGIN+'/en/family','x-default':ORIGIN+'/family'}:errors.append(f'{rel}: hreflang drift {a.alts}')
  if cfg['start'] not in a.hrefs or cfg['alt'] not in a.hrefs or '#included' not in a.hrefs:errors.append(f'{rel}: internal CTA/alternate drift')
- if any(urlparse(h).scheme or h.startswith('//') for h in a.hrefs):errors.append(f'{rel}: external anchor present')
- for forbidden in ['t.me/','wa.me/','line.me/','mailto:','href="#"','[response time]','[срок ответа]','x-dc','sc-for','sc-if','support.js','fonts.googleapis.com','fonts.gstatic.com']:
+ external=[h for h in a.hrefs if urlparse(h).scheme or h.startswith('//')]
+ if external!=CONTACT_URLS:errors.append(f'{rel}: external anchors drift {external}')
+ for forbidden in ['href="#"','[response time]','[срок ответа]','x-dc','sc-for','sc-if','support.js','fonts.googleapis.com','fonts.gstatic.com']:
   checks+=1
   if forbidden in text:errors.append(f'{rel}: forbidden {forbidden!r}')
 routes={route_for(p) for p in LIVE.rglob('*.html') if p.name!='404.html'}
@@ -109,7 +111,7 @@ for name in legacy_css:
 manifest=json.loads((LIVE/'_release.json').read_text(encoding='utf-8'));checks+=5
 if manifest.get('schema')!='ai-skill-lab.static-release.v1':errors.append('release manifest schema drift')
 # Current release identity is owned by the D3 release checker.
-expected_files=65 if manifest.get('release_id') in {'R145_PWA_INSTALLABILITY','R147_C2_DEPLOYMENT_FILTER_PWA_BACKGROUND'} else 63 if manifest.get('release_id') in {'R143_R136_A1_A8_CLOSEOUT','R144_ICON_CACHE_PARITY'} else 61 if manifest.get('release_id') in {'R115_WORKSHOP_TYPOGRAPHY','R116_MONETARY_TYPOGRAPHY','R117_GLYPH_FALLBACK','R121_SITEMAP_LASTMOD_REFRESH','R130_STATIC_H2_OVERFLOW_GUARD','R142_A9_A11_FOOTER_TOOLCHAIN_PROOF_TRUTH','R143_R136_A1_A8_CLOSEOUT','R144_ICON_CACHE_PARITY','R145_PWA_INSTALLABILITY','R147_C2_DEPLOYMENT_FILTER_PWA_BACKGROUND'} else 59 if manifest.get('release_id') in {'R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION','R111D_SITEMAP_LASTMOD','R112_PLATFORM_SHORTCUT_TITLES','R114_BRAND_TOUCH_TARGET','R115_WORKSHOP_TYPOGRAPHY','R116_MONETARY_TYPOGRAPHY','R117_GLYPH_FALLBACK','R121_SITEMAP_LASTMOD_REFRESH','R130_STATIC_H2_OVERFLOW_GUARD'} else 58
+expected_files=65 if manifest.get('release_id') in {'R145_PWA_INSTALLABILITY','R147_C2_DEPLOYMENT_FILTER_PWA_BACKGROUND','R149_D1_0_WORKSHOP_SHELL'} else 63 if manifest.get('release_id') in {'R143_R136_A1_A8_CLOSEOUT','R144_ICON_CACHE_PARITY'} else 61 if manifest.get('release_id') in {'R115_WORKSHOP_TYPOGRAPHY','R116_MONETARY_TYPOGRAPHY','R117_GLYPH_FALLBACK','R121_SITEMAP_LASTMOD_REFRESH','R130_STATIC_H2_OVERFLOW_GUARD','R142_A9_A11_FOOTER_TOOLCHAIN_PROOF_TRUTH','R143_R136_A1_A8_CLOSEOUT','R144_ICON_CACHE_PARITY','R145_PWA_INSTALLABILITY','R147_C2_DEPLOYMENT_FILTER_PWA_BACKGROUND','R149_D1_0_WORKSHOP_SHELL'} else 59 if manifest.get('release_id') in {'R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION','R111D_SITEMAP_LASTMOD','R112_PLATFORM_SHORTCUT_TITLES','R114_BRAND_TOUCH_TARGET','R115_WORKSHOP_TYPOGRAPHY','R116_MONETARY_TYPOGRAPHY','R117_GLYPH_FALLBACK','R121_SITEMAP_LASTMOD_REFRESH','R130_STATIC_H2_OVERFLOW_GUARD'} else 58
 if manifest.get('file_count')!=expected_files:errors.append(f'manifest file_count {manifest.get("file_count")} != {expected_files}')
 listed={x.get('path') for x in manifest.get('files',[])}
 if not {'family.html','en/family.html'}<=listed:errors.append('manifest missing Family static pages')
