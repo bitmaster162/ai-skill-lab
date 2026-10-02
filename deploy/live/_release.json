@@ -118,8 +118,8 @@
     },
     {
       "path": "en/privacy.html",
-      "sha256": "a4e0fe8a7d9cb55b0c6faf3d261b5f7fc50e5e7aa6d8cfcfb1f09afb8ad519ad",
-      "size": 7452
+      "sha256": "a8f60886488d33ea0203f82b4462de0a9ca5573f0d9db9863c4e97e730684fa3",
+      "size": 8420
     },
     {
       "path": "en/projects.html",
@@ -263,8 +263,8 @@
     },
     {
       "path": "privacy.html",
-      "sha256": "15d769f1e7be573c629aa5612c7d8ce4726bbad10d5813d10b6baf8f0fe7f353",
-      "size": 9294
+      "sha256": "612690793ebd2b33aaf9f780d7bdbc42c847b6af62991fa1ea0dac0af100c1f0",
+      "size": 10762
     },
     {
       "path": "project-filter.js",
@@ -298,7 +298,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "628266e115373a0ef4cb8ef3dd78a9c1162542ff8ce19fdfbcf05cdfe41f6878",
+      "sha256": "2d1c7e28a1001897199507f55b05dc0730b92c7792d1390de5c55837b9cf5aa0",
       "size": 3856
     },
     {
@@ -337,7 +337,7 @@
       "size": 33268
     }
   ],
-  "payload_sha256": "bc7c4ece4f067ab8e9cd1570ff45b84149699c85dbeeedadf6a3bbe17655bc01",
-  "release_id": "R158_F1_2_MATCHER_V2",
+  "payload_sha256": "a02706337b5cf79dab8e8f5bd41fa9e636dd354d7c7124e7247cc1220645668d",
+  "release_id": "R160_F1_2_PRIVACY_DISCLOSURE",
   "schema": "ai-skill-lab.static-release.v1"
 }

@@ -39,6 +39,7 @@ CHECKS = [
     ("route_service", ["python", "scripts/check_route_service.py"]),
     ("route_rate_receiver", ["node", "--test", "services/lead-receiver-cloudflare/test/route-rate.test.mjs"]),
     ("route_rate_schema", ["python", "scripts/check_route_rate_schema.py"]),
+    ("route_privacy", ["python", "scripts/check_route_privacy.py"]),
     ("lead_receiver", ["node", "--test", "services/lead-receiver-cloudflare/test/receiver.test.mjs"]),
     ("lead_schema", ["python", "scripts/check_lead_schema.py"]),
     ("intake_operations", ["python", "scripts/check_intake_operations.py"]),
