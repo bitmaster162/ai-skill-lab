@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { IntroCallCta } from "@/components/IntroCallCta";
 
 export type MatcherLocale = "ru" | "en";
 
@@ -183,6 +184,7 @@ export function ProgramMatcher({ locale = "ru" }: { locale?: MatcherLocale }) {
     <section className="matcherQuestion" aria-labelledby="matcher-audience"><h2 id="matcher-audience">{t.audience}</h2><div className="matcherOptions">{t.audienceOptions.map(([v,l]) => choose(v as Audience,audience,setAudience,l))}</div></section>
     <section className="matcherQuestion" aria-labelledby="matcher-goal"><h2 id="matcher-goal">{t.goal}</h2><div className="matcherOptions">{t.goalOptions.map(([v,l]) => choose(v as Goal,goal,setGoal,l))}</div></section>
     <section className="matcherQuestion" aria-labelledby="matcher-depth"><h2 id="matcher-depth">{t.depth}</h2><div className="matcherOptions">{t.depthOptions.map(([v,l]) => choose(v as Depth,depth,setDepth,l))}</div></section>
+    <IntroCallCta locale={locale}/>
     <section className="matcherResult" aria-live="polite">
       <span className="cardMeta">{t.resultLabel}</span>
       {!result ? <p className="matcherEmpty">{t.noResult}</p> : <>

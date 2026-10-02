@@ -5,13 +5,18 @@ import re,sys
 ROOT=Path(__file__).resolve().parents[1]
 scan=[*ROOT.joinpath('app').rglob('*.tsx'),*ROOT.joinpath('components').rglob('*.tsx'),*ROOT.joinpath('deploy/live').rglob('*.html')]
 rx=re.compile(r'\b(?:\d{2,3}\s*[–-]\s*\d{2,3}|\d{2,3})(?:\s*[-–]\s*|\s+)(?:минут(?:ы|у)?|minutes?)\b',re.I)
-errors=[];claims=[]
+errors=[];claims=[];intro_claims=0
 for p in scan:
  text=p.read_text(encoding='utf-8')
  for m in rx.finditer(text):
   claim=m.group(0);claims.append((p.relative_to(ROOT).as_posix(),claim))
   normalized=' '.join(re.sub(r'[-–]+',' ',claim.casefold()).split())
-  if normalized not in {'60 минут','60 minute','60 minutes'}:errors.append(f'{p.relative_to(ROOT)}: conflicting duration {claim!r}')
+  if normalized in {'60 минут','60 minute','60 minutes'}:continue
+  if normalized in {'15 минут','15 minute','15 minutes'}:
+   window=text[max(0,m.start()-320):min(len(text),m.end()+320)].casefold()
+   if any(marker in window for marker in ('data-e14-entry','data-intro-call-channel','звонок-знакомство','intro call','intro-call')):
+    intro_claims+=1;continue
+  errors.append(f'{p.relative_to(ROOT)}: conflicting duration {claim!r}')
 required={
  'data/commercial_facts.json':['"session_duration_minutes": 60'],
  'lib/commercial.ts':['facts.session_duration_minutes !== 60','Session duration authority must be 60 minutes'],
@@ -36,7 +41,8 @@ for rel,needles in required.items():
   checks+=1
   if needle not in text:errors.append(f'{rel}: missing {needle!r}')
 if not claims:errors.append('no numeric duration claims found')
-print(f'session_duration_checks={checks} claims={len(claims)} authority=60')
+if intro_claims!=36:errors.append(f'E1.4 intro-call duration claims {intro_claims} != 36')
+print(f'session_duration_checks={checks} claims={len(claims)} authority=60 intro_call=15 intro_claims={intro_claims}')
 if errors:
  print('SESSION_DURATION_POLICY_FAIL');[print('-',e) for e in errors];sys.exit(1)
 print('SESSION_DURATION_POLICY_PASS')

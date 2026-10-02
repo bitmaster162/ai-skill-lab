@@ -98,6 +98,8 @@ jobs:
         run: node scripts/check_public_form_runtime.mjs
       - name: Validate commercial facts parity
         run: python scripts/check_commercial_parity.py
+      - name: Validate E1.4 intro-call-first flow
+        run: python scripts/check_e1_4_intro_flow.py
       - name: Validate contact funnel
         run: python scripts/check_contact_funnel.py
       - name: Validate CTA semantics

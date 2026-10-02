@@ -23,8 +23,8 @@
     },
     {
       "path": "business.html",
-      "sha256": "963af118a47b0a224e10faa18c5be2989882c66f12223fa0b9d4e0a4c5686057",
-      "size": 24889
+      "sha256": "de63750efda1fa43eae6d18dd9552e05cc2fac19d06e5b5585f24e46f35012fc",
+      "size": 26365
     },
     {
       "path": "challenge.html",
@@ -38,8 +38,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "1c6663856ac28f3545cce0a50df408cd50b28b244092441f29c191bb0eb027a3",
-      "size": 9398
+      "sha256": "16201565c0408cc2b44e47b0d78d6f28ee5711593152b7302afa2905d435e7a1",
+      "size": 10403
     },
     {
       "path": "en/about.html",
@@ -53,8 +53,8 @@
     },
     {
       "path": "en/business.html",
-      "sha256": "b246540119b50dda14ccb29b4f29c34cb0f4c895d2a1e4e456e9be9dfa52f2cf",
-      "size": 19793
+      "sha256": "c0fb155aa76387ce8683a7a6b16c941df225954da2ba66776b115c1bbe1ab083",
+      "size": 20803
     },
     {
       "path": "en/challenge.html",
@@ -78,13 +78,13 @@
     },
     {
       "path": "en/kids.html",
-      "sha256": "93c41c79d9d8150dcae5389ebb0656f70b778a60ecb07e9e421a2cd481087b25",
-      "size": 9526
+      "sha256": "17295d3e9375466612b5358514ec8b682dc4325b9c87981c4f732701f0e2f5f7",
+      "size": 10536
     },
     {
       "path": "en/matcher.html",
-      "sha256": "e462d3294cadc22d4467a7fd83d9ac981c4c59a3b3944d45cb0b6e73ad23071a",
-      "size": 13639
+      "sha256": "a96e4d073c7375aa64e9e8abf6e9609cca65f7afc7b09b04e447e59e7ae57c45",
+      "size": 14649
     },
     {
       "path": "en/method.html",
@@ -93,13 +93,13 @@
     },
     {
       "path": "en/parents.html",
-      "sha256": "808114eb95b39411e5b65bcaa97c32e3c151a8bd5f03173b1c7315b51864f581",
-      "size": 8915
+      "sha256": "82ceef99fc36ecdecfc160c9f97f28876bce9470c86ed94cd13db56f6fd50365",
+      "size": 9925
     },
     {
       "path": "en/personal.html",
-      "sha256": "d52ecf2cd1b553089198931ce59d73a4b35238c2d8e8e5cafc0d5ac5a68b4d12",
-      "size": 7553
+      "sha256": "f069cf3206e778613da1daad65703d4f7c37c5f5801b82bb2306a5c39620d895",
+      "size": 8563
     },
     {
       "path": "en/phuket.html",
@@ -108,8 +108,8 @@
     },
     {
       "path": "en/pricing.html",
-      "sha256": "dcf0524225871e4c570bdb708688b04c199b0dc34d6bde3e6b08006f7d8c548a",
-      "size": 13591
+      "sha256": "f2933436c7be38be24c4baa1ffa8da6020ea0ed4ca6c2ba60091651597f2ffd6",
+      "size": 14323
     },
     {
       "path": "en/privacy.html",
@@ -133,8 +133,8 @@
     },
     {
       "path": "en/start.html",
-      "sha256": "f9564ff73b9414a472e15066f6fb93df93d46aadff253e0f7c1a4e1000101efc",
-      "size": 13102
+      "sha256": "95f7aac6cbdfca6a9db3abbccc90e27b42b79abe9e84127691f1053819f5fa69",
+      "size": 14112
     },
     {
       "path": "en/studio.html",
@@ -143,8 +143,8 @@
     },
     {
       "path": "en/teens.html",
-      "sha256": "3e35249561ee1c9a8545035017f7ef5788caf26473664dd9521a5a9560c9a41b",
-      "size": 9307
+      "sha256": "f45f27b62f3f07bc741992af0e2e4ab983fd094b57adcc53fa372ba4976bb183",
+      "size": 10317
     },
     {
       "path": "en/terms.html",
@@ -193,18 +193,18 @@
     },
     {
       "path": "index.html",
-      "sha256": "a277b2edd8abf0879735c49ef97fc57c4f2724b0864b024c17c2b314ea25ad8e",
-      "size": 11078
+      "sha256": "a57cb8f764015fdc39c8373107084fb31a0cbfbb2ac6e3f47f1e247a13a76cbb",
+      "size": 12540
     },
     {
       "path": "kids.html",
-      "sha256": "77856766639fc9edfe6592c183dc1148f2a2638bb6f55d8fb36fa794e2686ba8",
-      "size": 12095
+      "sha256": "347a7d73de1952330931082c248dd651236c0968b8c5e0c30a1a114b2c5b91f0",
+      "size": 13571
     },
     {
       "path": "lab-command.js",
-      "sha256": "b2fd0fb60a8801e25b032c98c6add5137d12cfc73f24b70a32e407a6c08357c1",
-      "size": 1868
+      "sha256": "f03dbb9216f4f8aa29573a9aac583fb85b9f1be60ea46258848493ad35f54423",
+      "size": 2235
     },
     {
       "path": "llms.txt",
@@ -218,8 +218,8 @@
     },
     {
       "path": "matcher.html",
-      "sha256": "baa642c2b63d53a8f70e75a9d274be075d20692fa49c6d341b7f77c91cedd32d",
-      "size": 15181
+      "sha256": "63f20ebd24076875f10528c3e939c0828113c492a5293ff5809cd13b47a15edb",
+      "size": 16657
     },
     {
       "path": "method.html",
@@ -233,13 +233,13 @@
     },
     {
       "path": "parents.html",
-      "sha256": "3689b196cb6318eae1cc9879dddb12439b83f0b5ec8f10bee1df28e6514f4703",
-      "size": 10938
+      "sha256": "8c12f30f9071419f20dae23b964a89915d02c4e3adaea01e6d43bc2dd9b099c6",
+      "size": 12414
     },
     {
       "path": "personal.html",
-      "sha256": "b84932f84bd2ef58e3c7f7a89b60082ca818cc26f9e8fd894c5dc209e5905201",
-      "size": 8964
+      "sha256": "0806f0e833b4bf0bcf89de50dd629b9ba8b6efc880e5b0741fa6bdc0061bdd76",
+      "size": 10440
     },
     {
       "path": "phuket.html",
@@ -248,8 +248,8 @@
     },
     {
       "path": "pricing.html",
-      "sha256": "251f013f87dcb806f67115b0688589943e982cd5a073c8330bb113041423591c",
-      "size": 15517
+      "sha256": "5da9bfe42badbcaf06151da38d47d70ad7b0d511ac740bb6b0520730c8fc9a5a",
+      "size": 16664
     },
     {
       "path": "privacy.html",
@@ -298,8 +298,8 @@
     },
     {
       "path": "start.html",
-      "sha256": "a5317aaaaa02325bc68006380264dcdee1ea8626c24b81df00e425259dc702a8",
-      "size": 18271
+      "sha256": "3f8e8702f158bd82e58a4cfcccc00743c1228ee74552fd34e220ec2c87545521",
+      "size": 19747
     },
     {
       "path": "studio.html",
@@ -308,8 +308,8 @@
     },
     {
       "path": "teens.html",
-      "sha256": "db086adb77fab2d34677401a8c987053643aa68e5c9349c893e198e1a1747d07",
-      "size": 11811
+      "sha256": "ddc7c9bbf8f07f7f2f4ce24dd1fd5cb8cc9012874c18288ee69a38a4f26c1c3e",
+      "size": 13287
     },
     {
       "path": "terms.html",
@@ -323,11 +323,11 @@
     },
     {
       "path": "workshop.css",
-      "sha256": "b3b7b05c17e74db9cb609ed4d5959154e81f1193bb25c7a30fe7b43b60159f39",
-      "size": 29796
+      "sha256": "058830fbca3dfa4b1acfd30c2bce45e2ab29fb694ae2e17c530fb2f2050756f9",
+      "size": 30660
     }
   ],
-  "payload_sha256": "c170b1b4fb6d8b586675878d69e51e5c5ca846b97f7ff4daee5c228be4eb4cee",
-  "release_id": "R152_E1_2_CACHE_POLICY",
+  "payload_sha256": "53b7c6e152e80f375be9be4a4b8c291e8ce852ebbf2eb7b437492d4bb4bfbd34",
+  "release_id": "R153_E1_4_INTRO_CALL",
   "schema": "ai-skill-lab.static-release.v1"
 }

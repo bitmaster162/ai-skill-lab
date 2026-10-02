@@ -15,7 +15,16 @@
    "iwf555",
    "Почта",
    "robert@aiskillab.work",
-   "Начать"
+   "Начать",
+   "ПЕРВЫЙ ШАГ",
+   "Бесплатно · 15 минут",
+   "Бесплатный звонок-знакомство · 15 минут",
+   "Telegram →",
+   "ВТОРОЙ ШАГ",
+   "Диагностика $120 · 60 минут · Зачтём в стоимость пакета при покупке в течение 14 дней.",
+   "Обсудить диагностику →",
+   "Сначала бесплатный звонок, затем диагностика.",
+   "BRIEF"
   ],
   "en": [
    "How to reach us",
@@ -31,7 +40,16 @@
    "iwf555",
    "Email",
    "robert@aiskillab.work",
-   "Start"
+   "Start",
+   "FIRST STEP",
+   "Free · 15 minutes",
+   "Free 15-minute intro call",
+   "Telegram →",
+   "SECOND STEP",
+   "Diagnostic session $120 · 60 minutes · Credited toward a package purchased within 14 days.",
+   "Discuss diagnostic →",
+   "Free intro call first, then diagnostic.",
+   "BRIEF"
   ]
  },
  "route_phrases": {
@@ -174,6 +192,14 @@
    "The public site uses Vercel Web Analytics for anonymized visit statistics; it uses no cookies or advertising trackers. The only form is the request form on /start; it submits to /api/lead.",
    "trackers",
    "ad_trackers"
+  ],
+  "/pricing": [
+   "Сначала диагностика, затем пакет.",
+   "Зачтём в стоимость пакета при покупке в течение 14 дней."
+  ],
+  "/en/pricing": [
+   "Diagnose before committing to a package.",
+   "Credited toward a package purchased within 14 days."
   ]
  },
  "links": {
@@ -182,14 +208,16 @@
    "https://wa.me/66649701204",
    "https://line.me/ti/p/~iwf555",
    "mailto:robert@aiskillab.work",
-   "/start"
+   "/start",
+   "https://wa.me/66649701204?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D1%8B%D0%B9%20%D0%B7%D0%B2%D0%BE%D0%BD%D0%BE%D0%BA-%D0%B7%D0%BD%D0%B0%D0%BA%D0%BE%D0%BC%D1%81%D1%82%D0%B2%D0%BE%2C%2015%20%D0%BC%D0%B8%D0%BD%D1%83%D1%82."
   ],
   "en": [
    "https://t.me/BiTFormer",
    "https://wa.me/66649701204",
    "https://line.me/ti/p/~iwf555",
    "mailto:robert@aiskillab.work",
-   "/en/start"
+   "/en/start",
+   "https://wa.me/66649701204?text=Hi%21%20I%27d%20like%20to%20book%20the%20free%2015-minute%20intro%20call."
   ]
  },
  "removed_links": {
@@ -232,6 +260,60 @@
    "https://antigravity.google/docs/faq",
    "https://support.google.com/gemini/answer/17094507",
    "https://www.cloudflare.com/privacypolicy/"
+  ],
+  "/": [
+   "/start#application-form"
+  ],
+  "/start": [
+   "/start#application-form"
+  ],
+  "/kids": [
+   "/start#application-form"
+  ],
+  "/teens": [
+   "/start#application-form"
+  ],
+  "/parents": [
+   "/start#application-form"
+  ],
+  "/personal": [
+   "/start#application-form"
+  ],
+  "/business": [
+   "/start#application-form"
+  ],
+  "/pricing": [
+   "/start#application-form"
+  ],
+  "/matcher": [
+   "/start#application-form"
+  ],
+  "/en": [
+   "/en/start#application-form"
+  ],
+  "/en/start": [
+   "/en/start#application-form"
+  ],
+  "/en/kids": [
+   "/en/start#application-form"
+  ],
+  "/en/teens": [
+   "/en/start#application-form"
+  ],
+  "/en/parents": [
+   "/en/start#application-form"
+  ],
+  "/en/personal": [
+   "/en/start#application-form"
+  ],
+  "/en/business": [
+   "/en/start#application-form"
+  ],
+  "/en/pricing": [
+   "/en/start#application-form"
+  ],
+  "/en/matcher": [
+   "/en/start#application-form"
   ]
  }
 }
