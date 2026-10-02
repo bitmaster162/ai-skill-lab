@@ -1,5 +1,5 @@
 {
-  "file_count": 66,
+  "file_count": 67,
   "files": [
     {
       "path": "404.html",
@@ -88,8 +88,8 @@
     },
     {
       "path": "en/matcher.html",
-      "sha256": "a10174cfd8dcf7c9784a5fc8233d53f36fe0c2f454ee7fb039776ae3ca836c39",
-      "size": 16159
+      "sha256": "48fc31535f45838f7acc8f28514a9b754f89d67f2ab47cf9ad195883aebb743c",
+      "size": 10403
     },
     {
       "path": "en/method.html",
@@ -128,8 +128,8 @@
     },
     {
       "path": "en/proof.html",
-      "sha256": "dba42ab6b4cb629ab6b50455cbf7c71b38a15f2e2db0aba5063ce05719e905e8",
-      "size": 22507
+      "sha256": "c8010c48d2016d7059ad6c598876a7b53c05ed47fa1b5d118f3d47dddc54ba51",
+      "size": 22572
     },
     {
       "path": "en/safety.html",
@@ -222,9 +222,14 @@
       "size": 7465
     },
     {
+      "path": "matcher-v2.js",
+      "sha256": "8b9b4b952e46375ead3ad01b6d6a070f52feebdef5e26a09d489d46d38e5be5b",
+      "size": 15796
+    },
+    {
       "path": "matcher.html",
-      "sha256": "d227b6ea95c0d5dfc43666865ecf7285391dddf67b6a87ef0abb59563792ad15",
-      "size": 18308
+      "sha256": "4cc8c7debe266dd36343d541d4aac805fff7054fd8b6a1edd547bdf0711eba96",
+      "size": 12223
     },
     {
       "path": "method.html",
@@ -273,8 +278,8 @@
     },
     {
       "path": "proof.html",
-      "sha256": "8be0b5e98c08043f43c2db1efb7c33dd5dc36684abedaebcd56558a7dd0c62c4",
-      "size": 26658
+      "sha256": "d5c22c357383af1e79453446dcbbe56aaa1d2c048444c01aae503d13aa3f2f0b",
+      "size": 26736
     },
     {
       "path": "robots.txt",
@@ -323,16 +328,16 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "b97ef9fa9d687cef5b309ca281ab917350ce639a2bab2575a99114c0c777e44e",
-      "size": 3904
+      "sha256": "213d5b08882963d91b2de138cd62503be8ae26017a5db3d03e4c8a923d032a8b",
+      "size": 3994
     },
     {
       "path": "workshop.css",
-      "sha256": "0a803b4d2dc07c8a43f53882aff7bca4c5ddd15a8af10e51241e3af9feef65c6",
-      "size": 32867
+      "sha256": "eab948f39f1dba307c8b7508114154306b99fcc8857494c55884d425a5dcf6d4",
+      "size": 33268
     }
   ],
-  "payload_sha256": "39dc08dbed1a168596d75de797b272749046a83f215b3ad803848b216d9ba041",
-  "release_id": "R157_I1_3_INDEXABILITY",
+  "payload_sha256": "bc7c4ece4f067ab8e9cd1570ff45b84149699c85dbeeedadf6a3bbe17655bc01",
+  "release_id": "R158_F1_2_MATCHER_V2",
   "schema": "ai-skill-lab.static-release.v1"
 }

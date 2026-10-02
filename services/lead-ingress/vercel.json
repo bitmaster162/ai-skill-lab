@@ -9,6 +9,9 @@
   "functions": {
     "api/lead.js": {
       "maxDuration": 10
+    },
+    "api/route.js": {
+      "maxDuration": 10
     }
   }
 }

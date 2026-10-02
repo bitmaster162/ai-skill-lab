@@ -49,9 +49,9 @@ require('components/workshop/WorkshopBusiness.tsx',['commercialFacts','business.
 
 # Existing rendered packages and unmigrated sources remain exact.
 legacy={
- 'adult':{'ru':['components/ProgramMatcher.tsx','deploy/live/matcher.html','deploy/live/personal.html'],'en':['components/ProgramMatcher.tsx','deploy/live/en/matcher.html','deploy/live/en/personal.html']},
- 'kids':{'ru':['components/ProgramMatcher.tsx','deploy/live/matcher.html','deploy/live/kids.html','app/parents/page.tsx','deploy/live/parents.html'],'en':['components/ProgramMatcher.tsx','deploy/live/en/matcher.html','deploy/live/en/kids.html','app/en/parents/page.tsx','deploy/live/en/parents.html']},
- 'teens':{'ru':['components/ProgramMatcher.tsx','deploy/live/matcher.html','deploy/live/teens.html','app/parents/page.tsx','deploy/live/parents.html'],'en':['components/ProgramMatcher.tsx','deploy/live/en/matcher.html','deploy/live/en/teens.html','app/en/parents/page.tsx','deploy/live/en/parents.html']},
+ 'adult':{'ru':['deploy/live/matcher-v2.js','deploy/live/personal.html'],'en':['deploy/live/matcher-v2.js','deploy/live/en/personal.html']},
+ 'kids':{'ru':['deploy/live/matcher-v2.js','deploy/live/kids.html','app/parents/page.tsx','deploy/live/parents.html'],'en':['deploy/live/matcher-v2.js','deploy/live/en/kids.html','app/en/parents/page.tsx','deploy/live/en/parents.html']},
+ 'teens':{'ru':['deploy/live/matcher-v2.js','deploy/live/teens.html','app/parents/page.tsx','deploy/live/parents.html'],'en':['deploy/live/matcher-v2.js','deploy/live/en/teens.html','app/en/parents/page.tsx','deploy/live/en/parents.html']},
 }
 for track,plans in FACTS['tracks'].items():
  for plan in plans:
@@ -63,8 +63,10 @@ for locale,paths in {
  'en':['app/en/parents/page.tsx','deploy/live/en/parents.html','deploy/live/en/family.html'],
 }.items():
  for rel in paths:require(rel,[family['name'],family['price'],family[f'sessions_{locale}']])
-for rel in ['components/ProgramMatcher.tsx','deploy/live/matcher.html','deploy/live/en/matcher.html']:
- require(rel,[FACTS['business']['display']])
+require('components/ProgramMatcher.tsx',['commercialFacts.tracks[audience]','commercialFacts.business','diagnosticCtaSummary(locale)','introCall.label[locale]'])
+require('deploy/live/matcher-v2.js',[FACTS['business']['display'],'const FACTS='])
+for rel in ['deploy/live/matcher.html','deploy/live/en/matcher.html']:
+ require(rel,['matcher-v2.js','matcher-goal','matcher-run'])
 
 # Workshop source binds to the typed authority; static output carries exact rendered facts.
 require('components/workshop/WorkshopHome.tsx',['commercialFacts.tracks.adult','commercialFacts.family','sessionDurationMinutes','adult.map','family.price'])
