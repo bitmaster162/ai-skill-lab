@@ -55,7 +55,7 @@ function referencesForbiddenFontHost(text) {
 }
 for (const [text, label] of [[css, 'static CSS'], [sourceCss, 'source CSS']]) {
   const block = text.split('R115 Workshop v1 typography roles').slice(-1)[0];
-  if (release === 'R149_D1_0_WORKSHOP_SHELL') {
+  if ((release === 'R149_D1_0_WORKSHOP_SHELL' || release === 'R149_D1_0_VIEWPORT_CLOSEOUT')) {
     const compact = text.replace(/\s+/g, '');
     const required = label === 'static CSS'
       ? [

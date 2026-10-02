@@ -77,3 +77,10 @@ html[lang="en"] .workshopPage .price,html[lang="en"] .workshopPage .diagnostic s
 
 /* D1.0 · acid is reserved for interactive affordances and focus. */
 .heroPanel li b{color:var(--i2)}
+
+/* R149 D1.0 viewport containment: cards and 18px mobile gutters stay inside the layout viewport. */
+.workshopPage main .wrap{width:min(1180px,calc(100% - 36px));margin:auto}
+.workshopPage main .lesson h2,.workshopPage main .card h2{font-size:clamp(1rem,1.5vw,1.25rem);line-height:1.1;overflow-wrap:anywhere}
+
+/* R149 D1.0 non-interactive status stays neutral. */
+.workshopPage main .projectStudioStatus{color:var(--i2)}
