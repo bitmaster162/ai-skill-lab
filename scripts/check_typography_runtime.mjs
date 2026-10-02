@@ -384,7 +384,8 @@ if (chrome) {
     }
     if (stopped) {
       try { fs.rmSync(profile, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 }); }
-      catch (error) { errors.push('CDP profile cleanup failed: ' + String(error)); }
+      // A locked temporary directory is not a live browser; retain it and report it.
+      catch (error) { console.warn('typography_profile_retained=' + profile + ' reason=' + String(error)); }
     }
   }
 }
