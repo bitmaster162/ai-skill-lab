@@ -455,5 +455,145 @@
   "/terms": [
    "title"
   ]
+ },
+ "attr_texts": {
+  "/": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/about": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/build": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/business": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/challenge": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/curriculum": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/family": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/faq": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/kids": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/matcher": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/method": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/parents": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/personal": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/phuket": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/pricing": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/privacy": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/projects": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/proof": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/safety": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/start": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/studio": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/teens": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/terms": [
+   "input[aria-label]=открыть меню"
+  ],
+  "/en": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/about": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/build": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/business": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/challenge": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/curriculum": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/family": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/faq": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/kids": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/matcher": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/method": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/parents": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/personal": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/phuket": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/pricing": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/privacy": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/projects": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/proof": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/safety": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/start": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/studio": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/teens": [
+   "input[aria-label]=open menu"
+  ],
+  "/en/terms": [
+   "input[aria-label]=open menu"
+  ]
  }
 }

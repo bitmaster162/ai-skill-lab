@@ -102,6 +102,8 @@ jobs:
         run: python scripts/check_e1_4_intro_flow.py
       - name: Validate E1.5 metadata and schema
         run: python scripts/check_e1_5_metadata.py
+      - name: Validate E1.6 mobile header
+        run: python scripts/check_e1_6_mobile_header.py
       - name: Validate contact funnel
         run: python scripts/check_contact_funnel.py
       - name: Validate CTA semantics

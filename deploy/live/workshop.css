@@ -94,3 +94,25 @@ html[lang="en"] .workshopPage .price,html[lang="en"] .workshopPage .diagnostic s
 .e14EntryActions{display:flex;flex-wrap:wrap;gap:8px}
 .e14DiagnosticCard>.workshopButton{margin-top:2px}
 @media(max-width:620px){.e14EntryStart{grid-template-columns:1fr}.e14EntryActions>*{width:100%;white-space:normal;text-align:center}}
+
+/* R155 E1.6 mobile header: one-row brand + burger at <=420px. */
+.workshopMenuToggle,.workshopBurger{display:none}
+@media(max-width:420px){
+.workshopHeader{display:grid;grid-template-columns:minmax(0,1fr) 48px;align-items:center;gap:0;padding:7px 14px;min-height:62px}
+.workshopBrand{grid-column:1;min-width:0}.workshopBrand>span:last-child{display:inline;overflow:hidden;text-overflow:ellipsis}
+.workshopMenuToggle{display:block;position:absolute;right:14px;top:7px;width:48px;height:48px;margin:0;opacity:0;z-index:4;cursor:pointer}
+.workshopBurger{grid-column:2;display:grid;width:48px;height:48px;place-content:center;gap:5px;justify-self:end;border:1px solid var(--border,#2a3039);border-radius:24px;pointer-events:none}
+.workshopBurger span{position:relative;top:0;display:block;width:20px;height:2px;background:var(--ink,#f5f7f9);transition:top .16s ease,transform .16s ease,opacity .16s ease}
+.workshopMenuToggle:focus-visible + .workshopBurger{outline:3px solid var(--acid);outline-offset:3px}
+.workshopMenuToggle:checked + .workshopBurger span:nth-child(1){top:7px;transform:rotate(45deg)}
+.workshopMenuToggle:checked + .workshopBurger span:nth-child(2){opacity:0}
+.workshopMenuToggle:checked + .workshopBurger span:nth-child(3){top:-7px;transform:rotate(-45deg)}
+.workshopMenu,.workshopActions{display:none}
+.workshopMenuToggle:checked ~ .workshopMenu,.workshopMenuToggle:checked ~ .workshopActions{display:flex;grid-column:1/-1;width:100%;margin:0}
+.workshopMenuToggle:checked ~ .workshopMenu{order:3;flex-direction:column;align-items:stretch;overflow:visible;padding:8px 0 0;border-top:1px solid var(--border,#2a3039)}
+.workshopMenuToggle:checked ~ .workshopMenu a{width:100%;min-height:48px;padding:0 4px;border:0;border-bottom:1px solid var(--border,#2a3039);font-size:16px}
+.workshopMenuToggle:checked ~ .workshopActions{order:4;justify-self:stretch;justify-content:flex-start;flex-wrap:wrap;gap:8px;padding:10px 0 6px}
+.workshopMenuToggle:checked ~ .workshopActions .workshopPrimary{flex:1 1 100%}
+}
+@media(hover:none),(pointer:coarse){.workshopHeader [data-lab-command-open]{display:none!important}}
+@media(prefers-reduced-motion:reduce){.workshopBurger span{transition:none!important}}
