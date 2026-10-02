@@ -51,7 +51,15 @@ export function WorkshopShell({ locale = "ru", alternateHref, showReach = true, 
         <Link className={styles.brand} href={home} aria-label="AI Skill Lab — Home">
           <span className={styles.mark} aria-hidden="true"><svg viewBox="0 0 24 24"><path fillRule="evenodd" d="M12 1 23 23H1Zm-1 9h2L16 14H8Zm-1.5 6h5L19 23H5Z" /></svg></span><span>AI SKILL LAB</span>
         </Link>
-        <nav className={styles.menu} aria-label={en ? "Main navigation" : "Основная навигация"}>
+        <input
+          className={styles.mobileMenuToggle}
+          type="checkbox"
+          id="workshop-menu"
+          aria-label={en ? "Open menu" : "Открыть меню"}
+          aria-controls="workshop-nav"
+        />
+        <label className={styles.burger} htmlFor="workshop-menu" aria-hidden="true"><span /><span /><span /></label>
+        <nav id="workshop-nav" className={styles.menu} aria-label={en ? "Main navigation" : "Основная навигация"}>
           {menu[locale].map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
         </nav>
         <div className={styles.actions}>

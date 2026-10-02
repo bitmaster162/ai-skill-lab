@@ -143,7 +143,8 @@ def compare(base, cur, allow):
         links_rem = sorted(set(A["links"]) - set(B["links"]) - ok_removed_links)
         links_new = sorted(set(B["links"]) - set(A["links"]) - ok_links)
         attr_rem = sorted(set(A["attr_texts"]) - set(B["attr_texts"]))
-        attr_new = sorted(x for x in set(B["attr_texts"]) - set(A["attr_texts"]) if x.split("=", 1)[-1] not in phrases)
+        ok_attrs = set(allow.get("attr_texts", {}).get(r, []))
+        attr_new = sorted(x for x in set(B["attr_texts"]) - set(A["attr_texts"]) if x not in ok_attrs and x.split("=", 1)[-1] not in phrases)
         item = {k: v for k, v in (("new_text", new), ("removed_text", rem), ("meta_changed", meta), ("links_removed", links_rem),
                                    ("links_added", links_new), ("attr_removed", attr_rem), ("attr_added", attr_new)) if v}
         if item:
