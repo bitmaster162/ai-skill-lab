@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 from pathlib import Path
-import re, sys
+import json, re, sys
 
 ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/"deploy"/"live"
@@ -39,6 +39,11 @@ FOOTER={
  "ru":["/faq","/about","/challenge","/build","/proof","/method","/curriculum","/phuket"],
  "en":["/en/faq","/en/about","/en/challenge","/en/build","/en/proof","/en/method","/en/curriculum","/en/phuket"],
 }
+FOOTER_R157={
+ "ru":["/faq","/about","/challenge","/build","/proof","/pricing","/start","/kids","/teens","/parents","/personal","/business","/method","/curriculum","/phuket"],
+ "en":["/en/faq","/en/about","/en/challenge","/en/build","/en/proof","/en/pricing","/en/start","/en/kids","/en/teens","/en/parents","/en/personal","/en/business","/en/method","/en/curriculum","/en/phuket"],
+}
+release=json.loads((LIVE/"_release.json").read_text(encoding="utf-8")).get("release_id")
 CAPTION={"ru":"Практический AI · online / Phuket","en":"Practical AI capability · online / Phuket"}
 
 errors=[]; checks=0
@@ -70,7 +75,8 @@ for p in public:
  footer=re.search(r'<footer class="workshopFooter">(.*?)</footer>',text,re.S)
  req(bool(footer),f"{rel}: Workshop footer missing")
  if footer:
-  req(hrefs(footer.group(1))==FOOTER[lang],f"{rel}: footer href drift {hrefs(footer.group(1))}")
+  expected_footer=FOOTER_R157[lang] if release=="R157_I1_3_INDEXABILITY" else FOOTER[lang]
+  req(hrefs(footer.group(1))==expected_footer,f"{rel}: footer href drift {hrefs(footer.group(1))}")
   req(CAPTION[lang] in footer.group(1),f"{rel}: footer caption drift")
  reach=re.search(r'<section class="reachBlock">(.*?)</section>',text,re.S)
  if rel in LIGHT:

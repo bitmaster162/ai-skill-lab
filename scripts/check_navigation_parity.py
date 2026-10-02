@@ -3,7 +3,7 @@ from pathlib import Path
 import re,sys
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';README=ROOT/'README.md';errors=[];checks=0
 WORKSHOP={'index.html': ('/start', '/en', False), 'en.html': ('/en/start', '/', True), 'start.html': ('/start', '/en/start', False), 'en/start.html': ('/en/start', '/start', True), 'pricing.html': ('/start', '/en/pricing', False), 'en/pricing.html': ('/en/start', '/pricing', True), 'family.html': ('/start', '/en/family', False), 'en/family.html': ('/en/start', '/family', True), 'personal.html': ('/start', '/en/personal', False), 'teens.html': ('/start', '/en/teens', False), 'kids.html': ('/start', '/en/kids', False), 'business.html': ('/start', '/en/business', False), 'faq.html': ('/start', '/en/faq', False), 'en/personal.html': ('/en/start', '/personal', True), 'en/teens.html': ('/en/start', '/teens', True), 'en/kids.html': ('/en/start', '/kids', True), 'en/business.html': ('/en/start', '/business', True), 'en/faq.html': ('/en/start', '/faq', True),'parents.html': ('/start', '/en/parents', False),'curriculum.html': ('/start', '/en/curriculum', False),'phuket.html': ('/start', '/en/phuket', False),'studio.html': ('/start', '/en/studio', False),'build.html': ('/start', '/en/build', False),'matcher.html': ('/start', '/en/matcher', False),'challenge.html': ('/start', '/en/challenge', False),'proof.html': ('/start', '/en/proof', False),'projects.html': ('/start', '/en/projects', False),'en/parents.html': ('/en/start', '/parents', True),'en/curriculum.html': ('/en/start', '/curriculum', True),'en/phuket.html': ('/en/start', '/phuket', True),'en/studio.html': ('/en/start', '/studio', True),'en/build.html': ('/en/start', '/build', True),'en/matcher.html': ('/en/start', '/matcher', True),'en/challenge.html': ('/en/start', '/challenge', True),'en/proof.html': ('/en/start', '/proof', True),'en/projects.html': ('/en/start', '/projects', True),'about.html':('/start','/en/about',False),'method.html':('/start','/en/method',False),'safety.html':('/start','/en/safety',False),'privacy.html':('/start','/en/privacy',False),'terms.html':('/start','/en/terms',False),'en/about.html':('/en/start','/about',True),'en/method.html':('/en/start','/method',True),'en/safety.html':('/en/start','/safety',True),'en/privacy.html':('/en/start','/privacy',True),'en/terms.html':('/en/start','/terms',True)}
-public=set();legacy=0
+public=set();legacy=0;sitemap=(LIVE/'sitemap.xml').read_text(encoding='utf-8')
 for p in sorted(LIVE.rglob('*.html')):
  if p.name=='404.html':continue
  rel=p.relative_to(LIVE).as_posix();route='/' if rel=='index.html' else '/en' if rel=='en.html' else '/'+rel[:-5];public.add(route);text=p.read_text(encoding='utf-8')
@@ -31,6 +31,19 @@ for p in sorted(LIVE.rglob('*.html')):
     checks+=2
     if footer.count(f'href="{href}"')!=1: errors.append(f'{rel}: footer {href} count drift')
     if f'>{label}</a>' not in footer: errors.append(f'{rel}: footer label {label} missing')
+  if rel in {'index.html','en.html'}:
+   prefix='/en' if en else ''
+   key_targets=[prefix+x for x in ['/pricing','/start','/kids','/teens','/parents','/personal','/business','/phuket','/faq']]
+   for href in key_targets:
+    checks+=2
+    if text.count(f'href="{href}"')<1: errors.append(f'{rel}: home key link {href} missing')
+    if not f or f.group(1).count(f'href="{href}"')<1: errors.append(f'{rel}: footer key link {href} missing')
+    key_rel=href.lstrip('/')+'.html'
+    key_text=(LIVE/key_rel).read_text(encoding='utf-8')
+    canonical=f'https://aiskillab.work{href}'
+    checks+=2
+    if f'<link rel="canonical" href="{canonical}">' not in key_text: errors.append(f'{key_rel}: self-canonical missing')
+    if f'<loc>{canonical}</loc>' not in sitemap: errors.append(f'{key_rel}: sitemap entry missing')
  else:
   legacy+=1;en=rel.startswith('en/');expected=[f'/en{x}' for x in ['/personal','/business','/kids','/teens','/pricing','/about','/faq']] if en else ['/personal','/business','/kids','/teens','/pricing','/about','/faq']
   m=re.search(r'<header class="nav">(.*?)</header>',text,re.S);checks+=1
@@ -40,6 +53,10 @@ for p in sorted(LIVE.rglob('*.html')):
    checks+=1
    if h.count(f'href="{href}"')!=2:errors.append(f'{rel}: legacy menu {href} count drift')
 source=(ROOT/'components/workshop/WorkshopShell.tsx').read_text(encoding='utf-8')
+home_source=(ROOT/'components/workshop/WorkshopHome.tsx').read_text(encoding='utf-8')
+checks+=2
+if 'href={p("/parents")}' not in home_source: errors.append('WorkshopHome missing Parents key link')
+if '/parents' not in source or '/en/parents' not in source: errors.append('WorkshopShell footer missing Parents key links')
 for label in ['Взрослые','Подростки','Дети','Бизнес','Studio','Цены','Adults','Teens','Kids','Business','Pricing']:
  checks+=1
  if label not in source:errors.append(f'WorkshopShell missing {label}')
