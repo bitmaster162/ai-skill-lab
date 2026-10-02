@@ -315,5 +315,145 @@
   "/en/matcher": [
    "/en/start#application-form"
   ]
+ },
+ "meta_changes": {
+  "/about": [
+   "title"
+  ],
+  "/build": [
+   "title"
+  ],
+  "/business": [
+   "title"
+  ],
+  "/challenge": [
+   "title"
+  ],
+  "/curriculum": [
+   "title"
+  ],
+  "/en/about": [
+   "title"
+  ],
+  "/en/build": [
+   "title"
+  ],
+  "/en/business": [
+   "title"
+  ],
+  "/en/challenge": [
+   "title"
+  ],
+  "/en/curriculum": [
+   "title"
+  ],
+  "/en/family": [
+   "title"
+  ],
+  "/en/faq": [
+   "title"
+  ],
+  "/en/kids": [
+   "title"
+  ],
+  "/en/matcher": [
+   "title"
+  ],
+  "/en/method": [
+   "title"
+  ],
+  "/en/parents": [
+   "title"
+  ],
+  "/en/personal": [
+   "title"
+  ],
+  "/en/phuket": [
+   "title"
+  ],
+  "/en/pricing": [
+   "title"
+  ],
+  "/en/privacy": [
+   "title"
+  ],
+  "/en/projects": [
+   "title"
+  ],
+  "/en/proof": [
+   "title"
+  ],
+  "/en/safety": [
+   "title"
+  ],
+  "/en/start": [
+   "title"
+  ],
+  "/en/studio": [
+   "title"
+  ],
+  "/en/teens": [
+   "title"
+  ],
+  "/en/terms": [
+   "title"
+  ],
+  "/en": [
+   "title"
+  ],
+  "/family": [
+   "title"
+  ],
+  "/faq": [
+   "title"
+  ],
+  "/": [
+   "title"
+  ],
+  "/kids": [
+   "title"
+  ],
+  "/matcher": [
+   "title"
+  ],
+  "/method": [
+   "title"
+  ],
+  "/parents": [
+   "title"
+  ],
+  "/personal": [
+   "title"
+  ],
+  "/phuket": [
+   "title"
+  ],
+  "/pricing": [
+   "title"
+  ],
+  "/privacy": [
+   "title"
+  ],
+  "/projects": [
+   "title"
+  ],
+  "/proof": [
+   "title"
+  ],
+  "/safety": [
+   "title"
+  ],
+  "/start": [
+   "title"
+  ],
+  "/studio": [
+   "title"
+  ],
+  "/teens": [
+   "title"
+  ],
+  "/terms": [
+   "title"
+  ]
  }
 }

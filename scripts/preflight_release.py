@@ -47,6 +47,7 @@ CHECKS = [
     ("public_form_runtime", ["node", "scripts/check_public_form_runtime.mjs"]),
     ("commercial_parity", ["python", "scripts/check_commercial_parity.py"]),
     ("e1_4_intro_flow", ["python", "scripts/check_e1_4_intro_flow.py"]),
+    ("e1_5_metadata", ["python", "scripts/check_e1_5_metadata.py"]),
     ("contact_funnel", ["python", "scripts/check_contact_funnel.py"]),
     ("cta_semantics", ["python", "scripts/check_cta_semantics.py"]),
     ("studio_offer", ["python", "scripts/check_studio_offer.py"]),

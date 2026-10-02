@@ -103,3 +103,39 @@ export function faqPageSchema(items: string[][], locale: WorkshopLocale) {
     })),
   };
 }
+
+export type CoursePageRoute = "kids" | "teens" | "personal" | "business";
+const coursePageFacts = {
+  ru: {
+    kids: { name: "AI для детей 8–13", description: "AI для детей 8–13: творчество и собственный проект с участием взрослого, правилами приватности, проверкой результата и безопасной практикой." },
+    teens: { name: "AI для подростков 14–18", description: "AI для подростков 14–18: research, код, портфолио и собственные проекты с проверкой результата, правилами авторства и контактом через взрослого." },
+    personal: { name: "Персональное обучение AI", description: "Персональные занятия AI 1-на-1 вокруг реальной задачи: практика, проверяемый проект, разбор инструментов и работа online или на Phuket." },
+    business: { name: "AI для бизнеса", description: "AI для бизнеса: аудит процессов, обучение команды, bounded pilot, QA и handoff — от выбора задачи до проверяемого результата без лишних обещаний." },
+  },
+  en: {
+    kids: { name: "AI for kids 8–13", description: "AI for kids 8–13: creativity and a learner-owned project with adult coordination, privacy rules, verification and safe practice." },
+    teens: { name: "AI for teens 14–18", description: "AI for teens 14–18: research, code, portfolio and learner-owned projects with verification, authorship rules and adult coordination." },
+    personal: { name: "Personal AI learning", description: "One-to-one AI learning around a real task: hands-on practice, a verifiable project, tool review and work online or in Phuket." },
+    business: { name: "AI for business", description: "Business AI: process audit, team training, bounded pilots, QA and handoff from task selection to a verifiable result without inflated promises." },
+  },
+} as const;
+
+export function coursePageSchema(route: CoursePageRoute, locale: WorkshopLocale) {
+  const item = coursePageFacts[locale][route];
+  const prefix = locale === "en" ? "/en" : "";
+  return {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "@id": `${site.url}${prefix}/${route}#course`,
+    name: item.name,
+    description: item.description,
+    provider: { "@id": `${site.url}/#organization` },
+    url: `${site.url}${prefix}/${route}`,
+    inLanguage: locale,
+    hasCourseInstance: {
+      "@type": "CourseInstance",
+      courseMode: "online",
+      courseWorkload: "PT60M",
+    },
+  };
+}

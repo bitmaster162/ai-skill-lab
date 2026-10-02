@@ -3,7 +3,7 @@ import { WorkshopEditorial } from "@/components/workshop/WorkshopEditorial";
 import Link from "next/link";
 import { IntroCallCta } from "@/components/IntroCallCta";
 export const metadata: Metadata = {
-  title: { absolute: "Родителям: как проходят занятия и где участие взрослого." },
+  title: { absolute: "Родителям — AI Skill Lab · Phuket" },
   description: "Что получает родитель в AI-программе 8–18: видимый прогресс, проект, правила безопасности и прозрачная роль взрослого.",
   alternates: { canonical: "/parents", languages: { ru: "/parents", en: "/en/parents" } },
 };

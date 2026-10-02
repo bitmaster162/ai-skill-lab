@@ -137,7 +137,8 @@ def compare(base, cur, allow):
         ops = difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes()
         new = [" ".join(x) for x in runs(ops, a, b, "new") if significant(x) and (" " + " ".join(x) + " ") not in sa]
         rem = [" ".join(x) for x in runs(ops, a, b, "removed") if significant(x) and (" " + " ".join(x) + " ") not in sb]
-        meta = [k for k in ("lang", "title", "description", "canonical", "hreflang", "h1") if A[k] != B[k]]
+        allowed_meta = set(allow.get("meta_changes", {}).get(r, []))
+        meta = [k for k in ("lang", "title", "description", "canonical", "hreflang", "h1") if A[k] != B[k] and k not in allowed_meta]
         ok_removed_links = set(allow.get("removed_links", {}).get(r, []))
         links_rem = sorted(set(A["links"]) - set(B["links"]) - ok_removed_links)
         links_new = sorted(set(B["links"]) - set(A["links"]) - ok_links)

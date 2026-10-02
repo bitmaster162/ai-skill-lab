@@ -3,7 +3,7 @@ import { WorkshopInteractive } from "@/components/workshop/WorkshopInteractive";
 import { ProgramMatcher } from "@/components/ProgramMatcher";
 
 export const metadata: Metadata = {
-  title: { absolute: "Find an AI program — AI Skill Lab" },
+  title: { absolute: "Find an AI program — AI Skill Lab · Phuket" },
   description: "Use the local AI Skill Lab program matcher to compare adult, kids, teens or business paths by goal and depth; the tool sends and stores no answers.",
   alternates: { canonical: "/en/matcher", languages: { ru: "/matcher", en: "/en/matcher" } },
   twitter: { card: "summary_large_image", title: "Find an AI program", description: "Use the local AI Skill Lab program matcher to compare adult, kids, teens or business paths by goal and depth; the tool sends and stores no answers.", images: ["/og.png"] },

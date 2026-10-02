@@ -44,20 +44,20 @@ DESCRIPTION_120_155 = {
     "/en/start",
 }
 RU_TITLE_CONTRACT = {
-    "/faq": 'Вопросы и ответы — AI Skill Lab',
-    "/privacy": 'Политика приватности — AI Skill Lab',
-    "/safety": 'Безопасность детей и подростков — AI Skill Lab',
-    "/terms": 'Условия обучения — AI Skill Lab',
+    "/faq": "Вопросы и ответы — AI Skill Lab · Phuket",
+    "/privacy": "Политика приватности — AI Skill Lab · Phuket",
+    "/safety": "Безопасность детей и подростков — AI Skill Lab · Phuket",
+    "/terms": "Условия обучения — AI Skill Lab · Phuket",
 }
 RU_TITLE_SOURCE = {route: "app" + route + "/page.tsx" for route in RU_TITLE_CONTRACT}
 TITLE_CONTRACT = {
-    "/en/faq": "FAQ — sessions, projects and payment | AI Skill Lab",
-    "/en/about": "About the practice and the method | AI Skill Lab",
-    "/en/start": "Start — pick a track and a first task | AI Skill Lab",
-    "/en/terms": "Terms of service | AI Skill Lab",
-    "/en/privacy": "Privacy policy and data handling | AI Skill Lab",
-    "/about": "О проекте: как устроены занятия | AI Skill Lab",
-    "/parents": "Родителям: как проходят занятия и где участие взрослого.",
+    "/en/faq": "FAQ — sessions, projects and payment | AI Skill Lab · Phuket",
+    "/en/about": "About the practice and the method | AI Skill Lab · Phuket",
+    "/en/start": "Start — pick a track and a first task | AI Skill Lab · Phuket",
+    "/en/terms": "Terms of service | AI Skill Lab · Phuket",
+    "/en/privacy": "Privacy policy and data handling | AI Skill Lab · Phuket",
+    "/about": "О проекте: как устроены занятия | AI Skill Lab · Phuket",
+    "/parents": "Родителям — AI Skill Lab · Phuket",
 }
 
 
@@ -181,7 +181,7 @@ def source_title(route: str) -> str | None:
     if not simple:
         return None
     value = simple.group(2).strip()
-    return value if route == "/" else f"{value} | AI Skill Lab"
+    return value if route == "/" else f"{value} | AI Skill Lab · Phuket"
 
 
 def source_alternates(route: str) -> tuple[str | None, dict[str, str]]:
@@ -268,6 +268,12 @@ def main() -> int:
             errors.append(f"{rel_layout} must declare /apple-touch-icon.png")
         if 'themeColor: "#0b0d10"' not in source_layout:
             errors.append(f"{rel_layout} must declare production theme color #0b0d10")
+        if 'siteName: "AI Skill Lab · Phuket"' not in source_layout:
+            errors.append(f"{rel_layout} must declare E1.5 og siteName")
+        if 'alt: "AI Skill Lab · Phuket"' not in source_layout:
+            errors.append(f"{rel_layout} must declare E1.5 OG image alt")
+        if 'width: 1200, height: 630' not in source_layout:
+            errors.append(f"{rel_layout} must declare 1200x630 OG dimensions")
 
     if grouped_layouts:
         grouped = {path.parent.name: text for path, text in source_layouts}
@@ -448,8 +454,14 @@ def main() -> int:
 
         if og.get("og:type") != "website":
             fail(errors, route, "og:type must be website")
-        if og.get("og:site_name") != "AI Skill Lab":
-            fail(errors, route, "og:site_name must be AI Skill Lab")
+        if og.get("og:site_name") != "AI Skill Lab · Phuket":
+            fail(errors, route, "og:site_name must be AI Skill Lab · Phuket")
+        expected_og_locale = "en_US" if expected_lang == "en" else "ru_RU"
+        expected_og_alternate = "ru_RU" if expected_lang == "en" else "en_US"
+        if og.get("og:locale") != expected_og_locale:
+            fail(errors, route, f"og:locale {og.get('og:locale')!r} != {expected_og_locale!r}")
+        if og.get("og:locale:alternate") != expected_og_alternate:
+            fail(errors, route, f"og:locale:alternate {og.get('og:locale:alternate')!r} != {expected_og_alternate!r}")
         if og.get("og:title") != title:
             fail(errors, route, "og:title must equal document title")
         if og.get("og:description") != desc:
@@ -458,6 +470,10 @@ def main() -> int:
             fail(errors, route, "og:url must equal canonical")
         if og.get("og:image") != OG_IMAGE:
             fail(errors, route, "og:image must use canonical site OG image")
+        if og.get("og:image:alt") != "AI Skill Lab · Phuket":
+            fail(errors, route, "og:image:alt must be AI Skill Lab · Phuket")
+        if og.get("og:image:width") != "1200" or og.get("og:image:height") != "630":
+            fail(errors, route, "og:image dimensions must be 1200x630")
 
         twitter = parser.meta_name
         if twitter.get("twitter:card") != "summary_large_image":
