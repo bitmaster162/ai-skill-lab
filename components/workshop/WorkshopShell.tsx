@@ -8,6 +8,8 @@ type Props = {
   locale?: WorkshopLocale;
   alternateHref: string;
   contactHref?: string;
+  showReach?: boolean;
+  light?: boolean;
   children: React.ReactNode;
 };
 
@@ -16,12 +18,34 @@ const menu = {
   en: [["Adults", "/en/personal"], ["Teens", "/en/teens"], ["Kids", "/en/kids"], ["Business", "/en/business"], ["Studio", "/en/studio"], ["Pricing", "/en/pricing"]],
 } as const;
 
-export function WorkshopShell({ locale = "ru", alternateHref, contactHref, children }: Props) {
+function ReachBlock({ locale }: { locale: WorkshopLocale }) {
+  const en = locale === "en";
+  return (
+    <section className={styles.reachBlock}>
+      <div className={styles.reachIntro}>
+        <h2>{en ? "How to reach us" : "Как написать"}</h2>
+        <p>{en ? "Use the application form or a direct channel; for a minor, coordination stays with an adult." : "Оставьте заявку или используйте прямой канал; для несовершеннолетнего контакт ведёт взрослый."}</p>
+      </div>
+      <div className={styles.reachActions}>
+        <Link className={styles.reachStart} href={en ? "/en/start" : "/start"}>{en ? "Start" : "Начать"}</Link>
+      </div>
+      <div className={styles.reachChannels}>
+        <a href="https://t.me/BiTFormer" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a href="https://wa.me/66649701204" target="_blank" rel="noopener noreferrer"><strong>WhatsApp</strong><span>+66 64 970 1204</span></a>
+        <a href="https://line.me/ti/p/~iwf555" target="_blank" rel="noopener noreferrer"><strong>LINE</strong><span>iwf555</span></a>
+        <a href="mailto:robert@aiskillab.work"><strong>{en ? "Email" : "Почта"}</strong><span>robert@aiskillab.work</span></a>
+      </div>
+      <p className={styles.reachReply}>{en ? "Reply within 1–2 business days." : "Ответ в течение 1–2 рабочих дней."}</p>
+    </section>
+  );
+}
+
+export function WorkshopShell({ locale = "ru", alternateHref, showReach = true, light = false, children }: Props) {
   const en = locale === "en";
   const home = en ? "/en" : "/";
-  const start = contactHref || (en ? "/en/start" : "/start");
+  const start = en ? "/en/start" : "/start";
   return (
-    <div className={styles.page}>
+    <div className={`${styles.page} ${light ? styles.light : ""}`}>
       <a className={styles.skip} href="#main">{en ? "Skip to content" : "К содержанию"}</a>
       <header className={styles.header}>
         <Link className={styles.brand} href={home} aria-label="AI Skill Lab — Home">
@@ -38,6 +62,7 @@ export function WorkshopShell({ locale = "ru", alternateHref, contactHref, child
         </div>
       </header>
       {children}
+      {showReach ? <ReachBlock locale={locale} /> : null}
       <footer className={styles.footer}>
         <div><strong>AI Skill Lab</strong><span>{en ? "Practical AI capability · online / Phuket" : "Практический AI · online / Phuket"}</span></div>
         <nav aria-label={en ? "Footer" : "Подвал"}>

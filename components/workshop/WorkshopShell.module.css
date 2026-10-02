@@ -15,3 +15,21 @@
 .page :is(h1,h2,h3),.priceCard>strong,.familyPrice strong,.audiencePrices strong{font-family:"Unbounded",system-ui,sans-serif;letter-spacing:-.01em}
 .page:lang(en) :is(h1,h2,h3),.page:lang(en) .priceCard>strong,.page:lang(en) .familyPrice strong,.page:lang(en) .audiencePrices strong{letter-spacing:-.005em}
 :global(.labCommandTrigger){column-gap:.25em}
+
+/* D1.0 · Workshop shell visual contract. */
+.page{font-family:"Onest",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.header{min-height:78px;padding:0 clamp(18px,3.5vw,44px);display:flex;align-items:center;gap:18px;background:var(--ground);border-bottom:1px solid var(--border)}
+.brand{font-family:"Unbounded",system-ui,sans-serif;font-size:18px;font-weight:700;letter-spacing:.01em}.mark{width:26px;height:26px;color:var(--ink)}
+.menu{margin:auto}.menu a{min-height:48px;padding:0 12px;border:0;border-bottom:2px solid transparent;font-size:16px;font-weight:500}.menu a:hover,.menu a:focus-visible,.utility:hover,.utility:focus-visible{background:var(--raised);border-color:var(--border)}
+.actions{gap:10px}.utility{min-height:44px;padding:0 10px;border:0;font-size:15px}.primary{min-height:48px;padding:0 20px;border-radius:24px;font-size:16px;font-weight:600}
+:global(.workshopButton){min-height:48px;border-width:1.5px;border-radius:999px;padding:0 24px;font-weight:600}
+.heroPanel,.trackCard,.priceCard,.channel,.briefCard,.diagnostic,.familyPrice,.familyItem,.audiencePanel,.lessonGrid article,.audiencePrices article,.decisionGrid article,:global(.proofLab),:global(.projectStudio),:global(.matcher){border-radius:20px}.darkBand{border-radius:24px}
+.hero h1 em,.startHero h1 em,.pricingHero h1 em,.heroPanel li b,:global(.proofLabTitleRow strong){color:inherit}.mark{color:var(--ink)}
+.reachBlock{margin:0 clamp(18px,3.5vw,44px) 48px;padding:32px 40px;border:1.5px solid var(--border);border-radius:24px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px 28px;background:var(--ground)}
+.reachIntro h2{margin:0;font-family:"Unbounded",system-ui,sans-serif;font-size:28px;line-height:1.16;font-weight:600;letter-spacing:-.01em}.reachIntro p{max-width:720px;margin:8px 0 0;color:var(--second);font-size:17px;line-height:1.5}
+.reachActions{display:flex;align-items:start}.reachStart{min-height:56px;padding:0 28px;display:inline-flex;align-items:center;justify-content:center;background:var(--acid);color:#0b0d10!important;border-radius:28px;font-size:17px;font-weight:600}
+.reachChannels{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 24px;padding-top:6px;border-top:1px solid var(--border)}.reachChannels a{min-height:48px;padding:10px 0;display:flex;align-items:center;gap:8px;color:var(--ink)}.reachChannels strong{font-weight:600}.reachChannels span{color:var(--muted);font-size:15px}.reachReply{grid-column:1/-1;margin:0;color:var(--muted);font-size:16px;line-height:1.5}
+.footer{padding:28px clamp(18px,3.5vw,44px) 40px;display:flex;justify-content:space-between;align-items:flex-start;gap:40px;color:var(--muted)}.footer strong{font-family:"Unbounded",system-ui,sans-serif;font-size:16px;letter-spacing:.01em}.footer nav{gap:20px}.footer a{min-height:48px}
+.light{--ground:#f5f7f9;--panel:#f5f7f9;--card:#fff;--raised:#eef2f5;--border:#d7dde3;--strong:#606a78;--ink:#0b0d10;--second:#3d454f;--muted:#5c6570;background:#f5f7f9;color:#0b0d10}.light .primary{background:#0b0d10;color:#f5f7f9!important}.light .header,.light .footer{background:#f5f7f9}
+@media(max-width:1050px){.header{flex-wrap:wrap;padding-block:12px}.menu{order:3;width:100%;margin:0;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap}.reachChannels{grid-template-columns:1fr 1fr}.footer{display:grid;grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.header{padding:7px 18px}.menu{padding-top:6px}.menu a{min-height:44px;padding:0 10px;font-size:15px}.primary{min-height:52px;border-radius:26px}.reachBlock{margin:0 18px 36px;padding:24px 20px;grid-template-columns:1fr}.reachActions{grid-column:1}.reachStart{width:100%;min-height:52px}.reachChannels{grid-template-columns:1fr}.footer{grid-template-columns:1fr;padding:28px 18px 36px}:global(.workshopButton){min-height:52px}}

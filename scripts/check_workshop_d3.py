@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / 'deploy/live'
 errors = []
 checks = 0
+CONTACT_URLS = ['https://t.me/BiTFormer','https://wa.me/66649701204','https://line.me/ti/p/~iwf555','mailto:robert@aiskillab.work']
 
 def source_path(rel):
  grouped=(ROOT/'app'/'(ru)'/'layout.tsx').exists() and (ROOT/'app'/'(en)'/'layout.tsx').exists()
@@ -75,7 +76,8 @@ for locale, prefix in [('ru', ''), ('en', 'en/')]:
         require(page.styles == ['/workshop.css'], f'{rel}: shared CSS')
         require(page.canonical == [origin + '/' + prefix + route], f'{rel}: canonical')
         require(page.alternates == {'ru': origin+'/'+route, 'en': origin+'/en/'+route, 'x-default': origin+'/'+route}, f'{rel}: alternates')
-        require(all(not urlsplit(h).scheme and not h.startswith('//') for h in page.hrefs), f'{rel}: external anchor')
+        external = [h for h in page.hrefs if urlsplit(h).scheme or h.startswith('//')]
+        require(external == CONTACT_URLS, f'{rel}: approved contact anchors {external}')
         start = '/' + prefix + 'start' + ('#business-brief' if route == 'business' else '')
         require(start in page.hrefs, f'{rel}: Start route')
         require('<header class="workshopHeader">' in html and html.count('data-lab-command-open') == 1, f'{rel}: Workshop navigation')
@@ -117,7 +119,7 @@ require('data-bv-brief' in calc and 'useSyncExternalStore' in calc, 'Calculator 
 all_pages = list(LIVE.rglob('*.html'))
 require(len(all_pages) == 47, '47 HTML files')
 manifest = json.loads(read('deploy/live/_release.json'))
-expected_files=65 if manifest.get('release_id') in {'R145_PWA_INSTALLABILITY','R147_C2_DEPLOYMENT_FILTER_PWA_BACKGROUND'} else 63 if manifest.get('release_id') in {'R143_R136_A1_A8_CLOSEOUT','R144_ICON_CACHE_PARITY'} else 61 if manifest.get('release_id') in {'R115_WORKSHOP_TYPOGRAPHY','R116_MONETARY_TYPOGRAPHY','R117_GLYPH_FALLBACK','R121_SITEMAP_LASTMOD_REFRESH','R130_STATIC_H2_OVERFLOW_GUARD','R142_A9_A11_FOOTER_TOOLCHAIN_PROOF_TRUTH','R143_R136_A1_A8_CLOSEOUT','R144_ICON_CACHE_PARITY','R145_PWA_INSTALLABILITY','R147_C2_DEPLOYMENT_FILTER_PWA_BACKGROUND'} else 59 if manifest.get('release_id') in {'R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION','R111D_SITEMAP_LASTMOD','R112_PLATFORM_SHORTCUT_TITLES','R114_BRAND_TOUCH_TARGET','R115_WORKSHOP_TYPOGRAPHY','R116_MONETARY_TYPOGRAPHY','R117_GLYPH_FALLBACK','R121_SITEMAP_LASTMOD_REFRESH','R130_STATIC_H2_OVERFLOW_GUARD'} else 58; require(manifest.get('file_count') == expected_files, f'{expected_files} release files')
+expected_files=65 if manifest.get('release_id') in {'R145_PWA_INSTALLABILITY','R147_C2_DEPLOYMENT_FILTER_PWA_BACKGROUND','R149_D1_0_WORKSHOP_SHELL'} else 63 if manifest.get('release_id') in {'R143_R136_A1_A8_CLOSEOUT','R144_ICON_CACHE_PARITY'} else 61 if manifest.get('release_id') in {'R115_WORKSHOP_TYPOGRAPHY','R116_MONETARY_TYPOGRAPHY','R117_GLYPH_FALLBACK','R121_SITEMAP_LASTMOD_REFRESH','R130_STATIC_H2_OVERFLOW_GUARD','R142_A9_A11_FOOTER_TOOLCHAIN_PROOF_TRUTH','R143_R136_A1_A8_CLOSEOUT','R144_ICON_CACHE_PARITY','R145_PWA_INSTALLABILITY','R147_C2_DEPLOYMENT_FILTER_PWA_BACKGROUND','R149_D1_0_WORKSHOP_SHELL'} else 59 if manifest.get('release_id') in {'R110C_BRAND_LOGO','R111A_NOSCRIPT_FORM_FALLBACK','R111B_BRAND_MARK_FAVICON','R111C_RU_TITLE_LOCALIZATION','R111D_SITEMAP_LASTMOD','R112_PLATFORM_SHORTCUT_TITLES','R114_BRAND_TOUCH_TARGET','R115_WORKSHOP_TYPOGRAPHY','R116_MONETARY_TYPOGRAPHY','R117_GLYPH_FALLBACK','R121_SITEMAP_LASTMOD_REFRESH','R130_STATIC_H2_OVERFLOW_GUARD'} else 58; require(manifest.get('file_count') == expected_files, f'{expected_files} release files')
 require(manifest.get('schema') == 'ai-skill-lab.static-release.v1', 'Release schema')
 
 def luminance(value):
@@ -142,7 +144,7 @@ for command in ('python scripts/check_workshop_d3.py','node scripts/check_busine
 # R98_D3_C1: preserve the bounded static Lab Command readability correction.
 lab_dialog_css = '.labDialog :is(p,.proofConsoleTop,.proofConsoleFoot){display:flex;gap:8px;flex-wrap:wrap}.labDialog :is(a,button){padding:13px}\n'
 workshop_css = read('deploy/live/workshop.css')
-if manifest.get('release_id') in {'R115_WORKSHOP_TYPOGRAPHY','R116_MONETARY_TYPOGRAPHY','R117_GLYPH_FALLBACK','R121_SITEMAP_LASTMOD_REFRESH','R130_STATIC_H2_OVERFLOW_GUARD','R142_A9_A11_FOOTER_TOOLCHAIN_PROOF_TRUTH','R143_R136_A1_A8_CLOSEOUT','R144_ICON_CACHE_PARITY','R145_PWA_INSTALLABILITY','R147_C2_DEPLOYMENT_FILTER_PWA_BACKGROUND'}:
+if manifest.get('release_id') in {'R115_WORKSHOP_TYPOGRAPHY','R116_MONETARY_TYPOGRAPHY','R117_GLYPH_FALLBACK','R121_SITEMAP_LASTMOD_REFRESH','R130_STATIC_H2_OVERFLOW_GUARD','R142_A9_A11_FOOTER_TOOLCHAIN_PROOF_TRUTH','R143_R136_A1_A8_CLOSEOUT','R144_ICON_CACHE_PARITY','R145_PWA_INSTALLABILITY','R147_C2_DEPLOYMENT_FILTER_PWA_BACKGROUND','R149_D1_0_WORKSHOP_SHELL'}:
     require(lab_dialog_css in workshop_css, 'Lab dialog correction preserved')
 else:
     require(workshop_css.endswith(lab_dialog_css), 'Lab dialog correction suffix')
