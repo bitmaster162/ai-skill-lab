@@ -42,6 +42,7 @@ export function WorkshopHome({ locale = "ru" }: { locale?: WorkshopLocale }) {
         <section className={styles.section}>
           <div className={styles.sectionHead}><span>{en ? "CHOOSE A TRACK" : "ВЫБЕРИТЕ ТРЕК"}</span><h2>{en ? "Different buyers. One standard: a result you can explain." : "Разные аудитории. Один стандарт: результат, который можно объяснить."}</h2></div>
           <div className={styles.trackGrid}>{routes.map(([tag,title,text,href,color]) => <Link className={styles.trackCard} data-track={tag} style={{"--track": color} as CSSProperties} href={href} key={href}><span>{tag}</span><h3>{title}</h3><p>{text}</p><b>{en ? "Open track →" : "Открыть трек →"}</b></Link>)}</div>
+          <div className={styles.sectionActions}><Link className="workshopButton workshopButtonSecondary" href={p("/parents")}>{en ? "For parents →" : "Родителям →"}</Link></div>
         </section>
         <section className={styles.darkBand}>
           <div><span>{en ? "BUILD / BUSINESS" : "BUILD / БИЗНЕС"}</span><h2>{en ? "Not AI theatre. One bounded system with ownership." : "Не AI-театр. Одна ограниченная система с владельцем результата."}</h2><p>{en ? "AI Studio for an assistant, automation or product — built with explicit scope, verification and handoff." : "Studio для ассистента, автоматизации или продукта — с явным scope, проверкой и handoff."}</p></div>
