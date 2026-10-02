@@ -27,7 +27,7 @@ function ReachBlock({ locale }: { locale: WorkshopLocale }) {
         <p>{en ? "Use the application form or a direct channel; for a minor, coordination stays with an adult." : "Оставьте заявку или используйте прямой канал; для несовершеннолетнего контакт ведёт взрослый."}</p>
       </div>
       <div className={styles.reachActions}>
-        <Link className={styles.reachStart} href={en ? "/en/start" : "/start"}>{en ? "Start" : "Начать"}</Link>
+        <Link className={styles.reachStart} href={en ? "/en/start" : "/start"}>{en ? "Start application" : "Открыть заявку"}</Link>
       </div>
       <div className={styles.reachChannels}>
         <a href="https://t.me/BiTFormer" target="_blank" rel="noopener noreferrer">Telegram</a>
@@ -58,7 +58,7 @@ export function WorkshopShell({ locale = "ru", alternateHref, showReach = true, 
           <Link className={styles.utility} href={en ? "/en/proof" : "/proof"} aria-label="Proof Lab">LAB</Link>
           <LabCommand locale={locale} />
           <Link className={styles.utility} href={alternateHref}>{en ? "RU" : "EN"}</Link>
-          <Link className={styles.primary} href={start}>{en ? "Start" : "Начать"}</Link>
+          <Link className={styles.primary} href={start}>{en ? "Start application" : "Открыть заявку"}</Link>
         </div>
       </header>
       {children}

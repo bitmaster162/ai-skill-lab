@@ -3,7 +3,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { faqPageSchema } from "@/lib/structured-data";
 import { WorkshopFaq } from "@/components/workshop/WorkshopFaq";
 export const metadata: Metadata = {
-  title: "FAQ — sessions, projects and payment",
+  title: { absolute: "FAQ — sessions, projects and payment | AI Skill Lab · Phuket" },
   description: "Answers to 11 common AI Skill Lab questions: how sessions work, what learners build, how payment and scheduling work, and how to choose a starting point.",
   alternates: { canonical: "/en/faq", languages: { ru: "/faq", en: "/en/faq" } },
 };

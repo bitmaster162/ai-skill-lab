@@ -5,26 +5,29 @@ import "../r70.css";
 import "../commercial-mobile.css";
 import "../proof-contrast.css";
 import { site } from "@/lib/site";
+import { JsonLd } from "@/components/JsonLd";
+import { organizationSchemaRu } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
   title: {
-    default: "AI Skill Lab — персональное обучение искусственному интеллекту",
-    template: "%s | AI Skill Lab",
+    default: "AI Skill Lab · Phuket — персональное обучение искусственному интеллекту",
+    template: "%s | AI Skill Lab · Phuket",
   },
   description:
     "Практическое обучение AI 1-на-1 для взрослых, бизнеса, детей и подростков — Phuket и online: реальные проекты, research, automation и responsible AI.",
   metadataBase: new URL(site.url),
   openGraph: {
-    title: "AI Skill Lab",
+    title: "AI Skill Lab · Phuket",
     description: "Персональное обучение AI 1-на-1 в Phuket и online через реальные задачи, workflows и собственные проекты.",
     type: "website",
-    siteName: "AI Skill Lab",
+    siteName: "AI Skill Lab · Phuket",
     locale: "ru_RU",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "AI Skill Lab" }],
+    alternateLocale: ["en_US"],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "AI Skill Lab · Phuket" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Skill Lab",
+    title: "AI Skill Lab · Phuket",
     description: "Практические AI-навыки через реальные задачи и проекты.",
     images: ["/og.png"],
   },
@@ -50,7 +53,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="preload" href="/fonts/Onest-ru-en.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/Unbounded-ru-en.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       </head>
-      <body>{children}<script defer src="/_vercel/insights/script.js" /></body>
+      <body><JsonLd data={organizationSchemaRu} />{children}<script defer src="/_vercel/insights/script.js" /></body>
     </html>
   );
 }

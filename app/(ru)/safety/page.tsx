@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
 
-export const metadata: Metadata = { title: { absolute: "Безопасность детей и подростков — AI Skill Lab" }, description: "Правила AI Skill Lab для детей и подростков: возрастные ограничения ChatGPT, участие взрослого, приватность, проверка ответов и parental controls.", alternates: { canonical: "/safety", languages: { ru: "/safety", en: "/en/safety" } } };
+export const metadata: Metadata = { title: { absolute: "Безопасность детей и подростков — AI Skill Lab · Phuket" }, description: "Правила AI Skill Lab для детей и подростков: возрастные ограничения ChatGPT, участие взрослого, приватность, проверка ответов и parental controls.", alternates: { canonical: "/safety", languages: { ru: "/safety", en: "/en/safety" } } };
 
 export default function SafetyPage() {
   return <LegalPage path="safety" title="Безопасность детей и AI" intro="Правила программы для 8–18 лет: взрослый остаётся в контуре, персональные данные минимизируются, а ответы моделей проверяются.">
