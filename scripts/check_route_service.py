@@ -17,6 +17,9 @@ def req(cond,msg):
 authority=ROOT/"data/commercial_facts.json"
 projection=ROOT/"services/lead-ingress/commercial_facts.json"
 route=ROOT/"services/lead-ingress/api/route.js"
+route_receiver=ROOT/"services/lead-receiver-cloudflare/src/index.js"
+route_schema=ROOT/"schema/route_rate_event_r159.sql"
+wrangler=ROOT/"services/lead-receiver-cloudflare/wrangler.jsonc"
 env_file=ROOT/"services/lead-ingress/.env.example"
 service_vercel=ROOT/"services/lead-ingress/vercel.json"
 site_vercel=ROOT/"deploy/live/vercel.json"
@@ -27,9 +30,14 @@ matcher_pages=[ROOT/"deploy/live/matcher.html",ROOT/"deploy/live/en/matcher.html
 req(authority.is_file(),"commercial authority missing")
 req(projection.is_file(),"route commercial projection missing")
 if authority.is_file() and projection.is_file():
-    req(authority.read_bytes()==projection.read_bytes(),"route commercial projection drift")
+    authority_bytes=authority.read_bytes().replace(b"\r\n",b"\n")
+    projection_bytes=projection.read_bytes().replace(b"\r\n",b"\n")
+    req(authority_bytes==projection_bytes,"route commercial projection drift")
 
 route_text=route.read_text(encoding="utf-8")
+route_receiver_text=route_receiver.read_text(encoding="utf-8")
+route_schema_text=route_schema.read_text(encoding="utf-8")
+wrangler_cfg=json.loads(wrangler.read_text(encoding="utf-8"))
 env_text=env_file.read_text(encoding="utf-8")
 service_cfg=json.loads(service_vercel.read_text(encoding="utf-8"))
 site_cfg=json.loads(site_vercel.read_text(encoding="utf-8"))
@@ -46,6 +54,7 @@ req(static_facts==authority_json,"static matcher commercial projection drift")
 req('ROUTE_API_ENABLED !== "true"' in route_text,"route service must default fail-closed")
 req('ROUTE_RATE_LIMIT_READY === "true"' in route_text,"hourly rate-limit readiness gate missing")
 req('ROUTE_DAILY_LIMIT_READY === "true"' in route_text,"daily rate-limit readiness gate missing")
+req('ROUTE_PRIVACY_READY === "true"' in route_text,"privacy readiness gate missing")
 req('endsWith(":free")' in route_text,"OpenRouter model list must accept :free models only")
 req("OPENROUTER_API_KEY" in route_text,"server-only OpenRouter key marker missing")
 req("https://openrouter.ai/api/v1/chat/completions" in route_text,"OpenRouter endpoint missing")
@@ -60,6 +69,42 @@ req("The first step is always the $120 diagnostic" not in route_text,"stale diag
 req("AUTHORIZED_MONEY" in route_text and "validateModelResult" in route_text,"price authority validation missing")
 req("fallbackResult" in route_text,"deterministic fallback missing")
 req("route_complete" in route_text,"metadata-only route event missing")
+for marker in [
+    'request.headers.get("x-forwarded-for")',
+    "isIP(first)",
+    'route-ip-v1:',
+    'route-rate-v1.',
+    'new URL("/r159/route-limit", webhook.origin)',
+    "HOURLY_ROUTE_LIMIT = 5",
+    "ROUTE_DAILY_LIMIT",
+    "const rate = await checkRouteRate(request, cfg, fetchImpl);",
+]:
+    req(marker in route_text,f"exact rate-gate route marker missing: {marker}")
+rate_call='const rate = await checkRouteRate(request, cfg, fetchImpl);'
+req(route_text.index("if (hasSecret(joined))") < route_text.index(rate_call),"secret check must happen before exact rate gate")
+req(route_text.index(rate_call) < route_text.rindex("callOpenRouter(cfg, input, table, fetchImpl)"),"exact rate gate must happen before model call")
+req("key &&" in route_text and "models.length" in route_text,"route activation must require OpenRouter key and eligible free model")
+req("LEAD_WEBHOOK_SECRET" in route_text and "LEAD_WEBHOOK_URL" in route_text,"route activation must bind to signed central rate gate")
+
+for marker in [
+    'env?.ROUTE_RATE_LIMIT_ENABLED !== "true"',
+    'ROUTE_RATE_INSERT_SQL',
+    'route_rate_event_r159',
+    'ROUTE_HOURLY_LIMIT = 5',
+    'ROUTE_RATE_PATH = "/r159/route-limit"',
+    'LEAD_RATE_LIMITER',
+    'route_rate_allowed',
+    'route_rate_limited',
+]:
+    req(marker in route_receiver_text,f"central rate-gate worker marker missing: {marker}")
+req("raw_ip" not in route_schema_text.lower() and "ip_address" not in route_schema_text.lower(),"route rate schema must not persist raw IP")
+for forbidden in ["goal","answers","audience","contact","name"]:
+    req(forbidden not in route_schema_text.lower(),f"route rate schema must not persist user field {forbidden}")
+req(wrangler_cfg.get("vars",{}).get("ROUTE_RATE_LIMIT_ENABLED")=="false","Cloudflare route rate gate must default disabled")
+req(any(item.get("name")=="LEAD_RATE_LIMITER" for item in wrangler_cfg.get("ratelimits",[])),"existing Cloudflare rate-limit binding missing")
+for line in route_receiver_text.splitlines():
+    if "logReceiver(" in line and "route_rate_" in line:
+        req("ipToken" not in line and "secret" not in line,"route rate logs may expose token/secret")
 
 for line in route_text.splitlines():
     if "logRoute(" in line and '"route_complete"' in line:
@@ -68,6 +113,8 @@ for line in route_text.splitlines():
 req("ROUTE_API_ENABLED=false" in env_text,"route API example must default disabled")
 req("ROUTE_RATE_LIMIT_READY=false" in env_text,"hourly rate-limit example must default false")
 req("ROUTE_DAILY_LIMIT_READY=false" in env_text,"daily rate-limit example must default false")
+req("ROUTE_PRIVACY_READY=false" in env_text,"privacy readiness example must default false")
+req("\nROUTE_DAILY_LIMIT=\n" in env_text.replace("\r\n","\n"),"daily limit must remain blank until Robert approves a value")
 req("OPENROUTER_API_KEY=" in env_text and "OPENROUTER_MODELS=" in env_text,"OpenRouter env example missing")
 req("50" not in "\n".join(line for line in env_text.splitlines() if "ROUTE_" in line),"unconfirmed daily numeric limit must not be hard-coded")
 

@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test test/receiver.test.mjs"
+    "test": "node --test test/receiver.test.mjs test/route-rate.test.mjs"
   },
   "devDependencies": {
     "wrangler": "4.129.0"

@@ -4,12 +4,16 @@ on:
   pull_request:
     paths:
       - 'services/lead-receiver-cloudflare/**'
+      - 'schema/route_rate_event_r159.sql'
+      - 'scripts/check_route_rate_schema.py'
       - '.github/workflows/r101b-receiver-qa.yml'
   push:
     branches:
       - 'agent/r101b-cloudflare-receiver-source-r1'
     paths:
       - 'services/lead-receiver-cloudflare/**'
+      - 'schema/route_rate_event_r159.sql'
+      - 'scripts/check_route_rate_schema.py'
       - '.github/workflows/r101b-receiver-qa.yml'
 
 permissions:
@@ -24,7 +28,14 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '22'
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
       - name: Check receiver syntax
         run: node --check services/lead-receiver-cloudflare/src/index.js
       - name: Test Cloudflare lead receiver
         run: node --test services/lead-receiver-cloudflare/test/receiver.test.mjs
+      - name: Test F1.2 central route rate gate
+        run: node --test services/lead-receiver-cloudflare/test/route-rate.test.mjs
+      - name: Validate F1.2 route rate schema
+        run: python scripts/check_route_rate_schema.py
