@@ -46,6 +46,7 @@ for marker in [
     "branches:",
     "- main",
     "fetch-depth: 0",
+    "uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1",
     "python scripts/indexnow_notify.py",
     "--wait-for-live",
     "INDEXNOW_BEFORE: ${{ github.event.before }}",
@@ -53,6 +54,7 @@ for marker in [
 ]:
     req(marker in wf,f"workflow missing {marker}")
 req(wf.count("python scripts/indexnow_notify.py")==1,"workflow command must appear once")
+req("actions/checkout@v" not in wf,"IndexNow checkout must be pinned to a full commit SHA")
 req("pull_request:" not in wf,"IndexNow must not run on pull_request")
 req("workflow_dispatch:" not in wf,"IndexNow has no manual mutation path")
 
@@ -66,6 +68,8 @@ req(mod.urls_for_changes(["deploy/live/pricing.html"])==["https://aiskillab.work
 req(mod.urls_for_changes(["deploy/live/en/pricing.html"])==["https://aiskillab.work/en/pricing"],"EN route mapping")
 req(mod.urls_for_changes(["deploy/live/404.html"])==[],"404 must never be submitted")
 req(mod.urls_for_changes(["deploy/live/workshop.css"])==urls,"global CSS change must submit all sitemap URLs")
+req(mod.urls_for_changes([".github/workflows/indexnow.yml"])==urls,"IndexNow workflow recovery must submit all sitemap URLs")
+req(mod.urls_for_changes(["scripts/indexnow_notify.py"])==urls,"IndexNow notifier recovery must submit all sitemap URLs")
 
 print(f"INDEXNOW_CONTRACT_CHECKS={checks} sitemap_urls={len(urls)}")
 if errors:

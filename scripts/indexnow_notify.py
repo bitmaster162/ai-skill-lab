@@ -27,6 +27,10 @@ GLOBAL_PUBLIC_ASSETS={
     "deploy/live/sitemap.xml",
     f"deploy/live/{KEY_FILE_NAME}",
 }
+INDEXNOW_CONTROL_PLANE={
+    ".github/workflows/indexnow.yml",
+    "scripts/indexnow_notify.py",
+}
 
 def read_key() -> str:
     key=KEY_PATH.read_text(encoding="utf-8").strip()
@@ -67,7 +71,7 @@ def route_url_from_html(rel: str) -> str | None:
 
 def urls_for_changes(paths: list[str]) -> list[str]:
     authority=set(sitemap_urls())
-    if any(p in GLOBAL_PUBLIC_ASSETS for p in paths):
+    if any(p in GLOBAL_PUBLIC_ASSETS or p in INDEXNOW_CONTROL_PLANE for p in paths):
         return sorted(authority)
     urls=set()
     for p in paths:
