@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { WorkshopEditorial } from "@/components/workshop/WorkshopEditorial";
 import Link from "next/link";
+import { IntroCallCta } from "@/components/IntroCallCta";
 export const metadata: Metadata = {
   title: { absolute: "For parents — AI Skill Lab" },
   description: "What parents get from an AI program for ages 8–18: visible progress, a project, safety rules and a clear adult role.",
@@ -14,6 +15,7 @@ export default function Page() {
         <div className="eyebrow eyebrowLight"><span className="dot dotLight" /> FOR PARENTS · 8–18</div>
         <h1>Not “AI did it.”<br/><span>The learner can do it.</span></h1>
         <p>Progress is visible through the ability to define a task, verify the output, explain personal contribution and defend the final project.</p>
+        <IntroCallCta locale="en"/>
         <div className="heroActions"><Link className="button buttonLight" href="/en/start">Discuss a route →</Link><Link className="button buttonGhost buttonOnDark" href="/en/projects">Example projects →</Link></div>
       </div></div></section>
 

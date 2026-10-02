@@ -10,6 +10,7 @@ class Links(HTMLParser):
   if tag=='a':self.hrefs.append(dict(attrs).get('href',''))
 light={'privacy.html','terms.html','en/privacy.html','en/terms.html'}
 start_routes={'start.html','en/start.html'}
+e14_reach_routes={'index.html','en.html','kids.html','en/kids.html','teens.html','en/teens.html','parents.html','en/parents.html','personal.html','en/personal.html','business.html','en/business.html','pricing.html','en/pricing.html','matcher.html','en/matcher.html'}
 reach_routes=0
 for p in sorted(LIVE.rglob('*.html')):
  rel=p.relative_to(LIVE).as_posix();text=p.read_text(encoding='utf-8');parser=Links();parser.feed(text);checks+=1
@@ -29,7 +30,8 @@ for p in sorted(LIVE.rglob('*.html')):
   reach_routes+=1
   for name,count in counts.items():
    checks+=1
-   if count!=1:errors.append(f'{rel}: approved D1 {name} count={count}, expected 1')
+   expected=2 if rel in e14_reach_routes and name in {'telegram','whatsapp'} else 1
+   if count!=expected:errors.append(f'{rel}: approved contact {name} count={count}, expected {expected}')
   block_count=text.count('class="reachBlock"')
   if block_count!=1:errors.append(f'{rel}: D1 reach block count={block_count}, expected 1')
 checks+=1

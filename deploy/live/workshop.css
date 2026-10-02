@@ -84,3 +84,13 @@ html[lang="en"] .workshopPage .price,html[lang="en"] .workshopPage .diagnostic s
 
 /* R149 D1.0 non-interactive status stays neutral. */
 .workshopPage main .projectStudioStatus{color:var(--i2)}
+
+/* R153 E1.4 intro-call-first commercial flow. */
+.e14EntryStart{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:24px 0 8px}
+.e14EntryStartSingle{grid-template-columns:1fr}
+.e14EntryCard{min-width:0;padding:20px;border:1px solid var(--border,var(--b,#2a3039));border-radius:20px;background:var(--card,var(--c,#171b21));color:var(--ink,var(--i,#f5f7f9))}
+.e14EntryMeta{display:block;margin-bottom:12px;color:var(--muted,var(--m,#919aa4));font-size:.78rem;font-weight:850;letter-spacing:.08em}
+.e14EntryCopy,.e14DiagnosticLine{margin:0 0 16px;color:var(--second,var(--i2,#c3cad2));line-height:1.55}
+.e14EntryActions{display:flex;flex-wrap:wrap;gap:8px}
+.e14DiagnosticCard>.workshopButton{margin-top:2px}
+@media(max-width:620px){.e14EntryStart{grid-template-columns:1fr}.e14EntryActions>*{width:100%;white-space:normal;text-align:center}}
