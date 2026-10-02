@@ -55,7 +55,7 @@ function referencesForbiddenFontHost(text) {
 }
 for (const [text, label] of [[css, 'static CSS'], [sourceCss, 'source CSS']]) {
   const block = text.split('R115 Workshop v1 typography roles').slice(-1)[0];
-  if (['R149_D1_0_WORKSHOP_SHELL', 'R149_D1_0_VIEWPORT_CLOSEOUT', 'R151_E1_1_WEB_ANALYTICS', 'R152_E1_2_CACHE_POLICY', 'R153_E1_4_INTRO_CALL', 'R154_E1_5_METADATA', 'R155_E1_6_MOBILE_HEADER'].includes(release)) {
+  if (['R149_D1_0_WORKSHOP_SHELL', 'R149_D1_0_VIEWPORT_CLOSEOUT', 'R151_E1_1_WEB_ANALYTICS', 'R152_E1_2_CACHE_POLICY', 'R153_E1_4_INTRO_CALL', 'R154_E1_5_METADATA', 'R155_E1_6_MOBILE_HEADER', 'R156_I1_2_INDEXNOW'].includes(release)) {
     const compact = text.replace(/\s+/g, '');
     const required = label === 'static CSS'
       ? [
