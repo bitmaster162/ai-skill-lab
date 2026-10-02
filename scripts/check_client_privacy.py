@@ -39,9 +39,16 @@ checks+=1
 if 'grid-template-columns: 24px 1fr; min-height: 24px; padding: 3px 0;' not in source_css:
  errors.append('source consent label target must be >=24px')
 proofs=[
- (ROOT/'proof.html',"Публичный сайт не использует analytics, cookies и trackers. Единственная форма — заявка на /start, она отправляется на /api/lead."),
- (ROOT/'en'/'proof.html',"The public site uses no analytics, cookies or trackers. The only form is the request form on /start; it submits to /api/lead."),
+ (ROOT/'proof.html',"Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Единственная форма — заявка на /start, она отправляется на /api/lead."),
+ (ROOT/'en'/'proof.html',"The public site uses Vercel Web Analytics for anonymized visit statistics; it uses no cookies or advertising trackers. The only form is the request form on /start; it submits to /api/lead."),
 ]
+analytics_tag='<script defer src="/_vercel/insights/script.js"></script>'
+public_html=[p for p in ROOT.rglob('*.html') if p.name!='404.html']
+checks+=len(public_html)+1
+if len(public_html)!=46: errors.append(f'analytics route count {len(public_html)} != 46')
+for p in public_html:
+ t=p.read_text(encoding='utf-8')
+ if t.count(analytics_tag)!=1: errors.append(f'{p.relative_to(ROOT)}: analytics script count {t.count(analytics_tag)} != 1')
 for p,privacy in proofs:
  t=p.read_text(encoding='utf-8'); checks+=4
  if '<b>public_forms</b><strong>1</strong>' not in t: errors.append(f'{p.relative_to(ROOT)}: public_forms must equal 1')
