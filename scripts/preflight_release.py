@@ -36,6 +36,7 @@ CHECKS = [
     ("python_text_encoding", ["python", "scripts/check_python_text_encoding.py"]),
     ("client_privacy", ["python", "scripts/check_client_privacy.py"]),
     ("lead_ingress", ["node", "--test", "services/lead-ingress/test/lead.test.mjs"]),
+    ("route_service", ["python", "scripts/check_route_service.py"]),
     ("lead_receiver", ["node", "--test", "services/lead-receiver-cloudflare/test/receiver.test.mjs"]),
     ("lead_schema", ["python", "scripts/check_lead_schema.py"]),
     ("intake_operations", ["python", "scripts/check_intake_operations.py"]),
@@ -89,7 +90,7 @@ CHECKS = [
 
 
 def run(name: str, cmd: list[str]) -> dict[str, object]:
-    result = subprocess.run(cmd, cwd=ROOT, text=True, capture_output=True)
+    result = subprocess.run(cmd, cwd=ROOT, text=True, encoding="utf-8", errors="replace", capture_output=True)
     output = (result.stdout + result.stderr).strip()
     status = "PASS" if result.returncode == 0 else "FAIL"
     print(f"[{name}] {status}")

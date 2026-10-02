@@ -20,11 +20,15 @@ for p in [*starts,*matchers]:
   if '<script src="/start-brief.js"></script>' not in t: errors.append(f'{p.relative_to(ROOT)}: helper missing')
   if 'action=' in t.lower(): errors.append(f'{p.relative_to(ROOT)}: native form action forbidden')
 brief=(ROOT/'start-brief.js').read_text(encoding='utf-8')
-checks+=1
+matcher_v2=(ROOT/'matcher-v2.js').read_text(encoding='utf-8')
+checks+=3
 if brief.count('fetch("/api/lead"')!=1: errors.append('start-brief.js must contain exactly one same-origin lead fetch')
+if matcher_v2.count('fetch("/api/route"')!=1: errors.append('matcher-v2.js must contain exactly one same-origin route fetch')
+if matcher_v2.count('fetch("/api/lead"')!=1: errors.append('matcher-v2.js must contain exactly one consent-gated lead fetch')
 for token in ['XMLHttpRequest','localStorage','sessionStorage','document.cookie','sendBeacon(','WebSocket(','https://ai-skill-lab-ingress']:
- checks+=1
+ checks+=2
  if token in brief: errors.append(f'start-brief.js forbidden {token}')
+ if token in matcher_v2: errors.append(f'matcher-v2.js forbidden {token}')
 for marker in ['navigator.clipboard.writeText','document.querySelectorAll(".briefSendLink")','document.querySelectorAll(".briefCopy")','new FormData(form)','"Content-Type":"application/json"','data-adult-confirmation']:
  checks+=1
  if marker not in brief: errors.append(f'start-brief.js missing {marker}')
@@ -39,8 +43,8 @@ checks+=1
 if 'grid-template-columns: 24px 1fr; min-height: 24px; padding: 3px 0;' not in source_css:
  errors.append('source consent label target must be >=24px')
 proofs=[
- (ROOT/'proof.html',"Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Единственная форма — заявка на /start, она отправляется на /api/lead."),
- (ROOT/'en'/'proof.html',"The public site uses Vercel Web Analytics for anonymized visit statistics; it uses no cookies or advertising trackers. The only form is the request form on /start; it submits to /api/lead."),
+ (ROOT/'proof.html',"Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Формы есть на /start и /matcher: matcher вызывает /api/route только по кнопке, а brief отправляет в /api/lead только по согласию."),
+ (ROOT/'en'/'proof.html',"The public site uses Vercel Web Analytics for anonymized visit statistics; it uses no cookies or advertising trackers. Forms exist on /start and /matcher: matcher calls /api/route only on button press, and sends its brief to /api/lead only with consent."),
 ]
 analytics_tag='<script defer src="/_vercel/insights/script.js"></script>'
 public_html=[p for p in ROOT.rglob('*.html') if p.name!='404.html']
@@ -51,8 +55,8 @@ for p in public_html:
  if t.count(analytics_tag)!=1: errors.append(f'{p.relative_to(ROOT)}: analytics script count {t.count(analytics_tag)} != 1')
 for p,privacy in proofs:
  t=p.read_text(encoding='utf-8'); checks+=4
- if '<b>public_forms</b><strong>1</strong>' not in t: errors.append(f'{p.relative_to(ROOT)}: public_forms must equal 1')
- if '<b>public_forms</b><strong>0</strong>' in t: errors.append(f'{p.relative_to(ROOT)}: stale public_forms 0')
+ if '<b>public_forms</b><strong>2</strong>' not in t: errors.append(f'{p.relative_to(ROOT)}: public_forms must equal 2')
+ if '<b>public_forms</b><strong>0</strong>' in t or '<b>public_forms</b><strong>1</strong>' in t: errors.append(f'{p.relative_to(ROOT)}: stale public_forms count')
  if privacy not in t: errors.append(f'{p.relative_to(ROOT)}: current privacy statement missing')
  if 'first-party lead forms' in t or 'first-party lead forms' in t.lower(): errors.append(f'{p.relative_to(ROOT)}: stale no-form claim')
 print(f'client_privacy_checks={checks}')

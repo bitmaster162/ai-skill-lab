@@ -1,5 +1,5 @@
 {
- "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline.",
+ "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below.",
  "phrases": {
   "ru": [
    "Как написать",
@@ -199,13 +199,19 @@
    "Публичный сайт не использует analytics, cookies и trackers. Единственная форма — заявка на /start, она отправляется на /api/lead.",
    "Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Единственная форма — заявка на /start, она отправляется на /api/lead.",
    "trackers",
-   "ad_trackers"
+   "ad_trackers",
+   "public_forms 1",
+   "public_forms 2",
+   "Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Формы есть на /start и /matcher: matcher вызывает /api/route только по кнопке, а brief отправляет в /api/lead только по согласию."
   ],
   "/en/proof": [
    "The public site uses no analytics, cookies or trackers. The only form is the request form on /start; it submits to /api/lead.",
    "The public site uses Vercel Web Analytics for anonymized visit statistics; it uses no cookies or advertising trackers. The only form is the request form on /start; it submits to /api/lead.",
    "trackers",
-   "ad_trackers"
+   "ad_trackers",
+   "public_forms 1",
+   "public_forms 2",
+   "The public site uses Vercel Web Analytics for anonymized visit statistics; it uses no cookies or advertising trackers. Forms exist on /start and /matcher: matcher calls /api/route only on button press, and sends its brief to /api/lead only with consent."
   ],
   "/pricing": [
    "Сначала диагностика, затем пакет.",
@@ -214,6 +220,23 @@
   "/en/pricing": [
    "Diagnose before committing to a package.",
    "Credited toward a package purchased within 14 days."
+  ],
+  "/matcher": [
+   "ai + fallback",
+   "только из опубликованной таблицы программ. ai используется",
+   "кнопке; при недоступности остаётся локальный fallback. ai-подбор запускается только по кнопке · ввод matcher",
+   "4. коротко опишите цель подобрать маршрут с ai",
+   "формату и пакету. никакие ответы",
+   "отправляются на сервер и не сохраняются. локально в браузере · ничего не отправляется"
+  ],
+  "/en/matcher": [
+   "ai + fallback",
+   "plus your goal",
+   "only from the published program table. ai runs on button press; a local fallback remains available. ai routing runs only after you press the button · matcher input",
+   "4. describe the goal briefly find a route with ai",
+   "a lead form.",
+   "for format and package. no answer",
+   "sent to a server or stored. local in your browser · nothing is sent"
   ]
  },
  "links": {
@@ -373,7 +396,9 @@
    "title"
   ],
   "/en/matcher": [
-   "title"
+   "title",
+   "description",
+   "h1"
   ],
   "/en/method": [
    "title"
@@ -430,7 +455,9 @@
    "title"
   ],
   "/matcher": [
-   "title"
+   "title",
+   "description",
+   "h1"
   ],
   "/method": [
    "title"
@@ -501,7 +528,8 @@
    "input[aria-label]=открыть меню"
   ],
   "/matcher": [
-   "input[aria-label]=открыть меню"
+   "input[aria-label]=открыть меню",
+   "textarea[placeholder]=например: хочу собрать ai-агента для research и научиться проверять его выводы."
   ],
   "/method": [
    "input[aria-label]=открыть меню"
@@ -570,7 +598,8 @@
    "input[aria-label]=open menu"
   ],
   "/en/matcher": [
-   "input[aria-label]=open menu"
+   "input[aria-label]=open menu",
+   "textarea[placeholder]=for example: build a research ai agent and learn how to verify its conclusions."
   ],
   "/en/method": [
    "input[aria-label]=open menu"

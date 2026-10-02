@@ -43,17 +43,17 @@ for rel, en, label in proof_surfaces:
         if forbidden.lower() in text.lower():
             errors.append(f"{label}: forbidden {forbidden}")
     privacy = (
-        "The public site uses Vercel Web Analytics for anonymized visit statistics; it uses no cookies or advertising trackers. The only form is the request form on /start; it submits to /api/lead."
+        "The public site uses Vercel Web Analytics for anonymized visit statistics; it uses no cookies or advertising trackers. Forms exist on /start and /matcher: matcher calls /api/route only on button press, and sends its brief to /api/lead only with consent."
         if en
-        else "Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Единственная форма — заявка на /start, она отправляется на /api/lead."
+        else "Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Формы есть на /start и /matcher: matcher вызывает /api/route только по кнопке, а brief отправляет в /api/lead только по согласию."
     )
     checks += 3
     if privacy not in text:
         errors.append(f"{label}: current client-privacy fact missing")
-    if "<b>public_forms</b><strong>1</strong>" not in text:
-        errors.append(f"{label}: public_forms must equal 1")
-    if "<b>public_forms</b><strong>0</strong>" in text:
-        errors.append(f"{label}: stale public_forms 0")
+    if "<b>public_forms</b><strong>2</strong>" not in text:
+        errors.append(f"{label}: public_forms must equal 2")
+    if "<b>public_forms</b><strong>0</strong>" in text or "<b>public_forms</b><strong>1</strong>" in text:
+        errors.append(f"{label}: stale public_forms count")
     if "<b>ad_trackers</b><strong>0</strong>" not in text or "<b>trackers</b><strong>0</strong>" in text:
         errors.append(f"{label}: analytics/ad-tracker truth drift")
 
