@@ -43,9 +43,9 @@ for rel, en, label in proof_surfaces:
         if forbidden.lower() in text.lower():
             errors.append(f"{label}: forbidden {forbidden}")
     privacy = (
-        "The public site uses no analytics, cookies or trackers. The only form is the request form on /start; it submits to /api/lead."
+        "The public site uses Vercel Web Analytics for anonymized visit statistics; it uses no cookies or advertising trackers. The only form is the request form on /start; it submits to /api/lead."
         if en
-        else "Публичный сайт не использует analytics, cookies и trackers. Единственная форма — заявка на /start, она отправляется на /api/lead."
+        else "Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Единственная форма — заявка на /start, она отправляется на /api/lead."
     )
     checks += 3
     if privacy not in text:
@@ -54,6 +54,8 @@ for rel, en, label in proof_surfaces:
         errors.append(f"{label}: public_forms must equal 1")
     if "<b>public_forms</b><strong>0</strong>" in text:
         errors.append(f"{label}: stale public_forms 0")
+    if "<b>ad_trackers</b><strong>0</strong>" not in text or "<b>trackers</b><strong>0</strong>" in text:
+        errors.append(f"{label}: analytics/ad-tracker truth drift")
 
 mounts = {
     "app/page.tsx": '<WorkshopHome locale="ru" />',

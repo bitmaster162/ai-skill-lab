@@ -18,6 +18,7 @@ const MAX_FIRST_VIEW_WITH_FONTS = 100 * 1024;
 const IMPORT_RE = /@import\s+(?:url\()?[\"']?([^\"')\s;]+)/gi;
 const LINK_RE = /<link\b[^>]*>/gi;
 const SCRIPT_RE = /<script\b[^>]*>/gi;
+const VERCEL_MANAGED_ANALYTICS = '/_vercel/insights/script.js';
 
 const br = (buf) => zlib.brotliCompressSync(buf, { params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 11 } }).length;
 const gz = (buf) => zlib.gzipSync(buf, { level: 9 }).length;
@@ -88,6 +89,7 @@ function pageAssets(page, html) {
   for (let m; (m = SCRIPT_RE.exec(html)); ) {
     const src = attr(m[0], 'src');
     if (!src) continue;
+    if (src.split(/[?#]/, 1)[0] === VERCEL_MANAGED_ANALYTICS) continue;
     const full = localAsset(src, page, 'script');
     if (jsSeen.has(full)) continue;
     jsSeen.add(full);

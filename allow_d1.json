@@ -162,6 +162,18 @@
    "cloudflare.com/privacypolicy",
    "Adult only; the service is 18+.",
    "Service rules change; we check the current terms before use. Checked on September 26, 2026."
+  ],
+  "/proof": [
+   "Публичный сайт не использует analytics, cookies и trackers. Единственная форма — заявка на /start, она отправляется на /api/lead.",
+   "Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Единственная форма — заявка на /start, она отправляется на /api/lead.",
+   "trackers",
+   "ad_trackers"
+  ],
+  "/en/proof": [
+   "The public site uses no analytics, cookies or trackers. The only form is the request form on /start; it submits to /api/lead.",
+   "The public site uses Vercel Web Analytics for anonymized visit statistics; it uses no cookies or advertising trackers. The only form is the request form on /start; it submits to /api/lead.",
+   "trackers",
+   "ad_trackers"
   ]
  },
  "links": {
@@ -181,10 +193,18 @@
   ]
  },
  "removed_links": {
-  "/business": ["/start#business-brief"],
-  "/en/business": ["/en/start#business-brief"],
-  "/start": ["#contact-channels"],
-  "/en/start": ["#contact-channels"]
+  "/business": [
+   "/start#business-brief"
+  ],
+  "/en/business": [
+   "/en/start#business-brief"
+  ],
+  "/start": [
+   "#contact-channels"
+  ],
+  "/en/start": [
+   "#contact-channels"
+  ]
  },
  "route_links": {
   "/safety": [
