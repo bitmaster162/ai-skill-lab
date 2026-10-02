@@ -33,8 +33,8 @@ cache_expected={
     '/site.webmanifest':'public, max-age=86400, must-revalidate',
     '/_release.json':'no-store, max-age=0',
     '/fonts/(.*).woff2':'public, max-age=604800',
-    '/(.*).js':'public, max-age=604800',
-    '/(.*).css':'public, max-age=604800',
+    '/(.*).js':'public, max-age=0, must-revalidate',
+    '/(.*).css':'public, max-age=0, must-revalidate',
 }
 for source,value in cache_expected.items():
     matches=[x for x in obj.get('headers',[]) if x.get('source')==source]
