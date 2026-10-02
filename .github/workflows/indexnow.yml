@@ -1,0 +1,34 @@
+name: IndexNow after production deploy
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow-production-main
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact main commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Wait for canonical deploy and notify IndexNow
+        env:
+          INDEXNOW_BEFORE: ${{ github.event.before }}
+          INDEXNOW_HEAD: ${{ github.sha }}
+        run: |
+          python scripts/indexnow_notify.py \
+            --before "$INDEXNOW_BEFORE" \
+            --head "$INDEXNOW_HEAD" \
+            --wait-for-live \
+            --max-attempts 60 \
+            --delay-seconds 10

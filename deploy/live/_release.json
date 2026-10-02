@@ -1,10 +1,15 @@
 {
-  "file_count": 65,
+  "file_count": 66,
   "files": [
     {
       "path": "404.html",
       "sha256": "c47c3d76d0cdbae30470ae3d8d4c45ccbf50a588a3973dcab9776042bde9e18f",
       "size": 1952
+    },
+    {
+      "path": "98ac1c70-f355-43f0-84f5-57cbf4c68e18.txt",
+      "sha256": "464000dca8907fbe778ead1e70c10110c45bb844c94a040da8ed6656c1c57329",
+      "size": 37
     },
     {
       "path": "about.html",
@@ -327,7 +332,7 @@
       "size": 32867
     }
   ],
-  "payload_sha256": "cefbda8559f9b5a4072b665e6826866ad9a3a1de5ee07bad28a86dda4fb38400",
-  "release_id": "R155_E1_6_MOBILE_HEADER",
+  "payload_sha256": "abfb92b8ad04af618be43053a6b7f90f4143116fd68c27c45d83267edbe8be4d",
+  "release_id": "R156_I1_2_INDEXNOW",
   "schema": "ai-skill-lab.static-release.v1"
 }

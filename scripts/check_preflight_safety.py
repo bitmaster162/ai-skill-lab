@@ -57,8 +57,8 @@ if "check-launch.mjs" in workflow_text or "check:launch" in workflow_text:
     errors.append("required static-release workflow must not invoke ENV-bound launch check")
 
 checks += 1
-if len(workflow_files) != 3:
-    errors.append(f"workflow inventory drift expected=3 actual={len(workflow_files)}")
+if len(workflow_files) != 4:
+    errors.append(f"workflow inventory drift expected=4 actual={len(workflow_files)}")
 for workflow_path in workflow_files:
     workflow_source = workflow_path.read_text(encoding="utf-8")
     checks += 1

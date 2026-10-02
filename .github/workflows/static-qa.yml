@@ -104,6 +104,8 @@ jobs:
         run: python scripts/check_e1_5_metadata.py
       - name: Validate E1.6 mobile header
         run: python scripts/check_e1_6_mobile_header.py
+      - name: Validate IndexNow contract
+        run: python scripts/check_indexnow.py
       - name: Validate contact funnel
         run: python scripts/check_contact_funnel.py
       - name: Validate CTA semantics
