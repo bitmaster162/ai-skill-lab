@@ -112,6 +112,9 @@ for marker in [
  '.reachBlock{margin:0 clamp(18px,3.5vw,44px) 48px',
  '.workshopLight{--g:#f5f7f9',
  '.heroPanel li b{color:var(--i2)}',
+ '.workshopPage main .wrap{width:min(1180px,calc(100% - 36px));margin:auto}',
+ '.workshopPage main .lesson h2,.workshopPage main .card h2{font-size:clamp(1rem,1.5vw,1.25rem);line-height:1.1;overflow-wrap:anywhere}',
+ '.workshopPage main .projectStudioStatus{color:var(--i2)}',
 ]:
  req(marker in css,f"static CSS missing {marker}")
 for marker in [
@@ -120,6 +123,9 @@ for marker in [
  '.reachBlock{margin:0 clamp(18px,3.5vw,44px) 48px',
  '.light{--ground:#f5f7f9',
  '.hero h1 em,.startHero h1 em,.pricingHero h1 em,.heroPanel li b,:global(.proofLabTitleRow strong){color:inherit}',
+ '.page :global(main .wrap){width:min(1180px,calc(100% - 36px));margin:auto}',
+ '.page :global(main .lesson h2),.page :global(main .card h2){font-size:clamp(1rem,1.5vw,1.25rem);line-height:1.1;overflow-wrap:anywhere}',
+ '.page :global(main .projectStudioStatus){color:var(--second)}',
 ]:
  req(marker in source_css,f"source CSS missing {marker}")
 for marker in [
