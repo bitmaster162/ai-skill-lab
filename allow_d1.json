@@ -195,6 +195,18 @@
    "Adult only; the service is 18+.",
    "Service rules change; we check the current terms before use. Checked on September 26, 2026."
   ],
+  "/privacy": [
+   "AI-route и OpenRouter",
+   "Если AI-route включён, он запускается только после нажатия кнопки пользователем. В /api/route передаются выбранная аудитория, три ответа matcher и текст цели. Перед обращением к модели сервер проверяет ввод на шаблоны секретов и ключей; обнаруженный секрет блокируется до вызова модели. Для AI-подбора сервер может передать эти данные в настроенную бесплатную модель через OpenRouter API. Код AI Skill Lab не записывает текст цели или ответы matcher в собственную таблицу rate-limit.",
+   "Защита от злоупотреблений AI-route",
+   "Для точного ограничения частоты ingress получает сетевой IP клиента от хостинг-платформы и сразу преобразует его в HMAC-token. Сырой IP не записывается в таблицу AI Skill Lab для route-limit. В этой таблице хранятся только request ID, HMAC-token и техническая отметка времени. Плановый cleanup удаляет rate-limit записи старше 24 часов. Token используется только для ограничения частоты и защиты AI-route, а не для рекламного профилирования."
+  ],
+  "/en/privacy": [
+   "AI routing and OpenRouter",
+   "If AI routing is enabled, it runs only after the user presses the route button. /api/route receives the selected audience, three matcher answers and the goal text. Before any model call, the server checks the input for secret and credential patterns; detected secrets are blocked before the model is called. For AI routing, the server may send this data to the configured free model through the OpenRouter API. AI Skill Lab code does not write the goal text or matcher answers into its route-limit table.",
+   "AI-route abuse prevention",
+   "For exact rate limiting, the ingress receives the client network IP from the hosting platform and immediately converts it to an HMAC token. The raw IP is not written to AI Skill Lab's route-limit table. That table stores only a request ID, HMAC token and technical timestamp. Scheduled cleanup deletes rate-limit rows once they are older than 24 hours. The token is used only for rate limiting and AI-route protection, not for advertising profiling."
+  ],
   "/proof": [
    "Публичный сайт не использует analytics, cookies и trackers. Единственная форма — заявка на /start, она отправляется на /api/lead.",
    "Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Единственная форма — заявка на /start, она отправляется на /api/lead.",
@@ -416,7 +428,8 @@
    "title"
   ],
   "/en/privacy": [
-   "title"
+   "title",
+   "description"
   ],
   "/en/projects": [
    "title"
@@ -475,7 +488,8 @@
    "title"
   ],
   "/privacy": [
-   "title"
+   "title",
+   "description"
   ],
   "/projects": [
    "title"
