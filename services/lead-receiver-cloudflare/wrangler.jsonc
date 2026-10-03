@@ -18,7 +18,8 @@
     "redact_query_string": true
   },
   "vars": {
-    "LEAD_RECEIVER_ENABLED": "false"
+    "LEAD_RECEIVER_ENABLED": "false",
+    "ROUTE_RATE_LIMIT_ENABLED": "false"
   },
   "ratelimits": [
     {

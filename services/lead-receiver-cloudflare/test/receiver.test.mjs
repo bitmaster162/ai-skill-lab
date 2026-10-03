@@ -6,6 +6,9 @@ import { cleanupExpired, handleReceiver } from "../src/index.js";
 const secret = "0123456789abcdef0123456789abcdef";
 const nowMs = Date.parse("2026-09-07T09:00:00.000Z");
 const timestamp = String(Math.floor(nowMs / 1000));
+const ipToken = createHmac("sha256", secret)
+  .update("lead-ip-v1:203.0.113.10")
+  .digest("hex");
 const realFetch = globalThis.fetch;
 afterEach(() => { globalThis.fetch = realFetch; });
 
@@ -56,6 +59,7 @@ function basePayload(requestId = randomUUID()) {
     adultConfirmed: false,
     source: "ai-skill-lab",
     sourcePath: "/start",
+    ipToken,
     requestId,
     receivedAt: "2026-09-07T09:00:00.000Z",
   };
@@ -152,7 +156,7 @@ test("valid signed lead passes rate limiter and inserts exactly once with 30-day
   assert.equal(response.status, 200);
   assert.deepEqual(await json(response), { ok: true, requestId: payload.requestId });
   assert.equal(response.headers.get("cache-control"), "no-store, max-age=0");
-  assert.deepEqual(rateLimiter.calls, [{ key: "lead-intake" }]);
+  assert.deepEqual(rateLimiter.calls, [{ key: `lead:${payload.ipToken}` }]);
   assert.equal(db.calls.length, 1);
   assert.match(db.calls[0].sql, /INSERT INTO lead_intake_r101b/);
   assert.match(db.calls[0].sql, /ON CONFLICT\(request_id\) DO NOTHING/);
@@ -160,6 +164,8 @@ test("valid signed lead passes rate limiter and inserts exactly once with 30-day
   assert.equal(db.calls[0].bindings[1], payload.receivedAt);
   assert.equal(db.calls[0].bindings[2], "2026-10-07T09:00:00.000Z");
   assert.equal(db.calls[0].bindings[13], "/start");
+  assert.equal(db.calls[0].bindings.length, 14);
+  assert.equal(db.calls[0].bindings.includes(payload.ipToken), false);
 });
 
 test("notification is skipped when Telegram secrets are absent", async () => {
@@ -193,7 +199,7 @@ test("successful Telegram notification is metadata-only and scheduled after inse
   const body = JSON.parse(calls[0].init.body);
   assert.equal(body.chat_id, "123456");
   for (const expected of [payload.requestId, payload.receivedAt, payload.audience, payload.locale]) assert.equal(body.text.includes(expected), true);
-  for (const forbidden of [payload.name, payload.contact, payload.goal, payload.program, payload.sourcePath, "bot-token-secret"].filter(Boolean)) {
+  for (const forbidden of [payload.name, payload.contact, payload.goal, payload.program, payload.sourcePath, payload.ipToken, "bot-token-secret"].filter(Boolean)) {
     assert.equal(body.text.includes(forbidden), false, forbidden);
   }
 });
@@ -229,7 +235,7 @@ test("receiver events correlate insert without logging lead fields or HMAC mater
       status: 200,
     });
     const serialized = JSON.stringify(audit.entries);
-    for (const forbidden of [payload.name, payload.contact, payload.goal, secret, "v1="]) {
+    for (const forbidden of [payload.name, payload.contact, payload.goal, payload.ipToken, secret, "v1="]) {
       assert.equal(serialized.includes(forbidden), false, forbidden);
     }
   } finally {
@@ -244,7 +250,7 @@ test("rate limiter rejection returns 429 before D1 write", async () => {
   assert.equal(response.status, 429);
   assert.equal(response.headers.get("retry-after"), "60");
   assert.deepEqual(await json(response), { ok: false, error: "Too many requests" });
-  assert.deepEqual(rateLimiter.calls, [{ key: "lead-intake" }]);
+  assert.deepEqual(rateLimiter.calls, [{ key: `lead:${ipToken}` }]);
   assert.equal(db.calls.length, 0);
 });
 
@@ -254,7 +260,7 @@ test("rate limiter failure returns generic 503 before D1 write", async () => {
   const response = await handleReceiver(signedRequest(basePayload()), env(db, rateLimiter), nowMs);
   assert.equal(response.status, 503);
   assert.deepEqual(await json(response), { ok: false, error: "Receiver unavailable" });
-  assert.deepEqual(rateLimiter.calls, [{ key: "lead-intake" }]);
+  assert.deepEqual(rateLimiter.calls, [{ key: `lead:${ipToken}` }]);
   assert.equal(db.calls.length, 0);
 });
 
@@ -275,6 +281,20 @@ test("invalid payload is rejected before rate limiter and D1 write", async () =>
   assert.equal(response.status, 400);
   assert.equal(rateLimiter.calls.length, 0);
   assert.equal(db.calls.length, 0);
+});
+
+test("missing or malformed IP token is rejected before rate limiter and D1 write", async () => {
+  for (const payload of [
+    { ...basePayload(), ipToken: undefined },
+    { ...basePayload(), ipToken: "not-a-token" },
+  ]) {
+    const db = makeDb();
+    const rateLimiter = makeRateLimiter();
+    const response = await handleReceiver(signedRequest(payload), env(db, rateLimiter), nowMs);
+    assert.equal(response.status, 400);
+    assert.equal(rateLimiter.calls.length, 0);
+    assert.equal(db.calls.length, 0);
+  }
 });
 
 test("kids programs require parent audience and adult confirmation", async () => {

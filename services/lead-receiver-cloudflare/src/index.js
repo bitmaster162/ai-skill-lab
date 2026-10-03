@@ -2,7 +2,12 @@ const MAX_BODY_BYTES = 20_000;
 const MIN_SECRET_BYTES = 32;
 const MAX_SKEW_SECONDS = 300;
 const RETENTION_DAYS = 30;
-const RATE_LIMIT_KEY = "lead-intake";
+const ROUTE_RATE_PATH = "/r159/route-limit";
+const ROUTE_RATE_SCHEMA = "ai-skill-lab.route-rate.v1";
+const ROUTE_RATE_BODY_BYTES = 2_000;
+const ROUTE_HOURLY_LIMIT = 5;
+const ROUTE_WINDOW_SECONDS = 3_600;
+const ROUTE_DAY_SECONDS = 86_400;
 const NOTIFY_TIMEOUT_MS = 5_000;
 const ALLOWED_AUDIENCES = new Set(["adult", "parent", "teen", "business"]);
 const ALLOWED_LOCALES = new Set(["ru", "en"]);
@@ -10,6 +15,15 @@ const UUID_V4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f
 const SIGNATURE_V1 = /^v1=([0-9a-f]{64})$/;
 const INTAKE_EVENT_SCHEMA = "ai-skill-lab.intake-event.v1";
 const RECEIVER_EVENT_FIELDS = new Set(["requestId", "status", "deleted"]);
+const ROUTE_RATE_INSERT_SQL = `
+  INSERT INTO route_rate_event_r159 (request_id, ip_token, occurred_at)
+  SELECT ?, ?, ?
+  WHERE
+    (SELECT COUNT(*) FROM route_rate_event_r159 WHERE ip_token = ? AND occurred_at >= ?) < ?
+    AND
+    (SELECT COUNT(*) FROM route_rate_event_r159 WHERE occurred_at >= ?) < ?
+  ON CONFLICT(request_id) DO NOTHING
+`;
 
 function logReceiver(level, event, fields = {}) {
   const record = { schema: INTAKE_EVENT_SCHEMA, component: "receiver", event };
@@ -74,6 +88,17 @@ function config(env) {
   return { enabled: true, ready, secret, db, rateLimiter };
 }
 
+function routeRateConfig(env) {
+  if (env?.ROUTE_RATE_LIMIT_ENABLED !== "true") return { enabled: false };
+  const secret = typeof env?.LEAD_WEBHOOK_SECRET === "string" ? env.LEAD_WEBHOOK_SECRET : "";
+  const db = env?.DB;
+  const rateLimiter = env?.LEAD_RATE_LIMITER;
+  const ready = utf8Bytes(secret) >= MIN_SECRET_BYTES
+    && db && typeof db.prepare === "function"
+    && rateLimiter && typeof rateLimiter.limit === "function";
+  return { enabled: true, ready, secret, db, rateLimiter };
+}
+
 function validatePayload(payload, headerRequestId, timestampSeconds) {
   if (!payload || typeof payload !== "object" || Array.isArray(payload)) return null;
   if (payload.schema !== "ai-skill-lab.lead.v2") return null;
@@ -88,6 +113,7 @@ function validatePayload(payload, headerRequestId, timestampSeconds) {
   if (payload.privacyConsent !== true) return null;
   if (typeof payload.adultConfirmed !== "boolean") return null;
   if (payload.source !== "ai-skill-lab") return null;
+  if (typeof payload.ipToken !== "string" || !/^[0-9a-f]{64}$/.test(payload.ipToken)) return null;
   if (payload.sourcePath !== undefined) {
     if (!validText(payload.sourcePath, 180)) return null;
     if (!payload.sourcePath.startsWith("/") || payload.sourcePath.startsWith("//")) return null;
@@ -118,7 +144,116 @@ function validatePayload(payload, headerRequestId, timestampSeconds) {
     adultConfirmed: payload.adultConfirmed ? 1 : 0,
     source: payload.source,
     sourcePath: payload.sourcePath ?? null,
+    ipToken: payload.ipToken,
   };
+}
+
+function validateRouteRatePayload(payload, headerRequestId) {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return null;
+  if (payload.schema !== ROUTE_RATE_SCHEMA) return null;
+  if (payload.requestId !== headerRequestId || !UUID_V4.test(payload.requestId)) return null;
+  if (typeof payload.ipToken !== "string" || !/^[0-9a-f]{64}$/.test(payload.ipToken)) return null;
+  if (payload.hourlyLimit !== ROUTE_HOURLY_LIMIT) return null;
+  if (!Number.isSafeInteger(payload.dailyLimit) || payload.dailyLimit < 1 || payload.dailyLimit > 1_000_000) return null;
+  return {
+    requestId: payload.requestId,
+    ipToken: payload.ipToken,
+    dailyLimit: payload.dailyLimit,
+  };
+}
+
+export async function handleRouteRateLimit(request, env = {}, nowMs = Date.now()) {
+  const cfg = routeRateConfig(env);
+  if (!cfg.enabled) return json({ ok: false, error: "Not found" }, 404);
+  if (!cfg.ready) return json({ ok: false, error: "Rate gate unavailable" }, 503);
+
+  const url = new URL(request.url);
+  if (url.pathname !== ROUTE_RATE_PATH) return json({ ok: false, error: "Not found" }, 404);
+  if (request.method !== "POST") return json({ ok: false, error: "Method not allowed" }, 405, { Allow: "POST" });
+
+  const contentType = request.headers.get("content-type") || "";
+  if (!/^application\/json(?:\s*;|$)/i.test(contentType)) return json({ ok: false, error: "Unsupported media type" }, 415);
+
+  const declaredLength = Number(request.headers.get("content-length") || 0);
+  if (Number.isFinite(declaredLength) && declaredLength > ROUTE_RATE_BODY_BYTES) {
+    return json({ ok: false, error: "Request too large" }, 413);
+  }
+
+  const timestampRaw = request.headers.get("x-ai-skill-lab-timestamp") || "";
+  const requestId = request.headers.get("x-ai-skill-lab-request-id") || "";
+  const signatureRaw = request.headers.get("x-ai-skill-lab-route-signature") || "";
+  const signatureMatch = SIGNATURE_V1.exec(signatureRaw);
+  if (!/^[0-9]{10}$/.test(timestampRaw) || !UUID_V4.test(requestId) || !signatureMatch) {
+    return json({ ok: false, error: "Unauthorized" }, 401);
+  }
+
+  const timestampSeconds = Number(timestampRaw);
+  const nowSeconds = Math.floor(nowMs / 1000);
+  if (!Number.isSafeInteger(timestampSeconds) || Math.abs(nowSeconds - timestampSeconds) > MAX_SKEW_SECONDS) {
+    return json({ ok: false, error: "Unauthorized" }, 401);
+  }
+
+  const rawBytes = new Uint8Array(await request.arrayBuffer());
+  if (rawBytes.byteLength > ROUTE_RATE_BODY_BYTES) return json({ ok: false, error: "Request too large" }, 413);
+  let rawBody;
+  try {
+    rawBody = new TextDecoder("utf-8", { fatal: true }).decode(rawBytes);
+  } catch {
+    return json({ ok: false, error: "Invalid data" }, 400);
+  }
+
+  const expectedDigest = await hmacHex(
+    cfg.secret,
+    `route-rate-v1.${timestampRaw}.${requestId}.${rawBody}`,
+  );
+  if (!timingSafeHexEqual(expectedDigest, signatureMatch[1])) {
+    return json({ ok: false, error: "Unauthorized" }, 401);
+  }
+
+  let payload;
+  try {
+    payload = JSON.parse(rawBody);
+  } catch {
+    return json({ ok: false, error: "Invalid data" }, 400);
+  }
+  const validated = validateRouteRatePayload(payload, requestId);
+  if (!validated) return json({ ok: false, error: "Invalid rate request" }, 400);
+
+  try {
+    const coarse = await cfg.rateLimiter.limit({ key: `route:${validated.ipToken}` });
+    if (!coarse?.success) {
+      logReceiver("warn", "route_rate_limited", { requestId, status: 429 });
+      return json({ ok: false, error: "Too many requests" }, 429, { "Retry-After": "60" });
+    }
+  } catch {
+    logReceiver("error", "route_rate_binding_error", { requestId, status: 503 });
+    return json({ ok: false, error: "Rate gate unavailable" }, 503);
+  }
+
+  let result;
+  try {
+    result = await cfg.db.prepare(ROUTE_RATE_INSERT_SQL).bind(
+      validated.requestId,
+      validated.ipToken,
+      nowSeconds,
+      validated.ipToken,
+      nowSeconds - ROUTE_WINDOW_SECONDS,
+      ROUTE_HOURLY_LIMIT,
+      nowSeconds - ROUTE_DAY_SECONDS,
+      validated.dailyLimit,
+    ).run();
+  } catch {
+    logReceiver("error", "route_rate_db_error", { requestId, status: 503 });
+    return json({ ok: false, error: "Rate gate unavailable" }, 503);
+  }
+
+  if (result?.meta?.changes !== 1) {
+    logReceiver("warn", "route_rate_limited", { requestId, status: 429 });
+    return json({ ok: false, error: "Too many requests" }, 429, { "Retry-After": String(ROUTE_WINDOW_SECONDS) });
+  }
+
+  logReceiver("info", "route_rate_allowed", { requestId, status: 200 });
+  return json({ ok: true, requestId });
 }
 
 async function notifyNewLead(env, row) {
@@ -207,7 +342,7 @@ export async function handleReceiver(request, env = {}, nowMs = Date.now(), ctx 
 
   let limitResult;
   try {
-    limitResult = await cfg.rateLimiter.limit({ key: RATE_LIMIT_KEY });
+    limitResult = await cfg.rateLimiter.limit({ key: `lead:${row.ipToken}` });
   } catch {
     logReceiver("error", "rate_limit_error", { requestId, status: 503 });
     return json({ ok: false, error: "Receiver unavailable" }, 503);
@@ -266,11 +401,27 @@ export async function cleanupExpired(env = {}, nowMs = Date.now()) {
   return result;
 }
 
-export default {
+export async function cleanupRouteRateEvents(env = {}, nowMs = Date.now()) {
+  if (env?.ROUTE_RATE_LIMIT_ENABLED !== "true") return { skipped: true };
+  if (!env?.DB || typeof env.DB.prepare !== "function") return { skipped: true };
+  const cutoff = Math.floor(nowMs / 1000) - ROUTE_DAY_SECONDS;
+  const result = await env.DB.prepare("DELETE FROM route_rate_event_r159 WHERE occurred_at < ?").bind(cutoff).run();
+  logReceiver("info", "route_rate_cleanup", { deleted: Number(result?.meta?.changes ?? 0) });
+  return result;
+}
+
+const workerHandler = {
   fetch(request, env, ctx) {
+    const pathname = new URL(request.url).pathname;
+    if (pathname === ROUTE_RATE_PATH) return handleRouteRateLimit(request, env, Date.now());
     return handleReceiver(request, env, Date.now(), ctx);
   },
   scheduled(_controller, env, ctx) {
-    ctx.waitUntil(cleanupExpired(env));
+    ctx.waitUntil(Promise.all([
+      cleanupExpired(env),
+      cleanupRouteRateEvents(env),
+    ]));
   },
 };
+
+export default workerHandler;

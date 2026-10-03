@@ -36,13 +36,17 @@ afterEach(() => {
 
 function req(body = valid, options = {}) {
   const payload = options.raw ?? JSON.stringify(body);
+  const headers = {
+    "Content-Type": options.contentType ?? "application/json",
+    Origin: options.origin ?? "https://aiskillab.work",
+    ...(options.headers || {}),
+  };
+  if (options.forwardedFor !== null) {
+    headers["X-Forwarded-For"] = options.forwardedFor ?? "203.0.113.10";
+  }
   return new Request("https://ingress.example.test/api/lead", {
     method: options.method ?? "POST",
-    headers: {
-      "Content-Type": options.contentType ?? "application/json",
-      Origin: options.origin ?? "https://aiskillab.work",
-      ...(options.headers || {}),
-    },
+    headers,
     body: ["GET", "HEAD"].includes(options.method) ? undefined : payload,
   });
 }
@@ -180,6 +184,35 @@ test("rejects missing required fields, non-string fields, overlong fields, and u
   for (const input of cases) assert.equal((await handleLead(req(input), baseEnv)).status, 400);
 });
 
+test("fails closed before forwarding when client IP is missing or invalid", async () => {
+  for (const forwardedFor of [null, "not-an-ip"]) {
+    const calls = captureDownstream();
+    const response = await handleLead(req(valid, { forwardedFor }), baseEnv);
+    assert.equal(response.status, 503);
+    assert.deepEqual(await body(response), { ok: false, error: "Application channel unavailable" });
+    assert.equal(calls.length, 0);
+  }
+});
+
+test("derives a deterministic privacy-safe per-IP token and never forwards raw IP", async () => {
+  const calls = captureDownstream();
+  const firstIp = "203.0.113.10";
+  const secondIp = "203.0.113.11";
+  assert.equal((await handleLead(req(valid, { forwardedFor: firstIp }), baseEnv)).status, 200);
+  assert.equal((await handleLead(req(valid, { forwardedFor: secondIp }), baseEnv)).status, 200);
+  assert.equal(calls.length, 2);
+
+  const first = JSON.parse(calls[0].init.body);
+  const second = JSON.parse(calls[1].init.body);
+  const expectedFirst = createHmac("sha256", secret).update(`lead-ip-v1:${firstIp}`).digest("hex");
+  const expectedSecond = createHmac("sha256", secret).update(`lead-ip-v1:${secondIp}`).digest("hex");
+  assert.equal(first.ipToken, expectedFirst);
+  assert.equal(second.ipToken, expectedSecond);
+  assert.notEqual(first.ipToken, second.ipToken);
+  assert.equal(calls[0].init.body.includes(firstIp), false);
+  assert.equal(calls[1].init.body.includes(secondIp), false);
+});
+
 test("success signs exact raw downstream body and returns request id", async () => {
   const calls = captureDownstream();
   const response = await handleLead(req(valid), baseEnv);
@@ -197,6 +230,11 @@ test("success signs exact raw downstream body and returns request id", async () 
   assert.equal(payload.requestId, result.requestId);
   assert.equal(payload.sourcePath, "/start");
   assert.equal(payload.receivedAt.endsWith("Z"), true);
+  const expectedIpToken = createHmac("sha256", secret)
+    .update("lead-ip-v1:203.0.113.10")
+    .digest("hex");
+  assert.equal(payload.ipToken, expectedIpToken);
+  assert.equal(downstreamBody.includes("203.0.113.10"), false);
 
   const timestamp = calls[0].init.headers["X-AI-Skill-Lab-Timestamp"];
   const requestId = calls[0].init.headers["X-AI-Skill-Lab-Request-Id"];
@@ -218,7 +256,10 @@ test("structured ingress events correlate outcomes without lead data or secrets"
     assert.equal(records[1].requestId, result.requestId);
     assert.deepEqual(Object.keys(records[1]).sort(), ["component", "downstreamStatus", "event", "requestId", "schema", "status"].sort());
     const serialized = JSON.stringify(records);
-    for (const forbidden of [valid.name, valid.contact, valid.goal, baseEnv.LEAD_WEBHOOK_URL, secret, "https://aiskillab.work"]) {
+    const ipToken = createHmac("sha256", secret)
+      .update("lead-ip-v1:203.0.113.10")
+      .digest("hex");
+    for (const forbidden of [valid.name, valid.contact, valid.goal, baseEnv.LEAD_WEBHOOK_URL, secret, "https://aiskillab.work", "203.0.113.10", ipToken]) {
       assert.equal(serialized.includes(forbidden), false, forbidden);
     }
   } finally {

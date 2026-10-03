@@ -26,7 +26,7 @@ Endpoint: `POST /api/lead`
 - no automatic retry is performed, avoiding duplicate lead creation
 - downstream timeout: 8 seconds
 
-Successful downstream payloads retain schema `ai-skill-lab.lead.v2` and add `requestId`, `receivedAt`, plus optional `sourcePath`.
+Successful downstream payloads retain schema `ai-skill-lab.lead.v2` and add `requestId`, `receivedAt`, a privacy-safe `ipToken`, plus optional `sourcePath`. `ipToken` is `HMAC-SHA256(LEAD_WEBHOOK_SECRET, "lead-ip-v1:" + client_ip)`: it is signed as part of the exact downstream JSON body, used only as the receiver rate-limit key, and is not written to the lead table or custom logs.
 
 ## Downstream signature
 
@@ -44,7 +44,7 @@ The receiver must recompute the HMAC over the exact raw body, compare it in cons
 
 ## Rate limiting
 
-This function deliberately does not use an in-memory counter because serverless instances are not a reliable shared rate-limit store. Public activation is blocked until provider-level rate limiting for `/api/lead` is configured and verified. The exact threshold is an activation-gate decision based on fresh provider capability and expected traffic.
+This function deliberately does not use an in-memory counter because serverless instances are not a reliable shared rate-limit store. For a real lead, the ingress requires a valid first address from `X-Forwarded-For`, converts it immediately to the domain-separated HMAC `ipToken`, and never forwards, stores, or custom-logs the raw IP. The signed receiver validates the token shape and calls the existing provider `LEAD_RATE_LIMITER` with `lead:<ipToken>`, so unrelated visitors no longer share one global `lead-intake` bucket. `LEAD_RATE_LIMIT_READY=true` remains the fail-closed attestation that the provider binding has been configured and verified.
 
 ## Public activation is separate
 

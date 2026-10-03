@@ -80,6 +80,12 @@ jobs:
         run: node --test services/lead-ingress/test/lead.test.mjs
       - name: Validate F1.2 route service contract
         run: python scripts/check_route_service.py
+      - name: Test F1.2 central route rate gate
+        run: node --test services/lead-receiver-cloudflare/test/route-rate.test.mjs
+      - name: Validate F1.2 route rate schema
+        run: python scripts/check_route_rate_schema.py
+      - name: Validate F1.2 route privacy disclosure
+        run: python scripts/check_route_privacy.py
       - name: Test Cloudflare lead receiver
         run: node --test services/lead-receiver-cloudflare/test/receiver.test.mjs
       - name: Validate captured D1 schema offline

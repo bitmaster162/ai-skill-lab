@@ -1,10 +1,15 @@
 import fs from "node:fs";
-import { randomUUID } from "node:crypto";
+import { createHmac, randomUUID } from "node:crypto";
+import { isIP } from "node:net";
 
 const FACTS = JSON.parse(fs.readFileSync(new URL("../commercial_facts.json", import.meta.url), "utf8"));
 const MAX_BODY_BYTES = 12_000;
 const MAX_INPUT_CHARS = 8_000;
 const OPENROUTER_TIMEOUT_MS = 8_000;
+const RATE_GATE_TIMEOUT_MS = 4_000;
+const MIN_SECRET_BYTES = 32;
+const HOURLY_ROUTE_LIMIT = 5;
+const MAX_OPENROUTER_CALLS_PER_ROUTE = 3;
 const ALLOWED_AUDIENCES = new Set(["adult", "kids", "teens", "business"]);
 const ALLOWED_LOCALES = new Set(["ru", "en"]);
 const EVENT_SCHEMA = "ai-skill-lab.route-event.v1";
@@ -68,17 +73,60 @@ function configuredModels(value) {
   return value.split(",").map((x) => x.trim()).filter((x) => x && x.endsWith(":free")).slice(0, 6);
 }
 
+function positiveInteger(value, max = 1_000_000) {
+  if (typeof value !== "string" || !/^[1-9][0-9]*$/.test(value)) return null;
+  const parsed = Number(value);
+  return Number.isSafeInteger(parsed) && parsed <= max ? parsed : null;
+}
+
 function config(env) {
   if (env.ROUTE_API_ENABLED !== "true") return { enabled: false };
   const origins = configuredOrigins(env.ROUTE_ALLOWED_ORIGINS);
   const rateLimitReady = env.ROUTE_RATE_LIMIT_READY === "true";
   const dailyLimitReady = env.ROUTE_DAILY_LIMIT_READY === "true";
+  const privacyReady = env.ROUTE_PRIVACY_READY === "true";
+  const webhook = parseHttpsUrl(env.LEAD_WEBHOOK_URL);
+  const secret = typeof env.LEAD_WEBHOOK_SECRET === "string" ? env.LEAD_WEBHOOK_SECRET : "";
+  const dailyLimit = positiveInteger(env.ROUTE_DAILY_LIMIT);
+  const providerDailyBudget = positiveInteger(env.OPENROUTER_DAILY_REQUEST_BUDGET);
+  const key = typeof env.OPENROUTER_API_KEY === "string" ? env.OPENROUTER_API_KEY.trim() : "";
+  const backupEnabled = env.OPENROUTER_BACKUP_ENABLED === "true";
+  const backupProviderDailyBudget = positiveInteger(env.OPENROUTER_BACKUP_DAILY_REQUEST_BUDGET);
+  const backupKey = typeof env.OPENROUTER_BACKUP_API_KEY === "string" ? env.OPENROUTER_BACKUP_API_KEY.trim() : "";
+  const models = configuredModels(env.OPENROUTER_MODELS);
+  const rateGate = webhook ? new URL("/r159/route-limit", webhook.origin) : null;
+  const backupReady = !backupEnabled || Boolean(
+    backupKey &&
+    backupKey !== key &&
+    backupProviderDailyBudget &&
+    dailyLimit &&
+    dailyLimit * MAX_OPENROUTER_CALLS_PER_ROUTE <= backupProviderDailyBudget
+  );
   return {
     enabled: true,
-    ready: Boolean(origins && rateLimitReady && dailyLimitReady),
+    ready: Boolean(
+      origins &&
+      rateLimitReady &&
+      dailyLimitReady &&
+      privacyReady &&
+      rateGate &&
+      Buffer.byteLength(secret, "utf8") >= MIN_SECRET_BYTES &&
+      dailyLimit &&
+      providerDailyBudget &&
+      dailyLimit * MAX_OPENROUTER_CALLS_PER_ROUTE <= providerDailyBudget &&
+      key &&
+      models.length &&
+      backupReady
+    ),
     origins,
-    key: typeof env.OPENROUTER_API_KEY === "string" ? env.OPENROUTER_API_KEY.trim() : "",
-    models: configuredModels(env.OPENROUTER_MODELS),
+    key,
+    backupKey: backupEnabled ? backupKey : "",
+    models,
+    secret,
+    dailyLimit,
+    providerDailyBudget,
+    backupProviderDailyBudget: backupEnabled ? backupProviderDailyBudget : null,
+    rateGate,
   };
 }
 
@@ -240,31 +288,111 @@ function promptFor(input, table) {
   ].filter(Boolean).join("\n");
 }
 
+function routeClientIp(request) {
+  const raw = request.headers.get("x-forwarded-for") || "";
+  const first = raw.split(",", 1)[0].trim();
+  return isIP(first) ? first : null;
+}
+
+function rateSignature(secret, timestamp, requestId, body) {
+  return createHmac("sha256", secret)
+    .update(`route-rate-v1.${timestamp}.${requestId}.${body}`)
+    .digest("hex");
+}
+
+function ipToken(secret, ip) {
+  return createHmac("sha256", secret)
+    .update(`route-ip-v1:${ip}`)
+    .digest("hex");
+}
+
+async function checkRouteRate(request, cfg, fetchImpl) {
+  const ip = routeClientIp(request);
+  if (!ip) return { ok: false, status: 503 };
+  const requestId = randomUUID();
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const body = JSON.stringify({
+    schema: "ai-skill-lab.route-rate.v1",
+    requestId,
+    ipToken: ipToken(cfg.secret, ip),
+    hourlyLimit: HOURLY_ROUTE_LIMIT,
+    dailyLimit: cfg.dailyLimit,
+  });
+  const digest = rateSignature(cfg.secret, timestamp, requestId, body);
+  let response;
+  try {
+    response = await fetchImpl(cfg.rateGate, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-AI-Skill-Lab-Timestamp": timestamp,
+        "X-AI-Skill-Lab-Request-Id": requestId,
+        "X-AI-Skill-Lab-Route-Signature": `v1=${digest}`,
+      },
+      body,
+      signal: AbortSignal.timeout(RATE_GATE_TIMEOUT_MS),
+    });
+  } catch {
+    return { ok: false, status: 503, requestId };
+  }
+  if (response.ok) return { ok: true, status: response.status, requestId };
+  if (response.status === 429) {
+    const retryAfter = response.headers.get("retry-after");
+    return { ok: false, status: 429, requestId, retryAfter: retryAfter && /^[0-9]+$/.test(retryAfter) ? retryAfter : "3600" };
+  }
+  return { ok: false, status: 503, requestId };
+}
+
 async function callOpenRouter(cfg, input, table, fetchImpl) {
   if (!cfg.key || cfg.models.length === 0) return null;
   const system = promptFor(input, table);
+  let providerCalls = 0;
+  let activeKey = cfg.key;
+  let credential = "primary";
+
+  const requestModel = async (model) => {
+    if (providerCalls >= MAX_OPENROUTER_CALLS_PER_ROUTE) return null;
+    providerCalls += 1;
+    try {
+      return await fetchImpl("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${activeKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model,
+          messages: [{ role: "system", content: system }, { role: "user", content: input.goal || "Recommend a route." }],
+          response_format: { type: "json_object" },
+          temperature: 0.2,
+        }),
+        signal: AbortSignal.timeout(OPENROUTER_TIMEOUT_MS),
+      });
+    } catch {
+      return null;
+    }
+  };
+
   for (const model of cfg.models) {
     for (let attempt = 0; attempt < 2; attempt += 1) {
-      let response;
-      try {
-        response = await fetchImpl("https://openrouter.ai/api/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${cfg.key}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model,
-            messages: [{ role: "system", content: system }, { role: "user", content: input.goal || "Recommend a route." }],
-            response_format: { type: "json_object" },
-            temperature: 0.2,
-          }),
-          signal: AbortSignal.timeout(OPENROUTER_TIMEOUT_MS),
-        });
-      } catch {
-        response = null;
+      if (providerCalls >= MAX_OPENROUTER_CALLS_PER_ROUTE) return null;
+      let response = await requestModel(model);
+
+      if (response?.status === 401) {
+        if (credential === "primary" && cfg.backupKey) {
+          activeKey = cfg.backupKey;
+          credential = "backup";
+          if (providerCalls >= MAX_OPENROUTER_CALLS_PER_ROUTE) return null;
+          response = await requestModel(model);
+        } else {
+          return null;
+        }
       }
+
+      if (response?.status === 401) return null;
+      if (response && (response.status === 402 || response.status === 403 || response.status === 429)) return null;
       if (!response?.ok) break;
+
       let payload;
       try { payload = await response.json(); } catch { payload = null; }
       const content = payload?.choices?.[0]?.message?.content;
@@ -272,7 +400,7 @@ async function callOpenRouter(cfg, input, table, fetchImpl) {
       let parsed;
       try { parsed = JSON.parse(content); } catch { parsed = null; }
       const validated = validateModelResult(parsed, input, table);
-      if (validated) return { result: validated, model };
+      if (validated) return { result: validated, model, credential };
     }
   }
   return null;
@@ -295,11 +423,28 @@ export async function handleRoute(request, env = process.env, fetchImpl = fetch)
   try { input = validateInput(JSON.parse(raw.toString("utf8"))); } catch { return json({ status: "error", error: "Invalid route request" }, 400); }
   const joined = [input.audience, ...input.answers, input.goal].join("\n");
   if (hasSecret(joined)) return json({ status: "secret_detected", package: null, steps: [], brief: "" }, 400);
-  const requestId = randomUUID();
+
+  const rate = await checkRouteRate(request, cfg, fetchImpl);
+  if (!rate.ok) {
+    logRoute(rate.status === 429 ? "warn" : "error", "route_rate_gate", {
+      requestId: rate.requestId,
+      status: rate.status,
+      mode: rate.status === 429 ? "rate_limited" : "rate_unavailable",
+    });
+    const headers = rate.status === 429 ? { "Retry-After": rate.retryAfter || "3600" } : {};
+    return json(
+      { status: "error", error: rate.status === 429 ? "Too many requests" : "Route service unavailable" },
+      rate.status,
+      headers,
+    );
+  }
+
+  const requestId = rate.requestId;
   const table = commercialPackages(input.audience, input.locale);
   const ai = await callOpenRouter(cfg, input, table, fetchImpl);
   const result = ai?.result || fallbackResult(input, table);
-  logRoute("info", "route_complete", { requestId, status: 200, mode: ai ? "ai" : "fallback" });
+  const mode = ai?.credential === "backup" ? "ai_backup" : ai ? "ai" : "fallback";
+  logRoute("info", "route_complete", { requestId, status: 200, mode });
   return json({ ...result, requestId });
 }
 
