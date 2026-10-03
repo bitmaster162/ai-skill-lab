@@ -6,6 +6,7 @@ import http from 'node:http';
 import crypto from 'node:crypto';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { closeOwnedBrowser } from './owned_browser_cleanup.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const LIVE = path.join(ROOT, 'deploy', 'live');
@@ -234,6 +235,8 @@ req(Boolean(chrome), 'Chrome/Chromium not found');
 
 let chromeProc = null;
 let profile = null;
+let browserEndpoint = null;
+let pageCdp = null;
 async function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
 async function waitForFile(p, timeoutMs) {
   const start = Date.now();
@@ -300,6 +303,7 @@ if (chrome) {
     '--headless=new', '--disable-gpu', '--disable-dev-shm-usage', '--no-sandbox', '--remote-debugging-address=127.0.0.1',
     '--remote-debugging-port=' + port, '--user-data-dir=' + profile, 'about:blank'
   ];
+  console.log('typography_browser_owned_profile=' + profile);
   chromeProc = spawn(chrome, args, { stdio: ['ignore', 'ignore', 'pipe'] });
   chromeProc.stderr?.setEncoding('utf8');
   chromeProc.stderr?.on('data', (chunk) => {
@@ -309,16 +313,18 @@ if (chrome) {
   });
   try {
     if (fixedPort) {
-      await waitForCdp(port, 20000, stderrLines);
+      const browserInfo = await waitForCdp(port, 20000, stderrLines);
+      browserEndpoint = browserInfo.webSocketDebuggerUrl;
     } else {
       const active = path.join(profile, 'DevToolsActivePort');
       await waitForFile(active, 15000);
       const lines = fs.readFileSync(active, 'utf8').trim().split(/\r?\n/);
       port = Number(lines[0]);
+      browserEndpoint = 'ws://127.0.0.1:' + port + lines[1];
     }
     const createUrl = 'http://127.0.0.1:' + port + '/json/new?about:blank';
     const created = await fetch(createUrl, { method: 'PUT' }).then((r) => r.json());
-    const cdp = await openSocket(created.webSocketDebuggerUrl);
+    const cdp = pageCdp = await openSocket(created.webSocketDebuggerUrl);
     await cdp.send('Page.enable');
     await cdp.send('Runtime.enable');
     await cdp.send('Network.enable');
@@ -366,9 +372,21 @@ if (chrome) {
   } catch (e) {
     errors.push('CDP runtime: ' + (e && e.stack ? e.stack : String(e)));
   } finally {
-    if (chromeProc && !chromeProc.killed) chromeProc.kill();
-    await sleep(150);
-    try { fs.rmSync(profile, { recursive: true, force: true }); } catch {}
+    try { pageCdp?.ws.close(); } catch {}
+    let stopped = false;
+    try {
+      await closeOwnedBrowser(browserEndpoint);
+      stopped = true;
+      console.log('typography_browser_cleanup=Browser.close endpoint_stopped=true');
+    } catch (error) {
+      errors.push('CDP cleanup failed; profile retained: ' + profile + ' ' + String(error));
+      if (chromeProc && chromeProc.exitCode === null && chromeProc.signalCode === null) chromeProc.kill();
+    }
+    if (stopped) {
+      try { fs.rmSync(profile, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 }); }
+      // A locked temporary directory is not a live browser; retain it and report it.
+      catch (error) { console.warn('typography_profile_retained=' + profile + ' reason=' + String(error)); }
+    }
   }
 }
 await new Promise((resolve) => server.close(resolve));
