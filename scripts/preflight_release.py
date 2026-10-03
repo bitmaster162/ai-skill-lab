@@ -36,6 +36,8 @@ CHECKS = [
     ("python_text_encoding", ["python", "scripts/check_python_text_encoding.py"]),
     ("client_privacy", ["python", "scripts/check_client_privacy.py"]),
     ("lead_ingress", ["node", "--test", "services/lead-ingress/test/lead.test.mjs"]),
+    ("telegram_faq_bot", ["node", "--test", "services/lead-ingress/test/telegram-faq.test.mjs"]),
+    ("telegram_faq_contract", ["python", "scripts/check_telegram_faq_bot.py"]),
     ("route_service", ["python", "scripts/check_route_service.py"]),
     ("route_rate_receiver", ["node", "--test", "services/lead-receiver-cloudflare/test/route-rate.test.mjs"]),
     ("route_rate_schema", ["python", "scripts/check_route_rate_schema.py"]),

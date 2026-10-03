@@ -12,6 +12,9 @@
     },
     "api/route.js": {
       "maxDuration": 10
+    },
+    "api/telegram-faq.js": {
+      "maxDuration": 10
     }
   }
 }

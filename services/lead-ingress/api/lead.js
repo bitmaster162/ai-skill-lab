@@ -9,6 +9,8 @@ const ALLOWED_LOCALES = new Set(["ru", "en"]);
 const YOUTH_PROGRAM_PREFIXES = ["kids-", "teens-"];
 const INTAKE_EVENT_SCHEMA = "ai-skill-lab.intake-event.v1";
 const INGRESS_EVENT_FIELDS = new Set(["requestId", "status", "downstreamStatus"]);
+const UUID_V4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const TOKEN_HEX_64 = /^[0-9a-f]{64}$/;
 
 function logIngress(level, event, fields = {}) {
   const record = { schema: INTAKE_EVENT_SCHEMA, component: "ingress", event };
@@ -163,7 +165,7 @@ function validateInput(input) {
   };
 }
 
-export async function handleLead(request, env = process.env) {
+export async function handleLead(request, env = process.env, internal = {}) {
   if (request.method !== "POST") {
     return json({ ok: false, error: "Method not allowed" }, 405, { Allow: "POST" });
   }
@@ -206,16 +208,22 @@ export async function handleLead(request, env = process.env) {
 
   if (validated.honeypot) return json({ ok: true });
 
-  const clientIp = leadClientIp(request);
-  if (!clientIp) return json({ ok: false, error: "Application channel unavailable" }, 503);
+  const internalRequestId = typeof internal.requestId === "string" ? internal.requestId : "";
+  const internalIpToken = typeof internal.ipToken === "string" ? internal.ipToken : "";
+  if ((internalRequestId && !UUID_V4.test(internalRequestId)) || (internalIpToken && !TOKEN_HEX_64.test(internalIpToken))) {
+    return json({ ok: false, error: "Application channel unavailable" }, 503);
+  }
 
-  const requestId = randomUUID();
+  const clientIp = internalIpToken ? null : leadClientIp(request);
+  if (!internalIpToken && !clientIp) return json({ ok: false, error: "Application channel unavailable" }, 503);
+
+  const requestId = internalRequestId || randomUUID();
   const receivedAt = new Date().toISOString();
   const payload = {
     ...validated.payload,
     requestId,
     receivedAt,
-    ipToken: leadIpToken(cfg.secret, clientIp),
+    ipToken: internalIpToken || leadIpToken(cfg.secret, clientIp),
   };
   const body = JSON.stringify(payload);
   const timestamp = Math.floor(Date.now() / 1000).toString();
@@ -241,6 +249,10 @@ export async function handleLead(request, env = process.env) {
   }
 
   if (!downstream.ok) {
+    if (downstream.status === 409 && internal.acceptDuplicate === true) {
+      logIngress("info", "forward_ok", { requestId, status: 200, downstreamStatus: 409 });
+      return json({ ok: true, requestId, duplicate: true });
+    }
     logIngress("warn", "downstream_rejected", { requestId, status: 502, downstreamStatus: downstream.status });
     return json({ ok: false, error: "Application channel unavailable" }, 502);
   }

@@ -51,7 +51,8 @@ require('const INTAKE_EVENT_SCHEMA = "ai-skill-lab.intake-event.v1";' in ingress
 require('function leadClientIp(request)' in ingress, "ingress per-IP extraction missing")
 require('function leadIpToken(secret, ip)' in ingress, "ingress IP-token helper missing")
 require('lead-ip-v1:' in ingress, "ingress domain-separated lead IP token missing")
-require('ipToken: leadIpToken(cfg.secret, clientIp)' in ingress, "ingress signed lead payload must carry IP token")
+require('ipToken: internalIpToken || leadIpToken(cfg.secret, clientIp)' in ingress, "ingress signed lead payload must carry public or trusted privacy-safe IP token")
+require('internal.acceptDuplicate === true' in ingress, "trusted Telegram retry path must preserve receiver dedupe")
 require('const INGRESS_EVENT_FIELDS = new Set(["requestId", "status", "downstreamStatus"]);' in ingress, "ingress event allowlist drift")
 require(ingress.count("console.") == 3, "ingress console calls must stay inside structured logger")
 for event in ["forward_start", "downstream_error", "downstream_rejected", "forward_ok"]:
