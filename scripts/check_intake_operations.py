@@ -48,12 +48,19 @@ require(
 )
 
 require('const INTAKE_EVENT_SCHEMA = "ai-skill-lab.intake-event.v1";' in ingress, "ingress event schema missing")
+require('function leadClientIp(request)' in ingress, "ingress per-IP extraction missing")
+require('function leadIpToken(secret, ip)' in ingress, "ingress IP-token helper missing")
+require('lead-ip-v1:' in ingress, "ingress domain-separated lead IP token missing")
+require('ipToken: leadIpToken(cfg.secret, clientIp)' in ingress, "ingress signed lead payload must carry IP token")
 require('const INGRESS_EVENT_FIELDS = new Set(["requestId", "status", "downstreamStatus"]);' in ingress, "ingress event allowlist drift")
 require(ingress.count("console.") == 3, "ingress console calls must stay inside structured logger")
 for event in ["forward_start", "downstream_error", "downstream_rejected", "forward_ok"]:
     require(f'logIngress(' in ingress and f'"{event}"' in ingress, f"ingress event missing {event}")
 
 require('const INTAKE_EVENT_SCHEMA = "ai-skill-lab.intake-event.v1";' in receiver, "receiver event schema missing")
+require('const RATE_LIMIT_KEY' not in receiver, "receiver must not use a global lead rate-limit key")
+require('/^[0-9a-f]{64}$/.test(payload.ipToken)' in receiver, "receiver IP-token validation missing")
+require('key: `lead:${row.ipToken}`' in receiver, "receiver limiter key must be per-IP token")
 require('const RECEIVER_EVENT_FIELDS = new Set(["requestId", "status", "deleted"]);' in receiver, "receiver event allowlist drift")
 require(receiver.count("console.") == 3, "receiver console calls must stay inside structured logger")
 for event in ["rate_limit_error", "rate_limited", "db_error", "duplicate", "inserted", "retention_cleanup"]:

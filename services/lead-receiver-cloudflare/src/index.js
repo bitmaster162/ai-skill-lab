@@ -2,7 +2,6 @@ const MAX_BODY_BYTES = 20_000;
 const MIN_SECRET_BYTES = 32;
 const MAX_SKEW_SECONDS = 300;
 const RETENTION_DAYS = 30;
-const RATE_LIMIT_KEY = "lead-intake";
 const ROUTE_RATE_PATH = "/r159/route-limit";
 const ROUTE_RATE_SCHEMA = "ai-skill-lab.route-rate.v1";
 const ROUTE_RATE_BODY_BYTES = 2_000;
@@ -114,6 +113,7 @@ function validatePayload(payload, headerRequestId, timestampSeconds) {
   if (payload.privacyConsent !== true) return null;
   if (typeof payload.adultConfirmed !== "boolean") return null;
   if (payload.source !== "ai-skill-lab") return null;
+  if (typeof payload.ipToken !== "string" || !/^[0-9a-f]{64}$/.test(payload.ipToken)) return null;
   if (payload.sourcePath !== undefined) {
     if (!validText(payload.sourcePath, 180)) return null;
     if (!payload.sourcePath.startsWith("/") || payload.sourcePath.startsWith("//")) return null;
@@ -144,6 +144,7 @@ function validatePayload(payload, headerRequestId, timestampSeconds) {
     adultConfirmed: payload.adultConfirmed ? 1 : 0,
     source: payload.source,
     sourcePath: payload.sourcePath ?? null,
+    ipToken: payload.ipToken,
   };
 }
 
@@ -341,7 +342,7 @@ export async function handleReceiver(request, env = {}, nowMs = Date.now(), ctx 
 
   let limitResult;
   try {
-    limitResult = await cfg.rateLimiter.limit({ key: RATE_LIMIT_KEY });
+    limitResult = await cfg.rateLimiter.limit({ key: `lead:${row.ipToken}` });
   } catch {
     logReceiver("error", "rate_limit_error", { requestId, status: 503 });
     return json({ ok: false, error: "Receiver unavailable" }, 503);

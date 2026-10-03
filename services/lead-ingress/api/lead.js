@@ -1,4 +1,5 @@
 import { createHmac, randomUUID } from "node:crypto";
+import { isIP } from "node:net";
 
 const MAX_BODY_BYTES = 20_000;
 const WEBHOOK_TIMEOUT_MS = 8_000;
@@ -106,6 +107,18 @@ function signature(secret, timestamp, requestId, body) {
     .digest("hex");
 }
 
+function leadClientIp(request) {
+  const raw = request.headers.get("x-forwarded-for") || "";
+  const first = raw.split(",", 1)[0].trim();
+  return isIP(first) ? first : null;
+}
+
+function leadIpToken(secret, ip) {
+  return createHmac("sha256", secret)
+    .update(`lead-ip-v1:${ip}`)
+    .digest("hex");
+}
+
 function validateInput(input) {
   if (!input || typeof input !== "object" || Array.isArray(input)) throw new Error("invalid-body");
 
@@ -193,9 +206,17 @@ export async function handleLead(request, env = process.env) {
 
   if (validated.honeypot) return json({ ok: true });
 
+  const clientIp = leadClientIp(request);
+  if (!clientIp) return json({ ok: false, error: "Application channel unavailable" }, 503);
+
   const requestId = randomUUID();
   const receivedAt = new Date().toISOString();
-  const payload = { ...validated.payload, requestId, receivedAt };
+  const payload = {
+    ...validated.payload,
+    requestId,
+    receivedAt,
+    ipToken: leadIpToken(cfg.secret, clientIp),
+  };
   const body = JSON.stringify(payload);
   const timestamp = Math.floor(Date.now() / 1000).toString();
   const digest = signature(cfg.secret, timestamp, requestId, body);
