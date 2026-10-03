@@ -53,12 +53,11 @@ This hardening service does not authorize or perform public form activation. The
 
 ## F1.5 Telegram FAQ bot
 
-The Telegram FAQ bot is a separate fail-closed webhook route at `POST /api/telegram-faq`. It is disabled unless `TELEGRAM_FAQ_ENABLED=true` and both server-only values are present:
+The Telegram FAQ bot is a separate fail-closed webhook route at `POST /api/telegram-faq`. It reuses the existing Cloudflare lead-notification bot instead of copying its BotFather token into Vercel. The ingress is disabled unless `TELEGRAM_FAQ_ENABLED=true`, the existing `LEAD_WEBHOOK_SECRET` is available, and `TELEGRAM_FAQ_RELAY_URL` points to the HTTPS Cloudflare relay route.
 
-- `TELEGRAM_FAQ_BOT_TOKEN`
-- `TELEGRAM_FAQ_WEBHOOK_SECRET` (at least 32 UTF-8 bytes)
+The BotFather token remains only in Cloudflare as `LEAD_NOTIFY_BOT_TOKEN`. Replies are sent from Vercel to the Worker through a domain-separated HMAC relay signed with the existing `LEAD_WEBHOOK_SECRET`. Telegram's `X-Telegram-Bot-Api-Secret-Token` value is also derived deterministically from that shared secret using the domain `telegram-faq-webhook-v1`, so there is no second webhook secret to distribute.
 
-The webhook must be registered directly against the dedicated ingress deployment, not the static site. Telegram must send the configured webhook secret in `X-Telegram-Bot-Api-Secret-Token`.
+The Worker keeps the webhook pointed at the dedicated ingress `/api/telegram-faq` endpoint when `TELEGRAM_FAQ_REUSE_ENABLED=true` and `TELEGRAM_FAQ_WEBHOOK_URL` is configured. Its existing hourly cron performs the idempotent sync; when the URL already matches, no `setWebhook` mutation is made.
 
 Behavior is deterministic:
 
@@ -71,4 +70,4 @@ Behavior is deterministic:
 - Secret-like text is rejected before FAQ matching or lead forwarding.
 - Custom bot logs contain only `updateId`, `status`, and action class; message text, username, chat ID, bot token, webhook secret, lead secret, and brief content are excluded.
 
-Activation is separate from code merge. Creating the BotFather token, setting Vercel production secrets, registering the webhook, enabling `TELEGRAM_FAQ_ENABLED`, and sending a live canary each require an explicit production approval.
+Activation is separate from code merge. Enabling the existing-bot reuse switch in Cloudflare, configuring the fixed webhook URL and relay URL, enabling `TELEGRAM_FAQ_ENABLED`, allowing the hourly webhook sync, and sending a live canary each require an explicit production approval. The existing `LEAD_NOTIFY_BOT_TOKEN` remains in Cloudflare and is not copied or exposed.

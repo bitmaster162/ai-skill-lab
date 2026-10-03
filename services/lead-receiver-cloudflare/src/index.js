@@ -9,6 +9,12 @@ const ROUTE_HOURLY_LIMIT = 5;
 const ROUTE_WINDOW_SECONDS = 3_600;
 const ROUTE_DAY_SECONDS = 86_400;
 const NOTIFY_TIMEOUT_MS = 5_000;
+const TELEGRAM_FAQ_REPLY_PATH = "/r163/telegram-faq/reply";
+const TELEGRAM_FAQ_REPLY_SCHEMA = "ai-skill-lab.telegram-faq-reply.v1";
+const TELEGRAM_FAQ_REPLY_BODY_BYTES = 8_000;
+const TELEGRAM_MESSAGE_MAX_CHARS = 4_096;
+const TELEGRAM_WEBHOOK_SECRET_DOMAIN = "telegram-faq-webhook-v1";
+const TELEGRAM_REPLY_SIGNATURE_DOMAIN = "telegram-faq-reply-v1";
 const ALLOWED_AUDIENCES = new Set(["adult", "parent", "teen", "business"]);
 const ALLOWED_LOCALES = new Set(["ru", "en"]);
 const UUID_V4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -97,6 +103,37 @@ function routeRateConfig(env) {
     && db && typeof db.prepare === "function"
     && rateLimiter && typeof rateLimiter.limit === "function";
   return { enabled: true, ready, secret, db, rateLimiter };
+}
+
+function validTelegramBotToken(value) {
+  return typeof value === "string" && /^\d{4,}:[A-Za-z0-9_-]{20,}$/.test(value.trim());
+}
+
+function parseTelegramWebhookUrl(value) {
+  if (typeof value !== "string" || !value.trim()) return null;
+  try {
+    const url = new URL(value.trim());
+    if (url.protocol !== "https:" || url.username || url.password || url.search || url.hash) return null;
+    if (url.pathname !== "/api/telegram-faq") return null;
+    return url.toString();
+  } catch {
+    return null;
+  }
+}
+
+function telegramFaqReuseConfig(env) {
+  if (env?.TELEGRAM_FAQ_REUSE_ENABLED !== "true") return { enabled: false };
+  const secret = typeof env?.LEAD_WEBHOOK_SECRET === "string" ? env.LEAD_WEBHOOK_SECRET : "";
+  const token = typeof env?.LEAD_NOTIFY_BOT_TOKEN === "string" ? env.LEAD_NOTIFY_BOT_TOKEN.trim() : "";
+  const webhookUrl = parseTelegramWebhookUrl(env?.TELEGRAM_FAQ_WEBHOOK_URL);
+  return {
+    enabled: true,
+    replyReady: utf8Bytes(secret) >= MIN_SECRET_BYTES && validTelegramBotToken(token),
+    webhookReady: utf8Bytes(secret) >= MIN_SECRET_BYTES && validTelegramBotToken(token) && Boolean(webhookUrl),
+    secret,
+    token,
+    webhookUrl,
+  };
 }
 
 function validatePayload(payload, headerRequestId, timestampSeconds) {
@@ -254,6 +291,151 @@ export async function handleRouteRateLimit(request, env = {}, nowMs = Date.now()
 
   logReceiver("info", "route_rate_allowed", { requestId, status: 200 });
   return json({ ok: true, requestId });
+}
+
+function validTelegramFaqReplyPayload(payload, requestId) {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return null;
+  if (payload.schema !== TELEGRAM_FAQ_REPLY_SCHEMA) return null;
+  if (payload.requestId !== requestId || !UUID_V4.test(payload.requestId)) return null;
+  if (typeof payload.chatId !== "string" || !/^-?\d{1,20}$/.test(payload.chatId)) return null;
+  if (!validText(payload.text, TELEGRAM_MESSAGE_MAX_CHARS, { required: true })) return null;
+  if (payload.disableWebPagePreview !== true) return null;
+  return {
+    requestId: payload.requestId,
+    chatId: payload.chatId,
+    text: payload.text,
+  };
+}
+
+export async function handleTelegramFaqReply(request, env = {}, nowMs = Date.now(), fetchImpl = fetch) {
+  const cfg = telegramFaqReuseConfig(env);
+  if (!cfg.enabled) return json({ ok: false, error: "Not found" }, 404);
+  if (!cfg.replyReady) return json({ ok: false, error: "Telegram relay unavailable" }, 503);
+
+  const url = new URL(request.url);
+  if (url.pathname !== TELEGRAM_FAQ_REPLY_PATH) return json({ ok: false, error: "Not found" }, 404);
+  if (request.method !== "POST") return json({ ok: false, error: "Method not allowed" }, 405, { Allow: "POST" });
+
+  const contentType = request.headers.get("content-type") || "";
+  if (!/^application\/json(?:\s*;|$)/i.test(contentType)) return json({ ok: false, error: "Unsupported media type" }, 415);
+
+  const declaredLength = Number(request.headers.get("content-length") || 0);
+  if (Number.isFinite(declaredLength) && declaredLength > TELEGRAM_FAQ_REPLY_BODY_BYTES) {
+    return json({ ok: false, error: "Request too large" }, 413);
+  }
+
+  const timestampRaw = request.headers.get("x-ai-skill-lab-timestamp") || "";
+  const requestId = request.headers.get("x-ai-skill-lab-request-id") || "";
+  const signatureRaw = request.headers.get("x-ai-skill-lab-telegram-relay-signature") || "";
+  const signatureMatch = SIGNATURE_V1.exec(signatureRaw);
+  if (!/^[0-9]{10}$/.test(timestampRaw) || !UUID_V4.test(requestId) || !signatureMatch) {
+    return json({ ok: false, error: "Unauthorized" }, 401);
+  }
+
+  const timestampSeconds = Number(timestampRaw);
+  if (!Number.isSafeInteger(timestampSeconds) || Math.abs(Math.floor(nowMs / 1000) - timestampSeconds) > MAX_SKEW_SECONDS) {
+    return json({ ok: false, error: "Unauthorized" }, 401);
+  }
+
+  const rawBytes = new Uint8Array(await request.arrayBuffer());
+  if (rawBytes.byteLength > TELEGRAM_FAQ_REPLY_BODY_BYTES) return json({ ok: false, error: "Request too large" }, 413);
+
+  let rawBody;
+  try {
+    rawBody = new TextDecoder("utf-8", { fatal: true }).decode(rawBytes);
+  } catch {
+    return json({ ok: false, error: "Invalid data" }, 400);
+  }
+
+  const expectedDigest = await hmacHex(
+    cfg.secret,
+    `${TELEGRAM_REPLY_SIGNATURE_DOMAIN}.${timestampRaw}.${requestId}.${rawBody}`,
+  );
+  if (!timingSafeHexEqual(expectedDigest, signatureMatch[1])) return json({ ok: false, error: "Unauthorized" }, 401);
+
+  let payload;
+  try {
+    payload = JSON.parse(rawBody);
+  } catch {
+    return json({ ok: false, error: "Invalid data" }, 400);
+  }
+  const validated = validTelegramFaqReplyPayload(payload, requestId);
+  if (!validated) return json({ ok: false, error: "Invalid relay request" }, 400);
+
+  try {
+    const response = await fetchImpl(`https://api.telegram.org/bot${cfg.token}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: validated.chatId,
+        text: validated.text,
+        disable_web_page_preview: true,
+      }),
+      signal: AbortSignal.timeout(NOTIFY_TIMEOUT_MS),
+    });
+    if (!response.ok) {
+      logReceiver("warn", "telegram_reply_failed", { requestId, status: response.status });
+      return json({ ok: false, error: "Telegram relay unavailable" }, 502);
+    }
+  } catch {
+    logReceiver("warn", "telegram_reply_failed", { requestId, status: 0 });
+    return json({ ok: false, error: "Telegram relay unavailable" }, 502);
+  }
+
+  logReceiver("info", "telegram_reply_sent", { requestId, status: 200 });
+  return json({ ok: true, requestId });
+}
+
+export async function ensureTelegramFaqWebhook(env = {}, fetchImpl = fetch) {
+  const cfg = telegramFaqReuseConfig(env);
+  if (!cfg.enabled) return { skipped: true };
+  if (!cfg.webhookReady) {
+    logReceiver("warn", "telegram_webhook_sync_failed", { status: 503 });
+    return { ok: false };
+  }
+
+  try {
+    const infoResponse = await fetchImpl(`https://api.telegram.org/bot${cfg.token}/getWebhookInfo`, {
+      method: "GET",
+      signal: AbortSignal.timeout(NOTIFY_TIMEOUT_MS),
+    });
+    if (!infoResponse.ok) {
+      logReceiver("warn", "telegram_webhook_sync_failed", { status: infoResponse.status });
+      return { ok: false };
+    }
+    const info = await infoResponse.json();
+    if (info?.ok === true && info?.result?.url === cfg.webhookUrl) {
+      logReceiver("info", "telegram_webhook_in_sync", { status: 200 });
+      return { ok: true, changed: false };
+    }
+
+    const secretToken = await hmacHex(cfg.secret, TELEGRAM_WEBHOOK_SECRET_DOMAIN);
+    const setResponse = await fetchImpl(`https://api.telegram.org/bot${cfg.token}/setWebhook`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        url: cfg.webhookUrl,
+        secret_token: secretToken,
+        allowed_updates: ["message"],
+        drop_pending_updates: false,
+      }),
+      signal: AbortSignal.timeout(NOTIFY_TIMEOUT_MS),
+    });
+    if (!setResponse.ok) {
+      logReceiver("warn", "telegram_webhook_sync_failed", { status: setResponse.status });
+      return { ok: false };
+    }
+    const result = await setResponse.json();
+    if (result?.ok !== true) {
+      logReceiver("warn", "telegram_webhook_sync_failed", { status: 502 });
+      return { ok: false };
+    }
+    logReceiver("info", "telegram_webhook_registered", { status: 200 });
+    return { ok: true, changed: true };
+  } catch {
+    logReceiver("warn", "telegram_webhook_sync_failed", { status: 0 });
+    return { ok: false };
+  }
 }
 
 async function notifyNewLead(env, row) {
@@ -414,12 +596,14 @@ const workerHandler = {
   fetch(request, env, ctx) {
     const pathname = new URL(request.url).pathname;
     if (pathname === ROUTE_RATE_PATH) return handleRouteRateLimit(request, env, Date.now());
+    if (pathname === TELEGRAM_FAQ_REPLY_PATH) return handleTelegramFaqReply(request, env, Date.now());
     return handleReceiver(request, env, Date.now(), ctx);
   },
   scheduled(_controller, env, ctx) {
     ctx.waitUntil(Promise.all([
       cleanupExpired(env),
       cleanupRouteRateEvents(env),
+      ensureTelegramFaqWebhook(env),
     ]));
   },
 };

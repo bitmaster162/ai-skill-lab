@@ -1,14 +1,14 @@
 import assert from "node:assert/strict";
+import { createHmac } from "node:crypto";
 import { afterEach, test } from "node:test";
 import { handleTelegramFaq } from "../api/telegram-faq.js";
 
-const botToken = "1234567890:abcdefghijklmnopqrstuvwxyzABCDE";
-const webhookSecret = "telegram-webhook-secret-0123456789abcdef";
 const leadSecret = "0123456789abcdef0123456789abcdef";
+const webhookSecret = createHmac("sha256", leadSecret).update("telegram-faq-webhook-v1").digest("hex");
+const relayUrl = "https://receiver.example.test/r163/telegram-faq/reply";
 const baseEnv = {
   TELEGRAM_FAQ_ENABLED: "true",
-  TELEGRAM_FAQ_BOT_TOKEN: botToken,
-  TELEGRAM_FAQ_WEBHOOK_SECRET: webhookSecret,
+  TELEGRAM_FAQ_RELAY_URL: relayUrl,
   LEAD_INGRESS_ENABLED: "true",
   LEAD_WEBHOOK_SECRET: leadSecret,
 };
@@ -79,8 +79,8 @@ test("disabled bot is fail-closed 404", async () => {
   assert.equal(tg.calls.length, 0);
 });
 
-test("enabled bot requires token, webhook secret, lead secret and lead ingress", async () => {
-  for (const key of ["TELEGRAM_FAQ_BOT_TOKEN", "TELEGRAM_FAQ_WEBHOOK_SECRET", "LEAD_WEBHOOK_SECRET", "LEAD_INGRESS_ENABLED"]) {
+test("enabled bot requires relay URL, lead secret and lead ingress but no Telegram token copy", async () => {
+  for (const key of ["TELEGRAM_FAQ_RELAY_URL", "LEAD_WEBHOOK_SECRET", "LEAD_INGRESS_ENABLED"]) {
     const tg = captureTelegram();
     const env = { ...baseEnv, [key]: "" };
     const response = await handleTelegramFaq(req(), env, { fetchImpl: tg.fetchImpl });
@@ -117,11 +117,12 @@ test("/start, /book and /faq use bounded published paths and FAQ text", async ()
     assert.equal(response.status, 200);
   }
   assert.equal(tg.calls.length, 3);
+  assert.equal(tg.calls.every((call) => call.url === relayUrl), true);
   assert.match(tg.calls[0].body.text, /FAQ bot/);
   assert.match(tg.calls[1].body.text, /https:\/\/aiskillab\.work\/start/);
   assert.match(tg.calls[2].body.text, /Is this a recorded course\?/);
   assert.match(tg.calls[2].body.text, /The core format is one-to-one/);
-  assert.equal(tg.calls.every((call) => call.body.disable_web_page_preview === true), true);
+  assert.equal(tg.calls.every((call) => call.body.disableWebPagePreview === true), true);
 });
 
 test("free text selects FAQ deterministically and unknown text falls back to command help", async () => {
@@ -228,16 +229,17 @@ test("structured bot logs contain metadata only", async () => {
   assert.equal(entries.length, 1);
   assert.deepEqual(Object.keys(entries[0]).sort(), ["action", "component", "event", "schema", "status", "updateId"].sort());
   const serialized = JSON.stringify(entries);
-  for (const forbidden of [secretQuestion, "privatehandle", botToken, webhookSecret, leadSecret]) {
+  for (const forbidden of [secretQuestion, "privatehandle", webhookSecret, leadSecret, relayUrl]) {
     assert.equal(serialized.includes(forbidden), false, forbidden);
   }
 });
 
-test("Telegram provider failure returns 502 without exposing bot token", async () => {
+test("relay failure returns 502 without exposing shared secret or relay URL", async () => {
   const tg = captureTelegram(500);
   const response = await handleTelegramFaq(req(update("/start")), baseEnv, { fetchImpl: tg.fetchImpl });
   assert.equal(response.status, 502);
   const raw = await response.text();
   assert.deepEqual(JSON.parse(raw), { ok: false, error: "Bot unavailable" });
-  assert.equal(raw.includes(botToken), false);
+  assert.equal(raw.includes(leadSecret), false);
+  assert.equal(raw.includes(relayUrl), false);
 });

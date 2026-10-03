@@ -96,6 +96,8 @@ jobs:
         run: python scripts/check_route_privacy.py
       - name: Test Cloudflare lead receiver
         run: node --test services/lead-receiver-cloudflare/test/receiver.test.mjs
+      - name: Test F1.5 existing-bot Telegram relay
+        run: node --test services/lead-receiver-cloudflare/test/telegram-reuse.test.mjs
       - name: Validate captured D1 schema offline
         run: python scripts/check_lead_schema.py
       - name: Validate intake operational contract
