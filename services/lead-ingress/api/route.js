@@ -90,8 +90,18 @@ function config(env) {
   const dailyLimit = positiveInteger(env.ROUTE_DAILY_LIMIT);
   const providerDailyBudget = positiveInteger(env.OPENROUTER_DAILY_REQUEST_BUDGET);
   const key = typeof env.OPENROUTER_API_KEY === "string" ? env.OPENROUTER_API_KEY.trim() : "";
+  const backupEnabled = env.OPENROUTER_BACKUP_ENABLED === "true";
+  const backupProviderDailyBudget = positiveInteger(env.OPENROUTER_BACKUP_DAILY_REQUEST_BUDGET);
+  const backupKey = typeof env.OPENROUTER_BACKUP_API_KEY === "string" ? env.OPENROUTER_BACKUP_API_KEY.trim() : "";
   const models = configuredModels(env.OPENROUTER_MODELS);
   const rateGate = webhook ? new URL("/r159/route-limit", webhook.origin) : null;
+  const backupReady = !backupEnabled || Boolean(
+    backupKey &&
+    backupKey !== key &&
+    backupProviderDailyBudget &&
+    dailyLimit &&
+    dailyLimit * MAX_OPENROUTER_CALLS_PER_ROUTE <= backupProviderDailyBudget
+  );
   return {
     enabled: true,
     ready: Boolean(
@@ -105,14 +115,17 @@ function config(env) {
       providerDailyBudget &&
       dailyLimit * MAX_OPENROUTER_CALLS_PER_ROUTE <= providerDailyBudget &&
       key &&
-      models.length,
+      models.length &&
+      backupReady
     ),
     origins,
     key,
+    backupKey: backupEnabled ? backupKey : "",
     models,
     secret,
     dailyLimit,
     providerDailyBudget,
+    backupProviderDailyBudget: backupEnabled ? backupProviderDailyBudget : null,
     rateGate,
   };
 }
@@ -334,30 +347,52 @@ async function callOpenRouter(cfg, input, table, fetchImpl) {
   if (!cfg.key || cfg.models.length === 0) return null;
   const system = promptFor(input, table);
   let providerCalls = 0;
+  let activeKey = cfg.key;
+  let credential = "primary";
+
+  const requestModel = async (model) => {
+    if (providerCalls >= MAX_OPENROUTER_CALLS_PER_ROUTE) return null;
+    providerCalls += 1;
+    try {
+      return await fetchImpl("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${activeKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model,
+          messages: [{ role: "system", content: system }, { role: "user", content: input.goal || "Recommend a route." }],
+          response_format: { type: "json_object" },
+          temperature: 0.2,
+        }),
+        signal: AbortSignal.timeout(OPENROUTER_TIMEOUT_MS),
+      });
+    } catch {
+      return null;
+    }
+  };
+
   for (const model of cfg.models) {
     for (let attempt = 0; attempt < 2; attempt += 1) {
       if (providerCalls >= MAX_OPENROUTER_CALLS_PER_ROUTE) return null;
-      providerCalls += 1;
-      let response;
-      try {
-        response = await fetchImpl("https://openrouter.ai/api/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${cfg.key}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model,
-            messages: [{ role: "system", content: system }, { role: "user", content: input.goal || "Recommend a route." }],
-            response_format: { type: "json_object" },
-            temperature: 0.2,
-          }),
-          signal: AbortSignal.timeout(OPENROUTER_TIMEOUT_MS),
-        });
-      } catch {
-        response = null;
+      let response = await requestModel(model);
+
+      if (response?.status === 401) {
+        if (credential === "primary" && cfg.backupKey) {
+          activeKey = cfg.backupKey;
+          credential = "backup";
+          if (providerCalls >= MAX_OPENROUTER_CALLS_PER_ROUTE) return null;
+          response = await requestModel(model);
+        } else {
+          return null;
+        }
       }
+
+      if (response?.status === 401) return null;
+      if (response && (response.status === 402 || response.status === 403 || response.status === 429)) return null;
       if (!response?.ok) break;
+
       let payload;
       try { payload = await response.json(); } catch { payload = null; }
       const content = payload?.choices?.[0]?.message?.content;
@@ -365,7 +400,7 @@ async function callOpenRouter(cfg, input, table, fetchImpl) {
       let parsed;
       try { parsed = JSON.parse(content); } catch { parsed = null; }
       const validated = validateModelResult(parsed, input, table);
-      if (validated) return { result: validated, model };
+      if (validated) return { result: validated, model, credential };
     }
   }
   return null;
@@ -408,7 +443,8 @@ export async function handleRoute(request, env = process.env, fetchImpl = fetch)
   const table = commercialPackages(input.audience, input.locale);
   const ai = await callOpenRouter(cfg, input, table, fetchImpl);
   const result = ai?.result || fallbackResult(input, table);
-  logRoute("info", "route_complete", { requestId, status: 200, mode: ai ? "ai" : "fallback" });
+  const mode = ai?.credential === "backup" ? "ai_backup" : ai ? "ai" : "fallback";
+  logRoute("info", "route_complete", { requestId, status: 200, mode });
   return json({ ...result, requestId });
 }
 

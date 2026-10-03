@@ -292,6 +292,172 @@ test("provider-call budget caps one route at three OpenRouter attempts across re
   );
 });
 
+test("backup credential is optional but fail-closed when explicitly enabled", async () => {
+  const baseBackup = {
+    ...baseEnv,
+    OPENROUTER_BACKUP_ENABLED: "true",
+    OPENROUTER_BACKUP_DAILY_REQUEST_BUDGET: "500",
+    OPENROUTER_BACKUP_API_KEY: "test-openrouter-backup-key",
+  };
+  const cases = [
+    ["missing-key", { ...baseBackup, OPENROUTER_BACKUP_API_KEY: "" }],
+    ["same-key", { ...baseBackup, OPENROUTER_BACKUP_API_KEY: baseEnv.OPENROUTER_API_KEY }],
+    ["missing-budget", { ...baseBackup, OPENROUTER_BACKUP_DAILY_REQUEST_BUDGET: "" }],
+    ["insufficient-budget", { ...baseBackup, OPENROUTER_BACKUP_DAILY_REQUEST_BUDGET: "200" }],
+  ];
+  for (const [name, env] of cases) {
+    let calls = 0;
+    const response = await handleRoute(
+      req(profile("adult", "research", "core", "Research")),
+      env,
+      async () => { calls += 1; throw new Error("must not call"); },
+    );
+    assert.equal(response.status, 503, name);
+    assert.equal(calls, 0, name);
+  }
+
+  const disabledEnv = {
+    ...baseEnv,
+    OPENROUTER_BACKUP_ENABLED: "false",
+    OPENROUTER_BACKUP_DAILY_REQUEST_BUDGET: "1",
+    OPENROUTER_BACKUP_API_KEY: baseEnv.OPENROUTER_API_KEY,
+  };
+  const pkg = { id: "adult:start", name: "Start", price: "$390", sessions: "4 sessions" };
+  const response = await handleRoute(
+    req(profile("adult", "research", "intro", "Learn basics", "en")),
+    disabledEnv,
+    fetchWithRateGate(okModel(validResult(pkg, "en"))),
+  );
+  assert.equal(response.status, 200);
+});
+
+test("primary 401 switches once to the distinct backup credential", async () => {
+  const env = {
+    ...baseEnv,
+    OPENROUTER_BACKUP_ENABLED: "true",
+    OPENROUTER_BACKUP_DAILY_REQUEST_BUDGET: "500",
+    OPENROUTER_BACKUP_API_KEY: "test-openrouter-backup-key",
+  };
+  const calls = [];
+  const pkg = { id: "adult:start", name: "Start", price: "$390", sessions: "4 sessions" };
+  const response = await handleRoute(
+    req(profile("adult", "research", "intro", "Learn basics", "en")),
+    env,
+    fetchWithRateGate(async (_url, options) => {
+      if (options.headers.Authorization === "Bearer test-openrouter-key") {
+        return new Response("primary auth failed", { status: 401 });
+      }
+      assert.equal(options.headers.Authorization, "Bearer test-openrouter-backup-key");
+      return new Response(
+        JSON.stringify({ choices: [{ message: { content: JSON.stringify(validResult(pkg, "en")) } }] }),
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      );
+    }, calls),
+  );
+  const body = await response.json();
+  assert.equal(response.status, 200);
+  assert.equal(body.status, "ok");
+  const modelCalls = calls.filter((x) => x.kind === "model");
+  assert.equal(modelCalls.length, 2);
+  assert.deepEqual(
+    modelCalls.map((x) => x.options.headers.Authorization),
+    ["Bearer test-openrouter-key", "Bearer test-openrouter-backup-key"],
+  );
+});
+
+test("402/403/429 never switch OpenRouter accounts", async () => {
+  for (const status of [402, 403, 429]) {
+    const env = {
+      ...baseEnv,
+      OPENROUTER_BACKUP_ENABLED: "true",
+      OPENROUTER_BACKUP_DAILY_REQUEST_BUDGET: "500",
+      OPENROUTER_BACKUP_API_KEY: "test-openrouter-backup-key",
+    };
+    const calls = [];
+    const response = await handleRoute(
+      req(profile("adult", "research", "core", "Research", "en")),
+      env,
+      fetchWithRateGate(async (_url, options) => {
+        assert.equal(options.headers.Authorization, "Bearer test-openrouter-key");
+        return new Response("quota/payment boundary", { status });
+      }, calls),
+    );
+    const body = await response.json();
+    assert.equal(response.status, 200);
+    assert.equal(body.status, "fallback");
+    const modelCalls = calls.filter((x) => x.kind === "model");
+    assert.equal(modelCalls.length, 1);
+    assert.equal(modelCalls[0].options.headers.Authorization, "Bearer test-openrouter-key");
+  }
+});
+
+test("model 5xx failover stays on primary credential", async () => {
+  const env = {
+    ...baseEnv,
+    OPENROUTER_MODELS: "bad/model:free,good/model:free",
+    OPENROUTER_BACKUP_ENABLED: "true",
+    OPENROUTER_BACKUP_DAILY_REQUEST_BUDGET: "500",
+    OPENROUTER_BACKUP_API_KEY: "test-openrouter-backup-key",
+  };
+  const calls = [];
+  const pkg = { id: "adult:start", name: "Start", price: "$390", sessions: "4 sessions" };
+  const response = await handleRoute(
+    req(profile("adult", "research", "intro", "Learn basics", "en")),
+    env,
+    fetchWithRateGate(async (_url, options) => {
+      assert.equal(options.headers.Authorization, "Bearer test-openrouter-key");
+      const parsed = JSON.parse(options.body);
+      if (parsed.model === "bad/model:free") return new Response("unavailable", { status: 503 });
+      return new Response(
+        JSON.stringify({ choices: [{ message: { content: JSON.stringify(validResult(pkg, "en")) } }] }),
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      );
+    }, calls),
+  );
+  const body = await response.json();
+  assert.equal(response.status, 200);
+  assert.equal(body.status, "ok");
+  assert.deepEqual(
+    calls.filter((x) => x.kind === "model").map((x) => x.options.headers.Authorization),
+    ["Bearer test-openrouter-key", "Bearer test-openrouter-key"],
+  );
+});
+
+test("primary auth failover and backup retries still share the global three-call cap", async () => {
+  const env = {
+    ...baseEnv,
+    OPENROUTER_MODELS: "one/model:free,two/model:free",
+    OPENROUTER_BACKUP_ENABLED: "true",
+    OPENROUTER_BACKUP_DAILY_REQUEST_BUDGET: "500",
+    OPENROUTER_BACKUP_API_KEY: "test-openrouter-backup-key",
+    ROUTE_DAILY_LIMIT: "10",
+    OPENROUTER_DAILY_REQUEST_BUDGET: "30",
+  };
+  const calls = [];
+  const response = await handleRoute(
+    req(profile("adult", "research", "core", "Research", "en")),
+    env,
+    fetchWithRateGate(async (_url, options) => {
+      if (options.headers.Authorization === "Bearer test-openrouter-key") {
+        return new Response("primary auth failed", { status: 401 });
+      }
+      return new Response(
+        JSON.stringify({ choices: [{ message: { content: "{not-json" } }] }),
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      );
+    }, calls),
+  );
+  const body = await response.json();
+  assert.equal(response.status, 200);
+  assert.equal(body.status, "fallback");
+  const modelCalls = calls.filter((x) => x.kind === "model");
+  assert.equal(modelCalls.length, 3);
+  assert.deepEqual(
+    modelCalls.map((x) => x.options.headers.Authorization),
+    ["Bearer test-openrouter-key", "Bearer test-openrouter-backup-key", "Bearer test-openrouter-backup-key"],
+  );
+});
+
 test("activation rejects a route daily cap whose worst-case provider calls exceed the verified account budget", async () => {
   const env = { ...baseEnv, ROUTE_DAILY_LIMIT: "17", OPENROUTER_DAILY_REQUEST_BUDGET: "50" };
   let calls = 0;
