@@ -35,6 +35,8 @@ CHECKS = [
     ("tracked_python_artifacts", ["python", "scripts/check_tracked_python_artifacts.py"]),
     ("python_text_encoding", ["python", "scripts/check_python_text_encoding.py"]),
     ("client_privacy", ["python", "scripts/check_client_privacy.py"]),
+    ("public_monitor_test", ["python", "scripts/test_public_monitor.py"]),
+    ("public_monitor_contract", ["python", "scripts/check_public_monitor_contract.py"]),
     ("lead_ingress", ["node", "--test", "services/lead-ingress/test/lead.test.mjs"]),
     ("telegram_faq_bot", ["node", "--test", "services/lead-ingress/test/telegram-faq.test.mjs"]),
     ("telegram_faq_contract", ["python", "scripts/check_telegram_faq_bot.py"]),
