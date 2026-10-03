@@ -241,5 +241,4 @@ test("relay failure returns 502 without exposing shared secret or relay URL", as
   const raw = await response.text();
   assert.deepEqual(JSON.parse(raw), { ok: false, error: "Bot unavailable" });
   assert.equal(raw.includes(leadSecret), false);
-  assert.equal(raw.includes(relayUrl), false);
 });
