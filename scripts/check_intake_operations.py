@@ -23,6 +23,7 @@ def require(condition: bool, message: str) -> None:
         errors.append(message)
 
 cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
+worker_vars = cfg.get("vars") or {}
 ingress = INGRESS.read_text(encoding="utf-8")
 receiver = RECEIVER.read_text(encoding="utf-8")
 workflow = WORKFLOW.read_text(encoding="utf-8")
@@ -40,6 +41,8 @@ require(logs.get("head_sampling_rate") == 1, "receiver log sampling must be 100%
 require(logs.get("persist") is True, "receiver logs must persist")
 require(obs.get("redact_query_string") is True, "receiver query strings must be redacted")
 require(traces.get("enabled") is False, "receiver traces must remain disabled")
+require("TELEGRAM_FAQ_REUSE_ENABLED" not in worker_vars, "Telegram FAQ reuse must not be hardcoded active in wrangler vars")
+require("TELEGRAM_FAQ_WEBHOOK_URL" not in worker_vars, "Telegram FAQ webhook URL must remain provider-bound, not committed")
 
 require(
     ingress_vercel.get("git", {}).get("deploymentEnabled")
@@ -67,14 +70,31 @@ require(receiver.count("console.") == 3, "receiver console calls must stay insid
 for event in ["rate_limit_error", "rate_limited", "db_error", "duplicate", "inserted", "retention_cleanup"]:
     require(f'logReceiver(' in receiver and f'"{event}"' in receiver, f"receiver event missing {event}")
 
+for marker in [
+    'const TELEGRAM_FAQ_REPLY_PATH = "/r163/telegram-faq/reply";',
+    'TELEGRAM_FAQ_REUSE_ENABLED',
+    'TELEGRAM_FAQ_WEBHOOK_URL',
+    'LEAD_NOTIFY_BOT_TOKEN',
+    'telegram-faq-webhook-v1',
+    'telegram-faq-reply-v1',
+    'handleTelegramFaqReply',
+    'ensureTelegramFaqWebhook',
+]:
+    require(marker in receiver, f"existing-bot Telegram reuse marker missing {marker}")
+for event in ["telegram_reply_sent", "telegram_reply_failed", "telegram_webhook_in_sync", "telegram_webhook_registered", "telegram_webhook_sync_failed"]:
+    require(f'"{event}"' in receiver, f"Telegram reuse event missing {event}")
+
 for forbidden in ["payload }", "rawBody }", "secret }", "signatureRaw }", "contact }", "goal }"]:
     require(forbidden not in ingress and forbidden not in receiver, f"forbidden log-like payload marker {forbidden!r}")
 
 receiver_test = "node --test services/lead-receiver-cloudflare/test/receiver.test.mjs"
+telegram_reuse_test = "node --test services/lead-receiver-cloudflare/test/telegram-reuse.test.mjs"
 operations_check = "python scripts/check_intake_operations.py"
 require(workflow.count(receiver_test) == 1, "required static-release must test receiver exactly once")
+require(workflow.count(telegram_reuse_test) == 1, "required static-release must test Telegram reuse exactly once")
 require(workflow.count(operations_check) == 1, "required static-release must check intake operations exactly once")
 require(preflight.count('["node", "--test", "services/lead-receiver-cloudflare/test/receiver.test.mjs"]') == 1, "preflight receiver test missing")
+require(preflight.count('["node", "--test", "services/lead-receiver-cloudflare/test/telegram-reuse.test.mjs"]') == 1, "preflight Telegram reuse test missing")
 require(preflight.count('["python", "scripts/check_intake_operations.py"]') == 1, "preflight operations checker missing")
 
 print(

@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FACTS = ROOT / "services/lead-ingress/faq_facts.json"
 BOT = ROOT / "services/lead-ingress/api/telegram-faq.js"
 LEAD = ROOT / "services/lead-ingress/api/lead.js"
+WORKER = ROOT / "services/lead-receiver-cloudflare/src/index.js"
 ENV_EXAMPLE = ROOT / "services/lead-ingress/.env.example"
 WORKFLOW = ROOT / ".github/workflows/static-qa.yml"
 PREFLIGHT = ROOT / "scripts/preflight_release.py"
@@ -31,6 +32,7 @@ def source_items(text: str) -> list[list[str]]:
 facts = json.loads(FACTS.read_text(encoding="utf-8"))
 bot = BOT.read_text(encoding="utf-8")
 lead = LEAD.read_text(encoding="utf-8")
+worker = WORKER.read_text(encoding="utf-8")
 env = ENV_EXAMPLE.read_text(encoding="utf-8")
 workflow = WORKFLOW.read_text(encoding="utf-8")
 preflight = PREFLIGHT.read_text(encoding="utf-8")
@@ -47,13 +49,16 @@ require(facts.get("privacy_path") == "https://aiskillab.work/privacy", "privacy 
 
 for marker in [
     'TELEGRAM_FAQ_ENABLED',
-    'TELEGRAM_FAQ_BOT_TOKEN',
-    'TELEGRAM_FAQ_WEBHOOK_SECRET',
+    'TELEGRAM_FAQ_RELAY_URL',
     'x-telegram-bot-api-secret-token',
     'handleLead',
     'acceptDuplicate: true',
     'telegram-update-v1:',
     'telegram-user-v1:',
+    'telegram-reply-request-v1:',
+    'telegram-faq-reply-v1.',
+    'telegram-faq-webhook-v1',
+    'X-AI-Skill-Lab-Telegram-Relay-Signature',
     'sourcePath: "/telegram-faq"',
     'privacyConsent: "yes"',
     'https://aiskillab.work/api/lead',
@@ -68,8 +73,21 @@ for forbidden in ["message.text }", "username }", "chatId }", "goal }", "BOT_TOK
     require(forbidden not in bot, f"forbidden log-like payload marker {forbidden!r}")
 
 require('TELEGRAM_FAQ_ENABLED=false' in env, "Telegram FAQ activation must default false")
-require(re.search(r"(?m)^TELEGRAM_FAQ_BOT_TOKEN=$", env) is not None, "Telegram bot token example must be blank")
-require(re.search(r"(?m)^TELEGRAM_FAQ_WEBHOOK_SECRET=$", env) is not None, "Telegram webhook secret example must be blank")
+require(re.search(r"(?m)^TELEGRAM_FAQ_RELAY_URL=$", env) is not None, "Telegram FAQ relay URL example must be blank")
+require("TELEGRAM_FAQ_BOT_TOKEN" not in env, "Vercel env example must not copy Telegram bot token")
+require("TELEGRAM_FAQ_WEBHOOK_SECRET" not in env, "Vercel env example must not carry a second webhook secret")
+require("TELEGRAM_FAQ_BOT_TOKEN" not in bot, "F1.5 ingress must not read a Telegram bot token")
+require("TELEGRAM_FAQ_WEBHOOK_SECRET" not in bot, "F1.5 ingress must derive the Telegram webhook secret")
+for marker in [
+    'const TELEGRAM_FAQ_REPLY_PATH = "/r163/telegram-faq/reply";',
+    'TELEGRAM_FAQ_REUSE_ENABLED',
+    'LEAD_NOTIFY_BOT_TOKEN',
+    'telegram-faq-webhook-v1',
+    'telegram-faq-reply-v1',
+    'handleTelegramFaqReply',
+    'ensureTelegramFaqWebhook',
+]:
+    require(marker in worker, f"existing-bot reuse Worker marker missing: {marker}")
 
 for marker in [
     "internal = {}",
@@ -90,7 +108,7 @@ require(preflight.count('["python", "scripts/check_telegram_faq_bot.py"]') == 1,
 
 print(
     f"telegram_faq_bot_checks={checks} faq_ru={len(ru_source)} faq_en={len(en_source)} "
-    "model_calls=0 activation_default=OFF lead_reuse=YES"
+    "model_calls=0 activation_default=OFF lead_reuse=YES notify_bot_reuse=YES token_copy=NO"
 )
 if errors:
     print("TELEGRAM_FAQ_BOT_CONTRACT_FAIL")

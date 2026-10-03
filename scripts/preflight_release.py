@@ -45,6 +45,7 @@ CHECKS = [
     ("route_rate_schema", ["python", "scripts/check_route_rate_schema.py"]),
     ("route_privacy", ["python", "scripts/check_route_privacy.py"]),
     ("lead_receiver", ["node", "--test", "services/lead-receiver-cloudflare/test/receiver.test.mjs"]),
+    ("telegram_reuse", ["node", "--test", "services/lead-receiver-cloudflare/test/telegram-reuse.test.mjs"]),
     ("lead_schema", ["python", "scripts/check_lead_schema.py"]),
     ("intake_operations", ["python", "scripts/check_intake_operations.py"]),
     ("lead_inbox", ["python", "scripts/check_lead_inbox.py"]),

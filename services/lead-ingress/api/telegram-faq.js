@@ -42,20 +42,37 @@ function json(body, status = 200, extraHeaders = {}) {
   });
 }
 
-function validToken(value) {
-  return typeof value === "string" && /^\d{4,}:[A-Za-z0-9_-]{20,}$/.test(value.trim());
+function parseHttpsUrl(value) {
+  if (typeof value !== "string" || !value.trim()) return null;
+  try {
+    const url = new URL(value.trim());
+    if (url.protocol !== "https:" || url.username || url.password || url.search || url.hash) return null;
+    return url;
+  } catch {
+    return null;
+  }
+}
+
+function derivedWebhookSecret(leadSecret) {
+  return createHmac("sha256", leadSecret)
+    .update("telegram-faq-webhook-v1")
+    .digest("hex");
 }
 
 function config(env) {
   if (env.TELEGRAM_FAQ_ENABLED !== "true") return { enabled: false };
-  const token = typeof env.TELEGRAM_FAQ_BOT_TOKEN === "string" ? env.TELEGRAM_FAQ_BOT_TOKEN.trim() : "";
-  const webhookSecret = typeof env.TELEGRAM_FAQ_WEBHOOK_SECRET === "string" ? env.TELEGRAM_FAQ_WEBHOOK_SECRET : "";
   const leadSecret = typeof env.LEAD_WEBHOOK_SECRET === "string" ? env.LEAD_WEBHOOK_SECRET : "";
-  const ready = validToken(token)
-    && Buffer.byteLength(webhookSecret, "utf8") >= MIN_SECRET_BYTES
+  const relay = parseHttpsUrl(env.TELEGRAM_FAQ_RELAY_URL);
+  const ready = relay
     && Buffer.byteLength(leadSecret, "utf8") >= MIN_SECRET_BYTES
     && env.LEAD_INGRESS_ENABLED === "true";
-  return { enabled: true, ready, token, webhookSecret, leadSecret };
+  return {
+    enabled: true,
+    ready: Boolean(ready),
+    leadSecret,
+    relay,
+    webhookSecret: ready ? derivedWebhookSecret(leadSecret) : "",
+  };
 }
 
 function equalSecret(actual, expected) {
@@ -183,15 +200,39 @@ function contact(message) {
   return `telegram:user:${message?.from?.id}`.slice(0, 120);
 }
 
-async function sendMessage(cfg, chatId, text, fetchImpl) {
-  const response = await fetchImpl(`https://api.telegram.org/bot${cfg.token}/sendMessage`, {
+function relayRequestId(secret, updateId) {
+  const bytes = createHmac("sha256", secret)
+    .update(`telegram-reply-request-v1:${updateId}`)
+    .digest()
+    .subarray(0, 16);
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const hex = bytes.toString("hex");
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+}
+
+async function sendMessage(cfg, updateId, chatId, text, fetchImpl) {
+  const requestId = relayRequestId(cfg.leadSecret, updateId);
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const body = JSON.stringify({
+    schema: "ai-skill-lab.telegram-faq-reply.v1",
+    requestId,
+    chatId: String(chatId),
+    text,
+    disableWebPagePreview: true,
+  });
+  const digest = createHmac("sha256", cfg.leadSecret)
+    .update(`telegram-faq-reply-v1.${timestamp}.${requestId}.${body}`)
+    .digest("hex");
+  const response = await fetchImpl(cfg.relay, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text,
-      disable_web_page_preview: true,
-    }),
+    headers: {
+      "Content-Type": "application/json",
+      "X-AI-Skill-Lab-Timestamp": timestamp,
+      "X-AI-Skill-Lab-Request-Id": requestId,
+      "X-AI-Skill-Lab-Telegram-Relay-Signature": `v1=${digest}`,
+    },
+    body,
     signal: AbortSignal.timeout(8_000),
   });
   return response.ok;
@@ -311,7 +352,7 @@ export async function handleTelegramFaq(request, env = process.env, deps = {}) {
   }
 
   let sent = false;
-  try { sent = await sendMessage(cfg, chatId, reply, fetchImpl); } catch { sent = false; }
+  try { sent = await sendMessage(cfg, updateId, chatId, reply, fetchImpl); } catch { sent = false; }
   logBot(sent ? "info" : "error", sent ? "reply_sent" : "reply_failed", {
     updateId,
     status: sent ? 200 : 502,
