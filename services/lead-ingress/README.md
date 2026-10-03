@@ -49,3 +49,26 @@ This function deliberately does not use an in-memory counter because serverless 
 ## Public activation is separate
 
 This hardening service does not authorize or perform public form activation. The later activation release must separately verify legal operator/jurisdiction, receiver ownership, HMAC readback, rate limiting, the public `/api/lead` rewrite, `connect-src 'self'`, Start/Privacy/Proof content, source/static parity, manifest regeneration, and live delivery.
+
+
+## F1.5 Telegram FAQ bot
+
+The Telegram FAQ bot is a separate fail-closed webhook route at `POST /api/telegram-faq`. It is disabled unless `TELEGRAM_FAQ_ENABLED=true` and both server-only values are present:
+
+- `TELEGRAM_FAQ_BOT_TOKEN`
+- `TELEGRAM_FAQ_WEBHOOK_SECRET` (at least 32 UTF-8 bytes)
+
+The webhook must be registered directly against the dedicated ingress deployment, not the static site. Telegram must send the configured webhook secret in `X-Telegram-Bot-Api-Secret-Token`.
+
+Behavior is deterministic:
+
+- FAQ replies come only from `faq_facts.json`, which is contract-checked against the published RU/EN `/faq` sources.
+- `/book` returns the approved AI Skill Lab Start path for the free 15-minute intro.
+- `/brief` explains the one-message brief format.
+- A brief is forwarded only with explicit `CONSENT`; `parent` and `teen` additionally require `ADULT`.
+- The bot reuses the existing lead handler and downstream HMAC/D1/notification pipeline. Telegram retries derive the same UUIDv4 request ID from `update_id`; the receiver's existing request-ID dedupe therefore prevents duplicate lead rows.
+- Telegram user ID is transformed with `HMAC-SHA256(LEAD_WEBHOOK_SECRET, "telegram-user-v1:" + user_id)` before it becomes the receiver rate-limit token. The raw Telegram user ID is not written to D1 or custom logs.
+- Secret-like text is rejected before FAQ matching or lead forwarding.
+- Custom bot logs contain only `updateId`, `status`, and action class; message text, username, chat ID, bot token, webhook secret, lead secret, and brief content are excluded.
+
+Activation is separate from code merge. Creating the BotFather token, setting Vercel production secrets, registering the webhook, enabling `TELEGRAM_FAQ_ENABLED`, and sending a live canary each require an explicit production approval.

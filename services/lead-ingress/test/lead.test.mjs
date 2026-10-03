@@ -294,3 +294,43 @@ test("downstream network error returns generic 502", async () => {
   assert.equal(response.status, 502);
   assert.deepEqual(await body(response), { ok: false, error: "Application channel unavailable" });
 });
+
+test("trusted internal options can supply deterministic request id and privacy-safe token without client IP", async () => {
+  const calls = captureDownstream();
+  const requestId = "11111111-2222-4333-8444-555555555555";
+  const ipToken = "a".repeat(64);
+  const response = await handleLead(req(valid, { forwardedFor: null }), baseEnv, { requestId, ipToken, acceptDuplicate: true });
+  assert.equal(response.status, 200);
+  const result = await body(response);
+  assert.equal(result.requestId, requestId);
+  assert.equal(calls.length, 1);
+  const payload = JSON.parse(calls[0].init.body);
+  assert.equal(payload.requestId, requestId);
+  assert.equal(payload.ipToken, ipToken);
+});
+
+test("trusted internal options reject malformed request id or token before forwarding", async () => {
+  for (const internal of [
+    { requestId: "not-a-uuid", ipToken: "a".repeat(64) },
+    { requestId: "11111111-2222-4333-8444-555555555555", ipToken: "bad" },
+  ]) {
+    const calls = captureDownstream();
+    const response = await handleLead(req(valid, { forwardedFor: null }), baseEnv, internal);
+    assert.equal(response.status, 503);
+    assert.equal(calls.length, 0);
+  }
+});
+
+test("trusted idempotent replay treats receiver duplicate as accepted while public duplicate stays generic", async () => {
+  const requestId = "11111111-2222-4333-8444-555555555555";
+  const ipToken = "b".repeat(64);
+  captureDownstream(409);
+  const trusted = await handleLead(req(valid, { forwardedFor: null }), baseEnv, { requestId, ipToken, acceptDuplicate: true });
+  assert.equal(trusted.status, 200);
+  assert.deepEqual(await body(trusted), { ok: true, requestId, duplicate: true });
+
+  captureDownstream(409);
+  const publicResponse = await handleLead(req(valid), baseEnv);
+  assert.equal(publicResponse.status, 502);
+  assert.deepEqual(await body(publicResponse), { ok: false, error: "Application channel unavailable" });
+});
