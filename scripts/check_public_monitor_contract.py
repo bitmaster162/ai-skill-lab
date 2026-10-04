@@ -38,7 +38,7 @@ worker = WORKER.read_text(encoding="utf-8")
 static_qa = STATIC_QA.read_text(encoding="utf-8")
 preflight = PREFLIGHT.read_text(encoding="utf-8")
 
-require("cron: '*/30 * * * *'" in workflow or 'cron: "*/30 * * * *"' in workflow, "monitor schedule must be every 30 minutes")
+require("cron: '7,37 * * * *'" in workflow or 'cron: "7,37 * * * *"' in workflow, "monitor schedule must be every 30 minutes at off-peak minutes 07 and 37")
 require("if: ${{ vars.PUBLIC_MONITOR_ENABLED == 'true' }}" in workflow, "monitor activation must default off unless explicitly enabled by repo variable")
 require("runs-on: ubuntu-24.04" in workflow, "monitor must use pinned ubuntu-24.04 runner")
 require("actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1" in workflow, "checkout action must be pinned")
