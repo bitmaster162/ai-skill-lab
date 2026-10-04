@@ -37,6 +37,7 @@ CHECKS = [
     ("client_privacy", ["python", "scripts/check_client_privacy.py"]),
     ("public_monitor_test", ["python", "scripts/test_public_monitor.py"]),
     ("public_monitor_contract", ["python", "scripts/check_public_monitor_contract.py"]),
+    ("public_monitor_relay", ["node", "--test", "services/lead-receiver-cloudflare/test/public-monitor-relay.test.mjs"]),
     ("lead_ingress", ["node", "--test", "services/lead-ingress/test/lead.test.mjs"]),
     ("telegram_faq_bot", ["node", "--test", "services/lead-ingress/test/telegram-faq.test.mjs"]),
     ("telegram_faq_contract", ["python", "scripts/check_telegram_faq_bot.py"]),

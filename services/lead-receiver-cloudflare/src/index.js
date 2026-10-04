@@ -15,6 +15,17 @@ const TELEGRAM_FAQ_REPLY_BODY_BYTES = 8_000;
 const TELEGRAM_MESSAGE_MAX_CHARS = 4_096;
 const TELEGRAM_WEBHOOK_SECRET_DOMAIN = "telegram-faq-webhook-v1";
 const TELEGRAM_REPLY_SIGNATURE_DOMAIN = "telegram-faq-reply-v1";
+const PUBLIC_MONITOR_ALERT_PATH = "/r164/public-monitor/alert";
+const PUBLIC_MONITOR_ALERT_SCHEMA = "ai-skill-lab.public-monitor-alert.v1";
+const PUBLIC_MONITOR_ALERT_BODY_BYTES = 4_000;
+const PUBLIC_MONITOR_SIGNATURE_DOMAIN = "public-monitor-alert-v1";
+const PUBLIC_MONITOR_TARGET_URLS = Object.freeze({
+  "bitevo-home": "https://bitevo.work/",
+  "bitevo-pricing": "https://bitevo.work/pricing",
+  "bitevo-start": "https://bitevo.work/start",
+  "aiskillab-home": "https://aiskillab.work/",
+  "aiskillab-start": "https://aiskillab.work/start",
+});
 const ALLOWED_AUDIENCES = new Set(["adult", "parent", "teen", "business"]);
 const ALLOWED_LOCALES = new Set(["ru", "en"]);
 const UUID_V4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -133,6 +144,24 @@ function telegramFaqReuseConfig(env) {
     secret,
     token,
     webhookUrl,
+  };
+}
+
+function validTelegramChatId(value) {
+  return typeof value === "string" && /^-?\d{1,20}$/.test(value.trim());
+}
+
+function publicMonitorRelayConfig(env) {
+  if (env?.PUBLIC_MONITOR_RELAY_ENABLED !== "true") return { enabled: false };
+  const secret = typeof env?.PUBLIC_MONITOR_RELAY_SECRET === "string" ? env.PUBLIC_MONITOR_RELAY_SECRET : "";
+  const token = typeof env?.LEAD_NOTIFY_BOT_TOKEN === "string" ? env.LEAD_NOTIFY_BOT_TOKEN.trim() : "";
+  const chatId = typeof env?.LEAD_NOTIFY_CHAT_ID === "string" ? env.LEAD_NOTIFY_CHAT_ID.trim() : "";
+  return {
+    enabled: true,
+    ready: utf8Bytes(secret) >= MIN_SECRET_BYTES && validTelegramBotToken(token) && validTelegramChatId(chatId),
+    secret,
+    token,
+    chatId,
   };
 }
 
@@ -290,6 +319,132 @@ export async function handleRouteRateLimit(request, env = {}, nowMs = Date.now()
   }
 
   logReceiver("info", "route_rate_allowed", { requestId, status: 200 });
+  return json({ ok: true, requestId });
+}
+
+function validatePublicMonitorFailure(item) {
+  if (!item || typeof item !== "object" || Array.isArray(item)) return null;
+  const url = PUBLIC_MONITOR_TARGET_URLS[item.name];
+  if (!url || item.expected !== 200) return null;
+
+  if (item.actual === null) {
+    if (typeof item.error !== "string" || !/^request_error=[A-Za-z][A-Za-z0-9_]{0,63}$/.test(item.error)) return null;
+  } else {
+    if (!Number.isSafeInteger(item.actual) || item.actual < 100 || item.actual > 599) return null;
+    const statusErrors = new Set([`unexpected_status=${item.actual}`, `http_error=${item.actual}`]);
+    if (!statusErrors.has(item.error)) return null;
+  }
+  return {
+    name: item.name,
+    url,
+    expected: 200,
+    actual: item.actual,
+    error: item.error,
+  };
+}
+
+function validPublicMonitorAlertPayload(payload, requestId) {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return null;
+  if (payload.schema !== PUBLIC_MONITOR_ALERT_SCHEMA) return null;
+  if (payload.requestId !== requestId || !UUID_V4.test(payload.requestId)) return null;
+  if (!Array.isArray(payload.failures) || payload.failures.length < 1 || payload.failures.length > 5) return null;
+
+  const seen = new Set();
+  const failures = [];
+  for (const item of payload.failures) {
+    const validated = validatePublicMonitorFailure(item);
+    if (!validated || seen.has(validated.name)) return null;
+    seen.add(validated.name);
+    failures.push(validated);
+  }
+  return { requestId: payload.requestId, failures };
+}
+
+function formatPublicMonitorAlert(failures) {
+  const lines = ["AI Skill Lab P27.7 public GET monitor failed."];
+  for (const item of failures) {
+    const observed = item.actual === null ? item.error : item.actual;
+    lines.push(`- ${item.name}: expected=200 observed=${observed} url=${item.url}`);
+  }
+  return lines.join("\n");
+}
+
+export async function handlePublicMonitorAlert(request, env = {}, nowMs = Date.now(), fetchImpl = fetch) {
+  const cfg = publicMonitorRelayConfig(env);
+  if (!cfg.enabled) return json({ ok: false, error: "Not found" }, 404);
+  if (!cfg.ready) return json({ ok: false, error: "Monitor relay unavailable" }, 503);
+
+  const url = new URL(request.url);
+  if (url.pathname !== PUBLIC_MONITOR_ALERT_PATH) return json({ ok: false, error: "Not found" }, 404);
+  if (request.method !== "POST") return json({ ok: false, error: "Method not allowed" }, 405, { Allow: "POST" });
+
+  const contentType = request.headers.get("content-type") || "";
+  if (!/^application\/json(?:\s*;|$)/i.test(contentType)) return json({ ok: false, error: "Unsupported media type" }, 415);
+
+  const declaredLength = Number(request.headers.get("content-length") || 0);
+  if (Number.isFinite(declaredLength) && declaredLength > PUBLIC_MONITOR_ALERT_BODY_BYTES) {
+    return json({ ok: false, error: "Request too large" }, 413);
+  }
+
+  const timestampRaw = request.headers.get("x-ai-skill-lab-timestamp") || "";
+  const requestId = request.headers.get("x-ai-skill-lab-request-id") || "";
+  const signatureRaw = request.headers.get("x-ai-skill-lab-public-monitor-signature") || "";
+  const signatureMatch = SIGNATURE_V1.exec(signatureRaw);
+  if (!/^[0-9]{10}$/.test(timestampRaw) || !UUID_V4.test(requestId) || !signatureMatch) {
+    return json({ ok: false, error: "Unauthorized" }, 401);
+  }
+
+  const timestampSeconds = Number(timestampRaw);
+  if (!Number.isSafeInteger(timestampSeconds) || Math.abs(Math.floor(nowMs / 1000) - timestampSeconds) > MAX_SKEW_SECONDS) {
+    return json({ ok: false, error: "Unauthorized" }, 401);
+  }
+
+  const rawBytes = new Uint8Array(await request.arrayBuffer());
+  if (rawBytes.byteLength > PUBLIC_MONITOR_ALERT_BODY_BYTES) return json({ ok: false, error: "Request too large" }, 413);
+
+  let rawBody;
+  try {
+    rawBody = new TextDecoder("utf-8", { fatal: true }).decode(rawBytes);
+  } catch {
+    return json({ ok: false, error: "Invalid data" }, 400);
+  }
+
+  const expectedDigest = await hmacHex(
+    cfg.secret,
+    `${PUBLIC_MONITOR_SIGNATURE_DOMAIN}.${timestampRaw}.${requestId}.${rawBody}`,
+  );
+  if (!timingSafeHexEqual(expectedDigest, signatureMatch[1])) return json({ ok: false, error: "Unauthorized" }, 401);
+
+  let payload;
+  try {
+    payload = JSON.parse(rawBody);
+  } catch {
+    return json({ ok: false, error: "Invalid data" }, 400);
+  }
+  const validated = validPublicMonitorAlertPayload(payload, requestId);
+  if (!validated) return json({ ok: false, error: "Invalid monitor alert" }, 400);
+
+  try {
+    const response = await fetchImpl(`https://api.telegram.org/bot${cfg.token}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: cfg.chatId,
+        text: formatPublicMonitorAlert(validated.failures),
+        disable_web_page_preview: true,
+      }),
+      signal: AbortSignal.timeout(NOTIFY_TIMEOUT_MS),
+    });
+    if (!response.ok) {
+      logReceiver("warn", "public_monitor_alert_failed", { requestId, status: response.status });
+      return json({ ok: false, error: "Monitor relay unavailable" }, 502);
+    }
+  } catch {
+    logReceiver("warn", "public_monitor_alert_failed", { requestId, status: 0 });
+    return json({ ok: false, error: "Monitor relay unavailable" }, 502);
+  }
+
+  logReceiver("info", "public_monitor_alert_sent", { requestId, status: 200 });
   return json({ ok: true, requestId });
 }
 
@@ -597,6 +752,7 @@ const workerHandler = {
     const pathname = new URL(request.url).pathname;
     if (pathname === ROUTE_RATE_PATH) return handleRouteRateLimit(request, env, Date.now());
     if (pathname === TELEGRAM_FAQ_REPLY_PATH) return handleTelegramFaqReply(request, env, Date.now());
+    if (pathname === PUBLIC_MONITOR_ALERT_PATH) return handlePublicMonitorAlert(request, env, Date.now());
     return handleReceiver(request, env, Date.now(), ctx);
   },
   scheduled(_controller, env, ctx) {

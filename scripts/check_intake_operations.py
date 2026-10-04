@@ -43,6 +43,8 @@ require(obs.get("redact_query_string") is True, "receiver query strings must be 
 require(traces.get("enabled") is False, "receiver traces must remain disabled")
 require("TELEGRAM_FAQ_REUSE_ENABLED" not in worker_vars, "Telegram FAQ reuse must not be hardcoded active in wrangler vars")
 require("TELEGRAM_FAQ_WEBHOOK_URL" not in worker_vars, "Telegram FAQ webhook URL must remain provider-bound, not committed")
+require("PUBLIC_MONITOR_RELAY_ENABLED" not in worker_vars, "public monitor relay must not be hardcoded active in wrangler vars")
+require("PUBLIC_MONITOR_RELAY_SECRET" not in worker_vars, "public monitor relay secret must remain provider-bound, not committed")
 
 require(
     ingress_vercel.get("git", {}).get("deploymentEnabled")
@@ -89,12 +91,15 @@ for forbidden in ["payload }", "rawBody }", "secret }", "signatureRaw }", "conta
 
 receiver_test = "node --test services/lead-receiver-cloudflare/test/receiver.test.mjs"
 telegram_reuse_test = "node --test services/lead-receiver-cloudflare/test/telegram-reuse.test.mjs"
+public_monitor_relay_test = "node --test services/lead-receiver-cloudflare/test/public-monitor-relay.test.mjs"
 operations_check = "python scripts/check_intake_operations.py"
 require(workflow.count(receiver_test) == 1, "required static-release must test receiver exactly once")
 require(workflow.count(telegram_reuse_test) == 1, "required static-release must test Telegram reuse exactly once")
+require(workflow.count(public_monitor_relay_test) == 1, "required static-release must test public monitor relay exactly once")
 require(workflow.count(operations_check) == 1, "required static-release must check intake operations exactly once")
 require(preflight.count('["node", "--test", "services/lead-receiver-cloudflare/test/receiver.test.mjs"]') == 1, "preflight receiver test missing")
 require(preflight.count('["node", "--test", "services/lead-receiver-cloudflare/test/telegram-reuse.test.mjs"]') == 1, "preflight Telegram reuse test missing")
+require(preflight.count('["node", "--test", "services/lead-receiver-cloudflare/test/public-monitor-relay.test.mjs"]') == 1, "preflight public monitor relay test missing")
 require(preflight.count('["python", "scripts/check_intake_operations.py"]') == 1, "preflight operations checker missing")
 
 print(
