@@ -62,3 +62,20 @@
 }
 @media(hover:none),(pointer:coarse){.header :global(.labCommandTrigger){display:none!important}}
 @media(prefers-reduced-motion:reduce){.burger span{transition:none!important}}
+
+/* N15 · safe AI-agent lesson. Existing Workshop type scale intentionally unchanged. */
+.agentSafety{background:var(--ground)}
+.agentSafetyCases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:32px 0 52px}
+.agentSafetyCase{min-width:0;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:20px;display:flex;flex-direction:column}
+.agentSafetyCase>span{color:var(--muted);font-weight:850;letter-spacing:.04em}
+.agentSafetyCase h3{margin:20px 0 12px}
+.agentSafetyCase p{color:var(--second);line-height:1.7;margin:0 0 18px}
+.agentSafetyCase strong{display:block;line-height:1.6;margin-top:auto}
+.agentSafetyCase a{min-height:48px;display:flex;align-items:center;margin-top:18px;color:var(--ink);text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
+.agentSafetyRules{list-style:none;padding:0;margin:28px 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.agentSafetyRules li{min-width:0;padding:22px;border:1px solid var(--border);border-radius:20px;background:var(--panel)}
+.agentSafetyRules strong{display:block;margin-bottom:10px}
+.agentSafetyRules p{margin:0;color:var(--second);line-height:1.65}
+.agentSafetyNote{max-width:900px;margin:26px 0 0;color:var(--muted);line-height:1.7}
+@media(max-width:1050px){.agentSafetyCases{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.agentSafetyCases,.agentSafetyRules{grid-template-columns:1fr}.agentSafetyCase,.agentSafetyRules li{padding:20px}}
