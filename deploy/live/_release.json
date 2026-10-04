@@ -118,8 +118,8 @@
     },
     {
       "path": "en/phuket.html",
-      "sha256": "45f963ab45f51b184aaf175b9fc2cd3524353be4ce5433c68afb4ee94a595be5",
-      "size": 7363
+      "sha256": "5eafb18168247de40ee22bf92328fd45001c15d4e079fa3932cf90105bc095cf",
+      "size": 9294
     },
     {
       "path": "en/pricing.html",
@@ -273,8 +273,8 @@
     },
     {
       "path": "phuket.html",
-      "sha256": "854b6b3ce7a6d0822add580ee6029809ef0b01439ce8db7e07d28954d046272f",
-      "size": 8487
+      "sha256": "0359ba757c47022522c6288284ea7b1d05e82b775782534b9fd69d0ac995220e",
+      "size": 11380
     },
     {
       "path": "pricing.html",
@@ -353,11 +353,11 @@
     },
     {
       "path": "workshop.css",
-      "sha256": "8e0640a4b7b14f3337a4a77620cc9edf8d365fec5dd92a76bd6febb2e409e5a3",
-      "size": 37817
+      "sha256": "d8134dd73fc966614aab106412943f7925a468e0b041e4645f2f1f7a9f0c9986",
+      "size": 39230
     }
   ],
-  "payload_sha256": "eba1ec01f088a93344eb099fcb33a80b4185eda7c0b83fd8503b71cb9080911f",
-  "release_id": "N15_AGENT_SAFETY_R1",
+  "payload_sha256": "c85635edd45a591e40695f096c3b7a2f5e7dc11577b22cbf34ecc683c56695cc",
+  "release_id": "A4_PHUKET_LOCAL_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }
