@@ -4,6 +4,7 @@ export const introCall = {
   durationMinutes: 15,
   whatsappNumber: "66649701204",
   telegramUrl: "https://t.me/BiTFormer",
+  calcomUrl: "https://cal.com/robert-dumanyan-vlck0x/15min",
   label: { ru: "Бесплатный звонок-знакомство · 15 минут", en: "Free 15-minute intro call" },
   freeMeta: { ru: "Бесплатно · 15 минут", en: "Free · 15 minutes" },
   whatsappMessage: {

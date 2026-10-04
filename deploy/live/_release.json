@@ -148,8 +148,8 @@
     },
     {
       "path": "en/start.html",
-      "sha256": "d7ab9e2dbdf0b077e5f2e63d7ab6d51a327e82d0596a56fd51807201a377b8ac",
-      "size": 15641
+      "sha256": "4818800af5ff2f0b7c285522dcb4773984b8f05e14f4a2538692483765ba9eea",
+      "size": 15579
     },
     {
       "path": "en/studio.html",
@@ -228,8 +228,8 @@
     },
     {
       "path": "lab-command.js",
-      "sha256": "f03dbb9216f4f8aa29573a9aac583fb85b9f1be60ea46258848493ad35f54423",
-      "size": 2235
+      "sha256": "b139e284cb66761a48f89444539c8eb646b16d30d0366dc96598dfcbc84508fa",
+      "size": 2255
     },
     {
       "path": "llms.txt",
@@ -328,8 +328,8 @@
     },
     {
       "path": "start.html",
-      "sha256": "ec399d65086d77c3631c2b832e4def31d36355a0873e7276990ec729367fc3be",
-      "size": 21415
+      "sha256": "c26e8d913202330e35691b746f313fc8210caa7017bfaec2fe20394c05415e66",
+      "size": 21041
     },
     {
       "path": "studio.html",
@@ -357,7 +357,7 @@
       "size": 39230
     }
   ],
-  "payload_sha256": "c85635edd45a591e40695f096c3b7a2f5e7dc11577b22cbf34ecc683c56695cc",
-  "release_id": "A4_PHUKET_LOCAL_R1",
+  "payload_sha256": "3ed21f9ae57e1a46d695420856de38a5e380258227797ed7e461473c77c4b9c0",
+  "release_id": "A3_CALCOM_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }
