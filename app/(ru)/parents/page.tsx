@@ -41,7 +41,7 @@ export default function Page() {
       <section className="section"><div className="shell"><div className="sectionHead">
         <span className="kicker">Возрастные правила</span><h2>ChatGPT и возраст.</h2>
         <p>ChatGPT не предназначен для детей младше 13 лет. Для пользователей 13–18 требуется согласие родителя или законного представителя. В образовательном контексте с ребёнком младше 13 непосредственное взаимодействие с ChatGPT проводит взрослый.</p>
-        <div className="heroActions"><a className="textLink" href="https://help.openai.com/en/articles/8313401" target="_blank" rel="noopener noreferrer">Официальная справка OpenAI →</a><Link className="textLink" href="/safety">Наш safety-подход →</Link></div>
+        <div className="heroActions"><a className="textLink" href="https://help.openai.com/en/articles/8313401" target="_blank" rel="noopener noreferrer">Официальная справка OpenAI →</a><Link className="textLink" href="/safety">Наш safety-подход →</Link><Link className="textLink" href="/guides/ai-safety-for-kids">Чек-лист для родителей: возраст, данные, родительский контроль →</Link></div>
       </div></div></section>
 
       <section className="section sectionMuted"><div className="shell">

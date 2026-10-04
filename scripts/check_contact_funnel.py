@@ -35,7 +35,7 @@ for p in sorted(LIVE.rglob('*.html')):
   block_count=text.count('class="reachBlock"')
   if block_count!=1:errors.append(f'{rel}: D1 reach block count={block_count}, expected 1')
 checks+=1
-if reach_routes!=40:errors.append(f'D1 reach-route count={reach_routes}, expected 40')
+if reach_routes!=44:errors.append(f'D1 reach-route count={reach_routes}, expected 44')
 for p in sorted((ROOT/'app').rglob('page.tsx')):
  rel=p.relative_to(ROOT).as_posix();text=p.read_text(encoding='utf-8');checks+=1
  if any(v in text for v in channels.values()) or 'site.telegram' in text or 'site.whatsapp' in text or 'site.line' in text:

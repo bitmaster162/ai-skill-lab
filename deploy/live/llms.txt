@@ -37,6 +37,10 @@ Do not infer guarantees or commercial terms from this index.
 - [RU](https://aiskillab.work/privacy) [EN](https://aiskillab.work/en/privacy)
 - [RU](https://aiskillab.work/safety) [EN](https://aiskillab.work/en/safety)
 
+## Guides
+- [RU](https://aiskillab.work/guides) [EN](https://aiskillab.work/en/guides)
+- [RU](https://aiskillab.work/guides/ai-safety-for-kids) [EN](https://aiskillab.work/en/guides/ai-safety-for-kids)
+
 ## About
 - [RU](https://aiskillab.work/about) [EN](https://aiskillab.work/en/about)
 - [RU](https://aiskillab.work/faq) [EN](https://aiskillab.work/en/faq)

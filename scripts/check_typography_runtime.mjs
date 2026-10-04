@@ -56,7 +56,7 @@ function referencesForbiddenFontHost(text) {
 }
 for (const [text, label] of [[css, 'static CSS'], [sourceCss, 'source CSS']]) {
   const block = text.split('R115 Workshop v1 typography roles').slice(-1)[0];
-  if (['R149_D1_0_WORKSHOP_SHELL', 'R149_D1_0_VIEWPORT_CLOSEOUT', 'R151_E1_1_WEB_ANALYTICS', 'R152_E1_2_CACHE_POLICY', 'R153_E1_4_INTRO_CALL', 'R154_E1_5_METADATA', 'R155_E1_6_MOBILE_HEADER', 'R156_I1_2_INDEXNOW', 'R157_I1_3_INDEXABILITY', 'R158_F1_2_MATCHER_V2', 'R160_F1_2_PRIVACY_DISCLOSURE'].includes(release)) {
+  if (['E2_GUIDES_R1', 'R149_D1_0_WORKSHOP_SHELL', 'R149_D1_0_VIEWPORT_CLOSEOUT', 'R151_E1_1_WEB_ANALYTICS', 'R152_E1_2_CACHE_POLICY', 'R153_E1_4_INTRO_CALL', 'R154_E1_5_METADATA', 'R155_E1_6_MOBILE_HEADER', 'R156_I1_2_INDEXNOW', 'R157_I1_3_INDEXABILITY', 'R158_F1_2_MATCHER_V2', 'R160_F1_2_PRIVACY_DISCLOSURE'].includes(release)) {
     const compact = text.replace(/\s+/g, '');
     const required = label === 'static CSS'
       ? [
@@ -99,7 +99,7 @@ const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) =
   return e.isDirectory() ? walk(p) : [p];
 });
 const htmls = walk(LIVE).filter((p) => p.endsWith('.html')).sort();
-req(htmls.length === 47, 'html surfaces ' + htmls.length + ' != 47');
+req(htmls.length === 51, 'html surfaces ' + htmls.length + ' != 51');
 
 const forbiddenStatusGlyph = String.fromCodePoint(0x25CF);
 const namedEntities = new Map([['&amp;', '&'], ['&lt;', '<'], ['&gt;', '>'], ['&quot;', '"'], ['&copy;', '©']]);

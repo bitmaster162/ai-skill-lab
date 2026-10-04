@@ -3,6 +3,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 import json,re,sys
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/"deploy/live";BRAND="AI Skill Lab · Phuket"
+GUIDE_TITLES={"/guides/ai-safety-for-kids":"AI и ребёнок 8–13: чек-лист для родителей — AI Skill Lab","/en/guides/ai-safety-for-kids":"AI and your child (8–13): a parent checklist — AI Skill Lab"}
 class P(HTMLParser):
  def __init__(self):super().__init__(convert_charrefs=True);self.lang="";self.title="";self.it=False;self.meta=[];self.links=[]
  def handle_starttag(self,t,a):
@@ -21,7 +22,9 @@ errors=[];pages=0;bare=0
 for f in sorted(p for p in LIVE.rglob("*.html") if p.name!="404.html"):
  route=route_for(f);en=route=="/en" or route.startswith("/en/");x=P();raw=f.read_text(encoding="utf-8");x.feed(raw);pages+=1
  props={m.get("property"):m.get("content") for m in x.meta if m.get("property")}
- if BRAND not in x.title:errors.append(f"{route}: title brand")
+ if route in GUIDE_TITLES:
+  if x.title!=GUIDE_TITLES[route]:errors.append(f"{route}: guide title drift")
+ elif BRAND not in x.title:errors.append(f"{route}: title brand")
  if props.get("og:site_name")!=BRAND:errors.append(f"{route}: og site name")
  if props.get("og:locale")!=("en_US" if en else "ru_RU"):errors.append(f"{route}: og locale")
  if props.get("og:locale:alternate")!=("ru_RU" if en else "en_US"):errors.append(f"{route}: og alternate")

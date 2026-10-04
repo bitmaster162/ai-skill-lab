@@ -1,5 +1,5 @@
 {
- "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below.",
+ "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below. E2: guides permits only the global Guides footer link plus the exact parent-checklist text/link on /kids, /parents, /safety and EN pairs.",
  "phrases": {
   "ru": [
    "Как написать",
@@ -129,7 +129,8 @@
    "Сервисы не предназначены для лиц младше 18 (политика конфиденциальности).",
    "cloudflare.com/privacypolicy",
    "Только взрослый, сервис 18+.",
-   "Правила сервисов меняются; перед использованием проверяем актуальные условия. Дата проверки — 26 сентября 2026."
+   "Правила сервисов меняются; перед использованием проверяем актуальные условия. Дата проверки — 26 сентября 2026.",
+   "чек-лист для родителей: возраст, данные, родительский контроль"
   ],
   "/en/safety": [
    "Age rules of the services",
@@ -193,7 +194,8 @@
    "Services are not intended for anyone under 18 (privacy policy).",
    "cloudflare.com/privacypolicy",
    "Adult only; the service is 18+.",
-   "Service rules change; we check the current terms before use. Checked on September 26, 2026."
+   "Service rules change; we check the current terms before use. Checked on September 26, 2026.",
+   "parent checklist: age rules, data, parental controls"
   ],
   "/privacy": [
    "AI-route и OpenRouter",
@@ -249,6 +251,18 @@
    "a lead form.",
    "for format and package. no answer",
    "sent to a server or stored. local in your browser · nothing is sent"
+  ],
+  "/kids": [
+   "чек-лист для родителей: возраст, данные, родительский контроль"
+  ],
+  "/parents": [
+   "чек-лист для родителей: возраст, данные, родительский контроль"
+  ],
+  "/en/kids": [
+   "parent checklist: age rules, data, parental controls"
+  ],
+  "/en/parents": [
+   "parent checklist: age rules, data, parental controls"
   ]
  },
  "links": {
@@ -259,7 +273,8 @@
    "mailto:robert@aiskillab.work",
    "/start",
    "https://wa.me/66649701204?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D1%8B%D0%B9%20%D0%B7%D0%B2%D0%BE%D0%BD%D0%BE%D0%BA-%D0%B7%D0%BD%D0%B0%D0%BA%D0%BE%D0%BC%D1%81%D1%82%D0%B2%D0%BE%2C%2015%20%D0%BC%D0%B8%D0%BD%D1%83%D1%82.",
-   "/parents"
+   "/parents",
+   "/guides"
   ],
   "en": [
    "https://t.me/BiTFormer",
@@ -268,7 +283,8 @@
    "mailto:robert@aiskillab.work",
    "/en/start",
    "https://wa.me/66649701204?text=Hi%21%20I%27d%20like%20to%20book%20the%20free%2015-minute%20intro%20call.",
-   "/en/parents"
+   "/en/parents",
+   "/en/guides"
   ]
  },
  "removed_links": {
@@ -297,7 +313,8 @@
    "https://support.google.com/flow/answer/16353333",
    "https://antigravity.google/docs/faq",
    "https://support.google.com/gemini/answer/17094507",
-   "https://www.cloudflare.com/privacypolicy/"
+   "https://www.cloudflare.com/privacypolicy/",
+   "/guides/ai-safety-for-kids"
   ],
   "/en/safety": [
    "https://help.openai.com/en/articles/8313401",
@@ -310,7 +327,8 @@
    "https://support.google.com/flow/answer/16353333",
    "https://antigravity.google/docs/faq",
    "https://support.google.com/gemini/answer/17094507",
-   "https://www.cloudflare.com/privacypolicy/"
+   "https://www.cloudflare.com/privacypolicy/",
+   "/en/guides/ai-safety-for-kids"
   ],
   "/": [
    "/start#application-form"
@@ -319,13 +337,15 @@
    "/start#application-form"
   ],
   "/kids": [
-   "/start#application-form"
+   "/start#application-form",
+   "/guides/ai-safety-for-kids"
   ],
   "/teens": [
    "/start#application-form"
   ],
   "/parents": [
-   "/start#application-form"
+   "/start#application-form",
+   "/guides/ai-safety-for-kids"
   ],
   "/personal": [
    "/start#application-form"
@@ -346,13 +366,15 @@
    "/en/start#application-form"
   ],
   "/en/kids": [
-   "/en/start#application-form"
+   "/en/start#application-form",
+   "/en/guides/ai-safety-for-kids"
   ],
   "/en/teens": [
    "/en/start#application-form"
   ],
   "/en/parents": [
-   "/en/start#application-form"
+   "/en/start#application-form",
+   "/en/guides/ai-safety-for-kids"
   ],
   "/en/personal": [
    "/en/start#application-form"

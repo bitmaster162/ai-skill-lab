@@ -75,6 +75,7 @@ export function WorkshopShell({ locale = "ru", alternateHref, showReach = true, 
         <div><strong>AI Skill Lab</strong><span>{en ? "Practical AI capability · online / Phuket" : "Практический AI · online / Phuket"}</span></div>
         <nav aria-label={en ? "Footer" : "Подвал"}>
           <Link href={en ? "/en/faq" : "/faq"}>FAQ</Link>
+          <Link href={en ? "/en/guides" : "/guides"}>{en ? "Guides" : "Гайды"}</Link>
           <Link href={en ? "/en/about" : "/about"}>{en ? "About" : "О проекте"}</Link>
           <Link href={en ? "/en/challenge" : "/challenge"}>Challenge</Link>
           <Link href={en ? "/en/build" : "/build"}>Build Log</Link>
