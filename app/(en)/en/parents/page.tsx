@@ -41,7 +41,7 @@ export default function Page() {
       <section className="section"><div className="shell"><div className="sectionHead">
         <span className="kicker">Age rules</span><h2>ChatGPT and age.</h2>
         <p>ChatGPT is not meant for children under 13. Users ages 13–18 need permission from a parent or legal guardian. In an educational context for a child under 13, the actual interaction with ChatGPT is conducted by an adult.</p>
-        <div className="heroActions"><a className="textLink" href="https://help.openai.com/en/articles/8313401" target="_blank" rel="noopener noreferrer">Official OpenAI guidance →</a><Link className="textLink" href="/en/safety">Our safety approach →</Link></div>
+        <div className="heroActions"><a className="textLink" href="https://help.openai.com/en/articles/8313401" target="_blank" rel="noopener noreferrer">Official OpenAI guidance →</a><Link className="textLink" href="/en/safety">Our safety approach →</Link><Link className="textLink" href="/en/guides/ai-safety-for-kids">Parent checklist: age rules, data, parental controls →</Link></div>
       </div></div></section>
 
       <section className="section sectionMuted"><div className="shell">

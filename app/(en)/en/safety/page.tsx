@@ -16,6 +16,7 @@ export default function SafetyPageEn() {
     <h2>6. Authorship and school rules</h2><p>AI is an assistant, not a hidden substitute for the learner&apos;s work. The learner should be able to explain their contribution and follow the rules of their school or teacher.</p>
     <h2>7. Parent controls</h2><p>A parent can identify tools, content types or topics that are off-limits. For younger learners, the final project and home practice are framed so the adult can understand how AI is being used.</p>
     <h2>8. ChatGPT parental controls for teens</h2><p>For linked teen accounts, OpenAI offers parental controls that can manage selected settings, study hours, quiet hours and limited safety notifications. These controls do not give a parent access to the teen&apos;s conversations and are not real-time conversation monitoring.</p><p><a className="inlineExternal" href="https://help.openai.com/en/articles/12315553-parental-controls-on-chatgpt-faq/" target="_blank" rel="noreferrer">Parental controls in ChatGPT ↗</a></p>
+    <p className="legalCrosslink"><Link href="/en/guides/ai-safety-for-kids">Parent checklist: age rules, data, parental controls →</Link></p>
     <p className="legalCrosslink">See also: <Link href="/en/privacy">Privacy</Link> · <Link href="/en/terms">Learning terms</Link>.</p>
   </LegalPage>;
 }

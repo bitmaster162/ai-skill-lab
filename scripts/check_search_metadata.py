@@ -151,6 +151,10 @@ def source_page_for(route: str) -> Path:
             return app / "(ru)" / "page.tsx"
         if route == "/en":
             return app / "(en)" / "en" / "page.tsx"
+        if route.startswith("/en/guides/"):
+            return app / "(en)" / "en" / "guides" / "[slug]" / "page.tsx"
+        if route.startswith("/guides/"):
+            return app / "(ru)" / "guides" / "[slug]" / "page.tsx"
         if route.startswith("/en/"):
             return app / "(en)" / "en" / route.removeprefix("/en/") / "page.tsx"
         return app / "(ru)" / route.lstrip("/") / "page.tsx"
@@ -159,7 +163,38 @@ def source_page_for(route: str) -> Path:
     return app / route.lstrip("/") / "page.tsx"
 
 
+def guide_frontmatter(route: str) -> dict[str, str] | None:
+    if route.startswith("/en/guides/"):
+        lang = "en"
+        slug = route.removeprefix("/en/guides/")
+    elif route.startswith("/guides/"):
+        lang = "ru"
+        slug = route.removeprefix("/guides/")
+    else:
+        return None
+    path = ROOT / "guides" / "aiskillab" / f"{slug}.{lang}.md"
+    if not path.exists():
+        return None
+    raw = path.read_text(encoding="utf-8").replace("\r\n", "\n")
+    match = re.match(r"^---\n([\s\S]*?)\n---\n", raw)
+    if not match:
+        return None
+    values: dict[str, str] = {}
+    for line in match.group(1).splitlines():
+        if ":" not in line:
+            continue
+        key, value = line.split(":", 1)
+        value = value.strip()
+        if len(value) >= 2 and value[0] == value[-1] == '"':
+            value = value[1:-1]
+        values[key.strip()] = value
+    return values
+
+
 def source_description(route: str) -> str | None:
+    guide = guide_frontmatter(route)
+    if guide is not None:
+        return guide.get("description")
     raw = source_page_for(route).read_text(encoding="utf-8")
     block = re.search(r"export const metadata[\s\S]*?=\s*\{([\s\S]*?)\};", raw)
     if not block:
@@ -169,6 +204,9 @@ def source_description(route: str) -> str | None:
 
 
 def source_title(route: str) -> str | None:
+    guide = guide_frontmatter(route)
+    if guide is not None:
+        return guide.get("seo_title")
     raw = source_page_for(route).read_text(encoding="utf-8")
     block = re.search(r"export const metadata[\s\S]*?=\s*\{([\s\S]*?)\};", raw)
     if not block:
@@ -185,6 +223,15 @@ def source_title(route: str) -> str | None:
 
 
 def source_alternates(route: str) -> tuple[str | None, dict[str, str]]:
+    guide = guide_frontmatter(route)
+    if guide is not None:
+        canonical = guide.get("path")
+        alternate = guide.get("alternate")
+        if not canonical or not alternate:
+            return canonical, {}
+        if route.startswith("/en/"):
+            return canonical, {"ru": alternate, "en": canonical}
+        return canonical, {"ru": canonical, "en": alternate}
     raw = source_page_for(route).read_text(encoding="utf-8")
     block = re.search(r"export const metadata[\s\S]*?=\s*\{([\s\S]*?)\};", raw)
     if not block:
@@ -221,6 +268,14 @@ def latest_public_html_commit_date(paths: list[Path], errors: list[str]) -> date
     dates: list[date] = []
     for path in paths:
         rel = path.relative_to(ROOT).as_posix()
+        tracked = subprocess.run(
+            ["git", "ls-files", "--error-unmatch", rel],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+        ).returncode == 0
+        if not tracked:
+            continue
         try:
             raw = git("log", "-1", "--format=%cs", "--", rel)
         except subprocess.CalledProcessError as exc:
@@ -392,6 +447,7 @@ def main() -> int:
 
         title = re.sub(r"\s+", " ", parser.title).strip()
         desc = parser.meta_name.get("description", "").strip()
+        guide_meta = guide_frontmatter(route)
         source_title_value = source_title(route)
         if source_title_value != title:
             fail(errors, route, f"source title {source_title_value!r} != static {title!r}")
@@ -425,6 +481,9 @@ def main() -> int:
         if route in DESCRIPTION_120_155:
             if not (120 <= len(desc) <= 155):
                 fail(errors, route, f"description length {len(desc)} outside contracted 120..155")
+        elif guide_meta is not None:
+            if not (50 <= len(desc) <= 180):
+                fail(errors, route, f"guide description length {len(desc)} outside 50..180")
         elif not (50 <= len(desc) <= 160):
             fail(errors, route, f"description length {len(desc)} outside 50..160")
 
@@ -452,8 +511,9 @@ def main() -> int:
         if len(apple_icon) != 1 or apple_icon[0].get("sizes") != "180x180":
             fail(errors, route, "apple-touch-icon 180x180 link missing")
 
-        if og.get("og:type") != "website":
-            fail(errors, route, "og:type must be website")
+        expected_og_type = "article" if guide_meta is not None else "website"
+        if og.get("og:type") != expected_og_type:
+            fail(errors, route, f"og:type must be {expected_og_type}")
         if og.get("og:site_name") != "AI Skill Lab · Phuket":
             fail(errors, route, "og:site_name must be AI Skill Lab · Phuket")
         expected_og_locale = "en_US" if expected_lang == "en" else "ru_RU"

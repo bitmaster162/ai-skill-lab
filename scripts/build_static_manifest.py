@@ -26,7 +26,7 @@ def main() -> int:
         'payload_sha256':hashlib.sha256(aggregate).hexdigest(),
         'files':files,
     }
-    OUT.write_text(json.dumps(manifest,ensure_ascii=False,indent=2,sort_keys=True)+'\n',encoding='utf-8')
+    OUT.write_text(json.dumps(manifest,ensure_ascii=False,indent=2,sort_keys=True)+'\n',encoding='utf-8',newline='\n')
     print(f"release_id={release_id} files={len(files)} payload_sha256={manifest['payload_sha256']}")
     return 0
 

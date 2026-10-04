@@ -71,6 +71,6 @@ by_key={x.get('key'):x for x in items}
 for key,value in wanted.items():
     if key in by_key: by_key[key]['value']=value
     else: items.append({'key':key,'value':value})
-CONFIG.write_text(json.dumps(obj,separators=(',',':'),ensure_ascii=False)+'\n',encoding='utf-8')
+CONFIG.write_text(json.dumps(obj,separators=(',',':'),ensure_ascii=False)+'\n',encoding='utf-8',newline='\n')
 print(f'CSP_BUILD_PASS inline_scripts={len(scripts)} unique_hashes={len(hashes)}')
 for h in hashes: print(h)

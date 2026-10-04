@@ -103,7 +103,7 @@ def main():
   text=(ROOT/rel).read_text(encoding="utf-8")
   for n in needles:
    if n not in text:errors.append(f"{rel}: missing source marker {n}")
- print(f"structured_data_routes=46 blocks={blocks} organization_routes={org_routes} course_routes={course_routes} pricing_courses={course_items} faq_items=22")
+ print(f"structured_data_routes=50 blocks={blocks} organization_routes={org_routes} course_routes={course_routes} pricing_courses={course_items} faq_items=22")
  if errors:
   print("STRUCTURED_DATA_FAIL");[print("-",e) for e in errors];return 1
  print("STRUCTURED_DATA_PASS");return 0

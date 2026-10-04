@@ -1,0 +1,38 @@
+.listingMain,.articleMain{background:#f6f2e9;color:#111;min-height:60vh;padding:72px 24px 96px}
+.listingHero,.cardGrid,.article{max-width:1080px;margin:0 auto}
+.listingHero{max-width:820px;margin-bottom:42px}
+.listingHero>span,.articleHeader>span{font-family:var(--font-unbounded,system-ui);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase}
+.listingHero h1,.articleHeader h1{font-family:var(--font-unbounded,system-ui);line-height:1.05;margin:12px 0 18px}
+.listingHero h1{font-size:clamp(2.4rem,7vw,5rem)}
+.listingHero p{max-width:66ch;font-size:1.12rem;line-height:1.6}
+.cardGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.card{background:#fff;border:1px solid #181818;padding:26px;min-width:0}
+.card>span{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+.card h2{font-size:1.35rem;line-height:1.25;margin:14px 0}
+.card h2 a,.cardLink{color:inherit;text-decoration-thickness:1px;text-underline-offset:4px}
+.card p{line-height:1.55}
+.cardLink{display:inline-block;margin-top:14px;font-weight:700}
+.article{max-width:760px}
+.breadcrumbs{font-size:.9rem;margin-bottom:28px}
+.breadcrumbs a{color:inherit}
+.articleHeader h1{font-size:clamp(2rem,5.2vw,3.8rem)}
+.lead{font-size:1.18rem;line-height:1.62;max-width:66ch}
+.reviewMeta{font-size:.9rem;font-weight:700;margin:18px 0 28px}
+.toc{border:1px solid #181818;background:#fff;padding:22px 24px;margin:0 0 38px}
+.toc strong{display:block;margin-bottom:10px}
+.toc ol{margin:0;padding-left:1.35rem}
+.toc li{margin:.35rem 0}
+.toc a{color:inherit}
+.body{font-size:1.02rem;line-height:1.58;max-width:66ch;overflow-wrap:anywhere}
+.body h2{font-family:var(--font-unbounded,system-ui);font-size:clamp(1.35rem,3vw,2rem);line-height:1.2;margin:48px 0 16px;scroll-margin-top:24px}
+.body p{margin:0 0 18px}
+.body ul,.body ol{padding-left:1.4rem;margin:0 0 22px}
+.body li{margin:.45rem 0}
+.body a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px}
+.body strong{font-weight:800}
+.body :global(.guideTableWrap){overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid #181818;background:#fff}
+.body :global(table){width:100%;min-width:680px;border-collapse:collapse;font-size:.94rem;line-height:1.45}
+.body :global(th),.body :global(td){padding:12px 14px;border-bottom:1px solid #c9c2b4;border-right:1px solid #c9c2b4;text-align:left;vertical-align:top}
+.body :global(th){background:#ece5d8;font-weight:800}
+.body :global(tr:last-child td){border-bottom:0}
+@media(max-width:640px){.listingMain,.articleMain{padding:44px 16px 72px}.card{padding:20px}.articleHeader h1{font-size:2rem}.lead{font-size:1.06rem}.toc{padding:18px}.body{font-size:1rem}}

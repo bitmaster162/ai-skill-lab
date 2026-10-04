@@ -16,8 +16,8 @@ The canonical production host is `https://aiskillab.work`. The legacy public Ver
 
 ## Routes
 
-- RU: `/`, `/about`, `/build`, `/business`, `/challenge`, `/curriculum`, `/family`, `/faq`, `/kids`, `/matcher`, `/method`, `/parents`, `/personal`, `/phuket`, `/pricing`, `/privacy`, `/projects`, `/proof`, `/safety`, `/start`, `/studio`, `/teens`, `/terms`
-- EN: `/en`, `/en/about`, `/en/build`, `/en/business`, `/en/challenge`, `/en/curriculum`, `/en/family`, `/en/faq`, `/en/kids`, `/en/matcher`, `/en/method`, `/en/parents`, `/en/personal`, `/en/phuket`, `/en/pricing`, `/en/privacy`, `/en/projects`, `/en/proof`, `/en/safety`, `/en/start`, `/en/studio`, `/en/teens`, `/en/terms`
+- RU: `/`, `/about`, `/build`, `/business`, `/challenge`, `/curriculum`, `/family`, `/faq`, `/guides`, `/guides/ai-safety-for-kids`, `/kids`, `/matcher`, `/method`, `/parents`, `/personal`, `/phuket`, `/pricing`, `/privacy`, `/projects`, `/proof`, `/safety`, `/start`, `/studio`, `/teens`, `/terms`
+- EN: `/en`, `/en/about`, `/en/build`, `/en/business`, `/en/challenge`, `/en/curriculum`, `/en/family`, `/en/faq`, `/en/guides`, `/en/guides/ai-safety-for-kids`, `/en/kids`, `/en/matcher`, `/en/method`, `/en/parents`, `/en/personal`, `/en/phuket`, `/en/pricing`, `/en/privacy`, `/en/projects`, `/en/proof`, `/en/safety`, `/en/start`, `/en/studio`, `/en/teens`, `/en/terms`
 
 ## Environment
 

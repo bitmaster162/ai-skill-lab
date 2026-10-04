@@ -63,9 +63,9 @@ jobs:
                   )
               rows[route] = (path.as_posix(), parser.lang)
 
-          if len(rows) != 46:
+          if len(rows) != 50:
               raise SystemExit(
-                  f"LANG_PARITY_ROUTE_COUNT_FAIL expected=46 actual={len(rows)} routes={sorted(rows)}"
+                  f"LANG_PARITY_ROUTE_COUNT_FAIL expected=50 actual={len(rows)} routes={sorted(rows)}"
               )
 
           bad = []
@@ -79,7 +79,7 @@ jobs:
               if lang != expected:
                   bad.append((route, path, lang, expected))
 
-          if ru != 23 or en != 23:
+          if ru != 25 or en != 25:
               raise SystemExit(f"LANG_PARITY_LOCALE_COUNT_FAIL ru={ru} en={en}")
           if bad:
               for row in bad:

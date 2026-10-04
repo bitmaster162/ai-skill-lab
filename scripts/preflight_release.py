@@ -59,6 +59,7 @@ CHECKS = [
     ("e1_4_intro_flow", ["python", "scripts/check_e1_4_intro_flow.py"]),
     ("e1_5_metadata", ["python", "scripts/check_e1_5_metadata.py"]),
     ("e1_6_mobile_header", ["python", "scripts/check_e1_6_mobile_header.py"]),
+    ("e2_guides", ["python", "scripts/check_guides.py"]),
     ("indexnow", ["python", "scripts/check_indexnow.py"]),
     ("contact_funnel", ["python", "scripts/check_contact_funnel.py"]),
     ("cta_semantics", ["python", "scripts/check_cta_semantics.py"]),

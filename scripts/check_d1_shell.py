@@ -43,6 +43,10 @@ FOOTER_R157={
  "ru":["/faq","/about","/challenge","/build","/proof","/pricing","/start","/kids","/teens","/parents","/personal","/business","/method","/curriculum","/phuket"],
  "en":["/en/faq","/en/about","/en/challenge","/en/build","/en/proof","/en/pricing","/en/start","/en/kids","/en/teens","/en/parents","/en/personal","/en/business","/en/method","/en/curriculum","/en/phuket"],
 }
+FOOTER_E2={
+ "ru":["/faq","/guides","/about","/challenge","/build","/proof","/pricing","/start","/kids","/teens","/parents","/personal","/business","/method","/curriculum","/phuket"],
+ "en":["/en/faq","/en/guides","/en/about","/en/challenge","/en/build","/en/proof","/en/pricing","/en/start","/en/kids","/en/teens","/en/parents","/en/personal","/en/business","/en/method","/en/curriculum","/en/phuket"],
+}
 release=json.loads((LIVE/"_release.json").read_text(encoding="utf-8")).get("release_id")
 CAPTION={"ru":"Практический AI · online / Phuket","en":"Practical AI capability · online / Phuket"}
 
@@ -56,7 +60,7 @@ def hrefs(fragment):
  return re.findall(r'<a\b[^>]*href="([^"]+)"',fragment,re.I)
 
 public=[p for p in sorted(LIVE.rglob("*.html")) if p.name!="404.html"]
-req(len(public)==46,f"public pages {len(public)} != 46")
+req(len(public)==50,f"public pages {len(public)} != 50")
 reach_count=light_count=start_reply_count=0
 for p in public:
  rel=p.relative_to(LIVE).as_posix()
@@ -75,7 +79,7 @@ for p in public:
  footer=re.search(r'<footer class="workshopFooter">(.*?)</footer>',text,re.S)
  req(bool(footer),f"{rel}: Workshop footer missing")
  if footer:
-  expected_footer=FOOTER_R157[lang] if release in {"R157_I1_3_INDEXABILITY","R158_F1_2_MATCHER_V2","R160_F1_2_PRIVACY_DISCLOSURE"} else FOOTER[lang]
+  expected_footer=FOOTER_E2[lang] if release=="E2_GUIDES_R1" else FOOTER_R157[lang] if release in {"R157_I1_3_INDEXABILITY","R158_F1_2_MATCHER_V2","R160_F1_2_PRIVACY_DISCLOSURE"} else FOOTER[lang]
   req(hrefs(footer.group(1))==expected_footer,f"{rel}: footer href drift {hrefs(footer.group(1))}")
   req(CAPTION[lang] in footer.group(1),f"{rel}: footer caption drift")
  reach=re.search(r'<section class="reachBlock">(.*?)</section>',text,re.S)
@@ -98,7 +102,7 @@ for p in public:
    links=hrefs(block)
    req(links==[CONTACT[lang]["start"],*CONTACT_URLS],f"{rel}: reach links drift {links}")
 
-req((reach_count,light_count,start_reply_count)==(40,4,2),f"D1 distribution reach/light/start={(reach_count,light_count,start_reply_count)}")
+req((reach_count,light_count,start_reply_count)==(44,4,2),f"D1 distribution reach/light/start={(reach_count,light_count,start_reply_count)}")
 
 for p in sorted(LIVE.rglob("*.html")):
  req(' style=' not in p.read_text(encoding="utf-8"),f"{p.relative_to(LIVE)}: inline style")
@@ -145,7 +149,7 @@ for marker in [
 ]:
  req(marker in source,f"source shell missing {marker}")
 
-print(f"d1_shell_checks={checks} public=46 reach={reach_count} light={light_count} start_reply={start_reply_count}")
+print(f"d1_shell_checks={checks} public=50 reach={reach_count} light={light_count} start_reply={start_reply_count}")
 if errors:
  print("D1_SHELL_FAIL")
  for error in errors: print("FAIL:",error)
