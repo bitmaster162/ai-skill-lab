@@ -28,8 +28,8 @@
     },
     {
       "path": "business.html",
-      "sha256": "6a629e2ce2a4566dfe9a8b34e8f378883bcb778823a3a3d33729c71fa1e8f20b",
-      "size": 28692
+      "sha256": "46c8daa4f1915df2b983be67cb7dddffa17bbf35c517289796dcb389f575cc42",
+      "size": 35085
     },
     {
       "path": "challenge.html",
@@ -58,8 +58,8 @@
     },
     {
       "path": "en/business.html",
-      "sha256": "7fe85afe07d90fbfeba47d7c737ef8efc4fbb707cc5d5b6cbf43657178bb6b83",
-      "size": 22886
+      "sha256": "5c2cd0e46d81080f5c5a5ad55975f5bccc111bf1116e4f0be24111f1b1144fe4",
+      "size": 27089
     },
     {
       "path": "en/challenge.html",
@@ -113,8 +113,8 @@
     },
     {
       "path": "en/personal.html",
-      "sha256": "729806c5e41d75b722bcc4b05f20414aada93c756f84aa8b9c7531ead41405ec",
-      "size": 10539
+      "sha256": "037265fec718fb323d940b2f7f120de439e78d0602bd6acd4e12f77f68d49db8",
+      "size": 14742
     },
     {
       "path": "en/phuket.html",
@@ -158,8 +158,8 @@
     },
     {
       "path": "en/teens.html",
-      "sha256": "8508e07816a082d94ae3f14866bcfb25c7840ab636df4afdfef7ea42001183fe",
-      "size": 12296
+      "sha256": "b052772c211b6518c83937ebea1d9915bb49107e24e2899e7fc04fa149844d05",
+      "size": 16499
     },
     {
       "path": "en/terms.html",
@@ -268,8 +268,8 @@
     },
     {
       "path": "personal.html",
-      "sha256": "f1122e5d7bcb082818cca6b056cb5c82872b3507811978a9f6d5b15e11a85a15",
-      "size": 12682
+      "sha256": "fe2b771d4535e7027811b0934e5621af901a4e422c348535c0b0d5e580b239cd",
+      "size": 19075
     },
     {
       "path": "phuket.html",
@@ -338,8 +338,8 @@
     },
     {
       "path": "teens.html",
-      "sha256": "65705e195b5dbb7dafcc742de8090ffb0c861d9821ea530aad7ff890ce410d25",
-      "size": 15538
+      "sha256": "13953e63619f7534e44b63620944cb6bed55c4bb2c7e69d1b0cbefad0137071a",
+      "size": 21931
     },
     {
       "path": "terms.html",
@@ -353,11 +353,11 @@
     },
     {
       "path": "workshop.css",
-      "sha256": "21e504d27ebbc5266dd6f2262400656b43d012ff46f7a142e982bc17562b2a0c",
-      "size": 36354
+      "sha256": "8e0640a4b7b14f3337a4a77620cc9edf8d365fec5dd92a76bd6febb2e409e5a3",
+      "size": 37817
     }
   ],
-  "payload_sha256": "a072ded84b3d1ccb7cfd431a07589cada1bed4132f97b17233cfc23c6b352fff",
-  "release_id": "E2_GUIDES_R1",
+  "payload_sha256": "eba1ec01f088a93344eb099fcb33a80b4185eda7c0b83fd8503b71cb9080911f",
+  "release_id": "N15_AGENT_SAFETY_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }

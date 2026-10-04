@@ -5,3 +5,4 @@ data/** text=auto eol=lf
 schema/** text=auto eol=lf
 public/** text=auto eol=lf
 deploy/live/** text=auto eol=lf
+guides/** text=auto eol=lf
