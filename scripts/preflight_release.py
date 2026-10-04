@@ -61,6 +61,7 @@ CHECKS = [
     ("e1_6_mobile_header", ["python", "scripts/check_e1_6_mobile_header.py"]),
     ("e2_guides", ["python", "scripts/check_guides.py"]),
     ("n15_agent_safety", ["python", "scripts/check_n15_agent_safety.py"]),
+    ("a4_phuket_local", ["python", "scripts/check_a4_phuket_local.py"]),
     ("indexnow", ["python", "scripts/check_indexnow.py"]),
     ("contact_funnel", ["python", "scripts/check_contact_funnel.py"]),
     ("cta_semantics", ["python", "scripts/check_cta_semantics.py"]),

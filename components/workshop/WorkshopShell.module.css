@@ -79,3 +79,21 @@
 .agentSafetyNote{max-width:900px;margin:26px 0 0;color:var(--muted);line-height:1.7}
 @media(max-width:1050px){.agentSafetyCases{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.agentSafetyCases,.agentSafetyRules{grid-template-columns:1fr}.agentSafetyCase,.agentSafetyRules li{padding:20px}}
+
+/* A4 · Phuket local coordination. Existing Workshop type scale intentionally unchanged. */
+.phuketLocal,.phuketFormats{padding:clamp(48px,7vw,88px) clamp(18px,6vw,92px)}
+.phuketLocal{background:var(--ground)}
+.phuketFormats{background:var(--panel)}
+.phuketLocalHead{max-width:860px;margin:0 0 30px}
+.phuketLocalHead>span{display:block;color:var(--muted);font-weight:850;letter-spacing:.06em;margin-bottom:12px}
+.phuketLocalHead h2{margin:0 0 14px}
+.phuketLocalHead p{margin:0;color:var(--second);line-height:1.7}
+.phuketAreaGrid,.phuketFormatGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.phuketAreaGrid article,.phuketFormatGrid article{min-width:0;padding:22px;border:1px solid var(--border);border-radius:20px;background:var(--card)}
+.phuketAreaGrid strong,.phuketFormatGrid>article>span{display:block;margin-bottom:12px;font-weight:850}
+.phuketAreaGrid p,.phuketFormatGrid p{margin:0;color:var(--second);line-height:1.65}
+.phuketFormatGrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.phuketFormatTitle{display:block;margin:10px 0 12px}
+.phuketLocalNote{max-width:860px;margin:24px 0 0;color:var(--muted);line-height:1.7}
+@media(max-width:980px){.phuketAreaGrid{grid-template-columns:1fr 1fr}.phuketFormatGrid{grid-template-columns:1fr}}
+@media(max-width:620px){.phuketLocal,.phuketFormats{padding:44px 18px}.phuketAreaGrid{grid-template-columns:1fr}.phuketAreaGrid article,.phuketFormatGrid article{padding:20px}}
