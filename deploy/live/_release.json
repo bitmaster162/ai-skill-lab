@@ -318,7 +318,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "c9fb7cc88ac4ced17d47d3320f42ba1d09e346be968fc0cfa000f0709a54aad2",
+      "sha256": "527940b2f4ad863bca878f71ff7ba207719487fdfb539c29f13eccbc29c21c1a",
       "size": 4220
     },
     {
@@ -357,7 +357,7 @@
       "size": 39230
     }
   ],
-  "payload_sha256": "3ed21f9ae57e1a46d695420856de38a5e380258227797ed7e461473c77c4b9c0",
+  "payload_sha256": "55506683f9406ef422731390208f4686a12898ea8ee00553cfefbb152901d5d5",
   "release_id": "A3_CALCOM_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }

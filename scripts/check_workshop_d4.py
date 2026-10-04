@@ -135,7 +135,8 @@ if release in {'R157_I1_3_INDEXABILITY','R158_F1_2_MATCHER_V2','R160_F1_2_PRIVAC
 if release in {'R158_F1_2_MATCHER_V2','R160_F1_2_PRIVACY_DISCLOSURE'}:protected.update(R158_PROTECTED_OVERRIDES)
 if release=='R160_F1_2_PRIVACY_DISCLOSURE':protected.update(R160_PROTECTED_OVERRIDES)
 if release in {'E2_GUIDES_R1','N15_AGENT_SAFETY_R1','A4_PHUKET_LOCAL_R1','A3_CALCOM_R1'}:protected=E2_PROTECTED_SNAPSHOT.copy()
-if release=='A3_CALCOM_R1':protected['deploy/live/lab-command.js']='b139e284cb66761a48f89444539c8eb646b16d30d0366dc96598dfcbc84508fa'
+if release=='A3_CALCOM_R1':
+ protected['deploy/live/lab-command.js']='b139e284cb66761a48f89444539c8eb646b16d30d0366dc96598dfcbc84508fa'; protected['app/sitemap.ts']='9b5e67c40f9dd4015a3aa5f6d019a9921a0db2d92518e6f90232904189d4446b'; protected['deploy/live/sitemap.xml']='527940b2f4ad863bca878f71ff7ba207719487fdfb539c29f13eccbc29c21c1a'
 for rel,digest in protected.items():require(sha(rel)==digest,f'protected byte drift {rel}')
 for locale in ('ru','en'):
  en=locale=='en'; prefix='en/' if en else ''

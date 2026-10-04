@@ -12,7 +12,7 @@ LIVE = ROOT / "deploy" / "live"
 GUIDE_DIR = ROOT / "guides" / "aiskillab"
 ORIGIN = "https://aiskillab.work"
 ORG_ID = f"{ORIGIN}/#organization"
-LASTMOD = "2026-10-04"
+LASTMOD = "2026-10-05"
 
 GUIDE_CSS = r"""
 /* E2_GUIDES_START */
