@@ -20,6 +20,5 @@ jobs:
           python-version: '3.12'
       - name: Check five public GET targets
         env:
-          PUBLIC_MONITOR_TELEGRAM_BOT_TOKEN: ${{ secrets.PUBLIC_MONITOR_TELEGRAM_BOT_TOKEN }}
-          PUBLIC_MONITOR_TELEGRAM_CHAT_ID: ${{ secrets.PUBLIC_MONITOR_TELEGRAM_CHAT_ID }}
+          PUBLIC_MONITOR_RELAY_SECRET: ${{ secrets.PUBLIC_MONITOR_RELAY_SECRET }}
         run: python scripts/public_monitor.py

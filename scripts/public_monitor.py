@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import hashlib
+import hmac
 import json
 import os
-import sys
+import time
 import urllib.error
-import urllib.parse
 import urllib.request
+import uuid
 from dataclasses import dataclass
 from typing import Callable
 
-USER_AGENT = "AI-Skill-Lab-P27.7-Monitor/1.0"
+USER_AGENT = "AI-Skill-Lab-P27.7-Monitor/1.1"
 TIMEOUT_SECONDS = 15
+RELAY_URL = "https://ai-skill-lab-lead-receiver.mirokonkr.workers.dev/r164/public-monitor/alert"
+RELAY_SCHEMA = "ai-skill-lab.public-monitor-alert.v1"
+RELAY_SIGNATURE_DOMAIN = "public-monitor-alert-v1"
 
 TARGETS = (
     ("bitevo-home", "https://bitevo.work/", 200),
@@ -20,6 +25,7 @@ TARGETS = (
     ("aiskillab-home", "https://aiskillab.work/", 200),
     ("aiskillab-start", "https://aiskillab.work/start", 200),
 )
+
 
 @dataclass(frozen=True)
 class Result:
@@ -52,27 +58,52 @@ def run_checks(fetcher: Callable[[str, int], int] = fetch_get) -> list[Result]:
     return results
 
 
-def format_alert(failures: list[Result]) -> str:
-    lines = ["AI Skill Lab P27.7 public GET monitor failed."]
-    for item in failures:
-        observed = item.actual if item.actual is not None else item.error or "unknown"
-        lines.append(f"- {item.name}: expected={item.expected} observed={observed} url={item.url}")
-    return "\n".join(lines)
+def relay_payload(failures: list[Result], request_id: str) -> dict:
+    return {
+        "schema": RELAY_SCHEMA,
+        "requestId": request_id,
+        "failures": [
+            {
+                "name": item.name,
+                "expected": item.expected,
+                "actual": item.actual,
+                "error": item.error,
+            }
+            for item in failures
+        ],
+    }
 
 
-def send_telegram_alert(message: str, token: str, chat_id: str, timeout: int = TIMEOUT_SECONDS) -> bool:
-    if not token or not chat_id:
+def send_monitor_alert(
+    failures: list[Result],
+    secret: str,
+    timeout: int = TIMEOUT_SECONDS,
+    now_seconds: int | None = None,
+    request_id: str | None = None,
+) -> bool:
+    if not secret or len(secret.encode("utf-8")) < 32 or not failures:
         return False
-    payload = urllib.parse.urlencode({
-        "chat_id": chat_id,
-        "text": message,
-        "disable_web_page_preview": "true",
-    }).encode("utf-8")
+
+    timestamp = str(now_seconds if now_seconds is not None else int(time.time()))
+    rid = request_id or str(uuid.uuid4())
+    body = json.dumps(relay_payload(failures, rid), separators=(",", ":"), sort_keys=True).encode("utf-8")
+    digest = hmac.new(
+        secret.encode("utf-8"),
+        f"{RELAY_SIGNATURE_DOMAIN}.{timestamp}.{rid}.".encode("utf-8") + body,
+        hashlib.sha256,
+    ).hexdigest()
+
     request = urllib.request.Request(
-        f"https://api.telegram.org/bot{token}/sendMessage",
-        data=payload,
+        RELAY_URL,
+        data=body,
         method="POST",
-        headers={"Content-Type": "application/x-www-form-urlencoded", "User-Agent": USER_AGENT},
+        headers={
+            "Content-Type": "application/json",
+            "User-Agent": USER_AGENT,
+            "X-AI-Skill-Lab-Timestamp": timestamp,
+            "X-AI-Skill-Lab-Request-Id": rid,
+            "X-AI-Skill-Lab-Public-Monitor-Signature": f"v1={digest}",
+        },
     )
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
@@ -92,12 +123,11 @@ def main() -> int:
         print(f"PUBLIC_MONITOR_PASS targets={len(results)} method=GET post_forms=0")
         return 0
 
-    token = os.environ.get("PUBLIC_MONITOR_TELEGRAM_BOT_TOKEN", "")
-    chat_id = os.environ.get("PUBLIC_MONITOR_TELEGRAM_CHAT_ID", "")
-    alert_sent = send_telegram_alert(format_alert(failures), token, chat_id)
+    secret = os.environ.get("PUBLIC_MONITOR_RELAY_SECRET", "")
+    alert_sent = send_monitor_alert(failures, secret)
     print(
         "PUBLIC_MONITOR_FAIL "
-        f"targets={len(results)} failures={len(failures)} telegram_alert={'sent' if alert_sent else 'not_sent'}"
+        f"targets={len(results)} failures={len(failures)} relay_alert={'sent' if alert_sent else 'not_sent'}"
     )
     return 1
 
