@@ -1,5 +1,5 @@
 {
- "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below. E2: guides permits only the global Guides footer link plus the exact parent-checklist text/link on /kids, /parents, /safety and EN pairs. N15: agent-safety permits only the exact generated lesson text and its three cited source links on /personal, /business, /teens and EN pairs. A4: Phuket local permits only the exact generated local-areas/formats text on /phuket and /en/phuket; no links or meta changes. A3: Cal.com permits only the exact 15-minute booking URL on /start and /en/start; no text or meta changes. A5: mentor card permits only exact mentor text, GitHub/LinkedIn links and mentor aria/alt text on /, /en, /about and /en/about.",
+ "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below. E2: guides permits only the global Guides footer link plus the exact parent-checklist text/link on /kids, /parents, /safety and EN pairs. N15: agent-safety permits only the exact generated lesson text and its three cited source links on /personal, /business, /teens and EN pairs. A4: Phuket local permits only the exact generated local-areas/formats text on /phuket and /en/phuket; no links or meta changes. A3: Cal.com permits only the exact 15-minute booking URL on /start and /en/start; no text or meta changes. A5: mentor card permits only exact mentor text, GitHub/LinkedIn links and mentor aria/alt text on /, /en, /about and /en/about. E1.3: post-submit permits only the exact diagnostic/Telegram continuation labels on /start and /en/start; success feedback remains runtime-only.",
  "phrases": {
   "ru": [
    "Как написать",
@@ -67,6 +67,14 @@
   ]
  },
  "route_phrases": {
+  "/start": [
+   "записаться на диагностику",
+   "написать в telegram"
+  ],
+  "/en/start": [
+   "book diagnostic",
+   "message on telegram"
+  ],
   "/safety": [
    "Возрастные правила сервисов",
    "Группы — по порогу из условий самого сервиса, а не по типу инструмента. Каждая строка взята с официальной страницы сервиса.",

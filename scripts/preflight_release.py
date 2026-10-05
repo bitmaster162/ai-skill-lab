@@ -55,6 +55,7 @@ CHECKS = [
     ("matcher_runtime", ["node", "scripts/check_matcher_runtime.mjs"]),
     ("start_runtime", ["node", "scripts/check_start_runtime.mjs"]),
     ("public_form_runtime", ["node", "scripts/check_public_form_runtime.mjs"]),
+    ("e1_3_post_submit", ["python", "scripts/check_e1_3_post_submit.py"]),
     ("commercial_parity", ["python", "scripts/check_commercial_parity.py"]),
     ("e1_4_intro_flow", ["python", "scripts/check_e1_4_intro_flow.py"]),
     ("e1_5_metadata", ["python", "scripts/check_e1_5_metadata.py"]),

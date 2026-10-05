@@ -148,8 +148,8 @@
     },
     {
       "path": "en/start.html",
-      "sha256": "4818800af5ff2f0b7c285522dcb4773984b8f05e14f4a2538692483765ba9eea",
-      "size": 15579
+      "sha256": "c7a050fbea2dc8767aa5b0e8ea20728e5220321f8b6c8c7178161218600c9058",
+      "size": 15887
     },
     {
       "path": "en/studio.html",
@@ -328,13 +328,13 @@
     },
     {
       "path": "start-brief.js",
-      "sha256": "a887dc23a871aeac2b4326c7adfae3bc22a0fd8c769921336482c590c5b976fc",
-      "size": 3590
+      "sha256": "e2780565c7761eaf0b81499649775859ffb036e03e35384e23b596fdb4751f6b",
+      "size": 3765
     },
     {
       "path": "start.html",
-      "sha256": "c26e8d913202330e35691b746f313fc8210caa7017bfaec2fe20394c05415e66",
-      "size": 21041
+      "sha256": "8d060b90325491c223e730d18ccb2dec85203c0a0af55322e4dc6e2e19a212f4",
+      "size": 21391
     },
     {
       "path": "studio.html",
@@ -358,11 +358,11 @@
     },
     {
       "path": "workshop.css",
-      "sha256": "f2db1cc7b618da4c41ee6cb0755bbf6359f6fe07d9cd74532ce3d4a8045eaf88",
-      "size": 40756
+      "sha256": "ceedeaf34c1e4fb0f8dfe28941584f3a7dbc61cd95f17145585d587d52680414",
+      "size": 41053
     }
   ],
-  "payload_sha256": "687a4a6fc4701a62c93b2c9f73659451957c0f2297bae40b848eaf08a3476c09",
-  "release_id": "A5_MENTOR_R1",
+  "payload_sha256": "6cb69ad754c665775355047aafb3c3c5da05d43879ca498a6b84723dc50a2c5f",
+  "release_id": "E1_3_POST_SUBMIT_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }
