@@ -80,6 +80,15 @@
 @media(max-width:1050px){.agentSafetyCases{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.agentSafetyCases,.agentSafetyRules{grid-template-columns:1fr}.agentSafetyCase,.agentSafetyRules li{padding:20px}}
 
+/* DESIGN_TYPOGRAPHY_R1 · Design System 2026-10-01.
+   Fluid interpolation is anchored to the approved 390px mobile and 1280px desktop specimens. */
+.hero h1{font-size:clamp(34px,calc(21.73px + 3.146vw),62px);line-height:1.03}
+.startHero h1,.audienceHero h1,.familyHero h1{font-size:clamp(31px,calc(21.80px + 2.360vw),52px);line-height:1.03}
+.pricingHero h1{font-size:clamp(28px,calc(24.49px + .899vw),36px);line-height:1.05}
+.sectionHead h2,.darkBand h2,.finalCta h2,.proofBand h2{font-size:clamp(24px,calc(17.87px + 1.573vw),38px);line-height:1.08}
+.page :global(.hero h1),.page :global(.proofHero h1),.page :global(.projectStudioHero h1){font-size:clamp(31px,calc(21.80px + 2.360vw),52px);line-height:1.03}
+.page :global(.sectionHead h2){font-size:clamp(24px,calc(17.87px + 1.573vw),38px);line-height:1.08}
+
 /* A4 · Phuket local coordination. Existing Workshop type scale intentionally unchanged. */
 .phuketLocal,.phuketFormats{padding:clamp(48px,7vw,88px) clamp(18px,6vw,92px)}
 .phuketLocal{background:var(--ground)}

@@ -358,11 +358,11 @@
     },
     {
       "path": "workshop.css",
-      "sha256": "ceedeaf34c1e4fb0f8dfe28941584f3a7dbc61cd95f17145585d587d52680414",
-      "size": 41053
+      "sha256": "202552407cad7ed04a4253851c9fffdc49ec46548cfbce4bb307ea06500854b8",
+      "size": 41731
     }
   ],
-  "payload_sha256": "6cb69ad754c665775355047aafb3c3c5da05d43879ca498a6b84723dc50a2c5f",
-  "release_id": "E1_3_POST_SUBMIT_R1",
+  "payload_sha256": "fb3984d5b059fd06e656df7549dff37aa5e9f899d43c3aa4c5bec0ce862c63fb",
+  "release_id": "DESIGN_TYPOGRAPHY_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }
