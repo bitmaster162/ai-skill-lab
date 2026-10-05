@@ -5,8 +5,10 @@ from html.parser import HTMLParser
 from pathlib import Path
 from public_origin import PUBLIC_ORIGIN
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/"deploy/live";ORIGIN=PUBLIC_ORIGIN
+RELEASE=json.loads((LIVE/"_release.json").read_text(encoding="utf-8")).get("release_id")
 ORG_ID=f"{ORIGIN}/#organization";WEB_ID=f"{ORIGIN}/#website";PERSON_ID=f"{ORIGIN}/about#person"
 TELEGRAM="https://t.me/BiTFormer";WHATSAPP="https://wa.me/66649701204";LINE="https://line.me/ti/p/~iwf555"
+GITHUB="https://github.com/bitmaster162";LINKEDIN="https://www.linkedin.com/in/robert-dumanyan-984171335/";MENTOR_IMAGE=f"{ORIGIN}/robert-dumanyan-mentor.webp"
 FORBIDDEN_TYPES={"Review","AggregateRating"};FORBIDDEN_KEYS={"aggregateRating","review","reviewCount","ratingValue"}
 DESCRIPTIONS={"ru":"Практическое персональное обучение AI для взрослых, бизнеса, детей и подростков — online worldwide и в Phuket по договорённости.","en":"Practical one-to-one AI education for adults, business, kids and teens — online worldwide and in Phuket by arrangement."}
 COURSE={
@@ -31,7 +33,11 @@ def tops(x):return x if isinstance(x,list) else [x]
 def organization(lang):
  return {"@context":"https://schema.org","@type":"EducationalOrganization","@id":ORG_ID,"name":"AI Skill Lab","url":ORIGIN,"description":DESCRIPTIONS[lang],"email":"robert@aiskillab.work","telephone":"+66649701204","logo":f"{ORIGIN}/logo.png","areaServed":[{"@type":"Place","name":"Phuket, Thailand"},{"@type":"Place","name":"Worldwide (online)"}],"founder":{"@id":PERSON_ID},"sameAs":[TELEGRAM,WHATSAPP,LINE]}
 def website():return {"@context":"https://schema.org","@type":"WebSite","@id":WEB_ID,"url":ORIGIN,"name":"AI Skill Lab","inLanguage":["ru","en"],"publisher":{"@id":ORG_ID}}
-def person():return {"@context":"https://schema.org","@type":"Person","@id":PERSON_ID,"name":"Dumanyan Robert","jobTitle":"Founder / instructor","worksFor":{"@id":ORG_ID},"url":f"{ORIGIN}/about","email":"robert@aiskillab.work","knowsAbout":["AI systems","Research workflows","AI agents","Automation","Decision workflows","Digital products"],"sameAs":[TELEGRAM]}
+def person():
+ base={"@context":"https://schema.org","@type":"Person","@id":PERSON_ID,"name":"Dumanyan Robert","jobTitle":"Founder / instructor","worksFor":{"@id":ORG_ID},"url":f"{ORIGIN}/about","email":"robert@aiskillab.work","knowsAbout":["AI systems","Research workflows","AI agents","Automation","Decision workflows","Digital products"],"sameAs":[TELEGRAM]}
+ if RELEASE=="A5_MENTOR_R1":
+  base["name"]="Robert Dumanyan";base["image"]=MENTOR_IMAGE;base["sameAs"]=[TELEGRAM,GITHUB,LINKEDIN]
+ return base
 def course_page(route,lang):
  name,desc=COURSE[lang][route];prefix="/en" if lang=="en" else ""
  return {"@context":"https://schema.org","@type":"Course","@id":f"{ORIGIN}{prefix}/{route}#course","name":name,"description":desc,"provider":{"@id":ORG_ID},"url":f"{ORIGIN}{prefix}/{route}","inLanguage":lang,"hasCourseInstance":{"@type":"CourseInstance","courseMode":"online","courseWorkload":"PT60M"}}

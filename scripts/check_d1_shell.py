@@ -79,7 +79,7 @@ for p in public:
  footer=re.search(r'<footer class="workshopFooter">(.*?)</footer>',text,re.S)
  req(bool(footer),f"{rel}: Workshop footer missing")
  if footer:
-  expected_footer=FOOTER_E2[lang] if release in {"E2_GUIDES_R1","N15_AGENT_SAFETY_R1","A4_PHUKET_LOCAL_R1","A3_CALCOM_R1"} else FOOTER_R157[lang] if release in {"R157_I1_3_INDEXABILITY","R158_F1_2_MATCHER_V2","R160_F1_2_PRIVACY_DISCLOSURE"} else FOOTER[lang]
+  expected_footer=FOOTER_E2[lang] if release in {"E2_GUIDES_R1","N15_AGENT_SAFETY_R1","A4_PHUKET_LOCAL_R1","A3_CALCOM_R1","A5_MENTOR_R1"} else FOOTER_R157[lang] if release in {"R157_I1_3_INDEXABILITY","R158_F1_2_MATCHER_V2","R160_F1_2_PRIVACY_DISCLOSURE"} else FOOTER[lang]
   req(hrefs(footer.group(1))==expected_footer,f"{rel}: footer href drift {hrefs(footer.group(1))}")
   req(CAPTION[lang] in footer.group(1),f"{rel}: footer caption drift")
  reach=re.search(r'<section class="reachBlock">(.*?)</section>',text,re.S)

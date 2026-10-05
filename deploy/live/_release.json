@@ -1,5 +1,5 @@
 {
-  "file_count": 71,
+  "file_count": 72,
   "files": [
     {
       "path": "404.html",
@@ -13,8 +13,8 @@
     },
     {
       "path": "about.html",
-      "sha256": "4eaf9c9e9ec63a4e159d31fe43b45d9ca5c06f8a1750512901fb582c0ad44e86",
-      "size": 10564
+      "sha256": "67eb9c97aab682ddca44ef3d4e79f261f5f479260f862a15de955bdd7837f5f5",
+      "size": 12043
     },
     {
       "path": "apple-touch-icon.png",
@@ -43,13 +43,13 @@
     },
     {
       "path": "en.html",
-      "sha256": "29cbb06cff4c599a436889c03932e857ced0f449cb72e93a0c5e0aae72ef4488",
-      "size": 11363
+      "sha256": "4bef61902674130e3421143e5329a74564a66c9cfa7c32439409481a4f623896",
+      "size": 12484
     },
     {
       "path": "en/about.html",
-      "sha256": "a502b12df29d2c2ae2ccbc01c67d22feb9c7299bebd2360573b926a339329cb9",
-      "size": 9219
+      "sha256": "e5e7c89ed856beaa84b56e56694b02a78eb37a1abd8934da5ab8cdcfd3950530",
+      "size": 10492
     },
     {
       "path": "en/build.html",
@@ -218,8 +218,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "04a29337485c2e26d9737f4fc314b77b6458fe7d800765025919fcaa552be2a6",
-      "size": 13553
+      "sha256": "4e4d84b88b00481aea42f40f166bc52b9bb5f0ce9998aa818cfed32576c942bf",
+      "size": 14880
     },
     {
       "path": "kids.html",
@@ -302,6 +302,11 @@
       "size": 26768
     },
     {
+      "path": "robert-dumanyan-mentor.webp",
+      "sha256": "1ccb8e47747706274a47302ed1a379748269de24890b5778ab721fd62ff8251b",
+      "size": 10582
+    },
+    {
       "path": "robots.txt",
       "sha256": "332cbcca130fa5d82115641450e6b05b939f5a02243a141c7795281b5286af88",
       "size": 67
@@ -348,16 +353,16 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "96c4cd7c79ed630c30a6cd892646853e8ac0321d502d996fb3c9fe4e5b9ad0fd",
+      "sha256": "82f34e283fdd17aa9aaf8c2f80ea4bec1a359085a922b6e032a007aca93ce50e",
       "size": 4102
     },
     {
       "path": "workshop.css",
-      "sha256": "d8134dd73fc966614aab106412943f7925a468e0b041e4645f2f1f7a9f0c9986",
-      "size": 39230
+      "sha256": "f2db1cc7b618da4c41ee6cb0755bbf6359f6fe07d9cd74532ce3d4a8045eaf88",
+      "size": 40756
     }
   ],
-  "payload_sha256": "55506683f9406ef422731390208f4686a12898ea8ee00553cfefbb152901d5d5",
-  "release_id": "A3_CALCOM_R1",
+  "payload_sha256": "687a4a6fc4701a62c93b2c9f73659451957c0f2297bae40b848eaf08a3476c09",
+  "release_id": "A5_MENTOR_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }
