@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ogPageMetadata } from "@/lib/og-assets";
 import { WorkshopEditorial } from "@/components/workshop/WorkshopEditorial";
 import Link from "next/link";
 import { IntroCallCta } from "@/components/IntroCallCta";
@@ -6,6 +7,8 @@ export const metadata: Metadata = {
   title: { absolute: "For parents — AI Skill Lab · Phuket" },
   description: "What parents get from an AI program for ages 8–18: visible progress, a project, safety rules and a clear adult role.",
   alternates: { canonical: "/en/parents", languages: { ru: "/parents", en: "/en/parents" } },
+
+  ...ogPageMetadata({ locale: "en", slug: "parents", title: "For parents — AI Skill Lab · Phuket", description: "What parents get from an AI program for ages 8–18: visible progress, a project, safety rules and a clear adult role." }),
 };
 
 export default function Page() {
