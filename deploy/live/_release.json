@@ -1,5 +1,5 @@
 {
-  "file_count": 92,
+  "file_count": 93,
   "files": [
     {
       "path": "404.html",
@@ -143,8 +143,8 @@
     },
     {
       "path": "en/safety.html",
-      "sha256": "dd02bcf94cbc87f8815ddac343e95e8bcc179a24d01471f69406d7ae5935e859",
-      "size": 8503
+      "sha256": "7b276e429ff29d322a673f1e22fb611c45cfa6d2a97fd76897c673f9953aa16a",
+      "size": 11108
     },
     {
       "path": "en/start.html",
@@ -412,9 +412,14 @@
       "size": 67
     },
     {
+      "path": "safety-quiz.js",
+      "sha256": "c2ebe9fd79afcd3b7655286cd7610ecc2c0cb7f89052a3641244494778311937",
+      "size": 1240
+    },
+    {
       "path": "safety.html",
-      "sha256": "92a96fc5db6eb6638b0c0aced94aaeb16a38de747abafaab56fa1e9252189670",
-      "size": 10663
+      "sha256": "39f992ea74cb36e21671176f8d674a162115760d53a40d847787107395f21de3",
+      "size": 14042
     },
     {
       "path": "site.webmanifest",
@@ -423,7 +428,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "527940b2f4ad863bca878f71ff7ba207719487fdfb539c29f13eccbc29c21c1a",
+      "sha256": "bbe77ed93ba201fe76f0dcff569046461ad0115c9caffcd4014f502622dff879",
       "size": 4220
     },
     {
@@ -458,11 +463,11 @@
     },
     {
       "path": "workshop.css",
-      "sha256": "202552407cad7ed04a4253851c9fffdc49ec46548cfbce4bb307ea06500854b8",
-      "size": 41731
+      "sha256": "109605112f628a060b15c4f8d14649effa3efa0132a38365f2ff80358db8a656",
+      "size": 41932
     }
   ],
-  "payload_sha256": "2d7345a62a46c3d2553d91a8411901acaa8f590ebf055b1f9fcfd2dfb339dc32",
-  "release_id": "OG20_R1",
+  "payload_sha256": "b03202490f13b99ec55d6e8a16f1e23f43455baef2e50a7c41f7ece83bcd4dc3",
+  "release_id": "A7_SAFETY_QUIZ_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }

@@ -334,3 +334,6 @@ html[lang="en"] .price,html[lang="en"] .diagnostic strong,html[lang="en"] .money
 .e14EntryActions{display:flex;flex-wrap:wrap;gap:8px}
 .e14DiagnosticCard>.workshopButton{margin-top:2px}
 @media(max-width:620px){.e14EntryStart{grid-template-columns:1fr}.e14EntryActions>*{width:100%;white-space:normal;text-align:center}}
+
+/* A7_SAFETY_QUIZ_R1 */
+.safetyQuiz{margin:38px 0}.safetyQuiz fieldset{min-width:0;margin:12px 0;padding:14px}.safetyQuiz label{display:block;margin:8px 0}.safetyQuizResult{margin:12px 0 0!important}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
+import { SafetyMiniCheck } from "@/components/SafetyMiniCheck";
 
 export const metadata: Metadata = { title: { absolute: "Безопасность детей и подростков — AI Skill Lab · Phuket" }, description: "Правила AI Skill Lab для детей и подростков: возрастные ограничения ChatGPT, участие взрослого, приватность, проверка ответов и parental controls.", alternates: { canonical: "/safety", languages: { ru: "/safety", en: "/en/safety" } } };
 
@@ -17,6 +18,7 @@ export default function SafetyPage() {
     <h2>6. Авторство и школа</h2><p>AI — помощник, а не скрытая замена собственной работе. Ребёнок должен уметь объяснить свой вклад и соблюдать правила конкретной школы или преподавателя.</p>
     <h2>7. Родительский контроль программы</h2><p>Родитель может заранее обозначить запрещённые инструменты, типы контента и темы. Для младшей программы итоговый проект и домашняя практика обсуждаются так, чтобы взрослому было понятно, что именно ребёнок делает с AI.</p>
     <h2>8. Родительский контроль ChatGPT для подростков</h2><p>Для связанных teen-аккаунтов OpenAI предлагает parental controls: взрослый может управлять отдельными настройками, учебными часами (study hours), quiet hours и получать ограниченные safety-уведомления. Эти controls не дают родителю доступ к переписке подростка и не являются мониторингом разговоров.</p><p><a className="inlineExternal" href="https://help.openai.com/en/articles/12315553-parental-controls-on-chatgpt-faq/" target="_blank" rel="noreferrer">Parental controls in ChatGPT ↗</a></p>
+    <SafetyMiniCheck />
     <p className="legalCrosslink"><Link href="/guides/ai-safety-for-kids">Чек-лист для родителей: возраст, данные, родительский контроль →</Link></p>
     <p className="legalCrosslink">См. также: <Link href="/privacy">Конфиденциальность</Link> · <Link href="/terms">Условия обучения</Link>.</p>
   </LegalPage>;
