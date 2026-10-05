@@ -61,6 +61,7 @@ CHECKS = [
     ("e1_5_metadata", ["python", "scripts/check_e1_5_metadata.py"]),
     ("e1_6_mobile_header", ["python", "scripts/check_e1_6_mobile_header.py"]),
     ("e2_guides", ["python", "scripts/check_guides.py"]),
+    ("t1_4_translation", ["python", "guides/aiskillab/check_translation_parity.py"]),
     ("n15_agent_safety", ["python", "scripts/check_n15_agent_safety.py"]),
     ("a4_phuket_local", ["python", "scripts/check_a4_phuket_local.py"]),
     ("a3_calcom", ["python", "scripts/check_a3_calcom.py"]),
