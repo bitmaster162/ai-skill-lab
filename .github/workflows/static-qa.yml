@@ -132,6 +132,8 @@ jobs:
         run: python scripts/check_a4_phuket_local.py
       - name: Validate A3 Cal.com booking route
         run: python scripts/check_a3_calcom.py
+      - name: Validate A5 mentor card
+        run: python scripts/check_a5_mentor.py
       - name: Validate IndexNow contract
         run: python scripts/check_indexnow.py
       - name: Validate contact funnel

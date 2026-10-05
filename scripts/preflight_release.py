@@ -63,6 +63,7 @@ CHECKS = [
     ("n15_agent_safety", ["python", "scripts/check_n15_agent_safety.py"]),
     ("a4_phuket_local", ["python", "scripts/check_a4_phuket_local.py"]),
     ("a3_calcom", ["python", "scripts/check_a3_calcom.py"]),
+    ("a5_mentor", ["python", "scripts/check_a5_mentor.py"]),
     ("indexnow", ["python", "scripts/check_indexnow.py"]),
     ("contact_funnel", ["python", "scripts/check_contact_funnel.py"]),
     ("cta_semantics", ["python", "scripts/check_cta_semantics.py"]),

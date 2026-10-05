@@ -1,5 +1,6 @@
 import { site } from "@/lib/site";
 import { commercialFacts, type WorkshopLocale } from "@/lib/commercial";
+import { mentorProfile } from "@/lib/mentor";
 
 export const websiteSchema = {
   "@context": "https://schema.org",
@@ -41,16 +42,17 @@ export const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
   "@id": `${site.url}/about#person`,
-  name: "Dumanyan Robert",
-  jobTitle: "Founder / instructor",
+  name: mentorProfile.name.en,
+  jobTitle: mentorProfile.role.en,
   worksFor: { "@id": `${site.url}/#organization` },
   url: `${site.url}/about`,
   email: site.email,
+  image: `${site.url}${mentorProfile.image}`,
   knowsAbout: [
     "AI systems", "Research workflows", "AI agents",
     "Automation", "Decision workflows", "Digital products",
   ],
-  sameAs: [site.telegram],
+  sameAs: [site.telegram, mentorProfile.github, mentorProfile.linkedin],
 };
 export function courseListSchema(locale: WorkshopLocale) {
   const en = locale === "en";

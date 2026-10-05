@@ -1,5 +1,5 @@
 {
- "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below. E2: guides permits only the global Guides footer link plus the exact parent-checklist text/link on /kids, /parents, /safety and EN pairs. N15: agent-safety permits only the exact generated lesson text and its three cited source links on /personal, /business, /teens and EN pairs. A4: Phuket local permits only the exact generated local-areas/formats text on /phuket and /en/phuket; no links or meta changes. A3: Cal.com permits only the exact 15-minute booking URL on /start and /en/start; no text or meta changes.",
+ "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below. E2: guides permits only the global Guides footer link plus the exact parent-checklist text/link on /kids, /parents, /safety and EN pairs. N15: agent-safety permits only the exact generated lesson text and its three cited source links on /personal, /business, /teens and EN pairs. A4: Phuket local permits only the exact generated local-areas/formats text on /phuket and /en/phuket; no links or meta changes. A3: Cal.com permits only the exact 15-minute booking URL on /start and /en/start; no text or meta changes. A5: mentor card permits only exact mentor text, GitHub/LinkedIn links and mentor aria/alt text on /, /en, /about and /en/about.",
  "phrases": {
   "ru": [
    "Как написать",
@@ -287,6 +287,18 @@
   ],
   "/en/phuket": [
    "phuket · local coordination real areas, no invented campus. for local planning we use recognizable phuket areas. they are coordination areas, not branches or permanent classrooms. the exact venue, availability and travel time are confirmed before booking. rawai / nai harn south phuket. an in-person session is confirmed only after venue and timing are agreed. chalong south-central phuket. used as a local coordination area for an agreed in-person session. kata / karon west coast. availability of a specific venue is confirmed before booking. phuket town central urban area. the meeting point is agreed separately for each session. format choose geography after the learning route. local 1:1 in-person one-to-one venue and timing are agreed in advance. ai skill lab does not claim a permanent school location or public classroom address. online 1:1 one-to-one online screen sharing, project building and a personal route work regardless of country. hybrid local plus online if a program benefits from both, in-person and online sessions can be combined after the route is agreed. for minors, contact, scheduling and service approval remain with a parent or legal guardian."
+  ],
+  "/": [
+   "наставник · human in the loop роберт думанян основатель / преподаватель работает с ai-системами, research workflows, агентами, автоматизацией, decision workflows и цифровыми продуктами. на занятиях: цель → спецификация → сборка → проверка → результат. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗"
+  ],
+  "/about": [
+   "наставник · human in the loop роберт думанян основатель / преподаватель работает с ai-системами, research workflows, агентами, автоматизацией, decision workflows и цифровыми продуктами. на занятиях: цель → спецификация → сборка → проверка → результат. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗"
+  ],
+  "/en": [
+   "mentor · human in the loop robert dumanyan founder / instructor works with ai systems, research workflows, agents, automation, decision workflows and digital products. sessions follow the same discipline: goal → specification → build → verification → output. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗"
+  ],
+  "/en/about": [
+   "mentor · human in the loop robert dumanyan founder / instructor works with ai systems, research workflows, agents, automation, decision workflows and digital products. sessions follow the same discipline: goal → specification → build → verification → output. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗"
   ]
  },
  "links": {
@@ -355,7 +367,9 @@
    "/en/guides/ai-safety-for-kids"
   ],
   "/": [
-   "/start#application-form"
+   "/start#application-form",
+   "https://github.com/bitmaster162",
+   "https://www.linkedin.com/in/robert-dumanyan-984171335/"
   ],
   "/start": [
    "/start#application-form",
@@ -394,7 +408,9 @@
    "/start#application-form"
   ],
   "/en": [
-   "/en/start#application-form"
+   "/en/start#application-form",
+   "https://github.com/bitmaster162",
+   "https://www.linkedin.com/in/robert-dumanyan-984171335/"
   ],
   "/en/start": [
    "/en/start#application-form",
@@ -431,6 +447,14 @@
   ],
   "/en/matcher": [
    "/en/start#application-form"
+  ],
+  "/about": [
+   "https://github.com/bitmaster162",
+   "https://www.linkedin.com/in/robert-dumanyan-984171335/"
+  ],
+  "/en/about": [
+   "https://github.com/bitmaster162",
+   "https://www.linkedin.com/in/robert-dumanyan-984171335/"
   ]
  },
  "meta_changes": {
@@ -581,10 +605,14 @@
  },
  "attr_texts": {
   "/": [
-   "input[aria-label]=открыть меню"
+   "input[aria-label]=открыть меню",
+   "div[aria-label]=направления практики",
+   "img[alt]=роберт думанян - основатель и преподаватель ai skill lab"
   ],
   "/about": [
-   "input[aria-label]=открыть меню"
+   "input[aria-label]=открыть меню",
+   "div[aria-label]=направления практики",
+   "img[alt]=роберт думанян - основатель и преподаватель ai skill lab"
   ],
   "/build": [
    "input[aria-label]=открыть меню"
@@ -651,10 +679,14 @@
    "input[aria-label]=открыть меню"
   ],
   "/en": [
-   "input[aria-label]=open menu"
+   "input[aria-label]=open menu",
+   "div[aria-label]=areas of practice",
+   "img[alt]=robert dumanyan - founder and instructor at ai skill lab"
   ],
   "/en/about": [
-   "input[aria-label]=open menu"
+   "input[aria-label]=open menu",
+   "div[aria-label]=areas of practice",
+   "img[alt]=robert dumanyan - founder and instructor at ai skill lab"
   ],
   "/en/build": [
    "input[aria-label]=open menu"

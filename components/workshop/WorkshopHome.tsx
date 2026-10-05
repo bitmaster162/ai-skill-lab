@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { IntroCallCta } from "@/components/IntroCallCta";
+import { MentorCard } from "./MentorCard";
 import { commercialFacts, sessionDurationMinutes } from "@/lib/commercial";
 import { WorkshopShell, type WorkshopLocale } from "./WorkshopShell";
 import styles from "./WorkshopShell.module.css";
@@ -39,6 +40,7 @@ export function WorkshopHome({ locale = "ru" }: { locale?: WorkshopLocale }) {
             <ol><li><b>01</b>{en ? "Define the outcome" : "Определить результат"}</li><li><b>02</b>{en ? "Build on real work" : "Собрать на реальной задаче"}</li><li><b>03</b>{en ? "Verify the output" : "Проверить результат"}</li><li><b>04</b>{en ? "Keep the capability" : "Забрать навык с собой"}</li></ol>
           </aside>
         </section>
+        <MentorCard locale={locale}/>
         <section className={styles.section}>
           <div className={styles.sectionHead}><span>{en ? "CHOOSE A TRACK" : "ВЫБЕРИТЕ ТРЕК"}</span><h2>{en ? "Different buyers. One standard: a result you can explain." : "Разные аудитории. Один стандарт: результат, который можно объяснить."}</h2></div>
           <div className={styles.trackGrid}>{routes.map(([tag,title,text,href,color]) => <Link className={styles.trackCard} data-track={tag} style={{"--track": color} as CSSProperties} href={href} key={href}><span>{tag}</span><h3>{title}</h3><p>{text}</p><b>{en ? "Open track →" : "Открыть трек →"}</b></Link>)}</div>
