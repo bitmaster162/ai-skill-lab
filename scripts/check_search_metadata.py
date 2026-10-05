@@ -4,6 +4,7 @@ from __future__ import annotations
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
+import json
 import os
 import re
 import subprocess
@@ -17,6 +18,29 @@ ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "deploy" / "live"
 ORIGIN = PUBLIC_ORIGIN
 OG_IMAGE = f"{ORIGIN}/og.png"
+RELEASE = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
+OG20_META = {
+    "/": ("og-ru-home.png", "Освойте AI так, чтобы результат остался у вас."),
+    "/en": ("og-en-home.png", "Learn AI so the capability stays with you."),
+    "/pricing": ("og-ru-pricing.png", "Знайте цену. Фиксируйте scope."),
+    "/en/pricing": ("og-en-pricing.png", "Know the price. Define the scope."),
+    "/start": ("og-ru-start.png", "Сначала fit. Потом программа."),
+    "/en/start": ("og-en-start.png", "Fit first. Program second."),
+    "/kids": ("og-ru-kids.png", "AI — не кнопка «сделай за меня»."),
+    "/en/kids": ("og-en-kids.png", "AI is not a button that does it for you."),
+    "/teens": ("og-ru-teens.png", "Не просто пользоваться AI. Собирать и объяснять."),
+    "/en/teens": ("og-en-teens.png", "Do more than use AI. Build it. Explain it."),
+    "/parents": ("og-ru-parents.png", "Платить не за «ребёнок поиграл с AI»."),
+    "/en/parents": ("og-en-parents.png", "Do not pay for “my child played with AI.”"),
+    "/personal": ("og-ru-personal.png", "Не курс про AI, а ваш рабочий процесс."),
+    "/en/personal": ("og-en-personal.png", "Not a course about AI. Your own working system."),
+    "/business": ("og-ru-business.png", "Не «добавить AI». Изменить один процесс."),
+    "/en/business": ("og-en-business.png", "Do not add AI. Change one process."),
+    "/phuket": ("og-ru-phuket.png", "Локально на Phuket. И без географии online."),
+    "/en/phuket": ("og-en-phuket.png", "Local in Phuket. Borderless online."),
+    "/faq": ("og-ru-faq.png", "Одиннадцать ответов до разговора."),
+    "/en/faq": ("og-en-faq.png", "Eleven answers before the call."),
+}
 DESCRIPTION_120_155 = {
     "/business",
     "/teens",
@@ -528,10 +552,16 @@ def main() -> int:
             fail(errors, route, "og:description must equal meta description")
         if og.get("og:url") != expected_url:
             fail(errors, route, "og:url must equal canonical")
-        if og.get("og:image") != OG_IMAGE:
-            fail(errors, route, "og:image must use canonical site OG image")
-        if og.get("og:image:alt") != "AI Skill Lab · Phuket":
-            fail(errors, route, "og:image:alt must be AI Skill Lab · Phuket")
+        if RELEASE == "OG20_R1" and route in OG20_META:
+            og_file, expected_og_alt = OG20_META[route]
+            expected_og_image = f"{ORIGIN}/{og_file}"
+        else:
+            expected_og_image = OG_IMAGE
+            expected_og_alt = "AI Skill Lab · Phuket"
+        if og.get("og:image") != expected_og_image:
+            fail(errors, route, f"og:image {og.get('og:image')!r} != {expected_og_image!r}")
+        if og.get("og:image:alt") != expected_og_alt:
+            fail(errors, route, f"og:image:alt {og.get('og:image:alt')!r} != {expected_og_alt!r}")
         if og.get("og:image:width") != "1200" or og.get("og:image:height") != "630":
             fail(errors, route, "og:image dimensions must be 1200x630")
 
@@ -543,8 +573,8 @@ def main() -> int:
             fail(errors, route, "twitter:title must equal document title")
         if twitter.get("twitter:description") != desc:
             fail(errors, route, "twitter:description must equal meta description")
-        if twitter.get("twitter:image") != OG_IMAGE:
-            fail(errors, route, "twitter:image must use canonical site OG image")
+        if twitter.get("twitter:image") != expected_og_image:
+            fail(errors, route, f"twitter:image {twitter.get('twitter:image')!r} != {expected_og_image!r}")
 
     sitemap = LIVE / "sitemap.xml"
     ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}

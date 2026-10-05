@@ -3,6 +3,19 @@ from pathlib import Path
 from html.parser import HTMLParser
 import json,re,sys
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/"deploy/live";BRAND="AI Skill Lab · Phuket"
+RELEASE=json.loads((LIVE/"_release.json").read_text(encoding="utf-8")).get("release_id")
+OG20_ALT={
+ "/":"Освойте AI так, чтобы результат остался у вас.","/en":"Learn AI so the capability stays with you.",
+ "/pricing":"Знайте цену. Фиксируйте scope.","/en/pricing":"Know the price. Define the scope.",
+ "/start":"Сначала fit. Потом программа.","/en/start":"Fit first. Program second.",
+ "/kids":"AI — не кнопка «сделай за меня».","/en/kids":"AI is not a button that does it for you.",
+ "/teens":"Не просто пользоваться AI. Собирать и объяснять.","/en/teens":"Do more than use AI. Build it. Explain it.",
+ "/parents":"Платить не за «ребёнок поиграл с AI».","/en/parents":"Do not pay for “my child played with AI.”",
+ "/personal":"Не курс про AI, а ваш рабочий процесс.","/en/personal":"Not a course about AI. Your own working system.",
+ "/business":"Не «добавить AI». Изменить один процесс.","/en/business":"Do not add AI. Change one process.",
+ "/phuket":"Локально на Phuket. И без географии online.","/en/phuket":"Local in Phuket. Borderless online.",
+ "/faq":"Одиннадцать ответов до разговора.","/en/faq":"Eleven answers before the call.",
+}
 GUIDE_TITLES={"/guides/ai-safety-for-kids":"AI и ребёнок 8–13: чек-лист для родителей — AI Skill Lab","/en/guides/ai-safety-for-kids":"AI and your child (8–13): a parent checklist — AI Skill Lab"}
 class P(HTMLParser):
  def __init__(self):super().__init__(convert_charrefs=True);self.lang="";self.title="";self.it=False;self.meta=[];self.links=[]
@@ -28,7 +41,8 @@ for f in sorted(p for p in LIVE.rglob("*.html") if p.name!="404.html"):
  if props.get("og:site_name")!=BRAND:errors.append(f"{route}: og site name")
  if props.get("og:locale")!=("en_US" if en else "ru_RU"):errors.append(f"{route}: og locale")
  if props.get("og:locale:alternate")!=("ru_RU" if en else "en_US"):errors.append(f"{route}: og alternate")
- if props.get("og:image:alt")!=BRAND:errors.append(f"{route}: og image alt")
+ expected_alt=OG20_ALT.get(route,BRAND) if RELEASE=="OG20_R1" else BRAND
+ if props.get("og:image:alt")!=expected_alt:errors.append(f"{route}: og image alt")
  if (props.get("og:image:width"),props.get("og:image:height"))!=("1200","630"):errors.append(f"{route}: og dimensions")
  alts={a.get("hreflang"):a.get("href") for a in x.links if a.get("rel")=="alternate"}
  if set(alts)!={"ru","en","x-default"}:errors.append(f"{route}: hreflang set")

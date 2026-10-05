@@ -38,6 +38,8 @@ jobs:
         run: python scripts/check_d1_shell.py
       - name: Validate Design Typography R1
         run: python scripts/check_design_typography_r1.py
+      - name: Validate OG20 R1 social previews
+        run: python scripts/check_og20_r1.py
       - name: Validate search metadata
         run: python scripts/check_search_metadata.py
       - name: Validate llms.txt AEO directory

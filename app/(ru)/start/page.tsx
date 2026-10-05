@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import { ogPageMetadata } from "@/lib/og-assets";
 import { WorkshopStart } from "@/components/workshop/WorkshopStart";
-export const metadata: Metadata = { title: { absolute: "Начать обучение — AI Skill Lab · Phuket" }, description: "Выберите тип запроса, скопируйте короткий brief и свяжитесь с AI Skill Lab через Telegram, почту, WhatsApp или LINE.", alternates: { canonical: "/start", languages: { ru: "/start", en: "/en/start" } } };
+export const metadata: Metadata = { title: { absolute: "Начать обучение — AI Skill Lab · Phuket" }, description: "Выберите тип запроса, скопируйте короткий brief и свяжитесь с AI Skill Lab через Telegram, почту, WhatsApp или LINE.", alternates: { canonical: "/start", languages: { ru: "/start", en: "/en/start" } } ,
+  ...ogPageMetadata({ locale: "ru", slug: "start", title: "Начать обучение — AI Skill Lab · Phuket", description: "Выберите тип запроса, скопируйте короткий brief и свяжитесь с AI Skill Lab через Telegram, почту, WhatsApp или LINE." }),
+};
 export default function StartPage(){return <WorkshopStart locale="ru"/>}
