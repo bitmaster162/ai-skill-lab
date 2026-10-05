@@ -10,19 +10,21 @@ declare global {
   }
 }
 
-function track(channel: "whatsapp" | "telegram") {
+function track(channel: "whatsapp" | "telegram" | "calcom") {
   window.va?.("event", { name: "intro_call_click", data: { channel } });
 }
 
-export function IntroCallCta({ locale = "ru", showDiagnostic = true }: { locale?: WorkshopLocale; showDiagnostic?: boolean }) {
+export function IntroCallCta({ locale = "ru", showDiagnostic = true, bookingHref }: { locale?: WorkshopLocale; showDiagnostic?: boolean; bookingHref?: string }) {
   const en = locale === "en";
   const start = en ? "/en/start#application-form" : "/start#application-form";
+  const primaryHref = bookingHref ?? introWhatsappHref(locale);
+  const primaryChannel = bookingHref ? "calcom" : "whatsapp";
   return <div className={`e14EntryStart ${showDiagnostic ? "" : "e14EntryStartSingle"}`} data-e14-entry>
     <article className="e14EntryCard">
       <span className="e14EntryMeta">{en ? "FIRST STEP" : "ПЕРВЫЙ ШАГ"}</span>
       <p className="e14EntryCopy">{introCall.freeMeta[locale]}</p>
       <div className="e14EntryActions">
-        <a className="workshopButton workshopButtonPrimary" data-intro-call-channel="whatsapp" href={introWhatsappHref(locale)} target="_blank" rel="noopener noreferrer" onClick={() => track("whatsapp")}>{introCall.label[locale]}</a>
+        <a className="workshopButton workshopButtonPrimary" data-intro-call-channel={primaryChannel} href={primaryHref} target="_blank" rel="noopener noreferrer" onClick={() => track(primaryChannel)}>{introCall.label[locale]}</a>
         <a className="workshopButton workshopButtonSecondary" data-intro-call-channel="telegram" href={introCall.telegramUrl} target="_blank" rel="noopener noreferrer" onClick={() => track("telegram")}>Telegram →</a>
       </div>
     </article>
