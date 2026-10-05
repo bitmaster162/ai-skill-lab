@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+from html.parser import HTMLParser
 from pathlib import Path
-from bs4 import BeautifulSoup
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,24 +46,46 @@ def route_file(slug: str, en: bool) -> Path:
         return LIVE / ("en.html" if en else "index.html")
     return LIVE / ("en" if en else "") / f"{slug}.html" if en else LIVE / f"{slug}.html"
 
+class FirstH1RoleParser(HTMLParser):
+    VOID_TAGS = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.stack: list[tuple[str, set[str]]] = []
+        self.role = "missing"
+        self.found = False
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attr_map = dict(attrs)
+        classes = set((attr_map.get("class") or "").split())
+        if tag == "h1" and not self.found:
+            inherited = set(classes)
+            for _, ancestor_classes in self.stack:
+                inherited.update(ancestor_classes)
+            if inherited & ROLE_CLASSES["home"]:
+                self.role = "home"
+            elif inherited & ROLE_CLASSES["pricing"]:
+                self.role = "pricing"
+            elif inherited & ROLE_CLASSES["internal"]:
+                self.role = "internal"
+            else:
+                self.role = "unclassified"
+            self.found = True
+        if tag not in self.VOID_TAGS:
+            self.stack.append((tag, classes))
+
+    def handle_endtag(self, tag: str) -> None:
+        for index in range(len(self.stack) - 1, -1, -1):
+            if self.stack[index][0] == tag:
+                del self.stack[index:]
+                break
+
+
 def h1_role(path: Path) -> str:
-    soup = BeautifulSoup(path.read_text(encoding="utf-8"), "html.parser")
-    h1 = soup.find("h1")
-    if h1 is None:
-        return "missing"
-    classes: set[str] = set()
-    node = h1
-    while node is not None:
-        if getattr(node, "attrs", None):
-            classes.update(node.get("class", []))
-        node = node.parent
-    if classes & ROLE_CLASSES["home"]:
-        return "home"
-    if classes & ROLE_CLASSES["pricing"]:
-        return "pricing"
-    if classes & ROLE_CLASSES["internal"]:
-        return "internal"
-    return "unclassified"
+    parser = FirstH1RoleParser()
+    parser.feed(path.read_text(encoding="utf-8"))
+    parser.close()
+    return parser.role
 
 def main() -> int:
     errors: list[str] = []
