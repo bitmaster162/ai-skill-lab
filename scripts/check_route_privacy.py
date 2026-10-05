@@ -30,11 +30,13 @@ for marker in [
 handle_start=route.index("export async function handleRoute")
 handle=route[handle_start:]
 req(handle.index("if (hasSecret(joined))") < handle.index("checkRouteRate(request, cfg, fetchImpl)"),"secret rejection must precede exact rate gate")
-req(handle.index("checkRouteRate(request, cfg, fetchImpl)") < handle.index("callOpenRouter(cfg, input, table, fetchImpl)"),"rate gate must precede model call")
+req(handle.index("checkRouteRate(request, cfg, fetchImpl)") < handle.index("callOpenRouter(cfg, input, table, fetchImpl)"),"rate gate must precede matcher model call")
+req(handle.index("checkRouteRate(request, cfg, fetchImpl)", handle.index("const auditMode")) < handle.index("callPromptAuditor(cfg, input, fetchImpl)"),"rate gate must precede Prompt Auditor model call")
+req('"prompt_audit"' in handle and "callPromptAuditor" in handle,"Prompt Auditor route mode missing")
 req('DELETE FROM route_rate_event_r159 WHERE occurred_at < ?' in worker,"24h cleanup query missing")
 req('ROUTE_DAY_SECONDS = 86_400' in worker,"24h cleanup constant missing")
 req("raw_ip" not in schema and "ip_address" not in schema,"route-rate schema must not store raw IP")
-for forbidden in ["goal","answers","audience","contact","name"]:
+for forbidden in ["goal","answers","audience","contact","name","prompt"]:
     req(forbidden not in schema,f"route-rate schema stores forbidden field {forbidden}")
 for required in ["request_id","ip_token","occurred_at"]:
     req(required in schema,f"route-rate schema missing {required}")
@@ -43,6 +45,8 @@ ru_markers=[
     "AI-route и OpenRouter",
     "только после нажатия кнопки пользователем",
     "три ответа matcher и текст цели",
+    "текст промпта из Prompt Auditor",
+    "Для AI-подбора или Prompt Auditor",
     "обнаруженный секрет блокируется до вызова модели",
     "через OpenRouter API",
     "сразу преобразует его в HMAC-token",
@@ -53,8 +57,10 @@ ru_markers=[
 ]
 en_markers=[
     "AI routing and OpenRouter",
-    "only after the user presses the route button",
+    "only after the user presses a button",
     "three matcher answers and the goal text",
+    "prompt text from Prompt Auditor",
+    "For AI routing or Prompt Auditor",
     "detected secrets are blocked before the model is called",
     "through the OpenRouter API",
     "immediately converts it to an HMAC token",

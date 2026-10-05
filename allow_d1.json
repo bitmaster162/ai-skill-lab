@@ -1,5 +1,5 @@
 {
- "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below. E2: guides permits only the global Guides footer link plus the exact parent-checklist text/link on /kids, /parents, /safety and EN pairs. N15: agent-safety permits only the exact generated lesson text and its three cited source links on /personal, /business, /teens and EN pairs. A4: Phuket local permits only the exact generated local-areas/formats text on /phuket and /en/phuket; no links or meta changes. A3: Cal.com permits only the exact 15-minute booking URL on /start and /en/start; no text or meta changes. A5: mentor card permits only exact mentor text, GitHub/LinkedIn links and mentor aria/alt text on /, /en, /about and /en/about. E1.3: post-submit permits only the exact diagnostic/Telegram continuation labels on /start and /en/start; success feedback remains runtime-only.",
+ "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below. E2: guides permits only the global Guides footer link plus the exact parent-checklist text/link on /kids, /parents, /safety and EN pairs. N15: agent-safety permits only the exact generated lesson text and its three cited source links on /personal, /business, /teens and EN pairs. A4: Phuket local permits only the exact generated local-areas/formats text on /phuket and /en/phuket; no links or meta changes. A3: Cal.com permits only the exact 15-minute booking URL on /start and /en/start; no text or meta changes. A5: mentor card permits only exact mentor text, GitHub/LinkedIn links and mentor aria/alt text on /, /en, /about and /en/about. E1.3: post-submit permits only the exact diagnostic/Telegram continuation labels on /start and /en/start; success feedback remains runtime-only. A8: Prompt Auditor permits only the exact RU/EN home demo copy, textarea labels/placeholders, and the exact Prompt Auditor privacy disclosure on /privacy and /en/privacy.",
  "phrases": {
   "ru": [
    "Как написать",
@@ -245,13 +245,15 @@
    "AI-route и OpenRouter",
    "Если AI-route включён, он запускается только после нажатия кнопки пользователем. В /api/route передаются выбранная аудитория, три ответа matcher и текст цели. Перед обращением к модели сервер проверяет ввод на шаблоны секретов и ключей; обнаруженный секрет блокируется до вызова модели. Для AI-подбора сервер может передать эти данные в настроенную бесплатную модель через OpenRouter API. Код AI Skill Lab не записывает текст цели или ответы matcher в собственную таблицу rate-limit.",
    "Защита от злоупотреблений AI-route",
-   "Для точного ограничения частоты ingress получает сетевой IP клиента от хостинг-платформы и сразу преобразует его в HMAC-token. Сырой IP не записывается в таблицу AI Skill Lab для route-limit. В этой таблице хранятся только request ID, HMAC-token и техническая отметка времени. Плановый cleanup удаляет rate-limit записи старше 24 часов. Token используется только для ограничения частоты и защиты AI-route, а не для рекламного профилирования."
+   "Для точного ограничения частоты ingress получает сетевой IP клиента от хостинг-платформы и сразу преобразует его в HMAC-token. Сырой IP не записывается в таблицу AI Skill Lab для route-limit. В этой таблице хранятся только request ID, HMAC-token и техническая отметка времени. Плановый cleanup удаляет rate-limit записи старше 24 часов. Token используется только для ограничения частоты и защиты AI-route, а не для рекламного профилирования.",
+   "если ai-route включён, он запускается только после нажатия кнопки пользователем. в /api/route передаются либо выбранная аудитория, три ответа matcher и текст цели, либо текст промпта из prompt auditor. перед обращением к модели сервер проверяет ввод на шаблоны секретов и ключей; обнаруженный секрет блокируется до вызова модели. для ai-подбора или prompt auditor сервер может передать эти данные в настроенную бесплатную модель через openrouter api. код ai skill lab не записывает текст цели, ответы matcher или текст prompt auditor в собственную таблицу rate-limit."
   ],
   "/en/privacy": [
    "AI routing and OpenRouter",
    "If AI routing is enabled, it runs only after the user presses the route button. /api/route receives the selected audience, three matcher answers and the goal text. Before any model call, the server checks the input for secret and credential patterns; detected secrets are blocked before the model is called. For AI routing, the server may send this data to the configured free model through the OpenRouter API. AI Skill Lab code does not write the goal text or matcher answers into its route-limit table.",
    "AI-route abuse prevention",
-   "For exact rate limiting, the ingress receives the client network IP from the hosting platform and immediately converts it to an HMAC token. The raw IP is not written to AI Skill Lab's route-limit table. That table stores only a request ID, HMAC token and technical timestamp. Scheduled cleanup deletes rate-limit rows once they are older than 24 hours. The token is used only for rate limiting and AI-route protection, not for advertising profiling."
+   "For exact rate limiting, the ingress receives the client network IP from the hosting platform and immediately converts it to an HMAC token. The raw IP is not written to AI Skill Lab's route-limit table. That table stores only a request ID, HMAC token and technical timestamp. Scheduled cleanup deletes rate-limit rows once they are older than 24 hours. The token is used only for rate limiting and AI-route protection, not for advertising profiling.",
+   "if ai routing is enabled, it runs only after the user presses a button. /api/route receives either the selected audience, three matcher answers and the goal text, or the prompt text from prompt auditor. before any model call, the server checks the input for secret and credential patterns; detected secrets are blocked before the model is called. for ai routing or prompt auditor, the server may send this data to the configured free model through the openrouter api. ai skill lab code does not write the goal text, matcher answers or prompt auditor text into its route-limit table."
   ],
   "/proof": [
    "Публичный сайт не использует analytics, cookies и trackers. Единственная форма — заявка на /start, она отправляется на /api/lead.",
@@ -333,13 +335,15 @@
    "phuket · local coordination real areas, no invented campus. for local planning we use recognizable phuket areas. they are coordination areas, not branches or permanent classrooms. the exact venue, availability and travel time are confirmed before booking. rawai / nai harn south phuket. an in-person session is confirmed only after venue and timing are agreed. chalong south-central phuket. used as a local coordination area for an agreed in-person session. kata / karon west coast. availability of a specific venue is confirmed before booking. phuket town central urban area. the meeting point is agreed separately for each session. format choose geography after the learning route. local 1:1 in-person one-to-one venue and timing are agreed in advance. ai skill lab does not claim a permanent school location or public classroom address. online 1:1 one-to-one online screen sharing, project building and a personal route work regardless of country. hybrid local plus online if a program benefits from both, in-person and online sessions can be combined after the route is agreed. for minors, contact, scheduling and service approval remain with a parent or legal guardian."
   ],
   "/": [
-   "наставник · human in the loop роберт думанян основатель / преподаватель работает с ai-системами, research workflows, агентами, автоматизацией, decision workflows и цифровыми продуктами. на занятиях: цель → спецификация → сборка → проверка → результат. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗"
+   "наставник · human in the loop роберт думанян основатель / преподаватель работает с ai-системами, research workflows, агентами, автоматизацией, decision workflows и цифровыми продуктами. на занятиях: цель → спецификация → сборка → проверка → результат. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗",
+   "запускается только по кнопке. текст передаётся настроенной модели через openrouter; ai skill lab его не сохраняет. не вставляйте пароли, ключи и приватные данные. ai prompt auditor ai prompt auditor вставьте рабочий запрос к llm - ai оценит его по 10-балльной шкале и предложит улучшенный вариант с пояснением. проверить промпт ai-оценка /10 пояснение улучшенный вариант это автоматическая оценка, а не универсальный стандарт качества. проверьте улучшенный промпт перед использованием. скопировать улучшенный промпт"
   ],
   "/about": [
    "наставник · human in the loop роберт думанян основатель / преподаватель работает с ai-системами, research workflows, агентами, автоматизацией, decision workflows и цифровыми продуктами. на занятиях: цель → спецификация → сборка → проверка → результат. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗"
   ],
   "/en": [
-   "mentor · human in the loop robert dumanyan founder / instructor works with ai systems, research workflows, agents, automation, decision workflows and digital products. sessions follow the same discipline: goal → specification → build → verification → output. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗"
+   "mentor · human in the loop robert dumanyan founder / instructor works with ai systems, research workflows, agents, automation, decision workflows and digital products. sessions follow the same discipline: goal → specification → build → verification → output. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗",
+   "runs only after you press the button. the text is sent to the configured model through openrouter; ai skill lab does not store it. do not paste passwords, keys or private data. ai prompt auditor ai prompt auditor paste a working llm request - ai scores it on a 10-point scale and returns an improved version with an explanation. audit prompt ai score /10 explanation improved version this is an automated assessment, not a universal quality standard. review the improved prompt before using it. copy improved prompt"
   ],
   "/en/about": [
    "mentor · human in the loop robert dumanyan founder / instructor works with ai systems, research workflows, agents, automation, decision workflows and digital products. sessions follow the same discipline: goal → specification → build → verification → output. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗"
@@ -651,7 +655,9 @@
   "/": [
    "input[aria-label]=открыть меню",
    "div[aria-label]=направления практики",
-   "img[alt]=роберт думанян - основатель и преподаватель ai skill lab"
+   "img[alt]=роберт думанян - основатель и преподаватель ai skill lab",
+   "textarea[aria-label]=промпт для ai prompt auditor",
+   "textarea[placeholder]=например: составь план исследования рынка для нового b2b ai-продукта и укажи, какие выводы нужно проверить отдельно."
   ],
   "/about": [
    "input[aria-label]=открыть меню",
@@ -725,7 +731,9 @@
   "/en": [
    "input[aria-label]=open menu",
    "div[aria-label]=areas of practice",
-   "img[alt]=robert dumanyan - founder and instructor at ai skill lab"
+   "img[alt]=robert dumanyan - founder and instructor at ai skill lab",
+   "textarea[aria-label]=prompt for ai prompt auditor",
+   "textarea[placeholder]=for example: build a market-research plan for a new b2b ai product and flag which conclusions need separate verification."
   ],
   "/en/about": [
    "input[aria-label]=open menu",

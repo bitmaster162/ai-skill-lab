@@ -288,6 +288,40 @@ function promptFor(input, table) {
   ].filter(Boolean).join("\n");
 }
 
+function validatePromptAuditInput(input) {
+  if (!input || typeof input !== "object" || Array.isArray(input)) throw new Error("invalid-body");
+  if (input.mode !== "prompt_audit") throw new Error("invalid-mode");
+  const locale = exactText(input.locale, 5);
+  if (!ALLOWED_LOCALES.has(locale)) throw new Error("invalid-enum");
+  const prompt = exactText(input.prompt, 2_000);
+  if (!prompt) throw new Error("empty-prompt");
+  return { mode: "prompt_audit", locale, prompt };
+}
+
+function validatePromptAuditResult(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  if (!Number.isInteger(value.score) || value.score < 1 || value.score > 10) return null;
+  if (typeof value.improved !== "string" || !value.improved.trim() || countChars(value.improved.trim()) > 4_000) return null;
+  if (typeof value.explanation !== "string" || !value.explanation.trim() || countChars(value.explanation.trim()) > 1_200) return null;
+  const improved = value.improved.trim();
+  const explanation = value.explanation.trim();
+  if (hasSecret(improved + "\n" + explanation)) return null;
+  return { status: "ok", score: value.score, improved, explanation };
+}
+
+function promptForAudit(input) {
+  return [
+    "You are AI Skill Lab's Prompt Auditor.",
+    "Evaluate the quality of the user's LLM prompt, not the truth of the task itself.",
+    "Return JSON only with exactly the keys score, improved, explanation.",
+    "score must be an integer from 1 to 10 and is an AI estimate, not a certification or universal metric.",
+    "improved must preserve the user's intent while making the request clearer, more specific and easier to verify.",
+    "explanation must be concise and explain the most material improvements.",
+    "Do not invent credentials, private data, citations or factual claims.",
+    input.locale === "ru" ? "Write improved and explanation in Russian." : "Write improved and explanation in English.",
+  ].join("\n");
+}
+
 function routeClientIp(request) {
   const raw = request.headers.get("x-forwarded-for") || "";
   const first = raw.split(",", 1)[0].trim();
@@ -406,6 +440,69 @@ async function callOpenRouter(cfg, input, table, fetchImpl) {
   return null;
 }
 
+async function callPromptAuditor(cfg, input, fetchImpl) {
+  if (!cfg.key || cfg.models.length === 0) return null;
+  const system = promptForAudit(input);
+  let providerCalls = 0;
+  let activeKey = cfg.key;
+  let credential = "primary";
+
+  const requestModel = async (model) => {
+    if (providerCalls >= MAX_OPENROUTER_CALLS_PER_ROUTE) return null;
+    providerCalls += 1;
+    try {
+      return await fetchImpl("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${activeKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model,
+          messages: [
+            { role: "system", content: system },
+            { role: "user", content: input.prompt },
+          ],
+          response_format: { type: "json_object" },
+          temperature: 0.2,
+        }),
+        signal: AbortSignal.timeout(OPENROUTER_TIMEOUT_MS),
+      });
+    } catch {
+      return null;
+    }
+  };
+
+  for (const model of cfg.models) {
+    for (let attempt = 0; attempt < 2; attempt += 1) {
+      if (providerCalls >= MAX_OPENROUTER_CALLS_PER_ROUTE) return null;
+      let response = await requestModel(model);
+      if (response?.status === 401) {
+        if (credential === "primary" && cfg.backupKey) {
+          activeKey = cfg.backupKey;
+          credential = "backup";
+          if (providerCalls >= MAX_OPENROUTER_CALLS_PER_ROUTE) return null;
+          response = await requestModel(model);
+        } else {
+          return null;
+        }
+      }
+      if (response?.status === 401) return null;
+      if (response && (response.status === 402 || response.status === 403 || response.status === 429)) return null;
+      if (!response?.ok) break;
+      let payload;
+      try { payload = await response.json(); } catch { payload = null; }
+      const content = payload?.choices?.[0]?.message?.content;
+      if (typeof content !== "string") continue;
+      let parsed;
+      try { parsed = JSON.parse(content); } catch { parsed = null; }
+      const validated = validatePromptAuditResult(parsed);
+      if (validated) return { result: validated, model, credential };
+    }
+  }
+  return null;
+}
+
 export async function handleRoute(request, env = process.env, fetchImpl = fetch) {
   if (request.method !== "POST") return json({ status: "error", error: "Method not allowed" }, 405, { Allow: "POST" });
   const cfg = config(env);
@@ -419,10 +516,17 @@ export async function handleRoute(request, env = process.env, fetchImpl = fetch)
   if (Number.isFinite(declaredLength) && declaredLength > MAX_BODY_BYTES) return json({ status: "error", error: "Request too large" }, 413);
   const raw = Buffer.from(await request.arrayBuffer());
   if (raw.byteLength > MAX_BODY_BYTES) return json({ status: "error", error: "Request too large" }, 413);
+  let parsed;
+  try { parsed = JSON.parse(raw.toString("utf8")); } catch { return json({ status: "error", error: "Invalid route request" }, 400); }
+  const auditMode = parsed?.mode === "prompt_audit";
   let input;
-  try { input = validateInput(JSON.parse(raw.toString("utf8"))); } catch { return json({ status: "error", error: "Invalid route request" }, 400); }
-  const joined = [input.audience, ...input.answers, input.goal].join("\n");
-  if (hasSecret(joined)) return json({ status: "secret_detected", package: null, steps: [], brief: "" }, 400);
+  try { input = auditMode ? validatePromptAuditInput(parsed) : validateInput(parsed); } catch { return json({ status: "error", error: "Invalid route request" }, 400); }
+  const joined = auditMode ? input.prompt : [input.audience, ...input.answers, input.goal].join("\n");
+  if (hasSecret(joined)) {
+    return auditMode
+      ? json({ status: "secret_detected" }, 400)
+      : json({ status: "secret_detected", package: null, steps: [], brief: "" }, 400);
+  }
 
   const rate = await checkRouteRate(request, cfg, fetchImpl);
   if (!rate.ok) {
@@ -440,6 +544,17 @@ export async function handleRoute(request, env = process.env, fetchImpl = fetch)
   }
 
   const requestId = rate.requestId;
+  if (auditMode) {
+    const ai = await callPromptAuditor(cfg, input, fetchImpl);
+    if (!ai) {
+      logRoute("error", "prompt_audit_complete", { requestId, status: 503, mode: "unavailable" });
+      return json({ status: "error", error: "Prompt auditor unavailable", requestId }, 503);
+    }
+    const mode = ai.credential === "backup" ? "prompt_audit_ai_backup" : "prompt_audit_ai";
+    logRoute("info", "prompt_audit_complete", { requestId, status: 200, mode });
+    return json({ ...ai.result, requestId });
+  }
+
   const table = commercialPackages(input.audience, input.locale);
   const ai = await callOpenRouter(cfg, input, table, fetchImpl);
   const result = ai?.result || fallbackResult(input, table);

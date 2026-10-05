@@ -1,5 +1,5 @@
 {
-  "file_count": 93,
+  "file_count": 94,
   "files": [
     {
       "path": "404.html",
@@ -42,11 +42,6 @@
       "size": 17171
     },
     {
-      "path": "en.html",
-      "sha256": "8ff8571fd30899cc88735fa78172aac163257a5952b5a7dc8e63086a82c1ee40",
-      "size": 12520
-    },
-    {
       "path": "en/about.html",
       "sha256": "e5e7c89ed856beaa84b56e56694b02a78eb37a1abd8934da5ab8cdcfd3950530",
       "size": 10492
@@ -82,14 +77,14 @@
       "size": 12063
     },
     {
-      "path": "en/guides.html",
-      "sha256": "c6cba5c02a9654eaf60ce61d2e9dfc9a6e0b77e80cce41ab40c6e4a9db1e19b5",
-      "size": 6823
-    },
-    {
       "path": "en/guides/ai-safety-for-kids.html",
       "sha256": "a386fd8c652960faf22bf606a00fa0f23afcd26882e424d9d308166a04bd1aaf",
       "size": 14890
+    },
+    {
+      "path": "en/guides.html",
+      "sha256": "c6cba5c02a9654eaf60ce61d2e9dfc9a6e0b77e80cce41ab40c6e4a9db1e19b5",
+      "size": 6823
     },
     {
       "path": "en/kids.html",
@@ -128,8 +123,8 @@
     },
     {
       "path": "en/privacy.html",
-      "sha256": "5ccb24887ccd9ab8f08d0b915bf4c16153993f495a1710d9671e75356098a15d",
-      "size": 8451
+      "sha256": "3513c7adb366535c7c596bc718a3ee7a35b6d17ab17619ff9bc33436debdc721",
+      "size": 8529
     },
     {
       "path": "en/projects.html",
@@ -167,6 +162,11 @@
       "size": 6834
     },
     {
+      "path": "en.html",
+      "sha256": "910e3c72f16fd6c5b632236526cced19c6afc572678b8d17febcd70c624fd707",
+      "size": 14019
+    },
+    {
       "path": "family.html",
       "sha256": "aa7841bfd13e35256c43212dd22ec1e7370a41068d4e39cbaa7e32e24d625c0a",
       "size": 11207
@@ -197,14 +197,14 @@
       "size": 52016
     },
     {
-      "path": "guides.html",
-      "sha256": "7888dd9aa159a52d7d538ab9550d1009f73dec69f323b796b3c36b3c455bcbb0",
-      "size": 7757
-    },
-    {
       "path": "guides/ai-safety-for-kids.html",
       "sha256": "9af5960b53562b0964e04fb91fd511c47c7f097aeefd12ddbb5bc78ede00ef28",
       "size": 18761
+    },
+    {
+      "path": "guides.html",
+      "sha256": "7888dd9aa159a52d7d538ab9550d1009f73dec69f323b796b3c36b3c455bcbb0",
+      "size": 7757
     },
     {
       "path": "icon-192.png",
@@ -218,8 +218,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "4e9886d97add9093b521ff4a1d6cc8fffbfb9dd825fc11c44fe7b66730443d6c",
-      "size": 14955
+      "sha256": "1c332f96dc53f713c3b120a2eef0d8ce5068fb9eb4ee04c156cf1e311ba29ca3",
+      "size": 16922
     },
     {
       "path": "kids.html",
@@ -383,8 +383,8 @@
     },
     {
       "path": "privacy.html",
-      "sha256": "0d5ac817b80cc4f621fd66665cbb68f81b1655095eaf4ddd68c91eaa9dcdacee",
-      "size": 10794
+      "sha256": "c6c37efc6fc5c22407a08f153fec688bb1ff757b70db3190d6e5199e0e1887c1",
+      "size": 10908
     },
     {
       "path": "project-filter.js",
@@ -395,6 +395,11 @@
       "path": "projects.html",
       "sha256": "f88b12d6d922714400b2ffe64a96098cad8a950ad2f1702f642b5b14095e2085",
       "size": 19483
+    },
+    {
+      "path": "prompt-auditor.js",
+      "sha256": "b39ca83a8200e6ffbbefe5fbb503a85bcbb0478d92ab90c52040c44daf8c82d4",
+      "size": 3080
     },
     {
       "path": "proof.html",
@@ -467,7 +472,7 @@
       "size": 41932
     }
   ],
-  "payload_sha256": "b03202490f13b99ec55d6e8a16f1e23f43455baef2e50a7c41f7ece83bcd4dc3",
-  "release_id": "A7_SAFETY_QUIZ_R1",
+  "payload_sha256": "7ecb940489bb0efff05c0d492a1f73b0f2c743a299497ff274619f0b0cfd81ef",
+  "release_id": "A8_PROMPT_AUDITOR_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }
