@@ -61,9 +61,7 @@ export function LeadForm({
       form.reset();
       setAudience(defaultAudience);
       setState("sent");
-      setMessage(needsAdultConfirmation
-        ? (en ? "Application sent. We will contact you using the adult contact provided." : "Заявка отправлена. Мы свяжемся по указанному контакту взрослого.")
-        : (en ? "Application sent. We will contact you using the details provided." : "Заявка отправлена. Мы свяжемся с вами по указанному контакту."));
+      setMessage(en ? "Application sent. We reply within 1–2 business days." : "Заявка отправлена. Ответим в течение 1–2 рабочих дней.");
     } catch (error) {
       setState("error");
       setMessage(error instanceof Error ? error.message : (en ? "Could not send the application" : "Не удалось отправить заявку"));
@@ -130,6 +128,10 @@ export function LeadForm({
         {en ? "For minors, applications and organizational communication use an adult contact only." : "Для несовершеннолетних заявка и организационная коммуникация идут только через взрослого."}
       </p>
       {message ? <p className={state === "sent" ? "formMessage success" : "formMessage error"}>{message}</p> : null}
+      {state === "sent" ? <div className="formSuccessActions" data-lead-success-actions>
+        <Link className="workshopButton workshopButtonSecondary" href={`${base}/start#contact-channels`}>{en ? "Book diagnostic" : "Записаться на диагностику"}</Link>
+        <a className="workshopButton workshopButtonPrimary" href={site.telegram} target="_blank" rel="noreferrer">{en ? "Message on Telegram" : "Написать в Telegram"}</a>
+      </div> : null}
       </form>
     </>
   );
