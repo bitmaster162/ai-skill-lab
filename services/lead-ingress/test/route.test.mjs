@@ -478,3 +478,95 @@ test("input contract requires audience plus exactly three answers", async () => 
   mismatch.answers[0] = "kids";
   assert.equal((await handleRoute(req(mismatch), baseEnv)).status, 400);
 });
+
+
+test("prompt auditor returns a validated 10-point AI assessment through the existing rate gate", async () => {
+  const calls = [];
+  const input = { mode: "prompt_audit", locale: "en", prompt: "Summarize this market and show what needs verification." };
+  const modelResult = {
+    score: 7,
+    improved: "Summarize the market, separate verified facts from assumptions, cite sources, and list claims that need independent verification.",
+    explanation: "The revision adds an explicit output structure and verification requirements.",
+  };
+  const response = await handleRoute(req(input), baseEnv, fetchWithRateGate(okModel(modelResult), calls));
+  const body = await response.json();
+  assert.equal(response.status, 200);
+  assert.equal(body.status, "ok");
+  assert.equal(body.score, 7);
+  assert.equal(body.improved, modelResult.improved);
+  assert.equal(body.explanation, modelResult.explanation);
+  assert.deepEqual(calls.map((x) => x.kind), ["rate", "model"]);
+  const requestBody = JSON.parse(calls[1].options.body);
+  assert.equal(requestBody.messages[1].content, input.prompt);
+  assert.match(requestBody.messages[0].content, /Prompt Auditor/);
+  assert.match(requestBody.messages[0].content, /AI estimate, not a certification or universal metric/);
+});
+
+test("prompt auditor blocks secret-like input before rate gate or model", async () => {
+  let calls = 0;
+  const response = await handleRoute(
+    req({ mode: "prompt_audit", locale: "ru", prompt: "Проверь sk-proj-TEST123456789 и улучши запрос" }),
+    baseEnv,
+    async () => { calls += 1; throw new Error("must not call"); },
+  );
+  const body = await response.json();
+  assert.equal(response.status, 400);
+  assert.equal(body.status, "secret_detected");
+  assert.equal(calls, 0);
+});
+
+test("prompt auditor fails closed on invalid model output instead of fabricating a local score", async () => {
+  const calls = [];
+  const response = await handleRoute(
+    req({ mode: "prompt_audit", locale: "en", prompt: "Write a research brief." }),
+    baseEnv,
+    fetchWithRateGate(okModel({ score: 11, improved: "x", explanation: "y" }), calls),
+  );
+  const body = await response.json();
+  assert.equal(response.status, 503);
+  assert.equal(body.status, "error");
+  assert.equal(calls[0].kind, "rate");
+  assert.ok(calls.filter((x) => x.kind === "model").length >= 1);
+});
+
+test("prompt auditor primary 401 may use the already-approved distinct backup credential within the shared call cap", async () => {
+  const env = {
+    ...baseEnv,
+    OPENROUTER_BACKUP_ENABLED: "true",
+    OPENROUTER_BACKUP_DAILY_REQUEST_BUDGET: "500",
+    OPENROUTER_BACKUP_API_KEY: "test-openrouter-backup-key",
+  };
+  const calls = [];
+  const response = await handleRoute(
+    req({ mode: "prompt_audit", locale: "en", prompt: "Improve this prompt." }),
+    env,
+    fetchWithRateGate(async (_url, options) => {
+      if (options.headers.Authorization === "Bearer test-openrouter-key") return new Response("primary auth failed", { status: 401 });
+      return new Response(JSON.stringify({ choices: [{ message: { content: JSON.stringify({
+        score: 6,
+        improved: "Improve this prompt with an explicit goal, constraints, output format and verification step.",
+        explanation: "The revised request adds missing structure.",
+      }) } }] }), { status: 200, headers: { "Content-Type": "application/json" } });
+    }, calls),
+  );
+  const body = await response.json();
+  assert.equal(response.status, 200);
+  assert.equal(body.score, 6);
+  assert.deepEqual(
+    calls.filter((x) => x.kind === "model").map((x) => x.options.headers.Authorization),
+    ["Bearer test-openrouter-key", "Bearer test-openrouter-backup-key"],
+  );
+});
+
+test("prompt auditor enforces locale and bounded prompt length", async () => {
+  let calls = 0;
+  for (const payload of [
+    { mode: "prompt_audit", locale: "xx", prompt: "hello" },
+    { mode: "prompt_audit", locale: "en", prompt: "" },
+    { mode: "prompt_audit", locale: "en", prompt: "x".repeat(2001) },
+  ]) {
+    const response = await handleRoute(req(payload), baseEnv, async () => { calls += 1; throw new Error("must not call"); });
+    assert.equal(response.status, 400);
+  }
+  assert.equal(calls, 0);
+});

@@ -19,6 +19,8 @@ CHECKS = [
     ("og20_r1", ["python", "scripts/check_og20_r1.py"]),
     ("a7_safety_quiz", ["python", "scripts/check_a7_safety_quiz.py"]),
     ("a7_safety_quiz_runtime", ["node", "scripts/check_safety_quiz_runtime.mjs"]),
+    ("a8_prompt_auditor", ["python", "scripts/check_a8_prompt_auditor.py"]),
+    ("a8_prompt_auditor_runtime", ["node", "scripts/check_prompt_auditor_runtime.mjs"]),
     ("search_metadata", ["python", "scripts/check_search_metadata.py"]),
     ("llms_txt", ["python", "scripts/check_llms_txt.py"]),
     ("structured_data", ["python", "scripts/check_structured_data.py"]),
