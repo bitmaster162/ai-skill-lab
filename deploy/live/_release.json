@@ -1,5 +1,5 @@
 {
-  "file_count": 94,
+  "file_count": 96,
   "files": [
     {
       "path": "404.html",
@@ -32,6 +32,11 @@
       "size": 35158
     },
     {
+      "path": "certificate.html",
+      "sha256": "b978e7bbda233841e3c1917c540f126525b6120e2bb42249e632791e5ac666d7",
+      "size": 12268
+    },
+    {
       "path": "challenge.html",
       "sha256": "52537cbb2e7d128d9205cbd28df85832dc63e79b564a833f7b5087719c859237",
       "size": 13400
@@ -40,6 +45,11 @@
       "path": "curriculum.html",
       "sha256": "68ca34b4315b458b2d1bc8054956c649ca457235e6dfc921aec4bde1c685e820",
       "size": 17171
+    },
+    {
+      "path": "en.html",
+      "sha256": "910e3c72f16fd6c5b632236526cced19c6afc572678b8d17febcd70c624fd707",
+      "size": 14019
     },
     {
       "path": "en/about.html",
@@ -55,6 +65,11 @@
       "path": "en/business.html",
       "sha256": "14dde7781a2b7c0139997798d12f1918c0ccf190f307068e80488d39ea5ddefb",
       "size": 27125
+    },
+    {
+      "path": "en/certificate.html",
+      "sha256": "e43a3c1c5ca5ceed6c8ead1ec6412a7a363a2a1aa00d9b16451fc02696b7c232",
+      "size": 9880
     },
     {
       "path": "en/challenge.html",
@@ -77,14 +92,14 @@
       "size": 12063
     },
     {
-      "path": "en/guides/ai-safety-for-kids.html",
-      "sha256": "a386fd8c652960faf22bf606a00fa0f23afcd26882e424d9d308166a04bd1aaf",
-      "size": 14890
-    },
-    {
       "path": "en/guides.html",
       "sha256": "c6cba5c02a9654eaf60ce61d2e9dfc9a6e0b77e80cce41ab40c6e4a9db1e19b5",
       "size": 6823
+    },
+    {
+      "path": "en/guides/ai-safety-for-kids.html",
+      "sha256": "a386fd8c652960faf22bf606a00fa0f23afcd26882e424d9d308166a04bd1aaf",
+      "size": 14890
     },
     {
       "path": "en/kids.html",
@@ -98,8 +113,8 @@
     },
     {
       "path": "en/method.html",
-      "sha256": "3192494bf7498756d78345b527f701956e874ad7a326e5f0be9c2e404bbfa375",
-      "size": 7348
+      "sha256": "65e3ab868a8f2aa2ebdcde000f3b01cfbc2acfaf17186eac32137e9b935d8617",
+      "size": 7417
     },
     {
       "path": "en/parents.html",
@@ -162,11 +177,6 @@
       "size": 6834
     },
     {
-      "path": "en.html",
-      "sha256": "910e3c72f16fd6c5b632236526cced19c6afc572678b8d17febcd70c624fd707",
-      "size": 14019
-    },
-    {
       "path": "family.html",
       "sha256": "aa7841bfd13e35256c43212dd22ec1e7370a41068d4e39cbaa7e32e24d625c0a",
       "size": 11207
@@ -197,14 +207,14 @@
       "size": 52016
     },
     {
-      "path": "guides/ai-safety-for-kids.html",
-      "sha256": "9af5960b53562b0964e04fb91fd511c47c7f097aeefd12ddbb5bc78ede00ef28",
-      "size": 18761
-    },
-    {
       "path": "guides.html",
       "sha256": "7888dd9aa159a52d7d538ab9550d1009f73dec69f323b796b3c36b3c455bcbb0",
       "size": 7757
+    },
+    {
+      "path": "guides/ai-safety-for-kids.html",
+      "sha256": "9af5960b53562b0964e04fb91fd511c47c7f097aeefd12ddbb5bc78ede00ef28",
+      "size": 18761
     },
     {
       "path": "icon-192.png",
@@ -233,8 +243,8 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "265495c825e89d90164606c095acd5117957d07abb76f14459d95238547492de",
-      "size": 2211
+      "sha256": "f595e63b9df6ff5a341f17b19c6505319d4553b4a71c9cac5b30e745f37f99de",
+      "size": 2298
     },
     {
       "path": "logo.png",
@@ -253,8 +263,8 @@
     },
     {
       "path": "method.html",
-      "sha256": "6340c5856f9e762504b0c160f02120f213ce78b7c9b17951236b46e1f463507d",
-      "size": 8409
+      "sha256": "c606ba021b648d7ad5bb953e1859021a3226920be3811f897d2ae27c52ea665f",
+      "size": 8475
     },
     {
       "path": "og-en-business.png",
@@ -433,8 +443,8 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "bbe77ed93ba201fe76f0dcff569046461ad0115c9caffcd4014f502622dff879",
-      "size": 4220
+      "sha256": "e5bcd0325e6437635eae499f047f7bd1d2ed51eb18529b1bc4fa46ea2c3db36c",
+      "size": 4393
     },
     {
       "path": "start-brief.js",
@@ -472,7 +482,7 @@
       "size": 41932
     }
   ],
-  "payload_sha256": "e38e7055686d4d976cb8a95961b0bcdbb1480c29293bac8b25e34a922a8ff170",
-  "release_id": "A9_REAL_PROJECTS_R1",
+  "payload_sha256": "dc51b3175148853d7087fbfdcc0ac20dad2a549f75e709650173b67ea47f3dd2",
+  "release_id": "N25_CERTIFICATE_RECORD_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }

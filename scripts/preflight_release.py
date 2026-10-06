@@ -96,6 +96,7 @@ CHECKS = [
     ("project_studio", ["python", "scripts/check_project_studio.py"]),
     ("project_studio_runtime", ["node", "scripts/check_project_studio_runtime.mjs"]),
     ("a9_real_projects", ["python", "scripts/check_a9_real_projects.py"]),
+    ("n25_certificate", ["python", "scripts/check_n25_certificate.py"]),
     ("pilot_simulator", ["python", "scripts/check_pilot_simulator.py"]),
     ("pilot_simulator_runtime", ["node", "scripts/check_pilot_simulator_runtime.mjs"]),
     ("business_calculator", ["node", "scripts/check_r70_business_calculator.mjs"]),

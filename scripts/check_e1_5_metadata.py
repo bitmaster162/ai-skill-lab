@@ -41,7 +41,7 @@ for f in sorted(p for p in LIVE.rglob("*.html") if p.name!="404.html"):
  if props.get("og:site_name")!=BRAND:errors.append(f"{route}: og site name")
  if props.get("og:locale")!=("en_US" if en else "ru_RU"):errors.append(f"{route}: og locale")
  if props.get("og:locale:alternate")!=("ru_RU" if en else "en_US"):errors.append(f"{route}: og alternate")
- expected_alt=OG20_ALT.get(route,BRAND) if RELEASE in {"OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1"} else BRAND
+ expected_alt=OG20_ALT.get(route,BRAND) if RELEASE in {"OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1"} else BRAND
  if props.get("og:image:alt")!=expected_alt:errors.append(f"{route}: og image alt")
  if (props.get("og:image:width"),props.get("og:image:height"))!=("1200","630"):errors.append(f"{route}: og dimensions")
  alts={a.get("hreflang"):a.get("href") for a in x.links if a.get("rel")=="alternate"}

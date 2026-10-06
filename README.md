@@ -16,8 +16,8 @@ The canonical production host is `https://aiskillab.work`. The legacy public Ver
 
 ## Routes
 
-- RU: `/`, `/about`, `/build`, `/business`, `/challenge`, `/curriculum`, `/family`, `/faq`, `/guides`, `/guides/ai-safety-for-kids`, `/kids`, `/matcher`, `/method`, `/parents`, `/personal`, `/phuket`, `/pricing`, `/privacy`, `/projects`, `/proof`, `/safety`, `/start`, `/studio`, `/teens`, `/terms`
-- EN: `/en`, `/en/about`, `/en/build`, `/en/business`, `/en/challenge`, `/en/curriculum`, `/en/family`, `/en/faq`, `/en/guides`, `/en/guides/ai-safety-for-kids`, `/en/kids`, `/en/matcher`, `/en/method`, `/en/parents`, `/en/personal`, `/en/phuket`, `/en/pricing`, `/en/privacy`, `/en/projects`, `/en/proof`, `/en/safety`, `/en/start`, `/en/studio`, `/en/teens`, `/en/terms`
+- RU: `/`, `/about`, `/build`, `/business`, `/certificate`, `/challenge`, `/curriculum`, `/family`, `/faq`, `/guides`, `/guides/ai-safety-for-kids`, `/kids`, `/matcher`, `/method`, `/parents`, `/personal`, `/phuket`, `/pricing`, `/privacy`, `/projects`, `/proof`, `/safety`, `/start`, `/studio`, `/teens`, `/terms`
+- EN: `/en`, `/en/about`, `/en/build`, `/en/business`, `/en/certificate`, `/en/challenge`, `/en/curriculum`, `/en/family`, `/en/faq`, `/en/guides`, `/en/guides/ai-safety-for-kids`, `/en/kids`, `/en/matcher`, `/en/method`, `/en/parents`, `/en/personal`, `/en/phuket`, `/en/pricing`, `/en/privacy`, `/en/projects`, `/en/proof`, `/en/safety`, `/en/start`, `/en/studio`, `/en/teens`, `/en/terms`
 
 ## Environment
 
@@ -56,7 +56,7 @@ Root-level `R*_READINESS.md` files are historical evidence snapshots from earlie
 
 ## Claims discipline
 
-No fabricated testimonials, student counts, income claims or unverified instructor biography are included.
+No fabricated testimonials, student counts, issued certificates, income claims or unverified instructor biography are included.
 
 ## R7 conversion layer
 
@@ -68,6 +68,7 @@ No fabricated testimonials, student counts, income claims or unverified instruct
 ## R8 proof layer
 
 - `/projects` and `/en/projects`: five provenance-bound public mentor builds plus nine example outcome formats. Real builds link to public repositories and preserve explicit claim boundaries; examples remain explicitly not client or student case studies.
+- `/certificate` and `/en/certificate`: consent-bound completion-record policy/template only. The current release publishes no real learner identity; minors have zero public PII; the record is not accreditation, academic credit, a professional qualification or security/compliance certification.
 - `/parents` and `/en/parents`: buyer-facing progress rubric, age/safety framing and family decision support.
 - Public youth age wording remains aligned with current OpenAI guidance and is linked to the official Help Center from the static parent page.
 

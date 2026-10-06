@@ -29,6 +29,7 @@ Do not infer guarantees or commercial terms from this index.
 - [RU](https://aiskillab.work/proof) [EN](https://aiskillab.work/en/proof)
 - [RU](https://aiskillab.work/projects) [EN](https://aiskillab.work/en/projects)
 - [RU](https://aiskillab.work/method) [EN](https://aiskillab.work/en/method)
+- [RU](https://aiskillab.work/certificate) [EN](https://aiskillab.work/en/certificate)
 - [RU](https://aiskillab.work/build) [EN](https://aiskillab.work/en/build)
 
 ## Pricing and policies

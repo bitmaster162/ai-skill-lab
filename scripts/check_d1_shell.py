@@ -60,7 +60,7 @@ def hrefs(fragment):
  return re.findall(r'<a\b[^>]*href="([^"]+)"',fragment,re.I)
 
 public=[p for p in sorted(LIVE.rglob("*.html")) if p.name!="404.html"]
-req(len(public)==50,f"public pages {len(public)} != 50")
+req(len(public)==52,f"public pages {len(public)} != 52")
 reach_count=light_count=start_reply_count=0
 for p in public:
  rel=p.relative_to(LIVE).as_posix()
@@ -79,7 +79,7 @@ for p in public:
  footer=re.search(r'<footer class="workshopFooter">(.*?)</footer>',text,re.S)
  req(bool(footer),f"{rel}: Workshop footer missing")
  if footer:
-  expected_footer=FOOTER_E2[lang] if release in {"E2_GUIDES_R1","N15_AGENT_SAFETY_R1","A4_PHUKET_LOCAL_R1","A3_CALCOM_R1","A5_MENTOR_R1","E1_3_POST_SUBMIT_R1","DESIGN_TYPOGRAPHY_R1","OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1"} else FOOTER_R157[lang] if release in {"R157_I1_3_INDEXABILITY","R158_F1_2_MATCHER_V2","R160_F1_2_PRIVACY_DISCLOSURE"} else FOOTER[lang]
+  expected_footer=FOOTER_E2[lang] if release in {"E2_GUIDES_R1","N15_AGENT_SAFETY_R1","A4_PHUKET_LOCAL_R1","A3_CALCOM_R1","A5_MENTOR_R1","E1_3_POST_SUBMIT_R1","DESIGN_TYPOGRAPHY_R1","OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1"} else FOOTER_R157[lang] if release in {"R157_I1_3_INDEXABILITY","R158_F1_2_MATCHER_V2","R160_F1_2_PRIVACY_DISCLOSURE"} else FOOTER[lang]
   req(hrefs(footer.group(1))==expected_footer,f"{rel}: footer href drift {hrefs(footer.group(1))}")
   req(CAPTION[lang] in footer.group(1),f"{rel}: footer caption drift")
  reach=re.search(r'<section class="reachBlock">(.*?)</section>',text,re.S)
@@ -102,7 +102,7 @@ for p in public:
    links=hrefs(block)
    req(links==[CONTACT[lang]["start"],*CONTACT_URLS],f"{rel}: reach links drift {links}")
 
-req((reach_count,light_count,start_reply_count)==(44,4,2),f"D1 distribution reach/light/start={(reach_count,light_count,start_reply_count)}")
+req((reach_count,light_count,start_reply_count)==(46,4,2),f"D1 distribution reach/light/start={(reach_count,light_count,start_reply_count)}")
 
 for p in sorted(LIVE.rglob("*.html")):
  req(' style=' not in p.read_text(encoding="utf-8"),f"{p.relative_to(LIVE)}: inline style")
@@ -149,7 +149,7 @@ for marker in [
 ]:
  req(marker in source,f"source shell missing {marker}")
 
-print(f"d1_shell_checks={checks} public=50 reach={reach_count} light={light_count} start_reply={start_reply_count}")
+print(f"d1_shell_checks={checks} public=52 reach={reach_count} light={light_count} start_reply={start_reply_count}")
 if errors:
  print("D1_SHELL_FAIL")
  for error in errors: print("FAIL:",error)

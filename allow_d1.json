@@ -1,5 +1,5 @@
 {
- "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below. E2: guides permits only the global Guides footer link plus the exact parent-checklist text/link on /kids, /parents, /safety and EN pairs. N15: agent-safety permits only the exact generated lesson text and its three cited source links on /personal, /business, /teens and EN pairs. A4: Phuket local permits only the exact generated local-areas/formats text on /phuket and /en/phuket; no links or meta changes. A3: Cal.com permits only the exact 15-minute booking URL on /start and /en/start; no text or meta changes. A5: mentor card permits only exact mentor text, GitHub/LinkedIn links and mentor aria/alt text on /, /en, /about and /en/about. E1.3: post-submit permits only the exact diagnostic/Telegram continuation labels on /start and /en/start; success feedback remains runtime-only. A8: Prompt Auditor permits only the exact RU/EN home demo copy, textarea labels/placeholders, and the exact Prompt Auditor privacy disclosure on /privacy and /en/privacy. A9: /projects permits only the provenance-bound real-build section, five exact public GitHub repository links, and the paired RU/EN project metadata/hero update; the nine existing example formats remain explicitly non-testimonial.",
+ "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below. E2: guides permits only the global Guides footer link plus the exact parent-checklist text/link on /kids, /parents, /safety and EN pairs. N15: agent-safety permits only the exact generated lesson text and its three cited source links on /personal, /business, /teens and EN pairs. A4: Phuket local permits only the exact generated local-areas/formats text on /phuket and /en/phuket; no links or meta changes. A3: Cal.com permits only the exact 15-minute booking URL on /start and /en/start; no text or meta changes. A5: mentor card permits only exact mentor text, GitHub/LinkedIn links and mentor aria/alt text on /, /en, /about and /en/about. E1.3: post-submit permits only the exact diagnostic/Telegram continuation labels on /start and /en/start; success feedback remains runtime-only. A8: Prompt Auditor permits only the exact RU/EN home demo copy, textarea labels/placeholders, and the exact Prompt Auditor privacy disclosure on /privacy and /en/privacy. A9: /projects permits only the provenance-bound real-build section, five exact public GitHub repository links, and the paired RU/EN project metadata/hero update; the nine existing example formats remain explicitly non-testimonial. N25: /method and /en/method may add one internal Completion record link; /certificate routes are net-new and are governed by the N25 checker.",
  "phrases": {
   "ru": [
    "Как написать",
@@ -371,6 +371,12 @@
    "AGENT GOVERNANCE · PUBLIC REPO DETERMINISTIC REFERENCE 03 BitEvo Agent Authority A public seven-gate Agent Authority & Evidence reference package for examining one action-capable workflow. 01 Evidence spec/gates.json, a local deterministic evaluator, fail-closed validation and regression tests; the package is source-bound to the public BitEvo implementation. 02 Boundary It does not issue a trust/safety score, certify a system, execute external actions or request credentials. GitHub ↗",
    "AI PRODUCT · PUBLIC REPO PUBLIC PRODUCT / EVIDENCE SURFACE 04 BitEvo Agent Site A public authority-first AI-agent product where SOURCE, BUILD, DEPLOYMENT, READBACK and EXTERNAL EFFECT are kept as separate evidence classes. 01 Evidence Astro site with provider-bound build receipts, deterministic release gates, a CSP hash allowlist and separate Vercel / Cloudflare provider paths. 02 Boundary Production promotion is separate from build/readback; the public repository explicitly fixes can_trade=false and capital_permission=DENY. GitHub ↗",
    "CONTROL STACK · PUBLIC REPO VALIDATION-ONLY 05 TRIAXIS A versioned governance/control stack with deterministic validation assets for policy binding, external witnesses, execution reconciliation and rollback detection. 01 Evidence The public repository includes executable validation harnesses for signed policy heads, quorum, execution ledger, provider reconciliation and completion witnesses. 02 Boundary The repository explicitly says it is not a production gateway; validation results do not prove production exactly-once behavior or complete mediation. GitHub ↗"
+  ],
+  "/method": [
+   "Completion record →"
+  ],
+  "/en/method": [
+   "Completion record →"
   ]
  },
  "links": {
@@ -541,6 +547,12 @@
    "https://github.com/bitmaster162/agent-authority",
    "https://github.com/bitmaster162/bitevo-agent-site",
    "https://github.com/bitmaster162/TRIAXIS"
+  ],
+  "/method": [
+   "/certificate"
+  ],
+  "/en/method": [
+   "/en/certificate"
   ]
  },
  "meta_changes": {

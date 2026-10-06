@@ -80,7 +80,7 @@ req('name:"intro_call_click"' in runtime, "intro_call_click event missing")
 
 # No route expansion.
 public = [p for p in LIVE.rglob("*.html") if p.name != "404.html"]
-req(len(public) == 50, f"public route count {len(public)} != 50")
+req(len(public) == 52, f"public route count {len(public)} != 52")
 
 print(f"A3_CALCOM_CHECK checks={checks} start_pages=2 unchanged_intro_surfaces=16 public_routes={len(public)}")
 if errors:

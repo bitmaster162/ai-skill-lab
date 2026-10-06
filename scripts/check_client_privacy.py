@@ -49,7 +49,7 @@ proofs=[
 analytics_tag='<script defer src="/_vercel/insights/script.js"></script>'
 public_html=[p for p in ROOT.rglob('*.html') if p.name!='404.html']
 checks+=len(public_html)+1
-if len(public_html)!=50: errors.append(f'analytics route count {len(public_html)} != 50')
+if len(public_html)!=52: errors.append(f'analytics route count {len(public_html)} != 52')
 for p in public_html:
  t=p.read_text(encoding='utf-8')
  if t.count(analytics_tag)!=1: errors.append(f'{p.relative_to(ROOT)}: analytics script count {t.count(analytics_tag)} != 1')
