@@ -128,8 +128,8 @@
     },
     {
       "path": "en/projects.html",
-      "sha256": "e43e1fccdf9c459041a1a35895975667f2f438a02574e63bcfe6cca88744fc96",
-      "size": 15890
+      "sha256": "fb7ec221a02b3885e813beb1779b52f1c71fc752b3975801575622adee31e744",
+      "size": 20898
     },
     {
       "path": "en/proof.html",
@@ -393,8 +393,8 @@
     },
     {
       "path": "projects.html",
-      "sha256": "f88b12d6d922714400b2ffe64a96098cad8a950ad2f1702f642b5b14095e2085",
-      "size": 19483
+      "sha256": "3e488ce03504bfb5a48b8bdae3d3f562b2a477f7a91560aeb89ca8f3158ea043",
+      "size": 25394
     },
     {
       "path": "prompt-auditor.js",
@@ -472,7 +472,7 @@
       "size": 41932
     }
   ],
-  "payload_sha256": "7ecb940489bb0efff05c0d492a1f73b0f2c743a299497ff274619f0b0cfd81ef",
-  "release_id": "A8_PROMPT_AUDITOR_R1",
+  "payload_sha256": "e38e7055686d4d976cb8a95961b0bcdbb1480c29293bac8b25e34a922a8ff170",
+  "release_id": "A9_REAL_PROJECTS_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }

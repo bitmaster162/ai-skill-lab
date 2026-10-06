@@ -1,5 +1,5 @@
 {
- "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below. E2: guides permits only the global Guides footer link plus the exact parent-checklist text/link on /kids, /parents, /safety and EN pairs. N15: agent-safety permits only the exact generated lesson text and its three cited source links on /personal, /business, /teens and EN pairs. A4: Phuket local permits only the exact generated local-areas/formats text on /phuket and /en/phuket; no links or meta changes. A3: Cal.com permits only the exact 15-minute booking URL on /start and /en/start; no text or meta changes. A5: mentor card permits only exact mentor text, GitHub/LinkedIn links and mentor aria/alt text on /, /en, /about and /en/about. E1.3: post-submit permits only the exact diagnostic/Telegram continuation labels on /start and /en/start; success feedback remains runtime-only. A8: Prompt Auditor permits only the exact RU/EN home demo copy, textarea labels/placeholders, and the exact Prompt Auditor privacy disclosure on /privacy and /en/privacy.",
+ "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below. E2: guides permits only the global Guides footer link plus the exact parent-checklist text/link on /kids, /parents, /safety and EN pairs. N15: agent-safety permits only the exact generated lesson text and its three cited source links on /personal, /business, /teens and EN pairs. A4: Phuket local permits only the exact generated local-areas/formats text on /phuket and /en/phuket; no links or meta changes. A3: Cal.com permits only the exact 15-minute booking URL on /start and /en/start; no text or meta changes. A5: mentor card permits only exact mentor text, GitHub/LinkedIn links and mentor aria/alt text on /, /en, /about and /en/about. E1.3: post-submit permits only the exact diagnostic/Telegram continuation labels on /start and /en/start; success feedback remains runtime-only. A8: Prompt Auditor permits only the exact RU/EN home demo copy, textarea labels/placeholders, and the exact Prompt Auditor privacy disclosure on /privacy and /en/privacy. A9: /projects permits only the provenance-bound real-build section, five exact public GitHub repository links, and the paired RU/EN project metadata/hero update; the nine existing example formats remain explicitly non-testimonial.",
  "phrases": {
   "ru": [
    "Как написать",
@@ -347,6 +347,30 @@
   ],
   "/en/about": [
    "mentor · human in the loop robert dumanyan founder / instructor works with ai systems, research workflows, agents, automation, decision workflows and digital products. sessions follow the same discipline: goal → specification → build → verification → output. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗"
+  ],
+  "/projects": [
+   "EXAMPLE OUTPUTS · NOT TESTIMONIALS Не галерея работ. Project Studio. 9 примерных форматов показывают не только что можно собрать, но и как устроена хорошая AI-работа: цель → роль AI → human check → проверяемый артефакт. Это не заявления о конкретных клиентах или учениках. Исследовать проекты ↓ Как мы проверяем AI →",
+   "PROJECT STUDIO / 9 EXAMPLES Фильтруй по типу работы. Смотри на устройство результата. Весь контент доступен даже без JavaScript. Фильтр работает только локально в браузере и ничего не отправляет наружу.",
+   "REAL BUILDS · PUBLIC PROVENANCE Реальные сборки. И Project Studio. Сначала — публичные проекты Роберта с проверяемыми репозиториями и честными границами claims. Ниже — 9 учебных примерных форматов; это не клиентские кейсы и не работы учеников. Смотреть реальные проекты ↓ Как мы проверяем AI →",
+   "REAL BUILDS / 5 PUBLIC REPOS Публичный код. Явные границы claims. Пять проектов Роберта Думаняна с открытыми репозиториями и проверяемым scope. Это проекты наставника, не работы учеников и не клиентские кейсы.",
+   "EXAMPLE OUTPUTS · NOT TESTIMONIALS / 9 EXAMPLES Фильтруй по типу работы. Смотри на устройство результата. Ниже — учебные примерные форматы, а не заявления о конкретных клиентах или учениках. Весь контент доступен даже без JavaScript; фильтр работает только локально в браузере и ничего не отправляет наружу.",
+   "VISUAL AI · PUBLIC REPO RESEARCH / OFFLINE TESTABLE 01 VisionAssist Визуально-семантический слой для evidence-grounded observations, competing hypotheses, counterevidence, uncertainty и явной human-AI revision. 01 Доказательство Публичный репозиторий фиксирует 75-case corpus: 60 market chart cases + 15 deterministic visual-control cases, offline harness, scorer и proof checklist. 02 Граница claims README не заявляет calibration, human-AI uplift, natural-scene generality или production value. GitHub ↗",
+   "MEMORY · PUBLIC REPO LOCAL-FIRST / OPEN SOURCE 02 ContinuityOS Durable memory и continuity layer для AI-агентов и людей: canon, frontiers, open loops, checkpoints и handoff context. 01 Доказательство Публичный репозиторий и PyPI package; core memory работает локально на SQLite, поддерживает CLI, Python API, MCP и импорт AI-history из нескольких провайдеров. 02 Граница claims Demo доказывает bounded persistence через новый процесс, а не поведенческую идентичность модели или production security. GitHub ↗",
+   "AGENT GOVERNANCE · PUBLIC REPO DETERMINISTIC REFERENCE 03 BitEvo Agent Authority Публичный reference package семи ворот Agent Authority & Evidence для проверки одного action-capable workflow. 01 Доказательство spec/gates.json, локальный deterministic evaluator, fail-closed validation и regression tests; package source-bound к публичной BitEvo реализации. 02 Граница claims Не выдаёт trust/safety score, не сертифицирует систему, не исполняет внешние действия и не запрашивает credentials. GitHub ↗",
+   "AI PRODUCT · PUBLIC REPO PUBLIC PRODUCT / EVIDENCE SURFACE 04 BitEvo Agent Site Публичный продукт для authority-first AI-agent engineering, где SOURCE, BUILD, DEPLOYMENT, READBACK и EXTERNAL EFFECT разделены как разные классы доказательств. 01 Доказательство Astro site с provider-bound build receipts, deterministic release gates, CSP hash allowlist и раздельными Vercel / Cloudflare provider paths. 02 Граница claims Production promotion отделён от build/readback; публичный repository прямо фиксирует can_trade=false и capital_permission=DENY. GitHub ↗",
+   "CONTROL STACK · PUBLIC REPO VALIDATION-ONLY 05 TRIAXIS Versioned governance/control stack с deterministic validation assets для policy binding, external witnesses, execution reconciliation и rollback detection. 01 Доказательство Публичный репозиторий содержит executable validation harnesses для signed policy heads, quorum, execution ledger, provider reconciliation и completion witnesses. 02 Граница claims Repository прямо указывает: это не production gateway; validation results не доказывают production exactly-once behavior или complete mediation. GitHub ↗"
+  ],
+  "/en/projects": [
+   "EXAMPLE OUTPUTS · NOT TESTIMONIALS Not a work gallery. Project Studio. Nine example formats show not just what can be built, but what good AI work contains: goal → AI role → human check → verifiable artifact. These are not claims about specific clients or learners. Explore projects ↓ How we verify AI →",
+   "PROJECT STUDIO / 9 EXAMPLES Filter by type of work. Inspect the anatomy of the result. All content remains available without JavaScript. The filter runs locally in the browser and sends nothing out.",
+   "REAL BUILDS · PUBLIC PROVENANCE Real builds. And Project Studio. First: Robert’s public projects with verifiable repositories and explicit claim boundaries. Below: nine learning examples; they are not client case studies or student work. See real projects ↓ How we verify AI →",
+   "REAL BUILDS / 5 PUBLIC REPOS Public code. Explicit claim boundaries. Five projects by Robert Dumanyan with public repositories and inspectable scope. These are mentor builds, not student work or client case studies.",
+   "EXAMPLE OUTPUTS · NOT TESTIMONIALS / 9 EXAMPLES Filter by type of work. Inspect the anatomy of the result. Below are learning examples, not claims about specific clients or learners. All content remains available without JavaScript; the filter runs locally in the browser and sends nothing out.",
+   "VISUAL AI · PUBLIC REPO RESEARCH / OFFLINE TESTABLE 01 VisionAssist A visual-semantic cognition layer for evidence-grounded observations, competing hypotheses, counterevidence, uncertainty and explicit human-AI revision. 01 Evidence The public repository documents a 75-case corpus: 60 market chart cases plus 15 deterministic visual-control cases, with an offline harness, scorer and proof checklist. 02 Boundary The README makes no calibration, human-AI uplift, natural-scene generality or production-value claim. GitHub ↗",
+   "MEMORY · PUBLIC REPO LOCAL-FIRST / OPEN SOURCE 02 ContinuityOS Durable memory and continuity for AI agents and humans: canon, frontiers, open loops, checkpoints and handoff context. 01 Evidence Public repository and PyPI package; core memory is local SQLite and supports a CLI, Python API, MCP and multi-provider AI-history import. 02 Boundary The demo proves bounded persistence across a fresh process, not behavioral model identity or production security. GitHub ↗",
+   "AGENT GOVERNANCE · PUBLIC REPO DETERMINISTIC REFERENCE 03 BitEvo Agent Authority A public seven-gate Agent Authority & Evidence reference package for examining one action-capable workflow. 01 Evidence spec/gates.json, a local deterministic evaluator, fail-closed validation and regression tests; the package is source-bound to the public BitEvo implementation. 02 Boundary It does not issue a trust/safety score, certify a system, execute external actions or request credentials. GitHub ↗",
+   "AI PRODUCT · PUBLIC REPO PUBLIC PRODUCT / EVIDENCE SURFACE 04 BitEvo Agent Site A public authority-first AI-agent product where SOURCE, BUILD, DEPLOYMENT, READBACK and EXTERNAL EFFECT are kept as separate evidence classes. 01 Evidence Astro site with provider-bound build receipts, deterministic release gates, a CSP hash allowlist and separate Vercel / Cloudflare provider paths. 02 Boundary Production promotion is separate from build/readback; the public repository explicitly fixes can_trade=false and capital_permission=DENY. GitHub ↗",
+   "CONTROL STACK · PUBLIC REPO VALIDATION-ONLY 05 TRIAXIS A versioned governance/control stack with deterministic validation assets for policy binding, external witnesses, execution reconciliation and rollback detection. 01 Evidence The public repository includes executable validation harnesses for signed policy heads, quorum, execution ledger, provider reconciliation and completion witnesses. 02 Boundary The repository explicitly says it is not a production gateway; validation results do not prove production exactly-once behavior or complete mediation. GitHub ↗"
   ]
  },
  "links": {
@@ -503,6 +527,20 @@
   "/en/about": [
    "https://github.com/bitmaster162",
    "https://www.linkedin.com/in/robert-dumanyan-984171335/"
+  ],
+  "/projects": [
+   "https://github.com/bitmaster162/VisionAssist",
+   "https://github.com/bitmaster162/continuityos",
+   "https://github.com/bitmaster162/agent-authority",
+   "https://github.com/bitmaster162/bitevo-agent-site",
+   "https://github.com/bitmaster162/TRIAXIS"
+  ],
+  "/en/projects": [
+   "https://github.com/bitmaster162/VisionAssist",
+   "https://github.com/bitmaster162/continuityos",
+   "https://github.com/bitmaster162/agent-authority",
+   "https://github.com/bitmaster162/bitevo-agent-site",
+   "https://github.com/bitmaster162/TRIAXIS"
   ]
  },
  "meta_changes": {
@@ -570,7 +608,9 @@
    "description"
   ],
   "/en/projects": [
-   "title"
+   "title",
+   "description",
+   "h1"
   ],
   "/en/proof": [
    "title"
@@ -630,7 +670,9 @@
    "description"
   ],
   "/projects": [
-   "title"
+   "title",
+   "description",
+   "h1"
   ],
   "/proof": [
    "title"

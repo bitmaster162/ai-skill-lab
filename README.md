@@ -67,7 +67,7 @@ No fabricated testimonials, student counts, income claims or unverified instruct
 
 ## R8 proof layer
 
-- `/projects` and `/en/projects`: example outcome formats, explicitly not client case studies.
+- `/projects` and `/en/projects`: five provenance-bound public mentor builds plus nine example outcome formats. Real builds link to public repositories and preserve explicit claim boundaries; examples remain explicitly not client or student case studies.
 - `/parents` and `/en/parents`: buyer-facing progress rubric, age/safety framing and family decision support.
 - Public youth age wording remains aligned with current OpenAI guidance and is linked to the official Help Center from the static parent page.
 

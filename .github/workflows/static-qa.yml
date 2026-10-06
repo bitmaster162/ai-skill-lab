@@ -196,6 +196,8 @@ jobs:
         run: python scripts/check_project_studio.py
       - name: Smoke-test Project Studio runtime
         run: node scripts/check_project_studio_runtime.mjs
+      - name: Validate A9 real project provenance
+        run: python scripts/check_a9_real_projects.py
       - name: Validate AI Pilot Simulator parity
         run: python scripts/check_pilot_simulator.py
       - name: Smoke-test AI Pilot Simulator runtime

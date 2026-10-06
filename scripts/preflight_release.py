@@ -95,6 +95,7 @@ CHECKS = [
     ("lab_discoverability", ["python", "scripts/check_lab_discoverability.py"]),
     ("project_studio", ["python", "scripts/check_project_studio.py"]),
     ("project_studio_runtime", ["node", "scripts/check_project_studio_runtime.mjs"]),
+    ("a9_real_projects", ["python", "scripts/check_a9_real_projects.py"]),
     ("pilot_simulator", ["python", "scripts/check_pilot_simulator.py"]),
     ("pilot_simulator_runtime", ["node", "scripts/check_pilot_simulator_runtime.mjs"]),
     ("business_calculator", ["node", "scripts/check_r70_business_calculator.mjs"]),
