@@ -113,7 +113,7 @@ def main() -> int:
     public = [p for p in LIVE.rglob("*.html") if p.name != "404.html"]
     routes = {route_for(p) for p in public}
     checks += 3
-    require(len(routes) == 50, f"public route authority {len(routes)} != 50", errors)
+    require(len(routes) == 52, f"public route authority {len(routes)} != 52", errors)
     require("/guides" in routes and "/en/guides" in routes, "guide listings missing from route authority", errors)
     require(set(ARTICLES).issubset(routes), "guide article routes missing", errors)
 
@@ -122,13 +122,13 @@ def main() -> int:
     expected_urls = {ORIGIN + ("/" if route == "/" else route) for route in routes}
     checks += 2
     require(sitemap_urls == expected_urls, f"sitemap route mismatch missing={sorted(expected_urls-sitemap_urls)} extra={sorted(sitemap_urls-expected_urls)}", errors)
-    require(len(sitemap_urls) == 50, f"sitemap URL count {len(sitemap_urls)} != 50", errors)
+    require(len(sitemap_urls) == 52, f"sitemap URL count {len(sitemap_urls)} != 52", errors)
 
     llms = (LIVE / "llms.txt").read_text(encoding="utf-8")
     llms_urls = re.findall(r"\]\((https?://[^)]+)\)", llms)
     checks += 3
     require("## Guides" in llms, "llms.txt missing Guides section", errors)
-    require(len(llms_urls) == 50, f"llms.txt URL count {len(llms_urls)} != 50", errors)
+    require(len(llms_urls) == 52, f"llms.txt URL count {len(llms_urls)} != 52", errors)
     require(set(llms_urls) == expected_urls, "llms.txt/sitemap parity mismatch", errors)
 
     # Footer link belongs to every public Workshop page.

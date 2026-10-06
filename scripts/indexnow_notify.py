@@ -43,7 +43,7 @@ def read_key() -> str:
 def sitemap_urls() -> list[str]:
     text=(LIVE/"sitemap.xml").read_text(encoding="utf-8")
     urls=re.findall(r"<loc>(https://aiskillab\.work[^<]+)</loc>",text)
-    if len(urls)!=50 or len(set(urls))!=50:
+    if len(urls)!=52 or len(set(urls))!=52:
         raise ValueError(f"sitemap canonical URL authority drift count={len(urls)} unique={len(set(urls))}")
     return sorted(urls)
 

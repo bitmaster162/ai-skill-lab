@@ -56,7 +56,7 @@ function referencesForbiddenFontHost(text) {
 }
 for (const [text, label] of [[css, 'static CSS'], [sourceCss, 'source CSS']]) {
   const block = text.split('R115 Workshop v1 typography roles').slice(-1)[0];
-  if (['A5_MENTOR_R1', 'E1_3_POST_SUBMIT_R1','DESIGN_TYPOGRAPHY_R1','OG20_R1','A7_SAFETY_QUIZ_R1','A8_PROMPT_AUDITOR_R1','A9_REAL_PROJECTS_R1', 'A3_CALCOM_R1', 'A4_PHUKET_LOCAL_R1', 'N15_AGENT_SAFETY_R1', 'E2_GUIDES_R1', 'R149_D1_0_WORKSHOP_SHELL', 'R149_D1_0_VIEWPORT_CLOSEOUT', 'R151_E1_1_WEB_ANALYTICS', 'R152_E1_2_CACHE_POLICY', 'R153_E1_4_INTRO_CALL', 'R154_E1_5_METADATA', 'R155_E1_6_MOBILE_HEADER', 'R156_I1_2_INDEXNOW', 'R157_I1_3_INDEXABILITY', 'R158_F1_2_MATCHER_V2', 'R160_F1_2_PRIVACY_DISCLOSURE'].includes(release)) {
+  if (['A5_MENTOR_R1', 'E1_3_POST_SUBMIT_R1','DESIGN_TYPOGRAPHY_R1','OG20_R1','A7_SAFETY_QUIZ_R1','A8_PROMPT_AUDITOR_R1','A9_REAL_PROJECTS_R1','N25_CERTIFICATE_RECORD_R1', 'A3_CALCOM_R1', 'A4_PHUKET_LOCAL_R1', 'N15_AGENT_SAFETY_R1', 'E2_GUIDES_R1', 'R149_D1_0_WORKSHOP_SHELL', 'R149_D1_0_VIEWPORT_CLOSEOUT', 'R151_E1_1_WEB_ANALYTICS', 'R152_E1_2_CACHE_POLICY', 'R153_E1_4_INTRO_CALL', 'R154_E1_5_METADATA', 'R155_E1_6_MOBILE_HEADER', 'R156_I1_2_INDEXNOW', 'R157_I1_3_INDEXABILITY', 'R158_F1_2_MATCHER_V2', 'R160_F1_2_PRIVACY_DISCLOSURE'].includes(release)) {
     const compact = text.replace(/\s+/g, '');
     const required = label === 'static CSS'
       ? [
@@ -99,7 +99,7 @@ const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) =
   return e.isDirectory() ? walk(p) : [p];
 });
 const htmls = walk(LIVE).filter((p) => p.endsWith('.html')).sort();
-req(htmls.length === 51, 'html surfaces ' + htmls.length + ' != 51');
+req(htmls.length === 53, 'html surfaces ' + htmls.length + ' != 53');
 
 const forbiddenStatusGlyph = String.fromCodePoint(0x25CF);
 const namedEntities = new Map([['&amp;', '&'], ['&lt;', '<'], ['&gt;', '>'], ['&quot;', '"'], ['&copy;', '©']]);
@@ -297,7 +297,7 @@ if (chrome) {
   profile = fs.mkdtempSync(path.join(os.tmpdir(), 'asl-cdp-'));
   const stderrLines = [];
   let port = 0;
-  const fixedPort = process.platform !== 'win32';
+  const fixedPort = true;
   if (fixedPort) port = await freePort();
   const args = [
     '--headless=new', '--disable-gpu', '--disable-dev-shm-usage', '--no-sandbox', '--remote-debugging-address=127.0.0.1',

@@ -67,7 +67,7 @@ for rel, locale in TARGETS.items():
 
 # A4 is a two-route content extension, not a route expansion.
 public = [p for p in LIVE.rglob("*.html") if p.name != "404.html"]
-req(len(public) == 50, f"public route count {len(public)} != 50")
+req(len(public) == 52, f"public route count {len(public)} != 52")
 for rel in ["kids.html", "en/kids.html", "personal.html", "en/personal.html", "business.html", "en/business.html"]:
     text = (LIVE / rel).read_text(encoding="utf-8")
     req('data-a4-phuket-local="true"' not in text, f"{rel}: A4 leaked outside Phuket")

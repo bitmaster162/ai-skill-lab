@@ -68,8 +68,8 @@ req("not student work or client case studies" in en_page,"EN source must separat
 req("не работы учеников и не клиентские кейсы" in ru,"RU static must separate mentor builds from student/client work")
 req("not student work or client case studies" in en,"EN static must separate mentor builds from student/client work")
 
-req(manifest.get("release_id")=="A9_REAL_PROJECTS_R1","A9 release identity")
-req(manifest.get("file_count")==94,"A9 static file_count must stay 94")
+req(manifest.get("release_id") in {"A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1"},"A9 release identity")
+req(manifest.get("file_count")==(96 if manifest.get("release_id")=="N25_CERTIFICATE_RECORD_R1" else 94),"A9 static file_count")
 print(f"A9_REAL_PROJECTS_CHECK checks={checks} real_projects=5 example_projects=9 public_repo_links=5")
 if errors:
     print("A9_REAL_PROJECTS_FAIL")
