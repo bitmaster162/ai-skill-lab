@@ -243,6 +243,8 @@ if release=='E3_8_LEAD_EVENTS_R1':
  protected.update({
   'deploy/live/vercel.json':'7ef773d9f03dce3568d6b0a11629049a58b462eb7ac2f333c5ffaee5ac1af450',
   'deploy/live/lab-command.js':'25dc752513a072fafa2b69019a5d6695b79c96b3e6a19e72a8f8722194e1e2aa',
+  'app/sitemap.ts':'6bb874d5610e5f08635c7e7dbc8d3085ba9b11bd1df243a325d7d78e1f5b832f',
+  'deploy/live/sitemap.xml':'d683b0464c737abcb5779ddb2e09451dd622c460f965273adb7efc5cafdb9633',
  })
  legal.update({
   'app/privacy/page.tsx':'238f21069f6ae71f53952a55fb3fdf0f12f98481d2b3f795595c44d1d62a8bce',

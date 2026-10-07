@@ -443,7 +443,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "e5bcd0325e6437635eae499f047f7bd1d2ed51eb18529b1bc4fa46ea2c3db36c",
+      "sha256": "d683b0464c737abcb5779ddb2e09451dd622c460f965273adb7efc5cafdb9633",
       "size": 4393
     },
     {
@@ -482,7 +482,7 @@
       "size": 41932
     }
   ],
-  "payload_sha256": "f6e93b180afc6b88229a19ee96832e6fe5f5ddfb47299a9b4737c387dca826f8",
+  "payload_sha256": "6ad1d1b92eb6f0bdd87a9ebbd9ad6032bd9ad5f40c60b5b245d07802a2be7722",
   "release_id": "E3_8_LEAD_EVENTS_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }
