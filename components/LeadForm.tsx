@@ -61,9 +61,11 @@ export function LeadForm({
       form.reset();
       setAudience(defaultAudience);
       setState("sent");
+      window.dispatchEvent(new CustomEvent("asl:lead-event", { detail: { event: "lead_submit_ok" } }));
       setMessage(en ? "Application sent. We reply within 1–2 business days." : "Заявка отправлена. Ответим в течение 1–2 рабочих дней.");
     } catch (error) {
       setState("error");
+      window.dispatchEvent(new CustomEvent("asl:lead-event", { detail: { event: "lead_submit_error" } }));
       setMessage(error instanceof Error ? error.message : (en ? "Could not send the application" : "Не удалось отправить заявку"));
     }
   }

@@ -5,7 +5,9 @@ on:
     paths:
       - 'services/lead-receiver-cloudflare/**'
       - 'schema/route_rate_event_r159.sql'
+      - 'schema/public_event_daily_e38.sql'
       - 'scripts/check_route_rate_schema.py'
+      - 'scripts/check_e3_8_event_schema.py'
       - '.github/workflows/r101b-receiver-qa.yml'
   push:
     branches:
@@ -13,7 +15,9 @@ on:
     paths:
       - 'services/lead-receiver-cloudflare/**'
       - 'schema/route_rate_event_r159.sql'
+      - 'schema/public_event_daily_e38.sql'
       - 'scripts/check_route_rate_schema.py'
+      - 'scripts/check_e3_8_event_schema.py'
       - '.github/workflows/r101b-receiver-qa.yml'
 
 permissions:
@@ -39,3 +43,7 @@ jobs:
         run: node --test services/lead-receiver-cloudflare/test/route-rate.test.mjs
       - name: Validate F1.2 route rate schema
         run: python scripts/check_route_rate_schema.py
+      - name: Test E3.8 public event counter
+        run: node --test services/lead-receiver-cloudflare/test/public-event.test.mjs
+      - name: Validate E3.8 event D1 schema
+        run: python scripts/check_e3_8_event_schema.py

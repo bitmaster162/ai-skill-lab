@@ -60,7 +60,9 @@ function attributionScript(){
   const marker='(()=>{"use strict";const START_PATHS=';
   const at=full.indexOf(marker);
   if(at<0)throw new Error('start source attribution runtime missing from lab-command.js');
-  const js=full.slice(at);
+  const end=full.indexOf('})();',at);
+  if(end<0)throw new Error('start source attribution runtime terminator missing from lab-command.js');
+  const js=full.slice(at,end+5);
   for(const forbidden of ['localStorage','sessionStorage','document.cookie','fetch(','XMLHttpRequest','sendBeacon']){
     if(js.includes(forbidden))throw new Error(`start attribution must stay storage/network free: ${forbidden}`);
   }

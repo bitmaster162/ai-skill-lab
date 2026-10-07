@@ -15,6 +15,33 @@ const TELEGRAM_FAQ_REPLY_BODY_BYTES = 8_000;
 const TELEGRAM_MESSAGE_MAX_CHARS = 4_096;
 const TELEGRAM_WEBHOOK_SECRET_DOMAIN = "telegram-faq-webhook-v1";
 const TELEGRAM_REPLY_SIGNATURE_DOMAIN = "telegram-faq-reply-v1";
+const PUBLIC_EVENT_PATH = "/e3/event";
+const PUBLIC_EVENT_REPORT_PATH = "/e3/event-report";
+const PUBLIC_EVENT_SCHEMA = "ai-skill-lab.public-event.v1";
+const PUBLIC_EVENT_SIGNATURE_DOMAIN = "public-event-v1";
+const PUBLIC_EVENT_REPORT_SIGNATURE_DOMAIN = "public-event-report-v1";
+const PUBLIC_EVENT_BODY_BYTES = 2_000;
+const PUBLIC_EVENT_NAMES = new Set([
+  "lead_submit_ok",
+  "lead_submit_error",
+  "cal_click",
+  "telegram_click",
+  "whatsapp_click",
+  "line_click",
+  "email_click",
+]);
+const PUBLIC_EVENT_UPSERT_SQL = `
+  INSERT INTO public_event_daily_e38 (day, event_name, page, locale, count)
+  VALUES (?, ?, ?, ?, 1)
+  ON CONFLICT(day, event_name, page, locale)
+  DO UPDATE SET count = count + 1
+`;
+const PUBLIC_EVENT_REPORT_SQL = `
+  SELECT day, event_name AS event, page, locale, count
+  FROM public_event_daily_e38
+  ORDER BY day DESC, event_name ASC, page ASC, locale ASC
+  LIMIT 5000
+`;
 const PUBLIC_MONITOR_ALERT_PATH = "/r164/public-monitor/alert";
 const PUBLIC_MONITOR_ALERT_SCHEMA = "ai-skill-lab.public-monitor-alert.v1";
 const PUBLIC_MONITOR_ALERT_BODY_BYTES = 4_000;
@@ -114,6 +141,98 @@ function routeRateConfig(env) {
     && db && typeof db.prepare === "function"
     && rateLimiter && typeof rateLimiter.limit === "function";
   return { enabled: true, ready, secret, db, rateLimiter };
+}
+
+
+function publicEventConfig(env) {
+  if (env?.LEAD_RECEIVER_ENABLED !== "true") return { enabled: false };
+  const secret = typeof env?.LEAD_WEBHOOK_SECRET === "string" ? env.LEAD_WEBHOOK_SECRET : "";
+  const db = env?.DB;
+  const rateLimiter = env?.LEAD_RATE_LIMITER;
+  return {
+    enabled: true,
+    ready: utf8Bytes(secret) >= MIN_SECRET_BYTES
+      && db && typeof db.prepare === "function"
+      && rateLimiter && typeof rateLimiter.limit === "function",
+    reportReady: utf8Bytes(secret) >= MIN_SECRET_BYTES
+      && db && typeof db.prepare === "function",
+    secret, db, rateLimiter,
+  };
+}
+
+function validatePublicEventPayload(payload, requestId, timestampSeconds) {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return null;
+  if (payload.schema !== PUBLIC_EVENT_SCHEMA) return null;
+  if (payload.requestId !== requestId || !UUID_V4.test(payload.requestId)) return null;
+  if (!PUBLIC_EVENT_NAMES.has(payload.event)) return null;
+  if (!ALLOWED_LOCALES.has(payload.locale)) return null;
+  if (!validText(payload.page, 180, { required: true })) return null;
+  if (!payload.page.startsWith("/") || payload.page.startsWith("//") || payload.page.includes("?") || payload.page.includes("#")) return null;
+  if (typeof payload.ipToken !== "string" || !/^[0-9a-f]{64}$/.test(payload.ipToken)) return null;
+  if (typeof payload.occurredAt !== "string") return null;
+  const occurredMs = Date.parse(payload.occurredAt);
+  if (!Number.isFinite(occurredMs) || new Date(occurredMs).toISOString() !== payload.occurredAt) return null;
+  if (Math.abs(occurredMs - timestampSeconds * 1000) > MAX_SKEW_SECONDS * 1000) return null;
+  return { requestId: payload.requestId, occurredAt: payload.occurredAt, event: payload.event, page: payload.page, locale: payload.locale, ipToken: payload.ipToken };
+}
+
+export async function handlePublicEvent(request, env = {}, nowMs = Date.now()) {
+  const cfg = publicEventConfig(env);
+  if (!cfg.enabled) return json({ ok: false, error: "Not found" }, 404);
+  if (!cfg.ready) return json({ ok: false, error: "Event counter unavailable" }, 503);
+  const url = new URL(request.url);
+  if (url.pathname !== PUBLIC_EVENT_PATH) return json({ ok: false, error: "Not found" }, 404);
+  if (request.method !== "POST") return json({ ok: false, error: "Method not allowed" }, 405, { Allow: "POST" });
+  if (!/^application\/json(?:\s*;|$)/i.test(request.headers.get("content-type") || "")) return json({ ok: false, error: "Unsupported media type" }, 415);
+  const declaredLength = Number(request.headers.get("content-length") || 0);
+  if (Number.isFinite(declaredLength) && declaredLength > PUBLIC_EVENT_BODY_BYTES) return json({ ok: false, error: "Request too large" }, 413);
+  const timestampRaw = request.headers.get("x-ai-skill-lab-timestamp") || "";
+  const requestId = request.headers.get("x-ai-skill-lab-request-id") || "";
+  const signatureRaw = request.headers.get("x-ai-skill-lab-public-event-signature") || "";
+  const signatureMatch = SIGNATURE_V1.exec(signatureRaw);
+  if (!/^[0-9]{10}$/.test(timestampRaw) || !UUID_V4.test(requestId) || !signatureMatch) return json({ ok: false, error: "Unauthorized" }, 401);
+  const timestampSeconds = Number(timestampRaw);
+  if (!Number.isSafeInteger(timestampSeconds) || Math.abs(Math.floor(nowMs / 1000) - timestampSeconds) > MAX_SKEW_SECONDS) return json({ ok: false, error: "Unauthorized" }, 401);
+  const rawBytes = new Uint8Array(await request.arrayBuffer());
+  if (rawBytes.byteLength > PUBLIC_EVENT_BODY_BYTES) return json({ ok: false, error: "Request too large" }, 413);
+  let rawBody;
+  try { rawBody = new TextDecoder("utf-8", { fatal: true }).decode(rawBytes); } catch { return json({ ok: false, error: "Invalid data" }, 400); }
+  const expectedDigest = await hmacHex(cfg.secret, `${PUBLIC_EVENT_SIGNATURE_DOMAIN}.${timestampRaw}.${requestId}.${rawBody}`);
+  if (!timingSafeHexEqual(expectedDigest, signatureMatch[1])) return json({ ok: false, error: "Unauthorized" }, 401);
+  let payload;
+  try { payload = JSON.parse(rawBody); } catch { return json({ ok: false, error: "Invalid data" }, 400); }
+  const row = validatePublicEventPayload(payload, requestId, timestampSeconds);
+  if (!row) return json({ ok: false, error: "Invalid event" }, 400);
+  try {
+    const limitResult = await cfg.rateLimiter.limit({ key: `event:${row.ipToken}` });
+    if (!limitResult?.success) return json({ ok: false, error: "Too many requests" }, 429, { "Retry-After": "60" });
+  } catch { return json({ ok: false, error: "Event counter unavailable" }, 503); }
+  try {
+    await cfg.db.prepare(PUBLIC_EVENT_UPSERT_SQL).bind(row.occurredAt.slice(0, 10), row.event, row.page, row.locale).run();
+  } catch { return json({ ok: false, error: "Event counter unavailable" }, 503); }
+  return json({ ok: true });
+}
+
+export async function handlePublicEventReport(request, env = {}, nowMs = Date.now()) {
+  const cfg = publicEventConfig(env);
+  if (!cfg.enabled) return json({ ok: false, error: "Not found" }, 404);
+  if (!cfg.reportReady) return json({ ok: false, error: "Report unavailable" }, 503);
+  const url = new URL(request.url);
+  if (url.pathname !== PUBLIC_EVENT_REPORT_PATH) return json({ ok: false, error: "Not found" }, 404);
+  if (request.method !== "GET") return json({ ok: false, error: "Method not allowed" }, 405, { Allow: "GET" });
+  const timestampRaw = request.headers.get("x-ai-skill-lab-timestamp") || "";
+  const requestId = request.headers.get("x-ai-skill-lab-request-id") || "";
+  const signatureRaw = request.headers.get("x-ai-skill-lab-event-report-signature") || "";
+  const signatureMatch = SIGNATURE_V1.exec(signatureRaw);
+  if (!/^[0-9]{10}$/.test(timestampRaw) || !UUID_V4.test(requestId) || !signatureMatch) return json({ ok: false, error: "Unauthorized" }, 401);
+  const timestampSeconds = Number(timestampRaw);
+  if (!Number.isSafeInteger(timestampSeconds) || Math.abs(Math.floor(nowMs / 1000) - timestampSeconds) > MAX_SKEW_SECONDS) return json({ ok: false, error: "Unauthorized" }, 401);
+  const expectedDigest = await hmacHex(cfg.secret, `${PUBLIC_EVENT_REPORT_SIGNATURE_DOMAIN}.${timestampRaw}.${requestId}`);
+  if (!timingSafeHexEqual(expectedDigest, signatureMatch[1])) return json({ ok: false, error: "Unauthorized" }, 401);
+  try {
+    const result = await cfg.db.prepare(PUBLIC_EVENT_REPORT_SQL).all();
+    return json({ ok: true, rows: Array.isArray(result?.results) ? result.results : [] });
+  } catch { return json({ ok: false, error: "Report unavailable" }, 503); }
 }
 
 function validTelegramBotToken(value) {
@@ -751,6 +870,8 @@ const workerHandler = {
   fetch(request, env, ctx) {
     const pathname = new URL(request.url).pathname;
     if (pathname === ROUTE_RATE_PATH) return handleRouteRateLimit(request, env, Date.now());
+    if (pathname === PUBLIC_EVENT_PATH) return handlePublicEvent(request, env, Date.now());
+    if (pathname === PUBLIC_EVENT_REPORT_PATH) return handlePublicEventReport(request, env, Date.now());
     if (pathname === TELEGRAM_FAQ_REPLY_PATH) return handleTelegramFaqReply(request, env, Date.now());
     if (pathname === PUBLIC_MONITOR_ALERT_PATH) return handlePublicMonitorAlert(request, env, Date.now());
     return handleReceiver(request, env, Date.now(), ctx);

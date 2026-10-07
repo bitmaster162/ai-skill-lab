@@ -138,8 +138,8 @@
     },
     {
       "path": "en/privacy.html",
-      "sha256": "3513c7adb366535c7c596bc718a3ee7a35b6d17ab17619ff9bc33436debdc721",
-      "size": 8529
+      "sha256": "1273aefe18ed6e938a55bf07776784332108bc794335dcdb12c3862f41ad1141",
+      "size": 8777
     },
     {
       "path": "en/projects.html",
@@ -238,8 +238,8 @@
     },
     {
       "path": "lab-command.js",
-      "sha256": "b139e284cb66761a48f89444539c8eb646b16d30d0366dc96598dfcbc84508fa",
-      "size": 2255
+      "sha256": "25dc752513a072fafa2b69019a5d6695b79c96b3e6a19e72a8f8722194e1e2aa",
+      "size": 2357
     },
     {
       "path": "llms.txt",
@@ -393,8 +393,8 @@
     },
     {
       "path": "privacy.html",
-      "sha256": "c6c37efc6fc5c22407a08f153fec688bb1ff757b70db3190d6e5199e0e1887c1",
-      "size": 10908
+      "sha256": "47a7c1f3246f76a81165ebe612981ac3940a5702c27aef104a7345ce841def6d",
+      "size": 11308
     },
     {
       "path": "project-filter.js",
@@ -448,8 +448,8 @@
     },
     {
       "path": "start-brief.js",
-      "sha256": "e2780565c7761eaf0b81499649775859ffb036e03e35384e23b596fdb4751f6b",
-      "size": 3765
+      "sha256": "6a40549cb3b1272b552e0da3d4c8b0cc11fd7ba31b4c3c84bbc5a8259650e1ae",
+      "size": 3934
     },
     {
       "path": "start.html",
@@ -473,8 +473,8 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "82f34e283fdd17aa9aaf8c2f80ea4bec1a359085a922b6e032a007aca93ce50e",
-      "size": 4102
+      "sha256": "7ef773d9f03dce3568d6b0a11629049a58b462eb7ac2f333c5ffaee5ac1af450",
+      "size": 4191
     },
     {
       "path": "workshop.css",
@@ -482,7 +482,7 @@
       "size": 41932
     }
   ],
-  "payload_sha256": "dc51b3175148853d7087fbfdcc0ac20dad2a549f75e709650173b67ea47f3dd2",
-  "release_id": "N25_CERTIFICATE_RECORD_R1",
+  "payload_sha256": "f6e93b180afc6b88229a19ee96832e6fe5f5ddfb47299a9b4737c387dca826f8",
+  "release_id": "E3_8_LEAD_EVENTS_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from pathlib import Path
 from urllib.parse import quote
-import sys
+import json, sys
 
 ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/"deploy/live"
@@ -42,10 +42,16 @@ for files,label,diag,wa in [(RU,RU_LABEL,RU_DIAG,RU_WA),(EN,EN_LABEL,EN_DIAG,EN_
             problems.append(f"{rel}: Telegram tracker missing")
 
 runtime=(LIVE/"lab-command.js").read_text(encoding="utf-8")
-if "intro_call_click" not in runtime:
-    problems.append("lab-command.js event missing")
-if 'channel!=="whatsapp"&&channel!=="telegram"&&channel!=="calcom"' not in runtime:
-    problems.append("lab-command.js calcom channel missing")
+release=json.loads((LIVE/"_release.json").read_text(encoding="utf-8")).get("release_id")
+if release=="E3_8_LEAD_EVENTS_R1":
+    for marker in ['fetch("/api/event"','"cal.com":"cal"','n+"_click"']:
+        if marker not in runtime:
+            problems.append(f"lab-command.js E3.8 event marker missing {marker}")
+else:
+    if "intro_call_click" not in runtime:
+        problems.append("lab-command.js event missing")
+    if 'channel!=="whatsapp"&&channel!=="telegram"&&channel!=="calcom"' not in runtime:
+        problems.append("lab-command.js calcom channel missing")
 
 css=(LIVE/"workshop.css").read_text(encoding="utf-8")
 if ".e14EntryStart" not in css or "@media(max-width:620px)" not in css:
@@ -55,4 +61,4 @@ if problems:
     print("\n".join("FAIL: "+p for p in problems))
     sys.exit(1)
 
-print("E1_4_INTRO_FLOW_PASS routes=18 event=intro_call_click channels=3 start_calcom=2")
+print(f"E1_4_INTRO_FLOW_PASS routes=18 event={'first_party_e3_8' if release=='E3_8_LEAD_EVENTS_R1' else 'intro_call_click'} channels=3 start_calcom=2")

@@ -31,7 +31,7 @@ export default function PrivacyPageEn() {
     <p>We do not ask children to submit contact details independently. Youth applications and organizational communication use an adult contact only; parent/teen scenarios require adult confirmation in the form.</p>
 
     <h2>8. Technical data</h2>
-    <p>Hosting and network providers may process standard technical logs required to deliver and protect the website. The current site code does not include advertising pixels or third-party behavioural analytics.</p>
+    <p>Hosting and network providers may process standard technical logs required to deliver and protect the website. The current site code does not include advertising pixels or third-party behavioural analytics. The site uses a first-party counter for application and contact-channel events without personal data or cookies: only the event type, page, locale and daily count are stored; names, contact details and form text are not sent to that counter.</p>
 
     <h2>9. Data requests</h2>
     <p>Requests to correct or delete application information should be sent to the privacy contact above. Route-limit records are automatically removed by scheduled cleanup after they become older than 24 hours.</p>

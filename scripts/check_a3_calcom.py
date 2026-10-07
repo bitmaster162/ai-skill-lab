@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -11,6 +12,7 @@ LIVE = ROOT / "deploy" / "live"
 CALCOM = "https://cal.com/robert-dumanyan-vlck0x/15min"
 errors: list[str] = []
 checks = 0
+release = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
 
 STARTS = {
     "start.html": ("ru", "Бесплатный звонок-знакомство · 15 минут"),
@@ -30,16 +32,21 @@ lib = (ROOT / "lib" / "e1_4.ts").read_text(encoding="utf-8")
 req(f'calcomUrl: "{CALCOM}"' in lib, "e1_4 calcom URL missing")
 
 cta = (ROOT / "components" / "IntroCallCta.tsx").read_text(encoding="utf-8")
-for marker in [
-    '"whatsapp" | "telegram" | "calcom"',
+source_markers = [
     "bookingHref?: string",
     'const primaryHref = bookingHref ?? introWhatsappHref(locale);',
     'const primaryChannel = bookingHref ? "calcom" : "whatsapp";',
     'data-intro-call-channel={primaryChannel}',
-    'onClick={() => track(primaryChannel)}',
     'data-intro-call-channel="telegram"',
-]:
+]
+for marker in source_markers:
     req(marker in cta, f"IntroCallCta missing {marker!r}")
+if release == "E3_8_LEAD_EVENTS_R1":
+    req("window.va" not in cta and "intro_call_click" not in cta, "E3.8 must retire old Vercel custom event")
+    req("onClick={() => track(primaryChannel)}" not in cta, "E3.8 old click handler must be absent")
+else:
+    req('"whatsapp" | "telegram" | "calcom"' in cta, "IntroCallCta channel type missing")
+    req('onClick={() => track(primaryChannel)}' in cta, "IntroCallCta primary click tracker missing")
 
 start_source = (ROOT / "components" / "workshop" / "WorkshopStart.tsx").read_text(encoding="utf-8")
 req('import { introCall } from "@/lib/e1_4";' in start_source, "WorkshopStart introCall import missing")
@@ -75,14 +82,22 @@ for files, wa in [(OTHER_RU, ru_wa), (OTHER_EN, en_wa)]:
         req(wa in text, f"{rel}: WhatsApp URL drift")
 
 runtime = (LIVE / "lab-command.js").read_text(encoding="utf-8")
-req('channel!=="whatsapp"&&channel!=="telegram"&&channel!=="calcom"' in runtime, "static tracker does not admit calcom")
-req('name:"intro_call_click"' in runtime, "intro_call_click event missing")
+if release == "E3_8_LEAD_EVENTS_R1":
+    for marker in ['fetch("/api/event"', '"cal.com":"cal"', 'n+"_click"']:
+        req(marker in runtime, f"E3.8 static event marker missing {marker}")
+    req("intro_call_click" not in runtime and "window.va" not in runtime, "E3.8 old Vercel event runtime must be absent")
+else:
+    req('channel!=="whatsapp"&&channel!=="telegram"&&channel!=="calcom"' in runtime, "static tracker does not admit calcom")
+    req('name:"intro_call_click"' in runtime, "intro_call_click event missing")
 
 # No route expansion.
 public = [p for p in LIVE.rglob("*.html") if p.name != "404.html"]
 req(len(public) == 52, f"public route count {len(public)} != 52")
 
-print(f"A3_CALCOM_CHECK checks={checks} start_pages=2 unchanged_intro_surfaces=16 public_routes={len(public)}")
+print(
+    f"A3_CALCOM_CHECK checks={checks} start_pages=2 unchanged_intro_surfaces=16 "
+    f"public_routes={len(public)} telemetry={'first_party_e3_8' if release == 'E3_8_LEAD_EVENTS_R1' else 'intro_call_click'}"
+)
 if errors:
     print("A3_CALCOM_FAIL")
     for error in errors:

@@ -3,7 +3,8 @@
   "git": {
     "deploymentEnabled": {
       "agent/**": false,
-      "agent/ingress-*": true
+      "agent/ingress-*": true,
+      "local/e3-8-lead-events-r1-20261007": true
     }
   },
   "functions": {
@@ -14,6 +15,9 @@
       "maxDuration": 10
     },
     "api/telegram-faq.js": {
+      "maxDuration": 10
+    },
+    "api/event.js": {
       "maxDuration": 10
     }
   }

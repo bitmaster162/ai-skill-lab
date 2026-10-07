@@ -88,6 +88,16 @@ jobs:
         run: python scripts/check_python_text_encoding.py
       - name: Validate client privacy boundary
         run: python scripts/check_client_privacy.py
+      - name: Validate E3.8 lead event contract
+        run: python scripts/check_e3_8_lead_events.py
+      - name: Smoke-test E3.8 event runtime
+        run: node scripts/check_e3_8_event_runtime.mjs
+      - name: Validate E3.8 event D1 schema
+        run: python scripts/check_e3_8_event_schema.py
+      - name: Test E3.8 event ingress
+        run: node --test services/lead-ingress/test/event.test.mjs
+      - name: Test E3.8 event receiver
+        run: node --test services/lead-receiver-cloudflare/test/public-event.test.mjs
       - name: Test P27.7 public GET monitor
         run: python scripts/test_public_monitor.py
       - name: Validate P27.7 public GET monitor contract

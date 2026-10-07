@@ -50,10 +50,12 @@ async function run({locale='en',audience='adult',adult=false,responseOk=true}){
   const navigator={clipboard:{async writeText(){}}};
   const location={origin:'https://aiskillab.work',pathname:locale==='en'?'/en/start':'/start'};
   const fetch=async(url,opts)=>{calls.push({url,opts});return responseOk?{ok:true,async json(){return{ok:true,requestId:'test'}}}:{ok:false,async json(){return{ok:false,error:'Request rejected'}}}};
-  const ctx={document,navigator,location,URL,FormData:FD,fetch,setTimeout(){return 1},clearTimeout(){},console};ctx.window=ctx;
+  const events=[];
+  class CustomEvent{constructor(type,init={}){this.type=type;this.detail=init.detail}}
+  const ctx={document,navigator,location,URL,FormData:FD,fetch,CustomEvent,dispatchEvent(event){events.push(event);return true},setTimeout(){return 1},clearTimeout(){},console};ctx.window=ctx;
   vm.runInNewContext(js,ctx,{filename:'start-brief.js',timeout:1000});
   if(calls.length!==0)throw new Error('network call during load');
-  return{form,calls,submit:()=>form.submit()};
+  return{form,calls,events,submit:()=>form.submit()};
 }
 
 let checks=0;
@@ -69,7 +71,8 @@ for(const [k,v] of Object.entries({locale:'en',sourcePath:'/en/start',audience:'
 if('adultConfirmation'in ab)throw new Error('adult confirmation leaked into adult body');
 if(adult.form.message.textContent!=='Application sent. We reply within 1–2 business days.')throw new Error('adult success feedback');
 if(adult.form.successActions.hidden)throw new Error('adult success actions hidden');
-checks+=8;
+if(adult.events.length!==1||adult.events[0].type!=='asl:lead-event'||adult.events[0].detail?.event!=='lead_submit_ok')throw new Error('adult success event');
+checks+=9;
 
 const parent=await run({locale:'ru',audience:'parent',adult:true});
 if(parent.form.adultWrap.hidden||!parent.form.adult.required)throw new Error('parent adult confirmation not required');checks+=2;
@@ -79,7 +82,8 @@ const pb=JSON.parse(parent.calls[0].opts.body);
 for(const [k,v] of Object.entries({locale:'ru',sourcePath:'/start',audience:'parent',privacyConsent:'yes',adultConfirmation:'yes'}))if(pb[k]!==v)throw new Error(`parent body ${k}`);
 if(parent.form.message.textContent!=='Заявка отправлена. Ответим в течение 1–2 рабочих дней.')throw new Error('parent success feedback');
 if(parent.form.successActions.hidden)throw new Error('parent success actions hidden');
-checks+=8;
+if(parent.events.length!==1||parent.events[0].detail?.event!=='lead_submit_ok')throw new Error('parent success event');
+checks+=9;
 
 const fail=await run({locale:'en',responseOk:false});
 await fail.submit();
@@ -87,7 +91,8 @@ if(fail.calls.length!==1)throw new Error('failure submit count');
 if(!fail.form.message.textContent.includes('Could not send the application'))throw new Error('safe failure feedback');
 if(fail.form.submitButton.disabled)throw new Error('submit stayed disabled');
 if(!fail.form.successActions.hidden)throw new Error('failure exposed success actions');
-checks+=4;
+if(fail.events.length!==1||fail.events[0].detail?.event!=='lead_submit_error')throw new Error('failure event');
+checks+=5;
 
 console.log(`public_form_runtime_checks=${checks} cases=3 fetch_calls=${adult.calls.length+parent.calls.length+fail.calls.length}`);
 console.log('PUBLIC_FORM_RUNTIME_PASS');
