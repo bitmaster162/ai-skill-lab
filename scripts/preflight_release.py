@@ -43,6 +43,7 @@ CHECKS = [
     ("client_privacy", ["python", "scripts/check_client_privacy.py"]),
     ("e3_8_lead_events", ["python", "scripts/check_e3_8_lead_events.py"]),
     ("e3_1_ru_seo", ["python", "scripts/check_e3_1_ru_seo.py"]),
+    ("e3_3_h1_action", ["python", "scripts/check_e3_3_h1.py"]),
     ("e3_8_event_runtime", ["node", "scripts/check_e3_8_event_runtime.mjs"]),
     ("e3_8_event_schema", ["python", "scripts/check_e3_8_event_schema.py"]),
     ("e3_8_event_ingress", ["node", "--test", "services/lead-ingress/test/event.test.mjs"]),
