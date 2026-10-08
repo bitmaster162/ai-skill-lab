@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+from guide_route_admission import admitted_route_count, require_public_html, require_canonical_urls
 
 import json
 import re
@@ -92,7 +93,8 @@ else:
 
 # No route expansion.
 public = [p for p in LIVE.rglob("*.html") if p.name != "404.html"]
-req(len(public) == 52, f"public route count {len(public)} != 52")
+require_public_html(LIVE)
+req(len(public) == admitted_route_count(), f"public route count {len(public)} != {admitted_route_count()}")
 
 print(
     f"A3_CALCOM_CHECK checks={checks} start_pages=2 unchanged_intro_surfaces=16 "

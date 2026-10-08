@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+from guide_route_admission import admitted_route_count, require_public_html, require_route_set, require_canonical_urls
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
@@ -80,17 +81,18 @@ for rel,cfg in pages.items():
   if forbidden in text:errors.append(f'{rel}: forbidden {forbidden!r}')
 routes={route_for(p) for p in LIVE.rglob('*.html') if p.name!='404.html'}
 ru={r for r in routes if r=='/' or not r.startswith('/en')};en={r for r in routes if r=='/en' or r.startswith('/en/')};checks+=5
-if len(routes)!=52:errors.append(f'route authority {len(routes)} != 52')
-if len(ru)!=26 or len(en)!=26:errors.append(f'locale route authority RU={len(ru)} EN={len(en)}')
+require_route_set(routes, 'D2 public routes')
+if len(routes)!=admitted_route_count():errors.append(f'route authority {len(routes)} != {admitted_route_count()}')
+if len(ru)!=admitted_route_count()//2 or len(en)!=admitted_route_count()//2:errors.append(f'locale route authority RU={len(ru)} EN={len(en)}')
 if not {'/family','/en/family'}<=routes:errors.append('Family route pair missing')
 html_files=list(LIVE.rglob('*.html'))
-if len(html_files)!=53:errors.append(f'static HTML count {len(html_files)} != 53')
+if len(html_files)!=admitted_route_count()+1:errors.append(f'static HTML count {len(html_files)} != {admitted_route_count()+1}')
 sitemap=(LIVE/'sitemap.xml').read_text(encoding='utf-8');locs=set(re.findall(r'<loc>(https?://[^<]+)</loc>',sitemap));expected={ORIGIN+('/' if r=='/' else r) for r in routes};checks+=2
 if locs!=expected:errors.append(f'sitemap authority mismatch missing={sorted(expected-locs)} extra={sorted(locs-expected)}')
 llms=(LIVE/'llms.txt').read_text(encoding='utf-8');checks+=3
 for marker in [f'[RU]({ORIGIN}/family)',f'[EN]({ORIGIN}/en/family)']:
  if marker not in llms:errors.append(f'llms.txt missing {marker}')
-if len(re.findall(r'\]\((https?://[^)]+)\)',llms))!=52:errors.append('llms.txt URL count drift')
+require_canonical_urls(re.findall(r'\]\((https?://[^)]+)\)',llms), 'D2 llms links')
 readme=(ROOT/'README.md').read_text(encoding='utf-8');checks+=2
 for route in ['`/family`','`/en/family`']:
  if readme.count(route)!=1:errors.append(f'README route inventory {route} count={readme.count(route)}')

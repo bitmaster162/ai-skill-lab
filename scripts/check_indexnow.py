@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+from guide_route_admission import admitted_route_count, require_public_html, require_route_set, require_canonical_urls
 import ast
 import importlib.util
 import sys
@@ -62,7 +63,7 @@ spec=importlib.util.spec_from_file_location("indexnow_notify",script)
 mod=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 urls=mod.sitemap_urls()
-req(len(urls)==52,"sitemap URL authority must be 52")
+require_canonical_urls(urls, "IndexNow QA sitemap URL authority")
 req(mod.urls_for_changes([f"deploy/live/{KEY}.txt"])==urls,"first key deployment must submit all sitemap URLs")
 req(mod.urls_for_changes(["deploy/live/pricing.html"])==["https://aiskillab.work/pricing"],"single route mapping")
 req(mod.urls_for_changes(["deploy/live/en/pricing.html"])==["https://aiskillab.work/en/pricing"],"EN route mapping")

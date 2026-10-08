@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+from guide_route_admission import admitted_route_count, require_public_html, require_route_set, require_canonical_urls
 
 import hashlib
 import json
@@ -119,22 +120,24 @@ def main() -> int:
     public = [p for p in LIVE.rglob("*.html") if p.name != "404.html"]
     routes = {route_for(p) for p in public}
     checks += 3
-    require(len(routes) == 52, f"public route authority {len(routes)} != 52", errors)
+    require_route_set(routes, "E2 guide public routes")
     require("/guides" in routes and "/en/guides" in routes, "guide listings missing from route authority", errors)
     require(set(ARTICLES).issubset(routes), "guide article routes missing", errors)
 
     sitemap = (LIVE / "sitemap.xml").read_text(encoding="utf-8")
-    sitemap_urls = set(re.findall(r"<loc>(https?://[^<]+)</loc>", sitemap))
+    sitemap_urls_raw = re.findall(r"<loc>(https?://[^<]+)</loc>", sitemap)
+    require_canonical_urls(sitemap_urls_raw, "E2 sitemap URLs")
+    sitemap_urls = set(sitemap_urls_raw)
     expected_urls = {ORIGIN + ("/" if route == "/" else route) for route in routes}
     checks += 2
     require(sitemap_urls == expected_urls, f"sitemap route mismatch missing={sorted(expected_urls-sitemap_urls)} extra={sorted(sitemap_urls-expected_urls)}", errors)
-    require(len(sitemap_urls) == 52, f"sitemap URL count {len(sitemap_urls)} != 52", errors)
+    require(len(sitemap_urls) == admitted_route_count(), f"sitemap URL count {len(sitemap_urls)} != {admitted_route_count()}", errors)
 
     llms = (LIVE / "llms.txt").read_text(encoding="utf-8")
     llms_urls = re.findall(r"\]\((https?://[^)]+)\)", llms)
     checks += 3
     require("## Guides" in llms, "llms.txt missing Guides section", errors)
-    require(len(llms_urls) == 52, f"llms.txt URL count {len(llms_urls)} != 52", errors)
+    require_canonical_urls(llms_urls, "E2 llms URLs")
     require(set(llms_urls) == expected_urls, "llms.txt/sitemap parity mismatch", errors)
 
     # Footer link belongs to every public Workshop page.

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+from guide_route_admission import admitted_route_count, require_public_html, require_route_set, require_canonical_urls
 from pathlib import Path
 import json, re, sys
 
@@ -60,7 +61,8 @@ def hrefs(fragment):
  return re.findall(r'<a\b[^>]*href="([^"]+)"',fragment,re.I)
 
 public=[p for p in sorted(LIVE.rglob("*.html")) if p.name!="404.html"]
-req(len(public)==52,f"public pages {len(public)} != 52")
+require_public_html(LIVE)
+req(len(public)==admitted_route_count(),f"public pages {len(public)} != {admitted_route_count()}")
 reach_count=light_count=start_reply_count=0
 for p in public:
  rel=p.relative_to(LIVE).as_posix()
@@ -150,7 +152,7 @@ for marker in [
 ]:
  req(marker in source,f"source shell missing {marker}")
 
-print(f"d1_shell_checks={checks} public=52 reach={reach_count} light={light_count} start_reply={start_reply_count}")
+print(f"d1_shell_checks={checks} public={admitted_route_count()} reach={reach_count} light={light_count} start_reply={start_reply_count}")
 if errors:
  print("D1_SHELL_FAIL")
  for error in errors: print("FAIL:",error)
