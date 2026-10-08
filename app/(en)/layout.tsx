@@ -6,6 +6,7 @@ import "../commercial-mobile.css";
 import "../proof-contrast.css";
 import { site } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
+import { PublicEventTracker } from "@/components/PublicEventTracker";
 import { organizationSchemaEn } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
@@ -53,7 +54,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="preload" href="/fonts/Onest-ru-en.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/Unbounded-ru-en.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       </head>
-      <body><JsonLd data={organizationSchemaEn} />{children}<script defer src="/_vercel/insights/script.js" /></body>
+      <body><JsonLd data={organizationSchemaEn} /><PublicEventTracker />{children}<script defer src="/_vercel/insights/script.js" /></body>
     </html>
   );
 }

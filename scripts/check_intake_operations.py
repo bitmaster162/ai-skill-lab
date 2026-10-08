@@ -48,7 +48,11 @@ require("PUBLIC_MONITOR_RELAY_SECRET" not in worker_vars, "public monitor relay 
 
 require(
     ingress_vercel.get("git", {}).get("deploymentEnabled")
-    == {"agent/**": False, "agent/ingress-*": True},
+    == {
+        "agent/**": False,
+        "agent/ingress-*": True,
+        "local/e3-8-lead-events-r1-20261007": True,
+    },
     "ingress git.deploymentEnabled branch contract drift",
 )
 

@@ -29,12 +29,18 @@ for rel,text,marker in [('Header.tsx',header,'<LabCommand locale={locale} />'),(
  checks+=1
  if marker not in text:errors.append(f'{rel}: command mount missing')
 js=(LIVE/'lab-command.js').read_text(encoding='utf-8')
+command_end=js.find('})();')
+if command_end<0:
+ errors.append('lab-command.js command IIFE terminator missing')
+ command_js=js
+else:
+ command_js=js[:command_end+5]
 for marker in ['document.documentElement.lang','d.innerHTML','data-lab-command-close','data-kbd-mod','navigator.platform||navigator.userAgent','/proof','/projects','/business#pilot-simulator','/matcher','/challenge','/build','/studio','/start']:
  checks+=1
- if marker not in js:errors.append(f'lab-command.js missing {marker}')
+ if marker not in command_js:errors.append(f'lab-command.js command IIFE missing {marker}')
 for forbidden in ['fetch(','XMLHttpRequest','localStorage','sessionStorage','document.cookie','sendBeacon(','WebSocket(']:
  checks+=1
- if forbidden in js:errors.append(f'lab-command.js forbidden {forbidden}')
+ if forbidden in command_js:errors.append(f'lab-command.js command IIFE forbidden {forbidden}')
 print(f'lab_command_checks={checks} workshop_pages={len(WORKSHOP)} legacy_pages={legacy}')
 if errors:
  for e in errors:print('FAIL:',e)

@@ -49,8 +49,8 @@ for text,label,markers in [
     (en_priv,"en privacy",["prompt text from Prompt Auditor","For AI routing or Prompt Auditor","Prompt Auditor text"]),
 ]:
     for marker in markers: req(marker in text,f"{label}: missing {marker}")
-req(manifest.get("release_id") in {"A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1"},"A8 release identity")
-req(manifest.get("file_count")==(96 if manifest.get("release_id")=="N25_CERTIFICATE_RECORD_R1" else 94),"A8 release file_count")
+req(manifest.get("release_id") in {"A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1"},"A8 release identity")
+req(manifest.get("file_count")==(96 if manifest.get("release_id") in {"N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1"} else 94),"A8 release file_count")
 req(sum(1 for x in manifest.get("files",[]) if x.get("path")=="prompt-auditor.js")==1,"manifest must list prompt-auditor.js once")
 print(f"a8_prompt_auditor_checks={checks}")
 if errors:
