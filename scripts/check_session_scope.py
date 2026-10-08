@@ -10,7 +10,7 @@ errors=[];claims=[];intro_claims=0
 # Exclude only exact metadata-description spans, not arbitrary body claims.
 SEO_DESCRIPTIONS = {}
 release = json.loads((ROOT/'deploy/live/_release.json').read_text(encoding='utf-8')).get('release_id')
-if release in {'E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1'}:
+if release in {'E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1'}:
  from check_e3_1_ru_seo import EXACT
  for route,(_title,description) in EXACT.items():
   source_rel = 'app/(ru)/' + (route.strip('/') + '/' if route != '/' else '') + 'page.tsx'
@@ -26,7 +26,7 @@ for p in scan:
   "components/workshop/WorkshopStart.tsx":'<h1>{en ? <>Start with a free<br/><em>15-minute call.</em></> : <>Начните с бесплатного звонка<br/><em>на 15 минут.</em></>}</h1>',
   "deploy/live/start.html":'<h1>Начните с бесплатного звонка<br><em>на 15 минут.</em></h1>',
   "deploy/live/en/start.html":'<h1>Start with a free<br><em>15-minute call.</em></h1>',
- } if release=="E3_3_H1_ACTION_R1" else {}
+ } if release in {"E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1"} else {}
  approved_h1=e33_h1.get(rel)
  h1_spans=[]
  if approved_h1:

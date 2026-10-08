@@ -3,10 +3,12 @@ from __future__ import annotations
 
 import re
 import sys
+import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "deploy" / "live"
+E32 = json.loads((LIVE / "_release.json").read_text(encoding="utf8")).get("release_id") == "E3_2_RU_GLOSSARY_R1"
 errors: list[str] = []
 checks = 0
 
@@ -137,7 +139,8 @@ for rel, locale in TARGETS.items():
     req("<form" not in block.lower(), f"{rel}: N15 must not contain form")
     req("<script" not in block.lower(), f"{rel}: N15 must not contain script")
     if "business" in rel:
-        req(raw.index('data-n15-agent-safety="true"') < raw.index("IMPLEMENTATION PILOT"), f"{rel}: block position")
+        marker='id="pilot-simulator"' if E32 and rel=="business.html" else "IMPLEMENTATION PILOT"
+        req(marker in raw and raw.index('data-n15-agent-safety="true"') < raw.index(marker), f"{rel}: block position")
     else:
         req(raw.index('data-n15-agent-safety="true"') < raw.index('id="pricing"'), f"{rel}: block position")
 

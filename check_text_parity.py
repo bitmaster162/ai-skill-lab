@@ -14,7 +14,7 @@ Approved additions live in an allow file (see allow_d1.json): phrases per langua
 they are removed from both sides before the diff, so only unapproved text is reported.
 Case, whitespace, quote and dash styles are normalized. Exit code 1 on any violation.
 """
-import argparse, difflib, json, os, re, sys, time, urllib.request
+import argparse, difflib, hashlib, json, os, re, sys, time, urllib.request
 from html.parser import HTMLParser
 
 ROUTES = ["/", "/about", "/build", "/business", "/challenge", "/curriculum", "/family", "/faq", "/kids", "/matcher",
@@ -137,15 +137,25 @@ def compare(base, cur, allow):
         ops = difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes()
         new = [" ".join(x) for x in runs(ops, a, b, "new") if significant(x) and (" " + " ".join(x) + " ") not in sa]
         rem = [" ".join(x) for x in runs(ops, a, b, "removed") if significant(x) and (" " + " ".join(x) + " ") not in sb]
+        # E3.2: 26 RU pages are localized. Exact SHA of every word in rendered
+        # body is stronger than ignoring arbitrary translated phrases; links,
+        # metadata, H1 and accessible labels are still checked independently.
+        pin = allow.get("approved_text_sha256", {}).get(r)
+        observed = hashlib.sha256(" ".join(B["words"]).encode("utf-8")).hexdigest()
+        text_sha_drift = pin is not None and observed != pin
+        if pin is not None and not text_sha_drift:
+            new, rem = [], []
         allowed_meta = set(allow.get("meta_changes", {}).get(r, []))
         meta = [k for k in ("lang", "title", "description", "canonical", "hreflang", "h1") if A[k] != B[k] and k not in allowed_meta]
         ok_removed_links = set(allow.get("removed_links", {}).get(r, []))
         links_rem = sorted(set(A["links"]) - set(B["links"]) - ok_removed_links)
         links_new = sorted(set(B["links"]) - set(A["links"]) - ok_links)
-        attr_rem = sorted(set(A["attr_texts"]) - set(B["attr_texts"]))
+        ok_removed_attrs = set(allow.get("removed_attr_texts", {}).get(r, []))
+        attr_rem = sorted(set(A["attr_texts"]) - set(B["attr_texts"]) - ok_removed_attrs)
         ok_attrs = set(allow.get("attr_texts", {}).get(r, []))
         attr_new = sorted(x for x in set(B["attr_texts"]) - set(A["attr_texts"]) if x not in ok_attrs and x.split("=", 1)[-1] not in phrases)
-        item = {k: v for k, v in (("new_text", new), ("removed_text", rem), ("meta_changed", meta), ("links_removed", links_rem),
+        item = {k: v for k, v in (("new_text", new), ("removed_text", rem), ("text_sha256_drift", [r] if text_sha_drift else []),
+                                   ("meta_changed", meta), ("links_removed", links_rem),
                                    ("links_added", links_new), ("attr_removed", attr_rem), ("attr_added", attr_new)) if v}
         if item:
             report[r] = item; bad += 1

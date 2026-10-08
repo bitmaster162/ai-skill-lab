@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import sys
+import sys,json
 ROOT=Path(__file__).resolve().parents[1]
 
 def source_path(rel: str) -> Path:
@@ -15,6 +15,9 @@ checks={
  'app/en/parents/page.tsx':['FOR PARENTS · 8–18','Defines the goal','Checks claims','Explains personal contribution','Defends the final project','What the family buys','Age rules','Formats 8–13','Formats 14–18','Family Concierge','Age + interest + goal'],
  'deploy/live/en/parents.html':['FOR PARENTS · 8–18','Defines the goal','Checks claims','Explains personal contribution','Defends the final project','What the family buys','ChatGPT and age','Formats 8–13','Formats 14–18','Family Concierge','Age + interest + goal'],
 }
+if json.loads((ROOT/'deploy/live/_release.json').read_text(encoding='utf8')).get('release_id')=='E3_2_RU_GLOSSARY_R1':
+ for rel in ['app/parents/page.tsx','deploy/live/parents.html']:
+  checks[rel][0]='РОДИТЕЛЯМ · 8–18'
 problems=[]; count=0
 for rel,needles in checks.items():
     text=source_path(rel).read_text(encoding='utf-8')

@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import sys
+import sys,json
 ROOT=Path(__file__).resolve().parents[1]
 required=[('components/workshop/WorkshopBusiness.tsx', ['Ship · Revise · Stop.', 'human review', 'failure modes', 'data boundaries', 'fallback', 'Stop']), ('components/workshop/WorkshopBusiness.tsx', ['Ship · Revise · Stop.', 'human review', 'failure modes', 'data boundaries', 'fallback', 'Stop']), ('deploy/live/business.html', ['Ship · Revise · Stop.', 'human review', 'failure modes', 'data boundaries', 'fallback', 'STOP']), ('deploy/live/en/business.html', ['Ship · Revise · Stop.', 'human review', 'failure modes', 'data boundaries', 'fallback', 'STOP'])]
+if json.loads((ROOT/'deploy/live/_release.json').read_text(encoding='utf8')).get('release_id')=='E3_2_RU_GLOSSARY_R1':
+    ru=['Выпустить · Доработать · Остановить.','проверку человеком','сценарии отказа','границы данных','запасной вариант','Остановить']
+    required[2]=('deploy/live/business.html',ru)
+    required.append(('components/workshop/WorkshopBusiness.tsx',ru))
 checks=0
 for rel,needles in required:
     text=(ROOT/rel).read_text(encoding='utf-8')

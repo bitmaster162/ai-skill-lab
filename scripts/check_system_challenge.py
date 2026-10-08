@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 from pathlib import Path
 from source_paths import source_path
-import sys
+import sys,json
 from public_origin import PUBLIC_ORIGIN
 ROOT=Path(__file__).resolve().parents[1];errors=[];checks=0
+E32=json.loads((ROOT/'deploy/live/_release.json').read_text(encoding='utf8')).get('release_id')=='E3_2_RU_GLOSSARY_R1'
 component=(ROOT/'components/SystemChallenge.tsx').read_text(encoding='utf-8')
 for marker in ['research','product','automation','learning','SOURCE-BOUND','SHIPPABLE','REPEATABLE','TRANSFERABLE','data-system-challenge','data-challenge-key']:
     checks+=1
     if marker not in component:errors.append(f'SystemChallenge.tsx: missing {marker}')
 for rel,en in [('app/challenge/page.tsx',False),('app/en/challenge/page.tsx',True)]:
     t=source_path(ROOT, rel).read_text(encoding='utf-8')
-    for marker in ['AI SYSTEM CHALLENGE','SystemChallenge','id="challenge"','Brief Compiler','stop condition' if en else 'stop condition']:
+    for marker in [('ЗАДАНИЕ ПО ИИ' if E32 and not en else 'AI SYSTEM CHALLENGE'),'SystemChallenge','id="challenge"',('Составление задачи' if E32 and not en else 'Brief Compiler'),'stop condition']:
         checks+=1
         if marker.lower() not in t.lower():errors.append(f'{rel}: missing {marker}')
     checks+=1
@@ -18,7 +19,7 @@ for rel,en in [('app/challenge/page.tsx',False),('app/en/challenge/page.tsx',Tru
     if expected not in t:errors.append(f'{rel}: locale mount missing')
 for rel,en in [('deploy/live/challenge.html',False),('deploy/live/en/challenge.html',True)]:
     t=source_path(ROOT, rel).read_text(encoding='utf-8')
-    for marker in ['AI SYSTEM CHALLENGE','data-system-challenge','data-challenge-key="research"','data-challenge-key="product"','data-challenge-key="automation"','data-challenge-key="learning"','id="challenge-weak"','id="challenge-title"','id="challenge-signal"','VAGUE → SYSTEMIZED']:
+    for marker in [('ЗАДАНИЕ ПО ИИ' if E32 and not en else 'AI SYSTEM CHALLENGE'),'data-system-challenge','data-challenge-key="research"','data-challenge-key="product"','data-challenge-key="automation"','data-challenge-key="learning"','id="challenge-weak"','id="challenge-title"','id="challenge-signal"',('РАЗМЫТО → СИСТЕМА' if E32 and not en else 'VAGUE → SYSTEMIZED')]:
         checks+=1
         if marker not in t:errors.append(f'{rel}: missing {marker}')
     for signal in ['SOURCE-BOUND','SHIPPABLE','REPEATABLE','TRANSFERABLE']:

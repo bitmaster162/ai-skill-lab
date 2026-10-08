@@ -4,7 +4,7 @@ import styles from "./WorkshopShell.module.css";
 export function ChannelLinks({ locale = "ru" }: { locale?: "ru" | "en" }) {
   const en = locale === "en";
   const channels = [
-    ["Telegram", site.telegram, en ? "Brief with prefill" : "Brief с автозаполнением"],
+    ["Telegram", site.telegram, en ? "Brief with prefill" : "Короткое описание задачи с автозаполнением"],
     [en ? "Email" : "Почта", `mailto:${site.email}`, site.email],
     ["WhatsApp", site.whatsapp, "+66 64 970 1204"],
     ["LINE", site.line, "iwf555"],

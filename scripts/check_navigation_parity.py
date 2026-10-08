@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import re,sys
+import re,sys,json
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';README=ROOT/'README.md';errors=[];checks=0
+release=json.loads((LIVE/'_release.json').read_text(encoding='utf-8')).get('release_id')
+E32=release=='E3_2_RU_GLOSSARY_R1'
 WORKSHOP={'index.html': ('/start', '/en', False), 'en.html': ('/en/start', '/', True), 'start.html': ('/start', '/en/start', False), 'en/start.html': ('/en/start', '/start', True), 'pricing.html': ('/start', '/en/pricing', False), 'en/pricing.html': ('/en/start', '/pricing', True), 'family.html': ('/start', '/en/family', False), 'en/family.html': ('/en/start', '/family', True), 'personal.html': ('/start', '/en/personal', False), 'teens.html': ('/start', '/en/teens', False), 'kids.html': ('/start', '/en/kids', False), 'business.html': ('/start', '/en/business', False), 'faq.html': ('/start', '/en/faq', False), 'en/personal.html': ('/en/start', '/personal', True), 'en/teens.html': ('/en/start', '/teens', True), 'en/kids.html': ('/en/start', '/kids', True), 'en/business.html': ('/en/start', '/business', True), 'en/faq.html': ('/en/start', '/faq', True),'parents.html': ('/start', '/en/parents', False),'curriculum.html': ('/start', '/en/curriculum', False),'phuket.html': ('/start', '/en/phuket', False),'studio.html': ('/start', '/en/studio', False),'build.html': ('/start', '/en/build', False),'matcher.html': ('/start', '/en/matcher', False),'challenge.html': ('/start', '/en/challenge', False),'proof.html': ('/start', '/en/proof', False),'projects.html': ('/start', '/en/projects', False),'en/parents.html': ('/en/start', '/parents', True),'en/curriculum.html': ('/en/start', '/curriculum', True),'en/phuket.html': ('/en/start', '/phuket', True),'en/studio.html': ('/en/start', '/studio', True),'en/build.html': ('/en/start', '/build', True),'en/matcher.html': ('/en/start', '/matcher', True),'en/challenge.html': ('/en/start', '/challenge', True),'en/proof.html': ('/en/start', '/proof', True),'en/projects.html': ('/en/start', '/projects', True),'about.html':('/start','/en/about',False),'certificate.html':('/start','/en/certificate',False),'method.html':('/start','/en/method',False),'safety.html':('/start','/en/safety',False),'privacy.html':('/start','/en/privacy',False),'terms.html':('/start','/en/terms',False),'en/about.html':('/en/start','/about',True),'en/certificate.html':('/en/start','/certificate',True),'en/method.html':('/en/start','/method',True),'en/safety.html':('/en/start','/safety',True),'en/privacy.html':('/en/start','/privacy',True),'en/terms.html':('/en/start','/terms',True),'guides.html':('/start','/en/guides',False),'en/guides.html':('/en/start','/guides',True),'guides/ai-safety-for-kids.html':('/start','/en/guides/ai-safety-for-kids',False),'en/guides/ai-safety-for-kids.html':('/en/start','/guides/ai-safety-for-kids',True)}
 public=set();legacy=0;sitemap=(LIVE/'sitemap.xml').read_text(encoding='utf-8')
 for p in sorted(LIVE.rglob('*.html')):
@@ -15,12 +17,17 @@ for p in sorted(LIVE.rglob('*.html')):
   for href in expected:
    checks+=1
    if h.count(f'href="{href}"')!=1:errors.append(f'{rel}: workshop menu {href} count drift')
-  for marker in ['data-lab-command-open','aria-label="Proof Lab"',f'href="{alternate}"',f'href="{start}"']:
+  expected_lab_aria='aria-label="Инструменты"' if E32 and not en else 'aria-label="Proof Lab"'
+  for marker in ['data-lab-command-open',expected_lab_aria,f'href="{alternate}"',f'href="{start}"']:
    checks+=1
    if marker not in h:errors.append(f'{rel}: missing {marker}')
-  lab_label='LAB — open Lab Command (Ctrl K)' if en else 'LAB — открыть Lab Command (Ctrl K)'
+  lab_label='LAB — open Lab Command (Ctrl K)' if en else ('Открыть инструменты' if E32 else 'LAB — открыть Lab Command (Ctrl K)')
   checks+=1
   if f'aria-label="{lab_label}"' not in h: errors.append(f'{rel}: LAB label-in-name drift')
+  if E32 and not en:
+   checks+=2
+   if '<a class="workshopUtility" href="/proof" aria-label="Инструменты">Инструменты</a>' not in h:errors.append(f'{rel}: RU instruments label/route mismatch')
+   if not re.search(r'<button class="workshopUtility" hidden[^>]*data-lab-command-open[^>]*aria-label="Открыть инструменты"',h):errors.append(f'{rel}: RU visible Ctrl K trigger not hidden')
   if '<header class="nav">' in text:errors.append(f'{rel}: legacy header returned')
   f=re.search(r'<footer class="workshopFooter">(.*?)</footer>',text,re.S);checks+=1
   if not f: errors.append(f'{rel}: workshop footer missing')
@@ -57,14 +64,14 @@ home_source=(ROOT/'components/workshop/WorkshopHome.tsx').read_text(encoding='ut
 checks+=2
 if 'href={p("/parents")}' not in home_source: errors.append('WorkshopHome missing Parents key link')
 if '/parents' not in source or '/en/parents' not in source: errors.append('WorkshopShell footer missing Parents key links')
-for label in ['Взрослые','Подростки','Дети','Бизнес','Studio','Цены','Adults','Teens','Kids','Business','Pricing']:
+for label in ['Взрослые','Подростки','Дети','Бизнес',('Студия' if E32 else 'Studio'),'Цены','Adults','Teens','Kids','Business','Pricing']:
  checks+=1
  if label not in source:errors.append(f'WorkshopShell missing {label}')
 for forbidden in ['Взрослым','Стоимость','Дети 8–13','Подростки 14–18']:
  checks+=1
  if f'[["{forbidden}"' in source:errors.append(f'Workshop menu stale label {forbidden}')
 lab_source=(ROOT/'components/LabCommand.tsx').read_text(encoding='utf-8')
-for marker in ['LAB — открыть Lab Command (Ctrl K)','LAB — open Lab Command (Ctrl K)']:
+for marker in [('Открыть инструменты' if E32 else 'LAB — открыть Lab Command (Ctrl K)'),'LAB — open Lab Command (Ctrl K)']:
  checks+=1
  if marker not in lab_source:errors.append(f'LabCommand source label missing {marker}')
 for rel,expected_h2 in [('method.html',5),('en/method.html',5),('phuket.html',3),('en/phuket.html',3)]:

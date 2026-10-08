@@ -14,7 +14,7 @@ type Props = {
 };
 
 const menu = {
-  ru: [["Взрослые", "/personal"], ["Подростки", "/teens"], ["Дети", "/kids"], ["Бизнес", "/business"], ["Studio", "/studio"], ["Цены", "/pricing"]],
+  ru: [["Взрослые", "/personal"], ["Подростки", "/teens"], ["Дети", "/kids"], ["Бизнес", "/business"], ["Студия", "/studio"], ["Цены", "/pricing"]],
   en: [["Adults", "/en/personal"], ["Teens", "/en/teens"], ["Kids", "/en/kids"], ["Business", "/en/business"], ["Studio", "/en/studio"], ["Pricing", "/en/pricing"]],
 } as const;
 
@@ -63,7 +63,7 @@ export function WorkshopShell({ locale = "ru", alternateHref, showReach = true, 
           {menu[locale].map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
         </nav>
         <div className={styles.actions}>
-          <Link className={styles.utility} href={en ? "/en/proof" : "/proof"} aria-label="Proof Lab">LAB</Link>
+          <Link className={styles.utility} href={en ? "/en/proof" : "/proof"} aria-label={en ? "Proof Lab" : "Инструменты"}>{en ? "LAB" : "Инструменты"}</Link>
           <LabCommand locale={locale} />
           <Link className={styles.utility} href={alternateHref}>{en ? "RU" : "EN"}</Link>
           <Link className={styles.primary} href={start}>{en ? "Start application" : "Открыть заявку"}</Link>
@@ -74,12 +74,12 @@ export function WorkshopShell({ locale = "ru", alternateHref, showReach = true, 
       <footer className={styles.footer}>
         <div><strong>AI Skill Lab</strong><span>{en ? "Practical AI capability · online / Phuket" : "Практический ИИ · онлайн / Пхукет"}</span></div>
         <nav aria-label={en ? "Footer" : "Подвал"}>
-          <Link href={en ? "/en/faq" : "/faq"}>FAQ</Link>
+          <Link href={en ? "/en/faq" : "/faq"}>{en ? "FAQ" : "Вопросы"}</Link>
           <Link href={en ? "/en/guides" : "/guides"}>{en ? "Guides" : "Гайды"}</Link>
           <Link href={en ? "/en/about" : "/about"}>{en ? "About" : "О проекте"}</Link>
-          <Link href={en ? "/en/challenge" : "/challenge"}>Challenge</Link>
-          <Link href={en ? "/en/build" : "/build"}>Build Log</Link>
-          <Link href={en ? "/en/proof" : "/proof"}>Proof Lab</Link>
+          <Link href={en ? "/en/challenge" : "/challenge"}>{en ? "Challenge" : "Задание"}</Link>
+          <Link href={en ? "/en/build" : "/build"}>{en ? "Build Log" : "Как сделан сайт"}</Link>
+          <Link href={en ? "/en/proof" : "/proof"}>{en ? "Proof Lab" : "Примеры и проверка"}</Link>
           <Link href={en ? "/en/pricing" : "/pricing"}>{en ? "Pricing" : "Цены"}</Link>
           <Link href={en ? "/en/start" : "/start"}>{en ? "Start application" : "Открыть заявку"}</Link>
           <Link href={en ? "/en/kids" : "/kids"}>{en ? "Kids" : "Дети"}</Link>

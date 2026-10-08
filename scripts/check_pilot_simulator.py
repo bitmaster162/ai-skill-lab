@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 from pathlib import Path
+import json
 import sys, html
 ROOT=Path(__file__).resolve().parents[1]
+E32 = json.loads((ROOT / "deploy/live/_release.json").read_text(encoding="utf-8")).get("release_id") == "E3_2_RU_GLOSSARY_R1"
 errors=[];checks=0
 surfaces=[
  ('components/PilotSimulator.tsx','source shared'),
@@ -14,12 +16,22 @@ for rel,label in surfaces:
   if label in ('source RU','source EN') and marker!='AI Pilot Simulator': continue
   if rel=='components/PilotSimulator.tsx' and marker=='AI Pilot Simulator': continue
   checks+=1
-  if marker.lower() not in text.lower():errors.append(f'{label}: missing {marker!r}')
+  required = "Симулятор пилота" if E32 and label == "static RU" and marker == "AI Pilot Simulator" else marker
+  if required.lower() not in text.lower():errors.append(f'{label}: missing {required!r}')
+E32_PILOT = {
+ "Candidate scope":"Возможный объём работ",
+ "AI role":"Роль ИИ",
+ "Human checkpoint":"Проверка человеком",
+ "Success signal":"Критерий успеха",
+ "Stop condition":"Условие остановки",
+ "Pilot artifact":"Результат пилота",
+}
 for rel in ['components/PilotSimulator.tsx','deploy/live/business.html','deploy/live/en/business.html']:
  text=html.unescape((ROOT/rel).read_text(encoding='utf-8'))
  for marker in ['SOURCE-BOUND','REVIEWABLE','MEASURABLE','HUMAN-OWNED','Candidate scope','AI role','Human checkpoint','Success signal','Stop condition','Pilot artifact']:
   checks+=1
-  if marker not in text:errors.append(f'{rel}: missing {marker!r}')
+  required = E32_PILOT.get(marker,marker) if E32 and rel == 'deploy/live/business.html' else marker
+  if required not in text:errors.append(f'{rel}: missing {required!r}')
 for rel in ['deploy/live/business.html','deploy/live/en/business.html']:
  text=(ROOT/rel).read_text(encoding='utf-8')
  checks+=1

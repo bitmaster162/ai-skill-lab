@@ -1,940 +1,1113 @@
 {
- "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below. E2: guides permits only the global Guides footer link plus the exact parent-checklist text/link on /kids, /parents, /safety and EN pairs. N15: agent-safety permits only the exact generated lesson text and its three cited source links on /personal, /business, /teens and EN pairs. A4: Phuket local permits only the exact generated local-areas/formats text on /phuket and /en/phuket; no links or meta changes. A3: Cal.com permits only the exact 15-minute booking URL on /start and /en/start; no text or meta changes. A5: mentor card permits only exact mentor text, GitHub/LinkedIn links and mentor aria/alt text on /, /en, /about and /en/about. E1.3: post-submit permits only the exact diagnostic/Telegram continuation labels on /start and /en/start; success feedback remains runtime-only. A8: Prompt Auditor permits only the exact RU/EN home demo copy, textarea labels/placeholders, and the exact Prompt Auditor privacy disclosure on /privacy and /en/privacy. A9: /projects permits only the provenance-bound real-build section, five exact public GitHub repository links, and the paired RU/EN project metadata/hero update; the nine existing example formats remain explicitly non-testimonial. N25: /method and /en/method may add one internal Completion record link; /certificate routes are net-new and are governed by the N25 checker. E3.8: разрешён только first-party счётчик семи lead/contact событий без персональных данных и одна точная privacy-фраза RU/EN. E3.1: route-scoped approved Russian SEO title/description, H1 lexical localization, first-lead ИИ/нейросети and visible Phuket→Пхукет only; exact eight SEO pairs are independently verified by scripts/check_e3_1_ru_seo.py; no commercial facts, links or third-party fields changed.",
- "phrases": {
-  "ru": [
-   "Как написать",
-   "Оставьте заявку или используйте прямой канал; для несовершеннолетнего контакт ведёт взрослый.",
-   "Ответ в течение 1–2 рабочих дней.",
-   "Telegram",
-   "WhatsApp +66 64 970 1204",
-   "LINE iwf555",
-   "Почта robert@aiskillab.work",
-   "WhatsApp",
-   "+66 64 970 1204",
-   "LINE",
-   "iwf555",
-   "Почта",
-   "robert@aiskillab.work",
-   "Начать",
-   "ПЕРВЫЙ ШАГ",
-   "Бесплатно · 15 минут",
-   "Бесплатный звонок-знакомство · 15 минут",
-   "Telegram →",
-   "ВТОРОЙ ШАГ",
-   "Диагностика $120 · 60 минут · Зачтём в стоимость пакета при покупке в течение 14 дней.",
-   "Обсудить диагностику →",
-   "Сначала бесплатный звонок, затем диагностика.",
-   "BRIEF",
-   "Цены",
-   "Открыть заявку",
-   "Дети",
-   "Подростки",
-   "Родителям",
-   "Взрослые",
-   "Бизнес",
-   "Практический AI · online / Phuket",
-   "Практический ИИ · онлайн / Пхукет"
-  ],
-  "en": [
-   "How to reach us",
-   "Use the application form or a direct channel; for a minor, coordination stays with an adult.",
-   "Reply within 1–2 business days.",
-   "Telegram",
-   "WhatsApp +66 64 970 1204",
-   "LINE iwf555",
-   "Email robert@aiskillab.work",
-   "WhatsApp",
-   "+66 64 970 1204",
-   "LINE",
-   "iwf555",
-   "Email",
-   "robert@aiskillab.work",
-   "Start",
-   "FIRST STEP",
-   "Free · 15 minutes",
-   "Free 15-minute intro call",
-   "Telegram →",
-   "SECOND STEP",
-   "Diagnostic session $120 · 60 minutes · Credited toward a package purchased within 14 days.",
-   "Discuss diagnostic →",
-   "Free intro call first, then diagnostic.",
-   "BRIEF",
-   "Pricing",
-   "Start application",
-   "Kids",
-   "Teens",
-   "For parents",
-   "Adults",
-   "Business"
-  ]
- },
- "route_phrases": {
-  "/start": [
-   "записаться на диагностику",
-   "написать в telegram",
-   "для обучения ии",
-   "сначала fit. потом программа.",
-   "начните с бесплатного звонка на 15 минут."
-  ],
-  "/en/start": [
-   "book diagnostic",
-   "message on telegram",
-   "fit first. program second.",
-   "start with a free 15-minute call."
-  ],
-  "/safety": [
-   "Возрастные правила сервисов",
-   "Группы — по порогу из условий самого сервиса, а не по типу инструмента. Каждая строка взята с официальной страницы сервиса.",
-   "Для 8–12 лет ни один сервис из списка не даёт ребёнку собственного доступа — кроме Gemini с аккаунтом Family Link (не в веб-версии).",
-   "Дети работают под присмотром взрослого",
-   "СЕРВИС",
-   "ПРАВИЛО",
-   "ИСТОЧНИК",
-   "КАК У НАС",
-   "13+",
-   "От 13 лет, с условиями",
-   "13+ · От 13 лет, с условиями",
-   "ChatGPT · OpenAI",
-   "Не предназначен для детей младше 13; для 13–18 нужно согласие родителя; для младше 13 в образовательном контексте взаимодействие ведёт взрослый.",
-   "help.openai.com/en/articles/8313401",
-   "13–17 — под присмотром взрослого, с согласием родителя. До 13 — работу в ChatGPT ведёт взрослый.",
-   "Gemini · Google",
-   "От 13 лет (или возраст, установленный в стране) с личным или школьным аккаунтом; с рабочим аккаунтом — от 18. Младше 13 — только с аккаунтом Family Link и не в веб-версии; родитель может отключить доступ.",
-   "support.google.com/gemini/answer/13278668",
-   "13–17 — под присмотром взрослого. До 13 — только с аккаунтом Family Link, не в веб-версии. Генерация видео — только взрослый.",
-   "Suno",
-   "От 13 лет; с 13 до 17 — только с явного согласия родителя.",
-   "suno.com/terms",
-   "13–17 — под присмотром взрослого, с согласием родителя. До 13 — ребёнок в сервисе не работает.",
-   "Replit",
-   "От 13 лет; до 18 — с разрешения родителя.",
-   "replit.com/terms-of-service",
-   "13–17 — под присмотром взрослого, с разрешения родителя. До 13 — ребёнок в сервисе не работает.",
-   "GitHub",
-   "От 13 лет; в отдельных странах порог выше.",
-   "docs.github.com — GitHub Terms of Service",
-   "13–17 — под присмотром взрослого. До 13 — ребёнок в сервисе не работает.",
-   "16+",
-   "От 16 лет",
-   "16+ · От 16 лет",
-   "Vercel",
-   "От 16 лет.",
-   "vercel.com/legal/terms",
-   "16–17 — под присмотром взрослого. До 16 — только взрослый.",
-   "18+",
-   "Только совершеннолетним",
-   "18+ · Только совершеннолетним",
-   "Claude · Anthropic",
-   "От 18 лет (или выше, если так требует закон страны); варианта с согласием родителя нет.",
-   "anthropic.com/legal/consumer-terms",
-   "Только взрослый, сервис 18+.",
-   "Veo · Google Flow",
-   "Только 18+, с проверкой возраста.",
-   "support.google.com/flow/answer/16353333",
-   "Только взрослый, сервис 18+.",
-   "Antigravity · Google",
-   "Сейчас недоступен пользователям младше 18, есть проверка возраста.",
-   "antigravity.google/docs/faq",
-   "Только взрослый, сервис 18+.",
-   "Gemini Spark · Google",
-   "18+; только личный аккаунт Google, не рабочий и не школьный; нужна подписка Google AI Pro или Ultra; недоступен в ЕЭЗ, Швейцарии, Великобритании и Нигерии.",
-   "support.google.com/gemini/answer/17094507",
-   "Только взрослый, сервис 18+.",
-   "Cloudflare",
-   "Сервисы не предназначены для лиц младше 18 (политика конфиденциальности).",
-   "cloudflare.com/privacypolicy",
-   "Только взрослый, сервис 18+.",
-   "Правила сервисов меняются; перед использованием проверяем актуальные условия. Дата проверки — 26 сентября 2026.",
-   "чек-лист для родителей: возраст, данные, родительский контроль",
-   "мини-тест · только в браузере",
-   "совпадают ли эти пять правил с вашим пониманием?",
-   "ничего не отправляется и не сохраняется. тест проверяет только понимание правил этой страницы и не является сертификатом безопасности.",
-   "если chatgpt используется с ребёнком младше 13 лет в образовательном контексте, кто проводит фактическое взаимодействие с сервисом?",
-   "что требуется пользователю 13–18 лет по текущей справке openai?",
-   "кто ведёт заявку, расписание, оплату и организационные сообщения для несовершеннолетнего?",
-   "что не нужно вводить в ai-задания без необходимости?",
-   "что делать, если ai отвечает уверенно?",
-   "взрослый",
-   "ребёнок самостоятельно",
-   "разрешение родителя или законного представителя",
-   "никакого отдельного условия",
-   "ребёнок через личный мессенджер",
-   "домашний адрес, документы, пароли и приватные переписки",
-   "только контекст, необходимый для задачи",
-   "считать ответ правильным",
-   "проверить утверждения и источники и исправить результат при необходимости",
-   "проверить ответы",
-   "работе с ии"
-  ],
-  "/en/safety": [
-   "Age rules of the services",
-   "Grouped by the threshold in each service’s own terms, not by tool type. Every row is taken from the service’s official page.",
-   "For ages 8–12, no service on the list gives a child their own access — except Gemini with a Family Link account (not in the web app).",
-   "Children work under adult supervision",
-   "SERVICE",
-   "RULE",
-   "SOURCE",
-   "HOW WE USE IT",
-   "13+",
-   "From 13, with conditions",
-   "13+ · From 13, with conditions",
-   "ChatGPT · OpenAI",
-   "Not intended for children under 13; ages 13–18 need parental consent; for under-13s in an educational context, an adult leads the interaction.",
-   "help.openai.com/en/articles/8313401",
-   "13–17 — under adult supervision, with parental consent. Under 13 — an adult does the work in ChatGPT.",
-   "Gemini · Google",
-   "From 13 (or the age set in the country) with a personal or school account; 18+ with a work account. Under 13 — only with a Family Link account and not in the web app; the parent can turn access off.",
-   "support.google.com/gemini/answer/13278668",
-   "13–17 — under adult supervision. Under 13 — only with a Family Link account, not in the web app. Video generation — adult only.",
-   "Suno",
-   "From 13; ages 13 to 17 only with explicit parental consent.",
-   "suno.com/terms",
-   "13–17 — under adult supervision, with parental consent. Under 13 — the child does not work in the service.",
-   "Replit",
-   "From 13; under 18 with parental permission.",
-   "replit.com/terms-of-service",
-   "13–17 — under adult supervision, with parental permission. Under 13 — the child does not work in the service.",
-   "GitHub",
-   "From 13; higher in some countries.",
-   "docs.github.com — GitHub Terms of Service",
-   "13–17 — under adult supervision. Under 13 — the child does not work in the service.",
-   "16+",
-   "From 16",
-   "16+ · From 16",
-   "Vercel",
-   "From 16.",
-   "vercel.com/legal/terms",
-   "16–17 — under adult supervision. Under 16 — adult only.",
-   "18+",
-   "Adults only",
-   "18+ · Adults only",
-   "Claude · Anthropic",
-   "18 and over (or higher where local law requires); there is no parental-consent option.",
-   "anthropic.com/legal/consumer-terms",
-   "Adult only; the service is 18+.",
-   "Veo · Google Flow",
-   "18+ only, with age verification.",
-   "support.google.com/flow/answer/16353333",
-   "Adult only; the service is 18+.",
-   "Antigravity · Google",
-   "Currently unavailable to users under 18, with age verification.",
-   "antigravity.google/docs/faq",
-   "Adult only; the service is 18+.",
-   "Gemini Spark · Google",
-   "18+; personal Google account only, not a work or school account; requires a Google AI Pro or Ultra subscription; not available in the EEA, Switzerland, the UK or Nigeria.",
-   "support.google.com/gemini/answer/17094507",
-   "Adult only; the service is 18+.",
-   "Cloudflare",
-   "Services are not intended for anyone under 18 (privacy policy).",
-   "cloudflare.com/privacypolicy",
-   "Adult only; the service is 18+.",
-   "Service rules change; we check the current terms before use. Checked on September 26, 2026.",
-   "parent checklist: age rules, data, parental controls",
-   "mini-check · local only",
-   "do these five safety rules match your understanding?",
-   "nothing is sent or stored. this checks only your understanding of the rules on this page; it is not a safety certification.",
-   "if chatgpt is used with a child under 13 in an education context, who conducts the actual interaction with the service?",
-   "what do users ages 13–18 need under openai's current guidance?",
-   "who handles applications, scheduling, payment and organizational communication for a minor?",
-   "what should not be entered into ai assignments unless genuinely needed?",
-   "what should you do when ai sounds confident?",
-   "an adult",
-   "the child independently",
-   "permission from a parent or legal guardian",
-   "no additional condition",
-   "the child through a personal messenger account",
-   "home addresses, identity documents, passwords and private conversations",
-   "only the context needed for the task",
-   "assume the answer is correct",
-   "verify claims and sources and correct the output when needed",
-   "check answers"
-  ],
-  "/privacy": [
-   "AI-route и OpenRouter",
-   "Если AI-route включён, он запускается только после нажатия кнопки пользователем. В /api/route передаются выбранная аудитория, три ответа matcher и текст цели. Перед обращением к модели сервер проверяет ввод на шаблоны секретов и ключей; обнаруженный секрет блокируется до вызова модели. Для AI-подбора сервер может передать эти данные в настроенную бесплатную модель через OpenRouter API. Код AI Skill Lab не записывает текст цели или ответы matcher в собственную таблицу rate-limit.",
-   "Защита от злоупотреблений AI-route",
-   "Для точного ограничения частоты ingress получает сетевой IP клиента от хостинг-платформы и сразу преобразует его в HMAC-token. Сырой IP не записывается в таблицу AI Skill Lab для route-limit. В этой таблице хранятся только request ID, HMAC-token и техническая отметка времени. Плановый cleanup удаляет rate-limit записи старше 24 часов. Token используется только для ограничения частоты и защиты AI-route, а не для рекламного профилирования.",
-   "если ai-route включён, он запускается только после нажатия кнопки пользователем. в /api/route передаются либо выбранная аудитория, три ответа matcher и текст цели, либо текст промпта из prompt auditor. перед обращением к модели сервер проверяет ввод на шаблоны секретов и ключей; обнаруженный секрет блокируется до вызова модели. для ai-подбора или prompt auditor сервер может передать эти данные в настроенную бесплатную модель через openrouter api. код ai skill lab не записывает текст цели, ответы matcher или текст prompt auditor в собственную таблицу rate-limit.",
-   "сайт ведёт first-party счётчик событий заявки и переходов по каналам связи без персональных данных и cookie: сохраняются только тип события, страница, язык и дневной счётчик; имена, контакты и текст формы туда не передаются.",
-   "для заявок на обучение ии"
-  ],
-  "/en/privacy": [
-   "AI routing and OpenRouter",
-   "If AI routing is enabled, it runs only after the user presses the route button. /api/route receives the selected audience, three matcher answers and the goal text. Before any model call, the server checks the input for secret and credential patterns; detected secrets are blocked before the model is called. For AI routing, the server may send this data to the configured free model through the OpenRouter API. AI Skill Lab code does not write the goal text or matcher answers into its route-limit table.",
-   "AI-route abuse prevention",
-   "For exact rate limiting, the ingress receives the client network IP from the hosting platform and immediately converts it to an HMAC token. The raw IP is not written to AI Skill Lab's route-limit table. That table stores only a request ID, HMAC token and technical timestamp. Scheduled cleanup deletes rate-limit rows once they are older than 24 hours. The token is used only for rate limiting and AI-route protection, not for advertising profiling.",
-   "if ai routing is enabled, it runs only after the user presses a button. /api/route receives either the selected audience, three matcher answers and the goal text, or the prompt text from prompt auditor. before any model call, the server checks the input for secret and credential patterns; detected secrets are blocked before the model is called. for ai routing or prompt auditor, the server may send this data to the configured free model through the openrouter api. ai skill lab code does not write the goal text, matcher answers or prompt auditor text into its route-limit table.",
-   "the site uses a first-party counter for application and contact-channel events without personal data or cookies: only the event type, page, locale and daily count are stored; names, contact details and form text are not sent to that counter."
-  ],
-  "/proof": [
-   "Публичный сайт не использует analytics, cookies и trackers. Единственная форма — заявка на /start, она отправляется на /api/lead.",
-   "Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Единственная форма — заявка на /start, она отправляется на /api/lead.",
-   "trackers",
-   "ad_trackers",
-   "public_forms 1",
-   "public_forms 2",
-   "Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Формы есть на /start и /matcher: matcher вызывает /api/route только по кнопке, а brief отправляет в /api/lead только по согласию.",
-   "работать с ии."
-  ],
-  "/en/proof": [
-   "The public site uses no analytics, cookies or trackers. The only form is the request form on /start; it submits to /api/lead.",
-   "The public site uses Vercel Web Analytics for anonymized visit statistics; it uses no cookies or advertising trackers. The only form is the request form on /start; it submits to /api/lead.",
-   "trackers",
-   "ad_trackers",
-   "public_forms 1",
-   "public_forms 2",
-   "The public site uses Vercel Web Analytics for anonymized visit statistics; it uses no cookies or advertising trackers. Forms exist on /start and /matcher: matcher calls /api/route only on button press, and sends its brief to /api/lead only with consent."
-  ],
-  "/pricing": [
-   "Сначала диагностика, затем пакет.",
-   "Зачтём в стоимость пакета при покупке в течение 14 дней.",
-   "знайте цену. фиксируйте scope.",
-   "цены известны заранее. объём работ - письменно."
-  ],
-  "/en/pricing": [
-   "Diagnose before committing to a package.",
-   "Credited toward a package purchased within 14 days.",
-   "know the price. define the scope.",
-   "prices up front. scope in writing."
-  ],
-  "/matcher": [
-   "ai + fallback",
-   "только из опубликованной таблицы программ. ai используется",
-   "кнопке; при недоступности остаётся локальный fallback. ai-подбор запускается только по кнопке · ввод matcher",
-   "4. коротко опишите цель подобрать маршрут с ai",
-   "формату и пакету. никакие ответы",
-   "отправляются на сервер и не сохраняются. локально в браузере · ничего не отправляется",
-   "ai используется по кнопке",
-   "ии используется по кнопке",
-   "только из опубликованной таблицы программ. ии используется"
-  ],
-  "/en/matcher": [
-   "ai + fallback",
-   "plus your goal",
-   "only from the published program table. ai runs on button press; a local fallback remains available. ai routing runs only after you press the button · matcher input",
-   "4. describe the goal briefly find a route with ai",
-   "a lead form.",
-   "for format and package. no answer",
-   "sent to a server or stored. local in your browser · nothing is sent"
-  ],
-  "/kids": [
-   "чек-лист для родителей: возраст, данные, родительский контроль",
-   "ai - не кнопка сделай за меня.",
-   "свой проект с ии - вместе со взрослым."
-  ],
-  "/parents": [
-   "чек-лист для родителей: возраст, данные, родительский контроль",
-   "навык работы с ии,"
-  ],
-  "/en/kids": [
-   "parent checklist: age rules, data, parental controls",
-   "ai is not a button that does it for you.",
-   "their own ai project - with an adult alongside."
-  ],
-  "/en/parents": [
-   "parent checklist: age rules, data, parental controls"
-  ],
-  "/business": [
-   "безопасная работа с ai-агентами · 3 кейса + 5 правил не доверять плану. контролировать эффект. ai-агент умеет читать, принимать решения и использовать инструменты. риск начинается там, где правдоподобный ответ может сразу превратиться во внешний эффект. эти три документированных кейса показывают разные классы отказа. инцидент · jul 2025 replit agent удалил данные production-базы. во время эксперимента saastr агент replit удалил данные приложения из базы. replit позже публично подтвердил проблему: до нового разделения development/production изменения во время разработки могли затронуть production; данные удалось восстановить через rollback. урок: текстовый запрет вроде «ничего не менять» слабее технической границы, которая физически не даёт агенту писать в production. replit · 29.07.2025 ↗ уязвимость · cve-2025-32711 echoleak показал, что входящие данные могут стать инструкцией. исследователи показали цепочку indirect prompt injection в microsoft 365 copilot: специально подготовленное письмо могло попасть в контекст copilot и привести к утечке данных без клика по письму. microsoft исправила уязвимость; публично сообщалось, что признаков эксплуатации «в дикой природе» не было. урок: письмо, веб-страница, документ или комментарий — это недоверенные данные, даже если агент умеет их читать автоматически. sc media · microsoft cve-2025-32711 ↗ атака обнаружена · dec 2025 unit 42 увидела hidden prompts на мошеннических страницах. unit 42 обнаружила реальные веб-страницы с indirect prompt injection, включая попытку заставить ai-систему проверки рекламы одобрить мошенническое объявление. исследователи отдельно отмечают: подтверждённого успешного обхода deployed ad-checker в этом кейсе они не видели. урок: агент, который читает интернет, должен отделять содержимое страницы от команд и не получать лишние права только потому, что «это удобно». palo alto networks unit 42 ↗ пять рабочих правил полномочия должны быть явными. 01 · сначала read-only пусть агент сначала читает, планирует и показывает diff. право писать выдаётся отдельно и только там, где оно действительно нужно. 02 · минимальные права тестовая среда, отдельные аккаунты и ключи, запрет production-доступа по умолчанию. не давайте агенту больше полномочий, чем требует одна задача. 03 · человек перед необратимым действием удаление данных, публикация, отправка сообщения, покупка, платёж или изменение доступа требуют явного подтверждения перед эффектом. 04 · данные не равны инструкциям текст из письма, сайта, файла, issue или чата может быть враждебным. агент не должен превращать найденный контент в новые команды без отдельной проверки. 05 · проверка после эффекта нужны журнал действия, проверка результата, способ отката и стоп-условие. «агент сказал, что всё готово» — не доказательство. кейсы не равнозначны: replit — реальный операционный инцидент; echoleak — подтверждённая уязвимость, исправленная до публичного раскрытия, без известной эксплуатации; кейс unit 42 — обнаруженная вредоносная попытка prompt injection без подтверждённого успешного обхода deployed ad-review агента.",
-   "workflow с ии,",
-   "не добавить ai. изменить один процесс.",
-   "обучить команду и проверить ии на одном процессе."
-  ],
-  "/personal": [
-   "безопасная работа с ai-агентами · 3 кейса + 5 правил не доверять плану. контролировать эффект. ai-агент умеет читать, принимать решения и использовать инструменты. риск начинается там, где правдоподобный ответ может сразу превратиться во внешний эффект. эти три документированных кейса показывают разные классы отказа. инцидент · jul 2025 replit agent удалил данные production-базы. во время эксперимента saastr агент replit удалил данные приложения из базы. replit позже публично подтвердил проблему: до нового разделения development/production изменения во время разработки могли затронуть production; данные удалось восстановить через rollback. урок: текстовый запрет вроде «ничего не менять» слабее технической границы, которая физически не даёт агенту писать в production. replit · 29.07.2025 ↗ уязвимость · cve-2025-32711 echoleak показал, что входящие данные могут стать инструкцией. исследователи показали цепочку indirect prompt injection в microsoft 365 copilot: специально подготовленное письмо могло попасть в контекст copilot и привести к утечке данных без клика по письму. microsoft исправила уязвимость; публично сообщалось, что признаков эксплуатации «в дикой природе» не было. урок: письмо, веб-страница, документ или комментарий — это недоверенные данные, даже если агент умеет их читать автоматически. sc media · microsoft cve-2025-32711 ↗ атака обнаружена · dec 2025 unit 42 увидела hidden prompts на мошеннических страницах. unit 42 обнаружила реальные веб-страницы с indirect prompt injection, включая попытку заставить ai-систему проверки рекламы одобрить мошенническое объявление. исследователи отдельно отмечают: подтверждённого успешного обхода deployed ad-checker в этом кейсе они не видели. урок: агент, который читает интернет, должен отделять содержимое страницы от команд и не получать лишние права только потому, что «это удобно». palo alto networks unit 42 ↗ пять рабочих правил полномочия должны быть явными. 01 · сначала read-only пусть агент сначала читает, планирует и показывает diff. право писать выдаётся отдельно и только там, где оно действительно нужно. 02 · минимальные права тестовая среда, отдельные аккаунты и ключи, запрет production-доступа по умолчанию. не давайте агенту больше полномочий, чем требует одна задача. 03 · человек перед необратимым действием удаление данных, публикация, отправка сообщения, покупка, платёж или изменение доступа требуют явного подтверждения перед эффектом. 04 · данные не равны инструкциям текст из письма, сайта, файла, issue или чата может быть враждебным. агент не должен превращать найденный контент в новые команды без отдельной проверки. 05 · проверка после эффекта нужны журнал действия, проверка результата, способ отката и стоп-условие. «агент сказал, что всё готово» — не доказательство. кейсы не равнозначны: replit — реальный операционный инцидент; echoleak — подтверждённая уязвимость, исправленная до публичного раскрытия, без известной эксплуатации; кейс unit 42 — обнаруженная вредоносная попытка prompt injection без подтверждённого успешного обхода deployed ad-review агента.",
-   "не курс про ai, а ваш рабочий процесс.",
-   "ии вокруг вашей реальной задачи."
-  ],
-  "/teens": [
-   "безопасная работа с ai-агентами · 3 кейса + 5 правил не доверять плану. контролировать эффект. ai-агент умеет читать, принимать решения и использовать инструменты. риск начинается там, где правдоподобный ответ может сразу превратиться во внешний эффект. эти три документированных кейса показывают разные классы отказа. инцидент · jul 2025 replit agent удалил данные production-базы. во время эксперимента saastr агент replit удалил данные приложения из базы. replit позже публично подтвердил проблему: до нового разделения development/production изменения во время разработки могли затронуть production; данные удалось восстановить через rollback. урок: текстовый запрет вроде «ничего не менять» слабее технической границы, которая физически не даёт агенту писать в production. replit · 29.07.2025 ↗ уязвимость · cve-2025-32711 echoleak показал, что входящие данные могут стать инструкцией. исследователи показали цепочку indirect prompt injection в microsoft 365 copilot: специально подготовленное письмо могло попасть в контекст copilot и привести к утечке данных без клика по письму. microsoft исправила уязвимость; публично сообщалось, что признаков эксплуатации «в дикой природе» не было. урок: письмо, веб-страница, документ или комментарий — это недоверенные данные, даже если агент умеет их читать автоматически. sc media · microsoft cve-2025-32711 ↗ атака обнаружена · dec 2025 unit 42 увидела hidden prompts на мошеннических страницах. unit 42 обнаружила реальные веб-страницы с indirect prompt injection, включая попытку заставить ai-систему проверки рекламы одобрить мошенническое объявление. исследователи отдельно отмечают: подтверждённого успешного обхода deployed ad-checker в этом кейсе они не видели. урок: агент, который читает интернет, должен отделять содержимое страницы от команд и не получать лишние права только потому, что «это удобно». palo alto networks unit 42 ↗ пять рабочих правил полномочия должны быть явными. 01 · сначала read-only пусть агент сначала читает, планирует и показывает diff. право писать выдаётся отдельно и только там, где оно действительно нужно. 02 · минимальные права тестовая среда, отдельные аккаунты и ключи, запрет production-доступа по умолчанию. не давайте агенту больше полномочий, чем требует одна задача. 03 · человек перед необратимым действием удаление данных, публикация, отправка сообщения, покупка, платёж или изменение доступа требуют явного подтверждения перед эффектом. 04 · данные не равны инструкциям текст из письма, сайта, файла, issue или чата может быть враждебным. агент не должен превращать найденный контент в новые команды без отдельной проверки. 05 · проверка после эффекта нужны журнал действия, проверка результата, способ отката и стоп-условие. «агент сказал, что всё готово» — не доказательство. кейсы не равнозначны: replit — реальный операционный инцидент; echoleak — подтверждённая уязвимость, исправленная до публичного раскрытия, без известной эксплуатации; кейс unit 42 — обнаруженная вредоносная попытка prompt injection без подтверждённого успешного обхода deployed ad-review агента.",
-   "проект с ии.",
-   "не просто пользоваться ai. собирать и объяснять.",
-   "исследовать, писать код и собирать портфолио с ии."
-  ],
-  "/en/business": [
-   "safe agent work · 3 cases + 5 rules do not trust the plan. control the effect. an ai agent can read, decide and use tools. the risk starts when a plausible answer can turn directly into an external effect. these three documented cases show different failure modes. incident · jul 2025 replit agent deleted production-app database data. during a saastr experiment, replit agent deleted app data from a database. replit later acknowledged the problem publicly: before its new development/production separation, changes made during development could affect production; the data was restored through rollback. lesson: a written instruction such as “do not change anything” is weaker than a technical boundary that prevents the agent from writing to production. replit · 29 jul 2025 ↗ vulnerability · cve-2025-32711 echoleak showed that incoming data can become an instruction. researchers demonstrated an indirect prompt-injection chain in microsoft 365 copilot: a crafted email could enter copilot context and enable data exfiltration without the user clicking the email. microsoft patched the issue; public reporting said microsoft had no evidence of in-the-wild exploitation. lesson: email, webpages, documents and comments are untrusted data even when an agent can read them automatically. sc media · microsoft cve-2025-32711 ↗ attack observed · dec 2025 unit 42 found hidden prompts on malicious webpages. unit 42 observed real webpages carrying indirect prompt injection, including an attempt to make an ai ad-review system approve a scam advertisement. the researchers explicitly noted that they had not confirmed a successful bypass of a deployed ad-checking agent in that case. lesson: an agent that reads the web must separate page content from commands, and it should not gain extra authority simply because automation is convenient. palo alto networks unit 42 ↗ five operating rules authority should be explicit. 01 · start read-only let the agent read, plan and show a diff first. grant write authority separately and only where one task actually requires it. 02 · least privilege use test environments, separate accounts and keys, and no production access by default. do not give an agent more authority than one task needs. 03 · human before irreversible effects data deletion, publishing, sending messages, purchasing, payment or access changes require explicit confirmation before the effect. 04 · data is not instruction text from email, webpages, files, issues or chat can be hostile. retrieved content must not become a new command without a separate trust check. 05 · verify after the effect keep an action log, verify the result, define rollback and a stop condition. “the agent said it is done” is not evidence. the cases are not equivalent: replit was a real operational incident; echoleak was a confirmed vulnerability patched before public disclosure with no known in-the-wild exploitation; the unit 42 case was an observed malicious injection attempt without confirmed successful bypass of a deployed ad-review agent.",
-   "do not add ai. change one process.",
-   "train the team and test ai on one process."
-  ],
-  "/en/personal": [
-   "safe agent work · 3 cases + 5 rules do not trust the plan. control the effect. an ai agent can read, decide and use tools. the risk starts when a plausible answer can turn directly into an external effect. these three documented cases show different failure modes. incident · jul 2025 replit agent deleted production-app database data. during a saastr experiment, replit agent deleted app data from a database. replit later acknowledged the problem publicly: before its new development/production separation, changes made during development could affect production; the data was restored through rollback. lesson: a written instruction such as “do not change anything” is weaker than a technical boundary that prevents the agent from writing to production. replit · 29 jul 2025 ↗ vulnerability · cve-2025-32711 echoleak showed that incoming data can become an instruction. researchers demonstrated an indirect prompt-injection chain in microsoft 365 copilot: a crafted email could enter copilot context and enable data exfiltration without the user clicking the email. microsoft patched the issue; public reporting said microsoft had no evidence of in-the-wild exploitation. lesson: email, webpages, documents and comments are untrusted data even when an agent can read them automatically. sc media · microsoft cve-2025-32711 ↗ attack observed · dec 2025 unit 42 found hidden prompts on malicious webpages. unit 42 observed real webpages carrying indirect prompt injection, including an attempt to make an ai ad-review system approve a scam advertisement. the researchers explicitly noted that they had not confirmed a successful bypass of a deployed ad-checking agent in that case. lesson: an agent that reads the web must separate page content from commands, and it should not gain extra authority simply because automation is convenient. palo alto networks unit 42 ↗ five operating rules authority should be explicit. 01 · start read-only let the agent read, plan and show a diff first. grant write authority separately and only where one task actually requires it. 02 · least privilege use test environments, separate accounts and keys, and no production access by default. do not give an agent more authority than one task needs. 03 · human before irreversible effects data deletion, publishing, sending messages, purchasing, payment or access changes require explicit confirmation before the effect. 04 · data is not instruction text from email, webpages, files, issues or chat can be hostile. retrieved content must not become a new command without a separate trust check. 05 · verify after the effect keep an action log, verify the result, define rollback and a stop condition. “the agent said it is done” is not evidence. the cases are not equivalent: replit was a real operational incident; echoleak was a confirmed vulnerability patched before public disclosure with no known in-the-wild exploitation; the unit 42 case was an observed malicious injection attempt without confirmed successful bypass of a deployed ad-review agent.",
-   "not a course about ai. your own working system.",
-   "ai around your real task."
-  ],
-  "/en/teens": [
-   "safe agent work · 3 cases + 5 rules do not trust the plan. control the effect. an ai agent can read, decide and use tools. the risk starts when a plausible answer can turn directly into an external effect. these three documented cases show different failure modes. incident · jul 2025 replit agent deleted production-app database data. during a saastr experiment, replit agent deleted app data from a database. replit later acknowledged the problem publicly: before its new development/production separation, changes made during development could affect production; the data was restored through rollback. lesson: a written instruction such as “do not change anything” is weaker than a technical boundary that prevents the agent from writing to production. replit · 29 jul 2025 ↗ vulnerability · cve-2025-32711 echoleak showed that incoming data can become an instruction. researchers demonstrated an indirect prompt-injection chain in microsoft 365 copilot: a crafted email could enter copilot context and enable data exfiltration without the user clicking the email. microsoft patched the issue; public reporting said microsoft had no evidence of in-the-wild exploitation. lesson: email, webpages, documents and comments are untrusted data even when an agent can read them automatically. sc media · microsoft cve-2025-32711 ↗ attack observed · dec 2025 unit 42 found hidden prompts on malicious webpages. unit 42 observed real webpages carrying indirect prompt injection, including an attempt to make an ai ad-review system approve a scam advertisement. the researchers explicitly noted that they had not confirmed a successful bypass of a deployed ad-checking agent in that case. lesson: an agent that reads the web must separate page content from commands, and it should not gain extra authority simply because automation is convenient. palo alto networks unit 42 ↗ five operating rules authority should be explicit. 01 · start read-only let the agent read, plan and show a diff first. grant write authority separately and only where one task actually requires it. 02 · least privilege use test environments, separate accounts and keys, and no production access by default. do not give an agent more authority than one task needs. 03 · human before irreversible effects data deletion, publishing, sending messages, purchasing, payment or access changes require explicit confirmation before the effect. 04 · data is not instruction text from email, webpages, files, issues or chat can be hostile. retrieved content must not become a new command without a separate trust check. 05 · verify after the effect keep an action log, verify the result, define rollback and a stop condition. “the agent said it is done” is not evidence. the cases are not equivalent: replit was a real operational incident; echoleak was a confirmed vulnerability patched before public disclosure with no known in-the-wild exploitation; the unit 42 case was an observed malicious injection attempt without confirmed successful bypass of a deployed ad-review agent.",
-   "do more than use ai. build it. explain it.",
-   "research, code and build a portfolio with ai."
-  ],
-  "/phuket": [
-   "phuket · локальная координация реальные районы, без выдуманного кампуса. для локального планирования используем понятные районы phuket. это зоны координации, а не филиалы и не постоянные классы. точное место, доступность и время в пути подтверждаем до бронирования. rawai / nai harn юг phuket. локальная встреча — только после подтверждения места и времени. chalong южно-центральная часть острова. подходит как ориентир для согласования очной сессии. kata / karon западное побережье. доступность конкретного места подтверждаем до бронирования. phuket town центральная городская зона. точка встречи определяется отдельно под конкретную сессию. формат сначала маршрут обучения, потом география. local 1:1 очная персональная сессия место и время согласуем заранее. ai skill lab не заявляет постоянный учебный центр или публичный classroom address. online 1:1 персональная работа online экран, совместная сборка проектов и персональный маршрут работают независимо от страны. hybrid часть очно, часть online если программе нужен смешанный режим, очные и online-сессии можно сочетать после согласования маршрута. для несовершеннолетних контакт, расписание и согласование сервисов остаются за родителем или законным представителем.",
-   "занятия по ии.",
-   "пхукет · локальная координация реальные районы, без выдуманного кампуса. для локального планирования используем понятные районы пхукета. это зоны координации, а не филиалы и не постоянные классы. точное место, доступность и время в пути подтверждаем до бронирования. rawai / nai harn юг пхукета. локальная встреча — только после подтверждения места и времени. chalong южно-центральная часть острова. подходит как ориентир для согласования очной сессии. kata / karon западное побережье. доступность конкретного места подтверждаем до бронирования. phuket town центральная городская зона. точка встречи определяется отдельно под конкретную сессию. формат сначала маршрут обучения, потом география. local 1:1 очная персональная сессия место и время согласуем заранее. ai skill lab не заявляет постоянный учебный центр или публичный classroom address. online 1:1 персональная работа online экран, совместная сборка проектов и персональный маршрут работают независимо от страны. hybrid часть очно, часть online если программе нужен смешанный режим, очные и online-сессии можно сочетать после согласования маршрута. для несовершеннолетних контакт, расписание и согласование сервисов остаются за родителем или законным представителем.",
-   "phuket · локальная координация реальные районы, без выдуманного кампуса. для локального планирования используем понятные районы пхукета. это зоны координации, а не филиалы и не постоянные классы. точное место, доступность и время в пути подтверждаем до бронирования. rawai / nai harn юг пхукета. локальная встреча - только после подтверждения места и времени. chalong южно-центральная часть острова. подходит как ориентир для согласования очной сессии. kata / karon западное побережье. доступность конкретного места подтверждаем до бронирования. phuket town центральная городская зона. точка встречи определяется отдельно под конкретную сессию. формат сначала маршрут обучения, потом география. local 1:1 очная персональная сессия место и время согласуем заранее. ai skill lab не заявляет постоянный учебный центр или публичный classroom address. online 1:1 персональная работа online экран, совместная сборка проектов и персональный маршрут работают независимо от страны. hybrid часть очно, часть online если программе нужен смешанный режим, очные и online-сессии можно сочетать после согласования маршрута. для несовершеннолетних контакт, расписание и согласование сервисов остаются за родителем или законным представителем.",
-   "локально на phuket. и без географии online.",
-   "на пхукете - очно. из любой страны - онлайн."
-  ],
-  "/en/phuket": [
-   "phuket · local coordination real areas, no invented campus. for local planning we use recognizable phuket areas. they are coordination areas, not branches or permanent classrooms. the exact venue, availability and travel time are confirmed before booking. rawai / nai harn south phuket. an in-person session is confirmed only after venue and timing are agreed. chalong south-central phuket. used as a local coordination area for an agreed in-person session. kata / karon west coast. availability of a specific venue is confirmed before booking. phuket town central urban area. the meeting point is agreed separately for each session. format choose geography after the learning route. local 1:1 in-person one-to-one venue and timing are agreed in advance. ai skill lab does not claim a permanent school location or public classroom address. online 1:1 one-to-one online screen sharing, project building and a personal route work regardless of country. hybrid local plus online if a program benefits from both, in-person and online sessions can be combined after the route is agreed. for minors, contact, scheduling and service approval remain with a parent or legal guardian.",
-   "local in phuket. borderless online.",
-   "in person on phuket. online from anywhere."
-  ],
-  "/": [
-   "наставник · human in the loop роберт думанян основатель / преподаватель работает с ai-системами, research workflows, агентами, автоматизацией, decision workflows и цифровыми продуктами. на занятиях: цель → спецификация → сборка → проверка → результат. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗",
-   "запускается только по кнопке. текст передаётся настроенной модели через openrouter; ai skill lab его не сохраняет. не вставляйте пароли, ключи и приватные данные. ai prompt auditor ai prompt auditor вставьте рабочий запрос к llm - ai оценит его по 10-балльной шкале и предложит улучшенный вариант с пояснением. проверить промпт ai-оценка /10 пояснение улучшенный вариант это автоматическая оценка, а не универсальный стандарт качества. проверьте улучшенный промпт перед использованием. скопировать улучшенный промпт",
-   "обучение: искусственный интеллект (ии) и нейросети,"
-  ],
-  "/about": [
-   "наставник · human in the loop роберт думанян основатель / преподаватель работает с ai-системами, research workflows, агентами, автоматизацией, decision workflows и цифровыми продуктами. на занятиях: цель → спецификация → сборка → проверка → результат. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗",
-   "обучение ии в"
-  ],
-  "/en": [
-   "mentor · human in the loop robert dumanyan founder / instructor works with ai systems, research workflows, agents, automation, decision workflows and digital products. sessions follow the same discipline: goal → specification → build → verification → output. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗",
-   "runs only after you press the button. the text is sent to the configured model through openrouter; ai skill lab does not store it. do not paste passwords, keys or private data. ai prompt auditor ai prompt auditor paste a working llm request - ai scores it on a 10-point scale and returns an improved version with an explanation. audit prompt ai score /10 explanation improved version this is an automated assessment, not a universal quality standard. review the improved prompt before using it. copy improved prompt"
-  ],
-  "/en/about": [
-   "mentor · human in the loop robert dumanyan founder / instructor works with ai systems, research workflows, agents, automation, decision workflows and digital products. sessions follow the same discipline: goal → specification → build → verification → output. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗"
-  ],
-  "/projects": [
-   "EXAMPLE OUTPUTS · NOT TESTIMONIALS Не галерея работ. Project Studio. 9 примерных форматов показывают не только что можно собрать, но и как устроена хорошая AI-работа: цель → роль AI → human check → проверяемый артефакт. Это не заявления о конкретных клиентах или учениках. Исследовать проекты ↓ Как мы проверяем AI →",
-   "PROJECT STUDIO / 9 EXAMPLES Фильтруй по типу работы. Смотри на устройство результата. Весь контент доступен даже без JavaScript. Фильтр работает только локально в браузере и ничего не отправляет наружу.",
-   "REAL BUILDS · PUBLIC PROVENANCE Реальные сборки. И Project Studio. Сначала — публичные проекты Роберта с проверяемыми репозиториями и честными границами claims. Ниже — 9 учебных примерных форматов; это не клиентские кейсы и не работы учеников. Смотреть реальные проекты ↓ Как мы проверяем AI →",
-   "REAL BUILDS / 5 PUBLIC REPOS Публичный код. Явные границы claims. Пять проектов Роберта Думаняна с открытыми репозиториями и проверяемым scope. Это проекты наставника, не работы учеников и не клиентские кейсы.",
-   "EXAMPLE OUTPUTS · NOT TESTIMONIALS / 9 EXAMPLES Фильтруй по типу работы. Смотри на устройство результата. Ниже — учебные примерные форматы, а не заявления о конкретных клиентах или учениках. Весь контент доступен даже без JavaScript; фильтр работает только локально в браузере и ничего не отправляет наружу.",
-   "VISUAL AI · PUBLIC REPO RESEARCH / OFFLINE TESTABLE 01 VisionAssist Визуально-семантический слой для evidence-grounded observations, competing hypotheses, counterevidence, uncertainty и явной human-AI revision. 01 Доказательство Публичный репозиторий фиксирует 75-case corpus: 60 market chart cases + 15 deterministic visual-control cases, offline harness, scorer и proof checklist. 02 Граница claims README не заявляет calibration, human-AI uplift, natural-scene generality или production value. GitHub ↗",
-   "MEMORY · PUBLIC REPO LOCAL-FIRST / OPEN SOURCE 02 ContinuityOS Durable memory и continuity layer для AI-агентов и людей: canon, frontiers, open loops, checkpoints и handoff context. 01 Доказательство Публичный репозиторий и PyPI package; core memory работает локально на SQLite, поддерживает CLI, Python API, MCP и импорт AI-history из нескольких провайдеров. 02 Граница claims Demo доказывает bounded persistence через новый процесс, а не поведенческую идентичность модели или production security. GitHub ↗",
-   "AGENT GOVERNANCE · PUBLIC REPO DETERMINISTIC REFERENCE 03 BitEvo Agent Authority Публичный reference package семи ворот Agent Authority & Evidence для проверки одного action-capable workflow. 01 Доказательство spec/gates.json, локальный deterministic evaluator, fail-closed validation и regression tests; package source-bound к публичной BitEvo реализации. 02 Граница claims Не выдаёт trust/safety score, не сертифицирует систему, не исполняет внешние действия и не запрашивает credentials. GitHub ↗",
-   "AI PRODUCT · PUBLIC REPO PUBLIC PRODUCT / EVIDENCE SURFACE 04 BitEvo Agent Site Публичный продукт для authority-first AI-agent engineering, где SOURCE, BUILD, DEPLOYMENT, READBACK и EXTERNAL EFFECT разделены как разные классы доказательств. 01 Доказательство Astro site с provider-bound build receipts, deterministic release gates, CSP hash allowlist и раздельными Vercel / Cloudflare provider paths. 02 Граница claims Production promotion отделён от build/readback; публичный repository прямо фиксирует can_trade=false и capital_permission=DENY. GitHub ↗",
-   "CONTROL STACK · PUBLIC REPO VALIDATION-ONLY 05 TRIAXIS Versioned governance/control stack с deterministic validation assets для policy binding, external witnesses, execution reconciliation и rollback detection. 01 Доказательство Публичный репозиторий содержит executable validation harnesses для signed policy heads, quorum, execution ledger, provider reconciliation и completion witnesses. 02 Граница claims Repository прямо указывает: это не production gateway; validation results не доказывают production exactly-once behavior или complete mediation. GitHub ↗",
-   "real builds · public provenance реальные сборки. и project studio. сначала - публичные проекты роберта с ии, проверяемыми репозиториями и честными границами claims. ниже - 9 учебных примерных форматов; это не клиентские кейсы и не работы учеников. смотреть реальные проекты ↓ как мы проверяем ai →"
-  ],
-  "/en/projects": [
-   "EXAMPLE OUTPUTS · NOT TESTIMONIALS Not a work gallery. Project Studio. Nine example formats show not just what can be built, but what good AI work contains: goal → AI role → human check → verifiable artifact. These are not claims about specific clients or learners. Explore projects ↓ How we verify AI →",
-   "PROJECT STUDIO / 9 EXAMPLES Filter by type of work. Inspect the anatomy of the result. All content remains available without JavaScript. The filter runs locally in the browser and sends nothing out.",
-   "REAL BUILDS · PUBLIC PROVENANCE Real builds. And Project Studio. First: Robert’s public projects with verifiable repositories and explicit claim boundaries. Below: nine learning examples; they are not client case studies or student work. See real projects ↓ How we verify AI →",
-   "REAL BUILDS / 5 PUBLIC REPOS Public code. Explicit claim boundaries. Five projects by Robert Dumanyan with public repositories and inspectable scope. These are mentor builds, not student work or client case studies.",
-   "EXAMPLE OUTPUTS · NOT TESTIMONIALS / 9 EXAMPLES Filter by type of work. Inspect the anatomy of the result. Below are learning examples, not claims about specific clients or learners. All content remains available without JavaScript; the filter runs locally in the browser and sends nothing out.",
-   "VISUAL AI · PUBLIC REPO RESEARCH / OFFLINE TESTABLE 01 VisionAssist A visual-semantic cognition layer for evidence-grounded observations, competing hypotheses, counterevidence, uncertainty and explicit human-AI revision. 01 Evidence The public repository documents a 75-case corpus: 60 market chart cases plus 15 deterministic visual-control cases, with an offline harness, scorer and proof checklist. 02 Boundary The README makes no calibration, human-AI uplift, natural-scene generality or production-value claim. GitHub ↗",
-   "MEMORY · PUBLIC REPO LOCAL-FIRST / OPEN SOURCE 02 ContinuityOS Durable memory and continuity for AI agents and humans: canon, frontiers, open loops, checkpoints and handoff context. 01 Evidence Public repository and PyPI package; core memory is local SQLite and supports a CLI, Python API, MCP and multi-provider AI-history import. 02 Boundary The demo proves bounded persistence across a fresh process, not behavioral model identity or production security. GitHub ↗",
-   "AGENT GOVERNANCE · PUBLIC REPO DETERMINISTIC REFERENCE 03 BitEvo Agent Authority A public seven-gate Agent Authority & Evidence reference package for examining one action-capable workflow. 01 Evidence spec/gates.json, a local deterministic evaluator, fail-closed validation and regression tests; the package is source-bound to the public BitEvo implementation. 02 Boundary It does not issue a trust/safety score, certify a system, execute external actions or request credentials. GitHub ↗",
-   "AI PRODUCT · PUBLIC REPO PUBLIC PRODUCT / EVIDENCE SURFACE 04 BitEvo Agent Site A public authority-first AI-agent product where SOURCE, BUILD, DEPLOYMENT, READBACK and EXTERNAL EFFECT are kept as separate evidence classes. 01 Evidence Astro site with provider-bound build receipts, deterministic release gates, a CSP hash allowlist and separate Vercel / Cloudflare provider paths. 02 Boundary Production promotion is separate from build/readback; the public repository explicitly fixes can_trade=false and capital_permission=DENY. GitHub ↗",
-   "CONTROL STACK · PUBLIC REPO VALIDATION-ONLY 05 TRIAXIS A versioned governance/control stack with deterministic validation assets for policy binding, external witnesses, execution reconciliation and rollback detection. 01 Evidence The public repository includes executable validation harnesses for signed policy heads, quorum, execution ledger, provider reconciliation and completion witnesses. 02 Boundary The repository explicitly says it is not a production gateway; validation results do not prove production exactly-once behavior or complete mediation. GitHub ↗"
-  ],
-  "/method": [
-   "Completion record →"
-  ],
-  "/en/method": [
-   "Completion record →"
-  ],
-  "/challenge": [
-   "для работы с ии"
-  ]
- },
- "links": {
-  "ru": [
-   "https://t.me/BiTFormer",
-   "https://wa.me/66649701204",
-   "https://line.me/ti/p/~iwf555",
-   "mailto:robert@aiskillab.work",
-   "/start",
-   "https://wa.me/66649701204?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D1%8B%D0%B9%20%D0%B7%D0%B2%D0%BE%D0%BD%D0%BE%D0%BA-%D0%B7%D0%BD%D0%B0%D0%BA%D0%BE%D0%BC%D1%81%D1%82%D0%B2%D0%BE%2C%2015%20%D0%BC%D0%B8%D0%BD%D1%83%D1%82.",
-   "/parents",
-   "/guides"
-  ],
-  "en": [
-   "https://t.me/BiTFormer",
-   "https://wa.me/66649701204",
-   "https://line.me/ti/p/~iwf555",
-   "mailto:robert@aiskillab.work",
-   "/en/start",
-   "https://wa.me/66649701204?text=Hi%21%20I%27d%20like%20to%20book%20the%20free%2015-minute%20intro%20call.",
-   "/en/parents",
-   "/en/guides"
-  ]
- },
- "removed_links": {
-  "/business": [
-   "/start#business-brief"
-  ],
-  "/en/business": [
-   "/en/start#business-brief"
-  ],
-  "/start": [
-   "#contact-channels",
-   "https://t.me/BiTFormer?text=AI%20Skill%20Lab%20%E2%80%94%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%0A%D0%9C%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%3A%20%D0%9B%D0%B8%D1%87%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%0A1.%20%D0%A6%D0%B5%D0%BB%D1%8C%20%D0%BD%D0%B0%20%D0%B1%D0%BB%D0%B8%D0%B6%D0%B0%D0%B9%D1%88%D0%B8%D0%B5%201%E2%80%933%20%D0%BC%D0%B5%D1%81%D1%8F%D1%86%D0%B0%3A%20%0A2.%20%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D1%8F%D1%8E%D1%82%D1%81%D1%8F%20%D1%81%D0%B5%D0%B9%D1%87%D0%B0%D1%81%3A%20%0A3.%20%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5%20AI-%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B%20%D1%83%D0%B6%D0%B5%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D1%82%D0%B5%3A%20%0A4.%20Online%20%2F%20Phuket%20%C2%B7%20RU%20%2F%20EN%3A%20"
-  ],
-  "/en/start": [
-   "#contact-channels"
-  ]
- },
- "route_links": {
-  "/safety": [
-   "https://help.openai.com/en/articles/8313401",
-   "https://support.google.com/gemini/answer/13278668",
-   "https://suno.com/terms",
-   "https://replit.com/terms-of-service",
-   "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
-   "https://vercel.com/legal/terms",
-   "https://www.anthropic.com/legal/consumer-terms",
-   "https://support.google.com/flow/answer/16353333",
-   "https://antigravity.google/docs/faq",
-   "https://support.google.com/gemini/answer/17094507",
-   "https://www.cloudflare.com/privacypolicy/",
-   "/guides/ai-safety-for-kids"
-  ],
-  "/en/safety": [
-   "https://help.openai.com/en/articles/8313401",
-   "https://support.google.com/gemini/answer/13278668",
-   "https://suno.com/terms",
-   "https://replit.com/terms-of-service",
-   "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
-   "https://vercel.com/legal/terms",
-   "https://www.anthropic.com/legal/consumer-terms",
-   "https://support.google.com/flow/answer/16353333",
-   "https://antigravity.google/docs/faq",
-   "https://support.google.com/gemini/answer/17094507",
-   "https://www.cloudflare.com/privacypolicy/",
-   "/en/guides/ai-safety-for-kids"
-  ],
-  "/": [
-   "/start#application-form",
-   "https://github.com/bitmaster162",
-   "https://www.linkedin.com/in/robert-dumanyan-984171335/"
-  ],
-  "/start": [
-   "/start#application-form",
-   "https://cal.com/robert-dumanyan-vlck0x/15min",
-   "https://t.me/BiTFormer?text=AI%20Skill%20Lab%20%E2%80%94%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%0A%D0%9C%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%3A%20%D0%9B%D0%B8%D1%87%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%0A1.%20%D0%A6%D0%B5%D0%BB%D1%8C%20%D0%BD%D0%B0%20%D0%B1%D0%BB%D0%B8%D0%B6%D0%B0%D0%B9%D1%88%D0%B8%D0%B5%201%E2%80%933%20%D0%BC%D0%B5%D1%81%D1%8F%D1%86%D0%B0%3A%20%0A2.%20%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D1%8F%D1%8E%D1%82%D1%81%D1%8F%20%D1%81%D0%B5%D0%B9%D1%87%D0%B0%D1%81%3A%20%0A3.%20%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5%20AI-%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B%20%D1%83%D0%B6%D0%B5%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D1%82%D0%B5%3A%20%0A4.%20%D0%9E%D0%BD%D0%BB%D0%B0%D0%B9%D0%BD%20%2F%20%D0%9F%D1%85%D1%83%D0%BA%D0%B5%D1%82%20%C2%B7%20RU%20%2F%20EN%3A%20"
-  ],
-  "/kids": [
-   "/start#application-form",
-   "/guides/ai-safety-for-kids"
-  ],
-  "/teens": [
-   "/start#application-form",
-   "https://replit.com/blog/doubling-down-on-our-commitment-to-secure-vibe-coding",
-   "https://www.scworld.com/news/microsoft-365-copilot-zero-click-vulnerability-enabled-data-exfiltration",
-   "https://unit42.paloaltonetworks.com/ai-agent-prompt-injection/"
-  ],
-  "/parents": [
-   "/start#application-form",
-   "/guides/ai-safety-for-kids"
-  ],
-  "/personal": [
-   "/start#application-form",
-   "https://replit.com/blog/doubling-down-on-our-commitment-to-secure-vibe-coding",
-   "https://www.scworld.com/news/microsoft-365-copilot-zero-click-vulnerability-enabled-data-exfiltration",
-   "https://unit42.paloaltonetworks.com/ai-agent-prompt-injection/"
-  ],
-  "/business": [
-   "/start#application-form",
-   "https://replit.com/blog/doubling-down-on-our-commitment-to-secure-vibe-coding",
-   "https://www.scworld.com/news/microsoft-365-copilot-zero-click-vulnerability-enabled-data-exfiltration",
-   "https://unit42.paloaltonetworks.com/ai-agent-prompt-injection/"
-  ],
-  "/pricing": [
-   "/start#application-form"
-  ],
-  "/matcher": [
-   "/start#application-form"
-  ],
-  "/en": [
-   "/en/start#application-form",
-   "https://github.com/bitmaster162",
-   "https://www.linkedin.com/in/robert-dumanyan-984171335/"
-  ],
-  "/en/start": [
-   "/en/start#application-form",
-   "https://cal.com/robert-dumanyan-vlck0x/15min"
-  ],
-  "/en/kids": [
-   "/en/start#application-form",
-   "/en/guides/ai-safety-for-kids"
-  ],
-  "/en/teens": [
-   "/en/start#application-form",
-   "https://replit.com/blog/doubling-down-on-our-commitment-to-secure-vibe-coding",
-   "https://www.scworld.com/news/microsoft-365-copilot-zero-click-vulnerability-enabled-data-exfiltration",
-   "https://unit42.paloaltonetworks.com/ai-agent-prompt-injection/"
-  ],
-  "/en/parents": [
-   "/en/start#application-form",
-   "/en/guides/ai-safety-for-kids"
-  ],
-  "/en/personal": [
-   "/en/start#application-form",
-   "https://replit.com/blog/doubling-down-on-our-commitment-to-secure-vibe-coding",
-   "https://www.scworld.com/news/microsoft-365-copilot-zero-click-vulnerability-enabled-data-exfiltration",
-   "https://unit42.paloaltonetworks.com/ai-agent-prompt-injection/"
-  ],
-  "/en/business": [
-   "/en/start#application-form",
-   "https://replit.com/blog/doubling-down-on-our-commitment-to-secure-vibe-coding",
-   "https://www.scworld.com/news/microsoft-365-copilot-zero-click-vulnerability-enabled-data-exfiltration",
-   "https://unit42.paloaltonetworks.com/ai-agent-prompt-injection/"
-  ],
-  "/en/pricing": [
-   "/en/start#application-form"
-  ],
-  "/en/matcher": [
-   "/en/start#application-form"
-  ],
-  "/about": [
-   "https://github.com/bitmaster162",
-   "https://www.linkedin.com/in/robert-dumanyan-984171335/"
-  ],
-  "/en/about": [
-   "https://github.com/bitmaster162",
-   "https://www.linkedin.com/in/robert-dumanyan-984171335/"
-  ],
-  "/projects": [
-   "https://github.com/bitmaster162/VisionAssist",
-   "https://github.com/bitmaster162/continuityos",
-   "https://github.com/bitmaster162/agent-authority",
-   "https://github.com/bitmaster162/bitevo-agent-site",
-   "https://github.com/bitmaster162/TRIAXIS"
-  ],
-  "/en/projects": [
-   "https://github.com/bitmaster162/VisionAssist",
-   "https://github.com/bitmaster162/continuityos",
-   "https://github.com/bitmaster162/agent-authority",
-   "https://github.com/bitmaster162/bitevo-agent-site",
-   "https://github.com/bitmaster162/TRIAXIS"
-  ],
-  "/method": [
-   "/certificate"
-  ],
-  "/en/method": [
-   "/en/certificate"
-  ]
- },
- "meta_changes": {
-  "/about": [
-   "title"
-  ],
-  "/build": [
-   "title"
-  ],
-  "/business": [
-   "title",
-   "description",
-   "h1"
-  ],
-  "/challenge": [
-   "title"
-  ],
-  "/curriculum": [
-   "title"
-  ],
-  "/en/about": [
-   "title"
-  ],
-  "/en/build": [
-   "title"
-  ],
-  "/en/business": [
-   "title",
-   "h1"
-  ],
-  "/en/challenge": [
-   "title"
-  ],
-  "/en/curriculum": [
-   "title"
-  ],
-  "/en/family": [
-   "title"
-  ],
-  "/en/faq": [
-   "title"
-  ],
-  "/en/kids": [
-   "title",
-   "h1"
-  ],
-  "/en/matcher": [
-   "title",
-   "description",
-   "h1"
-  ],
-  "/en/method": [
-   "title"
-  ],
-  "/en/parents": [
-   "title"
-  ],
-  "/en/personal": [
-   "title",
-   "h1"
-  ],
-  "/en/phuket": [
-   "title",
-   "h1"
-  ],
-  "/en/pricing": [
-   "title",
-   "h1"
-  ],
-  "/en/privacy": [
-   "title",
-   "description"
-  ],
-  "/en/projects": [
-   "title",
-   "description",
-   "h1"
-  ],
-  "/en/proof": [
-   "title"
-  ],
-  "/en/safety": [
-   "title"
-  ],
-  "/en/start": [
-   "title",
-   "h1"
-  ],
-  "/en/studio": [
-   "title"
-  ],
-  "/en/teens": [
-   "title",
-   "h1"
-  ],
-  "/en/terms": [
-   "title"
-  ],
-  "/en": [
-   "title"
-  ],
-  "/family": [
-   "title"
-  ],
-  "/faq": [
-   "title"
-  ],
-  "/": [
-   "title",
-   "description",
-   "h1"
-  ],
-  "/kids": [
-   "title",
-   "description",
-   "h1"
-  ],
-  "/matcher": [
-   "title",
-   "description",
-   "h1"
-  ],
-  "/method": [
-   "title"
-  ],
-  "/parents": [
-   "title",
-   "h1"
-  ],
-  "/personal": [
-   "title",
-   "description",
-   "h1"
-  ],
-  "/phuket": [
-   "title",
-   "description",
-   "h1"
-  ],
-  "/pricing": [
-   "title",
-   "description",
-   "h1"
-  ],
-  "/privacy": [
-   "title",
-   "description"
-  ],
-  "/projects": [
-   "title",
-   "description",
-   "h1"
-  ],
-  "/proof": [
-   "title",
-   "h1"
-  ],
-  "/safety": [
-   "title"
-  ],
-  "/start": [
-   "title",
-   "description",
-   "h1"
-  ],
-  "/studio": [
-   "title"
-  ],
-  "/teens": [
-   "title",
-   "description",
-   "h1"
-  ],
-  "/terms": [
-   "title"
-  ]
- },
- "attr_texts": {
-  "/": [
-   "input[aria-label]=открыть меню",
-   "div[aria-label]=направления практики",
-   "img[alt]=роберт думанян - основатель и преподаватель ai skill lab",
-   "textarea[aria-label]=промпт для ai prompt auditor",
-   "textarea[placeholder]=например: составь план исследования рынка для нового b2b ai-продукта и укажи, какие выводы нужно проверить отдельно."
-  ],
-  "/about": [
-   "input[aria-label]=открыть меню",
-   "div[aria-label]=направления практики",
-   "img[alt]=роберт думанян - основатель и преподаватель ai skill lab"
-  ],
-  "/build": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/business": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/challenge": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/curriculum": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/family": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/faq": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/kids": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/matcher": [
-   "input[aria-label]=открыть меню",
-   "textarea[placeholder]=например: хочу собрать ai-агента для research и научиться проверять его выводы."
-  ],
-  "/method": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/parents": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/personal": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/phuket": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/pricing": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/privacy": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/projects": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/proof": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/safety": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/start": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/studio": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/teens": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/terms": [
-   "input[aria-label]=открыть меню"
-  ],
-  "/en": [
-   "input[aria-label]=open menu",
-   "div[aria-label]=areas of practice",
-   "img[alt]=robert dumanyan - founder and instructor at ai skill lab",
-   "textarea[aria-label]=prompt for ai prompt auditor",
-   "textarea[placeholder]=for example: build a market-research plan for a new b2b ai product and flag which conclusions need separate verification."
-  ],
-  "/en/about": [
-   "input[aria-label]=open menu",
-   "div[aria-label]=areas of practice",
-   "img[alt]=robert dumanyan - founder and instructor at ai skill lab"
-  ],
-  "/en/build": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/business": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/challenge": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/curriculum": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/family": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/faq": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/kids": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/matcher": [
-   "input[aria-label]=open menu",
-   "textarea[placeholder]=for example: build a research ai agent and learn how to verify its conclusions."
-  ],
-  "/en/method": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/parents": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/personal": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/phuket": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/pricing": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/privacy": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/projects": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/proof": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/safety": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/start": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/studio": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/teens": [
-   "input[aria-label]=open menu"
-  ],
-  "/en/terms": [
-   "input[aria-label]=open menu"
-  ]
- }
+  "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below. E2: guides permits only the global Guides footer link plus the exact parent-checklist text/link on /kids, /parents, /safety and EN pairs. N15: agent-safety permits only the exact generated lesson text and its three cited source links on /personal, /business, /teens and EN pairs. A4: Phuket local permits only the exact generated local-areas/formats text on /phuket and /en/phuket; no links or meta changes. A3: Cal.com permits only the exact 15-minute booking URL on /start and /en/start; no text or meta changes. A5: mentor card permits only exact mentor text, GitHub/LinkedIn links and mentor aria/alt text on /, /en, /about and /en/about. E1.3: post-submit permits only the exact diagnostic/Telegram continuation labels on /start and /en/start; success feedback remains runtime-only. A8: Prompt Auditor permits only the exact RU/EN home demo copy, textarea labels/placeholders, and the exact Prompt Auditor privacy disclosure on /privacy and /en/privacy. A9: /projects permits only the provenance-bound real-build section, five exact public GitHub repository links, and the paired RU/EN project metadata/hero update; the nine existing example formats remain explicitly non-testimonial. N25: /method and /en/method may add one internal Completion record link; /certificate routes are net-new and are governed by the N25 checker. E3.8: разрешён только first-party счётчик семи lead/contact событий без персональных данных и одна точная privacy-фраза RU/EN. E3.1: route-scoped approved Russian SEO title/description, H1 lexical localization, first-lead ИИ/нейросети and visible Phuket→Пхукет only; exact eight SEO pairs are independently verified by scripts/check_e3_1_ru_seo.py; no commercial facts, links or third-party fields changed.",
+  "phrases": {
+    "ru": [
+      "Как написать",
+      "Оставьте заявку или используйте прямой канал; для несовершеннолетнего контакт ведёт взрослый.",
+      "Ответ в течение 1–2 рабочих дней.",
+      "Telegram",
+      "WhatsApp +66 64 970 1204",
+      "LINE iwf555",
+      "Почта robert@aiskillab.work",
+      "WhatsApp",
+      "+66 64 970 1204",
+      "LINE",
+      "iwf555",
+      "Почта",
+      "robert@aiskillab.work",
+      "Начать",
+      "ПЕРВЫЙ ШАГ",
+      "Бесплатно · 15 минут",
+      "Бесплатный звонок-знакомство · 15 минут",
+      "Telegram →",
+      "ВТОРОЙ ШАГ",
+      "Диагностика $120 · 60 минут · Зачтём в стоимость пакета при покупке в течение 14 дней.",
+      "Обсудить диагностику →",
+      "Сначала бесплатный звонок, затем диагностика.",
+      "BRIEF",
+      "Цены",
+      "Открыть заявку",
+      "Дети",
+      "Подростки",
+      "Родителям",
+      "Взрослые",
+      "Бизнес",
+      "Практический AI · online / Phuket",
+      "Практический ИИ · онлайн / Пхукет"
+    ],
+    "en": [
+      "How to reach us",
+      "Use the application form or a direct channel; for a minor, coordination stays with an adult.",
+      "Reply within 1–2 business days.",
+      "Telegram",
+      "WhatsApp +66 64 970 1204",
+      "LINE iwf555",
+      "Email robert@aiskillab.work",
+      "WhatsApp",
+      "+66 64 970 1204",
+      "LINE",
+      "iwf555",
+      "Email",
+      "robert@aiskillab.work",
+      "Start",
+      "FIRST STEP",
+      "Free · 15 minutes",
+      "Free 15-minute intro call",
+      "Telegram →",
+      "SECOND STEP",
+      "Diagnostic session $120 · 60 minutes · Credited toward a package purchased within 14 days.",
+      "Discuss diagnostic →",
+      "Free intro call first, then diagnostic.",
+      "BRIEF",
+      "Pricing",
+      "Start application",
+      "Kids",
+      "Teens",
+      "For parents",
+      "Adults",
+      "Business"
+    ]
+  },
+  "route_phrases": {
+    "/start": [
+      "записаться на диагностику",
+      "написать в telegram",
+      "для обучения ии",
+      "сначала fit. потом программа.",
+      "начните с бесплатного звонка на 15 минут."
+    ],
+    "/en/start": [
+      "book diagnostic",
+      "message on telegram",
+      "fit first. program second.",
+      "start with a free 15-minute call."
+    ],
+    "/safety": [
+      "Возрастные правила сервисов",
+      "Группы — по порогу из условий самого сервиса, а не по типу инструмента. Каждая строка взята с официальной страницы сервиса.",
+      "Для 8–12 лет ни один сервис из списка не даёт ребёнку собственного доступа — кроме Gemini с аккаунтом Family Link (не в веб-версии).",
+      "Дети работают под присмотром взрослого",
+      "СЕРВИС",
+      "ПРАВИЛО",
+      "ИСТОЧНИК",
+      "КАК У НАС",
+      "13+",
+      "От 13 лет, с условиями",
+      "13+ · От 13 лет, с условиями",
+      "ChatGPT · OpenAI",
+      "Не предназначен для детей младше 13; для 13–18 нужно согласие родителя; для младше 13 в образовательном контексте взаимодействие ведёт взрослый.",
+      "help.openai.com/en/articles/8313401",
+      "13–17 — под присмотром взрослого, с согласием родителя. До 13 — работу в ChatGPT ведёт взрослый.",
+      "Gemini · Google",
+      "От 13 лет (или возраст, установленный в стране) с личным или школьным аккаунтом; с рабочим аккаунтом — от 18. Младше 13 — только с аккаунтом Family Link и не в веб-версии; родитель может отключить доступ.",
+      "support.google.com/gemini/answer/13278668",
+      "13–17 — под присмотром взрослого. До 13 — только с аккаунтом Family Link, не в веб-версии. Генерация видео — только взрослый.",
+      "Suno",
+      "От 13 лет; с 13 до 17 — только с явного согласия родителя.",
+      "suno.com/terms",
+      "13–17 — под присмотром взрослого, с согласием родителя. До 13 — ребёнок в сервисе не работает.",
+      "Replit",
+      "От 13 лет; до 18 — с разрешения родителя.",
+      "replit.com/terms-of-service",
+      "13–17 — под присмотром взрослого, с разрешения родителя. До 13 — ребёнок в сервисе не работает.",
+      "GitHub",
+      "От 13 лет; в отдельных странах порог выше.",
+      "docs.github.com — GitHub Terms of Service",
+      "13–17 — под присмотром взрослого. До 13 — ребёнок в сервисе не работает.",
+      "16+",
+      "От 16 лет",
+      "16+ · От 16 лет",
+      "Vercel",
+      "От 16 лет.",
+      "vercel.com/legal/terms",
+      "16–17 — под присмотром взрослого. До 16 — только взрослый.",
+      "18+",
+      "Только совершеннолетним",
+      "18+ · Только совершеннолетним",
+      "Claude · Anthropic",
+      "От 18 лет (или выше, если так требует закон страны); варианта с согласием родителя нет.",
+      "anthropic.com/legal/consumer-terms",
+      "Только взрослый, сервис 18+.",
+      "Veo · Google Flow",
+      "Только 18+, с проверкой возраста.",
+      "support.google.com/flow/answer/16353333",
+      "Только взрослый, сервис 18+.",
+      "Antigravity · Google",
+      "Сейчас недоступен пользователям младше 18, есть проверка возраста.",
+      "antigravity.google/docs/faq",
+      "Только взрослый, сервис 18+.",
+      "Gemini Spark · Google",
+      "18+; только личный аккаунт Google, не рабочий и не школьный; нужна подписка Google AI Pro или Ultra; недоступен в ЕЭЗ, Швейцарии, Великобритании и Нигерии.",
+      "support.google.com/gemini/answer/17094507",
+      "Только взрослый, сервис 18+.",
+      "Cloudflare",
+      "Сервисы не предназначены для лиц младше 18 (политика конфиденциальности).",
+      "cloudflare.com/privacypolicy",
+      "Только взрослый, сервис 18+.",
+      "Правила сервисов меняются; перед использованием проверяем актуальные условия. Дата проверки — 26 сентября 2026.",
+      "чек-лист для родителей: возраст, данные, родительский контроль",
+      "мини-тест · только в браузере",
+      "совпадают ли эти пять правил с вашим пониманием?",
+      "ничего не отправляется и не сохраняется. тест проверяет только понимание правил этой страницы и не является сертификатом безопасности.",
+      "если chatgpt используется с ребёнком младше 13 лет в образовательном контексте, кто проводит фактическое взаимодействие с сервисом?",
+      "что требуется пользователю 13–18 лет по текущей справке openai?",
+      "кто ведёт заявку, расписание, оплату и организационные сообщения для несовершеннолетнего?",
+      "что не нужно вводить в ai-задания без необходимости?",
+      "что делать, если ai отвечает уверенно?",
+      "взрослый",
+      "ребёнок самостоятельно",
+      "разрешение родителя или законного представителя",
+      "никакого отдельного условия",
+      "ребёнок через личный мессенджер",
+      "домашний адрес, документы, пароли и приватные переписки",
+      "только контекст, необходимый для задачи",
+      "считать ответ правильным",
+      "проверить утверждения и источники и исправить результат при необходимости",
+      "проверить ответы",
+      "работе с ии"
+    ],
+    "/en/safety": [
+      "Age rules of the services",
+      "Grouped by the threshold in each service’s own terms, not by tool type. Every row is taken from the service’s official page.",
+      "For ages 8–12, no service on the list gives a child their own access — except Gemini with a Family Link account (not in the web app).",
+      "Children work under adult supervision",
+      "SERVICE",
+      "RULE",
+      "SOURCE",
+      "HOW WE USE IT",
+      "13+",
+      "From 13, with conditions",
+      "13+ · From 13, with conditions",
+      "ChatGPT · OpenAI",
+      "Not intended for children under 13; ages 13–18 need parental consent; for under-13s in an educational context, an adult leads the interaction.",
+      "help.openai.com/en/articles/8313401",
+      "13–17 — under adult supervision, with parental consent. Under 13 — an adult does the work in ChatGPT.",
+      "Gemini · Google",
+      "From 13 (or the age set in the country) with a personal or school account; 18+ with a work account. Under 13 — only with a Family Link account and not in the web app; the parent can turn access off.",
+      "support.google.com/gemini/answer/13278668",
+      "13–17 — under adult supervision. Under 13 — only with a Family Link account, not in the web app. Video generation — adult only.",
+      "Suno",
+      "From 13; ages 13 to 17 only with explicit parental consent.",
+      "suno.com/terms",
+      "13–17 — under adult supervision, with parental consent. Under 13 — the child does not work in the service.",
+      "Replit",
+      "From 13; under 18 with parental permission.",
+      "replit.com/terms-of-service",
+      "13–17 — under adult supervision, with parental permission. Under 13 — the child does not work in the service.",
+      "GitHub",
+      "From 13; higher in some countries.",
+      "docs.github.com — GitHub Terms of Service",
+      "13–17 — under adult supervision. Under 13 — the child does not work in the service.",
+      "16+",
+      "From 16",
+      "16+ · From 16",
+      "Vercel",
+      "From 16.",
+      "vercel.com/legal/terms",
+      "16–17 — under adult supervision. Under 16 — adult only.",
+      "18+",
+      "Adults only",
+      "18+ · Adults only",
+      "Claude · Anthropic",
+      "18 and over (or higher where local law requires); there is no parental-consent option.",
+      "anthropic.com/legal/consumer-terms",
+      "Adult only; the service is 18+.",
+      "Veo · Google Flow",
+      "18+ only, with age verification.",
+      "support.google.com/flow/answer/16353333",
+      "Adult only; the service is 18+.",
+      "Antigravity · Google",
+      "Currently unavailable to users under 18, with age verification.",
+      "antigravity.google/docs/faq",
+      "Adult only; the service is 18+.",
+      "Gemini Spark · Google",
+      "18+; personal Google account only, not a work or school account; requires a Google AI Pro or Ultra subscription; not available in the EEA, Switzerland, the UK or Nigeria.",
+      "support.google.com/gemini/answer/17094507",
+      "Adult only; the service is 18+.",
+      "Cloudflare",
+      "Services are not intended for anyone under 18 (privacy policy).",
+      "cloudflare.com/privacypolicy",
+      "Adult only; the service is 18+.",
+      "Service rules change; we check the current terms before use. Checked on September 26, 2026.",
+      "parent checklist: age rules, data, parental controls",
+      "mini-check · local only",
+      "do these five safety rules match your understanding?",
+      "nothing is sent or stored. this checks only your understanding of the rules on this page; it is not a safety certification.",
+      "if chatgpt is used with a child under 13 in an education context, who conducts the actual interaction with the service?",
+      "what do users ages 13–18 need under openai's current guidance?",
+      "who handles applications, scheduling, payment and organizational communication for a minor?",
+      "what should not be entered into ai assignments unless genuinely needed?",
+      "what should you do when ai sounds confident?",
+      "an adult",
+      "the child independently",
+      "permission from a parent or legal guardian",
+      "no additional condition",
+      "the child through a personal messenger account",
+      "home addresses, identity documents, passwords and private conversations",
+      "only the context needed for the task",
+      "assume the answer is correct",
+      "verify claims and sources and correct the output when needed",
+      "check answers"
+    ],
+    "/privacy": [
+      "AI-route и OpenRouter",
+      "Если AI-route включён, он запускается только после нажатия кнопки пользователем. В /api/route передаются выбранная аудитория, три ответа matcher и текст цели. Перед обращением к модели сервер проверяет ввод на шаблоны секретов и ключей; обнаруженный секрет блокируется до вызова модели. Для AI-подбора сервер может передать эти данные в настроенную бесплатную модель через OpenRouter API. Код AI Skill Lab не записывает текст цели или ответы matcher в собственную таблицу rate-limit.",
+      "Защита от злоупотреблений AI-route",
+      "Для точного ограничения частоты ingress получает сетевой IP клиента от хостинг-платформы и сразу преобразует его в HMAC-token. Сырой IP не записывается в таблицу AI Skill Lab для route-limit. В этой таблице хранятся только request ID, HMAC-token и техническая отметка времени. Плановый cleanup удаляет rate-limit записи старше 24 часов. Token используется только для ограничения частоты и защиты AI-route, а не для рекламного профилирования.",
+      "если ai-route включён, он запускается только после нажатия кнопки пользователем. в /api/route передаются либо выбранная аудитория, три ответа matcher и текст цели, либо текст промпта из prompt auditor. перед обращением к модели сервер проверяет ввод на шаблоны секретов и ключей; обнаруженный секрет блокируется до вызова модели. для ai-подбора или prompt auditor сервер может передать эти данные в настроенную бесплатную модель через openrouter api. код ai skill lab не записывает текст цели, ответы matcher или текст prompt auditor в собственную таблицу rate-limit.",
+      "сайт ведёт first-party счётчик событий заявки и переходов по каналам связи без персональных данных и cookie: сохраняются только тип события, страница, язык и дневной счётчик; имена, контакты и текст формы туда не передаются.",
+      "для заявок на обучение ии"
+    ],
+    "/en/privacy": [
+      "AI routing and OpenRouter",
+      "If AI routing is enabled, it runs only after the user presses the route button. /api/route receives the selected audience, three matcher answers and the goal text. Before any model call, the server checks the input for secret and credential patterns; detected secrets are blocked before the model is called. For AI routing, the server may send this data to the configured free model through the OpenRouter API. AI Skill Lab code does not write the goal text or matcher answers into its route-limit table.",
+      "AI-route abuse prevention",
+      "For exact rate limiting, the ingress receives the client network IP from the hosting platform and immediately converts it to an HMAC token. The raw IP is not written to AI Skill Lab's route-limit table. That table stores only a request ID, HMAC token and technical timestamp. Scheduled cleanup deletes rate-limit rows once they are older than 24 hours. The token is used only for rate limiting and AI-route protection, not for advertising profiling.",
+      "if ai routing is enabled, it runs only after the user presses a button. /api/route receives either the selected audience, three matcher answers and the goal text, or the prompt text from prompt auditor. before any model call, the server checks the input for secret and credential patterns; detected secrets are blocked before the model is called. for ai routing or prompt auditor, the server may send this data to the configured free model through the openrouter api. ai skill lab code does not write the goal text, matcher answers or prompt auditor text into its route-limit table.",
+      "the site uses a first-party counter for application and contact-channel events without personal data or cookies: only the event type, page, locale and daily count are stored; names, contact details and form text are not sent to that counter."
+    ],
+    "/proof": [
+      "Публичный сайт не использует analytics, cookies и trackers. Единственная форма — заявка на /start, она отправляется на /api/lead.",
+      "Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Единственная форма — заявка на /start, она отправляется на /api/lead.",
+      "trackers",
+      "ad_trackers",
+      "public_forms 1",
+      "public_forms 2",
+      "Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Формы есть на /start и /matcher: matcher вызывает /api/route только по кнопке, а brief отправляет в /api/lead только по согласию.",
+      "работать с ии."
+    ],
+    "/en/proof": [
+      "The public site uses no analytics, cookies or trackers. The only form is the request form on /start; it submits to /api/lead.",
+      "The public site uses Vercel Web Analytics for anonymized visit statistics; it uses no cookies or advertising trackers. The only form is the request form on /start; it submits to /api/lead.",
+      "trackers",
+      "ad_trackers",
+      "public_forms 1",
+      "public_forms 2",
+      "The public site uses Vercel Web Analytics for anonymized visit statistics; it uses no cookies or advertising trackers. Forms exist on /start and /matcher: matcher calls /api/route only on button press, and sends its brief to /api/lead only with consent."
+    ],
+    "/pricing": [
+      "Сначала диагностика, затем пакет.",
+      "Зачтём в стоимость пакета при покупке в течение 14 дней.",
+      "знайте цену. фиксируйте scope.",
+      "цены известны заранее. объём работ - письменно."
+    ],
+    "/en/pricing": [
+      "Diagnose before committing to a package.",
+      "Credited toward a package purchased within 14 days.",
+      "know the price. define the scope.",
+      "prices up front. scope in writing."
+    ],
+    "/matcher": [
+      "ai + fallback",
+      "только из опубликованной таблицы программ. ai используется",
+      "кнопке; при недоступности остаётся локальный fallback. ai-подбор запускается только по кнопке · ввод matcher",
+      "4. коротко опишите цель подобрать маршрут с ai",
+      "формату и пакету. никакие ответы",
+      "отправляются на сервер и не сохраняются. локально в браузере · ничего не отправляется",
+      "ai используется по кнопке",
+      "ии используется по кнопке",
+      "только из опубликованной таблицы программ. ии используется"
+    ],
+    "/en/matcher": [
+      "ai + fallback",
+      "plus your goal",
+      "only from the published program table. ai runs on button press; a local fallback remains available. ai routing runs only after you press the button · matcher input",
+      "4. describe the goal briefly find a route with ai",
+      "a lead form.",
+      "for format and package. no answer",
+      "sent to a server or stored. local in your browser · nothing is sent"
+    ],
+    "/kids": [
+      "чек-лист для родителей: возраст, данные, родительский контроль",
+      "ai - не кнопка сделай за меня.",
+      "свой проект с ии - вместе со взрослым."
+    ],
+    "/parents": [
+      "чек-лист для родителей: возраст, данные, родительский контроль",
+      "навык работы с ии,"
+    ],
+    "/en/kids": [
+      "parent checklist: age rules, data, parental controls",
+      "ai is not a button that does it for you.",
+      "their own ai project - with an adult alongside."
+    ],
+    "/en/parents": [
+      "parent checklist: age rules, data, parental controls"
+    ],
+    "/business": [
+      "безопасная работа с ai-агентами · 3 кейса + 5 правил не доверять плану. контролировать эффект. ai-агент умеет читать, принимать решения и использовать инструменты. риск начинается там, где правдоподобный ответ может сразу превратиться во внешний эффект. эти три документированных кейса показывают разные классы отказа. инцидент · jul 2025 replit agent удалил данные production-базы. во время эксперимента saastr агент replit удалил данные приложения из базы. replit позже публично подтвердил проблему: до нового разделения development/production изменения во время разработки могли затронуть production; данные удалось восстановить через rollback. урок: текстовый запрет вроде «ничего не менять» слабее технической границы, которая физически не даёт агенту писать в production. replit · 29.07.2025 ↗ уязвимость · cve-2025-32711 echoleak показал, что входящие данные могут стать инструкцией. исследователи показали цепочку indirect prompt injection в microsoft 365 copilot: специально подготовленное письмо могло попасть в контекст copilot и привести к утечке данных без клика по письму. microsoft исправила уязвимость; публично сообщалось, что признаков эксплуатации «в дикой природе» не было. урок: письмо, веб-страница, документ или комментарий — это недоверенные данные, даже если агент умеет их читать автоматически. sc media · microsoft cve-2025-32711 ↗ атака обнаружена · dec 2025 unit 42 увидела hidden prompts на мошеннических страницах. unit 42 обнаружила реальные веб-страницы с indirect prompt injection, включая попытку заставить ai-систему проверки рекламы одобрить мошенническое объявление. исследователи отдельно отмечают: подтверждённого успешного обхода deployed ad-checker в этом кейсе они не видели. урок: агент, который читает интернет, должен отделять содержимое страницы от команд и не получать лишние права только потому, что «это удобно». palo alto networks unit 42 ↗ пять рабочих правил полномочия должны быть явными. 01 · сначала read-only пусть агент сначала читает, планирует и показывает diff. право писать выдаётся отдельно и только там, где оно действительно нужно. 02 · минимальные права тестовая среда, отдельные аккаунты и ключи, запрет production-доступа по умолчанию. не давайте агенту больше полномочий, чем требует одна задача. 03 · человек перед необратимым действием удаление данных, публикация, отправка сообщения, покупка, платёж или изменение доступа требуют явного подтверждения перед эффектом. 04 · данные не равны инструкциям текст из письма, сайта, файла, issue или чата может быть враждебным. агент не должен превращать найденный контент в новые команды без отдельной проверки. 05 · проверка после эффекта нужны журнал действия, проверка результата, способ отката и стоп-условие. «агент сказал, что всё готово» — не доказательство. кейсы не равнозначны: replit — реальный операционный инцидент; echoleak — подтверждённая уязвимость, исправленная до публичного раскрытия, без известной эксплуатации; кейс unit 42 — обнаруженная вредоносная попытка prompt injection без подтверждённого успешного обхода deployed ad-review агента.",
+      "workflow с ии,",
+      "не добавить ai. изменить один процесс.",
+      "обучить команду и проверить ии на одном процессе."
+    ],
+    "/personal": [
+      "безопасная работа с ai-агентами · 3 кейса + 5 правил не доверять плану. контролировать эффект. ai-агент умеет читать, принимать решения и использовать инструменты. риск начинается там, где правдоподобный ответ может сразу превратиться во внешний эффект. эти три документированных кейса показывают разные классы отказа. инцидент · jul 2025 replit agent удалил данные production-базы. во время эксперимента saastr агент replit удалил данные приложения из базы. replit позже публично подтвердил проблему: до нового разделения development/production изменения во время разработки могли затронуть production; данные удалось восстановить через rollback. урок: текстовый запрет вроде «ничего не менять» слабее технической границы, которая физически не даёт агенту писать в production. replit · 29.07.2025 ↗ уязвимость · cve-2025-32711 echoleak показал, что входящие данные могут стать инструкцией. исследователи показали цепочку indirect prompt injection в microsoft 365 copilot: специально подготовленное письмо могло попасть в контекст copilot и привести к утечке данных без клика по письму. microsoft исправила уязвимость; публично сообщалось, что признаков эксплуатации «в дикой природе» не было. урок: письмо, веб-страница, документ или комментарий — это недоверенные данные, даже если агент умеет их читать автоматически. sc media · microsoft cve-2025-32711 ↗ атака обнаружена · dec 2025 unit 42 увидела hidden prompts на мошеннических страницах. unit 42 обнаружила реальные веб-страницы с indirect prompt injection, включая попытку заставить ai-систему проверки рекламы одобрить мошенническое объявление. исследователи отдельно отмечают: подтверждённого успешного обхода deployed ad-checker в этом кейсе они не видели. урок: агент, который читает интернет, должен отделять содержимое страницы от команд и не получать лишние права только потому, что «это удобно». palo alto networks unit 42 ↗ пять рабочих правил полномочия должны быть явными. 01 · сначала read-only пусть агент сначала читает, планирует и показывает diff. право писать выдаётся отдельно и только там, где оно действительно нужно. 02 · минимальные права тестовая среда, отдельные аккаунты и ключи, запрет production-доступа по умолчанию. не давайте агенту больше полномочий, чем требует одна задача. 03 · человек перед необратимым действием удаление данных, публикация, отправка сообщения, покупка, платёж или изменение доступа требуют явного подтверждения перед эффектом. 04 · данные не равны инструкциям текст из письма, сайта, файла, issue или чата может быть враждебным. агент не должен превращать найденный контент в новые команды без отдельной проверки. 05 · проверка после эффекта нужны журнал действия, проверка результата, способ отката и стоп-условие. «агент сказал, что всё готово» — не доказательство. кейсы не равнозначны: replit — реальный операционный инцидент; echoleak — подтверждённая уязвимость, исправленная до публичного раскрытия, без известной эксплуатации; кейс unit 42 — обнаруженная вредоносная попытка prompt injection без подтверждённого успешного обхода deployed ad-review агента.",
+      "не курс про ai, а ваш рабочий процесс.",
+      "ии вокруг вашей реальной задачи."
+    ],
+    "/teens": [
+      "безопасная работа с ai-агентами · 3 кейса + 5 правил не доверять плану. контролировать эффект. ai-агент умеет читать, принимать решения и использовать инструменты. риск начинается там, где правдоподобный ответ может сразу превратиться во внешний эффект. эти три документированных кейса показывают разные классы отказа. инцидент · jul 2025 replit agent удалил данные production-базы. во время эксперимента saastr агент replit удалил данные приложения из базы. replit позже публично подтвердил проблему: до нового разделения development/production изменения во время разработки могли затронуть production; данные удалось восстановить через rollback. урок: текстовый запрет вроде «ничего не менять» слабее технической границы, которая физически не даёт агенту писать в production. replit · 29.07.2025 ↗ уязвимость · cve-2025-32711 echoleak показал, что входящие данные могут стать инструкцией. исследователи показали цепочку indirect prompt injection в microsoft 365 copilot: специально подготовленное письмо могло попасть в контекст copilot и привести к утечке данных без клика по письму. microsoft исправила уязвимость; публично сообщалось, что признаков эксплуатации «в дикой природе» не было. урок: письмо, веб-страница, документ или комментарий — это недоверенные данные, даже если агент умеет их читать автоматически. sc media · microsoft cve-2025-32711 ↗ атака обнаружена · dec 2025 unit 42 увидела hidden prompts на мошеннических страницах. unit 42 обнаружила реальные веб-страницы с indirect prompt injection, включая попытку заставить ai-систему проверки рекламы одобрить мошенническое объявление. исследователи отдельно отмечают: подтверждённого успешного обхода deployed ad-checker в этом кейсе они не видели. урок: агент, который читает интернет, должен отделять содержимое страницы от команд и не получать лишние права только потому, что «это удобно». palo alto networks unit 42 ↗ пять рабочих правил полномочия должны быть явными. 01 · сначала read-only пусть агент сначала читает, планирует и показывает diff. право писать выдаётся отдельно и только там, где оно действительно нужно. 02 · минимальные права тестовая среда, отдельные аккаунты и ключи, запрет production-доступа по умолчанию. не давайте агенту больше полномочий, чем требует одна задача. 03 · человек перед необратимым действием удаление данных, публикация, отправка сообщения, покупка, платёж или изменение доступа требуют явного подтверждения перед эффектом. 04 · данные не равны инструкциям текст из письма, сайта, файла, issue или чата может быть враждебным. агент не должен превращать найденный контент в новые команды без отдельной проверки. 05 · проверка после эффекта нужны журнал действия, проверка результата, способ отката и стоп-условие. «агент сказал, что всё готово» — не доказательство. кейсы не равнозначны: replit — реальный операционный инцидент; echoleak — подтверждённая уязвимость, исправленная до публичного раскрытия, без известной эксплуатации; кейс unit 42 — обнаруженная вредоносная попытка prompt injection без подтверждённого успешного обхода deployed ad-review агента.",
+      "проект с ии.",
+      "не просто пользоваться ai. собирать и объяснять.",
+      "исследовать, писать код и собирать портфолио с ии."
+    ],
+    "/en/business": [
+      "safe agent work · 3 cases + 5 rules do not trust the plan. control the effect. an ai agent can read, decide and use tools. the risk starts when a plausible answer can turn directly into an external effect. these three documented cases show different failure modes. incident · jul 2025 replit agent deleted production-app database data. during a saastr experiment, replit agent deleted app data from a database. replit later acknowledged the problem publicly: before its new development/production separation, changes made during development could affect production; the data was restored through rollback. lesson: a written instruction such as “do not change anything” is weaker than a technical boundary that prevents the agent from writing to production. replit · 29 jul 2025 ↗ vulnerability · cve-2025-32711 echoleak showed that incoming data can become an instruction. researchers demonstrated an indirect prompt-injection chain in microsoft 365 copilot: a crafted email could enter copilot context and enable data exfiltration without the user clicking the email. microsoft patched the issue; public reporting said microsoft had no evidence of in-the-wild exploitation. lesson: email, webpages, documents and comments are untrusted data even when an agent can read them automatically. sc media · microsoft cve-2025-32711 ↗ attack observed · dec 2025 unit 42 found hidden prompts on malicious webpages. unit 42 observed real webpages carrying indirect prompt injection, including an attempt to make an ai ad-review system approve a scam advertisement. the researchers explicitly noted that they had not confirmed a successful bypass of a deployed ad-checking agent in that case. lesson: an agent that reads the web must separate page content from commands, and it should not gain extra authority simply because automation is convenient. palo alto networks unit 42 ↗ five operating rules authority should be explicit. 01 · start read-only let the agent read, plan and show a diff first. grant write authority separately and only where one task actually requires it. 02 · least privilege use test environments, separate accounts and keys, and no production access by default. do not give an agent more authority than one task needs. 03 · human before irreversible effects data deletion, publishing, sending messages, purchasing, payment or access changes require explicit confirmation before the effect. 04 · data is not instruction text from email, webpages, files, issues or chat can be hostile. retrieved content must not become a new command without a separate trust check. 05 · verify after the effect keep an action log, verify the result, define rollback and a stop condition. “the agent said it is done” is not evidence. the cases are not equivalent: replit was a real operational incident; echoleak was a confirmed vulnerability patched before public disclosure with no known in-the-wild exploitation; the unit 42 case was an observed malicious injection attempt without confirmed successful bypass of a deployed ad-review agent.",
+      "do not add ai. change one process.",
+      "train the team and test ai on one process."
+    ],
+    "/en/personal": [
+      "safe agent work · 3 cases + 5 rules do not trust the plan. control the effect. an ai agent can read, decide and use tools. the risk starts when a plausible answer can turn directly into an external effect. these three documented cases show different failure modes. incident · jul 2025 replit agent deleted production-app database data. during a saastr experiment, replit agent deleted app data from a database. replit later acknowledged the problem publicly: before its new development/production separation, changes made during development could affect production; the data was restored through rollback. lesson: a written instruction such as “do not change anything” is weaker than a technical boundary that prevents the agent from writing to production. replit · 29 jul 2025 ↗ vulnerability · cve-2025-32711 echoleak showed that incoming data can become an instruction. researchers demonstrated an indirect prompt-injection chain in microsoft 365 copilot: a crafted email could enter copilot context and enable data exfiltration without the user clicking the email. microsoft patched the issue; public reporting said microsoft had no evidence of in-the-wild exploitation. lesson: email, webpages, documents and comments are untrusted data even when an agent can read them automatically. sc media · microsoft cve-2025-32711 ↗ attack observed · dec 2025 unit 42 found hidden prompts on malicious webpages. unit 42 observed real webpages carrying indirect prompt injection, including an attempt to make an ai ad-review system approve a scam advertisement. the researchers explicitly noted that they had not confirmed a successful bypass of a deployed ad-checking agent in that case. lesson: an agent that reads the web must separate page content from commands, and it should not gain extra authority simply because automation is convenient. palo alto networks unit 42 ↗ five operating rules authority should be explicit. 01 · start read-only let the agent read, plan and show a diff first. grant write authority separately and only where one task actually requires it. 02 · least privilege use test environments, separate accounts and keys, and no production access by default. do not give an agent more authority than one task needs. 03 · human before irreversible effects data deletion, publishing, sending messages, purchasing, payment or access changes require explicit confirmation before the effect. 04 · data is not instruction text from email, webpages, files, issues or chat can be hostile. retrieved content must not become a new command without a separate trust check. 05 · verify after the effect keep an action log, verify the result, define rollback and a stop condition. “the agent said it is done” is not evidence. the cases are not equivalent: replit was a real operational incident; echoleak was a confirmed vulnerability patched before public disclosure with no known in-the-wild exploitation; the unit 42 case was an observed malicious injection attempt without confirmed successful bypass of a deployed ad-review agent.",
+      "not a course about ai. your own working system.",
+      "ai around your real task."
+    ],
+    "/en/teens": [
+      "safe agent work · 3 cases + 5 rules do not trust the plan. control the effect. an ai agent can read, decide and use tools. the risk starts when a plausible answer can turn directly into an external effect. these three documented cases show different failure modes. incident · jul 2025 replit agent deleted production-app database data. during a saastr experiment, replit agent deleted app data from a database. replit later acknowledged the problem publicly: before its new development/production separation, changes made during development could affect production; the data was restored through rollback. lesson: a written instruction such as “do not change anything” is weaker than a technical boundary that prevents the agent from writing to production. replit · 29 jul 2025 ↗ vulnerability · cve-2025-32711 echoleak showed that incoming data can become an instruction. researchers demonstrated an indirect prompt-injection chain in microsoft 365 copilot: a crafted email could enter copilot context and enable data exfiltration without the user clicking the email. microsoft patched the issue; public reporting said microsoft had no evidence of in-the-wild exploitation. lesson: email, webpages, documents and comments are untrusted data even when an agent can read them automatically. sc media · microsoft cve-2025-32711 ↗ attack observed · dec 2025 unit 42 found hidden prompts on malicious webpages. unit 42 observed real webpages carrying indirect prompt injection, including an attempt to make an ai ad-review system approve a scam advertisement. the researchers explicitly noted that they had not confirmed a successful bypass of a deployed ad-checking agent in that case. lesson: an agent that reads the web must separate page content from commands, and it should not gain extra authority simply because automation is convenient. palo alto networks unit 42 ↗ five operating rules authority should be explicit. 01 · start read-only let the agent read, plan and show a diff first. grant write authority separately and only where one task actually requires it. 02 · least privilege use test environments, separate accounts and keys, and no production access by default. do not give an agent more authority than one task needs. 03 · human before irreversible effects data deletion, publishing, sending messages, purchasing, payment or access changes require explicit confirmation before the effect. 04 · data is not instruction text from email, webpages, files, issues or chat can be hostile. retrieved content must not become a new command without a separate trust check. 05 · verify after the effect keep an action log, verify the result, define rollback and a stop condition. “the agent said it is done” is not evidence. the cases are not equivalent: replit was a real operational incident; echoleak was a confirmed vulnerability patched before public disclosure with no known in-the-wild exploitation; the unit 42 case was an observed malicious injection attempt without confirmed successful bypass of a deployed ad-review agent.",
+      "do more than use ai. build it. explain it.",
+      "research, code and build a portfolio with ai."
+    ],
+    "/phuket": [
+      "phuket · локальная координация реальные районы, без выдуманного кампуса. для локального планирования используем понятные районы phuket. это зоны координации, а не филиалы и не постоянные классы. точное место, доступность и время в пути подтверждаем до бронирования. rawai / nai harn юг phuket. локальная встреча — только после подтверждения места и времени. chalong южно-центральная часть острова. подходит как ориентир для согласования очной сессии. kata / karon западное побережье. доступность конкретного места подтверждаем до бронирования. phuket town центральная городская зона. точка встречи определяется отдельно под конкретную сессию. формат сначала маршрут обучения, потом география. local 1:1 очная персональная сессия место и время согласуем заранее. ai skill lab не заявляет постоянный учебный центр или публичный classroom address. online 1:1 персональная работа online экран, совместная сборка проектов и персональный маршрут работают независимо от страны. hybrid часть очно, часть online если программе нужен смешанный режим, очные и online-сессии можно сочетать после согласования маршрута. для несовершеннолетних контакт, расписание и согласование сервисов остаются за родителем или законным представителем.",
+      "занятия по ии.",
+      "пхукет · локальная координация реальные районы, без выдуманного кампуса. для локального планирования используем понятные районы пхукета. это зоны координации, а не филиалы и не постоянные классы. точное место, доступность и время в пути подтверждаем до бронирования. rawai / nai harn юг пхукета. локальная встреча — только после подтверждения места и времени. chalong южно-центральная часть острова. подходит как ориентир для согласования очной сессии. kata / karon западное побережье. доступность конкретного места подтверждаем до бронирования. phuket town центральная городская зона. точка встречи определяется отдельно под конкретную сессию. формат сначала маршрут обучения, потом география. local 1:1 очная персональная сессия место и время согласуем заранее. ai skill lab не заявляет постоянный учебный центр или публичный classroom address. online 1:1 персональная работа online экран, совместная сборка проектов и персональный маршрут работают независимо от страны. hybrid часть очно, часть online если программе нужен смешанный режим, очные и online-сессии можно сочетать после согласования маршрута. для несовершеннолетних контакт, расписание и согласование сервисов остаются за родителем или законным представителем.",
+      "phuket · локальная координация реальные районы, без выдуманного кампуса. для локального планирования используем понятные районы пхукета. это зоны координации, а не филиалы и не постоянные классы. точное место, доступность и время в пути подтверждаем до бронирования. rawai / nai harn юг пхукета. локальная встреча - только после подтверждения места и времени. chalong южно-центральная часть острова. подходит как ориентир для согласования очной сессии. kata / karon западное побережье. доступность конкретного места подтверждаем до бронирования. phuket town центральная городская зона. точка встречи определяется отдельно под конкретную сессию. формат сначала маршрут обучения, потом география. local 1:1 очная персональная сессия место и время согласуем заранее. ai skill lab не заявляет постоянный учебный центр или публичный classroom address. online 1:1 персональная работа online экран, совместная сборка проектов и персональный маршрут работают независимо от страны. hybrid часть очно, часть online если программе нужен смешанный режим, очные и online-сессии можно сочетать после согласования маршрута. для несовершеннолетних контакт, расписание и согласование сервисов остаются за родителем или законным представителем.",
+      "локально на phuket. и без географии online.",
+      "на пхукете - очно. из любой страны - онлайн."
+    ],
+    "/en/phuket": [
+      "phuket · local coordination real areas, no invented campus. for local planning we use recognizable phuket areas. they are coordination areas, not branches or permanent classrooms. the exact venue, availability and travel time are confirmed before booking. rawai / nai harn south phuket. an in-person session is confirmed only after venue and timing are agreed. chalong south-central phuket. used as a local coordination area for an agreed in-person session. kata / karon west coast. availability of a specific venue is confirmed before booking. phuket town central urban area. the meeting point is agreed separately for each session. format choose geography after the learning route. local 1:1 in-person one-to-one venue and timing are agreed in advance. ai skill lab does not claim a permanent school location or public classroom address. online 1:1 one-to-one online screen sharing, project building and a personal route work regardless of country. hybrid local plus online if a program benefits from both, in-person and online sessions can be combined after the route is agreed. for minors, contact, scheduling and service approval remain with a parent or legal guardian.",
+      "local in phuket. borderless online.",
+      "in person on phuket. online from anywhere."
+    ],
+    "/": [
+      "наставник · human in the loop роберт думанян основатель / преподаватель работает с ai-системами, research workflows, агентами, автоматизацией, decision workflows и цифровыми продуктами. на занятиях: цель → спецификация → сборка → проверка → результат. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗",
+      "запускается только по кнопке. текст передаётся настроенной модели через openrouter; ai skill lab его не сохраняет. не вставляйте пароли, ключи и приватные данные. ai prompt auditor ai prompt auditor вставьте рабочий запрос к llm - ai оценит его по 10-балльной шкале и предложит улучшенный вариант с пояснением. проверить промпт ai-оценка /10 пояснение улучшенный вариант это автоматическая оценка, а не универсальный стандарт качества. проверьте улучшенный промпт перед использованием. скопировать улучшенный промпт",
+      "обучение: искусственный интеллект (ии) и нейросети,"
+    ],
+    "/about": [
+      "наставник · human in the loop роберт думанян основатель / преподаватель работает с ai-системами, research workflows, агентами, автоматизацией, decision workflows и цифровыми продуктами. на занятиях: цель → спецификация → сборка → проверка → результат. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗",
+      "обучение ии в"
+    ],
+    "/en": [
+      "mentor · human in the loop robert dumanyan founder / instructor works with ai systems, research workflows, agents, automation, decision workflows and digital products. sessions follow the same discipline: goal → specification → build → verification → output. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗",
+      "runs only after you press the button. the text is sent to the configured model through openrouter; ai skill lab does not store it. do not paste passwords, keys or private data. ai prompt auditor ai prompt auditor paste a working llm request - ai scores it on a 10-point scale and returns an improved version with an explanation. audit prompt ai score /10 explanation improved version this is an automated assessment, not a universal quality standard. review the improved prompt before using it. copy improved prompt"
+    ],
+    "/en/about": [
+      "mentor · human in the loop robert dumanyan founder / instructor works with ai systems, research workflows, agents, automation, decision workflows and digital products. sessions follow the same discipline: goal → specification → build → verification → output. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗"
+    ],
+    "/projects": [
+      "EXAMPLE OUTPUTS · NOT TESTIMONIALS Не галерея работ. Project Studio. 9 примерных форматов показывают не только что можно собрать, но и как устроена хорошая AI-работа: цель → роль AI → human check → проверяемый артефакт. Это не заявления о конкретных клиентах или учениках. Исследовать проекты ↓ Как мы проверяем AI →",
+      "PROJECT STUDIO / 9 EXAMPLES Фильтруй по типу работы. Смотри на устройство результата. Весь контент доступен даже без JavaScript. Фильтр работает только локально в браузере и ничего не отправляет наружу.",
+      "REAL BUILDS · PUBLIC PROVENANCE Реальные сборки. И Project Studio. Сначала — публичные проекты Роберта с проверяемыми репозиториями и честными границами claims. Ниже — 9 учебных примерных форматов; это не клиентские кейсы и не работы учеников. Смотреть реальные проекты ↓ Как мы проверяем AI →",
+      "REAL BUILDS / 5 PUBLIC REPOS Публичный код. Явные границы claims. Пять проектов Роберта Думаняна с открытыми репозиториями и проверяемым scope. Это проекты наставника, не работы учеников и не клиентские кейсы.",
+      "EXAMPLE OUTPUTS · NOT TESTIMONIALS / 9 EXAMPLES Фильтруй по типу работы. Смотри на устройство результата. Ниже — учебные примерные форматы, а не заявления о конкретных клиентах или учениках. Весь контент доступен даже без JavaScript; фильтр работает только локально в браузере и ничего не отправляет наружу.",
+      "VISUAL AI · PUBLIC REPO RESEARCH / OFFLINE TESTABLE 01 VisionAssist Визуально-семантический слой для evidence-grounded observations, competing hypotheses, counterevidence, uncertainty и явной human-AI revision. 01 Доказательство Публичный репозиторий фиксирует 75-case corpus: 60 market chart cases + 15 deterministic visual-control cases, offline harness, scorer и proof checklist. 02 Граница claims README не заявляет calibration, human-AI uplift, natural-scene generality или production value. GitHub ↗",
+      "MEMORY · PUBLIC REPO LOCAL-FIRST / OPEN SOURCE 02 ContinuityOS Durable memory и continuity layer для AI-агентов и людей: canon, frontiers, open loops, checkpoints и handoff context. 01 Доказательство Публичный репозиторий и PyPI package; core memory работает локально на SQLite, поддерживает CLI, Python API, MCP и импорт AI-history из нескольких провайдеров. 02 Граница claims Demo доказывает bounded persistence через новый процесс, а не поведенческую идентичность модели или production security. GitHub ↗",
+      "AGENT GOVERNANCE · PUBLIC REPO DETERMINISTIC REFERENCE 03 BitEvo Agent Authority Публичный reference package семи ворот Agent Authority & Evidence для проверки одного action-capable workflow. 01 Доказательство spec/gates.json, локальный deterministic evaluator, fail-closed validation и regression tests; package source-bound к публичной BitEvo реализации. 02 Граница claims Не выдаёт trust/safety score, не сертифицирует систему, не исполняет внешние действия и не запрашивает credentials. GitHub ↗",
+      "AI PRODUCT · PUBLIC REPO PUBLIC PRODUCT / EVIDENCE SURFACE 04 BitEvo Agent Site Публичный продукт для authority-first AI-agent engineering, где SOURCE, BUILD, DEPLOYMENT, READBACK и EXTERNAL EFFECT разделены как разные классы доказательств. 01 Доказательство Astro site с provider-bound build receipts, deterministic release gates, CSP hash allowlist и раздельными Vercel / Cloudflare provider paths. 02 Граница claims Production promotion отделён от build/readback; публичный repository прямо фиксирует can_trade=false и capital_permission=DENY. GitHub ↗",
+      "CONTROL STACK · PUBLIC REPO VALIDATION-ONLY 05 TRIAXIS Versioned governance/control stack с deterministic validation assets для policy binding, external witnesses, execution reconciliation и rollback detection. 01 Доказательство Публичный репозиторий содержит executable validation harnesses для signed policy heads, quorum, execution ledger, provider reconciliation и completion witnesses. 02 Граница claims Repository прямо указывает: это не production gateway; validation results не доказывают production exactly-once behavior или complete mediation. GitHub ↗",
+      "real builds · public provenance реальные сборки. и project studio. сначала - публичные проекты роберта с ии, проверяемыми репозиториями и честными границами claims. ниже - 9 учебных примерных форматов; это не клиентские кейсы и не работы учеников. смотреть реальные проекты ↓ как мы проверяем ai →"
+    ],
+    "/en/projects": [
+      "EXAMPLE OUTPUTS · NOT TESTIMONIALS Not a work gallery. Project Studio. Nine example formats show not just what can be built, but what good AI work contains: goal → AI role → human check → verifiable artifact. These are not claims about specific clients or learners. Explore projects ↓ How we verify AI →",
+      "PROJECT STUDIO / 9 EXAMPLES Filter by type of work. Inspect the anatomy of the result. All content remains available without JavaScript. The filter runs locally in the browser and sends nothing out.",
+      "REAL BUILDS · PUBLIC PROVENANCE Real builds. And Project Studio. First: Robert’s public projects with verifiable repositories and explicit claim boundaries. Below: nine learning examples; they are not client case studies or student work. See real projects ↓ How we verify AI →",
+      "REAL BUILDS / 5 PUBLIC REPOS Public code. Explicit claim boundaries. Five projects by Robert Dumanyan with public repositories and inspectable scope. These are mentor builds, not student work or client case studies.",
+      "EXAMPLE OUTPUTS · NOT TESTIMONIALS / 9 EXAMPLES Filter by type of work. Inspect the anatomy of the result. Below are learning examples, not claims about specific clients or learners. All content remains available without JavaScript; the filter runs locally in the browser and sends nothing out.",
+      "VISUAL AI · PUBLIC REPO RESEARCH / OFFLINE TESTABLE 01 VisionAssist A visual-semantic cognition layer for evidence-grounded observations, competing hypotheses, counterevidence, uncertainty and explicit human-AI revision. 01 Evidence The public repository documents a 75-case corpus: 60 market chart cases plus 15 deterministic visual-control cases, with an offline harness, scorer and proof checklist. 02 Boundary The README makes no calibration, human-AI uplift, natural-scene generality or production-value claim. GitHub ↗",
+      "MEMORY · PUBLIC REPO LOCAL-FIRST / OPEN SOURCE 02 ContinuityOS Durable memory and continuity for AI agents and humans: canon, frontiers, open loops, checkpoints and handoff context. 01 Evidence Public repository and PyPI package; core memory is local SQLite and supports a CLI, Python API, MCP and multi-provider AI-history import. 02 Boundary The demo proves bounded persistence across a fresh process, not behavioral model identity or production security. GitHub ↗",
+      "AGENT GOVERNANCE · PUBLIC REPO DETERMINISTIC REFERENCE 03 BitEvo Agent Authority A public seven-gate Agent Authority & Evidence reference package for examining one action-capable workflow. 01 Evidence spec/gates.json, a local deterministic evaluator, fail-closed validation and regression tests; the package is source-bound to the public BitEvo implementation. 02 Boundary It does not issue a trust/safety score, certify a system, execute external actions or request credentials. GitHub ↗",
+      "AI PRODUCT · PUBLIC REPO PUBLIC PRODUCT / EVIDENCE SURFACE 04 BitEvo Agent Site A public authority-first AI-agent product where SOURCE, BUILD, DEPLOYMENT, READBACK and EXTERNAL EFFECT are kept as separate evidence classes. 01 Evidence Astro site with provider-bound build receipts, deterministic release gates, a CSP hash allowlist and separate Vercel / Cloudflare provider paths. 02 Boundary Production promotion is separate from build/readback; the public repository explicitly fixes can_trade=false and capital_permission=DENY. GitHub ↗",
+      "CONTROL STACK · PUBLIC REPO VALIDATION-ONLY 05 TRIAXIS A versioned governance/control stack with deterministic validation assets for policy binding, external witnesses, execution reconciliation and rollback detection. 01 Evidence The public repository includes executable validation harnesses for signed policy heads, quorum, execution ledger, provider reconciliation and completion witnesses. 02 Boundary The repository explicitly says it is not a production gateway; validation results do not prove production exactly-once behavior or complete mediation. GitHub ↗"
+    ],
+    "/method": [
+      "Completion record →"
+    ],
+    "/en/method": [
+      "Completion record →"
+    ],
+    "/challenge": [
+      "для работы с ии"
+    ]
+  },
+  "links": {
+    "ru": [
+      "https://t.me/BiTFormer",
+      "https://wa.me/66649701204",
+      "https://line.me/ti/p/~iwf555",
+      "mailto:robert@aiskillab.work",
+      "/start",
+      "https://wa.me/66649701204?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D1%8B%D0%B9%20%D0%B7%D0%B2%D0%BE%D0%BD%D0%BE%D0%BA-%D0%B7%D0%BD%D0%B0%D0%BA%D0%BE%D0%BC%D1%81%D1%82%D0%B2%D0%BE%2C%2015%20%D0%BC%D0%B8%D0%BD%D1%83%D1%82.",
+      "/parents",
+      "/guides"
+    ],
+    "en": [
+      "https://t.me/BiTFormer",
+      "https://wa.me/66649701204",
+      "https://line.me/ti/p/~iwf555",
+      "mailto:robert@aiskillab.work",
+      "/en/start",
+      "https://wa.me/66649701204?text=Hi%21%20I%27d%20like%20to%20book%20the%20free%2015-minute%20intro%20call.",
+      "/en/parents",
+      "/en/guides"
+    ]
+  },
+  "removed_links": {
+    "/business": [
+      "/start#business-brief"
+    ],
+    "/en/business": [
+      "/en/start#business-brief"
+    ],
+    "/start": [
+      "#contact-channels",
+      "https://t.me/BiTFormer?text=AI%20Skill%20Lab%20%E2%80%94%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%0A%D0%9C%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%3A%20%D0%94%D0%BB%D1%8F%20%D0%BF%D0%BE%D0%B4%D1%80%D0%BE%D1%81%D1%82%D0%BA%D0%B0%0A1.%20%D0%92%D0%BE%D0%B7%D1%80%D0%B0%D1%81%D1%82%20%D0%B8%20%D1%82%D0%B5%D0%BA%D1%83%D1%89%D0%B8%D0%B9%20%D1%83%D1%80%D0%BE%D0%B2%D0%B5%D0%BD%D1%8C%3A%20%0A2.%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%8B%3A%20code%20%2F%20design%20%2F%20science%20%2F%20content%20%2F%20business%3A%20%0A3.%20%D0%A7%D1%82%D0%BE%20%D1%83%D0%B6%D0%B5%20%D0%BF%D1%80%D0%BE%D0%B1%D0%BE%D0%B2%D0%B0%D0%BB%20%D1%81%20AI%3A%20%0A4.%20%D0%9A%D0%B0%D0%BA%D0%BE%D0%B9%20portfolio%20outcome%20%D0%B1%D1%8B%D0%BB%20%D0%B1%D1%8B%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%B7%D0%B5%D0%BD%3A%20",
+      "https://t.me/BiTFormer?text=AI%20Skill%20Lab%20%E2%80%94%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%0A%D0%9C%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%3A%20%D0%94%D0%BB%D1%8F%20%D1%80%D0%B5%D0%B1%D1%91%D0%BD%D0%BA%D0%B0%0A1.%20%D0%92%D0%BE%D0%B7%D1%80%D0%B0%D1%81%D1%82%3A%20%0A2.%20%D0%A7%D1%82%D0%BE%20%D1%80%D0%B5%D0%B1%D1%91%D0%BD%D0%BA%D1%83%20%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D0%BD%D0%BE%3A%20%0A3.%20%D0%95%D1%81%D1%82%D1%8C%20%D0%BB%D0%B8%20%D0%BE%D0%BF%D1%8B%D1%82%20%D1%81%20AI%3A%20%0A4.%20%D0%9A%D0%B0%D0%BA%D0%BE%D0%B9%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%20%D0%BC%D0%BE%D0%B3%20%D0%B1%D1%8B%20%D1%83%D0%B2%D0%BB%D0%B5%D1%87%D1%8C%3A%20",
+      "https://t.me/BiTFormer?text=AI%20Skill%20Lab%20%E2%80%94%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%0A%D0%9C%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%3A%20%D0%9B%D0%B8%D1%87%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%0A1.%20%D0%A6%D0%B5%D0%BB%D1%8C%20%D0%BD%D0%B0%20%D0%B1%D0%BB%D0%B8%D0%B6%D0%B0%D0%B9%D1%88%D0%B8%D0%B5%201%E2%80%933%20%D0%BC%D0%B5%D1%81%D1%8F%D1%86%D0%B0%3A%20%0A2.%20%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D1%8F%D1%8E%D1%82%D1%81%D1%8F%20%D1%81%D0%B5%D0%B9%D1%87%D0%B0%D1%81%3A%20%0A3.%20%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5%20AI-%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B%20%D1%83%D0%B6%D0%B5%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D1%82%D0%B5%3A%20%0A4.%20Online%20%2F%20Phuket%20%C2%B7%20RU%20%2F%20EN%3A%20",
+      "https://t.me/BiTFormer?text=AI%20Skill%20Lab%20%E2%80%94%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%0A%D0%9C%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%3A%20Workflow%20pilot%0A1.%20%D0%9A%D0%B0%D0%BA%D0%BE%D0%B9%20%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81%20%D1%85%D0%BE%D1%82%D0%B8%D1%82%D0%B5%20%D1%83%D0%BB%D1%83%D1%87%D1%88%D0%B8%D1%82%D1%8C%3A%20%0A2.%20%D0%9A%D1%82%D0%BE%20%D0%B5%D0%B3%D0%BE%20%D0%B2%D1%8B%D0%BF%D0%BE%D0%BB%D0%BD%D1%8F%D0%B5%D1%82%20%D0%B8%20%D0%BA%D1%82%D0%BE%20%D0%B2%D0%BB%D0%B0%D0%B4%D0%B5%D0%BB%D0%B5%D1%86%3A%20%0A3.%20%D0%9A%D0%B0%D0%BA%20%D1%87%D0%B0%D1%81%D1%82%D0%BE%20%D0%BE%D0%BD%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D1%8F%D0%B5%D1%82%D1%81%D1%8F%3A%20%0A4.%20%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5%20%D0%B2%D1%85%D0%BE%D0%B4%D0%BD%D1%8B%D0%B5%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D1%8E%D1%82%D1%81%D1%8F%3A%20%0A5.%20%D0%A7%D1%82%D0%BE%20%D1%81%D1%87%D0%B8%D1%82%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B8%D0%BC%20%D0%B2%D1%8B%D1%85%D0%BE%D0%B4%D0%BE%D0%BC%3A%20%0A6.%20%D0%A7%D1%82%D0%BE%20%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%BE%D0%B9%D0%B4%D1%91%D1%82%2C%20%D0%B5%D1%81%D0%BB%D0%B8%20AI%20%D0%BE%D1%88%D0%B8%D0%B1%D1%91%D1%82%D1%81%D1%8F%3A%20"
+    ],
+    "/en/start": [
+      "#contact-channels"
+    ]
+  },
+  "route_links": {
+    "/safety": [
+      "https://help.openai.com/en/articles/8313401",
+      "https://support.google.com/gemini/answer/13278668",
+      "https://suno.com/terms",
+      "https://replit.com/terms-of-service",
+      "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+      "https://vercel.com/legal/terms",
+      "https://www.anthropic.com/legal/consumer-terms",
+      "https://support.google.com/flow/answer/16353333",
+      "https://antigravity.google/docs/faq",
+      "https://support.google.com/gemini/answer/17094507",
+      "https://www.cloudflare.com/privacypolicy/",
+      "/guides/ai-safety-for-kids"
+    ],
+    "/en/safety": [
+      "https://help.openai.com/en/articles/8313401",
+      "https://support.google.com/gemini/answer/13278668",
+      "https://suno.com/terms",
+      "https://replit.com/terms-of-service",
+      "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+      "https://vercel.com/legal/terms",
+      "https://www.anthropic.com/legal/consumer-terms",
+      "https://support.google.com/flow/answer/16353333",
+      "https://antigravity.google/docs/faq",
+      "https://support.google.com/gemini/answer/17094507",
+      "https://www.cloudflare.com/privacypolicy/",
+      "/en/guides/ai-safety-for-kids"
+    ],
+    "/": [
+      "/start#application-form",
+      "https://github.com/bitmaster162",
+      "https://www.linkedin.com/in/robert-dumanyan-984171335/"
+    ],
+    "/start": [
+      "/start#application-form",
+      "https://cal.com/robert-dumanyan-vlck0x/15min",
+      "https://t.me/BiTFormer?text=AI%20Skill%20Lab%20%E2%80%94%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%0A%D0%9C%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%3A%20%D0%9B%D0%B8%D1%87%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%0A1.%20%D0%A6%D0%B5%D0%BB%D1%8C%20%D0%BD%D0%B0%20%D0%B1%D0%BB%D0%B8%D0%B6%D0%B0%D0%B9%D1%88%D0%B8%D0%B5%201%E2%80%933%20%D0%BC%D0%B5%D1%81%D1%8F%D1%86%D0%B0%3A%20%0A2.%20%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D1%8F%D1%8E%D1%82%D1%81%D1%8F%20%D1%81%D0%B5%D0%B9%D1%87%D0%B0%D1%81%3A%20%0A3.%20%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5%20AI-%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B%20%D1%83%D0%B6%D0%B5%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D1%82%D0%B5%3A%20%0A4.%20%D0%9E%D0%BD%D0%BB%D0%B0%D0%B9%D0%BD%20%2F%20%D0%9F%D1%85%D1%83%D0%BA%D0%B5%D1%82%20%C2%B7%20RU%20%2F%20EN%3A%20",
+      "https://t.me/BiTFormer?text=AI+Skill+Lab+%E2%80%94+%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%0A%D0%9C%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%3A+%D0%94%D0%BB%D1%8F+%D0%BF%D0%BE%D0%B4%D1%80%D0%BE%D1%81%D1%82%D0%BA%D0%B0%0A1.+%D0%92%D0%BE%D0%B7%D1%80%D0%B0%D1%81%D1%82+%D0%B8+%D1%82%D0%B5%D0%BA%D1%83%D1%89%D0%B8%D0%B9+%D1%83%D1%80%D0%BE%D0%B2%D0%B5%D0%BD%D1%8C%3A+%0A2.+%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%8B%3A+%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%2F+%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD+%2F+%D0%BD%D0%B0%D1%83%D0%BA%D0%B0+%2F+%D0%BA%D0%BE%D0%BD%D1%82%D0%B5%D0%BD%D1%82+%2F+%D0%B1%D0%B8%D0%B7%D0%BD%D0%B5%D1%81%3A+%0A3.+%D0%A7%D1%82%D0%BE+%D1%83%D0%B6%D0%B5+%D0%BF%D1%80%D0%BE%D0%B1%D0%BE%D0%B2%D0%B0%D0%BB+%D1%81+%D0%98%D0%98%3A+%0A4.+%D0%9A%D0%B0%D0%BA%D0%BE%D0%B9+%D1%80%D0%B5%D0%B7%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%82+%D0%B4%D0%BB%D1%8F+%D0%BF%D0%BE%D1%80%D1%82%D1%84%D0%BE%D0%BB%D0%B8%D0%BE+%D0%B1%D1%8B%D0%BB+%D0%B1%D1%8B+%D0%BF%D0%BE%D0%BB%D0%B5%D0%B7%D0%B5%D0%BD%3A+",
+      "https://t.me/BiTFormer?text=AI+Skill+Lab+%E2%80%94+%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%0A%D0%9C%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%3A+%D0%94%D0%BB%D1%8F+%D1%80%D0%B5%D0%B1%D1%91%D0%BD%D0%BA%D0%B0%0A1.+%D0%92%D0%BE%D0%B7%D1%80%D0%B0%D1%81%D1%82%3A+%0A2.+%D0%A7%D1%82%D0%BE+%D1%80%D0%B5%D0%B1%D1%91%D0%BD%D0%BA%D1%83+%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D0%BD%D0%BE%3A+%0A3.+%D0%95%D1%81%D1%82%D1%8C+%D0%BB%D0%B8+%D0%BE%D0%BF%D1%8B%D1%82+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B+%D1%81+%D0%98%D0%98%3A+%0A4.+%D0%9A%D0%B0%D0%BA%D0%BE%D0%B9+%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82+%D0%BC%D0%BE%D0%B3+%D0%B1%D1%8B+%D1%83%D0%B2%D0%BB%D0%B5%D1%87%D1%8C%3A+",
+      "https://t.me/BiTFormer?text=AI+Skill+Lab+%E2%80%94+%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%0A%D0%9C%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%3A+%D0%9B%D0%B8%D1%87%D0%BD%D0%B0%D1%8F+%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%0A1.+%D0%A6%D0%B5%D0%BB%D1%8C+%D0%BD%D0%B0+%D0%B1%D0%BB%D0%B8%D0%B6%D0%B0%D0%B9%D1%88%D0%B8%D0%B5+1%E2%80%933+%D0%BC%D0%B5%D1%81%D1%8F%D1%86%D0%B0%3A+%0A2.+%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5+%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8+%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D1%8F%D1%8E%D1%82%D1%81%D1%8F+%D1%81%D0%B5%D0%B9%D1%87%D0%B0%D1%81%3A+%0A3.+%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5+%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B+%D0%98%D0%98+%D1%83%D0%B6%D0%B5+%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D1%82%D0%B5%3A+%0A4.+%D0%9E%D0%BD%D0%BB%D0%B0%D0%B9%D0%BD+%2F+%D0%9F%D1%85%D1%83%D0%BA%D0%B5%D1%82+%C2%B7+RU+%2F+EN%3A+",
+      "https://t.me/BiTFormer?text=AI+Skill+Lab+%E2%80%94+%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%0A%D0%9C%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%3A+Workflow+pilot%0A1.+%D0%9A%D0%B0%D0%BA%D0%BE%D0%B9+%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81+%D1%85%D0%BE%D1%82%D0%B8%D1%82%D0%B5+%D1%83%D0%BB%D1%83%D1%87%D1%88%D0%B8%D1%82%D1%8C%3A+%0A2.+%D0%9A%D1%82%D0%BE+%D0%B5%D0%B3%D0%BE+%D0%B2%D1%8B%D0%BF%D0%BE%D0%BB%D0%BD%D1%8F%D0%B5%D1%82+%D0%B8+%D0%BA%D1%82%D0%BE+%D0%B2%D0%BB%D0%B0%D0%B4%D0%B5%D0%BB%D0%B5%D1%86%3A+%0A3.+%D0%9A%D0%B0%D0%BA+%D1%87%D0%B0%D1%81%D1%82%D0%BE+%D0%BE%D0%BD+%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D1%8F%D0%B5%D1%82%D1%81%D1%8F%3A+%0A4.+%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5+%D0%B2%D1%85%D0%BE%D0%B4%D0%BD%D1%8B%D0%B5+%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5+%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D1%8E%D1%82%D1%81%D1%8F%3A+%0A5.+%D0%A7%D1%82%D0%BE+%D1%81%D1%87%D0%B8%D1%82%D0%B0%D0%B5%D1%82%D1%81%D1%8F+%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B8%D0%BC+%D0%B2%D1%8B%D1%85%D0%BE%D0%B4%D0%BE%D0%BC%3A+%0A6.+%D0%A7%D1%82%D0%BE+%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%BE%D0%B9%D0%B4%D1%91%D1%82%2C+%D0%B5%D1%81%D0%BB%D0%B8+%D0%98%D0%98+%D0%BE%D1%88%D0%B8%D0%B1%D1%91%D1%82%D1%81%D1%8F%3A+"
+    ],
+    "/kids": [
+      "/start#application-form",
+      "/guides/ai-safety-for-kids"
+    ],
+    "/teens": [
+      "/start#application-form",
+      "https://replit.com/blog/doubling-down-on-our-commitment-to-secure-vibe-coding",
+      "https://www.scworld.com/news/microsoft-365-copilot-zero-click-vulnerability-enabled-data-exfiltration",
+      "https://unit42.paloaltonetworks.com/ai-agent-prompt-injection/"
+    ],
+    "/parents": [
+      "/start#application-form",
+      "/guides/ai-safety-for-kids"
+    ],
+    "/personal": [
+      "/start#application-form",
+      "https://replit.com/blog/doubling-down-on-our-commitment-to-secure-vibe-coding",
+      "https://www.scworld.com/news/microsoft-365-copilot-zero-click-vulnerability-enabled-data-exfiltration",
+      "https://unit42.paloaltonetworks.com/ai-agent-prompt-injection/"
+    ],
+    "/business": [
+      "/start#application-form",
+      "https://replit.com/blog/doubling-down-on-our-commitment-to-secure-vibe-coding",
+      "https://www.scworld.com/news/microsoft-365-copilot-zero-click-vulnerability-enabled-data-exfiltration",
+      "https://unit42.paloaltonetworks.com/ai-agent-prompt-injection/"
+    ],
+    "/pricing": [
+      "/start#application-form"
+    ],
+    "/matcher": [
+      "/start#application-form"
+    ],
+    "/en": [
+      "/en/start#application-form",
+      "https://github.com/bitmaster162",
+      "https://www.linkedin.com/in/robert-dumanyan-984171335/"
+    ],
+    "/en/start": [
+      "/en/start#application-form",
+      "https://cal.com/robert-dumanyan-vlck0x/15min"
+    ],
+    "/en/kids": [
+      "/en/start#application-form",
+      "/en/guides/ai-safety-for-kids"
+    ],
+    "/en/teens": [
+      "/en/start#application-form",
+      "https://replit.com/blog/doubling-down-on-our-commitment-to-secure-vibe-coding",
+      "https://www.scworld.com/news/microsoft-365-copilot-zero-click-vulnerability-enabled-data-exfiltration",
+      "https://unit42.paloaltonetworks.com/ai-agent-prompt-injection/"
+    ],
+    "/en/parents": [
+      "/en/start#application-form",
+      "/en/guides/ai-safety-for-kids"
+    ],
+    "/en/personal": [
+      "/en/start#application-form",
+      "https://replit.com/blog/doubling-down-on-our-commitment-to-secure-vibe-coding",
+      "https://www.scworld.com/news/microsoft-365-copilot-zero-click-vulnerability-enabled-data-exfiltration",
+      "https://unit42.paloaltonetworks.com/ai-agent-prompt-injection/"
+    ],
+    "/en/business": [
+      "/en/start#application-form",
+      "https://replit.com/blog/doubling-down-on-our-commitment-to-secure-vibe-coding",
+      "https://www.scworld.com/news/microsoft-365-copilot-zero-click-vulnerability-enabled-data-exfiltration",
+      "https://unit42.paloaltonetworks.com/ai-agent-prompt-injection/"
+    ],
+    "/en/pricing": [
+      "/en/start#application-form"
+    ],
+    "/en/matcher": [
+      "/en/start#application-form"
+    ],
+    "/about": [
+      "https://github.com/bitmaster162",
+      "https://www.linkedin.com/in/robert-dumanyan-984171335/"
+    ],
+    "/en/about": [
+      "https://github.com/bitmaster162",
+      "https://www.linkedin.com/in/robert-dumanyan-984171335/"
+    ],
+    "/projects": [
+      "https://github.com/bitmaster162/VisionAssist",
+      "https://github.com/bitmaster162/continuityos",
+      "https://github.com/bitmaster162/agent-authority",
+      "https://github.com/bitmaster162/bitevo-agent-site",
+      "https://github.com/bitmaster162/TRIAXIS"
+    ],
+    "/en/projects": [
+      "https://github.com/bitmaster162/VisionAssist",
+      "https://github.com/bitmaster162/continuityos",
+      "https://github.com/bitmaster162/agent-authority",
+      "https://github.com/bitmaster162/bitevo-agent-site",
+      "https://github.com/bitmaster162/TRIAXIS"
+    ],
+    "/method": [
+      "/certificate"
+    ],
+    "/en/method": [
+      "/en/certificate"
+    ]
+  },
+  "meta_changes": {
+    "/about": [
+      "title",
+      "h1"
+    ],
+    "/build": [
+      "title"
+    ],
+    "/business": [
+      "title",
+      "description",
+      "h1"
+    ],
+    "/challenge": [
+      "title"
+    ],
+    "/curriculum": [
+      "title"
+    ],
+    "/en/about": [
+      "title"
+    ],
+    "/en/build": [
+      "title"
+    ],
+    "/en/business": [
+      "title",
+      "h1"
+    ],
+    "/en/challenge": [
+      "title"
+    ],
+    "/en/curriculum": [
+      "title"
+    ],
+    "/en/family": [
+      "title"
+    ],
+    "/en/faq": [
+      "title"
+    ],
+    "/en/kids": [
+      "title",
+      "h1"
+    ],
+    "/en/matcher": [
+      "title",
+      "description",
+      "h1"
+    ],
+    "/en/method": [
+      "title"
+    ],
+    "/en/parents": [
+      "title"
+    ],
+    "/en/personal": [
+      "title",
+      "h1"
+    ],
+    "/en/phuket": [
+      "title",
+      "h1"
+    ],
+    "/en/pricing": [
+      "title",
+      "h1"
+    ],
+    "/en/privacy": [
+      "title",
+      "description"
+    ],
+    "/en/projects": [
+      "title",
+      "description",
+      "h1"
+    ],
+    "/en/proof": [
+      "title"
+    ],
+    "/en/safety": [
+      "title"
+    ],
+    "/en/start": [
+      "title",
+      "h1"
+    ],
+    "/en/studio": [
+      "title"
+    ],
+    "/en/teens": [
+      "title",
+      "h1"
+    ],
+    "/en/terms": [
+      "title"
+    ],
+    "/en": [
+      "title"
+    ],
+    "/family": [
+      "title"
+    ],
+    "/faq": [
+      "title"
+    ],
+    "/": [
+      "title",
+      "description",
+      "h1"
+    ],
+    "/kids": [
+      "title",
+      "description",
+      "h1"
+    ],
+    "/matcher": [
+      "title",
+      "description",
+      "h1"
+    ],
+    "/method": [
+      "title"
+    ],
+    "/parents": [
+      "title",
+      "h1"
+    ],
+    "/personal": [
+      "title",
+      "description",
+      "h1"
+    ],
+    "/phuket": [
+      "title",
+      "description",
+      "h1"
+    ],
+    "/pricing": [
+      "title",
+      "description",
+      "h1"
+    ],
+    "/privacy": [
+      "title",
+      "description"
+    ],
+    "/projects": [
+      "title",
+      "description",
+      "h1"
+    ],
+    "/proof": [
+      "title",
+      "h1"
+    ],
+    "/safety": [
+      "title"
+    ],
+    "/start": [
+      "title",
+      "description",
+      "h1"
+    ],
+    "/studio": [
+      "title"
+    ],
+    "/teens": [
+      "title",
+      "description",
+      "h1"
+    ],
+    "/terms": [
+      "title"
+    ]
+  },
+  "attr_texts": {
+    "/": [
+      "input[aria-label]=открыть меню",
+      "div[aria-label]=направления практики",
+      "img[alt]=роберт думанян - основатель и преподаватель ai skill lab",
+      "textarea[aria-label]=промпт для ai prompt auditor",
+      "textarea[placeholder]=например: составь план исследования рынка для нового b2b ai-продукта и укажи, какие выводы нужно проверить отдельно.",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/about": [
+      "input[aria-label]=открыть меню",
+      "div[aria-label]=направления практики",
+      "img[alt]=роберт думанян - основатель и преподаватель ai skill lab",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/build": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/business": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/challenge": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/curriculum": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/family": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/faq": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/kids": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/matcher": [
+      "input[aria-label]=открыть меню",
+      "textarea[placeholder]=например: хочу собрать ai-агента для research и научиться проверять его выводы.",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/method": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/parents": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/personal": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/phuket": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/pricing": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/privacy": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/projects": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/proof": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/safety": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/start": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/studio": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/teens": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/terms": [
+      "input[aria-label]=открыть меню",
+      "a[aria-label]=инструменты",
+      "button[aria-label]=открыть инструменты"
+    ],
+    "/en": [
+      "input[aria-label]=open menu",
+      "div[aria-label]=areas of practice",
+      "img[alt]=robert dumanyan - founder and instructor at ai skill lab",
+      "textarea[aria-label]=prompt for ai prompt auditor",
+      "textarea[placeholder]=for example: build a market-research plan for a new b2b ai product and flag which conclusions need separate verification."
+    ],
+    "/en/about": [
+      "input[aria-label]=open menu",
+      "div[aria-label]=areas of practice",
+      "img[alt]=robert dumanyan - founder and instructor at ai skill lab"
+    ],
+    "/en/build": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/business": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/challenge": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/curriculum": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/family": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/faq": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/kids": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/matcher": [
+      "input[aria-label]=open menu",
+      "textarea[placeholder]=for example: build a research ai agent and learn how to verify its conclusions."
+    ],
+    "/en/method": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/parents": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/personal": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/phuket": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/pricing": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/privacy": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/projects": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/proof": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/safety": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/start": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/studio": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/teens": [
+      "input[aria-label]=open menu"
+    ],
+    "/en/terms": [
+      "input[aria-label]=open menu"
+    ]
+  },
+  "removed_attr_texts": {
+    "/about": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/build": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/business": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/challenge": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/curriculum": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/family": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/faq": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/kids": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/matcher": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/method": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/parents": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/personal": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/phuket": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/pricing": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/privacy": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/projects": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/proof": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/safety": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/start": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/studio": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/teens": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ],
+    "/terms": [
+      "a[aria-label]=proof lab",
+      "button[aria-label]=lab - открыть lab command (ctrl k)"
+    ]
+  },
+  "approved_text_sha256": {
+    "/about": "c108002643816b006b5a147b75d658c03a946ff89e0bf377847a82d09dcd72c9",
+    "/build": "a6d32504d3eb324d6a8c52f32815f0508e1a3813d801fde8672991e5c73f0659",
+    "/business": "76062eb64452f8d5e80eec750bbe1375389e7084773ed821fa1a0e2f972c10bf",
+    "/challenge": "c9535ebdf3292c3ba98d6ebbf5dd279fb3bbc11c30466ab6bd5359b51d2d8c21",
+    "/curriculum": "a36878df83b33bf633d1cb0652b17da6392017aa83594f726c89aa623d434aab",
+    "/family": "7ec319c4b4ca679bbca8158900d062aa30ddd6bba5cea8df121a5931194df262",
+    "/faq": "a1aaccbe4ae09d444f737d5751ebb808939d528b97441411d8b41307858c54bc",
+    "/": "6e0ae0f44301dbf80660c51197401f543e1d91dc79bdcf6dddc384cdfd2f3dcf",
+    "/kids": "e0c842c68dc2ba86d22ecb500d9107f9cfdf33a729d6354db841eb5b6a345b9e",
+    "/matcher": "c5b22403ab5555d3ce1d6447a087f0c2c32b01927ec6a2a548663bbbf5f937d8",
+    "/method": "73088b1a692c7d4425ff189310d6e637c0abd78ec07e452d162012a092c2e86d",
+    "/parents": "4625afdfba2a736befeddc62e767b7f047e8ad0bc29e7a710419a3d1b4cb1902",
+    "/personal": "694cfeeb3342520721cfd06b510238931e7d2035dfd1a686aaeee564c8efe2dc",
+    "/phuket": "db64d1ce7b09af94bb1200db77a2890dccf88e200e15f0337c6ad8badb8e47ad",
+    "/pricing": "a73bf956bf4a613da0935870ee1287de4ddd70641bb6065f0a9efd674444e06e",
+    "/privacy": "7d04558095e496c9a80456729bbc9ded810da977e615d3acb6ff4e6267f58757",
+    "/projects": "9ba9df5f08c6676ad279c12552f6b512771ee1734a618eb8cd8594781c5f4fb0",
+    "/proof": "b9cf0e9946aee81a2300ac251f122696a49bcd6032a800b44af59741ec8b8d16",
+    "/safety": "70de12224add43228c2cd7d0da68e197c37f404a88516266b1f57943d74afb56",
+    "/start": "9622dd293295bc6eb249820e164f61706e86dfddfc342d1767bb2abba23cc8d3",
+    "/studio": "69e78fcf4c78e3d6ca227ffd319c63b4ad7eb62848a27138789e5085974b3dd2",
+    "/teens": "7381e446ee2911b9c98ca31fcf711da316f44e6227c0c3b21e08759e04e2db70",
+    "/terms": "24e47359d09284644c4a0698e9b4cf08173903bc8efc2705cad1f6dca0b6dd7f"
+  }
 }

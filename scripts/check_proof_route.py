@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 from pathlib import Path
+import json
 from source_paths import source_path
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+E32 = json.loads((ROOT / "deploy/live/_release.json").read_text(encoding="utf-8")).get("release_id") == "E3_2_RU_GLOSSARY_R1"
 errors = []
 checks = 0
 
@@ -23,17 +25,24 @@ common = [
     "BYTE-EXACT",
     "Release manifest",
 ]
+E32_PROOF_COMMON = {
+ "SITE AS PROOF":"САЙТ КАК ДОКАЗАТЕЛЬСТВО",
+ "Release manifest":"МАНИФЕСТ ВЫПУСКА",
+}
 for rel, en, label in proof_surfaces:
     text = source_path(ROOT, rel).read_text(encoding="utf-8")
     for marker in common:
         checks += 1
-        if marker not in text:
-            errors.append(f"{label}: missing {marker}")
+        required = E32_PROOF_COMMON.get(marker,marker) if E32 and not en else marker
+        if required not in text:
+            errors.append(f"{label}: missing {required}")
     honesty = (
         ["not a hidden AI call", "not a data-collection form", "What this site does", "not</em> prove"]
         if en
         else ["не скрытый AI-вызов", "не сбор персональных данных", "Что этот сайт", "не</em> доказывает"]
     )
+    if E32 and not en:
+        honesty = ["без скрытых вызовов ИИ","сбора персональных данных","Что этот сайт","не</em> доказывает"]
     for marker in honesty:
         checks += 1
         if marker not in text:
@@ -76,8 +85,9 @@ for marker in [
     "Proof stays — after the offer, not instead of it.",
 ]:
     checks += 1
-    if marker not in home_component:
-        errors.append(f"components/workshop/WorkshopHome.tsx: missing {marker!r}")
+    required = "Открыть примеры и проверку →" if E32 and marker == "Открыть Proof Lab →" else marker
+    if required not in home_component:
+        errors.append(f"components/workshop/WorkshopHome.tsx: missing {required!r}")
 
 home_static = {
     "deploy/live/index.html": ['href="/proof"', "ПРОВЕРЯЕМЫЙ ПОДХОД", "Открыть Proof Lab →", "Proof остаётся"],
@@ -85,6 +95,8 @@ home_static = {
 }
 for rel, markers in home_static.items():
     text = source_path(ROOT, rel).read_text(encoding="utf-8")
+    if E32 and rel == "deploy/live/index.html":
+        markers = [{"Proof остаётся":"Проверка остаётся","Открыть Proof Lab →":"Открыть примеры и проверку →"}.get(x,x) for x in markers]
     for marker in markers:
         checks += 1
         if marker not in text:

@@ -19,10 +19,10 @@ export function WorkshopHome({ locale = "ru" }: { locale?: WorkshopLocale }) {
     ["KIDS", "Create without outsourcing the thinking", "A project-based route with adult contact and privacy by default.", "/en/kids", "#c9a3ff"],
     ["BUSINESS", "Change one repeatable workflow", "Map, test, verify and hand off one bounded implementation.", "/en/business", "#f5f7f9"],
   ] : [
-    ["ВЗРОСЛЫЕ", "Собрать рабочий AI-процесс", "Research, тексты, код и автоматизация на ваших реальных задачах.", "/personal", "#8ab4ff"],
-    ["ПОДРОСТКИ", "Превратить интерес в портфолио", "Research, код и product thinking с законченной работой.", "/teens", "#5ee0c0"],
-    ["ДЕТИ", "Создавать, не отдавая мышление AI", "Проектный маршрут, контакт взрослого и приватность по умолчанию.", "/kids", "#c9a3ff"],
-    ["БИЗНЕС", "Изменить один повторяемый процесс", "Карта, тест, проверка и handoff одного ограниченного внедрения.", "/business", "#f5f7f9"],
+    ["ВЗРОСЛЫЕ", "Собрать рабочий ИИ-процесс", "Исследование, тексты, код и автоматизация на ваших реальных задачах.", "/personal", "#8ab4ff"],
+    ["ПОДРОСТКИ", "Превратить интерес в портфолио", "Исследование, код и продуктовое мышление с законченной работой.", "/teens", "#5ee0c0"],
+    ["ДЕТИ", "Создавать, не отдавая мышление ИИ", "Проектный маршрут, контакт взрослого и приватность по умолчанию.", "/kids", "#c9a3ff"],
+    ["БИЗНЕС", "Изменить один повторяемый процесс", "Карта, тест, проверка и передача одного ограниченного внедрения.", "/business", "#f5f7f9"],
   ];
   return (
     <WorkshopShell locale={locale} alternateHref={en ? "/" : "/en"}>
@@ -49,16 +49,16 @@ export function WorkshopHome({ locale = "ru" }: { locale?: WorkshopLocale }) {
           <div className={styles.sectionActions}><Link className="workshopButton workshopButtonSecondary" href={p("/parents")}>{en ? "For parents →" : "Родителям →"}</Link></div>
         </section>
         <section className={styles.darkBand}>
-          <div><span>{en ? "BUILD / BUSINESS" : "BUILD / БИЗНЕС"}</span><h2>{en ? "Not AI theatre. One bounded system with ownership." : "Не AI-театр. Одна ограниченная система с владельцем результата."}</h2><p>{en ? "AI Studio for an assistant, automation or product — built with explicit scope, verification and handoff." : "Studio для ассистента, автоматизации или продукта — с явным scope, проверкой и handoff."}</p></div>
+          <div><span>{en ? "BUILD / BUSINESS" : "СБОРКА / БИЗНЕС"}</span><h2>{en ? "Not AI theatre. One bounded system with ownership." : "Не ИИ-театр. Одна ограниченная система с владельцем результата."}</h2><p>{en ? "AI Studio for an assistant, automation or product — built with explicit scope, verification and handoff." : "Студия для ассистента, автоматизации или продукта — с явным объём работ, проверкой и передача."}</p></div>
           <div className={styles.bandSteps}><span>MAP</span><span>BUILD</span><span>VERIFY</span><span>HANDOFF</span></div>
-          <div className={styles.bandActions}><Link className="workshopButton workshopButtonLight" href={p("/business")}>{en ? "See business formats →" : "Посмотреть бизнес-форматы →"}</Link><Link className="workshopButton workshopButtonSecondary" href={studioHref}>{en ? "Open Studio →" : "Открыть Studio →"}</Link></div>
+          <div className={styles.bandActions}><Link className="workshopButton workshopButtonLight" href={p("/business")}>{en ? "See business formats →" : "Посмотреть бизнес-форматы →"}</Link><Link className="workshopButton workshopButtonSecondary" href={studioHref}>{en ? "Open Studio →" : "Открыть студию →"}</Link></div>
         </section>
         <section className={`${styles.section} ${styles.paper}`}>
           <div className={styles.sectionHead}><span>{en ? "CLEAR START" : "ПОНЯТНЫЙ СТАРТ"}</span><h2>{en ? "Personal packages stay transparent." : "Персональные пакеты остаются прозрачными."}</h2></div>
           <div className={styles.priceGrid}>{adult.map(plan => <article className={styles.priceCard} key={plan.id}><span>{plan.name}</span><strong>{plan.price}</strong><b>{en ? plan.sessions_en : plan.sessions_ru}</b><p>{en ? plan.summary_en : plan.summary_ru}</p></article>)}<Link className={`${styles.priceCard} ${styles.familyCard}`} href={p("/family")}><span>{family.name}</span><strong>{family.price}</strong><b>{en ? family.sessions_en : family.sessions_ru}</b><p>{en ? family.summary_en : family.summary_ru}</p></Link></div>
           <div className={styles.sectionActions}><Link className="workshopButton workshopButtonDark" href={p("/pricing")}>{en ? "All prices and formats →" : "Все цены и форматы →"}</Link></div>
         </section>
-        <section className={styles.proofBand}><div><span>{en ? "VERIFIABLE PRACTICE" : "ПРОВЕРЯЕМЫЙ ПОДХОД"}</span><h2>{en ? "Sources, tests, human gates and fallback remain visible." : "Источники, тесты, human gates и fallback остаются видимыми."}</h2></div><p>{en ? "Proof stays — after the offer, not instead of it." : "Proof остаётся — после оффера, а не вместо него."}</p><Link href={p("/proof")}>{en ? "Open Proof Lab →" : "Открыть Proof Lab →"}</Link></section>
+        <section className={styles.proofBand}><div><span>{en ? "VERIFIABLE PRACTICE" : "ПРОВЕРЯЕМЫЙ ПОДХОД"}</span><h2>{en ? "Sources, tests, human gates and fallback remain visible." : "Источники, тесты, проверка человеком и запасной вариант остаются видимыми."}</h2></div><p>{en ? "Proof stays — after the offer, not instead of it." : "Проверка остаётся — после оффера, а не вместо него."}</p><Link href={p("/proof")}>{en ? "Open Proof Lab →" : "Открыть примеры и проверку →"}</Link></section>
         <section className={styles.finalCta}><span>BRIEF</span><h2>{en ? "Describe the task, level and outcome." : "Опишите задачу, уровень и желаемый результат."}</h2><Link className="workshopButton workshopButtonPrimary" href={p("/start")}>{en ? "Start →" : "Начать →"}</Link></section>
       </main>
     </WorkshopShell>

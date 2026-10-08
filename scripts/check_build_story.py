@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 from pathlib import Path
+import json
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+E32 = json.loads((ROOT / "deploy/live/_release.json").read_text(encoding="utf-8")).get("release_id") == "E3_2_RU_GLOSSARY_R1"
 errors = []
 checks = 0
 
@@ -48,12 +50,24 @@ common = [
     "DEPLOYMENT BLOCKED",
     "/_release.json",
 ]
+E32_BUILD = {
+ "BUILD STORY / OPEN PROVENANCE": "КАК СДЕЛАН САЙТ / ОТКРЫТАЯ ИСТОРИЯ",
+ "TRANSFER":"ПЕРЕДАЧА","WEB RESEARCH":"WEB ИССЛЕДОВАНИЕ",
+ "LOCAL TEST STACK":"ЛОКАЛЬНЫЕ ПРОВЕРКИ",
+ "HUMAN REVIEW":"ПРОВЕРКА ЧЕЛОВЕКОМ",
+ "STATIC JS BROKE":"ОШИБКА СКРИПТА",
+ "METADATA DRIFT":"РАСХОЖДЕНИЕ МЕТАДАННЫХ",
+ "WRAPPER CORRUPTED":"ПОВРЕЖДЁН АРХИВ",
+ "SANDBOX DISAPPEARED":"ПРОПАЛА РАБОЧАЯ СРЕДА",
+ "DEPLOYMENT BLOCKED":"ВЫПУСК ЗАБЛОКИРОВАН",
+}
 for rel, en, label in build_surfaces:
     text = source_path(rel).read_text(encoding="utf-8")
     for marker in common:
         checks += 1
-        if marker not in text:
-            errors.append(f"{label}: missing {marker}")
+        required = E32_BUILD.get(marker,marker) if E32 and not en else marker
+        if required not in text:
+            errors.append(f"{label}: missing {required}")
     locale_markers = (
         ["AI did", "Human owned", "We can govern an AI build.",
          "Live-site audits and measurements, fact checks against primary sources, task specifications for the implementer. Claude Design — the “Workshop” design system: palette, typography, brand mark."]
@@ -61,6 +75,12 @@ for rel, en, label in build_surfaces:
         else ["AI did", "Human owned", "Мы умеем управлять AI-сборкой.",
               "Аудит и замеры живого сайта, проверка фактов по первоисточникам, спецификации задач для исполнителя. Claude Design — дизайн-система «Мастерская»: палитра, типографика, знак."]
     )
+    if E32 and not en:
+        locale_markers = [
+            "Что сделал ИИ", "За что отвечал человек",
+            "Мы умеем управлять ИИ-сборкой.",
+            "Аудит и замеры живого сайта, проверка фактов по первоисточникам, спецификации задач для исполнителя. Claude Дизайн — дизайн-система «Мастерская»: палитра, типографика, знак.",
+        ]
     for marker in locale_markers:
         checks += 1
         if marker not in text:
@@ -87,7 +107,8 @@ for rel, marker in mounts.items():
 home_component = (ROOT / "components/workshop/WorkshopHome.tsx").read_text(encoding="utf-8")
 for marker in ['p("/proof")', "Открыть Proof Lab →", "Open Proof Lab →"]:
     checks += 1
-    if marker not in home_component:
+    required = "Открыть примеры и проверку →" if E32 and marker == "Открыть Proof Lab →" else marker
+    if required not in home_component:
         errors.append(f"components/workshop/WorkshopHome.tsx: missing proof route {marker!r}")
 
 proof_discovery = {
@@ -98,6 +119,8 @@ proof_discovery = {
 }
 for rel, markers in proof_discovery.items():
     text = source_path(rel).read_text(encoding="utf-8")
+    if E32 and rel in ("app/proof/page.tsx", "deploy/live/proof.html"):
+        markers = [{"PROVENANCE":"ПРОИСХОЖДЕНИЕ","Build Log":"Как сделан сайт"}.get(x,x) for x in markers]
     for marker in markers:
         checks += 1
         if marker not in text:

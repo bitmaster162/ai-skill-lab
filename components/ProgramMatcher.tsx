@@ -18,28 +18,28 @@ type RouteResult = { status: "ok" | "fallback"; package: RoutePackage; steps: [s
 
 const copy = {
   ru: {
-    privacy: "AI-подбор запускается только по кнопке · ввод matcher не хранит",
+    privacy: "ИИ-подбор запускается только по кнопке · ввод подбор программы не хранит",
     audience: "1. Для кого маршрут?",
     goal: "2. Что важнее всего?",
     depth: "3. Насколько глубоко хотите зайти?",
     goalText: "4. Коротко опишите цель",
-    goalPlaceholder: "Например: хочу собрать AI-агента для research и научиться проверять его выводы.",
+    goalPlaceholder: "Например: хочу собрать ИИ-агента для исследование и научиться проверять его выводы.",
     audienceOptions: [["adult","Взрослый"],["kids","Ребёнок 8–13"],["teens","Подросток 14–18"],["business","Команда / бизнес"]],
     goalOptions: [["research","Исследования и решения"],["create","Контент и проекты"],["automate","Автоматизация / агенты"],["team","Рабочий процесс команды"]],
     depthOptions: [["intro","Понять и попробовать"],["core","Собрать рабочую систему"],["deep","Сделать сильный финальный проект"]],
-    run: "Подобрать маршрут с AI",
+    run: "Подобрать маршрут с ИИ",
     running: "Подбираем…",
     resultLabel: "Стартовая рекомендация",
     noResult: "Выберите три варианта и опишите цель. До нажатия кнопки ничего не отправляется.",
     why: "Следующие шаги",
-    note: "Результат автоматический: это не обещание результата и не подтверждение fit. Scope и условия сверяются человеком.",
-    unavailable: "AI-маршрут сейчас недоступен. Показана локальная рекомендация по той же таблице пакетов.",
+    note: "Результат автоматический: это не обещание результата и не подтверждение соответствие. Объём работ и условия сверяются человеком.",
+    unavailable: "ИИ-маршрут сейчас недоступен. Показана локальная рекомендация по той же таблице пакетов.",
     secret: "Похоже, в цели есть секрет или ключ. Удалите его: такие данные не передаются модели.",
-    copy: "Скопировать brief", copied: "Скопировано", copyError: "Не удалось скопировать", reset: "Сбросить",
-    leadTitle: "Отправить этот brief",
+    copy: "Скопировать короткое описание задачи", copied: "Скопировано", copyError: "Не удалось скопировать", reset: "Сбросить",
+    leadTitle: "Отправить этот короткое описание задачи",
     leadName: "Имя", leadContact: "Как связаться", leadConsent: "Согласен(на) на обработку этой заявки по правилам конфиденциальности.",
     adult: "Я совершеннолетний взрослый, организующий обучение; контакт принадлежит взрослому.",
-    send: "Отправить brief", sending: "Отправляем…", sent: "Brief отправлен. Ответим в течение 1–2 рабочих дней.", sendError: "Не удалось отправить brief. Можно использовать прямой канал связи.",
+    send: "Отправить короткое описание задачи", sending: "Отправляем…", sent: "Короткое описание задачи отправлен. Ответим в течение 1–2 рабочих дней.", sendError: "Не удалось отправить короткое описание задачи. Можно использовать прямой канал связи.",
   },
   en: {
     privacy: "AI routing runs only after you press the button · matcher input is not stored",
@@ -73,7 +73,7 @@ function localPackage(audience: Audience, goal: Goal, depth: Depth, locale: Work
     const b=commercialFacts.business;
     if (goal==="automate" || depth==="deep") return {id:"business:implementation_pilot",name:en?b.implementation_pilot.name_en:b.implementation_pilot.name_ru,price:en?`from ${b.implementation_pilot.price_from}`:`от ${b.implementation_pilot.price_from}`,sessions:en?`scope cap ${b.implementation_pilot.scope_cap_hours} hours`:`потолок scope ${b.implementation_pilot.scope_cap_hours} часов`};
     if (goal==="team") return {id:"business:team_training",name:en?b.team_training.name_en:b.team_training.name_ru,price:en?`from ${b.team_training.price_from_per_session}/session`:`от ${b.team_training.price_from_per_session}/сессия`,sessions:en?`minimum ${b.team_training.min_sessions} sessions`:`минимум ${b.team_training.min_sessions} занятия`};
-    return {id:"business:workflow_audit",name:en?b.workflow_audit.name_en:b.workflow_audit.name_ru,price:b.workflow_audit.price,sessions:en?"fixed scope":"фиксированный scope"};
+    return {id:"business:workflow_audit",name:en?b.workflow_audit.name_en:b.workflow_audit.name_ru,price:b.workflow_audit.price,sessions:en?"fixed scope":"фиксированный объём работ"};
   }
   const index=depth==="deep"?2:depth==="core"?1:0;
   const plan=commercialFacts.tracks[audience][index];
@@ -172,7 +172,7 @@ export function ProgramMatcher({ locale="ru" }: { locale?: MatcherLocale }) {
           <h3>{t.leadTitle}</h3>
           <div className="formRow"><label>{t.leadName}<input required maxLength={80} value={name} onChange={e=>setName(e.target.value)}/></label><label>{t.leadContact}<input required maxLength={120} value={contact} onChange={e=>setContact(e.target.value)}/></label></div>
           <label className="consentRow"><input type="checkbox" checked={privacy} onChange={e=>setPrivacy(e.target.checked)} required/><span>{t.leadConsent} <Link href={`${base}/privacy`}>{en?"Privacy notice":"Конфиденциальность"}</Link>.</span></label>
-          {youth?<label className="consentRow consentYouth"><input type="checkbox" checked={adultConfirmed} onChange={e=>setAdultConfirmed(e.target.checked)} required/><span>{t.adult} <Link href={`${base}/safety`}>{en?"Youth AI safety":"Безопасность детей и AI"}</Link>.</span></label>:null}
+          {youth?<label className="consentRow consentYouth"><input type="checkbox" checked={adultConfirmed} onChange={e=>setAdultConfirmed(e.target.checked)} required/><span>{t.adult} <Link href={`${base}/safety`}>{en?"Youth AI safety":"Безопасность детей и ИИ"}</Link>.</span></label>:null}
           <button className="button buttonPrimary" type="submit" disabled={leadState==="sending"||!privacy||(youth&&!adultConfirmed)}>{leadState==="sending"?t.sending:t.send}</button>
           {leadState==="sent"?<p className="formMessage success">{t.sent}</p>:leadState==="error"?<p className="formMessage error">{t.sendError}</p>:null}
         </form>

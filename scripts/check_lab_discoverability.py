@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import re,sys
+import re,sys,json
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';errors=[];checks=0
 WORKSHOP={'business.html','en.html','en/business.html','en/family.html','en/faq.html','en/kids.html','en/personal.html','en/pricing.html','en/start.html','en/teens.html','family.html','faq.html','index.html','kids.html','personal.html','pricing.html','start.html','teens.html','parents.html','curriculum.html','phuket.html','studio.html','build.html','matcher.html','challenge.html','proof.html','projects.html','en/parents.html','en/curriculum.html','en/phuket.html','en/studio.html','en/build.html','en/matcher.html','en/challenge.html','en/proof.html','en/projects.html','about.html','certificate.html','en/certificate.html','method.html','safety.html','privacy.html','terms.html','en/about.html','en/method.html','en/safety.html','en/privacy.html','en/terms.html'};WORKSHOP|={'guides.html','en/guides.html','guides/ai-safety-for-kids.html','en/guides/ai-safety-for-kids.html'};legacy=0
+release=json.loads((LIVE/'_release.json').read_text(encoding='utf8')).get('release_id')
+e32=release=='E3_2_RU_GLOSSARY_R1'
 for p in sorted(LIVE.rglob('*.html')):
  if p.name=='404.html':continue
  rel=p.relative_to(LIVE).as_posix();text=p.read_text(encoding='utf-8');en=rel=='en.html' or rel.startswith('en/');expect='/en/proof' if en else '/proof'
  if rel in WORKSHOP:
   checks+=5
   if '<header class="workshopHeader">' not in text:errors.append(f'{rel}: workshop header missing')
-  if text.count('aria-label="Proof Lab"')!=1:errors.append(f'{rel}: LAB action count')
+  label='aria-label="Инструменты"' if e32 and not en else 'aria-label="Proof Lab"'
+  if text.count(label)!=1:errors.append(f'{rel}: LAB action count')
   if f'href="{expect}"' not in text:errors.append(f'{rel}: proof route missing')
   if text.count('data-lab-command-open')!=1:errors.append(f'{rel}: command opener count')
   if text.count('aria-keyshortcuts="Control+K Meta+K"')!=1:errors.append(f'{rel}: shortcut count')
@@ -20,7 +23,7 @@ for p in sorted(LIVE.rglob('*.html')):
   if h.count('aria-label="Proof Lab">LAB</a>')!=1:errors.append(f'{rel}: legacy LAB count')
   if h.count(f'href="{expect}"')<1:errors.append(f'{rel}: legacy proof href')
 shell=(ROOT/'components/workshop/WorkshopShell.tsx').read_text(encoding='utf-8')
-for marker in ['aria-label="Proof Lab">LAB','<LabCommand locale={locale} />']:
+for marker in ([ 'aria-label={en ? "Proof Lab" : "Инструменты"}', '<LabCommand locale={locale} />'] if e32 else ['aria-label="Proof Lab">LAB','<LabCommand locale={locale} />']):
  checks+=1
  if marker not in shell:errors.append(f'WorkshopShell missing {marker}')
 print(f'lab_discoverability_checks={checks} workshop_pages={len(WORKSHOP)} legacy_pages={legacy}')

@@ -94,6 +94,8 @@ jobs:
         run: python scripts/check_e3_1_ru_seo.py
       - name: Validate E3.3 action-focused H1 localization
         run: python scripts/check_e3_3_h1.py
+      - name: Validate E3.2 Russian glossary reduction
+        run: python scripts/check_e3_2_ru_glossary.py
       - name: Smoke-test E3.8 event runtime
         run: node scripts/check_e3_8_event_runtime.mjs
       - name: Validate E3.8 event D1 schema

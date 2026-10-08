@@ -1,18 +1,28 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import sys
+import sys,json
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';errors=[];checks=0
 WORKSHOP={'business.html','en.html','en/business.html','en/family.html','en/faq.html','en/kids.html','en/personal.html','en/pricing.html','en/start.html','en/teens.html','family.html','faq.html','index.html','kids.html','personal.html','pricing.html','start.html','teens.html','parents.html','curriculum.html','phuket.html','studio.html','build.html','matcher.html','challenge.html','proof.html','projects.html','en/parents.html','en/curriculum.html','en/phuket.html','en/studio.html','en/build.html','en/matcher.html','en/challenge.html','en/proof.html','en/projects.html','about.html','certificate.html','en/certificate.html','method.html','safety.html','privacy.html','terms.html','en/about.html','en/method.html','en/safety.html','en/privacy.html','en/terms.html'}
 WORKSHOP|={'guides.html','en/guides.html','guides/ai-safety-for-kids.html','en/guides/ai-safety-for-kids.html'}
+release=json.loads((LIVE/'_release.json').read_text(encoding='utf8')).get('release_id')
+e32=release=='E3_2_RU_GLOSSARY_R1'
 pages=[p for p in sorted(LIVE.rglob('*.html')) if p.name!='404.html'];legacy=0
 for p in pages:
  rel=p.relative_to(LIVE).as_posix();t=p.read_text(encoding='utf-8')
  if rel in WORKSHOP:
-  for token,count in [('id="lab-command"',1),('src="/lab-command.js"',1),('aria-keyshortcuts="Control+K Meta+K"',1),('data-lab-command-open',1),('<span data-kbd-mod>Ctrl</span> K',1)]:
+  en=rel=='en.html' or rel.startswith('en/')
+  tokens=[('id="lab-command"',1),('src="/lab-command.js"',1),('aria-keyshortcuts="Control+K Meta+K"',1),('data-lab-command-open',1)]
+  tokens.append(('hidden type="button" data-lab-command-open',1) if e32 and not en else ('<span data-kbd-mod>Ctrl</span> K',1))
+  for token,count in tokens:
    checks+=1
    if t.count(token)!=count:errors.append(f'{rel}: {token} count={t.count(token)} expected={count}')
   checks+=1
   if '>⌘K</button>' in t:errors.append(f'{rel}: raw Apple-only shortcut label remains')
+  if e32 and not en:
+   checks+=2
+   header=t.split('</header>',1)[0]
+   if 'Ctrl K' in header:errors.append(f'{rel}: RU header still exposes Ctrl K')
+   if 'aria-label="Открыть инструменты"' not in header:errors.append(f'{rel}: RU command accessible label')
  else:
   legacy+=1
 src=(ROOT/'components/LabCommand.tsx').read_text(encoding='utf-8')

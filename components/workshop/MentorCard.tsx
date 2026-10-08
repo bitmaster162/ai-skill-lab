@@ -18,7 +18,7 @@ export function MentorCard({ locale = "ru" }: { locale?: WorkshopLocale }) {
           />
         </div>
         <div className={styles.mentorCopy}>
-          <span className={styles.mentorEyebrow}>{en ? "MENTOR · HUMAN IN THE LOOP" : "НАСТАВНИК · HUMAN IN THE LOOP"}</span>
+          <span className={styles.mentorEyebrow}>{en ? "MENTOR · HUMAN IN THE LOOP" : "НАСТАВНИК · ПРОВЕРКА ЧЕЛОВЕКОМ"}</span>
           <h2>{mentorProfile.name[locale]}</h2>
           <strong>{mentorProfile.role[locale]}</strong>
           <p>{mentorProfile.summary[locale]}</p>

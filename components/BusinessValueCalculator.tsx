@@ -19,7 +19,7 @@ const copy = {
     hoursMonth: "ч / мес",
     perHour: "/ч",
     perMonth: "/ мес",
-    action: "Открыть Start для обсуждения →",
+    action: "Открыть заявку для обсуждения →",
     note: "Это сценарий чувствительности, а не прогноз и не обещание экономии. Формула не учитывает стоимость внедрения, модели/API, интеграций, контроля качества, ошибок, налогов или то, будет ли высвобождённое время реально монетизировано.",
     formula: "Формула: люди × часы рутины/нед × 52/12 × выбранная доля высвобождения × стоимость часа.",
     briefTitle: "AI Skill Lab — Business capacity scenario",
@@ -75,7 +75,7 @@ export function BusinessValueCalculator({ locale = "ru" }: { locale?: Locale }) 
     `${t.recoverable}: ${recoverable}%`,
     `${t.recoverableHours}: ~${number(values.recoverableHours)} ${t.hoursMonth}`,
     `${t.grossValue}: ~${money(values.grossValue)} ${t.perMonth}`,
-    locale === "ru" ? "Статус: scenario only · не прогноз · требуется human validation процесса." : "Status: scenario only · not a forecast · process assumptions require human validation.",
+    locale === "ru" ? "Статус: сценарий only · не прогноз · требуется человек проверка процесса." : "Status: scenario only · not a forecast · process assumptions require human validation.",
   ].join("\n");
 
   const startHref = locale === "ru" ? "/start#business-brief" : "/en/start#business-brief";
@@ -95,7 +95,7 @@ export function BusinessValueCalculator({ locale = "ru" }: { locale?: Locale }) 
     </div>
     <p className="businessValueFormula">{t.formula}</p>
     <p className="businessValueNote">{t.note}</p>
-    <details className="businessValueBrief"><summary>{locale === "ru" ? "Текст для brief — скопируйте вручную" : "Brief text — copy manually"}</summary><pre data-bv-brief>{interactive ? brief : ""}</pre></details>
+    <details className="businessValueBrief"><summary>{locale === "ru" ? "Текст для короткое описание задачи — скопируйте вручную" : "Brief text — copy manually"}</summary><pre data-bv-brief>{interactive ? brief : ""}</pre></details>
     <noscript><p>{locale === "ru" ? "JavaScript выключен: показан исходный сценарий; поля недоступны." : "JavaScript is disabled: the initial scenario is shown; inputs are unavailable."}</p></noscript>
     <div className="heroActions"><a className="button buttonPrimary" href={startHref}>{t.action}</a></div>
   </div>;
