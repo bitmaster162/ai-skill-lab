@@ -19,8 +19,9 @@ seo_title: "..."
 description: "..."
 reviewed: YYYY-MM-DD
 next_review: YYYY-MM-DD
-sources: [...]
-schema: [...]
+related: [/safety, /parents, /kids]
+schema: [Article, BreadcrumbList]
+research_source: "<reviewed evidence and attribution>"
 ---
 ```
 
@@ -37,12 +38,15 @@ seo_title: "..."
 description: "..."
 reviewed: YYYY-MM-DD
 next_review: YYYY-MM-DD
-sources: [...]
-schema: [...]
+related: [/en/safety, /en/parents, /en/kids]
+schema: [Article, BreadcrumbList]
+research_source: "<faithful translation of reviewed attribution>"
 ---
 ```
 
-If a field exists in the source, keep `reviewed`, `next_review`, `sources` and `schema` unchanged. Translate `title`, `seo_title` and `description`; keep `seo_title` at 60 characters or fewer and `description` at 160 characters or fewer.
+The E2 generator requires `site`, `path`, `alternate`, `lang`, `title`, `seo_title`, `description`, `reviewed`, `next_review`, `related`, `schema`, and `research_source`. It does **not** use a `sources` frontmatter field. The examples above show existing E2 related-route conventions; adapt them only to real published counterparts, without inventing routes or sources. This README is an operator template, not a publishable guide.
+
+Keep `reviewed`, `next_review` and `schema` unchanged between languages. Translate `title`, `seo_title`, `description` and the wording of `research_source` without changing the evidence, source identity or attribution. Localise the `related` internal links to their existing EN equivalents; external source URLs must remain identical. Keep `seo_title` at 60 characters or fewer and `description` at 160 characters or fewer for new content.
 
 ## Translation rules · T1.2
 

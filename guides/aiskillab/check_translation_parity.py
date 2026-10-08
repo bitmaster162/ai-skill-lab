@@ -10,6 +10,10 @@ import sys
 ROOT = Path(__file__).resolve().parents[2]
 GUIDES = ROOT / "guides" / "aiskillab"
 README = GUIDES / "README.md"
+REQUIRED_E2_FIELDS = (
+    "site", "path", "alternate", "lang", "title", "seo_title", "description",
+    "reviewed", "next_review", "related", "schema", "research_source",
+)
 
 MONTHS = {
     "january": 1, "jan": 1, "января": 1,
@@ -51,6 +55,37 @@ def split_frontmatter(text: str) -> tuple[dict[str, str], str]:
         key, value = line.split(":", 1)
         data[key.strip()] = value.strip()
     return data, "\n".join(lines[end + 1 :])
+
+
+def required_metadata_errors(slug: str, lang: str, data: dict[str, str]) -> list[str]:
+    """Reject a translation pair whose metadata would fail the E2 source contract."""
+    errors: list[str] = []
+    for field in REQUIRED_E2_FIELDS:
+        if not data.get(field, "").strip():
+            errors.append(f"{slug}: {lang} missing/empty required E2 field {field}")
+    for field in ("reviewed", "next_review"):
+        value = data.get(field, "")
+        if value and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
+            errors.append(f"{slug}: {lang} invalid {field} date {value}")
+    for field in ("related", "schema"):
+        value = data.get(field, "")
+        if value and not (value.startswith("[") and value.endswith("]")):
+            errors.append(f"{slug}: {lang} invalid E2 list field {field}")
+    schema = data.get("schema", "")
+    if schema.startswith("[") and schema.endswith("]"):
+        actual = {value.strip() for value in schema[1:-1].split(",") if value.strip()}
+        if actual != {"Article", "BreadcrumbList"}:
+            errors.append(f"{slug}: {lang} unexpected schema types {sorted(actual)}")
+    return errors
+
+
+def english_without_russian(ru_files: list[Path], en_files: list[Path]) -> list[str]:
+    ru_slugs = {path.name.removesuffix(".ru.md") for path in ru_files}
+    return sorted(
+        path.name.removesuffix(".en.md")
+        for path in en_files
+        if path.name.removesuffix(".en.md") not in ru_slugs
+    )
 
 
 def normalise_dates(text: str) -> str:
@@ -160,6 +195,8 @@ def compare_pair(ru_path: Path, en_path: Path) -> tuple[dict[str, int], list[str
         return {}, [f"{ru_path.stem}: {exc}"]
 
     slug = ru_path.name.removesuffix(".ru.md")
+    errors.extend(required_metadata_errors(slug, "ru", ru_fm))
+    errors.extend(required_metadata_errors(slug, "en", en_fm))
     expected_ru = f"/guides/{slug}"
     expected_en = f"/en/guides/{slug}"
     contracts = [
@@ -204,8 +241,11 @@ def main() -> int:
     errors: list[str] = []
     require_readme(errors)
     ru_files = sorted(GUIDES.glob("*.ru.md"))
+    en_files = sorted(GUIDES.glob("*.en.md"))
     if not ru_files:
         errors.append("no RU guide sources found")
+    for slug in english_without_russian(ru_files, en_files):
+        errors.append(f"{slug}: missing RU pair")
 
     pairs = 0
     for ru_path in ru_files:

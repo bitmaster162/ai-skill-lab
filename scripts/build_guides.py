@@ -111,7 +111,12 @@ def parse_guide(path: Path) -> dict:
 
 
 def guides() -> list[dict]:
-    result = [parse_guide(p) for p in sorted(GUIDE_DIR.glob("*.md"))]
+    sources = sorted(GUIDE_DIR.glob("*.md"))
+    # README documents the authoring contract and must never be published as an article.
+    unexpected = [p.name for p in sources if p.name != "README.md" and not p.name.endswith((".ru.md", ".en.md"))]
+    if unexpected:
+        raise RuntimeError(f"unexpected guide Markdown source(s): {unexpected}")
+    result = [parse_guide(p) for p in sources if p.name != "README.md"]
     if not result:
         raise RuntimeError("no guide markdown files")
     seen = set()
