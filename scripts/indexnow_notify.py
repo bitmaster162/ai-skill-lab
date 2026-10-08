@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+from guide_route_admission import admitted_route_count, require_public_html, require_canonical_urls
 import argparse
 import json
 import re
@@ -43,8 +44,7 @@ def read_key() -> str:
 def sitemap_urls() -> list[str]:
     text=(LIVE/"sitemap.xml").read_text(encoding="utf-8")
     urls=re.findall(r"<loc>(https://aiskillab\.work[^<]+)</loc>",text)
-    if len(urls)!=52 or len(set(urls))!=52:
-        raise ValueError(f"sitemap canonical URL authority drift count={len(urls)} unique={len(set(urls))}")
+    require_canonical_urls(urls, "IndexNow canonical sitemap URLs")
     return sorted(urls)
 
 def changed_paths(before: str, head: str) -> list[str]:

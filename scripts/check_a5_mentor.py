@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+from guide_route_admission import admitted_route_count, require_public_html, require_canonical_urls
 
 import hashlib
 import json
@@ -159,7 +160,8 @@ for label, css in [("source", source_css), ("static", static_css)]:
     req("font-size:" not in block, f"{label} A5 must not override typography size scale")
 
 public = [p for p in LIVE.rglob("*.html") if p.name != "404.html"]
-req(len(public) == 52, f"public route count {len(public)} != 52")
+require_public_html(LIVE)
+req(len(public) == admitted_route_count(), f"public route count {len(public)} != {admitted_route_count()}")
 
 builder = (ROOT / "scripts" / "build_a5_mentor.py").read_text(encoding="utf-8")
 for marker in ["A5_MENTOR_BUILD_PASS", ASSET_SHA256, "https://cal.com/robert-dumanyan-vlck0x", "6fbefde3096a05011dcbc911a5539253500389c9a63a330acf4503b039722418", "A5_MENTOR_START", 'data-a5-mentor="true"']:

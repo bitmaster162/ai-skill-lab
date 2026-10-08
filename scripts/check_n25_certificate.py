@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from guide_route_admission import admitted_route_count, require_public_html, require_route_set, require_canonical_urls
 from pathlib import Path
 import json
 from html.parser import HTMLParser
@@ -87,7 +88,7 @@ req(manifest.get("release_id") in {"N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS
 req(manifest.get("file_count")==96,"N25 static file_count 96")
 listed={x.get("path") for x in manifest.get("files",[])}
 req({"certificate.html","en/certificate.html"}<=listed,"manifest certificate pair")
-req(len([p for p in LIVE.rglob("*.html") if p.name!="404.html"])==52,"52 public HTML routes")
+req(require_public_html(LIVE)==admitted_route_count(),"approved public HTML routes")
 req(len(list(LIVE.rglob("*.html")))==53,"53 HTML including 404")
 
 print(f"N25_CERTIFICATE_CHECK checks={checks} public_routes=52 issued_records=0 minor_public_pii=0")

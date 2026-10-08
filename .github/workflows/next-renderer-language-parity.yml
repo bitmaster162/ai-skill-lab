@@ -26,6 +26,8 @@ jobs:
           cache-dependency-path: package-lock.json
       - name: Clean install
         run: npm ci --ignore-scripts --audit=false --fund=false
+      - name: Validate T1.5 approved guide routes (read-only)
+        run: python -B scripts/test_guide_route_admission.py
       - name: Build Next renderer
         run: npm run build
       - name: Verify generated html lang by canonical route
@@ -34,6 +36,9 @@ jobs:
           from pathlib import Path
           from html.parser import HTMLParser
           from urllib.parse import urlparse
+          import sys
+          sys.path.insert(0, 'scripts')
+          from guide_route_admission import admitted_route_count, require_route_set
 
           class P(HTMLParser):
               def __init__(self):
@@ -63,10 +68,10 @@ jobs:
                   )
               rows[route] = (path.as_posix(), parser.lang)
 
-          if len(rows) != 52:
-              raise SystemExit(
-                  f"LANG_PARITY_ROUTE_COUNT_FAIL expected=52 actual={len(rows)} routes={sorted(rows)}"
-              )
+          try:
+              require_route_set(rows, label="Next renderer canonical routes")
+          except ValueError as exc:
+              raise SystemExit(f"LANG_PARITY_ROUTE_ADMISSION_FAIL {exc}")
 
           bad = []
           ru = en = 0
@@ -79,7 +84,7 @@ jobs:
               if lang != expected:
                   bad.append((route, path, lang, expected))
 
-          if ru != 26 or en != 26:
+          if ru != admitted_route_count() // 2 or en != admitted_route_count() // 2:
               raise SystemExit(f"LANG_PARITY_LOCALE_COUNT_FAIL ru={ru} en={en}")
           if bad:
               for row in bad:
