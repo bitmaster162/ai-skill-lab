@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { WorkshopEditorial } from "@/components/workshop/WorkshopEditorial";
 import Link from "next/link";
 export const metadata: Metadata = {
-  title: { absolute: "Build Log — AI Skill Lab · Phuket, построен с AI" },
+  title: { absolute: "Build Log: разработка с ИИ — AI Skill Lab · Пхукет" },
   description: "Открытый build log AI Skill Lab: реальные итерации, ошибки, AI-роль, human gates, автоматические проверки и release engineering.",
   alternates: { canonical: "/build", languages: { ru: "/build", en: "/en/build" } },
 };
@@ -32,7 +32,7 @@ export default function BuildPage() {
     <section className="proofHero"><div className="shell proofHeroGrid"><div>
       <span className="proofEyebrow"><i/> BUILD STORY / OPEN PROVENANCE</span>
       <h1>Этот сайт —<br/><em>наш собственный кейс.</em></h1>
-      <p>Не «сделано с AI» как наклейка. Ниже — реальная история итераций: что ускорял AI, что оставалось человеческим решением, какие ошибки нашли и какие проверки появились после них.</p>
+      <p>Не «сделано с ИИ» как наклейка. Ниже — реальная история итераций: что ускорял AI, что оставалось человеческим решением, какие ошибки нашли и какие проверки появились после них.</p>
       <div className="heroActions"><a className="button buttonLight" href="#timeline">Смотреть build log ↓</a><a className="button buttonGhost buttonOnDark" href="/_release.json">Текущий manifest ↗</a></div>
     </div><div className="proofConsole" aria-label="Build provenance console"><div className="proofConsoleTop"><span>AI SKILL LAB / BUILD PROVENANCE</span><b className="statusDot">EVIDENCE-SCOPED</b></div><div className="proofConsoleBody"><p><span>01</span><b>ai_role</b><strong>ACCELERATE</strong></p><p><span>02</span><b>human_role</b><strong>DECIDE</strong></p><p><span>03</span><b>machine_role</b><strong>VERIFY</strong></p><p><span>04</span><b>claims</b><strong>BOUNDED</strong></p><p><span>05</span><b>history</b><strong>PORTABLE</strong></p><p><span>06</span><b>release</b><strong>MANIFESTED</strong></p></div><div className="proofConsoleFoot"><span>IDEA</span><i/><span>ITERATE</span><i/><span>BREAK</span><i/><span>PROVE</span></div></div></div></section>
 

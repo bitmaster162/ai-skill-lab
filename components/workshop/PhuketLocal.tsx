@@ -8,7 +8,7 @@ type Area = {
 
 const areas: Record<WorkshopLocale, Area[]> = {
   ru: [
-    { name: "Rawai / Nai Harn", note: "Юг Phuket. Локальная встреча — только после подтверждения места и времени." },
+    { name: "Rawai / Nai Harn", note: "Юг Пхукета. Локальная встреча — только после подтверждения места и времени." },
     { name: "Chalong", note: "Южно-центральная часть острова. Подходит как ориентир для согласования очной сессии." },
     { name: "Kata / Karon", note: "Западное побережье. Доступность конкретного места подтверждаем до бронирования." },
     { name: "Phuket Town", note: "Центральная городская зона. Точка встречи определяется отдельно под конкретную сессию." },
@@ -43,7 +43,7 @@ export function PhuketLocal({ locale = "ru" }: { locale?: WorkshopLocale }) {
         <h2>{en ? "Real areas, no invented campus." : "Реальные районы, без выдуманного кампуса."}</h2>
         <p>{en
           ? "For local planning we use recognizable Phuket areas. They are coordination areas, not branches or permanent classrooms. The exact venue, availability and travel time are confirmed before booking."
-          : "Для локального планирования используем понятные районы Phuket. Это зоны координации, а не филиалы и не постоянные классы. Точное место, доступность и время в пути подтверждаем до бронирования."}</p>
+          : "Для локального планирования используем понятные районы Пхукета. Это зоны координации, а не филиалы и не постоянные классы. Точное место, доступность и время в пути подтверждаем до бронирования."}</p>
       </div>
       <div className={styles.phuketAreaGrid}>
         {areas[locale].map((area) => <article key={area.name}>

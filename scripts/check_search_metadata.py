@@ -68,10 +68,10 @@ DESCRIPTION_120_155 = {
     "/en/start",
 }
 RU_TITLE_CONTRACT = {
-    "/faq": "Вопросы и ответы — AI Skill Lab · Phuket",
-    "/privacy": "Политика приватности — AI Skill Lab · Phuket",
-    "/safety": "Безопасность детей и подростков — AI Skill Lab · Phuket",
-    "/terms": "Условия обучения — AI Skill Lab · Phuket",
+    "/faq": "Вопросы об обучении ИИ — AI Skill Lab · Пхукет",
+    "/privacy": "Приватность при обучении ИИ — AI Skill Lab · Пхукет",
+    "/safety": "Безопасность детей при работе с ИИ — AI Skill Lab · Пхукет",
+    "/terms": "Условия обучения ИИ — AI Skill Lab · Пхукет",
 }
 RU_TITLE_SOURCE = {route: "app" + route + "/page.tsx" for route in RU_TITLE_CONTRACT}
 TITLE_CONTRACT = {
@@ -80,8 +80,8 @@ TITLE_CONTRACT = {
     "/en/start": "Start — pick a track and a first task | AI Skill Lab · Phuket",
     "/en/terms": "Terms of service | AI Skill Lab · Phuket",
     "/en/privacy": "Privacy policy and data handling | AI Skill Lab · Phuket",
-    "/about": "О проекте: как устроены занятия | AI Skill Lab · Phuket",
-    "/parents": "Родителям — AI Skill Lab · Phuket",
+    "/about": "О проекте: обучение ИИ — AI Skill Lab · Пхукет",
+    "/parents": "Родителям: обучение ИИ — AI Skill Lab · Пхукет",
 }
 
 
@@ -552,7 +552,7 @@ def main() -> int:
             fail(errors, route, "og:description must equal meta description")
         if og.get("og:url") != expected_url:
             fail(errors, route, "og:url must equal canonical")
-        if RELEASE in {"OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1"} and route in OG20_META:
+        if RELEASE in {"OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1"} and route in OG20_META:
             og_file, expected_og_alt = OG20_META[route]
             expected_og_image = f"{ORIGIN}/{og_file}"
         else:

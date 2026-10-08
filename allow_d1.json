@@ -1,5 +1,5 @@
 {
- "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below. E2: guides permits only the global Guides footer link plus the exact parent-checklist text/link on /kids, /parents, /safety and EN pairs. N15: agent-safety permits only the exact generated lesson text and its three cited source links on /personal, /business, /teens and EN pairs. A4: Phuket local permits only the exact generated local-areas/formats text on /phuket and /en/phuket; no links or meta changes. A3: Cal.com permits only the exact 15-minute booking URL on /start and /en/start; no text or meta changes. A5: mentor card permits only exact mentor text, GitHub/LinkedIn links and mentor aria/alt text on /, /en, /about and /en/about. E1.3: post-submit permits only the exact diagnostic/Telegram continuation labels on /start and /en/start; success feedback remains runtime-only. A8: Prompt Auditor permits only the exact RU/EN home demo copy, textarea labels/placeholders, and the exact Prompt Auditor privacy disclosure on /privacy and /en/privacy. A9: /projects permits only the provenance-bound real-build section, five exact public GitHub repository links, and the paired RU/EN project metadata/hero update; the nine existing example formats remain explicitly non-testimonial. N25: /method and /en/method may add one internal Completion record link; /certificate routes are net-new and are governed by the N25 checker. E3.8: разрешён только first-party счётчик семи lead/contact событий без персональных данных и одна точная privacy-фраза RU/EN.",
+ "_about": "D1 allow-list, Claude 2026-09-26. Only these additions are approved: the contact block (D-2, reply time from Robert: 1–2 business days) and the /safety age table (D-4, verified 2026-09-26). Everything else must stay identical to the baseline. R158: F1.2 matcher v2 permits only route-scoped matcher/proof truth changes below. E2: guides permits only the global Guides footer link plus the exact parent-checklist text/link on /kids, /parents, /safety and EN pairs. N15: agent-safety permits only the exact generated lesson text and its three cited source links on /personal, /business, /teens and EN pairs. A4: Phuket local permits only the exact generated local-areas/formats text on /phuket and /en/phuket; no links or meta changes. A3: Cal.com permits only the exact 15-minute booking URL on /start and /en/start; no text or meta changes. A5: mentor card permits only exact mentor text, GitHub/LinkedIn links and mentor aria/alt text on /, /en, /about and /en/about. E1.3: post-submit permits only the exact diagnostic/Telegram continuation labels on /start and /en/start; success feedback remains runtime-only. A8: Prompt Auditor permits only the exact RU/EN home demo copy, textarea labels/placeholders, and the exact Prompt Auditor privacy disclosure on /privacy and /en/privacy. A9: /projects permits only the provenance-bound real-build section, five exact public GitHub repository links, and the paired RU/EN project metadata/hero update; the nine existing example formats remain explicitly non-testimonial. N25: /method and /en/method may add one internal Completion record link; /certificate routes are net-new and are governed by the N25 checker. E3.8: разрешён только first-party счётчик семи lead/contact событий без персональных данных и одна точная privacy-фраза RU/EN. E3.1: route-scoped approved Russian SEO title/description, H1 lexical localization, first-lead ИИ/нейросети and visible Phuket→Пхукет only; exact eight SEO pairs are independently verified by scripts/check_e3_1_ru_seo.py; no commercial facts, links or third-party fields changed.",
  "phrases": {
   "ru": [
    "Как написать",
@@ -31,7 +31,9 @@
    "Подростки",
    "Родителям",
    "Взрослые",
-   "Бизнес"
+   "Бизнес",
+   "Практический AI · online / Phuket",
+   "Практический ИИ · онлайн / Пхукет"
   ],
   "en": [
    "How to reach us",
@@ -69,7 +71,8 @@
  "route_phrases": {
   "/start": [
    "записаться на диагностику",
-   "написать в telegram"
+   "написать в telegram",
+   "для обучения ии"
   ],
   "/en/start": [
    "book diagnostic",
@@ -156,7 +159,8 @@
    "только контекст, необходимый для задачи",
    "считать ответ правильным",
    "проверить утверждения и источники и исправить результат при необходимости",
-   "проверить ответы"
+   "проверить ответы",
+   "работе с ии"
   ],
   "/en/safety": [
    "Age rules of the services",
@@ -247,7 +251,8 @@
    "Защита от злоупотреблений AI-route",
    "Для точного ограничения частоты ingress получает сетевой IP клиента от хостинг-платформы и сразу преобразует его в HMAC-token. Сырой IP не записывается в таблицу AI Skill Lab для route-limit. В этой таблице хранятся только request ID, HMAC-token и техническая отметка времени. Плановый cleanup удаляет rate-limit записи старше 24 часов. Token используется только для ограничения частоты и защиты AI-route, а не для рекламного профилирования.",
    "если ai-route включён, он запускается только после нажатия кнопки пользователем. в /api/route передаются либо выбранная аудитория, три ответа matcher и текст цели, либо текст промпта из prompt auditor. перед обращением к модели сервер проверяет ввод на шаблоны секретов и ключей; обнаруженный секрет блокируется до вызова модели. для ai-подбора или prompt auditor сервер может передать эти данные в настроенную бесплатную модель через openrouter api. код ai skill lab не записывает текст цели, ответы matcher или текст prompt auditor в собственную таблицу rate-limit.",
-   "сайт ведёт first-party счётчик событий заявки и переходов по каналам связи без персональных данных и cookie: сохраняются только тип события, страница, язык и дневной счётчик; имена, контакты и текст формы туда не передаются."
+   "сайт ведёт first-party счётчик событий заявки и переходов по каналам связи без персональных данных и cookie: сохраняются только тип события, страница, язык и дневной счётчик; имена, контакты и текст формы туда не передаются.",
+   "для заявок на обучение ии"
   ],
   "/en/privacy": [
    "AI routing and OpenRouter",
@@ -264,7 +269,8 @@
    "ad_trackers",
    "public_forms 1",
    "public_forms 2",
-   "Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Формы есть на /start и /matcher: matcher вызывает /api/route только по кнопке, а brief отправляет в /api/lead только по согласию."
+   "Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Формы есть на /start и /matcher: matcher вызывает /api/route только по кнопке, а brief отправляет в /api/lead только по согласию.",
+   "работать с ии."
   ],
   "/en/proof": [
    "The public site uses no analytics, cookies or trackers. The only form is the request form on /start; it submits to /api/lead.",
@@ -289,7 +295,10 @@
    "кнопке; при недоступности остаётся локальный fallback. ai-подбор запускается только по кнопке · ввод matcher",
    "4. коротко опишите цель подобрать маршрут с ai",
    "формату и пакету. никакие ответы",
-   "отправляются на сервер и не сохраняются. локально в браузере · ничего не отправляется"
+   "отправляются на сервер и не сохраняются. локально в браузере · ничего не отправляется",
+   "ai используется по кнопке",
+   "ии используется по кнопке",
+   "только из опубликованной таблицы программ. ии используется"
   ],
   "/en/matcher": [
    "ai + fallback",
@@ -304,7 +313,8 @@
    "чек-лист для родителей: возраст, данные, родительский контроль"
   ],
   "/parents": [
-   "чек-лист для родителей: возраст, данные, родительский контроль"
+   "чек-лист для родителей: возраст, данные, родительский контроль",
+   "навык работы с ии,"
   ],
   "/en/kids": [
    "parent checklist: age rules, data, parental controls"
@@ -313,13 +323,15 @@
    "parent checklist: age rules, data, parental controls"
   ],
   "/business": [
-   "безопасная работа с ai-агентами · 3 кейса + 5 правил не доверять плану. контролировать эффект. ai-агент умеет читать, принимать решения и использовать инструменты. риск начинается там, где правдоподобный ответ может сразу превратиться во внешний эффект. эти три документированных кейса показывают разные классы отказа. инцидент · jul 2025 replit agent удалил данные production-базы. во время эксперимента saastr агент replit удалил данные приложения из базы. replit позже публично подтвердил проблему: до нового разделения development/production изменения во время разработки могли затронуть production; данные удалось восстановить через rollback. урок: текстовый запрет вроде «ничего не менять» слабее технической границы, которая физически не даёт агенту писать в production. replit · 29.07.2025 ↗ уязвимость · cve-2025-32711 echoleak показал, что входящие данные могут стать инструкцией. исследователи показали цепочку indirect prompt injection в microsoft 365 copilot: специально подготовленное письмо могло попасть в контекст copilot и привести к утечке данных без клика по письму. microsoft исправила уязвимость; публично сообщалось, что признаков эксплуатации «в дикой природе» не было. урок: письмо, веб-страница, документ или комментарий — это недоверенные данные, даже если агент умеет их читать автоматически. sc media · microsoft cve-2025-32711 ↗ атака обнаружена · dec 2025 unit 42 увидела hidden prompts на мошеннических страницах. unit 42 обнаружила реальные веб-страницы с indirect prompt injection, включая попытку заставить ai-систему проверки рекламы одобрить мошенническое объявление. исследователи отдельно отмечают: подтверждённого успешного обхода deployed ad-checker в этом кейсе они не видели. урок: агент, который читает интернет, должен отделять содержимое страницы от команд и не получать лишние права только потому, что «это удобно». palo alto networks unit 42 ↗ пять рабочих правил полномочия должны быть явными. 01 · сначала read-only пусть агент сначала читает, планирует и показывает diff. право писать выдаётся отдельно и только там, где оно действительно нужно. 02 · минимальные права тестовая среда, отдельные аккаунты и ключи, запрет production-доступа по умолчанию. не давайте агенту больше полномочий, чем требует одна задача. 03 · человек перед необратимым действием удаление данных, публикация, отправка сообщения, покупка, платёж или изменение доступа требуют явного подтверждения перед эффектом. 04 · данные не равны инструкциям текст из письма, сайта, файла, issue или чата может быть враждебным. агент не должен превращать найденный контент в новые команды без отдельной проверки. 05 · проверка после эффекта нужны журнал действия, проверка результата, способ отката и стоп-условие. «агент сказал, что всё готово» — не доказательство. кейсы не равнозначны: replit — реальный операционный инцидент; echoleak — подтверждённая уязвимость, исправленная до публичного раскрытия, без известной эксплуатации; кейс unit 42 — обнаруженная вредоносная попытка prompt injection без подтверждённого успешного обхода deployed ad-review агента."
+   "безопасная работа с ai-агентами · 3 кейса + 5 правил не доверять плану. контролировать эффект. ai-агент умеет читать, принимать решения и использовать инструменты. риск начинается там, где правдоподобный ответ может сразу превратиться во внешний эффект. эти три документированных кейса показывают разные классы отказа. инцидент · jul 2025 replit agent удалил данные production-базы. во время эксперимента saastr агент replit удалил данные приложения из базы. replit позже публично подтвердил проблему: до нового разделения development/production изменения во время разработки могли затронуть production; данные удалось восстановить через rollback. урок: текстовый запрет вроде «ничего не менять» слабее технической границы, которая физически не даёт агенту писать в production. replit · 29.07.2025 ↗ уязвимость · cve-2025-32711 echoleak показал, что входящие данные могут стать инструкцией. исследователи показали цепочку indirect prompt injection в microsoft 365 copilot: специально подготовленное письмо могло попасть в контекст copilot и привести к утечке данных без клика по письму. microsoft исправила уязвимость; публично сообщалось, что признаков эксплуатации «в дикой природе» не было. урок: письмо, веб-страница, документ или комментарий — это недоверенные данные, даже если агент умеет их читать автоматически. sc media · microsoft cve-2025-32711 ↗ атака обнаружена · dec 2025 unit 42 увидела hidden prompts на мошеннических страницах. unit 42 обнаружила реальные веб-страницы с indirect prompt injection, включая попытку заставить ai-систему проверки рекламы одобрить мошенническое объявление. исследователи отдельно отмечают: подтверждённого успешного обхода deployed ad-checker в этом кейсе они не видели. урок: агент, который читает интернет, должен отделять содержимое страницы от команд и не получать лишние права только потому, что «это удобно». palo alto networks unit 42 ↗ пять рабочих правил полномочия должны быть явными. 01 · сначала read-only пусть агент сначала читает, планирует и показывает diff. право писать выдаётся отдельно и только там, где оно действительно нужно. 02 · минимальные права тестовая среда, отдельные аккаунты и ключи, запрет production-доступа по умолчанию. не давайте агенту больше полномочий, чем требует одна задача. 03 · человек перед необратимым действием удаление данных, публикация, отправка сообщения, покупка, платёж или изменение доступа требуют явного подтверждения перед эффектом. 04 · данные не равны инструкциям текст из письма, сайта, файла, issue или чата может быть враждебным. агент не должен превращать найденный контент в новые команды без отдельной проверки. 05 · проверка после эффекта нужны журнал действия, проверка результата, способ отката и стоп-условие. «агент сказал, что всё готово» — не доказательство. кейсы не равнозначны: replit — реальный операционный инцидент; echoleak — подтверждённая уязвимость, исправленная до публичного раскрытия, без известной эксплуатации; кейс unit 42 — обнаруженная вредоносная попытка prompt injection без подтверждённого успешного обхода deployed ad-review агента.",
+   "workflow с ии,"
   ],
   "/personal": [
    "безопасная работа с ai-агентами · 3 кейса + 5 правил не доверять плану. контролировать эффект. ai-агент умеет читать, принимать решения и использовать инструменты. риск начинается там, где правдоподобный ответ может сразу превратиться во внешний эффект. эти три документированных кейса показывают разные классы отказа. инцидент · jul 2025 replit agent удалил данные production-базы. во время эксперимента saastr агент replit удалил данные приложения из базы. replit позже публично подтвердил проблему: до нового разделения development/production изменения во время разработки могли затронуть production; данные удалось восстановить через rollback. урок: текстовый запрет вроде «ничего не менять» слабее технической границы, которая физически не даёт агенту писать в production. replit · 29.07.2025 ↗ уязвимость · cve-2025-32711 echoleak показал, что входящие данные могут стать инструкцией. исследователи показали цепочку indirect prompt injection в microsoft 365 copilot: специально подготовленное письмо могло попасть в контекст copilot и привести к утечке данных без клика по письму. microsoft исправила уязвимость; публично сообщалось, что признаков эксплуатации «в дикой природе» не было. урок: письмо, веб-страница, документ или комментарий — это недоверенные данные, даже если агент умеет их читать автоматически. sc media · microsoft cve-2025-32711 ↗ атака обнаружена · dec 2025 unit 42 увидела hidden prompts на мошеннических страницах. unit 42 обнаружила реальные веб-страницы с indirect prompt injection, включая попытку заставить ai-систему проверки рекламы одобрить мошенническое объявление. исследователи отдельно отмечают: подтверждённого успешного обхода deployed ad-checker в этом кейсе они не видели. урок: агент, который читает интернет, должен отделять содержимое страницы от команд и не получать лишние права только потому, что «это удобно». palo alto networks unit 42 ↗ пять рабочих правил полномочия должны быть явными. 01 · сначала read-only пусть агент сначала читает, планирует и показывает diff. право писать выдаётся отдельно и только там, где оно действительно нужно. 02 · минимальные права тестовая среда, отдельные аккаунты и ключи, запрет production-доступа по умолчанию. не давайте агенту больше полномочий, чем требует одна задача. 03 · человек перед необратимым действием удаление данных, публикация, отправка сообщения, покупка, платёж или изменение доступа требуют явного подтверждения перед эффектом. 04 · данные не равны инструкциям текст из письма, сайта, файла, issue или чата может быть враждебным. агент не должен превращать найденный контент в новые команды без отдельной проверки. 05 · проверка после эффекта нужны журнал действия, проверка результата, способ отката и стоп-условие. «агент сказал, что всё готово» — не доказательство. кейсы не равнозначны: replit — реальный операционный инцидент; echoleak — подтверждённая уязвимость, исправленная до публичного раскрытия, без известной эксплуатации; кейс unit 42 — обнаруженная вредоносная попытка prompt injection без подтверждённого успешного обхода deployed ad-review агента."
   ],
   "/teens": [
-   "безопасная работа с ai-агентами · 3 кейса + 5 правил не доверять плану. контролировать эффект. ai-агент умеет читать, принимать решения и использовать инструменты. риск начинается там, где правдоподобный ответ может сразу превратиться во внешний эффект. эти три документированных кейса показывают разные классы отказа. инцидент · jul 2025 replit agent удалил данные production-базы. во время эксперимента saastr агент replit удалил данные приложения из базы. replit позже публично подтвердил проблему: до нового разделения development/production изменения во время разработки могли затронуть production; данные удалось восстановить через rollback. урок: текстовый запрет вроде «ничего не менять» слабее технической границы, которая физически не даёт агенту писать в production. replit · 29.07.2025 ↗ уязвимость · cve-2025-32711 echoleak показал, что входящие данные могут стать инструкцией. исследователи показали цепочку indirect prompt injection в microsoft 365 copilot: специально подготовленное письмо могло попасть в контекст copilot и привести к утечке данных без клика по письму. microsoft исправила уязвимость; публично сообщалось, что признаков эксплуатации «в дикой природе» не было. урок: письмо, веб-страница, документ или комментарий — это недоверенные данные, даже если агент умеет их читать автоматически. sc media · microsoft cve-2025-32711 ↗ атака обнаружена · dec 2025 unit 42 увидела hidden prompts на мошеннических страницах. unit 42 обнаружила реальные веб-страницы с indirect prompt injection, включая попытку заставить ai-систему проверки рекламы одобрить мошенническое объявление. исследователи отдельно отмечают: подтверждённого успешного обхода deployed ad-checker в этом кейсе они не видели. урок: агент, который читает интернет, должен отделять содержимое страницы от команд и не получать лишние права только потому, что «это удобно». palo alto networks unit 42 ↗ пять рабочих правил полномочия должны быть явными. 01 · сначала read-only пусть агент сначала читает, планирует и показывает diff. право писать выдаётся отдельно и только там, где оно действительно нужно. 02 · минимальные права тестовая среда, отдельные аккаунты и ключи, запрет production-доступа по умолчанию. не давайте агенту больше полномочий, чем требует одна задача. 03 · человек перед необратимым действием удаление данных, публикация, отправка сообщения, покупка, платёж или изменение доступа требуют явного подтверждения перед эффектом. 04 · данные не равны инструкциям текст из письма, сайта, файла, issue или чата может быть враждебным. агент не должен превращать найденный контент в новые команды без отдельной проверки. 05 · проверка после эффекта нужны журнал действия, проверка результата, способ отката и стоп-условие. «агент сказал, что всё готово» — не доказательство. кейсы не равнозначны: replit — реальный операционный инцидент; echoleak — подтверждённая уязвимость, исправленная до публичного раскрытия, без известной эксплуатации; кейс unit 42 — обнаруженная вредоносная попытка prompt injection без подтверждённого успешного обхода deployed ad-review агента."
+   "безопасная работа с ai-агентами · 3 кейса + 5 правил не доверять плану. контролировать эффект. ai-агент умеет читать, принимать решения и использовать инструменты. риск начинается там, где правдоподобный ответ может сразу превратиться во внешний эффект. эти три документированных кейса показывают разные классы отказа. инцидент · jul 2025 replit agent удалил данные production-базы. во время эксперимента saastr агент replit удалил данные приложения из базы. replit позже публично подтвердил проблему: до нового разделения development/production изменения во время разработки могли затронуть production; данные удалось восстановить через rollback. урок: текстовый запрет вроде «ничего не менять» слабее технической границы, которая физически не даёт агенту писать в production. replit · 29.07.2025 ↗ уязвимость · cve-2025-32711 echoleak показал, что входящие данные могут стать инструкцией. исследователи показали цепочку indirect prompt injection в microsoft 365 copilot: специально подготовленное письмо могло попасть в контекст copilot и привести к утечке данных без клика по письму. microsoft исправила уязвимость; публично сообщалось, что признаков эксплуатации «в дикой природе» не было. урок: письмо, веб-страница, документ или комментарий — это недоверенные данные, даже если агент умеет их читать автоматически. sc media · microsoft cve-2025-32711 ↗ атака обнаружена · dec 2025 unit 42 увидела hidden prompts на мошеннических страницах. unit 42 обнаружила реальные веб-страницы с indirect prompt injection, включая попытку заставить ai-систему проверки рекламы одобрить мошенническое объявление. исследователи отдельно отмечают: подтверждённого успешного обхода deployed ad-checker в этом кейсе они не видели. урок: агент, который читает интернет, должен отделять содержимое страницы от команд и не получать лишние права только потому, что «это удобно». palo alto networks unit 42 ↗ пять рабочих правил полномочия должны быть явными. 01 · сначала read-only пусть агент сначала читает, планирует и показывает diff. право писать выдаётся отдельно и только там, где оно действительно нужно. 02 · минимальные права тестовая среда, отдельные аккаунты и ключи, запрет production-доступа по умолчанию. не давайте агенту больше полномочий, чем требует одна задача. 03 · человек перед необратимым действием удаление данных, публикация, отправка сообщения, покупка, платёж или изменение доступа требуют явного подтверждения перед эффектом. 04 · данные не равны инструкциям текст из письма, сайта, файла, issue или чата может быть враждебным. агент не должен превращать найденный контент в новые команды без отдельной проверки. 05 · проверка после эффекта нужны журнал действия, проверка результата, способ отката и стоп-условие. «агент сказал, что всё готово» — не доказательство. кейсы не равнозначны: replit — реальный операционный инцидент; echoleak — подтверждённая уязвимость, исправленная до публичного раскрытия, без известной эксплуатации; кейс unit 42 — обнаруженная вредоносная попытка prompt injection без подтверждённого успешного обхода deployed ad-review агента.",
+   "проект с ии."
   ],
   "/en/business": [
    "safe agent work · 3 cases + 5 rules do not trust the plan. control the effect. an ai agent can read, decide and use tools. the risk starts when a plausible answer can turn directly into an external effect. these three documented cases show different failure modes. incident · jul 2025 replit agent deleted production-app database data. during a saastr experiment, replit agent deleted app data from a database. replit later acknowledged the problem publicly: before its new development/production separation, changes made during development could affect production; the data was restored through rollback. lesson: a written instruction such as “do not change anything” is weaker than a technical boundary that prevents the agent from writing to production. replit · 29 jul 2025 ↗ vulnerability · cve-2025-32711 echoleak showed that incoming data can become an instruction. researchers demonstrated an indirect prompt-injection chain in microsoft 365 copilot: a crafted email could enter copilot context and enable data exfiltration without the user clicking the email. microsoft patched the issue; public reporting said microsoft had no evidence of in-the-wild exploitation. lesson: email, webpages, documents and comments are untrusted data even when an agent can read them automatically. sc media · microsoft cve-2025-32711 ↗ attack observed · dec 2025 unit 42 found hidden prompts on malicious webpages. unit 42 observed real webpages carrying indirect prompt injection, including an attempt to make an ai ad-review system approve a scam advertisement. the researchers explicitly noted that they had not confirmed a successful bypass of a deployed ad-checking agent in that case. lesson: an agent that reads the web must separate page content from commands, and it should not gain extra authority simply because automation is convenient. palo alto networks unit 42 ↗ five operating rules authority should be explicit. 01 · start read-only let the agent read, plan and show a diff first. grant write authority separately and only where one task actually requires it. 02 · least privilege use test environments, separate accounts and keys, and no production access by default. do not give an agent more authority than one task needs. 03 · human before irreversible effects data deletion, publishing, sending messages, purchasing, payment or access changes require explicit confirmation before the effect. 04 · data is not instruction text from email, webpages, files, issues or chat can be hostile. retrieved content must not become a new command without a separate trust check. 05 · verify after the effect keep an action log, verify the result, define rollback and a stop condition. “the agent said it is done” is not evidence. the cases are not equivalent: replit was a real operational incident; echoleak was a confirmed vulnerability patched before public disclosure with no known in-the-wild exploitation; the unit 42 case was an observed malicious injection attempt without confirmed successful bypass of a deployed ad-review agent."
@@ -331,17 +343,22 @@
    "safe agent work · 3 cases + 5 rules do not trust the plan. control the effect. an ai agent can read, decide and use tools. the risk starts when a plausible answer can turn directly into an external effect. these three documented cases show different failure modes. incident · jul 2025 replit agent deleted production-app database data. during a saastr experiment, replit agent deleted app data from a database. replit later acknowledged the problem publicly: before its new development/production separation, changes made during development could affect production; the data was restored through rollback. lesson: a written instruction such as “do not change anything” is weaker than a technical boundary that prevents the agent from writing to production. replit · 29 jul 2025 ↗ vulnerability · cve-2025-32711 echoleak showed that incoming data can become an instruction. researchers demonstrated an indirect prompt-injection chain in microsoft 365 copilot: a crafted email could enter copilot context and enable data exfiltration without the user clicking the email. microsoft patched the issue; public reporting said microsoft had no evidence of in-the-wild exploitation. lesson: email, webpages, documents and comments are untrusted data even when an agent can read them automatically. sc media · microsoft cve-2025-32711 ↗ attack observed · dec 2025 unit 42 found hidden prompts on malicious webpages. unit 42 observed real webpages carrying indirect prompt injection, including an attempt to make an ai ad-review system approve a scam advertisement. the researchers explicitly noted that they had not confirmed a successful bypass of a deployed ad-checking agent in that case. lesson: an agent that reads the web must separate page content from commands, and it should not gain extra authority simply because automation is convenient. palo alto networks unit 42 ↗ five operating rules authority should be explicit. 01 · start read-only let the agent read, plan and show a diff first. grant write authority separately and only where one task actually requires it. 02 · least privilege use test environments, separate accounts and keys, and no production access by default. do not give an agent more authority than one task needs. 03 · human before irreversible effects data deletion, publishing, sending messages, purchasing, payment or access changes require explicit confirmation before the effect. 04 · data is not instruction text from email, webpages, files, issues or chat can be hostile. retrieved content must not become a new command without a separate trust check. 05 · verify after the effect keep an action log, verify the result, define rollback and a stop condition. “the agent said it is done” is not evidence. the cases are not equivalent: replit was a real operational incident; echoleak was a confirmed vulnerability patched before public disclosure with no known in-the-wild exploitation; the unit 42 case was an observed malicious injection attempt without confirmed successful bypass of a deployed ad-review agent."
   ],
   "/phuket": [
-   "phuket · локальная координация реальные районы, без выдуманного кампуса. для локального планирования используем понятные районы phuket. это зоны координации, а не филиалы и не постоянные классы. точное место, доступность и время в пути подтверждаем до бронирования. rawai / nai harn юг phuket. локальная встреча — только после подтверждения места и времени. chalong южно-центральная часть острова. подходит как ориентир для согласования очной сессии. kata / karon западное побережье. доступность конкретного места подтверждаем до бронирования. phuket town центральная городская зона. точка встречи определяется отдельно под конкретную сессию. формат сначала маршрут обучения, потом география. local 1:1 очная персональная сессия место и время согласуем заранее. ai skill lab не заявляет постоянный учебный центр или публичный classroom address. online 1:1 персональная работа online экран, совместная сборка проектов и персональный маршрут работают независимо от страны. hybrid часть очно, часть online если программе нужен смешанный режим, очные и online-сессии можно сочетать после согласования маршрута. для несовершеннолетних контакт, расписание и согласование сервисов остаются за родителем или законным представителем."
+   "phuket · локальная координация реальные районы, без выдуманного кампуса. для локального планирования используем понятные районы phuket. это зоны координации, а не филиалы и не постоянные классы. точное место, доступность и время в пути подтверждаем до бронирования. rawai / nai harn юг phuket. локальная встреча — только после подтверждения места и времени. chalong южно-центральная часть острова. подходит как ориентир для согласования очной сессии. kata / karon западное побережье. доступность конкретного места подтверждаем до бронирования. phuket town центральная городская зона. точка встречи определяется отдельно под конкретную сессию. формат сначала маршрут обучения, потом география. local 1:1 очная персональная сессия место и время согласуем заранее. ai skill lab не заявляет постоянный учебный центр или публичный classroom address. online 1:1 персональная работа online экран, совместная сборка проектов и персональный маршрут работают независимо от страны. hybrid часть очно, часть online если программе нужен смешанный режим, очные и online-сессии можно сочетать после согласования маршрута. для несовершеннолетних контакт, расписание и согласование сервисов остаются за родителем или законным представителем.",
+   "занятия по ии.",
+   "пхукет · локальная координация реальные районы, без выдуманного кампуса. для локального планирования используем понятные районы пхукета. это зоны координации, а не филиалы и не постоянные классы. точное место, доступность и время в пути подтверждаем до бронирования. rawai / nai harn юг пхукета. локальная встреча — только после подтверждения места и времени. chalong южно-центральная часть острова. подходит как ориентир для согласования очной сессии. kata / karon западное побережье. доступность конкретного места подтверждаем до бронирования. phuket town центральная городская зона. точка встречи определяется отдельно под конкретную сессию. формат сначала маршрут обучения, потом география. local 1:1 очная персональная сессия место и время согласуем заранее. ai skill lab не заявляет постоянный учебный центр или публичный classroom address. online 1:1 персональная работа online экран, совместная сборка проектов и персональный маршрут работают независимо от страны. hybrid часть очно, часть online если программе нужен смешанный режим, очные и online-сессии можно сочетать после согласования маршрута. для несовершеннолетних контакт, расписание и согласование сервисов остаются за родителем или законным представителем.",
+   "phuket · локальная координация реальные районы, без выдуманного кампуса. для локального планирования используем понятные районы пхукета. это зоны координации, а не филиалы и не постоянные классы. точное место, доступность и время в пути подтверждаем до бронирования. rawai / nai harn юг пхукета. локальная встреча - только после подтверждения места и времени. chalong южно-центральная часть острова. подходит как ориентир для согласования очной сессии. kata / karon западное побережье. доступность конкретного места подтверждаем до бронирования. phuket town центральная городская зона. точка встречи определяется отдельно под конкретную сессию. формат сначала маршрут обучения, потом география. local 1:1 очная персональная сессия место и время согласуем заранее. ai skill lab не заявляет постоянный учебный центр или публичный classroom address. online 1:1 персональная работа online экран, совместная сборка проектов и персональный маршрут работают независимо от страны. hybrid часть очно, часть online если программе нужен смешанный режим, очные и online-сессии можно сочетать после согласования маршрута. для несовершеннолетних контакт, расписание и согласование сервисов остаются за родителем или законным представителем."
   ],
   "/en/phuket": [
    "phuket · local coordination real areas, no invented campus. for local planning we use recognizable phuket areas. they are coordination areas, not branches or permanent classrooms. the exact venue, availability and travel time are confirmed before booking. rawai / nai harn south phuket. an in-person session is confirmed only after venue and timing are agreed. chalong south-central phuket. used as a local coordination area for an agreed in-person session. kata / karon west coast. availability of a specific venue is confirmed before booking. phuket town central urban area. the meeting point is agreed separately for each session. format choose geography after the learning route. local 1:1 in-person one-to-one venue and timing are agreed in advance. ai skill lab does not claim a permanent school location or public classroom address. online 1:1 one-to-one online screen sharing, project building and a personal route work regardless of country. hybrid local plus online if a program benefits from both, in-person and online sessions can be combined after the route is agreed. for minors, contact, scheduling and service approval remain with a parent or legal guardian."
   ],
   "/": [
    "наставник · human in the loop роберт думанян основатель / преподаватель работает с ai-системами, research workflows, агентами, автоматизацией, decision workflows и цифровыми продуктами. на занятиях: цель → спецификация → сборка → проверка → результат. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗",
-   "запускается только по кнопке. текст передаётся настроенной модели через openrouter; ai skill lab его не сохраняет. не вставляйте пароли, ключи и приватные данные. ai prompt auditor ai prompt auditor вставьте рабочий запрос к llm - ai оценит его по 10-балльной шкале и предложит улучшенный вариант с пояснением. проверить промпт ai-оценка /10 пояснение улучшенный вариант это автоматическая оценка, а не универсальный стандарт качества. проверьте улучшенный промпт перед использованием. скопировать улучшенный промпт"
+   "запускается только по кнопке. текст передаётся настроенной модели через openrouter; ai skill lab его не сохраняет. не вставляйте пароли, ключи и приватные данные. ai prompt auditor ai prompt auditor вставьте рабочий запрос к llm - ai оценит его по 10-балльной шкале и предложит улучшенный вариант с пояснением. проверить промпт ai-оценка /10 пояснение улучшенный вариант это автоматическая оценка, а не универсальный стандарт качества. проверьте улучшенный промпт перед использованием. скопировать улучшенный промпт",
+   "обучение: искусственный интеллект (ии) и нейросети,"
   ],
   "/about": [
-   "наставник · human in the loop роберт думанян основатель / преподаватель работает с ai-системами, research workflows, агентами, автоматизацией, decision workflows и цифровыми продуктами. на занятиях: цель → спецификация → сборка → проверка → результат. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗"
+   "наставник · human in the loop роберт думанян основатель / преподаватель работает с ai-системами, research workflows, агентами, автоматизацией, decision workflows и цифровыми продуктами. на занятиях: цель → спецификация → сборка → проверка → результат. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗",
+   "обучение ии в"
   ],
   "/en": [
    "mentor · human in the loop robert dumanyan founder / instructor works with ai systems, research workflows, agents, automation, decision workflows and digital products. sessions follow the same discipline: goal → specification → build → verification → output. ai systems research workflows ai agents automation decision workflows digital products github ↗ linkedin ↗",
@@ -360,7 +377,8 @@
    "MEMORY · PUBLIC REPO LOCAL-FIRST / OPEN SOURCE 02 ContinuityOS Durable memory и continuity layer для AI-агентов и людей: canon, frontiers, open loops, checkpoints и handoff context. 01 Доказательство Публичный репозиторий и PyPI package; core memory работает локально на SQLite, поддерживает CLI, Python API, MCP и импорт AI-history из нескольких провайдеров. 02 Граница claims Demo доказывает bounded persistence через новый процесс, а не поведенческую идентичность модели или production security. GitHub ↗",
    "AGENT GOVERNANCE · PUBLIC REPO DETERMINISTIC REFERENCE 03 BitEvo Agent Authority Публичный reference package семи ворот Agent Authority & Evidence для проверки одного action-capable workflow. 01 Доказательство spec/gates.json, локальный deterministic evaluator, fail-closed validation и regression tests; package source-bound к публичной BitEvo реализации. 02 Граница claims Не выдаёт trust/safety score, не сертифицирует систему, не исполняет внешние действия и не запрашивает credentials. GitHub ↗",
    "AI PRODUCT · PUBLIC REPO PUBLIC PRODUCT / EVIDENCE SURFACE 04 BitEvo Agent Site Публичный продукт для authority-first AI-agent engineering, где SOURCE, BUILD, DEPLOYMENT, READBACK и EXTERNAL EFFECT разделены как разные классы доказательств. 01 Доказательство Astro site с provider-bound build receipts, deterministic release gates, CSP hash allowlist и раздельными Vercel / Cloudflare provider paths. 02 Граница claims Production promotion отделён от build/readback; публичный repository прямо фиксирует can_trade=false и capital_permission=DENY. GitHub ↗",
-   "CONTROL STACK · PUBLIC REPO VALIDATION-ONLY 05 TRIAXIS Versioned governance/control stack с deterministic validation assets для policy binding, external witnesses, execution reconciliation и rollback detection. 01 Доказательство Публичный репозиторий содержит executable validation harnesses для signed policy heads, quorum, execution ledger, provider reconciliation и completion witnesses. 02 Граница claims Repository прямо указывает: это не production gateway; validation results не доказывают production exactly-once behavior или complete mediation. GitHub ↗"
+   "CONTROL STACK · PUBLIC REPO VALIDATION-ONLY 05 TRIAXIS Versioned governance/control stack с deterministic validation assets для policy binding, external witnesses, execution reconciliation и rollback detection. 01 Доказательство Публичный репозиторий содержит executable validation harnesses для signed policy heads, quorum, execution ledger, provider reconciliation и completion witnesses. 02 Граница claims Repository прямо указывает: это не production gateway; validation results не доказывают production exactly-once behavior или complete mediation. GitHub ↗",
+   "real builds · public provenance реальные сборки. и project studio. сначала - публичные проекты роберта с ии, проверяемыми репозиториями и честными границами claims. ниже - 9 учебных примерных форматов; это не клиентские кейсы и не работы учеников. смотреть реальные проекты ↓ как мы проверяем ai →"
   ],
   "/en/projects": [
    "EXAMPLE OUTPUTS · NOT TESTIMONIALS Not a work gallery. Project Studio. Nine example formats show not just what can be built, but what good AI work contains: goal → AI role → human check → verifiable artifact. These are not claims about specific clients or learners. Explore projects ↓ How we verify AI →",
@@ -379,6 +397,9 @@
   ],
   "/en/method": [
    "Completion record →"
+  ],
+  "/challenge": [
+   "для работы с ии"
   ]
  },
  "links": {
@@ -411,7 +432,8 @@
    "/en/start#business-brief"
   ],
   "/start": [
-   "#contact-channels"
+   "#contact-channels",
+   "https://t.me/BiTFormer?text=AI%20Skill%20Lab%20%E2%80%94%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%0A%D0%9C%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%3A%20%D0%9B%D0%B8%D1%87%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%0A1.%20%D0%A6%D0%B5%D0%BB%D1%8C%20%D0%BD%D0%B0%20%D0%B1%D0%BB%D0%B8%D0%B6%D0%B0%D0%B9%D1%88%D0%B8%D0%B5%201%E2%80%933%20%D0%BC%D0%B5%D1%81%D1%8F%D1%86%D0%B0%3A%20%0A2.%20%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D1%8F%D1%8E%D1%82%D1%81%D1%8F%20%D1%81%D0%B5%D0%B9%D1%87%D0%B0%D1%81%3A%20%0A3.%20%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5%20AI-%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B%20%D1%83%D0%B6%D0%B5%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D1%82%D0%B5%3A%20%0A4.%20Online%20%2F%20Phuket%20%C2%B7%20RU%20%2F%20EN%3A%20"
   ],
   "/en/start": [
    "#contact-channels"
@@ -453,7 +475,8 @@
   ],
   "/start": [
    "/start#application-form",
-   "https://cal.com/robert-dumanyan-vlck0x/15min"
+   "https://cal.com/robert-dumanyan-vlck0x/15min",
+   "https://t.me/BiTFormer?text=AI%20Skill%20Lab%20%E2%80%94%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%0A%D0%9C%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%3A%20%D0%9B%D0%B8%D1%87%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%0A1.%20%D0%A6%D0%B5%D0%BB%D1%8C%20%D0%BD%D0%B0%20%D0%B1%D0%BB%D0%B8%D0%B6%D0%B0%D0%B9%D1%88%D0%B8%D0%B5%201%E2%80%933%20%D0%BC%D0%B5%D1%81%D1%8F%D1%86%D0%B0%3A%20%0A2.%20%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D1%8F%D1%8E%D1%82%D1%81%D1%8F%20%D1%81%D0%B5%D0%B9%D1%87%D0%B0%D1%81%3A%20%0A3.%20%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5%20AI-%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B%20%D1%83%D0%B6%D0%B5%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D1%82%D0%B5%3A%20%0A4.%20%D0%9E%D0%BD%D0%BB%D0%B0%D0%B9%D0%BD%20%2F%20%D0%9F%D1%85%D1%83%D0%BA%D0%B5%D1%82%20%C2%B7%20RU%20%2F%20EN%3A%20"
   ],
   "/kids": [
    "/start#application-form",
@@ -565,7 +588,9 @@
    "title"
   ],
   "/business": [
-   "title"
+   "title",
+   "description",
+   "h1"
   ],
   "/challenge": [
    "title"
@@ -654,10 +679,14 @@
    "title"
   ],
   "/": [
-   "title"
+   "title",
+   "description",
+   "h1"
   ],
   "/kids": [
-   "title"
+   "title",
+   "description",
+   "h1"
   ],
   "/matcher": [
    "title",
@@ -668,16 +697,22 @@
    "title"
   ],
   "/parents": [
-   "title"
+   "title",
+   "h1"
   ],
   "/personal": [
-   "title"
+   "title",
+   "description",
+   "h1"
   ],
   "/phuket": [
-   "title"
+   "title",
+   "description",
+   "h1"
   ],
   "/pricing": [
-   "title"
+   "title",
+   "description"
   ],
   "/privacy": [
    "title",
@@ -689,19 +724,23 @@
    "h1"
   ],
   "/proof": [
-   "title"
+   "title",
+   "h1"
   ],
   "/safety": [
    "title"
   ],
   "/start": [
-   "title"
+   "title",
+   "description"
   ],
   "/studio": [
    "title"
   ],
   "/teens": [
-   "title"
+   "title",
+   "description",
+   "h1"
   ],
   "/terms": [
    "title"

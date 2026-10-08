@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { LegalPage } from "@/components/LegalPage";
 
 export const metadata: Metadata = {
-  title: { absolute: "Политика приватности — AI Skill Lab · Phuket" },
+  title: { absolute: "Приватность при обучении ИИ — AI Skill Lab · Пхукет" },
   description: "Политика приватности AI Skill Lab: заявки, AI-route, pseudonymous rate limiting, прямые каналы, минимизация данных и защита сервиса.",
   alternates: { canonical: "/privacy", languages: { ru: "/privacy", en: "/en/privacy" } },
 };
 
 export default function PrivacyPage() {
-  return <LegalPage path="privacy" title="Конфиденциальность" intro="Как AI Skill Lab обрабатывает данные заявок, AI-route и технические данные защиты сервиса.">
+  return <LegalPage path="privacy" title="Конфиденциальность" intro="Как AI Skill Lab обрабатывает данные заявок на обучение ИИ, AI-route и технические данные защиты сервиса.">
     <h2>1. Что собирает форма</h2>
     <p>Форма может передавать имя совершеннолетнего заявителя или взрослого, организующего обучение, контакт для связи, выбранную аудиторию, описание цели, язык страницы и путь источника заявки. Сервис также создаёт технический request ID и отметку времени.</p>
 

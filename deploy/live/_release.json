@@ -13,8 +13,8 @@
     },
     {
       "path": "about.html",
-      "sha256": "67eb9c97aab682ddca44ef3d4e79f261f5f479260f862a15de955bdd7837f5f5",
-      "size": 12043
+      "sha256": "83e05fd4f175c0fdb8174a4545c0c7025ff09295151ae343aa09752683da9ac3",
+      "size": 12055
     },
     {
       "path": "apple-touch-icon.png",
@@ -23,28 +23,28 @@
     },
     {
       "path": "build.html",
-      "sha256": "e8aabe6f223cc586f0f76d774ddb1df2bae7d8fbae173e0c2e1bab8c7b9f13b6",
-      "size": 16801
+      "sha256": "cc6933428627b499ec1aa75bdb466c4ed8a04cf87baf0d60415b0ca534156b7b",
+      "size": 16853
     },
     {
       "path": "business.html",
-      "sha256": "b7281af1c1f123bf497f355c9889eba8cbedda7556c16af3a48512d5bc359e5d",
-      "size": 35158
+      "sha256": "d1c9140e501ff51a4a38c226c8547a24e0e08ee3c55ca205531df7f0d7c19226",
+      "size": 35401
     },
     {
       "path": "certificate.html",
-      "sha256": "b978e7bbda233841e3c1917c540f126525b6120e2bb42249e632791e5ac666d7",
-      "size": 12268
+      "sha256": "b7f532874ca39677628b730f31049bd3c73f14deac4b731eb3d61751458c9a12",
+      "size": 12283
     },
     {
       "path": "challenge.html",
-      "sha256": "52537cbb2e7d128d9205cbd28df85832dc63e79b564a833f7b5087719c859237",
-      "size": 13400
+      "sha256": "e4a984781c0b8039c73e12fb28a3fbb4d4c4277e49fef50f229b7a31061c7ee5",
+      "size": 13466
     },
     {
       "path": "curriculum.html",
-      "sha256": "68ca34b4315b458b2d1bc8054956c649ca457235e6dfc921aec4bde1c685e820",
-      "size": 17171
+      "sha256": "eebfef19c1edcdeca5590715b82c93cffefd0b733fdb592c625706637c7caf45",
+      "size": 17231
     },
     {
       "path": "en.html",
@@ -178,13 +178,13 @@
     },
     {
       "path": "family.html",
-      "sha256": "aa7841bfd13e35256c43212dd22ec1e7370a41068d4e39cbaa7e32e24d625c0a",
-      "size": 11207
+      "sha256": "56fe5aad36d4a2d08be60dcce4503b20d22255c2dc96fa71d463d769367b8277",
+      "size": 11213
     },
     {
       "path": "faq.html",
-      "sha256": "208afcad7c58f8c7fd848ceb06b3dffc349cf5b57ded1e9e65f725be97ad73c5",
-      "size": 15868
+      "sha256": "9c47e2677304610b7ccebdbcc83b61a4c1313f04fd2c2c592be5e48317010a3d",
+      "size": 15975
     },
     {
       "path": "favicon.ico",
@@ -208,13 +208,13 @@
     },
     {
       "path": "guides.html",
-      "sha256": "7888dd9aa159a52d7d538ab9550d1009f73dec69f323b796b3c36b3c455bcbb0",
-      "size": 7757
+      "sha256": "faa292779f8fdb4f05509560b9397ca68677044f0c3e60cb27167bdc63897501",
+      "size": 7865
     },
     {
       "path": "guides/ai-safety-for-kids.html",
-      "sha256": "9af5960b53562b0964e04fb91fd511c47c7f097aeefd12ddbb5bc78ede00ef28",
-      "size": 18761
+      "sha256": "fd436105cccb073d4a5594f8e4cf2dfe8e3559e671d61e1e7413b70cfb6259c6",
+      "size": 18789
     },
     {
       "path": "icon-192.png",
@@ -228,13 +228,13 @@
     },
     {
       "path": "index.html",
-      "sha256": "1c332f96dc53f713c3b120a2eef0d8ce5068fb9eb4ee04c156cf1e311ba29ca3",
-      "size": 16922
+      "sha256": "d623a217960abebf2748513daa10c9bace5bb38266216fa7c3979509c8269b52",
+      "size": 17305
     },
     {
       "path": "kids.html",
-      "sha256": "c267c76b1e6355535e567ea80780e25bf64ac7aeba4174146c46b11ba55246cd",
-      "size": 16077
+      "sha256": "310a1d8f3856da9d4dc506c65db4209cfd0941130b983632cee89fb60c739a8f",
+      "size": 16266
     },
     {
       "path": "lab-command.js",
@@ -258,13 +258,13 @@
     },
     {
       "path": "matcher.html",
-      "sha256": "62c37a84af7bc77be163394179aaa342ffed959496940c0d8d8e0b90cbeb9dd3",
-      "size": 12255
+      "sha256": "79afc7144f747068813a609039ef413ed6283265e8fa563839363dbe60ec9025",
+      "size": 12289
     },
     {
       "path": "method.html",
-      "sha256": "c606ba021b648d7ad5bb953e1859021a3226920be3811f897d2ae27c52ea665f",
-      "size": 8475
+      "sha256": "b803307e046fb0f9c868d9c54bd95de89df8ed8d679bd387ee3231c3852bd47a",
+      "size": 8527
     },
     {
       "path": "og-en-business.png",
@@ -373,28 +373,28 @@
     },
     {
       "path": "parents.html",
-      "sha256": "0caf3188f4fe5fd68d1ce2ff18309b0ad49c1170354e5467fc6152d14b54afc3",
-      "size": 14079
+      "sha256": "360e7e955b773d85ab6341f1e70e518b68bf74bea7a4c01e133bae74c8f73146",
+      "size": 14203
     },
     {
       "path": "personal.html",
-      "sha256": "fcfd8d7d9c9df8617082e16012b67d2eaa12503a3ef239d6415a3a5b4efdfbbb",
-      "size": 19142
+      "sha256": "9a9de0d342f68b6794481ae87c58da9f6dd6e08ee735017d7425acba28f7ec0d",
+      "size": 19233
     },
     {
       "path": "phuket.html",
-      "sha256": "ef793f7c902360a9620713b263c9c7ba00724c1f8ababa6a3297ab8a3b2b0b6d",
-      "size": 11444
+      "sha256": "e7841eaf58936ee109e26b79d8bdf99a67432e2c25227beb7b8aea77233435a1",
+      "size": 11643
     },
     {
       "path": "pricing.html",
-      "sha256": "00dcb87846d6a0a6e440ccb68918b5617630256c6f7333e6b2480d47fbd8f8c0",
-      "size": 18397
+      "sha256": "0088810a9f42af504258f20cb04556907e6cd7c093ea707d52e73fcafe95b546",
+      "size": 18661
     },
     {
       "path": "privacy.html",
-      "sha256": "47a7c1f3246f76a81165ebe612981ac3940a5702c27aef104a7345ce841def6d",
-      "size": 11308
+      "sha256": "6be8e38e3041ba95fddcb4246b84e9939bbc017bd39a00617a596df8da65cfcc",
+      "size": 11423
     },
     {
       "path": "project-filter.js",
@@ -403,8 +403,8 @@
     },
     {
       "path": "projects.html",
-      "sha256": "3e488ce03504bfb5a48b8bdae3d3f562b2a477f7a91560aeb89ca8f3158ea043",
-      "size": 25394
+      "sha256": "1cf49acbc76d1022333f5df7571ce241adfc1459107a44b7c09adae280bef11b",
+      "size": 25408
     },
     {
       "path": "prompt-auditor.js",
@@ -413,8 +413,8 @@
     },
     {
       "path": "proof.html",
-      "sha256": "7626057af072110669cc21dcbafc17ae7f2acfc3981729a5748f296df026c626",
-      "size": 26768
+      "sha256": "b40cfdd77ab342b72ee5e7821afd45e4c4d9f02a36e50b33c4ae7d3a8060a3f7",
+      "size": 26893
     },
     {
       "path": "robert-dumanyan-mentor.webp",
@@ -433,8 +433,8 @@
     },
     {
       "path": "safety.html",
-      "sha256": "39f992ea74cb36e21671176f8d674a162115760d53a40d847787107395f21de3",
-      "size": 14042
+      "sha256": "d80aac5c1fe9ee52295ba97aa26177a6e723488038e5b4b3695f54af30196565",
+      "size": 14107
     },
     {
       "path": "site.webmanifest",
@@ -443,7 +443,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "d683b0464c737abcb5779ddb2e09451dd622c460f965273adb7efc5cafdb9633",
+      "sha256": "eb2b9fb02be00865751474fdcf08651f458f624c0e877ad4d338cd5320abb0c3",
       "size": 4393
     },
     {
@@ -453,36 +453,36 @@
     },
     {
       "path": "start.html",
-      "sha256": "f17a562f9307706d3a8faa570d89725c5fa2f29bceb241c30c446b202e527418",
-      "size": 21437
+      "sha256": "36cd8ce6a8d0475247482613fd8f85fb130d661e3ec21bdef14b116f1c5c25a2",
+      "size": 21741
     },
     {
       "path": "studio.html",
-      "sha256": "02af879653cc73ebfa6351113aca6d097667cbfc7693e83d1713074e87b8c7c4",
-      "size": 14216
+      "sha256": "af671a9a9463cce60d9a8a9777b48afe75e75d024932276e724cb6d42b350899",
+      "size": 14342
     },
     {
       "path": "teens.html",
-      "sha256": "651f17bb24747b769c66745ffd67de82b105a06f9d0aefd3d7de346e9713cdaf",
-      "size": 22013
+      "sha256": "12a3879fe7b0da0bd07d9127450e028628ee93a148f92ea3bac9788763a2c7ce",
+      "size": 22069
     },
     {
       "path": "terms.html",
-      "sha256": "2d416446682a914d332e653432e0a307b2e06f397e3c3b63b210efa53007fbd1",
-      "size": 8697
+      "sha256": "5b5a11612e1426606d63baf227cb5e7a8febf2f273a75a37c22513575f2ba059",
+      "size": 8735
     },
     {
       "path": "vercel.json",
-      "sha256": "7ef773d9f03dce3568d6b0a11629049a58b462eb7ac2f333c5ffaee5ac1af450",
-      "size": 4191
+      "sha256": "244c604c25328224efcb9316f19a39931ec19f627a508482e0d5e34502bc19da",
+      "size": 4192
     },
     {
       "path": "workshop.css",
-      "sha256": "109605112f628a060b15c4f8d14649effa3efa0132a38365f2ff80358db8a656",
-      "size": 41932
+      "sha256": "cb5677a046c1c56de587111f79eea4cc7b592ded331082486da8db73399559fd",
+      "size": 41033
     }
   ],
-  "payload_sha256": "6ad1d1b92eb6f0bdd87a9ebbd9ad6032bd9ad5f40c60b5b245d07802a2be7722",
-  "release_id": "E3_8_LEAD_EVENTS_R1",
+  "payload_sha256": "071254e4f60b419b222bf26c685562f0c15a86f58c8f2e6a1239c54f68467c57",
+  "release_id": "E3_1_RU_SEO_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }

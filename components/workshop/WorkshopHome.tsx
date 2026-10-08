@@ -30,8 +30,8 @@ export function WorkshopHome({ locale = "ru" }: { locale?: WorkshopLocale }) {
         <section className={styles.hero}>
           <div className={styles.heroCopy}>
             <span className={styles.eyebrow}>AI SKILL LAB · 1:1 · ONLINE / PHUKET</span>
-            <h1>{en ? <>Learn AI so the <em>capability stays with you.</em></> : <>Освойте AI так, чтобы <em>результат остался у вас.</em></>}</h1>
-            <p>{en ? "Practical learning, hands-on building and one-workflow business implementation. You understand the system, verify it and can keep using it." : "Практическое обучение, сборка AI-проектов и внедрение одного бизнес-процесса. Вы понимаете систему, проверяете её и можете пользоваться дальше."}</p>
+            <h1>{en ? <>Learn AI so the <em>capability stays with you.</em></> : <>Освойте ИИ так, чтобы <em>результат остался у вас.</em></>}</h1>
+            <p>{en ? "Practical learning, hands-on building and one-workflow business implementation. You understand the system, verify it and can keep using it." : "Практическое обучение: искусственный интеллект (ИИ) и нейросети, сборка проектов и внедрение одного бизнес-процесса. Вы понимаете систему, проверяете её и можете пользоваться дальше."}</p>
             <IntroCallCta locale={locale}/>
             <div className={styles.heroActions}><Link className="workshopButton workshopButtonPrimary" href={p("/start")}>{en ? "Find my route →" : "Подобрать маршрут →"}</Link><Link className="workshopButton workshopButtonSecondary" href={p("/proof")}>Proof Lab</Link></div>
             <div className={styles.signalRow}><span>1:1</span><span>{sessionDurationMinutes} {en ? "minutes" : "минут"}</span><span>{en ? "Real project" : "Реальный проект"}</span><span>Human review</span></div>

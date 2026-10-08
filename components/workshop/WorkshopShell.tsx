@@ -72,7 +72,7 @@ export function WorkshopShell({ locale = "ru", alternateHref, showReach = true, 
       {children}
       {showReach ? <ReachBlock locale={locale} /> : null}
       <footer className={styles.footer}>
-        <div><strong>AI Skill Lab</strong><span>{en ? "Practical AI capability · online / Phuket" : "Практический AI · online / Phuket"}</span></div>
+        <div><strong>AI Skill Lab</strong><span>{en ? "Practical AI capability · online / Phuket" : "Практический ИИ · онлайн / Пхукет"}</span></div>
         <nav aria-label={en ? "Footer" : "Подвал"}>
           <Link href={en ? "/en/faq" : "/faq"}>FAQ</Link>
           <Link href={en ? "/en/guides" : "/guides"}>{en ? "Guides" : "Гайды"}</Link>

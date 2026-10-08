@@ -45,7 +45,7 @@ export function GuideListing({ locale, guides }: { locale: WorkshopLocale; guide
         <h1>{en ? "Guides" : "Гайды"}</h1>
         <p>{en
           ? "Short, checked guides for parents, adult learners and teams. Each one shows when it was checked and its sources."
-          : "Короткие проверенные материалы для родителей, взрослых учеников и команд. У каждого — дата проверки и источники."}</p>
+          : "Короткие проверенные материалы об ИИ для родителей, взрослых учеников и команд. У каждого — дата проверки и источники."}</p>
       </section>
       <section className={styles.cardGrid} aria-label={en ? "Published guides" : "Опубликованные гайды"}>
         {guides.map((guide) => <article className={styles.card} key={guide.meta.path}>
