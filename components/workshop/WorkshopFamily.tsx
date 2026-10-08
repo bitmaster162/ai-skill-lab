@@ -34,7 +34,7 @@ export function WorkshopFamily({ locale = "ru" }: { locale?: WorkshopLocale }) {
           <div className={styles.familyHeroCopy}>
             <span className={styles.familyEyebrow}>{en ? "FAMILY FORMAT · ONE LEARNER" : "СЕМЕЙНЫЙ ФОРМАТ · ОДИН УЧЕНИК"}</span>
             <h1>{en ? <>The child learns.<br/><em>The household sets the rules.</em></> : <>Учится ребёнок.<br/><em>Правила заводит семья.</em></>}</h1>
-            <p className={styles.familyLead}>{en ? "Twelve sessions with the learner, two with a parent, and written household rules for using AI that stay with you after the program ends." : "Двенадцать занятий с учеником, два — с родителем, и письменные домашние правила обращения с AI, которые остаются у вас после программы."}</p>
+            <p className={styles.familyLead}>{en ? "Twelve sessions with the learner, two with a parent, and written household rules for using AI that stay with you after the program ends." : "Двенадцать занятий по ИИ с учеником, два — с родителем, и письменные домашние правила обращения с AI, которые остаются у вас после программы."}</p>
             <div className={styles.heroActions}>
               <Link className="workshopButton workshopButtonPrimary" href={start}>{en ? "Discuss the family route →" : "Обсудить семейный маршрут →"}</Link>
               <a className="workshopButton workshopButtonSecondary" href="#included">{en ? "What is included ↓" : "Что входит ↓"}</a>

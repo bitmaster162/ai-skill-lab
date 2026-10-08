@@ -83,7 +83,7 @@ req("/certificate" in readme and "/en/certificate" in readme,"README route inven
 req("consent-bound completion-record policy/template only" in readme,"README N25 truth")
 req("issued certificates" in readme,"README no-fabricated-issued-certificate discipline")
 
-req(manifest.get("release_id") in {"N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1"},"N25-or-successor release identity")
+req(manifest.get("release_id") in {"N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1"},"N25-or-successor release identity")
 req(manifest.get("file_count")==96,"N25 static file_count 96")
 listed={x.get("path") for x in manifest.get("files",[])}
 req({"certificate.html","en/certificate.html"}<=listed,"manifest certificate pair")

@@ -3,10 +3,10 @@ import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
 import { SafetyMiniCheck } from "@/components/SafetyMiniCheck";
 
-export const metadata: Metadata = { title: { absolute: "Безопасность детей и подростков — AI Skill Lab · Phuket" }, description: "Правила AI Skill Lab для детей и подростков: возрастные ограничения ChatGPT, участие взрослого, приватность, проверка ответов и parental controls.", alternates: { canonical: "/safety", languages: { ru: "/safety", en: "/en/safety" } } };
+export const metadata: Metadata = { title: { absolute: "Безопасность детей при работе с ИИ — AI Skill Lab · Пхукет" }, description: "Правила AI Skill Lab для детей и подростков: возрастные ограничения ChatGPT, участие взрослого, приватность, проверка ответов и parental controls.", alternates: { canonical: "/safety", languages: { ru: "/safety", en: "/en/safety" } } };
 
 export default function SafetyPage() {
-  return <LegalPage path="safety" title="Безопасность детей и AI" intro="Правила программы для 8–18 лет: взрослый остаётся в контуре, персональные данные минимизируются, а ответы моделей проверяются.">
+  return <LegalPage path="safety" title="Безопасность детей и AI" intro="Правила обучения ИИ для 8–18 лет: взрослый остаётся в контуре, персональные данные минимизируются, а ответы моделей проверяются.">
     <div className="policyCallout"><strong>Ключевое правило</strong><p>Для ребёнка младше 13 лет программа не требует самостоятельного аккаунта ChatGPT. Если ChatGPT применяется как демонстрационный инструмент в образовательном контексте, фактическое взаимодействие с сервисом проводит взрослый.</p></div>
     <h2>1. Почему так</h2>
     <p>По актуальной справке OpenAI ChatGPT не предназначен для детей младше 13 лет; пользователям 13–18 лет требуется разрешение родителя или законного представителя. Для образовательного использования с ребёнком младше 13 OpenAI указывает, что фактическое взаимодействие с ChatGPT должен вести взрослый.</p>

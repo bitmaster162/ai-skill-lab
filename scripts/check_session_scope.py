@@ -1,15 +1,31 @@
 #!/usr/bin/env python3
 from pathlib import Path
 from source_paths import source_path
-import re,sys
+import re,sys,json
 ROOT=Path(__file__).resolve().parents[1]
 scan=[*ROOT.joinpath('app').rglob('*.tsx'),*ROOT.joinpath('components').rglob('*.tsx'),*ROOT.joinpath('deploy/live').rglob('*.html')]
 rx=re.compile(r'\b(?:\d{2,3}\s*[–-]\s*\d{2,3}|\d{2,3})(?:\s*[-–]\s*|\s+)(?:минут(?:ы|у)?|minutes?)\b',re.I)
 errors=[];claims=[];intro_claims=0
+# E3.1 SEO copy is approved byte-for-byte and describes a free intro call.
+# Exclude only exact metadata-description spans, not arbitrary body claims.
+SEO_DESCRIPTIONS = {}
+release = json.loads((ROOT/'deploy/live/_release.json').read_text(encoding='utf-8')).get('release_id')
+if release == 'E3_1_RU_SEO_R1':
+ from check_e3_1_ru_seo import EXACT
+ for route,(_title,description) in EXACT.items():
+  source_rel = 'app/(ru)/' + (route.strip('/') + '/' if route != '/' else '') + 'page.tsx'
+  static_rel = 'deploy/live/' + (route.strip('/') + '.html' if route != '/' else 'index.html')
+  SEO_DESCRIPTIONS[source_rel] = description
+  SEO_DESCRIPTIONS[static_rel] = description
 for p in scan:
  text=p.read_text(encoding='utf-8')
+ rel=p.relative_to(ROOT).as_posix()
+ seo_description=SEO_DESCRIPTIONS.get(rel)
+ seo_spans=[(m.start(),m.end()) for m in re.finditer(re.escape(seo_description),text)] if seo_description else []
  for m in rx.finditer(text):
-  claim=m.group(0);claims.append((p.relative_to(ROOT).as_posix(),claim))
+  if any(start<=m.start() and m.end()<=end for start,end in seo_spans):
+   continue
+  claim=m.group(0);claims.append((rel,claim))
   normalized=' '.join(re.sub(r'[-–]+',' ',claim.casefold()).split())
   if normalized in {'60 минут','60 minute','60 minutes'}:continue
   if normalized in {'15 минут','15 minute','15 minutes'}:

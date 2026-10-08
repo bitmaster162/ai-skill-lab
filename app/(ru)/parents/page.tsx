@@ -4,11 +4,11 @@ import { WorkshopEditorial } from "@/components/workshop/WorkshopEditorial";
 import Link from "next/link";
 import { IntroCallCta } from "@/components/IntroCallCta";
 export const metadata: Metadata = {
-  title: { absolute: "Родителям — AI Skill Lab · Phuket" },
+  title: { absolute: "Родителям: обучение ИИ — AI Skill Lab · Пхукет" },
   description: "Что получает родитель в AI-программе 8–18: видимый прогресс, проект, правила безопасности и прозрачная роль взрослого.",
   alternates: { canonical: "/parents", languages: { ru: "/parents", en: "/en/parents" } },
 
-  ...ogPageMetadata({ locale: "ru", slug: "parents", title: "Родителям — AI Skill Lab · Phuket", description: "Что получает родитель в AI-программе 8–18: видимый прогресс, проект, правила безопасности и прозрачная роль взрослого." }),
+  ...ogPageMetadata({ locale: "ru", slug: "parents", title: "Родителям: обучение ИИ — AI Skill Lab · Пхукет", description: "Что получает родитель в AI-программе 8–18: видимый прогресс, проект, правила безопасности и прозрачная роль взрослого." }),
 };
 
 export default function Page() {
@@ -16,8 +16,8 @@ export default function Page() {
     <main id="main">
       <section className="kidsHero"><div className="shell kidsHeroGrid"><div>
         <div className="eyebrow eyebrowLight"><span className="dot dotLight" /> FOR PARENTS · 8–18</div>
-        <h1>Не «AI сделал».<br/><span>Ребёнок умеет.</span></h1>
-        <p>Прогресс виден через способность поставить задачу, проверить ответ, объяснить личный вклад и защитить финальный проект.</p>
+        <h1>Не «ИИ сделал».<br/><span>Ребёнок умеет.</span></h1>
+        <p>Прогресс в обучении ИИ виден через способность поставить задачу, проверить ответ, объяснить личный вклад и защитить финальный проект.</p>
         <IntroCallCta locale="ru"/>
         <div className="heroActions"><Link className="button buttonLight" href="/start">Обсудить маршрут →</Link><Link className="button buttonGhost buttonOnDark" href="/projects">Примеры проектов →</Link></div>
       </div></div></section>

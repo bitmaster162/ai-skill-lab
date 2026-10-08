@@ -44,6 +44,12 @@ CROSSLINK_ROUTES = {
 }
 
 
+RELEASE = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
+if RELEASE == "E3_1_RU_SEO_R1":
+    EXPECTED_MD["guides/aiskillab/ai-safety-for-kids.ru.md"] = "f8be315623ddcfb8b3e3f5da46a52305f943df3aecb6ea2915895d2ed6aff75e"
+    LISTING["/guides"] = ("Гайды", "Короткие проверенные материалы об ИИ для родителей, взрослых учеников и команд. У каждого — дата проверки и источники.")
+    ARTICLES["/guides/ai-safety-for-kids"]["title"] = "ИИ и ребёнок 8–13: чек-лист безопасности для родителей"
+
 def route_for(path: Path) -> str:
     rel = path.relative_to(LIVE).as_posix()
     if rel == "index.html":

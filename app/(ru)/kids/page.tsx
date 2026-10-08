@@ -4,10 +4,10 @@ import { JsonLd } from "@/components/JsonLd";
 import { coursePageSchema } from "@/lib/structured-data";
 import { WorkshopAudience } from "@/components/workshop/WorkshopAudience";
 export const metadata: Metadata = {
-  title: { absolute: "AI для детей 8–13 — AI Skill Lab · Phuket" },
-  description: "AI для детей 8–13: творчество и собственный проект с участием взрослого, правилами приватности, проверкой результата и безопасной практикой.",
+  title: { absolute: "ИИ для детей 8–13 лет на Пхукете и онлайн — AI Skill Lab" },
+  description: "Занятия по ИИ и нейросетям для детей 8–13 лет: свой творческий проект вместе со взрослым, правила приватности и безопасная практика. Пхукет и онлайн.",
   alternates: { canonical: "/kids", languages: { ru: "/kids", en: "/en/kids" } },
 
-  ...ogPageMetadata({ locale: "ru", slug: "kids", title: "AI для детей 8–13 — AI Skill Lab · Phuket", description: "AI для детей 8–13: творчество и собственный проект с участием взрослого, правилами приватности, проверкой результата и безопасной практикой." }),
+  ...ogPageMetadata({ locale: "ru", slug: "kids", title: "ИИ для детей 8–13 лет на Пхукете и онлайн — AI Skill Lab", description: "Занятия по ИИ и нейросетям для детей 8–13 лет: свой творческий проект вместе со взрослым, правила приватности и безопасная практика. Пхукет и онлайн." }),
 };
 export default function Page(){return <><JsonLd data={coursePageSchema("kids", "ru")} /><WorkshopAudience audience="kids" locale="ru"/></>;}

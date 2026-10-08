@@ -11,15 +11,15 @@ import { organizationSchemaRu } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
   title: {
-    default: "AI Skill Lab · Phuket — персональное обучение искусственному интеллекту",
-    template: "%s | AI Skill Lab · Phuket",
+    default: "Обучение искусственному интеллекту (ИИ) на Пхукете — AI Skill Lab",
+    template: "%s | AI Skill Lab · Пхукет",
   },
   description:
-    "Практическое обучение AI 1-на-1 для взрослых, бизнеса, детей и подростков — Phuket и online: реальные проекты, research, automation и responsible AI.",
+    "Практическое обучение ИИ 1-на-1 для взрослых, бизнеса, детей и подростков — Пхукет и онлайн: реальные проекты, research, automation и responsible AI.",
   metadataBase: new URL(site.url),
   openGraph: {
     title: "AI Skill Lab · Phuket",
-    description: "Персональное обучение AI 1-на-1 в Phuket и online через реальные задачи, workflows и собственные проекты.",
+    description: "Персональное обучение ИИ 1-на-1 на Пхукете и онлайн через реальные задачи, workflows и собственные проекты.",
     type: "website",
     siteName: "AI Skill Lab · Phuket",
     locale: "ru_RU",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "AI Skill Lab · Phuket",
-    description: "Практические AI-навыки через реальные задачи и проекты.",
+    description: "Практические навыки ИИ через реальные задачи и проекты.",
     images: ["/og.png"],
   },
   manifest: "/site.webmanifest",

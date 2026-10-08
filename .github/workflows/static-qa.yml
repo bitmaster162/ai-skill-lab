@@ -90,6 +90,8 @@ jobs:
         run: python scripts/check_client_privacy.py
       - name: Validate E3.8 lead event contract
         run: python scripts/check_e3_8_lead_events.py
+      - name: Validate E3.1 Russian SEO localization
+        run: python scripts/check_e3_1_ru_seo.py
       - name: Smoke-test E3.8 event runtime
         run: node scripts/check_e3_8_event_runtime.mjs
       - name: Validate E3.8 event D1 schema
