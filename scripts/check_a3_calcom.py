@@ -41,7 +41,7 @@ source_markers = [
 ]
 for marker in source_markers:
     req(marker in cta, f"IntroCallCta missing {marker!r}")
-if release in {"E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1"}:
+if release in {"E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1"}:
     req("window.va" not in cta and "intro_call_click" not in cta, "E3.8 must retire old Vercel custom event")
     req("onClick={() => track(primaryChannel)}" not in cta, "E3.8 old click handler must be absent")
 else:
@@ -82,7 +82,7 @@ for files, wa in [(OTHER_RU, ru_wa), (OTHER_EN, en_wa)]:
         req(wa in text, f"{rel}: WhatsApp URL drift")
 
 runtime = (LIVE / "lab-command.js").read_text(encoding="utf-8")
-if release in {"E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1"}:
+if release in {"E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1"}:
     for marker in ['fetch("/api/event"', '"cal.com":"cal"', 'n+"_click"']:
         req(marker in runtime, f"E3.8 static event marker missing {marker}")
     req("intro_call_click" not in runtime and "window.va" not in runtime, "E3.8 old Vercel event runtime must be absent")
@@ -96,7 +96,7 @@ req(len(public) == 52, f"public route count {len(public)} != 52")
 
 print(
     f"A3_CALCOM_CHECK checks={checks} start_pages=2 unchanged_intro_surfaces=16 "
-    f"public_routes={len(public)} telemetry={'first_party_e3_8' if release in {'E3_8_LEAD_EVENTS_R1','E3_1_RU_SEO_R1'} else 'intro_call_click'}"
+    f"public_routes={len(public)} telemetry={'first_party_e3_8' if release in {'E3_8_LEAD_EVENTS_R1','E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1'} else 'intro_call_click'}"
 )
 if errors:
     print("A3_CALCOM_FAIL")
