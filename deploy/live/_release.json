@@ -443,7 +443,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "eb2b9fb02be00865751474fdcf08651f458f624c0e877ad4d338cd5320abb0c3",
+      "sha256": "165e7afc60d7c9d330594f69133b04f00cb91192ffe59794868cb13964cf1e41",
       "size": 4393
     },
     {
@@ -482,7 +482,7 @@
       "size": 41067
     }
   ],
-  "payload_sha256": "bf9099c5966102a55a2812b4959bad6c2003b37885b307571aec0150f8a5903d",
+  "payload_sha256": "cc0bf27604d1ea73eb8e821e716c3b90cee4afbb58f24154d6ec1e959fad0b1a",
   "release_id": "E3_2_RU_GLOSSARY_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }

@@ -159,8 +159,9 @@ if release in {'E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1'}:
   'deploy/live/vercel.json':'244c604c25328224efcb9316f19a39931ec19f627a508482e0d5e34502bc19da',
   'components/workshop/WorkshopShell.tsx':'42f7db61455c39d6389846e8da3bc9eefd3f735a0d60b831a03d31c7398ccdee',
  })
- require('lastModified = "2026-10-08"' in read('app/sitemap.ts'),'E3.1 sitemap source freshness')
- require(read('deploy/live/sitemap.xml').count('<lastmod>2026-10-08</lastmod>')==admitted_route_count(),'E3.1 sitemap static freshness route authority')
+ expected_e32_sitemap_lastmod = '2026-10-09' if release=='E3_2_RU_GLOSSARY_R1' else '2026-10-08'
+ require(f'lastModified = "{expected_e32_sitemap_lastmod}"' in read('app/sitemap.ts'),'E3.1 sitemap source freshness')
+ require(read('deploy/live/sitemap.xml').count(f'<lastmod>{expected_e32_sitemap_lastmod}</lastmod>')==admitted_route_count(),'E3.1 sitemap static freshness route authority')
  require('Практический ИИ · онлайн / Пхукет' in read('components/workshop/WorkshopShell.tsx'),'E3.1 RU footer caption')
  require('Content-Security-Policy' in read('deploy/live/vercel.json'),'E3.1 CSP retained')
 # E3.2: release-specific byte seal for nine approved RU glossary/UI source assets.
@@ -168,6 +169,7 @@ if release in {'E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1'}:
 if release=='E3_2_RU_GLOSSARY_R1':
  protected.update({'deploy/live/lab-command.js': '967f8b85b31a079e3077dd41fe0cf66305d59895cf06211f9baf4aca443d9ea3', 'components/ProgramMatcher.tsx': '8b82ff5b8c44c55b1898aab6009327d4526cfc27b7b922ee16c7658a774bdc3c', 'components/SystemChallenge.tsx': '5550a8e921903d17ce001dd130bbd6d7d64fc426b6b943b0a6fe02656ca7d9f6', 'components/ProofLab.tsx': 'a590a9ff0bf861c1fc137ed93abd45dece4e57b03cd63ac4004d831648e38d1d', 'components/BriefCompiler.tsx': 'df07709cad7bbe97f0502a2fc6e3442bbf18bd0804e05c2130d7ed27284cc48b', 'components/ProjectStudio.tsx': '8b2ac3c0da20220725e632c450d69e113043607c4ad4150f77c4e293d841aba8', 'components/SkillGraph.tsx': 'f1059fc52093d1add99322208a86f1a23336585c36ea99472bba72dfdbe4cf46', 'components/LabCommand.tsx': '4e3c6e8db7ca23e18be7d0f2d1f81184278d46a086916aa907d02f7bcb055b2b', 'components/workshop/WorkshopShell.tsx': 'b2b1dadd2d33f99681bc64c071a0a5bcca91731fe96ca892300f0c2e204e2b57'})
  protected['deploy/live/vercel.json']='455d618b9ebd78b4c3f7d40d837e0c3362d4023e84beede5c252a4b206d8b933'
+ protected['app/sitemap.ts']='dbc041229d4a81b88057928ecb9f49dc90add676cc9aee88bbbdda3a4526d3f2'; protected['deploy/live/sitemap.xml']='165e7afc60d7c9d330594f69133b04f00cb91192ffe59794868cb13964cf1e41'
  require('Content-Security-Policy' in read('deploy/live/vercel.json'),'E3.2 CSP retained')
  require('data-lab-command-open' in read('deploy/live/lab-command.js'),'E3.2 command opener')
  require('e.key.toLowerCase()' in read('deploy/live/lab-command.js'),'E3.2 keyboard shortcut')
