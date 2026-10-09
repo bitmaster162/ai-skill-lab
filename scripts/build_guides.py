@@ -4,6 +4,7 @@ from __future__ import annotations
 import html
 import json
 import re
+from datetime import date
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -12,7 +13,9 @@ LIVE = ROOT / "deploy" / "live"
 GUIDE_DIR = ROOT / "guides" / "aiskillab"
 ORIGIN = "https://aiskillab.work"
 ORG_ID = f"{ORIGIN}/#organization"
-LASTMOD = "2026-10-05"
+RU_GUIDES_SEO_TITLE = "Гайды по ИИ — AI Skill Lab · Пхукет"
+RU_GUIDES_DESCRIPTION = "Короткие проверенные материалы об ИИ для родителей, взрослых учеников и команд. У каждого — дата проверки и источники."
+SAFETY_QUIZ_SCRIPT = '<script src="/safety-quiz.js" defer></script>'
 
 GUIDE_CSS = r"""
 /* E2_GUIDES_START */
@@ -321,9 +324,14 @@ def update_head(prefix: str, *, title: str, description: str, route: str, altern
 def shell(locale: str) -> tuple[str, str]:
     base = LIVE / ("en/safety.html" if locale == "en" else "safety.html")
     raw = base.read_text(encoding="utf-8")
+    if raw.count(SAFETY_QUIZ_SCRIPT) != 1:
+        raise RuntimeError(f"{locale}: safety quiz script marker drift")
     start = raw.index('<main id="main">')
     end = raw.index("</main>", start) + len("</main>")
-    return raw[:start], raw[end:]
+    prefix, suffix = raw[:start], raw[end:]
+    if SAFETY_QUIZ_SCRIPT in prefix or suffix.count(SAFETY_QUIZ_SCRIPT) != 1:
+        raise RuntimeError(f"{locale}: safety quiz script must occur once after main")
+    return prefix, suffix.replace(SAFETY_QUIZ_SCRIPT, "", 1)
 
 
 def organization_present(prefix: str) -> None:
@@ -383,6 +391,18 @@ def article_main(guide: dict) -> str:
     )
 
 
+def listing_description(guide: dict, locale: str) -> str:
+    """Preserve the released E3.2 RU kids-card glossary without changing source."""
+    description = guide["description"]
+    if locale == "ru" and guide["slug"] == "ai-safety-for-kids":
+        old = "пять вопросов к любому AI-сервису"
+        new = "пять вопросов к любому ИИ-сервису"
+        if description.count(old) != 1:
+            raise RuntimeError("E3.2 RU kids listing description source drift")
+        return description.replace(old, new, 1)
+    return description
+
+
 def listing_main(locale: str, locale_guides: list[dict]) -> str:
     en = locale == "en"
     cards = []
@@ -390,10 +410,10 @@ def listing_main(locale: str, locale_guides: list[dict]) -> str:
         checked = f"Checked {date_label(guide['reviewed'], 'en')}" if en else f"Проверено {date_label(guide['reviewed'], 'ru')}"
         cards.append(
             f'<article class="guideCard"><span>{html.escape(checked)}</span><h2><a href="{guide["path"]}">{html.escape(guide["title"])}</a></h2>'
-            f'<p>{html.escape(guide["description"])}</p><a class="guideCardLink" href="{guide["path"]}">{"Open guide →" if en else "Открыть гайд →"}</a></article>'
+            f'<p>{html.escape(listing_description(guide, locale))}</p><a class="guideCardLink" href="{guide["path"]}">{"Open guide →" if en else "Открыть гайд →"}</a></article>'
         )
     title = "Guides" if en else "Гайды"
-    subtitle = "Short, checked guides for parents, adult learners and teams. Each one shows when it was checked and its sources." if en else "Короткие проверенные материалы для родителей, взрослых учеников и команд. У каждого — дата проверки и источники."
+    subtitle = "Short, checked guides for parents, adult learners and teams. Each one shows when it was checked and its sources." if en else RU_GUIDES_DESCRIPTION
     return (
         '<main id="main" class="guideMain">'
         f'<section class="guideListingHero"><span>{"GUIDES · CHECKED SOURCES" if en else "ГАЙДЫ · ПРОВЕРЕННЫЕ ИСТОЧНИКИ"}</span><h1>{title}</h1><p>{html.escape(subtitle)}</p></section>'
@@ -426,7 +446,7 @@ def ensure_footer_links() -> int:
         raw = page.read_text(encoding="utf-8")
         route = route_for_file(page)
         en = route == "/en" or route.startswith("/en/")
-        anchor = '<a href="/en/faq">FAQ</a>' if en else '<a href="/faq">FAQ</a>'
+        anchor = '<a href="/en/faq">FAQ</a>' if en else '<a href="/faq">Вопросы</a>'
         guide = '<a href="/en/guides">Guides</a>' if en else '<a href="/guides">Гайды</a>'
         if anchor + guide in raw:
             continue
@@ -462,20 +482,52 @@ def ensure_crosslinks() -> int:
     return changed
 
 
+def css_rule_linebreaks_only(value: str) -> str:
+    """Ignore only the known minification difference between CSS rules."""
+    return re.sub(r"}\r?\n(?=[.@]|/\* E2_GUIDES_END \*/)", "}", value)
+
+
 def update_css() -> None:
+    """Preserve published CSS bytes; reject missing or changed guide rules."""
     path = LIVE / "workshop.css"
     raw = path.read_text(encoding="utf-8")
-    pattern = re.compile(r"/\* E2_GUIDES_START \*/[\s\S]*?/\* E2_GUIDES_END \*/")
-    if pattern.search(raw):
-        raw = pattern.sub(GUIDE_CSS, raw)
-    else:
-        raw = raw.rstrip() + "\n" + GUIDE_CSS + "\n"
-    path.write_text(raw, encoding="utf-8", newline="\n")
+    start, end = "/* E2_GUIDES_START */", "/* E2_GUIDES_END */"
+    if raw.count(start) != 1 or raw.count(end) != 1:
+        raise RuntimeError("guide CSS markers missing or duplicated")
+    match = re.search(r"/\* E2_GUIDES_START \*/[\s\S]*?/\* E2_GUIDES_END \*/", raw)
+    if match is None or css_rule_linebreaks_only(match.group(0)) != css_rule_linebreaks_only(GUIDE_CSS):
+        raise RuntimeError("guide CSS declarations or selectors drift")
+    # Identical (or known line-break-equivalent) CSS must remain byte-exact.
+
+
+def read_sitemap_lastmod() -> str:
+    """One validated source date; never downgrade static sitemap freshness."""
+    source = (ROOT / "app" / "sitemap.ts").read_text(encoding="utf-8")
+    declarations = re.findall(r"(?m)^\s*const\s+lastModified\s*=", source)
+    matches = re.findall(r'(?m)^\s*const\s+lastModified\s*=\s*"(\d{4}-\d{2}-\d{2})";\s*$', source)
+    if len(declarations) != 1 or len(matches) != 1:
+        raise RuntimeError("sitemap source lastModified must be one ISO date literal")
+    try:
+        source_date = date.fromisoformat(matches[0])
+    except ValueError as exc:
+        raise RuntimeError("sitemap source lastModified invalid calendar date") from exc
+    published = (LIVE / "sitemap.xml").read_text(encoding="utf-8")
+    previous = re.findall(r"<lastmod>([^<]+)</lastmod>", published)
+    if not previous:
+        raise RuntimeError("published sitemap lastModified missing")
+    try:
+        published_dates = [date.fromisoformat(value) for value in previous]
+    except ValueError as exc:
+        raise RuntimeError("published sitemap lastModified invalid calendar date") from exc
+    if source_date < max(published_dates):
+        raise RuntimeError("sitemap source lastModified would downgrade published sitemap")
+    return matches[0]
 
 
 def update_sitemap() -> int:
+    lastmod = read_sitemap_lastmod()
     routes = sorted(route_for_file(p) for p in LIVE.rglob("*.html") if p.name != "404.html")
-    urls = "".join(f"<url><loc>{ORIGIN}{'/' if route == '/' else route}</loc><lastmod>{LASTMOD}</lastmod></url>" for route in routes)
+    urls = "".join(f"<url><loc>{ORIGIN}{'/' if route == '/' else route}</loc><lastmod>{lastmod}</lastmod></url>" for route in routes)
     (LIVE / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n', encoding="utf-8", newline="\n")
     return len(routes)
 
@@ -512,7 +564,7 @@ def main() -> int:
 
     # Generate listing pages first.
     listing_meta = {
-        "ru": ("Гайды | AI Skill Lab · Phuket", "Короткие проверенные материалы для родителей, взрослых учеников и команд. У каждого — дата проверки и источники.", "/guides", "/en/guides"),
+        "ru": (RU_GUIDES_SEO_TITLE, RU_GUIDES_DESCRIPTION, "/guides", "/en/guides"),
         "en": ("Guides | AI Skill Lab · Phuket", "Short, checked guides for parents, adult learners and teams. Each one shows when it was checked and its sources.", "/en/guides", "/guides"),
     }
     for lang in ("ru", "en"):
