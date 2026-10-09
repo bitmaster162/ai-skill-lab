@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import html
 import re
+import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -109,6 +110,11 @@ TARGETS = {
     "en/business.html": ("en", "pilot"),
 }
 
+LEARNER_CASES = [('Replit: автоматическое действие привело к удалению данных.', 'Во время эксперимента SaaStr агент Replit удалил данные приложения из базы. Replit подтвердил проблему, а данные впоследствии восстановили.', 'Для практики используйте учебные или тестовые данные и проверяйте, что именно изменится.'), ('Copilot: письмо содержало скрытые инструкции.', 'Исследователи описали уязвимость EchoLeak в Microsoft 365 Copilot: специально подготовленное письмо могло привести к утечке данных без клика по письму. Microsoft исправила уязвимость; подтверждённых случаев эксплуатации в открытых источниках не сообщалось.', 'Письмо или файл могут содержать вредоносные инструкции. Проверяйте, откуда взялся текст.'), ('Unit 42: на веб-страницах нашли скрытые команды.', 'Исследователи обнаружили веб-страницы с попытками скрыто направлять работу ИИ, включая проверку рекламы. Подтверждённого успешного обхода действующей системы в этом случае не было.', 'Содержимое сайта — источник информации, а не команда, которую ИИ должен выполнять.')]
+LEARNER_RULES = [('01 · Проверяйте источники', 'Сверяйте важные утверждения с первоисточником и не принимайте уверенный ответ за доказательство.'), ('02 · Берегите личные данные', 'Не вводите пароли, адреса, платёжные сведения и чужие данные без необходимости и разрешения.'), ('03 · Отличайте данные от указаний', 'Текст из письма, сайта или файла может содержать команды для ИИ. Не считайте их своими инструкциями.'), ('04 · Согласовывайте важные действия', 'Перед отправкой, публикацией, удалением или оплатой проверяйте действие и получайте нужное разрешение.'), ('05 · Проверяйте результат', 'Сравните результат с задачей. Если возможны изменения данных, заранее продумайте способ исправления.')]
+LEARNER_LEAD = 'Безопасность ИИ — это умение проверять источники, беречь данные и не превращать непроверенный ответ в действие без человека.'
+LEARNER_NOTE = 'Примеры различаются: Replit — реальный случай удаления данных; EchoLeak — исправленная уязвимость без подтверждённой эксплуатации в открытых источниках; Unit 42 — обнаруженная попытка скрытого управления ИИ, без подтверждённого успешного обхода.'
+
 def esc(value: str) -> str:
     return html.escape(value, quote=True)
 
@@ -154,9 +160,57 @@ def block(locale: str) -> str:
         '</section>'
     )
 
+
+def learner_block() -> str:
+    items = []
+    for index, item in enumerate(CASES["ru"]):
+        title, body, note = LEARNER_CASES[index]
+        items.append(
+            '<article class="agentSafetyCase">'
+            f'<span>{esc(item["label"])}</span>'
+            f'<h3>{esc(title)}</h3>'
+            f'<p>{esc(body)}</p>'
+            f'<strong>{esc(note)}</strong>'
+            f'<a href="{esc(item["source"])}" target="_blank" rel="noopener noreferrer">{esc(item["source_label"])} ↗</a>'
+            '</article>'
+        )
+    rules_html = "".join(
+        f'<li><strong>{esc(title)}</strong><p>{esc(body)}</p></li>' for title, body in LEARNER_RULES
+    )
+    return (
+        '<section class="section agentSafety" id="agent-safety" data-n15-agent-safety="true">'
+        '<div class="sectionHead"><span>ТРИ ПРИМЕРА · ПЯТЬ ПРАВИЛ</span><h2>Безопасность ИИ</h2></div>'
+        f'<p class="longCopy">{esc(LEARNER_LEAD)}</p>'
+        f'<div class="agentSafetyCases">{"".join(items)}</div>'
+        '<p class="longCopy"><strong>Пять правил практики</strong></p>'
+        f'<ol class="agentSafetyRules">{rules_html}</ol>'
+        f'<p class="agentSafetyNote">{esc(LEARNER_NOTE)}</p>'
+        '</section>'
+    )
+
 def update_page(path: Path, locale: str, mode: str) -> bool:
     raw = path.read_text(encoding="utf-8")
     marker = 'data-n15-agent-safety="true"'
+
+    # E3.4: one learner-focused block below the price/packages section, only on RU audience routes.
+    is_learner = (json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id") == "E3_4_AI_SAFETY_AUDIENCE_R1" and locale == "ru" and path.parent == LIVE and path.name in {"personal.html", "teens.html"})
+    if is_learner:
+        section = re.compile(
+            r'<section class="section agentSafety" id="agent-safety" data-n15-agent-safety="true">[\s\S]*?</section>'
+        )
+        old_blocks = section.findall(raw)
+        if len(old_blocks) != 1:
+            raise RuntimeError(f"{path}: original N15 block count {len(old_blocks)}")
+        cleared = section.sub("", raw, count=1)
+        pricing = re.compile(r'<section class="section paper" id="pricing">[\s\S]*?</section>')
+        slots = list(pricing.finditer(cleared))
+        if len(slots) != 1:
+            raise RuntimeError(f"{path}: pricing section count {len(slots)}")
+        updated = cleared[:slots[0].end()] + learner_block() + cleared[slots[0].end():]
+        if updated != raw:
+            path.write_text(updated, encoding="utf-8", newline="\n")
+            return True
+        return False
     if marker in raw:
         # Replace the exact generated block to keep regeneration deterministic.
         raw2, count = re.subn(

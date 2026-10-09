@@ -82,7 +82,70 @@ const rules: Record<WorkshopLocale, Array<[string, string]>> = {
   ],
 };
 
-export function AgentSafetyLesson({ locale = "ru" }: { locale?: WorkshopLocale }) {
+const learnerCases = [
+  [
+    "Replit: автоматическое действие привело к удалению данных.",
+    "Во время эксперимента SaaStr агент Replit удалил данные приложения из базы. Replit подтвердил проблему, а данные впоследствии восстановили.",
+    "Для практики используйте учебные или тестовые данные и проверяйте, что именно изменится."
+  ],
+  [
+    "Copilot: письмо содержало скрытые инструкции.",
+    "Исследователи описали уязвимость EchoLeak в Microsoft 365 Copilot: специально подготовленное письмо могло привести к утечке данных без клика по письму. Microsoft исправила уязвимость; подтверждённых случаев эксплуатации в открытых источниках не сообщалось.",
+    "Письмо или файл могут содержать вредоносные инструкции. Проверяйте, откуда взялся текст."
+  ],
+  [
+    "Unit 42: на веб-страницах нашли скрытые команды.",
+    "Исследователи обнаружили веб-страницы с попытками скрыто направлять работу ИИ, включая проверку рекламы. Подтверждённого успешного обхода действующей системы в этом случае не было.",
+    "Содержимое сайта — источник информации, а не команда, которую ИИ должен выполнять."
+  ]
+] as const;
+const learnerRules = [
+  [
+    "01 · Проверяйте источники",
+    "Сверяйте важные утверждения с первоисточником и не принимайте уверенный ответ за доказательство."
+  ],
+  [
+    "02 · Берегите личные данные",
+    "Не вводите пароли, адреса, платёжные сведения и чужие данные без необходимости и разрешения."
+  ],
+  [
+    "03 · Отличайте данные от указаний",
+    "Текст из письма, сайта или файла может содержать команды для ИИ. Не считайте их своими инструкциями."
+  ],
+  [
+    "04 · Согласовывайте важные действия",
+    "Перед отправкой, публикацией, удалением или оплатой проверяйте действие и получайте нужное разрешение."
+  ],
+  [
+    "05 · Проверяйте результат",
+    "Сравните результат с задачей. Если возможны изменения данных, заранее продумайте способ исправления."
+  ]
+] as const;
+
+export function AgentSafetyLesson({ locale = "ru", mode = "standard" }: { locale?: WorkshopLocale; mode?: "standard" | "learner" }) {
+  if (mode === "learner" && locale === "ru") {
+    return (
+      <section className={styles.section + " " + styles.agentSafety} id="agent-safety" data-n15-agent-safety="true">
+        <div className={styles.sectionHead}><span>ТРИ ПРИМЕРА · ПЯТЬ ПРАВИЛ</span><h2>Безопасность ИИ</h2></div>
+        <p className={styles.longCopy}>Безопасность ИИ — это умение проверять источники, беречь данные и не превращать непроверенный ответ в действие без человека.</p>
+        <div className={styles.agentSafetyCases}>
+          {cases.ru.map((item, index) => (
+            <article className={styles.agentSafetyCase} key={item.title}>
+              <span>{item.label}</span><h3>{learnerCases[index][0]}</h3><p>{learnerCases[index][1]}</p>
+              <strong>{learnerCases[index][2]}</strong>
+              <a href={item.source} target="_blank" rel="noopener noreferrer">{item.sourceLabel} ↗</a>
+            </article>
+          ))}
+        </div>
+        <p className={styles.longCopy}><strong>Пять правил практики</strong></p>
+        <ol className={styles.agentSafetyRules}>{learnerRules.map(([title, body]) => (
+          <li key={title}><strong>{title}</strong><p>{body}</p></li>
+        ))}</ol>
+        <p className={styles.agentSafetyNote}>Примеры различаются: Replit — реальный случай удаления данных; EchoLeak — исправленная уязвимость без подтверждённой эксплуатации в открытых источниках; Unit 42 — обнаруженная попытка скрытого управления ИИ, без подтверждённого успешного обхода.</p>
+      </section>
+    );
+  }
+
   const en = locale === "en";
   return (
     <section className={`${styles.section} ${styles.agentSafety}`} id="agent-safety">

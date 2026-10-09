@@ -8,7 +8,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "deploy" / "live"
-E32 = json.loads((LIVE / "_release.json").read_text(encoding="utf8")).get("release_id") == "E3_2_RU_GLOSSARY_R1"
+RELEASE_ID = json.loads((LIVE / "_release.json").read_text(encoding="utf8")).get("release_id")
+E32 = RELEASE_ID in {"E3_2_RU_GLOSSARY_R1", "E3_4_AI_SAFETY_AUDIENCE_R1"}
+E34 = RELEASE_ID == "E3_4_AI_SAFETY_AUDIENCE_R1"
 errors: list[str] = []
 checks = 0
 
@@ -64,6 +66,24 @@ EXPECTED = {
     },
 }
 
+LEARNER_EXPECTED = {
+    "eyebrow": "ТРИ ПРИМЕРА · ПЯТЬ ПРАВИЛ",
+    "heading": "Безопасность ИИ",
+    "titles": [
+        "Replit: автоматическое действие привело к удалению данных.",
+        "Copilot: письмо содержало скрытые инструкции.",
+        "Unit 42: на веб-страницах нашли скрытые команды.",
+    ],
+    "rules": [
+        "01 · Проверяйте источники",
+        "02 · Берегите личные данные",
+        "03 · Отличайте данные от указаний",
+        "04 · Согласовывайте важные действия",
+        "05 · Проверяйте результат",
+    ],
+    "distinction": "Примеры различаются: Replit — реальный случай удаления данных; EchoLeak — исправленная уязвимость без подтверждённой эксплуатации в открытых источниках; Unit 42 — обнаруженная попытка скрытого управления ИИ, без подтверждённого успешного обхода.",
+}
+
 def req(cond: bool, message: str) -> None:
     global checks
     checks += 1
@@ -94,7 +114,11 @@ if component.is_file():
 audience = (ROOT / "components" / "workshop" / "WorkshopAudience.tsx").read_text(encoding="utf-8")
 business = (ROOT / "components" / "workshop" / "WorkshopBusiness.tsx").read_text(encoding="utf-8")
 req('import { AgentSafetyLesson } from "./AgentSafetyLesson";' in audience, "WorkshopAudience import missing")
-req('{audience!=="kids"&&<AgentSafetyLesson locale={locale}/>}' in audience, "WorkshopAudience N15 conditional missing")
+if E34:
+    req('{audience!=="kids"&&en&&<AgentSafetyLesson locale={locale}/>}' in audience, "EN legacy safety mount missing")
+    req('{audience!=="kids"&&!en&&<AgentSafetyLesson locale={locale} mode="learner"/>}' in audience, "RU learner safety mount missing")
+else:
+    req('{audience!=="kids"&&<AgentSafetyLesson locale={locale}/>}' in audience, "WorkshopAudience N15 conditional missing")
 req('import { AgentSafetyLesson } from "./AgentSafetyLesson";' in business, "WorkshopBusiness import missing")
 req('<AgentSafetyLesson locale={locale}/>' in business, "WorkshopBusiness N15 mount missing")
 
@@ -114,7 +138,7 @@ for rel, locale in TARGETS.items():
     if not path.is_file():
         continue
     raw = path.read_text(encoding="utf-8")
-    expected = EXPECTED[locale]
+    expected = LEARNER_EXPECTED if E34 and rel in {"personal.html", "teens.html"} else EXPECTED[locale]
     req(raw.count('data-n15-agent-safety="true"') == 1, f"{rel}: N15 block count")
     req(raw.count('class="agentSafetyCase"') == 3, f"{rel}: case count")
     block_match = re.search(
@@ -142,7 +166,12 @@ for rel, locale in TARGETS.items():
         marker='id="pilot-simulator"' if E32 and rel=="business.html" else "IMPLEMENTATION PILOT"
         req(marker in raw and raw.index('data-n15-agent-safety="true"') < raw.index(marker), f"{rel}: block position")
     else:
-        req(raw.index('data-n15-agent-safety="true"') < raw.index('id="pricing"'), f"{rel}: block position")
+        if E34 and rel in {"personal.html", "teens.html"}:
+            req(raw.index('data-n15-agent-safety="true"') > raw.index('id="pricing"'), f"{rel}: E3.4 block after packages")
+            req(block.count("<h2>") == 1, f"{rel}: E3.4 one safety H2")
+            req(block.count("<h2>" + expected["heading"] + "</h2>") == 1, f"{rel}: E3.4 exact learner H2")
+        else:
+            req(raw.index('data-n15-agent-safety="true"') < raw.index('id="pricing"'), f"{rel}: block position")
 
 for rel in ["kids.html", "en/kids.html"]:
     raw = (LIVE / rel).read_text(encoding="utf-8")
