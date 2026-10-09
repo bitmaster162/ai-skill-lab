@@ -552,7 +552,7 @@ def main() -> int:
             fail(errors, route, "og:description must equal meta description")
         if og.get("og:url") != expected_url:
             fail(errors, route, "og:url must equal canonical")
-        if RELEASE in {"OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1"} and route in OG20_META:
+        if RELEASE in {"OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1"} and route in OG20_META:
             og_file, expected_og_alt = OG20_META[route]
             expected_og_image = f"{ORIGIN}/{og_file}"
         else:

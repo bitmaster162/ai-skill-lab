@@ -1,0 +1,27 @@
+{
+  "base_main": "778c27ff33f4a58faf616d83ad8e4681ea2f31e3",
+  "release": "E3_4_AI_SAFETY_AUDIENCE_R1",
+  "routes": {
+    "/personal": {
+      "d1_words_sha256": "1c087628073dfdd310b271b4900fc19373877dc59af9368363b4df00a2841e6d",
+      "h1": [
+        "ии вокруг вашей реальной задачи."
+      ],
+      "latin_after": 26,
+      "old_e32_d1_words_sha256": "694cfeeb3342520721cfd06b510238931e7d2035dfd1a686aaeee564c8efe2dc",
+      "old_e32_visible_sha256": "6ac29f0fab5b16b0488ca596bcfb04161ed54ea0e606b9848142bacb56b6ce64",
+      "visible_sha256": "e07865894099cbaec9ce381b323bba7e31574d81d245543964d368a14b7bbb11"
+    },
+    "/teens": {
+      "d1_words_sha256": "fb24eb5113166badef1b35aadb09799724ee75f7a9f220a57864b98cdd524561",
+      "h1": [
+        "исследовать, писать код и собирать портфолио с ии."
+      ],
+      "latin_after": 31,
+      "old_e32_d1_words_sha256": "7381e446ee2911b9c98ca31fcf711da316f44e6227c0c3b21e08759e04e2db70",
+      "old_e32_visible_sha256": "c73ac30795c9d7e86bc4154038f5b96ff804efb4b5fe15f21bb839592a4a6fe9",
+      "visible_sha256": "17642d94682bc5867f71909876df0e7ed1e9b1e23f6cf713cbc09ec8a6ca97c2"
+    }
+  },
+  "schema": "aiskillab.e3-4.approved-two-route-text-pins.v1"
+}

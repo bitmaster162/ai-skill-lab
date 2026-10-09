@@ -378,8 +378,8 @@
     },
     {
       "path": "personal.html",
-      "sha256": "177afc83c47cc6dfafb0e3b0c7f48dcf8426b1bef7c2474e68548015bbd66326",
-      "size": 19588
+      "sha256": "83be5caa0931c331fb8261c5e3475ca3ccf74a17e686a3d69c9c91c145557bd3",
+      "size": 18258
     },
     {
       "path": "phuket.html",
@@ -463,8 +463,8 @@
     },
     {
       "path": "teens.html",
-      "sha256": "277711498344c1902791d513ce1ad75abe21d8ee6f73f3cd1b67ca22dd59272d",
-      "size": 22601
+      "sha256": "93d7cbf210cdee8ba0c62fbe2216d37e9f63c0125edcff9267c69936929c7e58",
+      "size": 21271
     },
     {
       "path": "terms.html",
@@ -482,7 +482,7 @@
       "size": 41067
     }
   ],
-  "payload_sha256": "cc0bf27604d1ea73eb8e821e716c3b90cee4afbb58f24154d6ec1e959fad0b1a",
-  "release_id": "E3_2_RU_GLOSSARY_R1",
+  "payload_sha256": "65fd44683804fe840cf5d0263d8f992ee0dda71f8f35447c23e3653102db631e",
+  "release_id": "E3_4_AI_SAFETY_AUDIENCE_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }
