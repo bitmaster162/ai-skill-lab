@@ -26,3 +26,5 @@
 .formSuccessActions{display:flex;flex-wrap:wrap;gap:10px;margin-top:2px}.formSuccessActions[hidden]{display:none!important}@media(max-width:620px){.formSuccessActions{display:grid;grid-template-columns:1fr}.formSuccessActions .workshopButton{width:100%}}
 /* A7_SAFETY_QUIZ_R1 */
 .safetyQuiz{margin:38px 0}.safetyQuiz fieldset{min-width:0;margin:12px 0;padding:14px}.safetyQuiz label{display:block;margin:8px 0}.safetyQuizResult{margin:12px 0 0!important}
+@media(max-width:620px){.workshopActions>[data-lab-command-open]{display:none!important}}
+[data-lab-command-open][hidden]{display:none!important}

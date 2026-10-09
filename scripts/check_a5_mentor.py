@@ -41,6 +41,14 @@ EXPECTED = {
     },
 }
 FOCUS = ["AI systems", "Research workflows", "AI agents", "Automation", "Decision workflows", "Digital products"]
+RELEASE = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
+E32 = RELEASE == "E3_2_RU_GLOSSARY_R1"
+RU_FOCUS_E32 = ["ИИ-системы", "Исследовательские процессы", "ИИ-агенты", "Автоматизация", "Процессы принятия решений", "Цифровые продукты"]
+if E32:
+    EXPECTED["ru"]["eyebrow"] = "НАСТАВНИК · ПРОВЕРКА ЧЕЛОВЕКОМ"
+    EXPECTED["ru"]["summary"] = ("Работает с ИИ-системами, исследовательскими процессами, агентами, "
+                                 "автоматизацией, процессами принятия решений и цифровыми продуктами. "
+                                 "На занятиях: цель → спецификация → сборка → проверка → результат.")
 
 def req(cond: bool, message: str) -> None:
     global checks
@@ -117,7 +125,7 @@ for rel, locale in TARGETS.items():
     exp = EXPECTED[locale]
     for value in [exp["eyebrow"], exp["name"], exp["role"], exp["summary"], exp["alt"]]:
         req(value in block, f"{rel}: missing mentor value {value!r}")
-    for item in FOCUS:
+    for item in (RU_FOCUS_E32 if E32 and locale == "ru" else FOCUS):
         req(block.count(f"<span>{item}</span>") == 1, f"{rel}: focus {item}")
     req(block.count(f'href="{GITHUB}"') == 1, f"{rel}: GitHub link")
     req(block.count(f'href="{LINKEDIN}"') == 1, f"{rel}: LinkedIn link")

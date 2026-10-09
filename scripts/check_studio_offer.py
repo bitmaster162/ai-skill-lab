@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 from pathlib import Path
+import json
 import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+E32 = json.loads((ROOT / "deploy/live/_release.json").read_text(encoding="utf-8")).get("release_id") == "E3_2_RU_GLOSSARY_R1"
 errors = []
 checks = 0
 
@@ -40,12 +42,25 @@ common = [
     "/build",
 ]
 
+E32_STUDIO = {
+    "AI STUDIO / BUILD WITH US": "СТУДИЯ / СОБИРАЕМ ВМЕСТЕ",
+    "CUSTOM SCOPE": "ОБЪЁМ РАБОТ",
+    "AI PRODUCT / WEBSITE": "ИИ-ПРОДУКТ / САЙТ",
+    "RESEARCH / DECISION": "ИССЛЕДОВАНИЕ / РЕШЕНИЕ",
+    "AUTOMATION / AGENT": "АВТОМАТИЗАЦИЯ / АГЕНТ",
+    "TEAM ENABLEMENT": "ОБУЧЕНИЕ КОМАНДЫ",
+    "DIAGNOSE": "ДИАГНОСТИКА", "SCOPE": "ОБЪЁМ РАБОТ",
+    "BUILD": "СБОРКА", "VERIFY": "ПРОВЕРКА", "SHIP": "ЗАПУСК",
+    "TRANSFER": "ПЕРЕДАЧА",
+    "Ship / Revise / Stop": "выпустить, доработать или остановить",
+}
 for rel, en in studio_surfaces:
     text = source_path(rel).read_text(encoding="utf-8")
     for marker in common:
         checks += 1
-        if marker.casefold() not in text.casefold():
-            errors.append(f"{rel}: missing {marker}")
+        required = E32_STUDIO.get(marker, marker) if E32 and not en else marker
+        if required.casefold() not in text.casefold():
+            errors.append(f"{rel}: missing {required}")
     checks += 1
     if re.search(r"\$\s?[0-9]", text):
         errors.append(f"{rel}: AI Studio must remain custom-scope, found hard-coded price")
@@ -94,8 +109,9 @@ for marker in [
     "Studio for an assistant",
 ]:
     checks += 1
-    if marker not in component:
-        errors.append(f"components/workshop/WorkshopHome.tsx: missing {marker!r}")
+    required = {"Открыть Studio →":"Открыть студию →","Studio для ассистента":"Студия для ассистента"}.get(marker,marker) if E32 else marker
+    if required not in component:
+        errors.append(f"components/workshop/WorkshopHome.tsx: missing {required!r}")
 
 static_homes = {
     "deploy/live/index.html": [
@@ -111,6 +127,8 @@ static_homes = {
 }
 for rel, markers in static_homes.items():
     text = source_path(rel).read_text(encoding="utf-8")
+    if E32 and rel == "deploy/live/index.html":
+        markers = [{"Studio для ассистента":"Студия для ассистента","Открыть Studio →":"Открыть студию →"}.get(x,x) for x in markers]
     for marker in markers:
         checks += 1
         if marker not in text:

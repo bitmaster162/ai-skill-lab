@@ -33,6 +33,7 @@ readme=(ROOT/"README.md").read_text(encoding="utf-8")
 sitemap=(LIVE/"sitemap.xml").read_text(encoding="utf-8")
 llms=(LIVE/"llms.txt").read_text(encoding="utf-8")
 manifest=json.loads((LIVE/"_release.json").read_text(encoding="utf-8"))
+E32=manifest.get('release_id')=='E3_2_RU_GLOSSARY_R1'
 
 for label,src in [("RU source",src_ru),("EN source",src_en)]:
     req(''"use client"'' not in src,f"{label}: must stay server-rendered")
@@ -49,15 +50,17 @@ for label,text,canon,alt in [
     req(p.scripts==["/lab-command.js","/_vercel/insights/script.js"],f"{label}: no certificate-specific runtime")
     req(f'<link rel="canonical" href="{canon}">' in text,f"{label}: canonical")
     req(f'href="{alt}"' in text,f"{label}: language alternate/link")
-    req(text.count("TEMPLATE · NOT ISSUED")>=2,f"{label}: template-not-issued marker")
-    req("N25 · COMPLETION RECORD · CONSENT-BOUND" in text,f"{label}: N25 marker")
+    marker=("ШАБЛОН · НЕ ВЫДАН" if E32 and label=="RU static" else "TEMPLATE · NOT ISSUED")
+    n25=("N25 · ЗАПИСЬ О ЗАВЕРШЕНИИ · ПО СОГЛАСИЮ" if E32 and label=="RU static" else "N25 · COMPLETION RECORD · CONSENT-BOUND")
+    req(text.count(marker)>=2,f"{label}: template-not-issued marker")
+    req(n25 in text,f"{label}: N25 marker")
 
 for marker in [
     "Сертификат не является главным результатом программы",
     "Это не аккредитация",
-    "Никакой student record не выпущен",
+    ("Никакая запись об ученике не выпущена" if E32 else "Никакой student record не выпущен"),
     "отдельного согласия на публикацию",
-    "имя, возраст, фото, школу, контакт, username, account/repository links",
+    ("имя, возраст, фото, школу, контакт, имя пользователя, ссылки на аккаунты и репозитории" if E32 else "имя, возраст, фото, школу, контакт, username, account/repository links"),
 ]:
     req(marker in ru,f"RU contract missing {marker!r}")
 for marker in [
@@ -84,7 +87,7 @@ req("/certificate" in readme and "/en/certificate" in readme,"README route inven
 req("consent-bound completion-record policy/template only" in readme,"README N25 truth")
 req("issued certificates" in readme,"README no-fabricated-issued-certificate discipline")
 
-req(manifest.get("release_id") in {"N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1"},"N25-or-successor release identity")
+req(manifest.get("release_id") in {"N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1"},"N25-or-successor release identity")
 req(manifest.get("file_count")==96,"N25 static file_count 96")
 listed={x.get("path") for x in manifest.get("files",[])}
 req({"certificate.html","en/certificate.html"}<=listed,"manifest certificate pair")

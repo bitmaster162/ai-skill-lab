@@ -9,28 +9,28 @@ type Choice={key:string;label:string;value:string};
 const DATA:Record<Locale,Record<Group,Choice[]>>={
   ru:{
     goal:[
-      {key:"research",label:"Research",value:"Разобраться и принять решение"},
-      {key:"build",label:"Build",value:"Собрать работающий AI-прототип"},
+      {key:"research",label:"Исследование",value:"Разобраться и принять решение"},
+      {key:"build",label:"Сборка",value:"Собрать работающий ИИ-прототип"},
       {key:"automate",label:"Automate",value:"Автоматизировать повторяемый процесс"},
-      {key:"learn",label:"Learn",value:"Освоить навык и повторить процесс"},
+      {key:"learn",label:"Изучить",value:"Освоить навык и повторить процесс"},
     ],
     context:[
-      {key:"solo",label:"Solo",value:"Личная работа · один owner"},
-      {key:"team",label:"Team",value:"Команда · общий workflow"},
-      {key:"business",label:"Business",value:"Бизнес-процесс · owner"},
-      {key:"family",label:"Family",value:"Обучение · adult safety"},
+      {key:"solo",label:"Solo",value:"Личная работа · один владелец"},
+      {key:"team",label:"Команда",value:"Команда · общий рабочий процесс"},
+      {key:"business",label:"Бизнес",value:"Бизнес-процесс · владелец"},
+      {key:"family",label:"Семья",value:"Обучение · взрослые безопасность"},
     ],
     output:[
-      {key:"brief",label:"Brief",value:"Decision brief + source map"},
-      {key:"prototype",label:"Prototype",value:"Working prototype + known limits"},
-      {key:"workflow",label:"Workflow",value:"Workflow + fallback + handoff"},
+      {key:"brief",label:"Короткое описание задачи",value:"КРАТКОЕ РЕШЕНИЕ + источник карта"},
+      {key:"prototype",label:"Прототип",value:"Работающий прототип + известные ограничения"},
+      {key:"workflow",label:"Рабочий процесс",value:"Рабочий процесс + запасной вариант + передача"},
       {key:"project",label:"Project",value:"Project + explanation + checklist"},
     ],
     verify:[
-      {key:"sources",label:"Sources",value:"Проверить источники / допущения"},
-      {key:"qa",label:"Human QA",value:"Human QA до выпуска"},
-      {key:"tests",label:"Tests",value:"Acceptance tests + stop condition"},
-      {key:"explain",label:"Explain",value:"Объяснить результат и повторить процесс"},
+      {key:"sources",label:"Источники",value:"Проверить источники / допущения"},
+      {key:"qa",label:"проверка человеком",value:"проверка человеком до выпуска"},
+      {key:"tests",label:"Проверки",value:"Приёмочные проверки + остановка condition"},
+      {key:"explain",label:"Объяснить",value:"Объяснить результат и повторить процесс"},
     ],
   },
   en:{
@@ -74,7 +74,7 @@ export function BriefCompiler({locale="ru"}:{locale?:Locale}){
       `CONTEXT: ${selected("context").value}`,
       `OUTPUT: ${selected("output").value}`,
       `VERIFY: ${selected("verify").value}`,
-      "HUMAN GATE: не выпускать без подтверждённой человеком проверки.",
+      "ПРОВЕРКА ЧЕЛОВЕКОМ: не выпускать без подтверждённой человеком проверки.",
     ]:[
       `GOAL: ${selected("goal").value}`,
       `CONTEXT: ${selected("context").value}`,
@@ -84,7 +84,7 @@ export function BriefCompiler({locale="ru"}:{locale?:Locale}){
     ];
     return lines.join("\n");
   },[locale,selected]);
-  const labels=locale==="ru"?{goal:"01 · GOAL",context:"02 · CONTEXT",output:"03 · OUTPUT",verify:"04 · VERIFY",telegram:"Открыть Telegram с brief →",copy:"Скопировать brief",copied:"Скопировано",failed:"Не удалось скопировать",local:"Локальный compiler · ничего не отправляется"}:{goal:"01 · GOAL",context:"02 · CONTEXT",output:"03 · OUTPUT",verify:"04 · VERIFY",telegram:"Open Telegram with brief →",copy:"Copy brief",copied:"Copied",failed:"Copy failed",local:"Local compiler · nothing is sent"};
+  const labels=locale==="ru"?{goal:"01 · GOAL",context:"02 · CONTEXT",output:"03 · OUTPUT",verify:"04 · VERIFY",telegram:"Открыть Telegram с короткое описание задачи →",copy:"Скопировать короткое описание задачи",copied:"Скопировано",failed:"Не удалось скопировать",local:"Локальный конструктор · ничего не отправляется"}:{goal:"01 · GOAL",context:"02 · CONTEXT",output:"03 · OUTPUT",verify:"04 · VERIFY",telegram:"Open Telegram with brief →",copy:"Copy brief",copied:"Copied",failed:"Copy failed",local:"Local compiler · nothing is sent"};
   const choose=(group:Group,key:string)=>{setState(s=>({...s,[group]:key}));setCopyState("idle")};
   const copy=async()=>{try{await navigator.clipboard.writeText(brief);setCopyState("copied")}catch{setCopyState("failed")}};
   const telegramHref=`https://t.me/BiTFormer?text=${encodeURIComponent(brief)}`;

@@ -12,8 +12,8 @@ export function WorkshopFamily({ locale = "ru" }: { locale?: WorkshopLocale }) {
     ["03", "Household rules", "Write down allowed services, prohibited data, own-work boundaries and when an adult must step in."],
     ["04", "Final presentation", "The learner presents the project, checks the result and explains their own contribution."],
   ] : [
-    ["01", "12 занятий с учеником", "Полная возрастная программа Kids или Teens вокруг одного ученика и одного законченного проекта."],
-    ["02", "2 занятия с родителем", "Разобраться в работе ребёнка, границе модели и критериях проверки итогового проекта."],
+    ["01", "12 занятий с учеником", "Полная возрастная программа «Дети» или «Подростки» вокруг одного ученика и одного законченного проекта."],
+    ["02", "2 занятия с родителем", "Разобраться в работе ребёнка, ограничениях модели и критериях проверки итогового проекта."],
     ["03", "Домашние правила", "Зафиксировать разрешённые сервисы, запрещённые данные, границу собственной работы и участие взрослого."],
     ["04", "Финальная защита", "Ученик показывает проект, проверяет результат и объясняет собственный вклад."],
   ];
@@ -34,7 +34,7 @@ export function WorkshopFamily({ locale = "ru" }: { locale?: WorkshopLocale }) {
           <div className={styles.familyHeroCopy}>
             <span className={styles.familyEyebrow}>{en ? "FAMILY FORMAT · ONE LEARNER" : "СЕМЕЙНЫЙ ФОРМАТ · ОДИН УЧЕНИК"}</span>
             <h1>{en ? <>The child learns.<br/><em>The household sets the rules.</em></> : <>Учится ребёнок.<br/><em>Правила заводит семья.</em></>}</h1>
-            <p className={styles.familyLead}>{en ? "Twelve sessions with the learner, two with a parent, and written household rules for using AI that stay with you after the program ends." : "Двенадцать занятий по ИИ с учеником, два — с родителем, и письменные домашние правила обращения с AI, которые остаются у вас после программы."}</p>
+            <p className={styles.familyLead}>{en ? "Twelve sessions with the learner, two with a parent, and written household rules for using AI that stay with you after the program ends." : "Двенадцать занятий по ИИ с учеником, два — с родителем, и письменные домашние правила обращения с ИИ, которые остаются у вас после программы."}</p>
             <div className={styles.heroActions}>
               <Link className="workshopButton workshopButtonPrimary" href={start}>{en ? "Discuss the family route →" : "Обсудить семейный маршрут →"}</Link>
               <a className="workshopButton workshopButtonSecondary" href="#included">{en ? "What is included ↓" : "Что входит ↓"}</a>
@@ -48,7 +48,7 @@ export function WorkshopFamily({ locale = "ru" }: { locale?: WorkshopLocale }) {
           </aside>
         </section>
         <section className={`${styles.section} ${styles.familyPanel}`} id="included">
-          <div className={styles.sectionHead}><span>{en ? "INCLUDED" : "ЧТО ВХОДИТ"}</span><h2>{en ? "Learning, a parent loop and rules that remain usable." : "Обучение, parent loop и правила, которыми можно пользоваться дальше."}</h2></div>
+          <div className={styles.sectionHead}><span>{en ? "INCLUDED" : "ЧТО ВХОДИТ"}</span><h2>{en ? "Learning, a parent loop and rules that remain usable." : "Обучение, занятия для родителя и правила, которыми можно пользоваться дальше."}</h2></div>
           <div className={styles.familyIncludedGrid}>{included.map(([number,title,text]) => <article className={styles.familyItem} key={number}><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
         </section>
         <section className={`${styles.section} ${styles.paper} ${styles.familyHonesty}`}>
@@ -57,9 +57,9 @@ export function WorkshopFamily({ locale = "ru" }: { locale?: WorkshopLocale }) {
         </section>
         <section className={`${styles.darkBand} ${styles.familyAdult}`}>
           <div><span>{en ? "ADULT CONTACT" : "КОНТАКТ ВЗРОСЛОГО"}</span><h2>{en ? "Organizational communication stays with an adult." : "Организационную переписку ведёт взрослый."}</h2><p>{en ? "Send the learner's age range, interests and desired outcome. Do not send school, address, passwords, payment data or the child's own contact details." : "Достаточно возраста, интересов и желаемого результата. Не присылайте школу, адрес, пароли, платёжные данные или личные контакты ребёнка."}</p></div>
-          <Link className="workshopButton workshopButtonLight" href={start}>{en ? "Open Start →" : "Перейти к Start →"}</Link>
+          <Link className="workshopButton workshopButtonLight" href={start}>{en ? "Open Start →" : "Перейти к Начать →"}</Link>
         </section>
-        <section className={styles.finalCta}><span>{en ? "FIRST BRIEF" : "ПЕРВЫЙ BRIEF"}</span><h2>{en ? "Age range + interest + outcome is enough." : "Возраст + интерес + результат — достаточно."}</h2><Link className="workshopButton workshopButtonPrimary" href={start}>{en ? "Discuss Family Concierge →" : "Обсудить Family Concierge →"}</Link></section>
+        <section className={styles.finalCta}><span>{en ? "FIRST BRIEF" : "ПЕРВОЕ КОРОТКОЕ ОПИСАНИЕ ЗАДАЧИ"}</span><h2>{en ? "Age range + interest + outcome is enough." : "Возраст + интерес + результат — достаточно."}</h2><Link className="workshopButton workshopButtonPrimary" href={start}>{en ? "Discuss Family Concierge →" : "Обсудить Family Concierge →"}</Link></section>
       </main>
     </WorkshopShell>
   );

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 from pathlib import Path
 from source_paths import source_path
-import sys
+import sys,json
 ROOT=Path(__file__).resolve().parents[1]
 errors=[];checks=0
+E32=json.loads((ROOT/'deploy/live/_release.json').read_text(encoding='utf8')).get('release_id')=='E3_2_RU_GLOSSARY_R1'
 component=(ROOT/'components/BriefCompiler.tsx').read_text(encoding='utf-8')
 for marker in ['data-brief-compiler','goal','context','output','verify','Research','Build','Automate','Learn','Solo','Team','Business','Family','Brief','Prototype','Workflow','Project','Sources','Human QA','Tests','Explain','navigator.clipboard.writeText(brief)','setCopyState("failed")','HUMAN GATE:']:
     checks+=1
@@ -15,7 +16,7 @@ for rel,en in [('app/proof/page.tsx',False),('app/en/proof/page.tsx',True)]:
         if marker not in t:errors.append(f'{rel}: missing {marker}')
 for rel,en in [('deploy/live/proof.html',False),('deploy/live/en/proof.html',True)]:
     t=source_path(ROOT, rel).read_text(encoding='utf-8')
-    for marker in ['Brief Compiler','id="brief-compiler"','data-brief-compiler','data-brief-group="goal"','data-brief-group="context"','data-brief-group="output"','data-brief-group="verify"','id="brief-copy"','id="brief-copy-status"','navigator.clipboard.writeText','HUMAN GATE:']:
+    for marker in [('Brief Compiler' if en or not E32 else 'Составление задачи'),'id="brief-compiler"','data-brief-compiler','data-brief-group="goal"','data-brief-group="context"','data-brief-group="output"','data-brief-group="verify"','id="brief-copy"','id="brief-copy-status"','navigator.clipboard.writeText','HUMAN GATE:']:
         checks+=1
         if marker not in t:errors.append(f'{rel}: missing {marker}')
     for marker in ['Research','Build','Automate','Learn','Solo','Team','Business','Family','Brief','Prototype','Workflow','Project','Sources','Human QA','Tests','Explain']:

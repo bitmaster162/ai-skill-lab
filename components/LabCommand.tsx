@@ -8,20 +8,20 @@ type LabCommandProps = { locale?: Locale };
 
 const copy = {
   ru: {
-    open: "LAB — открыть Lab Command (Ctrl K)",
-    close: "Закрыть Lab Command",
-    title: "AI SKILL LAB / COMMAND",
-    hint: "CTRL / ⌘ + K",
-    esc: "ESC TO CLOSE",
+    open: "Открыть инструменты",
+    close: "Закрыть инструменты",
+    title: "AI SKILL LAB / ИНСТРУМЕНТЫ",
+    hint: "",
+    esc: "Закрыть: ESC",
     items: [
-      ["01", "Proof Lab", "/proof", "METHOD"],
-      ["02", "AI Studio", "/studio", "BUILD WITH US"],
-      ["03", "Project Studio", "/projects", "ARTIFACTS"],
-      ["04", "Pilot Simulator", "/business#pilot-simulator", "BUSINESS"],
-      ["05", "Program Matcher", "/matcher", "MATCH"],
-      ["06", "AI Challenge", "/challenge", "SYSTEM"],
-      ["07", "Build Log", "/build", "PROVENANCE"],
-      ["08", "Start", "/start", "START"],
+      ["01", "Примеры и проверка", "/proof", "МЕТОД"],
+      ["02", "Студия", "/studio", "СБОРКА"],
+      ["03", "Примеры проектов", "/projects", "РЕЗУЛЬТАТЫ"],
+      ["04", "Пилот на одном процессе", "/business#pilot-simulator", "БИЗНЕС"],
+      ["05", "Подбор программы", "/matcher", "ПОДБОР"],
+      ["06", "Задание", "/challenge", "СИСТЕМА"],
+      ["07", "Как сделан сайт", "/build", "ИСТОРИЯ"],
+      ["08", "Начать", "/start", "СТАРТ"],
     ],
   },
   en: {
@@ -73,6 +73,7 @@ export function LabCommand({ locale = "ru" }: LabCommandProps) {
     <>
       <button
         className="langSwitch labCommandTrigger"
+        hidden={locale === "ru"}
         type="button"
         aria-label={t.open}
         aria-haspopup="dialog"
@@ -80,7 +81,7 @@ export function LabCommand({ locale = "ru" }: LabCommandProps) {
         aria-keyshortcuts="Control+K Meta+K"
         onClick={open}
       >
-        <span data-kbd-mod="">Ctrl</span> K
+        {locale === "ru" ? "Инструменты" : <><span data-kbd-mod="">Ctrl</span> K</>}
       </button>
       <dialog className="labDialog" id="lab-command" ref={dialogRef} aria-label={t.open}>
         <div className="proofConsole">
