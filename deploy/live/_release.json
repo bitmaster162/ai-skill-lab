@@ -48,8 +48,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "910e3c72f16fd6c5b632236526cced19c6afc572678b8d17febcd70c624fd707",
-      "size": 14019
+      "sha256": "d9c3804919254d78fd73a8ebeaa3b6ffd42a6c2b4c7ff1d291ad929f98be2e36",
+      "size": 14042
     },
     {
       "path": "en/about.html",
@@ -133,7 +133,7 @@
     },
     {
       "path": "en/pricing.html",
-      "sha256": "d4c60a15fcc47243f6d3286ce2edfe7b65f7d821d5633bda0210f3447da1e002",
+      "sha256": "d240c6ac48a372f59f650aef52e5c474b224821b540d7bb65f0a6408116583cf",
       "size": 15898
     },
     {
@@ -228,8 +228,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "e8494b28e2f37e9367169bd8864d0ec7759fe3583b31fbca215c8f8e233c357d",
-      "size": 17990
+      "sha256": "f380d4f0d889829bd507dd32efb03a690fed5d7e51bb27b2c67bfd89de07523a",
+      "size": 18013
     },
     {
       "path": "kids.html",
@@ -388,7 +388,7 @@
     },
     {
       "path": "pricing.html",
-      "sha256": "ec59671d9bf86706d296d272caefd5acba6703f0d81001e596d37bab3cc43731",
+      "sha256": "34c78eedc53ce9e68621f3a1f58f58afee757dcc3e02d60cb809ac4ab550ffb4",
       "size": 19107
     },
     {
@@ -478,11 +478,11 @@
     },
     {
       "path": "workshop.css",
-      "sha256": "ef8d8e5b453211cd64fad23642397207feca219624b2ab01c9309968fdac06a9",
-      "size": 41067
+      "sha256": "f6cfcfb57dbf3fe22397a49f661f04cff3cd5ef72a879ad8a66c75cdf1cee658",
+      "size": 41131
     }
   ],
-  "payload_sha256": "65fd44683804fe840cf5d0263d8f992ee0dda71f8f35447c23e3653102db631e",
-  "release_id": "E3_4_AI_SAFETY_AUDIENCE_R1",
+  "payload_sha256": "32438c2091a002ca14424629066759b6eb8798222488c3d24bfb881131bbb296",
+  "release_id": "E3_5_HEADING_STRUCTURE_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }
