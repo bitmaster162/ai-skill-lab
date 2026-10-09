@@ -108,7 +108,7 @@ export function PromptAuditor({ locale = "ru" }: { locale?: WorkshopLocale }) {
     </section>
     <section className="matcherResult" aria-live="polite">
       {message ? <p className="matcherEmpty">{message}</p> : result ? <>
-        <div className="matcherResultTop"><div><span className="cardMeta">{t.score}</span><h2>{result.score}/10</h2></div></div>
+        <div className="matcherResultTop"><div><span className="cardMeta">{t.score}</span><p className="promptAuditScore">{result.score}/10</p></div></div>
         <div className="matcherReason"><b>{t.why}</b><p>{result.explanation}</p></div>
         <div className="matcherReason"><b>{t.improved}</b><p>{result.improved}</p></div>
         <p className="matcherNote">{t.note}</p>

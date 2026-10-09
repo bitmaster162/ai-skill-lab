@@ -42,7 +42,7 @@ EXPECTED = {
 }
 FOCUS = ["AI systems", "Research workflows", "AI agents", "Automation", "Decision workflows", "Digital products"]
 RELEASE = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
-E32 = RELEASE  in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1'}
+E32 = RELEASE  in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1'}
 RU_FOCUS_E32 = ["ИИ-системы", "Исследовательские процессы", "ИИ-агенты", "Автоматизация", "Процессы принятия решений", "Цифровые продукты"]
 if E32:
     EXPECTED["ru"]["eyebrow"] = "НАСТАВНИК · ПРОВЕРКА ЧЕЛОВЕКОМ"
