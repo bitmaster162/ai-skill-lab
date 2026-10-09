@@ -294,9 +294,23 @@ def main_digest(text):
 # E3.4: only the two reviewed RU audience routes and their source/verifier/manifest files.
 # All inherited E3.2 and earlier byte seals stay active unchanged.
 if release=='E3_4_AI_SAFETY_AUDIENCE_R1':
- protected.update({'components/workshop/AgentSafetyLesson.tsx': '2f8e73d06debbce37e58fc5abb91f662c55ada9bd12bafdd7a1d991d0edc0105', 'components/workshop/WorkshopAudience.tsx': '6f49c5a4394db2818342e8d9ea1b786f733e0abca54b9b83ccc7d7bf6c03ba67', 'scripts/build_n15_agent_safety.py': '0613ae474e6081cfbc1f6eefe5369b666f25a398dae5489ef90803fd2fe65eaa', 'scripts/check_e3_4_ai_safety.py': '09fdf678203d6b2f0aaa30df0572f770070bc9bb982002acd0fbe93dee9630e1', 'data/e3_4_ru_route_sha_pins.json': '99aad84e2c99e46e02ff496d2514fff8170d02c00adf19e09adf4999371920f4', 'deploy/live/personal.html': '83be5caa0931c331fb8261c5e3475ca3ccf74a17e686a3d69c9c91c145557bd3', 'deploy/live/teens.html': '93d7cbf210cdee8ba0c62fbe2216d37e9f63c0125edcff9267c69936929c7e58', 'deploy/live/_release.json': 'ed6f9270d56b6d2be2c02fb51fcf8b1f23ec518209dc36d00563ad8397f9cb53'})
+ protected.update({'components/workshop/AgentSafetyLesson.tsx': '2f8e73d06debbce37e58fc5abb91f662c55ada9bd12bafdd7a1d991d0edc0105', 'components/workshop/WorkshopAudience.tsx': '6f49c5a4394db2818342e8d9ea1b786f733e0abca54b9b83ccc7d7bf6c03ba67', 'scripts/build_n15_agent_safety.py': 'b272f8206bec06f9802e745283642d83d14730d18c863297d16a45c68425f182', 'scripts/check_e3_4_ai_safety.py': '648d976993fa471946edb980e1e13e3e704559164bf6f7c69c8458eb0dbf9d62', 'data/e3_4_ru_route_sha_pins.json': 'd3dbbc063156f2c6ad1492c191b12f747116ec2f40225a34d13bc4a3ba671e90', 'deploy/live/personal.html': '83be5caa0931c331fb8261c5e3475ca3ccf74a17e686a3d69c9c91c145557bd3', 'deploy/live/teens.html': '93d7cbf210cdee8ba0c62fbe2216d37e9f63c0125edcff9267c69936929c7e58', 'deploy/live/_release.json': 'ed6f9270d56b6d2be2c02fb51fcf8b1f23ec518209dc36d00563ad8397f9cb53'})
 for rel,d in legal.items(): req(sha(rel)==d,f'legal source byte drift {rel}')
-for rel,d in protected.items(): req(sha(rel)==d,f'protected byte drift {rel}')
+# E3.4: compare to the Git blob (LF) SHA for exactly these three files.
+# A checkout may use LF (GitHub Linux) or CRLF (Windows); other files still require exact bytes.
+E34_GIT_EOL_SOURCE_FILES = frozenset({
+    'scripts/build_n15_agent_safety.py',
+    'scripts/check_e3_4_ai_safety.py',
+    'data/e3_4_ru_route_sha_pins.json',
+})
+def e34_repo_byte_sha(rel):
+    raw = source_path(rel).read_bytes()
+    lf = raw.replace(b'\r\n', b'\n')
+    req(raw.count(b'\r\n') in {0, raw.count(b'\n')} and b'\r' not in lf, f'E3.4 invalid mixed line endings {rel}')
+    return hashlib.sha256(lf).hexdigest()
+
+for rel,d in protected.items():
+ req((e34_repo_byte_sha(rel) if release=='E3_4_AI_SAFETY_AUDIENCE_R1' and rel in E34_GIT_EOL_SOURCE_FILES else sha(rel))==d,f'protected byte drift {rel}')
 for rel,d in SOURCE_MAIN.items():
  t=read(rel); req(main_digest(t)==d,f'source main drift {rel}'); req('WorkshopEditorial' in t and 'Header' not in t and 'Footer' not in t,f'source Workshop shell {rel}')
 legalpage=read('components/LegalPage.tsx'); req('WorkshopEditorial' in legalpage and '<main id="main" className="legalMain">' in legalpage,'LegalPage Workshop shell/id'); req('Header' not in legalpage and 'Footer' not in legalpage,'LegalPage legacy shell')
