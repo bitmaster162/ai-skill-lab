@@ -70,11 +70,11 @@ def normalized(h: str)->str:
  return " ".join(re.sub(r"<[^>]+>"," ",h).split())
 import json
 release=json.loads((LIVE/"_release.json").read_text(encoding="utf8")).get("release_id")
-if release in {"E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1"}:
+if release in {"E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1'}:
  from check_e3_2_ru_glossary import EXPECTED as E32_TEXT,visible as E32_VISIBLE
 else:E32_TEXT={}
-E34_PINS=json.loads((ROOT/"data/e3_4_ru_route_sha_pins.json").read_text(encoding="utf-8"))["routes"] if release in {"E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1"} else {}
-E35_PINS=json.loads((ROOT/"data/e3_5_heading_pins.json").read_text(encoding="utf-8")) if release=="E3_5_HEADING_STRUCTURE_R1" else {}
+E34_PINS=json.loads((ROOT/"data/e3_4_ru_route_sha_pins.json").read_text(encoding="utf-8"))["routes"] if release in {"E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1'} else {}
+E35_PINS=json.loads((ROOT/"data/e3_5_heading_pins.json").read_text(encoding="utf-8")) if release in {'E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1'} else {}
 errors=[]
 counts={"ru":0,"en":0,"line_splits":0,"em":0,"span":0,"unchanged_root":0}
 for route,scope in ROUTES.items():
@@ -89,7 +89,7 @@ for route,scope in ROUTES.items():
   errors.append(f"{route}: exact H1 text mismatch")
  if current.count(scope["new"])!=1:
   errors.append(f"{route}: expected H1 occurs not exactly once")
- if release in {"E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1"} and not route.startswith("/en/"):
+ if release in {"E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1'} and not route.startswith("/en/"):
   # E3.2 intentionally replaces RU text outside H1; enforce exact route-level
   # visible SHA from its independently tested glossary contract instead.
   expected=E32_TEXT.get(route,{}).get("text_sha256")
@@ -99,7 +99,7 @@ for route,scope in ROUTES.items():
    expected=E35_PINS["routes"][route]["visible_sha256"]
   actual=hashlib.sha256(E32_VISIBLE(current).encode("utf8")).hexdigest()
   if not expected or actual!=expected:errors.append(f"{route}: E3.2 exact RU visible text SHA mismatch")
- elif release=="E3_5_HEADING_STRUCTURE_R1" and route=="/en/pricing":
+ elif release in {'E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1'} and route=="/en/pricing":
   expected_sha=E35_PINS["assets"]["deploy/live/en/pricing.html"]["accepted_sha256"]
   if hashlib.sha256(current.encode("utf-8")).hexdigest()!=expected_sha:
    errors.append(f"{route}: E3.5 exact EN pricing markup changed")

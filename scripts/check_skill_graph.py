@@ -4,7 +4,7 @@ import json
 from source_paths import source_path
 import sys
 ROOT=Path(__file__).resolve().parents[1];errors=[];checks=0
-E32 = json.loads((ROOT / "deploy/live/_release.json").read_text(encoding="utf-8")).get("release_id")  in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1'}
+E32 = json.loads((ROOT / "deploy/live/_release.json").read_text(encoding="utf-8")).get("release_id")  in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1'}
 component=(ROOT/'components/SkillGraph.tsx').read_text(encoding='utf-8')
 for marker in ['adult','kids','teens','business','INDEPENDENT','EXPLAINABLE','PORTFOLIO-READY','GOVERNED','data-skill-graph','data-skill-key']:
  checks+=1
