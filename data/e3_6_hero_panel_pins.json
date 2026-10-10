@@ -1,0 +1,96 @@
+{
+  "base_main": "97233ea8bb154fca22f232b8f02c5af84d69fc61",
+  "base_tree": "2a244dc1c45d014b97dc17ab5b5b8471c27e8a8b",
+  "e2_guides_css_sha256": "d42abc2b253959b2b888bc9c0d2c39f0726fb4cd3db93f68dbde9781c94018f1",
+  "e35_inherited_assets": {
+    "app/globals.css": {
+      "accepted_lf_bytes": 58430,
+      "accepted_sha256": "63d69aa9e9bddbe07c2b5642e4f72c04745c46bc6505a9824041a84707e11688",
+      "base_sha256": "3368f8c357f5d2ffd290d59b4359e50a18a8b37e56859977ca00d2e300e5fba8"
+    },
+    "components/PromptAuditor.tsx": {
+      "accepted_lf_bytes": 6459,
+      "accepted_sha256": "9efd20cf66fa1af7449a9455a02f94953257c2bd3a1386c1a1dca9bd88b4b1f3",
+      "base_sha256": "294ea6603d91220eecb7c0f17bfc566291bbeee7a3fb708a60bae752374b3593"
+    },
+    "components/workshop/WorkshopPricing.tsx": {
+      "accepted_lf_bytes": 8892,
+      "accepted_sha256": "c0ecc8a1f9e242b87860c438dd0beb01c3221beb53b03fd6fb2a1a1180eb09bd",
+      "base_sha256": "b4f2985c8ca3646f51e894a35bbc5bd64f33da2b1c7f6ebc00585d026165e2c4"
+    },
+    "deploy/live/en.html": {
+      "accepted_lf_bytes": 14042,
+      "accepted_sha256": "d9c3804919254d78fd73a8ebeaa3b6ffd42a6c2b4c7ff1d291ad929f98be2e36",
+      "base_sha256": "910e3c72f16fd6c5b632236526cced19c6afc572678b8d17febcd70c624fd707"
+    },
+    "deploy/live/en/pricing.html": {
+      "accepted_lf_bytes": 15898,
+      "accepted_sha256": "d240c6ac48a372f59f650aef52e5c474b224821b540d7bb65f0a6408116583cf",
+      "base_sha256": "d4c60a15fcc47243f6d3286ce2edfe7b65f7d821d5633bda0210f3447da1e002"
+    },
+    "deploy/live/index.html": {
+      "accepted_lf_bytes": 18013,
+      "accepted_sha256": "f380d4f0d889829bd507dd32efb03a690fed5d7e51bb27b2c67bfd89de07523a",
+      "base_sha256": "e8494b28e2f37e9367169bd8864d0ec7759fe3583b31fbca215c8f8e233c357d"
+    },
+    "deploy/live/pricing.html": {
+      "accepted_lf_bytes": 19107,
+      "accepted_sha256": "34c78eedc53ce9e68621f3a1f58f58afee757dcc3e02d60cb809ac4ab550ffb4",
+      "base_sha256": "ec59671d9bf86706d296d272caefd5acba6703f0d81001e596d37bab3cc43731"
+    }
+  },
+  "e35_inherited_preserved": {
+    "components/workshop/AgentSafetyLesson.tsx": "2f8e73d06debbce37e58fc5abb91f662c55ada9bd12bafdd7a1d991d0edc0105",
+    "data/commercial_facts.json": "f747296d269fd57940e24a22e7d08f988ede5e43460549afdb39e3ef5857fc77",
+    "data/e3_4_ru_route_sha_pins.json": "d3dbbc063156f2c6ad1492c191b12f747116ec2f40225a34d13bc4a3ba671e90",
+    "deploy/live/business.html": "c71a4b1176484a8477b9e5f5c97c3fd5e874085acd769164ed039c46f8e9d5e2",
+    "deploy/live/en/business.html": "31966492f3005b4b9f5f7747b5b75e511978d6e58502cf7a450413dc8f6964fc",
+    "deploy/live/en/personal.html": "eb2de9d3b280a9b2f542092b2dba551832cbbcd2f75e1a5e3fa132d502f0c10d",
+    "deploy/live/en/teens.html": "7643c5b46c066350f5b06d2c0114692138fb1a0905eb16fcb25707f3aa8f5f98",
+    "deploy/live/personal.html": "83be5caa0931c331fb8261c5e3475ca3ccf74a17e686a3d69c9c91c145557bd3",
+    "deploy/live/teens.html": "93d7cbf210cdee8ba0c62fbe2216d37e9f63c0125edcff9267c69936929c7e58",
+    "lib/commercial.ts": "56c9c0715fff965bf44f195e74a38c7583d79a119b6751a7798f588b0e12b4b0"
+  },
+  "e35_manifest_sha256": "1fa3f65800dc734ed976b06b5c4f6fe96a13ec61fb3a57e2d2f4fab2136c499e",
+  "e35_payload_sha256": "32438c2091a002ca14424629066759b6eb8798222488c3d24bfb881131bbb296",
+  "e35_pins_sha256": "c7a65c3e4dfb110bbaa573f2c7f4939ee55753215e1b86f829ab84ce5ad9037d",
+  "e35_prior_workshop_css": {
+    "bytes": 41131,
+    "sha256": "f6cfcfb57dbf3fe22397a49f661f04cff3cd5ef72a879ad8a66c75cdf1cee658"
+  },
+  "e35_release_id": "E3_5_HEADING_STRUCTURE_R1",
+  "e36_source_css": {
+    "bytes": 32276,
+    "path": "components/workshop/WorkshopShell.module.css",
+    "prior_bytes": 32241,
+    "prior_sha256": "77d4aab3f5565b3c3ffe14752a8f508b9d63a0aadc7c6abbf064c91be106d594",
+    "sha256": "8d85d9d61e84cc178af370b7faa840b8dd73b5318ce0eb1ccd07b63c80924109",
+    "suffix_ascii": ".hero>.heroPanel{align-self:start}\n"
+  },
+  "e36_static_css": {
+    "bytes": 41174,
+    "path": "deploy/live/workshop.css",
+    "prior_bytes": 41131,
+    "prior_sha256": "f6cfcfb57dbf3fe22397a49f661f04cff3cd5ef72a879ad8a66c75cdf1cee658",
+    "sha256": "a666815eb37b12ab643de504fd17e0a12255d25989c63b364ea5c58693a3da06",
+    "suffix_ascii": ".workshopHero>.heroPanel{align-self:start}\n"
+  },
+  "manifest": {
+    "bytes": 14504,
+    "file_count": 96,
+    "nonfont_bytes": 1080718,
+    "path": "deploy/live/_release.json",
+    "payload_sha256": "cd18e15cdea7996b5164778983f413616309222fac323cc64966887ad1712bad",
+    "routes": 52,
+    "sha256": "3b762726614a3a0cf292abf23501be4f68d49df857f72bed26065e6515103c81",
+    "total_payload_bytes": 1162770
+  },
+  "release_id": "E3_6_WORKSHOP_HERO_PANEL_R1",
+  "schema": "aiskillab.e3-6.hero-panel.exact-source-seal.v1",
+  "visual_check_count": 22,
+  "visual_evidence_sha256": {
+    "closeout": "7534f3e842b8980f3f9da678e1e5bce01f874e5dd5e1fc42d118a3274c36b82d",
+    "patch": "a24356c8049a3e013ef33b993e46924e64c75756d13121455e0a846de3c15b9f",
+    "receipt": "8b62255bd788574f1987d8098d992117c345b8fdb8d64f109af1b472ba9dca21"
+  }
+}
