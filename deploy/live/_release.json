@@ -1,5 +1,5 @@
 {
-  "file_count": 96,
+  "file_count": 98,
   "files": [
     {
       "path": "404.html",
@@ -93,8 +93,13 @@
     },
     {
       "path": "en/guides.html",
-      "sha256": "c6cba5c02a9654eaf60ce61d2e9dfc9a6e0b77e80cce41ab40c6e4a9db1e19b5",
-      "size": 6823
+      "sha256": "5789cc163a22b3abeb239adc4216f26b66d3ab8d4ff571b616cb36c32796c1ea",
+      "size": 7224
+    },
+    {
+      "path": "en/guides/ai-first-tasks-for-adults.html",
+      "sha256": "dd43b529fac595d4ac5ea2d848de54db8dd11be761bf873b109593476f2c58aa",
+      "size": 20480
     },
     {
       "path": "en/guides/ai-safety-for-kids.html",
@@ -208,8 +213,13 @@
     },
     {
       "path": "guides.html",
-      "sha256": "ec479ef995bf724c8d647dd166019021d3a838d040de7a51a291569ccddcceac",
-      "size": 7958
+      "sha256": "204556755d618585651d44d52c8c0494986943364b67cfdf27b6ee9b4232c74e",
+      "size": 8528
+    },
+    {
+      "path": "guides/ai-first-tasks-for-adults.html",
+      "sha256": "f3cecb6ea3f46ab64ac3d3ab16db955ab8776d5edeb0c87b3b9b46bcaae2af91",
+      "size": 27314
     },
     {
       "path": "guides/ai-safety-for-kids.html",
@@ -243,8 +253,8 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "f595e63b9df6ff5a341f17b19c6505319d4553b4a71c9cac5b30e745f37f99de",
-      "size": 2298
+      "sha256": "d10072a8332312030a015f62f60c5ae4af48b9d5fa7c0089c628f9e02dbc93c5",
+      "size": 2427
     },
     {
       "path": "logo.png",
@@ -443,8 +453,8 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "165e7afc60d7c9d330594f69133b04f00cb91192ffe59794868cb13964cf1e41",
-      "size": 4393
+      "sha256": "7f78c4eb21189b061b8a3dd3f94c49a73077c6fed6f44b6cedbfb02458297c2c",
+      "size": 4608
     },
     {
       "path": "start-brief.js",
@@ -473,8 +483,8 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "455d618b9ebd78b4c3f7d40d837e0c3362d4023e84beede5c252a4b206d8b933",
-      "size": 4192
+      "sha256": "ba4fefee6a7401d7959473bc126ce743eaccacddda2fdffacb9a725afc8f049e",
+      "size": 4408
     },
     {
       "path": "workshop.css",
@@ -482,7 +492,7 @@
       "size": 41174
     }
   ],
-  "payload_sha256": "cd18e15cdea7996b5164778983f413616309222fac323cc64966887ad1712bad",
-  "release_id": "E3_6_WORKSHOP_HERO_PANEL_R1",
+  "payload_sha256": "bd972c8b657e6ebf558da3630970668f935b149abc88e28e10cc53a36d9c5973",
+  "release_id": "T1_6F2_ADULT_FIRST_TASKS_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }

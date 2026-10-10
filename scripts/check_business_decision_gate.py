@@ -3,7 +3,7 @@ from pathlib import Path
 import sys,json
 ROOT=Path(__file__).resolve().parents[1]
 required=[('components/workshop/WorkshopBusiness.tsx', ['Ship · Revise · Stop.', 'human review', 'failure modes', 'data boundaries', 'fallback', 'Stop']), ('components/workshop/WorkshopBusiness.tsx', ['Ship · Revise · Stop.', 'human review', 'failure modes', 'data boundaries', 'fallback', 'Stop']), ('deploy/live/business.html', ['Ship · Revise · Stop.', 'human review', 'failure modes', 'data boundaries', 'fallback', 'STOP']), ('deploy/live/en/business.html', ['Ship · Revise · Stop.', 'human review', 'failure modes', 'data boundaries', 'fallback', 'STOP'])]
-if json.loads((ROOT/'deploy/live/_release.json').read_text(encoding='utf8')).get('release_id') in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1'}:
+if json.loads((ROOT/'deploy/live/_release.json').read_text(encoding='utf8')).get('release_id') in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1'}:
     ru=['Выпустить · Доработать · Остановить.','проверку человеком','сценарии отказа','границы данных','запасной вариант','Остановить']
     required[2]=('deploy/live/business.html',ru)
     required.append(('components/workshop/WorkshopBusiness.tsx',ru))

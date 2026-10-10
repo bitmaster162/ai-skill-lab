@@ -81,9 +81,9 @@ for p in public:
  footer=re.search(r'<footer class="workshopFooter">(.*?)</footer>',text,re.S)
  req(bool(footer),f"{rel}: Workshop footer missing")
  if footer:
-  expected_footer=FOOTER_E2[lang] if release in {"E2_GUIDES_R1","N15_AGENT_SAFETY_R1","A4_PHUKET_LOCAL_R1","A3_CALCOM_R1","A5_MENTOR_R1","E1_3_POST_SUBMIT_R1","DESIGN_TYPOGRAPHY_R1","OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1'} else FOOTER_R157[lang] if release in {"R157_I1_3_INDEXABILITY","R158_F1_2_MATCHER_V2","R160_F1_2_PRIVACY_DISCLOSURE"} else FOOTER[lang]
+  expected_footer=FOOTER_E2[lang] if release in {"E2_GUIDES_R1","N15_AGENT_SAFETY_R1","A4_PHUKET_LOCAL_R1","A3_CALCOM_R1","A5_MENTOR_R1","E1_3_POST_SUBMIT_R1","DESIGN_TYPOGRAPHY_R1","OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1'} else FOOTER_R157[lang] if release in {"R157_I1_3_INDEXABILITY","R158_F1_2_MATCHER_V2","R160_F1_2_PRIVACY_DISCLOSURE"} else FOOTER[lang]
   req(hrefs(footer.group(1))==expected_footer,f"{rel}: footer href drift {hrefs(footer.group(1))}")
-  expected_caption = "Практический ИИ · онлайн / Пхукет" if release in {"E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1'} and lang == "ru" else CAPTION[lang]
+  expected_caption = "Практический ИИ · онлайн / Пхукет" if release in {"E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1'} and lang == "ru" else CAPTION[lang]
   req(expected_caption in footer.group(1),f"{rel}: footer caption drift")
  reach=re.search(r'<section class="reachBlock">(.*?)</section>',text,re.S)
  if rel in LIGHT:
@@ -105,7 +105,7 @@ for p in public:
    links=hrefs(block)
    req(links==[CONTACT[lang]["start"],*CONTACT_URLS],f"{rel}: reach links drift {links}")
 
-req((reach_count,light_count,start_reply_count)==(46,4,2),f"D1 distribution reach/light/start={(reach_count,light_count,start_reply_count)}")
+req((reach_count,light_count,start_reply_count)==((48,4,2) if release=='T1_6F2_ADULT_FIRST_TASKS_R1' else (46,4,2)),f"D1 distribution reach/light/start={(reach_count,light_count,start_reply_count)}")
 
 for p in sorted(LIVE.rglob("*.html")):
  req(' style=' not in p.read_text(encoding="utf-8"),f"{p.relative_to(LIVE)}: inline style")

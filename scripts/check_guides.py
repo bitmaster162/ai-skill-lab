@@ -46,10 +46,39 @@ CROSSLINK_ROUTES = {
 
 
 RELEASE = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
-if RELEASE in {"E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1'}:
+if RELEASE in {"E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1', 'T1_6F2_ADULT_FIRST_TASKS_R1'}:
     EXPECTED_MD["guides/aiskillab/ai-safety-for-kids.ru.md"] = "f8be315623ddcfb8b3e3f5da46a52305f943df3aecb6ea2915895d2ed6aff75e"
     LISTING["/guides"] = ("Гайды", "Короткие проверенные материалы об ИИ для родителей, взрослых учеников и команд. У каждого — дата проверки и источники.")
     ARTICLES["/guides/ai-safety-for-kids"]["title"] = "ИИ и ребёнок 8–13: чек-лист безопасности для родителей"
+
+
+FUTURE_RELEASE = "T1_6F2_ADULT_FIRST_TASKS_R1"
+FUTURE_ARTICLES = {
+    "/guides/ai-first-tasks-for-adults": {
+        "alternate": "/en/guides/ai-first-tasks-for-adults",
+        "title": "С чего начать работать с AI взрослому: первые задачи",
+        "sources": 5,
+    },
+    "/en/guides/ai-first-tasks-for-adults": {
+        "alternate": "/guides/ai-first-tasks-for-adults",
+        "title": "Where should adults start with AI? First practical tasks",
+        "sources": 5,
+    },
+}
+FUTURE_EXTERNAL_SOURCES = {
+    "https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt",
+    "https://openai.com/academy/getting-started/",
+    "https://help.openai.com/en/articles/7730893-data-usage-for-openai-models",
+    "https://help.openai.com/en/articles/8313428",
+    "https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety",
+}
+if RELEASE == FUTURE_RELEASE:
+    EXPECTED_MD.update({
+        "guides/aiskillab/ai-first-tasks-for-adults.ru.md": "5c5f8d8da100a8657aeefbe5d9044462095e92db341e240a37bdebae57bba61b",
+        "guides/aiskillab/ai-first-tasks-for-adults.en.md": "b0bcd0a6b545d2d8d4b190e55ab9d3c76350a9a30a8e1c745fb23e04b48df671",
+    })
+    ARTICLES.update(FUTURE_ARTICLES)
+
 
 def route_for(path: Path) -> str:
     rel = path.relative_to(LIVE).as_posix()
@@ -160,6 +189,10 @@ def main() -> int:
         require(f'<link rel="canonical" href="{ORIGIN}{route}">' in raw, f"{route}: canonical missing", errors)
         require('hreflang="x-default"' in raw, f"{route}: x-default missing", errors)
         require('content="https://aiskillab.work/og.png"' in raw, f"{route}: OG PNG missing", errors)
+        if RELEASE == FUTURE_RELEASE:
+            href = "/en/guides/ai-first-tasks-for-adults" if route.startswith("/en") else "/guides/ai-first-tasks-for-adults"
+            checks += 1
+            require(f'href="{href}"' in raw, f"{route}: future guide listing card missing", errors)
 
     # Article contract.
     for route, expected in ARTICLES.items():
@@ -171,6 +204,8 @@ def main() -> int:
         source_urls = [url for url in external_source_links if any(host in urlparse(url).netloc for host in [
             "help.openai.com", "support.google.com", "anthropic.com", "suno.com", "replit.com", "docs.github.com", "internetmatters.org"
         ])]
+        if RELEASE == FUTURE_RELEASE and route in FUTURE_ARTICLES:
+            source_urls.extend(url for url in external_source_links if urlparse(url).netloc == "openai.com")
         checks += 16
         require(f"<h1>{expected['title']}</h1>" in raw, f"{route}: article H1 drift", errors)
         require('class="guideToc"' in raw and 'href="#section-1"' in raw and 'href="#sources"' in raw, f"{route}: TOC/anchors missing", errors)
@@ -189,6 +224,11 @@ def main() -> int:
         require('content="https://aiskillab.work/og.png"' in raw, f"{route}: OG PNG missing", errors)
         require("guideReviewMeta" in raw, f"{route}: reviewed/next review line missing", errors)
         require(len(set(source_urls)) == expected["sources"], f"{route}: external source count {len(set(source_urls))} != {expected['sources']}", errors)
+        if RELEASE == FUTURE_RELEASE and route in FUTURE_ARTICLES:
+            checks += 2
+            require(set(source_urls) == FUTURE_EXTERNAL_SOURCES, f"{route}: future external source set drift", errors)
+            required_internal = ("/en/personal", "/en/curriculum") if route.startswith("/en/") else ("/personal", "/curriculum")
+            require(all(f'href="{link}"' in raw for link in required_internal), f"{route}: future internal links missing", errors)
         require('rel="noopener"' in raw, f"{route}: external noopener missing", errors)
 
     # Required contextual links from youth/safety pages.

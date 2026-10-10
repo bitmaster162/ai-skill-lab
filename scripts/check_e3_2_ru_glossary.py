@@ -36,13 +36,15 @@ PROTECTED={'privacy.html': 'e5c30338dc38bffd04f0160760345062080e41edc0a5b2574ded
 ENGLISH={'en/about.html': 'e5e7c89ed856beaa84b56e56694b02a78eb37a1abd8934da5ab8cdcfd3950530', 'en/build.html': '6a963b7bacfa0f9eecf57de0299afbff8ed015299f458d2754ab3166ed080c48', 'en/business.html': '31966492f3005b4b9f5f7747b5b75e511978d6e58502cf7a450413dc8f6964fc', 'en/certificate.html': 'e43a3c1c5ca5ceed6c8ead1ec6412a7a363a2a1aa00d9b16451fc02696b7c232', 'en/challenge.html': 'f381308ca6b344ed3785e8168a97768f30353a4c79a668c37b6b5705bfac7f61', 'en/curriculum.html': '7acce68cefdd9cf91f2e72727f202959d8f9db3fb5f19347ca601d91d2326105', 'en/family.html': '52d9880e9356d19c12ecde46d351b746c1d8e9543b5f1f64c230b087d4c11886', 'en/faq.html': '4a880b4aefdeb54d6ffd60bb7d804441c10c95111332b7bbb72e480469a47b62', 'en/guides/ai-safety-for-kids.html': 'a386fd8c652960faf22bf606a00fa0f23afcd26882e424d9d308166a04bd1aaf', 'en/guides.html': 'c6cba5c02a9654eaf60ce61d2e9dfc9a6e0b77e80cce41ab40c6e4a9db1e19b5', 'en/kids.html': '06f7f7f643ba6222df484e68e34bed7611331374d3706a3b7f62876cb56fb3a2', 'en/matcher.html': 'fb2ab78d51a941b87b8cae4d06e8074b9584fecdd8e888d4edc6375591546650', 'en/method.html': '65e3ab868a8f2aa2ebdcde000f3b01cfbc2acfaf17186eac32137e9b935d8617', 'en/parents.html': 'c70ee6601a9395907cc00c51e22acf71252f814e8ebd0fcce84ae58087c3dcdd', 'en/personal.html': 'eb2de9d3b280a9b2f542092b2dba551832cbbcd2f75e1a5e3fa132d502f0c10d', 'en/phuket.html': '10cf9ba9f1dd0b3077b767f5b73080a5c40b75f2ece6d209b77e727afd6f5946', 'en/pricing.html': 'd4c60a15fcc47243f6d3286ce2edfe7b65f7d821d5633bda0210f3447da1e002', 'en/privacy.html': '1273aefe18ed6e938a55bf07776784332108bc794335dcdb12c3862f41ad1141', 'en/projects.html': 'fb7ec221a02b3885e813beb1779b52f1c71fc752b3975801575622adee31e744', 'en/proof.html': '49d525cc0a4ebc268cb4a3d91e880815bd34a21cef5174c5298b46cae11d5353', 'en/safety.html': '7b276e429ff29d322a673f1e22fb611c45cfa6d2a97fd76897c673f9953aa16a', 'en/start.html': 'baae34d9842851d09460189e1161527d39681fbdeffb21512f3f7085bc0e3f28', 'en/studio.html': '15d863d291acb92623f0cd163f0ec50af88bb302fb586447aff7a3439a2ae8e9', 'en/teens.html': '7643c5b46c066350f5b06d2c0114692138fb1a0905eb16fcb25707f3aa8f5f98', 'en/terms.html': 'c0e97aefd66215d012395ec27a8f174bc0c26c9ae0b477d24789cd340e045ec9', 'en.html': '910e3c72f16fd6c5b632236526cced19c6afc572678b8d17febcd70c624fd707'}
 
 RELEASE_ID=json.loads((LIVE/"_release.json").read_text(encoding="utf-8")).get("release_id")
-E34_PINS=json.loads((ROOT/"data/e3_4_ru_route_sha_pins.json").read_text(encoding="utf-8"))["routes"] if RELEASE_ID in {"E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1'} else {}
-E35_PINS=json.loads((ROOT/"data/e3_5_heading_pins.json").read_text(encoding="utf-8")) if RELEASE_ID in {'E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1'} else {}
+E34_PINS=json.loads((ROOT/"data/e3_4_ru_route_sha_pins.json").read_text(encoding="utf-8"))["routes"] if RELEASE_ID in {"E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1'} else {}
+E35_PINS=json.loads((ROOT/"data/e3_5_heading_pins.json").read_text(encoding="utf-8")) if RELEASE_ID in {'E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1'} else {}
 if E35_PINS:
  assert E35_PINS["release_id"]=="E3_5_HEADING_STRUCTURE_R1"
  ENGLISH=dict(ENGLISH)
  for rel in ("en.html","en/pricing.html"):
   ENGLISH[rel]=E35_PINS["assets"]["deploy/live/"+rel]["accepted_sha256"]
+if RELEASE_ID == 'T1_6F2_ADULT_FIRST_TASKS_R1':
+ ENGLISH['en/guides.html']='5789cc163a22b3abeb239adc4216f26b66d3ab8d4ff571b616cb36c32796c1ea'
 def route_for(rel):
  return "/" if rel=="index.html" else "/"+rel[:-5]
 def main():
@@ -56,6 +58,7 @@ def main():
   n=len(terms(html))
   total_before+=x["before"];total_after+=n
   expected_sha = E35_PINS["routes"][route]["visible_sha256"] if route in E35_PINS.get("routes",{}) else (E34_PINS[route]["visible_sha256"] if route in E34_PINS else x["text_sha256"])
+  if RELEASE_ID == "T1_6F2_ADULT_FIRST_TASKS_R1" and route == "/guides": expected_sha="23039bf8b36d5c1305e5f3b802023df4a09e2d708f5d9d9fb812b9fb3befea2a"
   if seen!=expected_sha:errors.append(f"{route}: exact approved RU visible text SHA drift")
   if n>x["before"]:errors.append(f"{route}: Latin word count increased {n}>{x['before']}")
   if route=="/" and "искусственный интеллект (ИИ) и нейросети" not in text:errors.append("/: canonical opening missing")

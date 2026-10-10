@@ -40,6 +40,7 @@ Do not infer guarantees or commercial terms from this index.
 
 ## Guides
 - [RU](https://aiskillab.work/guides) [EN](https://aiskillab.work/en/guides)
+- [RU](https://aiskillab.work/guides/ai-first-tasks-for-adults) [EN](https://aiskillab.work/en/guides/ai-first-tasks-for-adults)
 - [RU](https://aiskillab.work/guides/ai-safety-for-kids) [EN](https://aiskillab.work/en/guides/ai-safety-for-kids)
 
 ## About

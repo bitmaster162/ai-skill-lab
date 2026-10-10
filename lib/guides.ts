@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { createHash } from "node:crypto";
 
 export type GuideLocale = "ru" | "en";
 
@@ -32,6 +33,61 @@ export type GuideDocument = {
 };
 
 const GUIDE_DIR = path.join(process.cwd(), "guides", "aiskillab");
+
+// Source existence alone never grants publishing authority: the static manifest,
+// exact reviewed RU/EN bytes, and matching two HTML records must all agree.
+const FUTURE_GUIDE_RELEASE = "T1_6F2_ADULT_FIRST_TASKS_R1";
+const FUTURE_GUIDE_SLUG = "ai-first-tasks-for-adults";
+const FUTURE_GUIDE_PAYLOAD_SHA = "bd972c8b657e6ebf558da3630970668f935b149abc88e28e10cc53a36d9c5973";
+const FUTURE_GUIDE_SOURCE_SHA: Record<GuideLocale, string> = {
+  ru: "5c5f8d8da100a8657aeefbe5d9044462095e92db341e240a37bdebae57bba61b",
+  en: "b0bcd0a6b545d2d8d4b190e55ab9d3c76350a9a30a8e1c745fb23e04b48df671",
+};
+const FUTURE_GUIDE_STATIC_ASSETS = [
+  ["guides/ai-first-tasks-for-adults.html", 27314, "f3cecb6ea3f46ab64ac3d3ab16db955ab8776d5edeb0c87b3b9b46bcaae2af91"],
+  ["en/guides/ai-first-tasks-for-adults.html", 20480, "dd43b529fac595d4ac5ea2d848de54db8dd11be761bf873b109593476f2c58aa"],
+] as const;
+
+function futureGuidePairApproved(): boolean {
+  try {
+    const manifest: unknown = JSON.parse(
+      fs.readFileSync(path.join(process.cwd(), "deploy", "live", "_release.json"), "utf8"),
+    );
+    if (manifest === null || typeof manifest !== "object" || Array.isArray(manifest)) return false;
+    const header = manifest as Record<string, unknown>;
+    if (
+      header.schema !== "ai-skill-lab.static-release.v1" ||
+      header.release_id !== FUTURE_GUIDE_RELEASE ||
+      header.file_count !== 98 ||
+      header.payload_sha256 !== FUTURE_GUIDE_PAYLOAD_SHA
+    ) return false;
+    const files = header.files;
+    if (!Array.isArray(files) || files.length !== 98) return false;
+    const indexed = new Map<string, { size: number; sha256: string }>();
+    for (const item of files) {
+      if (!item || typeof item !== "object" || Array.isArray(item)) return false;
+      const asset = item as Record<string, unknown>;
+      if (
+        typeof asset.path !== "string" ||
+        !Number.isInteger(asset.size) ||
+        typeof asset.sha256 !== "string" ||
+        indexed.has(asset.path)
+      ) return false;
+      indexed.set(asset.path, { size: asset.size as number, sha256: asset.sha256 });
+    }
+    for (const [assetPath, expectedSize, expectedSHA] of FUTURE_GUIDE_STATIC_ASSETS) {
+      const actual = indexed.get(assetPath);
+      if (!actual || actual.size !== expectedSize || actual.sha256 !== expectedSHA) return false;
+    }
+    for (const locale of ["ru", "en"] as const) {
+      const bytes = fs.readFileSync(path.join(GUIDE_DIR, `${FUTURE_GUIDE_SLUG}.${locale}.md`));
+      if (createHash("sha256").update(bytes).digest("hex") !== FUTURE_GUIDE_SOURCE_SHA[locale]) return false;
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 function stripQuoted(value: string): string {
   const s = value.trim();
@@ -84,8 +140,12 @@ function parseGuideFile(filePath: string): Guide {
 
 export function listGuides(locale: GuideLocale): Guide[] {
   if (!fs.existsSync(GUIDE_DIR)) return [];
+  const futureApproved = futureGuidePairApproved();
   return fs.readdirSync(GUIDE_DIR)
-    .filter((name) => name.endsWith(`.${locale}.md`))
+    .filter((name) =>
+      name === `ai-safety-for-kids.${locale}.md` ||
+      (futureApproved && name === `${FUTURE_GUIDE_SLUG}.${locale}.md`)
+    )
     .sort()
     .map((name) => parseGuideFile(path.join(GUIDE_DIR, name)));
 }
