@@ -38,7 +38,7 @@ const GUIDE_DIR = path.join(process.cwd(), "guides", "aiskillab");
 // exact reviewed RU/EN bytes, and matching two HTML records must all agree.
 const FUTURE_GUIDE_RELEASE = "T1_6F2_ADULT_FIRST_TASKS_R1";
 const FUTURE_GUIDE_SLUG = "ai-first-tasks-for-adults";
-const FUTURE_GUIDE_PAYLOAD_SHA = "bd972c8b657e6ebf558da3630970668f935b149abc88e28e10cc53a36d9c5973";
+const FUTURE_GUIDE_PAYLOAD_SHA = "188c0b7c3204dd4c1366a51facafeb09421c929e58913e34c7500d9fdf2ea30e";
 const FUTURE_GUIDE_SOURCE_SHA: Record<GuideLocale, string> = {
   ru: "5c5f8d8da100a8657aeefbe5d9044462095e92db341e240a37bdebae57bba61b",
   en: "b0bcd0a6b545d2d8d4b190e55ab9d3c76350a9a30a8e1c745fb23e04b48df671",

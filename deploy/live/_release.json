@@ -453,7 +453,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "7f78c4eb21189b061b8a3dd3f94c49a73077c6fed6f44b6cedbfb02458297c2c",
+      "sha256": "921f6e6a03e23cbf79d7a6efd8006bcea1f879e923fd03575839b751fd5a0d76",
       "size": 4608
     },
     {
@@ -492,7 +492,7 @@
       "size": 41174
     }
   ],
-  "payload_sha256": "bd972c8b657e6ebf558da3630970668f935b149abc88e28e10cc53a36d9c5973",
+  "payload_sha256": "188c0b7c3204dd4c1366a51facafeb09421c929e58913e34c7500d9fdf2ea30e",
   "release_id": "T1_6F2_ADULT_FIRST_TASKS_R1",
   "schema": "ai-skill-lab.static-release.v1"
 }

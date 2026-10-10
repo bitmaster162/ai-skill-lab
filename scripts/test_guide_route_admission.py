@@ -2,6 +2,7 @@
 """Read-only, in-memory route-admission acceptance fixtures for T1.5."""
 from __future__ import annotations
 
+import json
 import re
 import unittest
 from pathlib import Path
@@ -23,31 +24,45 @@ SYNTHETIC = "fixture-second-guide"
 PAIR = {f"/guides/{SYNTHETIC}", f"/en/guides/{SYNTHETIC}"}
 
 
+FUTURE_RELEASE = "T1_6F2_ADULT_FIRST_TASKS_R1"
+FUTURE_PAIR = frozenset({
+    "/guides/ai-first-tasks-for-adults",
+    "/en/guides/ai-first-tasks-for-adults",
+})
+
+
+def expected_live_routes() -> frozenset[str]:
+    """Preserve 52 historical routes; require two SHA-admitted future routes."""
+    release = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
+    return BASELINE_ROUTES | FUTURE_PAIR if release == FUTURE_RELEASE else BASELINE_ROUTES
+
+
 class RouteAdmissionTest(unittest.TestCase):
     def test_no_new_slug_has_release_authority(self) -> None:
         self.assertEqual(APPROVED_ADDITIONAL_GUIDE_SLUGS, frozenset())
-        self.assertEqual(admitted_route_count(), 52)
+        self.assertEqual(admitted_routes(), expected_live_routes())
+        self.assertEqual(admitted_route_count(), len(expected_live_routes()))
 
     def test_52_baseline_exact(self) -> None:
         self.assertEqual(len(BASELINE_ROUTES), 52)
-        self.assertEqual(require_route_set(sorted(BASELINE_ROUTES)), 52)
+        self.assertEqual(require_route_set(sorted(BASELINE_ROUTES), approved_slugs=[]), 52)
 
     def test_existing_static_html(self) -> None:
-        self.assertEqual(require_public_html(LIVE), 52)
+        self.assertEqual(require_public_html(LIVE), len(expected_live_routes()))
 
     def test_existing_sitemap_exact(self) -> None:
         urls = re.findall(
             r"<loc>(https://[^<]+)</loc>",
             (LIVE / "sitemap.xml").read_text(encoding="utf-8"),
         )
-        self.assertEqual(require_canonical_urls(urls), 52)
+        self.assertEqual(require_canonical_urls(urls), len(expected_live_routes()))
 
     def test_existing_llms_exact(self) -> None:
         urls = re.findall(
             r"\]\((https://[^)]+)\)",
             (LIVE / "llms.txt").read_text(encoding="utf-8"),
         )
-        self.assertEqual(require_canonical_urls(urls), 52)
+        self.assertEqual(require_canonical_urls(urls), len(expected_live_routes()))
 
     def test_54_pair_explicitly_admitted(self) -> None:
         candidate = BASELINE_ROUTES | PAIR

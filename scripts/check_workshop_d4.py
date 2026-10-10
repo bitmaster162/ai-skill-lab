@@ -160,7 +160,7 @@ if release in {'E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1','E3_4_
   'components/workshop/WorkshopShell.tsx':'42f7db61455c39d6389846e8da3bc9eefd3f735a0d60b831a03d31c7398ccdee',
  })
  expected_e32_sitemap_lastmod = '2026-10-09' if release in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1'} else '2026-10-08'
- if release=='T1_6F2_ADULT_FIRST_TASKS_R1': expected_e32_sitemap_lastmod = '2026-10-10'
+ if release=='T1_6F2_ADULT_FIRST_TASKS_R1': expected_e32_sitemap_lastmod = '2026-10-11'
  require(f'lastModified = "{expected_e32_sitemap_lastmod}"' in read('app/sitemap.ts'),'E3.1 sitemap source freshness')
  require(read('deploy/live/sitemap.xml').count(f'<lastmod>{expected_e32_sitemap_lastmod}</lastmod>')==admitted_route_count(),'E3.1 sitemap static freshness route authority')
  require('Практический ИИ · онлайн / Пхукет' in read('components/workshop/WorkshopShell.tsx'),'E3.1 RU footer caption')
@@ -201,15 +201,15 @@ if release=='E3_6_WORKSHOP_HERO_PANEL_R1': protected['deploy/live/_release.json'
 # T1.6F2G: future-only 54/98 release and exact SEO asset pins; historic SHA seals retained.
 if release=='T1_6F2_ADULT_FIRST_TASKS_R1':
  require(manifest.get('schema')=='ai-skill-lab.static-release.v1' and manifest.get('file_count')==98 and len(manifest.get('files',[]))==98,'F2 future release schema / 98 records')
- require(manifest.get('payload_sha256')=='bd972c8b657e6ebf558da3630970668f935b149abc88e28e10cc53a36d9c5973','F2 future payload SHA')
+ require(manifest.get('payload_sha256')=='188c0b7c3204dd4c1366a51facafeb09421c929e58913e34c7500d9fdf2ea30e','F2 future payload SHA')
  future_records=manifest.get('files',[])
- require(hashlib.sha256(''.join(f"{rec['path']}\t{rec['size']}\t{rec['sha256']}\n" for rec in sorted(future_records,key=lambda rec:rec['path'])).encode('utf-8')).hexdigest()=='bd972c8b657e6ebf558da3630970668f935b149abc88e28e10cc53a36d9c5973','F2 future 98-asset digest')
+ require(hashlib.sha256(''.join(f"{rec['path']}\t{rec['size']}\t{rec['sha256']}\n" for rec in sorted(future_records,key=lambda rec:rec['path'])).encode('utf-8')).hexdigest()=='188c0b7c3204dd4c1366a51facafeb09421c929e58913e34c7500d9fdf2ea30e','F2 future 98-asset digest')
  protected.pop('deploy/live/_release.json',None)  # replaced by digest+schema+inventory checks only for F2
  protected['deploy/live/sitemap.xml']='413590018e11b8ae516534fa8f9b1b739077c7343ab5c312acf68017849f134c'
  protected['deploy/live/llms.txt']='d10072a8332312030a015f62f60c5ae4af48b9d5fa7c0089c628f9e02dbc93c5'
 
 if release=='T1_6F2_ADULT_FIRST_TASKS_R1':
- protected.update({'README.md': '36eac170fb5d428e2cca290db993527c8babe51fd428cf605ac1e791aeeba822', 'app/sitemap.ts': '0b7b9b522ac5e1192e51e6fd58b6d5d0a1b7df6ed9a45d96cd056d23b8b1de71', 'deploy/live/sitemap.xml': '7f78c4eb21189b061b8a3dd3f94c49a73077c6fed6f44b6cedbfb02458297c2c', 'deploy/live/vercel.json': 'ba4fefee6a7401d7959473bc126ce743eaccacddda2fdffacb9a725afc8f049e'})
+ protected.update({'README.md': '36eac170fb5d428e2cca290db993527c8babe51fd428cf605ac1e791aeeba822', 'app/sitemap.ts': '1137cb927e61acd85b255935d591b93379d01e6c10ed5309656a874d2a791a54', 'deploy/live/sitemap.xml': '921f6e6a03e23cbf79d7a6efd8006bcea1f879e923fd03575839b751fd5a0d76', 'deploy/live/vercel.json': 'ba4fefee6a7401d7959473bc126ce743eaccacddda2fdffacb9a725afc8f049e'})
 for rel,digest in protected.items():
  require((e34_repo_byte_sha(rel) if (release in {'E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1'} and rel in E34_GIT_EOL_SOURCE_FILES) or (release=='E3_5_HEADING_STRUCTURE_R1' and rel in E35_CANONICAL_FILES) else sha(rel))==digest,f'protected byte drift {rel}')
 for locale in ('ru','en'):
