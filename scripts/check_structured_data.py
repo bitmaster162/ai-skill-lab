@@ -35,7 +35,7 @@ def organization(lang):
 def website():return {"@context":"https://schema.org","@type":"WebSite","@id":WEB_ID,"url":ORIGIN,"name":"AI Skill Lab","inLanguage":["ru","en"],"publisher":{"@id":ORG_ID}}
 def person():
  base={"@context":"https://schema.org","@type":"Person","@id":PERSON_ID,"name":"Dumanyan Robert","jobTitle":"Founder / instructor","worksFor":{"@id":ORG_ID},"url":f"{ORIGIN}/about","email":"robert@aiskillab.work","knowsAbout":["AI systems","Research workflows","AI agents","Automation","Decision workflows","Digital products"],"sameAs":[TELEGRAM]}
- if RELEASE in {"A5_MENTOR_R1","E1_3_POST_SUBMIT_R1","DESIGN_TYPOGRAPHY_R1","OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1'}:
+ if RELEASE in {"A5_MENTOR_R1","E1_3_POST_SUBMIT_R1","DESIGN_TYPOGRAPHY_R1","OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1', 'T1_6F2_ADULT_FIRST_TASKS_R1'}:
   base["name"]="Robert Dumanyan";base["image"]=MENTOR_IMAGE;base["sameAs"]=[TELEGRAM,GITHUB,LINKEDIN]
  return base
 def course_page(route,lang):
@@ -109,7 +109,7 @@ def main():
   text=(ROOT/rel).read_text(encoding="utf-8")
   for n in needles:
    if n not in text:errors.append(f"{rel}: missing source marker {n}")
- print(f"structured_data_routes=52 blocks={blocks} organization_routes={org_routes} course_routes={course_routes} pricing_courses={course_items} faq_items=22")
+ print(f"structured_data_routes={org_routes} blocks={blocks} organization_routes={org_routes} course_routes={course_routes} pricing_courses={course_items} faq_items=22")
  if errors:
   print("STRUCTURED_DATA_FAIL");[print("-",e) for e in errors];return 1
  print("STRUCTURED_DATA_PASS");return 0

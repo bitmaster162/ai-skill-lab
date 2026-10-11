@@ -48,6 +48,7 @@ CHECKS = [
     ("e3_4_ai_safety", ["python", "scripts/check_e3_4_ai_safety.py"]),
     ("e3_5_heading_structure", ["python", "scripts/check_e3_5_heading_structure.py"]),
     ("e3_6_hero_panel", ["python", "scripts/check_e3_6_hero_panel.py"]),
+    ("t16f2_release_seal", ["python", "scripts/check_t16f2_release_seal.py"]),
     ("e3_8_event_runtime", ["node", "scripts/check_e3_8_event_runtime.mjs"]),
     ("e3_8_event_schema", ["python", "scripts/check_e3_8_event_schema.py"]),
     ("e3_8_event_ingress", ["node", "--test", "services/lead-ingress/test/event.test.mjs"]),

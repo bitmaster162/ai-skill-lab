@@ -176,7 +176,7 @@ def main():
     allow = json.load(open(args.allow, encoding="utf-8")) if args.allow else {}
     if args.dir:
         release_meta = json.load(open(os.path.join(args.dir, "_release.json"), encoding="utf-8"))
-        if release_meta.get("release_id") in {"E3_4_AI_SAFETY_AUDIENCE_R1", "E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1'}:
+        if release_meta.get("release_id") in {"E3_4_AI_SAFETY_AUDIENCE_R1", "E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1', 'T1_6F2_ADULT_FIRST_TASKS_R1'}:
             route_pins = json.load(open(os.path.join(os.path.dirname(__file__), "data/e3_4_ru_route_sha_pins.json"), encoding="utf-8"))
             assert route_pins.get("release") == "E3_4_AI_SAFETY_AUDIENCE_R1"
             assert set(route_pins.get("routes", {})) == {"/personal", "/teens"}
@@ -185,7 +185,7 @@ def main():
                 assert observed == item["d1_words_sha256"], f"E3.4 D1 exact text drift {route}"
                 assert route in allow.get("approved_text_sha256", {}), f"E3.2 D1 inheritance missing {route}"
                 allow["approved_text_sha256"][route] = item["d1_words_sha256"]
-        if release_meta.get("release_id") in {"E3_5_HEADING_STRUCTURE_R1","E3_6_WORKSHOP_HERO_PANEL_R1"}:
+        if release_meta.get("release_id") in {"E3_5_HEADING_STRUCTURE_R1","E3_6_WORKSHOP_HERO_PANEL_R1", "T1_6F2_ADULT_FIRST_TASKS_R1"}:
             pins = json.load(open(os.path.join(os.path.dirname(__file__), "data/e3_5_heading_pins.json"), encoding="utf-8"))
             assert pins["release_id"] == "E3_5_HEADING_STRUCTURE_R1"
             route = "/pricing"

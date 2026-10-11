@@ -33,7 +33,7 @@ readme=(ROOT/"README.md").read_text(encoding="utf-8")
 sitemap=(LIVE/"sitemap.xml").read_text(encoding="utf-8")
 llms=(LIVE/"llms.txt").read_text(encoding="utf-8")
 manifest=json.loads((LIVE/"_release.json").read_text(encoding="utf-8"))
-E32=manifest.get('release_id') in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1'}
+E32=manifest.get('release_id') in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1'}
 
 for label,src in [("RU source",src_ru),("EN source",src_en)]:
     req(''"use client"'' not in src,f"{label}: must stay server-rendered")
@@ -87,14 +87,14 @@ req("/certificate" in readme and "/en/certificate" in readme,"README route inven
 req("consent-bound completion-record policy/template only" in readme,"README N25 truth")
 req("issued certificates" in readme,"README no-fabricated-issued-certificate discipline")
 
-req(manifest.get("release_id") in {"N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1'},"N25-or-successor release identity")
-req(manifest.get("file_count")==96,"N25 static file_count 96")
+req(manifest.get("release_id") in {"N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1'},"N25-or-successor release identity")
+req(manifest.get("file_count")==(98 if manifest.get("release_id")=='T1_6F2_ADULT_FIRST_TASKS_R1' else 96),"N25 static file_count 96")
 listed={x.get("path") for x in manifest.get("files",[])}
 req({"certificate.html","en/certificate.html"}<=listed,"manifest certificate pair")
 req(require_public_html(LIVE)==admitted_route_count(),"approved public HTML routes")
-req(len(list(LIVE.rglob("*.html")))==53,"53 HTML including 404")
+req(len(list(LIVE.rglob("*.html")))==(55 if manifest.get("release_id")=='T1_6F2_ADULT_FIRST_TASKS_R1' else 53),"53 HTML including 404")
 
-print(f"N25_CERTIFICATE_CHECK checks={checks} public_routes=52 issued_records=0 minor_public_pii=0")
+print(f"N25_CERTIFICATE_CHECK checks={checks} public_routes={admitted_route_count()} issued_records=0 minor_public_pii=0")
 if errors:
     print("N25_CERTIFICATE_FAIL")
     for e in errors: print("FAIL:",e)

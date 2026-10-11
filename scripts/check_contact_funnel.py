@@ -2,7 +2,9 @@
 from html.parser import HTMLParser
 from pathlib import Path
 import sys
+import json
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';errors=[];checks=0
+RELEASE_ID=json.loads((LIVE/'_release.json').read_text(encoding='utf-8')).get('release_id')
 channels={'telegram':'https://t.me/BiTFormer','email':'mailto:robert@aiskillab.work','whatsapp':'https://wa.me/66649701204','line':'https://line.me/ti/p/~iwf555'}
 class Links(HTMLParser):
  def __init__(self):super().__init__();self.hrefs=[]
@@ -35,7 +37,8 @@ for p in sorted(LIVE.rglob('*.html')):
   block_count=text.count('class="reachBlock"')
   if block_count!=1:errors.append(f'{rel}: D1 reach block count={block_count}, expected 1')
 checks+=1
-if reach_routes!=46:errors.append(f'D1 reach-route count={reach_routes}, expected 46')
+expected_reach=48 if RELEASE_ID=='T1_6F2_ADULT_FIRST_TASKS_R1' else 46
+if reach_routes!=expected_reach:errors.append(f'D1 reach-route count={reach_routes}, expected {expected_reach}')
 for p in sorted((ROOT/'app').rglob('page.tsx')):
  rel=p.relative_to(ROOT).as_posix();text=p.read_text(encoding='utf-8');checks+=1
  if any(v in text for v in channels.values()) or 'site.telegram' in text or 'site.whatsapp' in text or 'site.line' in text:

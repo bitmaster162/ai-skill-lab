@@ -102,6 +102,8 @@ jobs:
         run: python scripts/check_e3_5_heading_structure.py
       - name: Validate E3.6 scoped hero panel seal
         run: python scripts/check_e3_6_hero_panel.py
+      - name: Validate T1.6F2 exact future release seal
+        run: python scripts/check_t16f2_release_seal.py
       - name: Smoke-test E3.8 event runtime
         run: node scripts/check_e3_8_event_runtime.mjs
       - name: Validate E3.8 event D1 schema

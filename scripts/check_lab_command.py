@@ -5,7 +5,11 @@ ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';errors=[];check
 WORKSHOP={'business.html','en.html','en/business.html','en/family.html','en/faq.html','en/kids.html','en/personal.html','en/pricing.html','en/start.html','en/teens.html','family.html','faq.html','index.html','kids.html','personal.html','pricing.html','start.html','teens.html','parents.html','curriculum.html','phuket.html','studio.html','build.html','matcher.html','challenge.html','proof.html','projects.html','en/parents.html','en/curriculum.html','en/phuket.html','en/studio.html','en/build.html','en/matcher.html','en/challenge.html','en/proof.html','en/projects.html','about.html','certificate.html','en/certificate.html','method.html','safety.html','privacy.html','terms.html','en/about.html','en/method.html','en/safety.html','en/privacy.html','en/terms.html'}
 WORKSHOP|={'guides.html','en/guides.html','guides/ai-safety-for-kids.html','en/guides/ai-safety-for-kids.html'}
 release=json.loads((LIVE/'_release.json').read_text(encoding='utf8')).get('release_id')
-e32=release in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1'}
+e32=release in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1'}
+if release == 'T1_6F2_ADULT_FIRST_TASKS_R1':
+ from guide_route_admission import require_public_html
+ require_public_html(LIVE)
+ WORKSHOP|={'guides/ai-first-tasks-for-adults.html','en/guides/ai-first-tasks-for-adults.html'}
 pages=[p for p in sorted(LIVE.rglob('*.html')) if p.name!='404.html'];legacy=0
 for p in pages:
  rel=p.relative_to(LIVE).as_posix();t=p.read_text(encoding='utf-8')
