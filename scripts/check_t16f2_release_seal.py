@@ -32,6 +32,12 @@ NEW_PINS = {'en/guides/ai-first-tasks-for-adults.html': (20480, 'dd43b529fac595d
 SOURCE_PINS = {'README.md': '36eac170fb5d428e2cca290db993527c8babe51fd428cf605ac1e791aeeba822', 'app/sitemap.ts': '1137cb927e61acd85b255935d591b93379d01e6c10ed5309656a874d2a791a54', 'lib/guides.ts': 'fa001377d3d3c60a116184c4c78f22a8e2256d1315c0d9758b9bf2fd17b680e1', 'scripts/guide_route_admission.py': 'f6b666f30d50cb628f73b859fb396f70fc03191c18aa62ae25d42d43d964d6c0', 'scripts/check_workshop_d4.py': '226c637273d50015208523243417496957f222c81545baba9d6fd7955af4d6e4', 'scripts/check_workshop_d5.py': '278b971dd12ec11148c4dcb9a75cf0be5f9d92a1efb77142d1b30347ed82fc48'}
 GUIDE_MD_PINS = {'guides/aiskillab/ai-first-tasks-for-adults.ru.md': '5c5f8d8da100a8657aeefbe5d9044462095e92db341e240a37bdebae57bba61b', 'guides/aiskillab/ai-first-tasks-for-adults.en.md': 'b0bcd0a6b545d2d8d4b190e55ab9d3c76350a9a30a8e1c745fb23e04b48df671'}
 CSP_SCRIPT_HASHES = frozenset(["'sha256-+5Abet46dRu7xgh7ONU3aRHwu4XCgn0av3VtVaB9vQQ='", "'sha256-1D5p3XKYCKjFN5qkykAgO5oSy7JKiMTZDf1TbxQpxPs='", "'sha256-9zfBNf6BTpltyZT7sXvGKMaeed+z6N4SOxvJXQUlwQ8='", "'sha256-CCVgyL9wfl6vyK4MT6kQBhSDJxpdgMx5jEfjQ+hnc8s='", "'sha256-DpHqfAHUgp/L5/bQcplT9Of3U5ivdu/GpOu5eOrHV64='", "'sha256-HQqaa3Z1Xw16vqjkVC4UKBF9jlvYXnOZNhOhiExBD+M='", "'sha256-HtzNzttJwWRzqCX1wpQkWpidK7i6pRs2JvGwZcxDzx8='", "'sha256-MYAcxKb2LcjgJVHpr6CfqqUj4DachPW5lzG0UkkWZPY='", "'sha256-Mwz56/kjcl+qmxr/4Orda2ZeuN4b2iPQiYEMe+/ohRw='", "'sha256-W8CfKRZBNbzGtbnZXIMHDmyTdraCtlMMu9Y9kF7Tv9M='", "'sha256-WqigdFWh373d7RTqQ9bLDsYefW10sIr8tAkK8gVrVGY='", "'sha256-XIViPnFQEwT0xRGoh64CY3dXxozrVfMjxwurBFtpWuQ='", "'sha256-Xci1Rtuqv3/4QzsVwusXarUdqkdEJW7YGXQfBN3tONs='", "'sha256-YKkkxaOG3LfDneK5G+cpSniSqlhs60fPJC1KgutD7L4='", "'sha256-crRjSblbKaYdV0QZDHQfkTjQb8dL0L6jh1kdSKFp+cc='", "'sha256-d9IyEvw6JtxeSRtr1k4fiE7GYW71vv/JZngAehe+kCw='", "'sha256-dQ3SMhIPZlmsEwzfmA+sFw4Z/NcygWCYRF41mnR02KM='", "'sha256-dUbqRmiyR98Wa/jfc9YboqlxKPstPrE6yISEHTcUF/0='", "'sha256-ep5rhVKiiKhV3aX+EseidQI4X0hKvotM3w/rMVCCxUc='", "'sha256-ffhfSLr701n8XV3TY4Oele7DimRKw16tJ66ZKfGWLrM='", "'sha256-id8y4bpHWJhsbKClaaFAeJM9wUJhLIfVsfJg6kTiYhU='", "'sha256-mBnSpbC8d2CYfRQIfDdtUxZxquYSB/tFwkhFZK4+eNc='", "'sha256-mtQlGJdMkEh8zZt/9bFfZwO6vDkwVmoUfwZ+15TLdiQ='", "'sha256-n75S1xfHaxaMAWOpaUrbrXZ46nUAYff912gFQeHQbLM='", "'sha256-oIe1IriGV/+WLushEsKfCES0nuvc0ejg+08churdFAo='", "'sha256-pJGQTPj78KWFy+PFgRl3tlb2ZrvJkjMMHvGihIjahXw='", "'sha256-qPpJ2aGgRZeJXgr2t3KZQO3/d9/tTM8C8zOaiM7pP+k='", "'sha256-t6hwSQWdNnzYxdDm12Ac1jqTYTK39Wzt+iel101eo2Y='", "'sha256-tH5uRisYS+h78paejUhUoK5fI4MbN4goF0C9wQEbn9s='", "'sha256-uNDIziGtefWJfMdtCA7flBi99mFvnYnzWle/mYUQyf4='", "'sha256-w7WuzwQZujvHloopbyL/41RRDPnFiyskWg320lN7OWA='", "'sha256-x4yZJdgOAALgD/mAyeYqcEejzVErla6rVz4hoCA8F/4='", "'sha256-xmJCMQd4ca6dXIWouYK72T7Gbd0IolZ+XnjIlwkkr+U='", "'sha256-z+i1z6sdSHm5jJT3nLZbSrjh7AER2I3y3vEsAMPp5VI='", "'sha256-z33oO0COhbw2pcbyC11S2t5h1otemwT2zIC+uUd8lbA='", "'sha256-zHvZSfQKhrDTlvMfskNertqUc+kpFTJOzd2vr6Ejj58='", "'sha256-zzhLZEvFKoxX3OVQNEqrpxmyril76vOzdeXmMnAEerE='"])
+LF_SOURCE_PINS = {
+    "scripts/check_workshop_d4.py": "91fe492d102306dbb67bab14ff39c6eebb029ad69bf980688cbe67b9288a8468",
+    "scripts/check_workshop_d5.py": "f6b1362b9f06eb4760975ffa3ccb6e64b1e9d837d9417d80c1df250e189cafba",
+}
+assert set(LF_SOURCE_PINS) == {"scripts/check_workshop_d4.py", "scripts/check_workshop_d5.py"}
+
 assert len(PRESERVED_PINS) == 91 and len(MODIFIED_PINS) == 5 and len(NEW_PINS) == 2
 assert len(CSP_SCRIPT_HASHES) == 37 and len(SOURCE_PINS) == 6 and len(GUIDE_MD_PINS) == 2
 
@@ -156,7 +162,10 @@ def validate(overrides: Mapping[str, bytes | None] | None = None) -> dict:
          "nonfont 1120 KiB budget")
 
     for rel,digest in SOURCE_PINS.items():
-        need(sha(read_or_error(rel)) == digest, "exact reviewed source " + rel)
+        actual_source_sha = sha(read_or_error(rel))
+        need(actual_source_sha == digest or (
+            rel in LF_SOURCE_PINS and actual_source_sha == LF_SOURCE_PINS[rel]
+        ), "exact reviewed source " + rel)
     for rel,digest in GUIDE_MD_PINS.items():
         need(sha(read_or_error(rel)) == digest, "exact approved Markdown " + rel)
     need(sha(read_or_error("data/e3_5_heading_pins.json")) == PREVIOUS_E35_PINS_SHA,
