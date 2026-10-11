@@ -103,7 +103,7 @@ class ReleaseProfileAdmissionTest(unittest.TestCase):
             with tempfile.TemporaryDirectory() as tmp:
                 file=Path(tmp)/"deploy/live/_release.json"
                 file.parent.mkdir(parents=True)
-                file.write_text(json.dumps({"release_id":"T1_6F3_R4E_UNAPPROVED","files":[]}))
+                file.write_text(json.dumps({"release_id":"T1_6F3_R4E_UNAPPROVED","files":[]}), encoding="utf-8")
                 with self.assertRaises(Deny): run(Path(tmp))
         finally:
             sys.path.remove(str(ROOT/"scripts"))
@@ -115,7 +115,7 @@ class ReleaseProfileAdmissionTest(unittest.TestCase):
             with tempfile.TemporaryDirectory() as tmp:
                 file=Path(tmp)/"deploy/live/_release.json"
                 file.parent.mkdir(parents=True)
-                file.write_text(json.dumps({"release_id":ID_F2,"files":[]}))
+                file.write_text(json.dumps({"release_id":ID_F2,"files":[]}), encoding="utf-8")
                 with self.assertRaises(Deny): run(Path(tmp))
         finally:
             sys.path.remove(str(ROOT/"scripts"))
@@ -128,7 +128,7 @@ class ReleaseProfileAdmissionTest(unittest.TestCase):
                 file=Path(tmp)/"deploy/live/_release.json"
                 file.parent.mkdir(parents=True)
                 file.write_text(json.dumps({"release_id":ID_F2,
-                    "files":[{"path":"../outside"}]*98}))
+                    "files":[{"path":"../outside"}]*98}), encoding="utf-8")
                 with self.assertRaises(Deny): run(Path(tmp))
         finally:
             sys.path.remove(str(ROOT/"scripts"))
@@ -141,7 +141,7 @@ class ReleaseProfileAdmissionTest(unittest.TestCase):
                 file=Path(tmp)/"deploy/live/_release.json"
                 file.parent.mkdir(parents=True)
                 file.write_text(json.dumps({"release_id":ID_F2,
-                    "files":[{"path":"a.html"}]*98}))
+                    "files":[{"path":"a.html"}]*98}), encoding="utf-8")
                 with self.assertRaises(Deny): run(Path(tmp))
         finally:
             sys.path.remove(str(ROOT/"scripts"))
@@ -153,7 +153,7 @@ class ReleaseProfileAdmissionTest(unittest.TestCase):
             with tempfile.TemporaryDirectory() as tmp:
                 root=Path(tmp)
                 original=root/"original.json"
-                original.write_text(json.dumps({"release_id":ID_F2,"files":[]}))
+                original.write_text(json.dumps({"release_id":ID_F2,"files":[]}), encoding="utf-8")
                 leaf=root/"deploy/live/_release.json"
                 leaf.parent.mkdir(parents=True)
                 leaf.symlink_to(original)
