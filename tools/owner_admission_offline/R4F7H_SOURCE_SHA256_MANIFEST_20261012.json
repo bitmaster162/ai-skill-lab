@@ -1,0 +1,202 @@
+{
+  "authority": "NONE: this manifest is not signed by the owner and grants no rights",
+  "excluded_from_self_hash": [
+    "R4F7H_SOURCE_SHA256_MANIFEST_20261012.json"
+  ],
+  "expected_branch": "offline/r4f7h-merge-only-r1",
+  "files": [
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": ".gitignore",
+      "sha256": "4f3df7dd3598ce2becd2406ffec7018dc91dd56084681536c7df4a0517a6ff01",
+      "size_bytes": 144
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "README.md",
+      "sha256": "46ac1bf92297dbd41ffc55426ae925c2e4a226677b84a9982f187c389b6479a1",
+      "size_bytes": 5492
+    },
+    {
+      "lineage": "r4f7h_new",
+      "path": "README_R4F7H.md",
+      "sha256": "0da1fcae65eb5ef276b74b4939c7db4b20f78873e2d9d6a2e2c9a46fe0c74356",
+      "size_bytes": 4682
+    },
+    {
+      "lineage": "r4f7h_new",
+      "path": "docs/R4F7H_SECURITY_CONTRACT.md",
+      "sha256": "d93aedbebfb0b1ceaf43eacfa1a74b268e11139ff71e8292bfd460abf55b5f94",
+      "size_bytes": 6201
+    },
+    {
+      "lineage": "r4f7h_new",
+      "path": "docs/R4F7H_TEST_MATRIX.md",
+      "sha256": "8eedfb89fa5f141fb1e7bb556ba0a1474f1dd9c359e5e85fa277ef27d1c403a0",
+      "size_bytes": 2449
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "docs/REMAINING_OWNER_DECISIONS.md",
+      "sha256": "2dcc9e9edcbeef1db4c4d687e90f1488b9dcb784830b7ad2bb893fb97a6fcb2a",
+      "size_bytes": 3156
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "docs/SECURITY_CONTRACT.md",
+      "sha256": "fc357f1ca18a4074a6985ba43dffb191454249db654e3d0aa4bdcb240c3ef4dd",
+      "size_bytes": 4925
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "docs/TEST_MATRIX.md",
+      "sha256": "d863af0af2d66840576f5e301c249964b34e33c7f5e7e9104984d04d25b9cd6a",
+      "size_bytes": 2496
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "evidence/R4F7F_READ_ONLY_JIT_NOT_AUTHORITY_20261012.json",
+      "sha256": "5c3b2338362f8e56786ff3c18667af33e442ea858dc620e102c7d310c214a7ef",
+      "size_bytes": 2795
+    },
+    {
+      "lineage": "r4f7h_new",
+      "path": "evidence/R4F7H_READ_ONLY_JIT_20261012.json",
+      "sha256": "09c54c6fb72d2c324df743a4c4741d9071659338489eb3ff028155253fcfcd16",
+      "size_bytes": 1079
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "owner_admission/__init__.py",
+      "sha256": "a0b821e8d2f4a5c9ee1735de41ddb724febcffae1a21f675cdc48453e8d3e3de",
+      "size_bytes": 706
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "owner_admission/canonical.py",
+      "sha256": "0948be2e92f1a1ad1610a8cd168a7f4b316d172642c3c1f534a8c5a746baac02",
+      "size_bytes": 3916
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "owner_admission/contracts.py",
+      "sha256": "51856d1770abacec1693d81fae1e9c746c38f7c9dc471e5511d47a02618e9689",
+      "size_bytes": 2481
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "owner_admission/ledger.py",
+      "sha256": "16d3975a73aa95f4c1cfa65facf75d2d9dc1fde1e2a4bc64f2084006dcea2214",
+      "size_bytes": 4678
+    },
+    {
+      "lineage": "r4f7h_new",
+      "path": "owner_admission/merge_v2.py",
+      "sha256": "a41d58a23cf599d8cfc05422839680dc4b61f878a2e3a72ded5597eddf8c729f",
+      "size_bytes": 19400
+    },
+    {
+      "lineage": "r4f7h_new",
+      "path": "owner_admission/merge_v2_contracts.py",
+      "sha256": "8baa0504b7389ea8e49c282238c93e43d69d0d869fc29834b36fe786902c6b07",
+      "size_bytes": 2788
+    },
+    {
+      "lineage": "r4f7h_new",
+      "path": "owner_admission/merge_v2_ledger.py",
+      "sha256": "1b1b3ca35805a7354fc3d17603c0282a8186901755aece8eb526b0ad8179f0ce",
+      "size_bytes": 7613
+    },
+    {
+      "lineage": "r4f7h_new",
+      "path": "owner_admission/merge_v2_provider_port.py",
+      "sha256": "e7b83f265080375c3b41b6e3c9165f9abc0389c256ba4d719c085cdd05c8410c",
+      "size_bytes": 1266
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "owner_admission/verifier.py",
+      "sha256": "d7a3c3b63f047843204795ec78d4ed320d0ece2f25c0849659a07d21dea3a5d2",
+      "size_bytes": 16722
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "requirements-test.txt",
+      "sha256": "aaa1e036f7afdeb7eb2c641a42ec377eabb3805e5c91b143704dd035642d39d4",
+      "size_bytes": 96
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "run_tests.py",
+      "sha256": "2fd96c0a57263b7a67cd0483fd6938319c1f4187960033784ffc8ee2f246fd93",
+      "size_bytes": 524
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "tests/__init__.py",
+      "sha256": "4cfe38d97c3553df8f813a9f0ce6b241dd7fa4b43b397efb568624b0555982d4",
+      "size_bytes": 76
+    },
+    {
+      "lineage": "r4f7h_new",
+      "path": "tests/merge_v2_support.py",
+      "sha256": "e8e22f5441d406e14c1fbf7ae273485546b1357e15c89438fb59a21064ef9743",
+      "size_bytes": 6617
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "tests/support.py",
+      "sha256": "750bdd03dea148845bcbf250fc00d9f56c395b2f208650bf35c2f6435d2989d1",
+      "size_bytes": 5556
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "tests/test_canonical.py",
+      "sha256": "ac2e5ed2d28ed76cc45a0f65f251df5687571e91205296553c7d9638b15447ac",
+      "size_bytes": 2516
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "tests/test_ledger.py",
+      "sha256": "f94ba26e126efd0c25baec71f1d2126d9926e578d75c8ef1f290387b46910b17",
+      "size_bytes": 4442
+    },
+    {
+      "lineage": "r4f7h_new",
+      "path": "tests/test_merge_v2.py",
+      "sha256": "ce15d20cb5d07bf89dbc4b050ef7af0a39a0abeb0bcbefe2d2e83e2e56663e34",
+      "size_bytes": 24685
+    },
+    {
+      "lineage": "r4f7h_new",
+      "path": "tests/test_merge_v2_ledger.py",
+      "sha256": "1dc1da5b3815c7b844a5f9ebaeb6f42fb52d34e2a093642923fa583740cd2822",
+      "size_bytes": 8359
+    },
+    {
+      "lineage": "r4f7h_new",
+      "path": "tests/test_merge_v2_safety.py",
+      "sha256": "56b1490f0e0af8e5fe2cc9923f81d353b13269ef85f76c85b171023acd6e6890",
+      "size_bytes": 6654
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "tests/test_safety.py",
+      "sha256": "8fecea6cf37077846441b7bcb4b1531098ceb4933050ccb6d52f7d19f89a4862",
+      "size_bytes": 1828
+    },
+    {
+      "lineage": "r4f7f_unchanged",
+      "path": "tests/test_verifier.py",
+      "sha256": "f02be0fe96244db87ef57d8bd025b877b93b2f7750c387edc45f2c2a5e379cf7",
+      "size_bytes": 15919
+    }
+  ],
+  "implementation_status": "Tested offline/synthetic only",
+  "normative_files_excluding_self": 31,
+  "parent_commit": "91df0e091eac8b4e33b093034ec75576b577f7bc",
+  "parent_tree": "05783ff52490ec7933562635c973e49c9a075195",
+  "schema": "ai-skill-lab.r4f7h.source-manifest.v1",
+  "spec_status": "Draft",
+  "version": "R4F7H_OFFLINE_MERGE_CONTRACT_R1"
+}
