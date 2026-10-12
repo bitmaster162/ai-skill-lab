@@ -1,0 +1,37 @@
+name: R4F7K offline owner-admission tests (test-only)
+
+# Source-only unit tests. Never a required owner/merge/publish authorization.
+# pull_request, not pull_request_target; never load secrets or use write scopes.
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'tools/owner_admission_offline/**'
+      - '.github/workflows/owner-admission-offline.yml'
+      - 'scripts/check_preflight_safety.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  r4f7k-offline-owner-admission-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout candidate source (read-only)
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # Existing static-qa pinned version v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # Existing static-qa pinned version v7.0.0
+        with:
+          python-version: '3.13'
+      - name: Install pinned test-only crypto dependency
+        env:
+          PIP_DISABLE_PIP_VERSION_CHECK: '1'
+          PIP_NO_INPUT: '1'
+        run: python -m pip install --no-cache-dir --requirement tools/owner_admission_offline/requirements-test.txt
+      - name: Run R4F7F and R4F7H synthetic tests (NO OWNER AUTHORITY)
+        run: python -I -B tools/owner_admission_offline/run_tests.py

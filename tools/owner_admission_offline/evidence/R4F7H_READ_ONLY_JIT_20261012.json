@@ -1,0 +1,21 @@
+{
+  "schema": "ai-skill-lab.r4f7h.read-only-baseline.v1",
+  "evidence_class": "connected-provider-readback; not owner authority",
+  "checked_on": "2026-10-12",
+  "repo": "bitmaster162/ai-skill-lab",
+  "main_sha": "0ab438a2568e562603b707c377c91bee1c836a8a",
+  "main_tree": "7eaced40ab4b21c621d37b072d1558343574a801",
+  "pr_number": 226,
+  "pr_state": "OPEN",
+  "pr_draft": true,
+  "pr_head": "c4dc530b1c62694c6c8f9dbac25bf9d26c46d690",
+  "pr_head_tree": "2848b8684ea8766d52195e958e98983ae42bcffd",
+  "ci": {"total": 9, "success": 9, "failure": 0},
+  "production": {"state": "READY", "sha": "0ab438a2568e562603b707c377c91bee1c836a8a", "deployment_id": "dpl_isF43zD4GTmJFuKf3GSXjYBsPLfk"},
+  "coordination_ref": "6087e59afff11b8529dcf87e983cc8cf5505df1a",
+  "coordination_lease": "EXPIRED; no new authority inferred",
+  "require_owner_merge_check": false,
+  "owner_approval_to_merge": false,
+  "source_note": "Synthetic tests deliberately model a hypothetical future ready PR with an App-pinned owner-merge check; present GitHub conditions fail the gate.",
+  "external_writes": 0
+}

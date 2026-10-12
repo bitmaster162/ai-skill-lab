@@ -1,0 +1,2 @@
+# Exact tested local environment. NEVER pip-install on Windows/production.
+cryptography==46.0.4

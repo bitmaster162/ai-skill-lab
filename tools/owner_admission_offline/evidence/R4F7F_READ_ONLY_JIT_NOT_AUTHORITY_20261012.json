@@ -1,0 +1,74 @@
+{
+  "schema": "ai-skill-lab.r4f7f.read-only-context.v1",
+  "observed_date": "2026-10-12",
+  "claim_scope": "READ_ONLY_GITHUB_VERCEL_AND_PRIOR_OWNER_SETTINGS_READBACK",
+  "not_authority": true,
+  "github": {
+    "repo": "bitmaster162/ai-skill-lab",
+    "main_commit": "0ab438a2568e562603b707c377c91bee1c836a8a",
+    "main_tree": "7eaced40ab4b21c621d37b072d1558343574a801",
+    "pr": 226,
+    "pr_state": "OPEN_DRAFT",
+    "pr_head": "c4dc530b1c62694c6c8f9dbac25bf9d26c46d690",
+    "pr_head_tree": "2848b8684ea8766d52195e958e98983ae42bcffd",
+    "pr_file_count": 10,
+    "checks_total": 9,
+    "checks_success": 9,
+    "unique_ci_contexts_warning": ["static-release", "language-parity"],
+    "provider_check_sources_from_owner_ui": {
+      "static-release": "GitHub Actions",
+      "language-parity": "GitHub Actions",
+      "CodeQL": "GitHub Advanced Security"
+    },
+    "main_classic_branch_protection_owner_ui": {
+      "requires_pr": true,
+      "requires_status": true,
+      "requires_up_to_date": true,
+      "requires_conversation_resolution": true,
+      "no_bypass": true,
+      "force_pushes_allowed": false,
+      "deletions_allowed": false,
+      "require_approvals": false,
+      "require_signed_commits": false,
+      "require_linear_history": false,
+      "owner_admission_required": false
+    },
+    "repository_rulesets_count": 0,
+    "github_connector_branch_protection_details": "403_FORBIDDEN",
+    "merge_method": "normal_merge_only"
+  },
+  "coordination": {
+    "ref": "coordination/ai-skill-lab-r4f3-lease-r1",
+    "ref_sha": "6087e59afff11b8529dcf87e983cc8cf5505df1a",
+    "lease_expiration_utc": "2026-10-11T20:19:52Z",
+    "effective_lease": "EXPIRED"
+  },
+  "production": {
+    "public_deployment_id": "dpl_isF43zD4GTmJFuKf3GSXjYBsPLfk",
+    "state": "READY",
+    "source_sha": "0ab438a2568e562603b707c377c91bee1c836a8a"
+  },
+  "historical_replay": {
+    "spark_source_receipt_sha256": "2a6a8dc5251726a7298c01f6e8c1dc9aca874e579887f78a64bf4f586a065ca1",
+    "evidence_status": "PASS_WITH_PROVENANCE_LIMITATION"
+  },
+  "runtime_gates": {
+    "real_owner_public_registry_installed": false,
+    "real_owner_private_signing_key_generated": false,
+    "independent_verifier_app_installed": false,
+    "real_owner_admission_status_required": false,
+    "both_preview_ready_proven": false,
+    "active_coordination_lease": false,
+    "mark_ready_authorized": false,
+    "merge_authorized": false,
+    "publication_authorized": false
+  },
+  "actions": {
+    "github_mutations": 0,
+    "vercel_mutations": 0,
+    "drive_mutations": 0,
+    "host_filesystem_mutations": 0,
+    "scheduler_mutations": 0
+  },
+  "source_note": "Connected GitHub/Vercel JIT in R4F7F; owner browser GitHub Settings readback in R4F7E. Facts are audit context, not independent provider attestations."
+}
