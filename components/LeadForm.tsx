@@ -1,13 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useRef, useState, useSyncExternalStore } from "react";
 import { site } from "@/lib/site";
 import { ArrowIcon } from "./ArrowIcon";
 
 type State = "idle" | "sending" | "sent" | "error";
 type Audience = "adult" | "parent" | "teen" | "business";
 type Locale = "ru" | "en";
+
+// These browser capabilities are fixed for this mounted page; no polling or listeners.
+const subscribeToFormCapabilities = () => () => undefined;
+const getServerFormCapabilities = () => false;
+const getClientFormCapabilities = () =>
+  typeof window.fetch === "function" &&
+  typeof window.FormData === "function" &&
+  typeof Object.fromEntries === "function";
 
 export function LeadForm({
   defaultAudience = "adult",
@@ -19,10 +27,11 @@ export function LeadForm({
   program?: string;
 }) {
   const [state, setState] = useState<State>("idle");
-  const [ready, setReady] = useState(false);
+  // Keep SSR and the first hydration render disabled; enable only with browser APIs ready.
+  const ready = useSyncExternalStore(
+    subscribeToFormCapabilities, getClientFormCapabilities, getServerFormCapabilities,
+  );
   const inFlight = useRef(false);
-  // The server render stays disabled; the effect runs after hydration attaches handlers.
-  useEffect(() => { setReady(true); }, []);
   const [message, setMessage] = useState("");
   const [audience, setAudience] = useState<Audience>(defaultAudience);
   const en = locale === "en";
@@ -62,7 +71,7 @@ export function LeadForm({
         body: JSON.stringify(data),
       });
       const result = (await response.json()) as { ok?: boolean; error?: string };
-      if (!response.ok || !result.ok) throw new Error(result.error || (en ? "Could not send the application" : "Не удалось отправить заявку"));
+      if (!response.ok || !result || result.ok !== true) throw new Error(result.error || (en ? "Could not send the application" : "Не удалось отправить заявку"));
       form.reset();
       setAudience(defaultAudience);
       setState("sent");

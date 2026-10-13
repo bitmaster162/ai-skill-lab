@@ -35,7 +35,7 @@ def run(preview: Path, chrome: str, report: dict, screenshots: Path|None) -> Non
     # These first checks catch template/source drift before running any browser.
     react=(ROOT/'components/LeadForm.tsx').read_text(encoding='utf-8')
     require('disabled={!ready || state === "sending"}' in react,'React server-safe disable missing')
-    require('useEffect(() => { setReady(true); }, []);' in react,'React hydration readiness missing')
+    require('const ready = useSyncExternalStore(' in react and 'getServerFormCapabilities = () => false' in react and 'typeof window.fetch ===' in react,'React hydration readiness missing')
     require('!ready || inFlight.current || !form.checkValidity()' in react,'React submit guard missing')
     for locale,rel in [('ru','start.html'),('en','en/start.html')]:
         s=(preview/rel).read_text(encoding='utf-8')
