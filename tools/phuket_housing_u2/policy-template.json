@@ -1,0 +1,11 @@
+{
+  "schema": "phuket-housing-consents.v1",
+  "terms_sha256": "1bc0947ae7062069dd116dde0d3356e483181c53c66440f453e2fa4d43483d9c",
+  "max_listing_age_days": null,
+  "agencies": [],
+  "authority": {
+    "publish": false,
+    "deploy": false,
+    "legal_review_completed": false
+  }
+}
