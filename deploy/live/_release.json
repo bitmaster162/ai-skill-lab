@@ -1,5 +1,5 @@
 {
-  "file_count": 98,
+  "file_count": 99,
   "files": [
     {
       "path": "404.html",
@@ -48,8 +48,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "d9c3804919254d78fd73a8ebeaa3b6ffd42a6c2b4c7ff1d291ad929f98be2e36",
-      "size": 14042
+      "sha256": "798dffdaf25a07d15192b21b8af897800fe8d10626f2596a03d961a732055526",
+      "size": 14012
     },
     {
       "path": "en/about.html",
@@ -103,8 +103,8 @@
     },
     {
       "path": "en/guides/ai-safety-for-kids.html",
-      "sha256": "a386fd8c652960faf22bf606a00fa0f23afcd26882e424d9d308166a04bd1aaf",
-      "size": 14890
+      "sha256": "f738c2e947095804322cc292ab55b099a35d38cee0fde2ff2ed21ef88d141e1f",
+      "size": 14830
     },
     {
       "path": "en/kids.html",
@@ -163,8 +163,8 @@
     },
     {
       "path": "en/start.html",
-      "sha256": "baae34d9842851d09460189e1161527d39681fbdeffb21512f3f7085bc0e3f28",
-      "size": 15916
+      "sha256": "143576fdb93f1349b714db9fc15bce69027479d5b764f00fbcd36c6068e60f2e",
+      "size": 16056
     },
     {
       "path": "en/studio.html",
@@ -250,6 +250,11 @@
       "path": "lab-command.js",
       "sha256": "967f8b85b31a079e3077dd41fe0cf66305d59895cf06211f9baf4aca443d9ea3",
       "size": 2974
+    },
+    {
+      "path": "lead-form-runtime.js",
+      "sha256": "0cc5c167d0a13e8b6fe9ac80217f9d50de9ee12a3f02c7cf78ed767c0fbb5ef9",
+      "size": 3799
     },
     {
       "path": "llms.txt",
@@ -458,13 +463,13 @@
     },
     {
       "path": "start-brief.js",
-      "sha256": "6a40549cb3b1272b552e0da3d4c8b0cc11fd7ba31b4c3c84bbc5a8259650e1ae",
-      "size": 3934
+      "sha256": "3a6e63cccdc1c9b67f5a99c3c3457c565a49e0a96d9b0ca33ed8313ac68f763a",
+      "size": 1844
     },
     {
       "path": "start.html",
-      "sha256": "6900581a2b9d189c625a797f41e52fd1ed156134ded0b81d27b320a9b9afe3df",
-      "size": 22217
+      "sha256": "8ce2c257dee04f3c2eeff834148c92e65274bdf946bd4559ba9f3782448c6dea",
+      "size": 22347
     },
     {
       "path": "studio.html",
@@ -483,7 +488,7 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "ba4fefee6a7401d7959473bc126ce743eaccacddda2fdffacb9a725afc8f049e",
+      "sha256": "c7e452b59be09ed5e1a6fabeb69be8b55a898f541aed5b356f8e86a3daefc468",
       "size": 4408
     },
     {
@@ -492,7 +497,7 @@
       "size": 41174
     }
   ],
-  "payload_sha256": "188c0b7c3204dd4c1366a51facafeb09421c929e58913e34c7500d9fdf2ea30e",
-  "release_id": "T1_6F2_ADULT_FIRST_TASKS_R1",
+  "payload_sha256": "ae8e2affc11c6d946b08a14c2d90b1a312b3efdf16334234998bcc087c090a57",
+  "release_id": "SITE_FORM_METADATA_R3_20261014",
   "schema": "ai-skill-lab.static-release.v1"
 }

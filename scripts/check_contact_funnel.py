@@ -37,7 +37,7 @@ for p in sorted(LIVE.rglob('*.html')):
   block_count=text.count('class="reachBlock"')
   if block_count!=1:errors.append(f'{rel}: D1 reach block count={block_count}, expected 1')
 checks+=1
-expected_reach=48 if RELEASE_ID=='T1_6F2_ADULT_FIRST_TASKS_R1' else 46
+expected_reach=48 if RELEASE_ID in {'T1_6F2_ADULT_FIRST_TASKS_R1', 'SITE_FORM_METADATA_R3_20261014'} else 46
 if reach_routes!=expected_reach:errors.append(f'D1 reach-route count={reach_routes}, expected {expected_reach}')
 for p in sorted((ROOT/'app').rglob('page.tsx')):
  rel=p.relative_to(ROOT).as_posix();text=p.read_text(encoding='utf-8');checks+=1

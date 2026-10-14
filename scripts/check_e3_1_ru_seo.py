@@ -146,7 +146,7 @@ def main() -> int:
         if page.lang != "ru":
             errors.append(f"{route}: wrong lang={page.lang!r}")
         allow_reviewed_future_title = (
-            RELEASE_ID == "T1_6F2_ADULT_FIRST_TASKS_R1"
+            RELEASE_ID in {'T1_6F2_ADULT_FIRST_TASKS_R1', 'SITE_FORM_METADATA_R3_20261014'}
             and route == "/guides/ai-first-tasks-for-adults"
             and title == "С чего начать работать с AI взрослому: первые задачи"
             and hashlib.sha256((ROOT / "guides/aiskillab/ai-first-tasks-for-adults.ru.md").read_bytes()).hexdigest()
@@ -175,7 +175,7 @@ def main() -> int:
             f"Пхукет={combined.count('Пхукет')} ИИ={combined.count('ИИ')} "
             f"нейросет={combined.lower().count('нейросет')}"
         )
-    expected_routes = 27 if RELEASE_ID == "T1_6F2_ADULT_FIRST_TASKS_R1" else 26
+    expected_routes = 27 if RELEASE_ID in {'T1_6F2_ADULT_FIRST_TASKS_R1', 'SITE_FORM_METADATA_R3_20261014'} else 26
     if len(routes) != expected_routes:
         errors.append(f"expected {expected_routes} RU pages, got {len(routes)}")
     if errors:

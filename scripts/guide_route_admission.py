@@ -103,6 +103,20 @@ def _reviewed_future_guide_slugs() -> tuple[str, ...]:
         manifest = json.loads((root / "deploy/live/_release.json").read_text(encoding="utf-8"))
         if not isinstance(manifest, dict):
             return ()
+        if manifest.get("release_id") == "SITE_FORM_METADATA_R3_20261014":
+            from site_form_metadata_r3 import load_pins
+            pins = load_pins(root)
+            if hashlib.sha256((root / "deploy/live/_release.json").read_bytes()).hexdigest() != pins["manifest_sha256"]:
+                return ()
+            for lang, digest in _FUTURE_GUIDE_MD_SHA.items():
+                data = (root / "guides/aiskillab" / f"{_FUTURE_GUIDE_SLUG}.{lang}.md").read_bytes()
+                if hashlib.sha256(data).hexdigest() != digest:
+                    return ()
+            for rel, (size, digest) in _FUTURE_GUIDE_STATIC.items():
+                data = (root / "deploy/live" / rel).read_bytes()
+                if len(data) != size or hashlib.sha256(data).hexdigest() != digest:
+                    return ()
+            return (_FUTURE_GUIDE_SLUG,)
         if (
             manifest.get("schema") != "ai-skill-lab.static-release.v1"
             or manifest.get("release_id") != _FUTURE_GUIDE_RELEASE
