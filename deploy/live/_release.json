@@ -1,5 +1,5 @@
 {
-  "file_count": 98,
+  "file_count": 104,
   "files": [
     {
       "path": "404.html",
@@ -132,6 +132,11 @@
       "size": 14769
     },
     {
+      "path": "en/phuket-universe.html",
+      "sha256": "fc9de82b98d17e478131a16608783f38c552561355d789f8547a01476b76c00b",
+      "size": 25301
+    },
+    {
       "path": "en/phuket.html",
       "sha256": "10cf9ba9f1dd0b3077b767f5b73080a5c40b75f2ece6d209b77e727afd6f5946",
       "size": 9334
@@ -202,6 +207,21 @@
       "size": 234
     },
     {
+      "path": "fonts/Manrope-cyrillic.woff2",
+      "sha256": "c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914",
+      "size": 14500
+    },
+    {
+      "path": "fonts/Manrope-latin.woff2",
+      "sha256": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972",
+      "size": 24836
+    },
+    {
+      "path": "fonts/OFL-Manrope.txt",
+      "sha256": "d6a309fcfb963d329a93baf9df66fa5f3c23a4be2b5f67edf24d6cafecde12ac",
+      "size": 4386
+    },
+    {
       "path": "fonts/Onest-ru-en.woff2",
       "sha256": "1527f4a5e3a2c65b9d789bf86a49cceefea2472bda0b1b3edc08b3adae4a9997",
       "size": 30036
@@ -253,8 +273,8 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "d10072a8332312030a015f62f60c5ae4af48b9d5fa7c0089c628f9e02dbc93c5",
-      "size": 2427
+      "sha256": "15f8e773352f3019a61788313c9df3d8820219ad8d2c960f632107be50c8c8d9",
+      "size": 2542
     },
     {
       "path": "logo.png",
@@ -392,6 +412,16 @@
       "size": 18258
     },
     {
+      "path": "phuket-universe.css",
+      "sha256": "4e7beffe30099ea7bf3d0b520ff05fee40e24bcbd4d9169c6b9515050630bd00",
+      "size": 14192
+    },
+    {
+      "path": "phuket-universe.html",
+      "sha256": "609b42e56c291b28baefb766c58378366d388c0f505f110088c8ee35e311ef75",
+      "size": 27925
+    },
+    {
       "path": "phuket.html",
       "sha256": "0cc9f3644e0d97dffbbb9da70a43f1934bd4fce7470db7817e8439b46c532c53",
       "size": 11799
@@ -453,8 +483,8 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "921f6e6a03e23cbf79d7a6efd8006bcea1f879e923fd03575839b751fd5a0d76",
-      "size": 4608
+      "sha256": "b7b9664eef0ccdbc1b0748118bf407af2255afefb48ca17c15fba8e402554666",
+      "size": 4903
     },
     {
       "path": "start-brief.js",
@@ -492,7 +522,7 @@
       "size": 41174
     }
   ],
-  "payload_sha256": "188c0b7c3204dd4c1366a51facafeb09421c929e58913e34c7500d9fdf2ea30e",
-  "release_id": "T1_6F2_ADULT_FIRST_TASKS_R1",
+  "payload_sha256": "40606d00063d1ec99f495bf3623f8a8ddba23bc04298c530cf6cd97f92965c10",
+  "release_id": "PHUKET_UNIVERSE_U1_STATIC_R3_20261014",
   "schema": "ai-skill-lab.static-release.v1"
 }

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { PhuketUniverse } from "@/components/PhuketUniverse";
 
-const title = "Вселенная Пхукета — Phuket Universe";
+const title = "Вселенная Пхукета — Phuket Universe | AI Skill Lab";
 const description = "Проекты знакомых людей на Пхукете и будущие объекты агентств-партнёров: карта острова, контакты и прямые ссылки на владельцев.";
 
 export const metadata: Metadata = {
-  title: { absolute: title },
-  description,
+  title: { absolute: "Вселенная Пхукета — Phuket Universe | AI Skill Lab" },
+  description: "Проекты знакомых людей на Пхукете и будущие объекты агентств-партнёров: карта острова, контакты и прямые ссылки на владельцев.",
   alternates: {
     canonical: "/phuket-universe",
     languages: { ru: "/phuket-universe", en: "/en/phuket-universe" },

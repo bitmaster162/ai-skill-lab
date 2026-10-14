@@ -55,14 +55,16 @@ function futureGuidePairApproved(): boolean {
     );
     if (manifest === null || typeof manifest !== "object" || Array.isArray(manifest)) return false;
     const header = manifest as Record<string, unknown>;
+    const isU1R3 = header.release_id === "PHUKET_UNIVERSE_U1_STATIC_R3_20261014";
+    const expectedRecords = isU1R3 ? 104 : 98;
     if (
       header.schema !== "ai-skill-lab.static-release.v1" ||
-      header.release_id !== FUTURE_GUIDE_RELEASE ||
-      header.file_count !== 98 ||
-      header.payload_sha256 !== FUTURE_GUIDE_PAYLOAD_SHA
+      header.release_id !== (isU1R3 ? "PHUKET_UNIVERSE_U1_STATIC_R3_20261014" : FUTURE_GUIDE_RELEASE) ||
+      header.file_count !== expectedRecords ||
+      header.payload_sha256 !== (isU1R3 ? "40606d00063d1ec99f495bf3623f8a8ddba23bc04298c530cf6cd97f92965c10" : FUTURE_GUIDE_PAYLOAD_SHA)
     ) return false;
     const files = header.files;
-    if (!Array.isArray(files) || files.length !== 98) return false;
+    if (!Array.isArray(files) || files.length !== expectedRecords) return false;
     const indexed = new Map<string, { size: number; sha256: string }>();
     for (const item of files) {
       if (!item || typeof item !== "object" || Array.isArray(item)) return false;

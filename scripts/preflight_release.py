@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
@@ -12,6 +13,7 @@ MANIFEST = ROOT / "deploy/live/_release.json"
 
 CHECKS = [
     ("eslint", ["python", "scripts/check_eslint_gate.py"]),
+    ("phuket_release_r3", ["python", "scripts/check_phuket_release_r3.py"]),
     ("static_release", ["python", "scripts/check_static_release.py"]),
     ("d1_text_parity", ["python", "check_text_parity.py", "compare", "--dir", "deploy/live", "--baseline", "baseline_live_20260926.json", "--allow", "allow_d1.json"]),
     ("d1_shell", ["python", "scripts/check_d1_shell.py"]),
@@ -127,7 +129,7 @@ CHECKS = [
 
 
 def run(name: str, cmd: list[str]) -> dict[str, object]:
-    result = subprocess.run(cmd, cwd=ROOT, text=True, encoding="utf-8", errors="replace", capture_output=True)
+    result = subprocess.run(cmd, cwd=ROOT, text=True, encoding="utf-8", errors="replace", capture_output=True, env={**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONDONTWRITEBYTECODE": "1"})
     output = (result.stdout + result.stderr).strip()
     status = "PASS" if result.returncode == 0 else "FAIL"
     print(f"[{name}] {status}")

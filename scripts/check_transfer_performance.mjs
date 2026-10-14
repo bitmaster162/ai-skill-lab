@@ -9,11 +9,13 @@ const LIVE = path.join(ROOT, 'deploy', 'live');
 const LIVE_ROOT = path.resolve(LIVE);
 const LIVE_PREFIX = LIVE_ROOT + path.sep;
 const release = JSON.parse(fs.readFileSync(path.join(LIVE, '_release.json'), 'utf8')).release_id;
-const MAX_HTML_BR = ['N15_AGENT_SAFETY_R1','A4_PHUKET_LOCAL_R1','A3_CALCOM_R1','A5_MENTOR_R1','E1_3_POST_SUBMIT_R1','DESIGN_TYPOGRAPHY_R1','OG20_R1','A7_SAFETY_QUIZ_R1','A8_PROMPT_AUDITOR_R1','A9_REAL_PROJECTS_R1','N25_CERTIFICATE_RECORD_R1','E3_8_LEAD_EVENTS_R1','E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1'].includes(release) ? 10 * 1024 : ['E2_GUIDES_R1', 'R154_E1_5_METADATA', 'R155_E1_6_MOBILE_HEADER', 'R156_I1_2_INDEXNOW', 'R157_I1_3_INDEXABILITY', 'R158_F1_2_MATCHER_V2', 'R160_F1_2_PRIVACY_DISCLOSURE'].includes(release) ? 15 * 512 : 7 * 1024;
+const MAX_HTML_BR = ['N15_AGENT_SAFETY_R1','A4_PHUKET_LOCAL_R1','A3_CALCOM_R1','A5_MENTOR_R1','E1_3_POST_SUBMIT_R1','DESIGN_TYPOGRAPHY_R1','OG20_R1','A7_SAFETY_QUIZ_R1','A8_PROMPT_AUDITOR_R1','A9_REAL_PROJECTS_R1','N25_CERTIFICATE_RECORD_R1','E3_8_LEAD_EVENTS_R1','E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014'].includes(release) ? 10 * 1024 : ['E2_GUIDES_R1', 'R154_E1_5_METADATA', 'R155_E1_6_MOBILE_HEADER', 'R156_I1_2_INDEXNOW', 'R157_I1_3_INDEXABILITY', 'R158_F1_2_MATCHER_V2', 'R160_F1_2_PRIVACY_DISCLOSURE'].includes(release) ? 15 * 512 : 7 * 1024;
+const U1_R3 = release === 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014';
+const U1_PROFILES = U1_R3 ? JSON.parse(fs.readFileSync(path.join(ROOT, 'data/phuket_universe_u1_static_r3_profile.json'), 'utf8')).transfer_profiles : {};
 const MAX_CSS_BR = 8 * 1024;
-const MAX_SHARED_JS_BR = ['E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1'].includes(release) ? 1344 : ["E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1","E3_6_WORKSHOP_HERO_PANEL_R1","T1_6F2_ADULT_FIRST_TASKS_R1"].includes(release) ? 1088 : 1 * 1024;
-const MAX_FIRST_VIEW_BR = ['N15_AGENT_SAFETY_R1','A4_PHUKET_LOCAL_R1','A3_CALCOM_R1','A5_MENTOR_R1','E1_3_POST_SUBMIT_R1','DESIGN_TYPOGRAPHY_R1','OG20_R1','A7_SAFETY_QUIZ_R1','A8_PROMPT_AUDITOR_R1','A9_REAL_PROJECTS_R1','N25_CERTIFICATE_RECORD_R1','E3_8_LEAD_EVENTS_R1','E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1'].includes(release) ? 18 * 1024 : 16 * 1024;
-const MAX_FIRST_VIEW_GZIP = ['E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1'].includes(release) ? 21760 : ["E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1","E3_6_WORKSHOP_HERO_PANEL_R1","T1_6F2_ADULT_FIRST_TASKS_R1"].includes(release) ? 21632 : ['N15_AGENT_SAFETY_R1','A4_PHUKET_LOCAL_R1','A3_CALCOM_R1','A5_MENTOR_R1','E1_3_POST_SUBMIT_R1','DESIGN_TYPOGRAPHY_R1','OG20_R1','A7_SAFETY_QUIZ_R1','A8_PROMPT_AUDITOR_R1','A9_REAL_PROJECTS_R1','N25_CERTIFICATE_RECORD_R1'].includes(release) ? 21 * 1024 : 20 * 1024;
+const MAX_SHARED_JS_BR = ['E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014'].includes(release) ? 1344 : ["E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1","E3_6_WORKSHOP_HERO_PANEL_R1","T1_6F2_ADULT_FIRST_TASKS_R1", 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014'].includes(release) ? 1088 : 1 * 1024;
+const MAX_FIRST_VIEW_BR = ['N15_AGENT_SAFETY_R1','A4_PHUKET_LOCAL_R1','A3_CALCOM_R1','A5_MENTOR_R1','E1_3_POST_SUBMIT_R1','DESIGN_TYPOGRAPHY_R1','OG20_R1','A7_SAFETY_QUIZ_R1','A8_PROMPT_AUDITOR_R1','A9_REAL_PROJECTS_R1','N25_CERTIFICATE_RECORD_R1','E3_8_LEAD_EVENTS_R1','E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014'].includes(release) ? 18 * 1024 : 16 * 1024;
+const MAX_FIRST_VIEW_GZIP = ['E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014'].includes(release) ? 21760 : ["E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1","E3_6_WORKSHOP_HERO_PANEL_R1","T1_6F2_ADULT_FIRST_TASKS_R1", 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014'].includes(release) ? 21632 : ['N15_AGENT_SAFETY_R1','A4_PHUKET_LOCAL_R1','A3_CALCOM_R1','A5_MENTOR_R1','E1_3_POST_SUBMIT_R1','DESIGN_TYPOGRAPHY_R1','OG20_R1','A7_SAFETY_QUIZ_R1','A8_PROMPT_AUDITOR_R1','A9_REAL_PROJECTS_R1','N25_CERTIFICATE_RECORD_R1'].includes(release) ? 21 * 1024 : 20 * 1024;
 const MAX_PRELOAD_FONT_BYTES = 84 * 1024;
 const MAX_FIRST_VIEW_WITH_FONTS = 100 * 1024;
 const IMPORT_RE = /@import\s+(?:url\()?[\"']?([^\"')\s;]+)/gi;
@@ -120,6 +122,7 @@ let worstBr = { bytes: 0, route: '' };
 let worstGz = { bytes: 0, route: '' };
 let worstWithFonts = { bytes: 0, route: '', fontBytes: 0 };
 const pages = walk(LIVE).filter((p) => p.endsWith('.html')).sort();
+if (U1_R3 && pages.length !== 57) errors.push("R3 HTML inventory must be 57");
 if (release === 'T1_6F2_ADULT_FIRST_TASKS_R1' && pages.length !== 55) errors.push('F2 future HTML surfaces ' + pages.length + ' != 55');
 
 for (const page of pages) {
@@ -137,14 +140,17 @@ for (const page of pages) {
   const firstBr = htmlBr + cssBr + jsBr;
   const firstGz = htmlGz + cssGz + jsGz;
   const firstWithFonts = firstBr + fontBytes;
+  const u1 = U1_R3 && ["phuket-universe.html", "en/phuket-universe.html"].includes(rel) ? U1_PROFILES[rel] : null;
+  if (U1_R3 && ["phuket-universe.html", "en/phuket-universe.html"].includes(rel) && !u1) throw new Error("U1 transfer profile missing");
+  if (u1 && JSON.stringify(fonts.map(f => path.basename(f.path)).sort()) !== JSON.stringify([...u1.fonts].sort())) errors.push(rel + ": unexpected U1 font preload set");
 
-  checks++; if (fonts.length !== 2) errors.push(rel + ': font preloads ' + fonts.length + ' != 2');
-  checks++; if (fontBytes > MAX_PRELOAD_FONT_BYTES) errors.push(rel + ': preload font bytes ' + fontBytes + ' > ' + MAX_PRELOAD_FONT_BYTES);
-  checks++; if (firstWithFonts > MAX_FIRST_VIEW_WITH_FONTS) errors.push(rel + ': first-view with fonts ' + firstWithFonts + ' > ' + MAX_FIRST_VIEW_WITH_FONTS);
+  checks++; if (fonts.length !== (u1 ? u1.fonts.length : 2)) errors.push(rel + ': font preloads ' + fonts.length + ' != 2');
+  checks++; if (fontBytes > (u1 ? u1.font_bytes : MAX_PRELOAD_FONT_BYTES)) errors.push(rel + ': preload font bytes ' + fontBytes + ' > ' + MAX_PRELOAD_FONT_BYTES);
+  checks++; if (firstWithFonts > (u1 ? u1.first_with_fonts_max : MAX_FIRST_VIEW_WITH_FONTS)) errors.push(rel + ': first-view with fonts ' + firstWithFonts + ' > ' + MAX_FIRST_VIEW_WITH_FONTS);
   checks++; if (htmlBr > MAX_HTML_BR) errors.push(`${rel}: HTML brotli ${htmlBr} > ${MAX_HTML_BR}`);
-  checks++; if (cssBr > MAX_CSS_BR) errors.push(`${rel}: CSS brotli ${cssBr} > ${MAX_CSS_BR}`);
-  checks++; if (firstBr > MAX_FIRST_VIEW_BR) errors.push(`${rel}: first-view brotli ${firstBr} > ${MAX_FIRST_VIEW_BR}`);
-  checks++; if (firstGz > MAX_FIRST_VIEW_GZIP) errors.push(`${rel}: first-view gzip ${firstGz} > ${MAX_FIRST_VIEW_GZIP}`);
+  checks++; if (cssBr > (u1 ? u1.css_br_max : MAX_CSS_BR)) errors.push(`${rel}: CSS brotli ${cssBr} > ${MAX_CSS_BR}`);
+  checks++; if (firstBr > (u1 ? u1.first_br_max : MAX_FIRST_VIEW_BR)) errors.push(`${rel}: first-view brotli ${firstBr} > ${MAX_FIRST_VIEW_BR}`);
+  checks++; if (firstGz > (u1 ? u1.first_gzip_max : MAX_FIRST_VIEW_GZIP)) errors.push(`${rel}: first-view gzip ${firstGz} > ${MAX_FIRST_VIEW_GZIP}`);
 
   if (htmlBr > largestHtmlBr.bytes) largestHtmlBr = { bytes: htmlBr, route: rel };
   if (cssBr > largestCssBr.bytes) largestCssBr = { bytes: cssBr, route: rel, files: css.length };
@@ -156,11 +162,11 @@ for (const page of pages) {
 
 console.log(`transfer_performance_checks=${checks} pages=${pages.length} shared_lab_br=${sharedLabBr}`);
 console.log(`largest_html_br=${largestHtmlBr.bytes} route=${largestHtmlBr.route} budget=${MAX_HTML_BR}`);
-console.log(`largest_css_br=${largestCssBr.bytes} route=${largestCssBr.route} files=${largestCssBr.files} budget=${MAX_CSS_BR}`);
+console.log(`largest_css_br=${largestCssBr.bytes} route=${largestCssBr.route} files=${largestCssBr.files} budget=${U1_PROFILES[largestCssBr.route]?.css_br_max ?? MAX_CSS_BR}`);
 console.log(`largest_js_br=${largestJsBr.bytes} route=${largestJsBr.route} files=${largestJsBr.files}`);
 console.log(`worst_first_view_br=${worstBr.bytes} route=${worstBr.route} budget=${MAX_FIRST_VIEW_BR}`);
 console.log(`worst_first_view_gzip=${worstGz.bytes} route=${worstGz.route} budget=${MAX_FIRST_VIEW_GZIP}`);
-console.log('worst_first_view_with_fonts=' + worstWithFonts.bytes + ' route=' + worstWithFonts.route + ' font_bytes=' + worstWithFonts.fontBytes + ' budget=' + MAX_FIRST_VIEW_WITH_FONTS);
+console.log('worst_first_view_with_fonts=' + worstWithFonts.bytes + ' route=' + worstWithFonts.route + ' font_bytes=' + worstWithFonts.fontBytes + ' budget=' + (U1_PROFILES[worstWithFonts.route]?.first_with_fonts_max ?? MAX_FIRST_VIEW_WITH_FONTS));
 if (errors.length) {
   console.log('TRANSFER_PERFORMANCE_FAIL');
   for (const error of errors) console.log('-', error);

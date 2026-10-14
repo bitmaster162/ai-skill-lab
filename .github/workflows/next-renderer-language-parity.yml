@@ -39,6 +39,7 @@ jobs:
           import sys
           sys.path.insert(0, 'scripts')
           from guide_route_admission import admitted_route_count, require_route_set
+          from phuket_release_profile import active as integrated_u1_release
           # Owner-reviewed U1 routes are admitted in Next source only.
           # Historical sealed static routes and SHA-256 source pins stay unchanged.
           U1_SOURCE_ONLY_ROUTES = frozenset({"/phuket-universe", "/en/phuket-universe"})
@@ -75,10 +76,13 @@ jobs:
               missing_u1 = U1_SOURCE_ONLY_ROUTES.difference(rows)
               if missing_u1:
                   raise ValueError(f"U1 source-only pair missing={sorted(missing_u1)}")
-              require_route_set(
-                  (route for route in rows if route not in U1_SOURCE_ONLY_ROUTES),
-                  label="Next renderer sealed-release baseline",
-              )
+              if integrated_u1_release():
+                  require_route_set(rows, label="Next renderer R3 complete routes")
+              else:
+                  require_route_set(
+                      (route for route in rows if route not in U1_SOURCE_ONLY_ROUTES),
+                      label="Next renderer sealed-release baseline",
+                  )
           except ValueError as exc:
               raise SystemExit(f"LANG_PARITY_ROUTE_ADMISSION_FAIL {exc}")
 
@@ -93,7 +97,7 @@ jobs:
               if lang != expected:
                   bad.append((route, path, lang, expected))
 
-          expected_per_locale = (admitted_route_count() + len(U1_SOURCE_ONLY_ROUTES)) // 2
+          expected_per_locale = (admitted_route_count() + (0 if integrated_u1_release() else len(U1_SOURCE_ONLY_ROUTES))) // 2
           if ru != expected_per_locale or en != expected_per_locale:
               raise SystemExit(f"LANG_PARITY_LOCALE_COUNT_FAIL ru={ru} en={en}")
           if bad:

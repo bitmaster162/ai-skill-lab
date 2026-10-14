@@ -140,6 +140,10 @@ def admitted_routes(
     approved_slugs: Iterable[str] | None = None,
 ) -> frozenset[str]:
     """Return exact allowed paths; approved_slugs is for synthetic QA only."""
+    from phuket_release_profile import active, verify_integrity, UNIVERSE_ROUTES, ADULT_ROUTES
+    if approved_slugs is None and active():
+        verify_integrity()
+        return BASELINE_ROUTES | ADULT_ROUTES | UNIVERSE_ROUTES
     slugs = (
         tuple(APPROVED_ADDITIONAL_GUIDE_SLUGS) + _reviewed_future_guide_slugs()
         if approved_slugs is None else tuple(approved_slugs)

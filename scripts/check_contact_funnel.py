@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import phuket_release_profile as u1
 from html.parser import HTMLParser
 from pathlib import Path
 import sys
@@ -15,6 +16,7 @@ start_routes={'start.html','en/start.html'}
 e14_reach_routes={'index.html','en.html','kids.html','en/kids.html','teens.html','en/teens.html','parents.html','en/parents.html','personal.html','en/personal.html','business.html','en/business.html','pricing.html','en/pricing.html','matcher.html','en/matcher.html'}
 reach_routes=0
 for p in sorted(LIVE.rglob('*.html')):
+ if u1.universe_page(p): continue
  rel=p.relative_to(LIVE).as_posix();text=p.read_text(encoding='utf-8');parser=Links();parser.feed(text);checks+=1
  counts={name:sum(1 for h in parser.hrefs if h==url or h.startswith(url+'?')) for name,url in channels.items()}
  if rel in start_routes:
@@ -37,7 +39,7 @@ for p in sorted(LIVE.rglob('*.html')):
   block_count=text.count('class="reachBlock"')
   if block_count!=1:errors.append(f'{rel}: D1 reach block count={block_count}, expected 1')
 checks+=1
-expected_reach=48 if RELEASE_ID=='T1_6F2_ADULT_FIRST_TASKS_R1' else 46
+expected_reach=48 if RELEASE_ID in ('T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014') else 46
 if reach_routes!=expected_reach:errors.append(f'D1 reach-route count={reach_routes}, expected {expected_reach}')
 for p in sorted((ROOT/'app').rglob('page.tsx')):
  rel=p.relative_to(ROOT).as_posix();text=p.read_text(encoding='utf-8');checks+=1

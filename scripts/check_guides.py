@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+import phuket_release_profile as u1
 from guide_route_admission import admitted_route_count, require_public_html, require_route_set, require_canonical_urls
 
 import hashlib
@@ -46,7 +47,7 @@ CROSSLINK_ROUTES = {
 
 
 RELEASE = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
-if RELEASE in {"E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1', 'T1_6F2_ADULT_FIRST_TASKS_R1'}:
+if RELEASE in {"E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1', 'T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014'}:
     EXPECTED_MD["guides/aiskillab/ai-safety-for-kids.ru.md"] = "f8be315623ddcfb8b3e3f5da46a52305f943df3aecb6ea2915895d2ed6aff75e"
     LISTING["/guides"] = ("Гайды", "Короткие проверенные материалы об ИИ для родителей, взрослых учеников и команд. У каждого — дата проверки и источники.")
     ARTICLES["/guides/ai-safety-for-kids"]["title"] = "ИИ и ребёнок 8–13: чек-лист безопасности для родителей"
@@ -171,6 +172,7 @@ def main() -> int:
 
     # Footer link belongs to every public Workshop page.
     for page in public:
+        if u1.universe_page(page): continue
         route = route_for(page)
         raw = page.read_text(encoding="utf-8")
         en = route == "/en" or route.startswith("/en/")
