@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phuket Universe — макет v2 (Claude Design, 14.10.2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&amp;family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#070A12}
+a{color:#EEF2F6}a:hover{color:#FFFFFF}
+@media (max-width: 720px){.pu-label{display:none}.pu-h1{font-size:46px !important}.pu-pad{padding:40px 24px !important}}
+</style>
+</head>
+<body>
+<!-- Макет v2 из Claude Design «Phuket Universe», статическая копия для реализации U1–U3. Источник: https://claude.ai/artifact/9sWaWsZA8hTdgFLtLa9Ebf -->
+<div style="font-family: Manrope, system-ui, sans-serif; color: #EEF2F6; background: #070A12; width: 100%">
+
+<header style="border-bottom: 1px solid #172033">
+<div style="max-width: 1280px; margin: 0 auto; padding: 16px 32px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between">
+<a href="#top" aria-label="Phuket Universe — наверх" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #EEF2F6; min-height: 44px">
+<svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><ellipse cx="17" cy="17" rx="15" ry="9" transform="rotate(-16 17 17)" style="fill: none; stroke: #39E1C6; stroke-width: 1.5"></ellipse><circle cx="17" cy="17" r="5" style="fill: #EEF2F6"></circle><circle cx="30" cy="12.5" r="2.5" style="fill: #39E1C6"></circle></svg>
+<span style="font-family: Unbounded, system-ui, sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.08em">PHUKET UNIVERSE</span>
+</a>
+<nav aria-label="Разделы" style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px">
+<a href="#orbit" style="text-decoration: none; padding: 12px 14px; font-size: 15px; color: #C5CEDB">Орбита</a>
+<a href="#homes" style="text-decoration: none; padding: 12px 14px; font-size: 15px; color: #C5CEDB">Жильё</a>
+<a href="#agencies" style="text-decoration: none; padding: 12px 14px; font-size: 15px; color: #C5CEDB">Агентствам</a>
+<a href="https://aiskillab.work" style="text-decoration: none; padding: 12px 14px; font-size: 15px; color: #C5CEDB">AI Skill Lab ↗</a>
+<a href="#top" style="margin-left: 8px; padding: 11px 16px; border: 1px solid #2A3650; border-radius: 999px; font-size: 14px; font-weight: 700; text-decoration: none; color: #EEF2F6">RU / EN</a>
+</nav>
+</div>
+</header>
+
+<section id="top" class="pu-pad" style="max-width: 1280px; margin: 0 auto; padding: 56px 32px 72px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 40px; align-items: center; box-sizing: border-box">
+<div style="display: flex; flex-direction: column; gap: 24px">
+<span style="font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 800; color: #39E1C6">Пхукет · свои люди · жильё</span>
+<h1 class="pu-h1" style="margin: 0; font-family: Unbounded, system-ui, sans-serif; font-weight: 800; font-size: 76px; line-height: 0.98; letter-spacing: -0.01em">Вселенная Пхукета</h1>
+<p style="margin: 0; font-size: 20px; line-height: 1.55; color: #B4BFCE; max-width: 520px">Проекты людей, которых мы знаем лично, и жильё в аренду и на продажу — на одной карте острова. Каждая ссылка ведёт прямо к владельцу.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<a href="#homes" style="background: #B9FF3F; color: #070A12; text-decoration: none; font-weight: 800; font-size: 17px; padding: 16px 26px; border-radius: 999px">Найти жильё</a>
+<a href="#orbit" style="border: 1px solid #3A4A66; color: #EEF2F6; text-decoration: none; font-weight: 700; font-size: 17px; padding: 15px 24px; border-radius: 999px">Смотреть орбиту</a>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; font-size: 14px; color: #8E9BB0">
+<span style="display: flex; align-items: center; gap: 8px"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="5" style="fill: #39E1C6"></circle></svg>на связи — открывается сайт</span>
+<span style="display: flex; align-items: center; gap: 8px"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.5" style="fill: none; stroke: #8E9BB0; stroke-width: 1; stroke-dasharray: 2 2"></circle></svg>скоро</span>
+</div>
+</div>
+
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 10px">
+<svg viewBox="-20 -20 680 680" role="img" aria-labelledby="pu-map-title" style="width: 100%; height: auto; display: block">
+<title id="pu-map-title">Карта Phuket Universe: остров Пхукет в центре, шесть проектов друзей на орбитах</title>
+<defs>
+<radialGradient id="pu-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#173445" stop-opacity="0.85"></stop><stop offset="100%" stop-color="#070A12" stop-opacity="0"></stop></radialGradient>
+<filter id="pu-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"></feGaussianBlur></filter>
+</defs>
+<g style="fill: #EEF2F6">
+<circle cx="18" cy="42" r="1.1" opacity="0.6"></circle><circle cx="64" cy="196" r="0.8" opacity="0.4"></circle><circle cx="96" cy="560" r="1" opacity="0.5"></circle><circle cx="140" cy="30" r="0.7" opacity="0.35"></circle><circle cx="188" cy="248" r="0.9" opacity="0.3"></circle><circle cx="226" cy="610" r="1.2" opacity="0.6"></circle><circle cx="262" cy="58" r="0.8" opacity="0.45"></circle><circle cx="300" cy="170" r="0.7" opacity="0.3"></circle><circle cx="352" cy="640" r="1" opacity="0.5"></circle><circle cx="398" cy="92" r="1.3" opacity="0.7"></circle><circle cx="436" cy="236" r="0.8" opacity="0.35"></circle><circle cx="470" cy="20" r="1" opacity="0.5"></circle><circle cx="512" cy="128" r="0.7" opacity="0.4"></circle><circle cx="548" cy="602" r="1.1" opacity="0.55"></circle><circle cx="586" cy="70" r="0.9" opacity="0.45"></circle><circle cx="612" cy="212" r="1.2" opacity="0.6"></circle><circle cx="640" cy="420" r="0.8" opacity="0.4"></circle><circle cx="628" cy="560" r="1" opacity="0.5"></circle><circle cx="574" cy="470" r="0.7" opacity="0.3"></circle><circle cx="30" cy="300" r="0.9" opacity="0.45"></circle><circle cx="10" cy="470" r="1.2" opacity="0.6"></circle><circle cx="52" cy="640" r="0.8" opacity="0.35"></circle><circle cx="120" cy="470" r="0.7" opacity="0.3"></circle><circle cx="420" cy="560" r="0.9" opacity="0.4"></circle><circle cx="470" cy="420" r="0.8" opacity="0.35"></circle><circle cx="560" cy="330" r="1" opacity="0.5"></circle><circle cx="652" cy="150" r="0.9" opacity="0.4"></circle><circle cx="-6" cy="130" r="1" opacity="0.5"></circle><circle cx="210" cy="400" r="0.6" opacity="0.25"></circle><circle cx="160" cy="640" r="1" opacity="0.45"></circle><circle cx="500" cy="652" r="0.8" opacity="0.4"></circle><circle cx="600" cy="646" r="0.7" opacity="0.3"></circle><circle cx="330" cy="-6" r="1.1" opacity="0.55"></circle><circle cx="232" cy="120" r="0.7" opacity="0.3"></circle><circle cx="88" cy="96" r="1.2" opacity="0.6"></circle><circle cx="540" cy="250" r="0.8" opacity="0.35"></circle>
+</g>
+<circle cx="325" cy="318" r="240" fill="url(#pu-glow)"></circle>
+<g transform="rotate(-16 325 318)" style="fill: none">
+<ellipse cx="325" cy="318" rx="150" ry="236" style="stroke: #24334E; stroke-width: 1"></ellipse>
+<ellipse cx="325" cy="318" rx="232" ry="286" style="stroke: #24334E; stroke-width: 1; stroke-dasharray: 3 6"></ellipse>
+<ellipse cx="325" cy="318" rx="296" ry="304" style="stroke: #1B2740; stroke-width: 1"></ellipse>
+</g>
+<path d="M275.0 100.0 C282.0 96.7 295.0 117.0 305.0 130.0 C315.0 143.0 324.7 165.0 335.0 178.0 C345.3 191.0 357.0 198.0 367.0 208.0 C377.0 218.0 389.3 226.3 395.0 238.0 C400.7 249.7 402.7 266.3 401.0 278.0 C399.3 289.7 386.7 296.0 385.0 308.0 C383.3 320.0 392.0 335.5 391.0 350.0 C390.0 364.5 379.7 382.0 379.0 395.0 C378.3 408.0 386.3 417.5 387.0 428.0 C387.7 438.5 383.0 447.0 383.0 458.0 C383.0 469.0 393.0 491.3 387.0 494.0 C381.0 496.7 358.0 475.0 347.0 474.0 C336.0 473.0 327.8 479.7 321.0 488.0 C314.2 496.3 312.7 515.0 306.0 524.0 C299.3 533.0 286.2 542.3 281.0 542.0 C275.8 541.7 276.3 532.0 275.0 522.0 C273.7 512.0 274.7 493.3 273.0 482.0 C271.3 470.7 267.3 463.0 265.0 454.0 C262.7 445.0 258.0 436.3 259.0 428.0 C260.0 419.7 270.3 410.7 271.0 404.0 C271.7 397.3 265.7 397.0 263.0 388.0 C260.3 379.0 257.3 360.7 255.0 350.0 C252.7 339.3 247.3 332.3 249.0 324.0 C250.7 315.7 264.7 312.3 265.0 300.0 C265.3 287.7 250.0 265.0 251.0 250.0 C252.0 235.0 269.0 226.7 271.0 210.0 C273.0 193.3 262.3 168.3 263.0 150.0 C263.7 131.7 268.0 103.3 275.0 100.0Z" filter="url(#pu-blur)" style="fill: #39E1C6; opacity: 0.32"></path>
+<path d="M275.0 100.0 C282.0 96.7 295.0 117.0 305.0 130.0 C315.0 143.0 324.7 165.0 335.0 178.0 C345.3 191.0 357.0 198.0 367.0 208.0 C377.0 218.0 389.3 226.3 395.0 238.0 C400.7 249.7 402.7 266.3 401.0 278.0 C399.3 289.7 386.7 296.0 385.0 308.0 C383.3 320.0 392.0 335.5 391.0 350.0 C390.0 364.5 379.7 382.0 379.0 395.0 C378.3 408.0 386.3 417.5 387.0 428.0 C387.7 438.5 383.0 447.0 383.0 458.0 C383.0 469.0 393.0 491.3 387.0 494.0 C381.0 496.7 358.0 475.0 347.0 474.0 C336.0 473.0 327.8 479.7 321.0 488.0 C314.2 496.3 312.7 515.0 306.0 524.0 C299.3 533.0 286.2 542.3 281.0 542.0 C275.8 541.7 276.3 532.0 275.0 522.0 C273.7 512.0 274.7 493.3 273.0 482.0 C271.3 470.7 267.3 463.0 265.0 454.0 C262.7 445.0 258.0 436.3 259.0 428.0 C260.0 419.7 270.3 410.7 271.0 404.0 C271.7 397.3 265.7 397.0 263.0 388.0 C260.3 379.0 257.3 360.7 255.0 350.0 C252.7 339.3 247.3 332.3 249.0 324.0 C250.7 315.7 264.7 312.3 265.0 300.0 C265.3 287.7 250.0 265.0 251.0 250.0 C252.0 235.0 269.0 226.7 271.0 210.0 C273.0 193.3 262.3 168.3 263.0 150.0 C263.7 131.7 268.0 103.3 275.0 100.0Z" style="fill: #0F1B2B; stroke: #39E1C6; stroke-width: 1.5"></path>
+<text x="324" y="254" text-anchor="middle" style="font-family: Unbounded, system-ui, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.4em; fill: #39E1C6">ПХУКЕТ</text>
+<g style="fill: #EEF2F6; opacity: 0.85">
+<circle cx="302" cy="518" r="2.5"></circle><circle cx="279" cy="479" r="2.5"></circle><circle cx="275" cy="454" r="2.5"></circle><circle cx="279" cy="403" r="2.5"></circle><circle cx="315" cy="454" r="2.5"></circle><circle cx="363" cy="416" r="2.5"></circle><circle cx="275" cy="303" r="2.5"></circle>
+</g>
+
+<a href="https://phuketravel.vercel.app" aria-label="Яков — экскурсии: открыть сайт">
+<circle cx="102" cy="382" r="22" style="fill: #39E1C6; opacity: 0.16"></circle>
+<circle cx="102" cy="382" r="9" style="fill: #39E1C6"></circle>
+<g class="pu-label"><text x="124" y="376" style="font-family: Manrope, system-ui, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; fill: #8E9BB0">01 · ЭКСКУРСИИ</text><text x="124" y="397" style="font-family: Unbounded, system-ui, sans-serif; font-size: 16px; font-weight: 600; fill: #EEF2F6">Яков</text></g>
+</a>
+<a href="https://stasph.vercel.app" aria-label="Стас — персональный гид: открыть сайт">
+<circle cx="395" cy="24" r="22" style="fill: #39E1C6; opacity: 0.16"></circle>
+<circle cx="395" cy="24" r="9" style="fill: #39E1C6"></circle>
+<g class="pu-label"><text x="417" y="18" style="font-family: Manrope, system-ui, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; fill: #8E9BB0">02 · ГИД</text><text x="417" y="39" style="font-family: Unbounded, system-ui, sans-serif; font-size: 16px; font-weight: 600; fill: #EEF2F6">Стас</text></g>
+</a>
+<a href="https://muaithaiph.vercel.app" aria-label="Иван — Muay Thai и ОФП: открыть сайт">
+<circle cx="483" cy="357" r="22" style="fill: #39E1C6; opacity: 0.16"></circle>
+<circle cx="483" cy="357" r="9" style="fill: #39E1C6"></circle>
+<g class="pu-label"><text x="505" y="351" style="font-family: Manrope, system-ui, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; fill: #8E9BB0">03 · MUAY THAI</text><text x="505" y="372" style="font-family: Unbounded, system-ui, sans-serif; font-size: 16px; font-weight: 600; fill: #EEF2F6">Иван</text></g>
+</a>
+<a href="https://haven-ruddy.vercel.app" aria-label="HAVEN — помощь дому: открыть сайт">
+<circle cx="317" cy="621" r="22" style="fill: #39E1C6; opacity: 0.16"></circle>
+<circle cx="317" cy="621" r="9" style="fill: #39E1C6"></circle>
+<g class="pu-label"><text x="339" y="615" style="font-family: Manrope, system-ui, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; fill: #8E9BB0">04 · ДОМ И СЕМЬЯ</text><text x="339" y="636" style="font-family: Unbounded, system-ui, sans-serif; font-size: 16px; font-weight: 600; fill: #EEF2F6">HAVEN</text></g>
+</a>
+<a href="https://rostikson-portfolio.vercel.app" aria-label="Ростиксон — контент: открыть сайт">
+<circle cx="140" cy="119" r="22" style="fill: #39E1C6; opacity: 0.16"></circle>
+<circle cx="140" cy="119" r="9" style="fill: #39E1C6"></circle>
+<g class="pu-label"><text x="118" y="113" text-anchor="end" style="font-family: Manrope, system-ui, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; fill: #8E9BB0">05 · КОНТЕНТ</text><text x="118" y="134" text-anchor="end" style="font-family: Unbounded, system-ui, sans-serif; font-size: 16px; font-weight: 600; fill: #EEF2F6">Ростиксон</text></g>
+</a>
+<g>
+<circle cx="499" cy="531" r="9" style="fill: #070A12; stroke: #8E9BB0; stroke-width: 1.25; stroke-dasharray: 3 3"></circle>
+<g class="pu-label"><text x="477" y="525" text-anchor="end" style="font-family: Manrope, system-ui, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; fill: #8E9BB0">06 · РЕСТОРАН · СКОРО</text><text x="477" y="546" text-anchor="end" style="font-family: Unbounded, system-ui, sans-serif; font-size: 16px; font-weight: 600; fill: #C5CEDB">Pharaohs Rawai</text></g>
+</g>
+</svg>
+<figcaption style="font-size: 14px; color: #8E9BB0">Нажмите на планету — откроется сайт проекта. Точки на острове — районы для поиска жилья.</figcaption>
+</figure>
+</section>
+
+<section id="orbit" style="border-top: 1px solid #172033">
+<div class="pu-pad" style="max-width: 1280px; margin: 0 auto; padding: 88px 32px; display: flex; flex-direction: column; gap: 40px; box-sizing: border-box">
+<div style="display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: flex-end">
+<div style="display: flex; flex-direction: column; gap: 12px; max-width: 640px">
+<span style="font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 800; color: #39E1C6">01 · Орбита</span>
+<h2 style="margin: 0; font-family: Unbounded, system-ui, sans-serif; font-weight: 600; font-size: 44px; line-height: 1.08">Проекты друзей</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.6; color: #B4BFCE">Люди, с которыми мы работаем на Пхукете. За свои услуги отвечают они сами — мы даём ссылку и знакомим.</p>
+</div>
+<a href="mailto:robert@aiskillab.work?subject=Phuket%20Universe%20%E2%80%94%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82" style="border: 1px solid #3A4A66; color: #EEF2F6; text-decoration: none; font-weight: 700; font-size: 16px; padding: 14px 22px; border-radius: 999px">Добавить свой проект</a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 16px">
+
+<article style="background: #0D1320; border: 1px solid #1B2638; border-radius: 22px; padding: 26px; display: flex; flex-direction: column; gap: 14px; min-height: 236px; box-sizing: border-box">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+<span style="font-family: Unbounded, system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #8E9BB0">01 · Экскурсии</span>
+<span style="font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; background: #142033; color: #39E1C6">на связи</span>
+</div>
+<h3 style="margin: 0; font-family: Unbounded, system-ui, sans-serif; font-weight: 600; font-size: 22px; line-height: 1.25">Яков — Phuket Travel</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #B4BFCE; flex-grow: 1">Каталог экскурсий и активностей Пхукета. Запросы — через WhatsApp.</p>
+<a href="https://phuketravel.vercel.app" style="display: flex; justify-content: space-between; gap: 12px; padding: 12px 0 0; border-top: 1px solid #1B2638; text-decoration: none; font-size: 15px">
+<span style="color: #8E9BB0">phuketravel.vercel.app</span>
+<span style="font-weight: 800; color: #39E1C6">Открыть ↗</span>
+</a>
+</article>
+
+<article style="background: #0D1320; border: 1px solid #1B2638; border-radius: 22px; padding: 26px; display: flex; flex-direction: column; gap: 14px; min-height: 236px; box-sizing: border-box">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+<span style="font-family: Unbounded, system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #8E9BB0">02 · Гид</span>
+<span style="font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; background: #142033; color: #39E1C6">на связи</span>
+</div>
+<h3 style="margin: 0; font-family: Unbounded, system-ui, sans-serif; font-weight: 600; font-size: 22px; line-height: 1.25">Стас — персональный гид</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #B4BFCE; flex-grow: 1">Экскурсии, сопровождение и организация дня на Пхукете, островах и в соседних провинциях.</p>
+<a href="https://stasph.vercel.app" style="display: flex; justify-content: space-between; gap: 12px; padding: 12px 0 0; border-top: 1px solid #1B2638; text-decoration: none; font-size: 15px">
+<span style="color: #8E9BB0">stasph.vercel.app</span>
+<span style="font-weight: 800; color: #39E1C6">Открыть ↗</span>
+</a>
+</article>
+
+<article style="background: #0D1320; border: 1px solid #1B2638; border-radius: 22px; padding: 26px; display: flex; flex-direction: column; gap: 14px; min-height: 236px; box-sizing: border-box">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+<span style="font-family: Unbounded, system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #8E9BB0">03 · Тренировки</span>
+<span style="font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; background: #142033; color: #39E1C6">на связи</span>
+</div>
+<h3 style="margin: 0; font-family: Unbounded, system-ui, sans-serif; font-weight: 600; font-size: 22px; line-height: 1.25">Иван — Muay Thai и ОФП</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #B4BFCE; flex-grow: 1">Частные тренировки на Пхукете: Muay Thai и Strength &amp; Conditioning, на русском и английском.</p>
+<a href="https://muaithaiph.vercel.app" style="display: flex; justify-content: space-between; gap: 12px; padding: 12px 0 0; border-top: 1px solid #1B2638; text-decoration: none; font-size: 15px">
+<span style="color: #8E9BB0">muaithaiph.vercel.app</span>
+<span style="font-weight: 800; color: #39E1C6">Открыть ↗</span>
+</a>
+</article>
+
+<article style="background: #0D1320; border: 1px solid #1B2638; border-radius: 22px; padding: 26px; display: flex; flex-direction: column; gap: 14px; min-height: 236px; box-sizing: border-box">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+<span style="font-family: Unbounded, system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #8E9BB0">04 · Дом и семья</span>
+<span style="font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; background: #142033; color: #39E1C6">на связи</span>
+</div>
+<h3 style="margin: 0; font-family: Unbounded, system-ui, sans-serif; font-weight: 600; font-size: 22px; line-height: 1.25">HAVEN</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #B4BFCE; flex-grow: 1">Помощь дому на Пхукете: готовка, заготовка еды, закупки и немедицинская помощь семье.</p>
+<a href="https://haven-ruddy.vercel.app" style="display: flex; justify-content: space-between; gap: 12px; padding: 12px 0 0; border-top: 1px solid #1B2638; text-decoration: none; font-size: 15px">
+<span style="color: #8E9BB0">haven-ruddy.vercel.app</span>
+<span style="font-weight: 800; color: #39E1C6">Открыть ↗</span>
+</a>
+</article>
+
+<article style="background: #0D1320; border: 1px solid #1B2638; border-radius: 22px; padding: 26px; display: flex; flex-direction: column; gap: 14px; min-height: 236px; box-sizing: border-box">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+<span style="font-family: Unbounded, system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #8E9BB0">05 · Контент</span>
+<span style="font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; background: #142033; color: #39E1C6">на связи</span>
+</div>
+<h3 style="margin: 0; font-family: Unbounded, system-ui, sans-serif; font-weight: 600; font-size: 22px; line-height: 1.25">Ростиксон</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #B4BFCE; flex-grow: 1">Контент для брендов и ресторанов.</p>
+<a href="https://rostikson-portfolio.vercel.app" style="display: flex; justify-content: space-between; gap: 12px; padding: 12px 0 0; border-top: 1px solid #1B2638; text-decoration: none; font-size: 15px">
+<span style="color: #8E9BB0">rostikson-portfolio.vercel.app</span>
+<span style="font-weight: 800; color: #39E1C6">Открыть ↗</span>
+</a>
+</article>
+
+<article style="background: #0D1320; border: 1px solid #1B2638; border-radius: 22px; padding: 26px; display: flex; flex-direction: column; gap: 14px; min-height: 236px; box-sizing: border-box">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+<span style="font-family: Unbounded, system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #8E9BB0">06 · Ресторан</span>
+<span style="font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; background: #142033; color: #8E9BB0">скоро</span>
+</div>
+<h3 style="margin: 0; font-family: Unbounded, system-ui, sans-serif; font-weight: 600; font-size: 22px; line-height: 1.25">Pharaohs Rawai</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #B4BFCE; flex-grow: 1">Ресторан в Раваи. Сайт готовится к публикации.</p>
+<a href="#orbit" style="display: flex; justify-content: space-between; gap: 12px; padding: 12px 0 0; border-top: 1px solid #1B2638; text-decoration: none; font-size: 15px">
+<span style="color: #8E9BB0">сайт скоро</span>
+<span style="font-weight: 800; color: #8E9BB0">Скоро</span>
+</a>
+</article>
+
+</div>
+</div>
+</section>
+
+<section id="homes" style="border-top: 1px solid #172033">
+<div class="pu-pad" style="max-width: 1280px; margin: 0 auto; padding: 88px 32px; display: flex; flex-direction: column; gap: 32px; box-sizing: border-box">
+<div style="display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: flex-end">
+<div style="display: flex; flex-direction: column; gap: 12px; max-width: 700px">
+<span style="font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 800; color: #39E1C6">02 · Жильё</span>
+<h2 style="margin: 0; font-family: Unbounded, system-ui, sans-serif; font-weight: 600; font-size: 44px; line-height: 1.08">Аренда и продажа — на карте острова</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.6; color: #B4BFCE">Объекты агентств-партнёров. У нас — район, тип, цена и дата. Фото, описание и контакт — на сайте агентства.</p>
+</div>
+<div role="group" aria-label="Тип сделки" style="display: inline-flex; padding: 4px; border: 1px solid #24334E; border-radius: 999px; gap: 4px">
+<button type="button" aria-pressed="true" style="font: inherit; font-weight: 800; font-size: 16px; padding: 12px 22px; border-radius: 999px; border: 0; background: #39E1C6; color: #070A12; min-height: 44px">Аренда</button>
+<button type="button" aria-pressed="false" style="font: inherit; font-weight: 700; font-size: 16px; padding: 12px 22px; border-radius: 999px; border: 0; background: transparent; color: #C5CEDB; min-height: 44px">Продажа</button>
+</div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+<div style="flex: 0 1 400px; min-width: min(100%, 320px); background: #0B111C; border: 1px solid #1B2638; border-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 16px; box-sizing: border-box">
+<svg viewBox="0 0 360 440" role="img" aria-label="Карта районов Пхукета" style="width: 100%; height: auto; display: block">
+<path d="M159.0 30.0 C165.3 27.0 177.0 45.3 186.0 57.0 C195.0 68.7 203.7 88.5 213.0 100.2 C222.3 111.9 232.8 118.2 241.8 127.2 C250.8 136.2 261.9 143.7 267.0 154.2 C272.1 164.7 273.9 179.7 272.4 190.2 C270.9 200.7 259.5 206.4 258.0 217.2 C256.5 228.0 264.3 242.0 263.4 255.0 C262.5 268.1 253.2 283.8 252.6 295.5 C252.0 307.2 259.2 315.8 259.8 325.2 C260.4 334.7 256.2 342.3 256.2 352.2 C256.2 362.1 265.2 382.2 259.8 384.6 C254.4 387.0 233.7 367.5 223.8 366.6 C213.9 365.7 206.6 371.7 200.4 379.2 C194.3 386.7 192.9 403.5 186.9 411.6 C180.9 419.7 169.1 428.1 164.4 427.8 C159.8 427.5 160.2 418.8 159.0 409.8 C157.8 400.8 158.7 384.0 157.2 373.8 C155.7 363.6 152.1 356.7 150.0 348.6 C147.9 340.5 143.7 332.7 144.6 325.2 C145.5 317.7 154.8 309.6 155.4 303.6 C156.0 297.6 150.6 297.3 148.2 289.2 C145.8 281.1 143.1 264.6 141.0 255.0 C138.9 245.4 134.1 239.1 135.6 231.6 C137.1 224.1 149.7 221.1 150.0 210.0 C150.3 198.9 136.5 178.5 137.4 165.0 C138.3 151.5 153.6 144.0 155.4 129.0 C157.2 114.0 147.6 91.5 148.2 75.0 C148.8 58.5 152.7 33.0 159.0 30.0Z" style="fill: #0F1B2B; stroke: #39E1C6; stroke-width: 1.25"></path>
+<g style="fill: #39E1C6">
+<circle cx="159" cy="212.7" r="9" opacity="0.18"></circle><circle cx="159" cy="212.7" r="4"></circle>
+<circle cx="162.6" cy="302.7" r="9" opacity="0.18"></circle><circle cx="162.6" cy="302.7" r="4"></circle>
+<circle cx="159" cy="348.6" r="9" opacity="0.18"></circle><circle cx="159" cy="348.6" r="4"></circle>
+<circle cx="162.6" cy="371.1" r="9" opacity="0.18"></circle><circle cx="162.6" cy="371.1" r="4"></circle>
+<circle cx="183.3" cy="406.2" r="9" opacity="0.18"></circle><circle cx="183.3" cy="406.2" r="4"></circle>
+<circle cx="195" cy="348.6" r="9" opacity="0.18"></circle><circle cx="195" cy="348.6" r="4"></circle>
+<circle cx="238.2" cy="314.4" r="9" opacity="0.18"></circle><circle cx="238.2" cy="314.4" r="4"></circle>
+</g>
+<g style="font-family: Manrope, system-ui, sans-serif; font-size: 12px; font-weight: 700; fill: #C5CEDB">
+<text x="146" y="217" text-anchor="end">Банг Тао</text>
+<text x="150" y="307" text-anchor="end">Патонг</text>
+<text x="146" y="353" text-anchor="end">Карон</text>
+<text x="150" y="375" text-anchor="end">Ката</text>
+<text x="171" y="420" text-anchor="end">Раваи</text>
+<text x="206" y="345">Чалонг</text>
+<text x="250" y="318">Пхукет-таун</text>
+</g>
+</svg>
+<div role="group" aria-label="Район" style="display: flex; flex-wrap: wrap; gap: 8px">
+<button type="button" aria-pressed="true" style="font: inherit; font-size: 14px; font-weight: 800; padding: 12px 14px; border-radius: 999px; border: 1px solid #39E1C6; background: #39E1C6; color: #070A12; min-height: 44px">Весь остров</button>
+<button type="button" aria-pressed="false" style="font: inherit; font-size: 14px; font-weight: 700; padding: 12px 14px; border-radius: 999px; border: 1px solid #2A3650; background: transparent; color: #C5CEDB; min-height: 44px">Банг Тао</button>
+<button type="button" aria-pressed="false" style="font: inherit; font-size: 14px; font-weight: 700; padding: 12px 14px; border-radius: 999px; border: 1px solid #2A3650; background: transparent; color: #C5CEDB; min-height: 44px">Патонг</button>
+<button type="button" aria-pressed="false" style="font: inherit; font-size: 14px; font-weight: 700; padding: 12px 14px; border-radius: 999px; border: 1px solid #2A3650; background: transparent; color: #C5CEDB; min-height: 44px">Карон</button>
+<button type="button" aria-pressed="false" style="font: inherit; font-size: 14px; font-weight: 700; padding: 12px 14px; border-radius: 999px; border: 1px solid #2A3650; background: transparent; color: #C5CEDB; min-height: 44px">Ката</button>
+<button type="button" aria-pressed="false" style="font: inherit; font-size: 14px; font-weight: 700; padding: 12px 14px; border-radius: 999px; border: 1px solid #2A3650; background: transparent; color: #C5CEDB; min-height: 44px">Раваи</button>
+<button type="button" aria-pressed="false" style="font: inherit; font-size: 14px; font-weight: 700; padding: 12px 14px; border-radius: 999px; border: 1px solid #2A3650; background: transparent; color: #C5CEDB; min-height: 44px">Чалонг</button>
+<button type="button" aria-pressed="false" style="font: inherit; font-size: 14px; font-weight: 700; padding: 12px 14px; border-radius: 999px; border: 1px solid #2A3650; background: transparent; color: #C5CEDB; min-height: 44px">Пхукет-таун</button>
+</div>
+</div>
+
+<div style="flex: 1 1 520px; min-width: min(100%, 320px); display: flex; flex-direction: column; gap: 16px">
+<form aria-label="Фильтр объектов" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; align-items: end">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="pu-type" style="font-size: 13px; font-weight: 700; color: #8E9BB0">Тип</label>
+<select id="pu-type" style="font: inherit; font-size: 16px; padding: 12px; border-radius: 14px; border: 1px solid #24334E; background: #0D1320; color: #EEF2F6; min-height: 48px">
+<option>Любой</option>
+<option>Квартира или кондо</option>
+<option>Вилла</option>
+<option>Дом</option>
+</select>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="pu-beds" style="font-size: 13px; font-weight: 700; color: #8E9BB0">Спальни</label>
+<select id="pu-beds" style="font: inherit; font-size: 16px; padding: 12px; border-radius: 14px; border: 1px solid #24334E; background: #0D1320; color: #EEF2F6; min-height: 48px">
+<option>Любые</option>
+<option>Студия</option>
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4 и больше</option>
+</select>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="pu-price" style="font-size: 13px; font-weight: 700; color: #8E9BB0">Цена до, ฿</label>
+<input id="pu-price" type="number" inputmode="numeric" placeholder="например, 40 000" style="font: inherit; font-size: 16px; padding: 12px; border-radius: 14px; border: 1px solid #24334E; background: #0D1320; color: #EEF2F6; min-height: 48px; box-sizing: border-box; width: 100%">
+</div>
+<button type="button" style="font: inherit; font-weight: 800; font-size: 16px; padding: 13px 18px; border-radius: 14px; border: 0; background: #B9FF3F; color: #070A12; min-height: 48px">Показать</button>
+</form>
+
+<div style="background: #0B111C; border: 1px solid #1B2638; border-radius: 22px; padding: 32px; display: flex; flex-direction: column; gap: 14px">
+<svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><ellipse cx="28" cy="28" rx="25" ry="15" transform="rotate(-16 28 28)" style="fill: none; stroke: #2A3650; stroke-width: 1.5; stroke-dasharray: 3 4"></ellipse><circle cx="28" cy="28" r="7" style="fill: #0F1B2B; stroke: #39E1C6; stroke-width: 1.5"></circle><circle cx="50" cy="20" r="3" style="fill: #B9FF3F"></circle></svg>
+<h3 style="margin: 0; font-family: Unbounded, system-ui, sans-serif; font-weight: 600; font-size: 24px; line-height: 1.25">Скоро: агентства добавляют объекты</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #B4BFCE; max-width: 560px">Карточки появятся после проверки ссылок у партнёров. Вы агентство? Добавьте свои объекты первыми.</p>
+<a href="#agencies" style="align-self: flex-start; border: 1px solid #39E1C6; color: #39E1C6; text-decoration: none; font-weight: 800; font-size: 15px; padding: 12px 18px; border-radius: 999px">Агентствам →</a>
+</div>
+
+<article aria-label="Пример карточки объекта" style="border: 1px dashed #2A3650; border-radius: 22px; padding: 16px; display: flex; gap: 18px; align-items: stretch">
+<div style="flex: 0 0 96px; border-radius: 14px; background: #0F1726; display: flex; align-items: center; justify-content: center">
+<svg width="40" height="72" viewBox="0 0 40 72" aria-hidden="true"><path d="M12.4 5.8 C13.4 5.3 15.2 8.2 16.6 10.0 C18.0 11.8 19.4 14.9 20.8 16.7 C22.2 18.5 23.9 19.5 25.3 20.9 C26.7 22.3 28.4 23.5 29.2 25.1 C30.0 26.8 30.3 29.1 30.0 30.7 C29.8 32.4 28.0 33.2 27.8 34.9 C27.6 36.6 28.8 38.8 28.6 40.8 C28.5 42.8 27.1 45.3 27.0 47.1 C26.9 48.9 28.0 50.3 28.1 51.7 C28.2 53.2 27.5 54.4 27.5 55.9 C27.5 57.5 28.9 60.6 28.1 61.0 C27.2 61.3 24.0 58.3 22.5 58.2 C20.9 58.0 19.8 59.0 18.8 60.1 C17.9 61.3 17.7 63.9 16.7 65.2 C15.8 66.4 14.0 67.7 13.2 67.7 C12.5 67.6 12.6 66.3 12.4 64.9 C12.2 63.5 12.4 60.9 12.1 59.3 C11.9 57.7 11.3 56.6 11.0 55.4 C10.7 54.1 10.0 52.9 10.2 51.7 C10.3 50.6 11.7 49.3 11.8 48.4 C11.9 47.4 11.1 47.4 10.7 46.1 C10.3 44.9 9.9 42.3 9.6 40.8 C9.3 39.3 8.5 38.3 8.8 37.2 C9.0 36.0 11.0 35.5 11.0 33.8 C11.0 32.1 8.9 28.9 9.0 26.8 C9.2 24.7 11.6 23.5 11.8 21.2 C12.1 18.9 10.6 15.4 10.7 12.8 C10.8 10.2 11.4 6.3 12.4 5.8Z" style="fill: #16243A; stroke: #39E1C6; stroke-width: 0.8"></path><circle cx="16.2" cy="64.3" r="2.6" style="fill: #B9FF3F"></circle></svg>
+</div>
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+<span style="font-size: 11px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: #8E9BB0">Пример карточки</span>
+<span style="font-size: 12px; font-weight: 800; padding: 5px 10px; border-radius: 999px; background: #142033; color: #39E1C6">Аренда</span>
+<span style="font-size: 12px; font-weight: 800; padding: 5px 10px; border-radius: 999px; background: #142033; color: #C5CEDB">[Район]</span>
+</div>
+<h3 style="margin: 0; font-family: Unbounded, system-ui, sans-serif; font-weight: 600; font-size: 18px; line-height: 1.3">[Тип объекта, спальни]</h3>
+<p style="margin: 0; font-size: 22px; font-weight: 800">[Цена] ฿ / мес</p>
+<p style="margin: 0; font-size: 14px; color: #8E9BB0">[Агентство-партнёр] · обновлено [дата]</p>
+<a href="#homes" style="align-self: flex-start; font-weight: 800; font-size: 15px; padding: 8px 0; color: #39E1C6; text-decoration: none">На сайт агентства ↗</a>
+</div>
+</article>
+</div>
+</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #8E9BB0; max-width: 900px">Показываем только объекты агентств, которые дали согласие, и только с прямой ссылкой на их сайт. Фото и описания остаются у агентства. Цену и наличие проверяйте по ссылке.</p>
+</div>
+</section>
+
+<section id="agencies" style="border-top: 1px solid #172033">
+<div class="pu-pad" style="max-width: 1280px; margin: 0 auto; padding: 88px 32px; box-sizing: border-box">
+<div style="background: #0D1320; border: 1px solid #1B2638; border-radius: 32px; padding: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 48px; box-sizing: border-box">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<span style="font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 800; color: #39E1C6">03 · Агентствам</span>
+<h2 style="margin: 0; font-family: Unbounded, system-ui, sans-serif; font-weight: 600; font-size: 38px; line-height: 1.12">Ваши объекты — на карте Phuket Universe</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.6; color: #B4BFCE">Карточка ведёт на ваш сайт: заявку получаете вы, а не мы. Фото и тексты не копируем.</p>
+<p style="margin: 0; font-size: 15px; color: #8E9BB0">Условия размещения: [УСЛОВИЯ ДЛЯ АГЕНТСТВ]</p>
+<a href="mailto:robert@aiskillab.work?subject=Phuket%20Universe%20%E2%80%94%20%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D1%8B" style="align-self: flex-start; margin-top: 8px; background: #B9FF3F; color: #070A12; text-decoration: none; font-weight: 800; font-size: 17px; padding: 16px 24px; border-radius: 999px">Написать: robert@aiskillab.work</a>
+</div>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px">
+<li style="display: flex; gap: 20px; align-items: flex-start; padding: 20px; border: 1px solid #1B2638; border-radius: 20px">
+<span style="font-family: Unbounded, system-ui, sans-serif; font-weight: 800; font-size: 28px; line-height: 1; color: #39E1C6">1</span>
+<div style="display: flex; flex-direction: column; gap: 6px"><strong style="font-size: 18px">Пришлите ссылку</strong><span style="font-size: 16px; line-height: 1.55; color: #B4BFCE">На страницу с объявлениями или таблицу: район, тип, спальни, цена.</span></div>
+</li>
+<li style="display: flex; gap: 20px; align-items: flex-start; padding: 20px; border: 1px solid #1B2638; border-radius: 20px">
+<span style="font-family: Unbounded, system-ui, sans-serif; font-weight: 800; font-size: 28px; line-height: 1; color: #39E1C6">2</span>
+<div style="display: flex; flex-direction: column; gap: 6px"><strong style="font-size: 18px">Мы проверяем</strong><span style="font-size: 16px; line-height: 1.55; color: #B4BFCE">Что ссылка ваша и объект актуален. Без проверки карточка не появится.</span></div>
+</li>
+<li style="display: flex; gap: 20px; align-items: flex-start; padding: 20px; border: 1px solid #1B2638; border-radius: 20px">
+<span style="font-family: Unbounded, system-ui, sans-serif; font-weight: 800; font-size: 28px; line-height: 1; color: #39E1C6">3</span>
+<div style="display: flex; flex-direction: column; gap: 6px"><strong style="font-size: 18px">Карточка на карте</strong><span style="font-size: 16px; line-height: 1.55; color: #B4BFCE">Район, тип и цена — у нас. Всё остальное и контакт — у вас на сайте.</span></div>
+</li>
+</ol>
+</div>
+</div>
+</section>
+
+<footer style="border-top: 1px solid #172033">
+<div style="max-width: 1280px; margin: 0 auto; padding: 40px 32px 56px; display: flex; flex-wrap: wrap; gap: 28px; justify-content: space-between; align-items: center; box-sizing: border-box">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: Unbounded, system-ui, sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.08em">PHUKET UNIVERSE</span>
+<span style="font-size: 14px; color: #8E9BB0">Проект AI Skill Lab · Пхукет и онлайн</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start">
+<span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #8E9BB0; font-weight: 800">Кнопка для подвала сайта</span>
+<a href="#top" style="display: inline-flex; align-items: center; gap: 10px; padding: 9px 18px 9px 10px; border: 1px solid #2A3650; border-radius: 999px; text-decoration: none; font-weight: 800; font-size: 15px; color: #EEF2F6"><svg width="26" height="26" viewBox="0 0 34 34" aria-hidden="true"><ellipse cx="17" cy="17" rx="15" ry="9" transform="rotate(-16 17 17)" style="fill: none; stroke: #39E1C6; stroke-width: 1.8"></ellipse><circle cx="17" cy="17" r="5" style="fill: #EEF2F6"></circle><circle cx="30" cy="12.5" r="2.8" style="fill: #39E1C6"></circle></svg>Phuket Universe</a>
+</div>
+<span style="font-size: 13px; line-height: 1.55; color: #8E9BB0; max-width: 360px">Ссылки ведут на сайты владельцев. Актуальность объявлений проверяйте у источника.</span>
+</div>
+</footer>
+</div>
+</body>
+</html>
