@@ -57,12 +57,13 @@ function futureGuidePairApproved(): boolean {
     const header = manifest as Record<string, unknown>;
     const isU1R3 = header.release_id === "PHUKET_UNIVERSE_U1_STATIC_R3_20261014";
     const isU1R5 = header.release_id === "PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014";
-    const expectedRecords = isU1R3 || isU1R5 ? 104 : 98;
+    const isU2R6 = header.release_id === "PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014";
+    const expectedRecords = isU2R6 ? 106 : isU1R3 || isU1R5 ? 104 : 98;
     if (
       header.schema !== "ai-skill-lab.static-release.v1" ||
-      header.release_id !== (isU1R5 ? "PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014" : isU1R3 ? "PHUKET_UNIVERSE_U1_STATIC_R3_20261014" : FUTURE_GUIDE_RELEASE) ||
+      header.release_id !== (isU2R6 ? "PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014" : isU1R5 ? "PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014" : isU1R3 ? "PHUKET_UNIVERSE_U1_STATIC_R3_20261014" : FUTURE_GUIDE_RELEASE) ||
       header.file_count !== expectedRecords ||
-      header.payload_sha256 !== (isU1R5 ? "e8b41c9e6fed3e6b1f2b9edf66e1ddd227c4253fd1cb70c7030265dba1c63726" : isU1R3 ? "40606d00063d1ec99f495bf3623f8a8ddba23bc04298c530cf6cd97f92965c10" : FUTURE_GUIDE_PAYLOAD_SHA)
+      header.payload_sha256 !== (isU2R6 ? "0b5f3b9d20d3dbcb9dcb03c6e65c0f9b513792c7cbaf71d958ee15d13914ec94" : isU1R5 ? "e8b41c9e6fed3e6b1f2b9edf66e1ddd227c4253fd1cb70c7030265dba1c63726" : isU1R3 ? "40606d00063d1ec99f495bf3623f8a8ddba23bc04298c530cf6cd97f92965c10" : FUTURE_GUIDE_PAYLOAD_SHA)
     ) return false;
     const files = header.files;
     if (!Array.isArray(files) || files.length !== expectedRecords) return false;

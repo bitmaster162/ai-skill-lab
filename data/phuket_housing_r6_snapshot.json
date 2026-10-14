@@ -1,0 +1,18 @@
+{
+  "as_of": "2026-10-14",
+  "schema": "phuket-housing-empty-snapshot.v1",
+  "values": [
+    [
+      "deal",
+      "area",
+      "type",
+      "bedrooms",
+      "price_thb",
+      "title",
+      "source_name",
+      "source_url",
+      "updated_at",
+      "partner_ok"
+    ]
+  ]
+}
