@@ -239,6 +239,17 @@ def main() -> None:
     ru = normalize_markup(base, locale="ru")
     en = normalize_markup(base, locale="en")
     ru, en, css = externalize_styles(ru, en)
+    # R3 owner-approved copy correction, after style extraction to preserve SVG/CSS.
+    omitted = {
+        "ru": '<p class="pu-s100">Условия размещения: [УСЛОВИЯ ДЛЯ АГЕНТСТВ]</p>',
+        "en": '<p class="pu-s100">Listing terms: [TERMS FOR AGENCIES]</p>',
+    }
+    require(ru.count(omitted["ru"]) == en.count(omitted["en"]) == 1, "agency paragraph drift")
+    ru = ru.replace(omitted["ru"], "", 1)
+    en = en.replace(omitted["en"], "", 1)
+    ru = '<a class="pu-skip-link" href="#main">К содержанию</a>' + ru
+    en = '<a class="pu-skip-link" href="#main">Skip to content</a>' + en
+    css += '.pu-page .pu-skip-link{position:absolute;left:-10000px;top:12px;z-index:1000;padding:12px;background:#B9FF3F;color:#070A12}.pu-page .pu-skip-link:focus{left:12px}\n'
     expected = ["phuketravel.vercel.app", "stasph.vercel.app", "muaithaiph.vercel.app",
                 "haven-ruddy.vercel.app", "rostikson-portfolio.vercel.app"]
     for locale, markup in (("ru", ru), ("en", en)):

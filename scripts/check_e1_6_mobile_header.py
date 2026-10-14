@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
+import phuket_release_profile as u1
 from pathlib import Path
 import re,sys
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/"deploy/live"
 errors=[];pages=0
 for p in sorted(x for x in LIVE.rglob("*.html") if x.name!="404.html"):
+ if u1.universe_page(p): continue
  rel=p.relative_to(LIVE).as_posix();h=p.read_text(encoding="utf-8");pages+=1
  if h.count('class="workshopMenuToggle"')!=1:errors.append(f"{rel}: mobile toggle count")
  if h.count('class="workshopBurger"')!=1:errors.append(f"{rel}: burger count")

@@ -1,0 +1,6 @@
+/* Agency terms remain readable and expandable without JavaScript. */
+.pu-page .pu-agency-terms{margin:22px 0;padding:0 16px;border:1px solid #1B2638;border-radius:12px;background:#0D1320;color:#EEF2F6}
+.pu-page .pu-agency-terms summary{min-height:44px;padding:14px 0;cursor:pointer;font-size:15px;font-weight:800;line-height:1.5;color:#39E1C6;overflow-wrap:anywhere}
+.pu-page .pu-agency-terms-body{padding:0 0 4px}
+.pu-page .pu-agency-terms-body p{margin:0 0 16px;font-size:14px;line-height:1.7;overflow-wrap:anywhere}
+.pu-page .pu-agency-terms summary:focus-visible{outline:3px solid #B9FF3F;outline-offset:4px}

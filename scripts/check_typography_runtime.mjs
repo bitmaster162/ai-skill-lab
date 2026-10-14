@@ -14,10 +14,15 @@ const errors = [];
 let checks = 0;
 const req = (cond, msg) => { checks++; if (!cond) errors.push(msg); };
 
+const U1_R3 = ['PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014'].includes(JSON.parse(fs.readFileSync(path.join(LIVE, '_release.json'), 'utf8')).release_id);
 const expected = {
   'Onest-ru-en.woff2': { size: 30036, sha: '1527f4a5e3a2c65b9d789bf86a49cceefea2472bda0b1b3edc08b3adae4a9997' },
   'Unbounded-ru-en.woff2': { size: 52016, sha: '1600f2b8c27dc942601fdd2fc3f894f0375e371287d740289bf58945ab1991b1' },
 };
+if (U1_R3) Object.assign(expected, {
+  'Manrope-cyrillic.woff2': {size: 14500, sha: 'c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914'},
+  'Manrope-latin.woff2': {size: 24836, sha: 'a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972'},
+});
 for (const [name, meta] of Object.entries(expected)) {
   const deployed = path.join(LIVE, 'fonts', name);
   const source = path.join(ROOT, 'public', 'fonts', name);
@@ -56,7 +61,7 @@ function referencesForbiddenFontHost(text) {
 }
 for (const [text, label] of [[css, 'static CSS'], [sourceCss, 'source CSS']]) {
   const block = text.split('R115 Workshop v1 typography roles').slice(-1)[0];
-  if (['A5_MENTOR_R1', 'E1_3_POST_SUBMIT_R1','DESIGN_TYPOGRAPHY_R1','OG20_R1','A7_SAFETY_QUIZ_R1','A8_PROMPT_AUDITOR_R1','A9_REAL_PROJECTS_R1','N25_CERTIFICATE_RECORD_R1','E3_8_LEAD_EVENTS_R1','E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'A3_CALCOM_R1', 'A4_PHUKET_LOCAL_R1', 'N15_AGENT_SAFETY_R1', 'E2_GUIDES_R1', 'R149_D1_0_WORKSHOP_SHELL', 'R149_D1_0_VIEWPORT_CLOSEOUT', 'R151_E1_1_WEB_ANALYTICS', 'R152_E1_2_CACHE_POLICY', 'R153_E1_4_INTRO_CALL', 'R154_E1_5_METADATA', 'R155_E1_6_MOBILE_HEADER', 'R156_I1_2_INDEXNOW', 'R157_I1_3_INDEXABILITY', 'R158_F1_2_MATCHER_V2', 'R160_F1_2_PRIVACY_DISCLOSURE'].includes(release)) {
+  if (['A5_MENTOR_R1', 'E1_3_POST_SUBMIT_R1','DESIGN_TYPOGRAPHY_R1','OG20_R1','A7_SAFETY_QUIZ_R1','A8_PROMPT_AUDITOR_R1','A9_REAL_PROJECTS_R1','N25_CERTIFICATE_RECORD_R1','E3_8_LEAD_EVENTS_R1','E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'A3_CALCOM_R1', 'A4_PHUKET_LOCAL_R1', 'N15_AGENT_SAFETY_R1', 'E2_GUIDES_R1', 'R149_D1_0_WORKSHOP_SHELL', 'R149_D1_0_VIEWPORT_CLOSEOUT', 'R151_E1_1_WEB_ANALYTICS', 'R152_E1_2_CACHE_POLICY', 'R153_E1_4_INTRO_CALL', 'R154_E1_5_METADATA', 'R155_E1_6_MOBILE_HEADER', 'R156_I1_2_INDEXNOW', 'R157_I1_3_INDEXABILITY', 'R158_F1_2_MATCHER_V2', 'R160_F1_2_PRIVACY_DISCLOSURE', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014'].includes(release)) {
     const compact = text.replace(/\s+/g, '');
     const required = label === 'static CSS'
       ? [
@@ -99,7 +104,7 @@ const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) =
   return e.isDirectory() ? walk(p) : [p];
 });
 const htmls = walk(LIVE).filter((p) => p.endsWith('.html')).sort();
-req(htmls.length === (release === 'T1_6F2_ADULT_FIRST_TASKS_R1' ? 55 : 53), 'html surfaces ' + htmls.length + ' != approved ' + (release === 'T1_6F2_ADULT_FIRST_TASKS_R1' ? 55 : 53));
+req(htmls.length === (U1_R3 ? 57 : release === 'T1_6F2_ADULT_FIRST_TASKS_R1' ? 55 : 53), 'html surfaces ' + htmls.length + ' != approved ' + (U1_R3 ? 57 : release === 'T1_6F2_ADULT_FIRST_TASKS_R1' ? 55 : 53));
 
 const forbiddenStatusGlyph = String.fromCodePoint(0x25CF);
 const namedEntities = new Map([['&amp;', '&'], ['&lt;', '<'], ['&gt;', '>'], ['&quot;', '"'], ['&copy;', '©']]);
@@ -133,7 +138,11 @@ function stripElementBlocks(raw, tag) {
   }
 }
 const corpusSet = new Set();
-for (const hp of htmls) {
+// Onest/Unbounded legacy coverage applies to the inherited Workshop text.
+// Universe uses a different Manrope stack, checked by its own browser cases.
+const workshopGlyphPages = htmls.filter(hp => !(U1_R3 && ['phuket-universe.html','en/phuket-universe.html'].includes(path.relative(LIVE, hp).replaceAll('\\', '/'))));
+req(workshopGlyphPages.length === (U1_R3 ? 55 : htmls.length), 'Workshop glyph corpus route coverage');
+for (const hp of workshopGlyphPages) {
   let body = fs.readFileSync(hp, 'utf8').match(/<body[^>]*>([\s\S]*?)<\/body>/i)?.[1] || '';
   body = stripElementBlocks(body, 'script');
   body = stripElementBlocks(body, 'style');
@@ -156,7 +165,13 @@ for (const fp of activeUiFiles) {
 for (const hp of htmls) {
   const t = fs.readFileSync(hp, 'utf8');
   const rel = path.relative(LIVE, hp).replaceAll('\\', '/');
-  req((t.match(/rel="preload" href="\/fonts\/Onest-ru-en\.woff2" as="font" type="font\/woff2" crossorigin/g) || []).length === 1, rel + ': Onest preload');
+  const u1Page = U1_R3 && ['phuket-universe.html','en/phuket-universe.html'].includes(rel);
+  req((t.match(/rel="preload" href="\/fonts\/Onest-ru-en\.woff2" as="font" type="font\/woff2" crossorigin/g) || []).length === (u1Page ? 0 : 1), rel + ': Onest preload');
+  if (u1Page) {
+    const preloadNames = [...t.matchAll(/rel="preload" href="\/fonts\/([^"]+)"/g)].map(m=>m[1]).sort();
+    const expectedNames = ['Unbounded-ru-en.woff2','Manrope-latin.woff2',...(rel.startsWith('en/') ? [] : ['Manrope-cyrillic.woff2'])].sort();
+    req(JSON.stringify(preloadNames) === JSON.stringify(expectedNames), rel + ': exact U1 preload inventory');
+  }
   req((t.match(/rel="preload" href="\/fonts\/Unbounded-ru-en\.woff2" as="font" type="font\/woff2" crossorigin/g) || []).length === 1, rel + ': Unbounded preload');
 }
 
@@ -391,7 +406,7 @@ if (chrome) {
 }
 await new Promise((resolve) => server.close(resolve));
 
-console.log('typography_runtime_checks=' + checks + ' fonts=2 html=' + htmls.length + ' browser_cases=4 static_money_nodes=22 runtime_money_types=5 inline_money_prose=Onest glyph_corpus=' + glyphCorpus.length + ' fallback_glyphs=0');
+console.log('typography_runtime_checks=' + checks + ' fonts=' + Object.keys(expected).length + ' html=' + htmls.length + ' browser_cases=4 static_money_nodes=22 runtime_money_types=5 inline_money_prose=Onest glyph_corpus=' + glyphCorpus.length + ' fallback_glyphs=0');
 if (errors.length) {
   console.log('WORKSHOP_TYPOGRAPHY_RUNTIME_FAIL');
   for (const e of errors) console.log('FAIL:', e);

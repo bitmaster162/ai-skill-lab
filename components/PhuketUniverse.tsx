@@ -1,4 +1,6 @@
 import "@/app/phuket-universe.css";
+import "@/app/phuket-universe-agency-terms.css";
+import { withAgencyPilotTerms } from "@/components/phuketUniverseAgencyTerms";
 import { phuketUniverseMarkup } from "@/components/phuketUniverseMarkup";
 
 export type PhuketUniverseLocale = "ru" | "en";
@@ -14,7 +16,7 @@ export function PhuketUniverse({ locale }: { locale: PhuketUniverseLocale }) {
       className="pu-page"
       lang={locale}
       data-phuket-universe={locale}
-      dangerouslySetInnerHTML={{ __html: phuketUniverseMarkup[locale] }}
+      dangerouslySetInnerHTML={{ __html: withAgencyPilotTerms(phuketUniverseMarkup[locale], locale) }}
     />
   );
 }
