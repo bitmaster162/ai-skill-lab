@@ -69,6 +69,7 @@ CHECKS = [
     ("intake_operations", ["python", "scripts/check_intake_operations.py"]),
     ("lead_inbox", ["python", "scripts/check_lead_inbox.py"]),
     ("inline_scripts", ["python", "scripts/check_inline_scripts.py"]),
+    ("phuket_universe_u1", ["python", "scripts/check_phuket_universe_u1.py", "--source-only"]),
     ("qa_gate_inventory", ["python", "scripts/check_qa_gate_inventory.py"]),
     ("matcher_runtime", ["node", "scripts/check_matcher_runtime.mjs"]),
     ("start_runtime", ["node", "scripts/check_start_runtime.mjs"]),
