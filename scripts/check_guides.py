@@ -208,7 +208,7 @@ def main() -> int:
         source_urls = [url for url in external_source_links if any(host in urlparse(url).netloc for host in [
             "help.openai.com", "support.google.com", "anthropic.com", "suno.com", "replit.com", "docs.github.com", "internetmatters.org"
         ])]
-        if RELEASE == FUTURE_RELEASE and route in FUTURE_ARTICLES:
+        if RELEASE in {FUTURE_RELEASE, 'SITE_FORM_METADATA_R3_20261014'} and route in FUTURE_ARTICLES:
             source_urls.extend(url for url in external_source_links if urlparse(url).netloc == "openai.com")
         checks += 16
         require(f"<h1>{expected['title']}</h1>" in raw, f"{route}: article H1 drift", errors)
@@ -228,7 +228,7 @@ def main() -> int:
         require('content="https://aiskillab.work/og.png"' in raw, f"{route}: OG PNG missing", errors)
         require("guideReviewMeta" in raw, f"{route}: reviewed/next review line missing", errors)
         require(len(set(source_urls)) == expected["sources"], f"{route}: external source count {len(set(source_urls))} != {expected['sources']}", errors)
-        if RELEASE == FUTURE_RELEASE and route in FUTURE_ARTICLES:
+        if RELEASE in {FUTURE_RELEASE, 'SITE_FORM_METADATA_R3_20261014'} and route in FUTURE_ARTICLES:
             checks += 2
             require(set(source_urls) == FUTURE_EXTERNAL_SOURCES, f"{route}: future external source set drift", errors)
             required_internal = ("/en/personal", "/en/curriculum") if route.startswith("/en/") else ("/personal", "/curriculum")

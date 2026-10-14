@@ -5,6 +5,11 @@ import vm from 'node:vm';
 import {fileURLToPath} from 'node:url';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const release=JSON.parse(fs.readFileSync(path.join(root,'deploy/live/_release.json'),'utf8')).release_id;
+if(release === 'SITE_FORM_METADATA_R3_20261014') {
+  await import('./site_form_runtime_r3.mjs');
+  process.exit(0);
+}
 const js=fs.readFileSync(path.join(root,'deploy/live/start-brief.js'),'utf8');
 
 class E{

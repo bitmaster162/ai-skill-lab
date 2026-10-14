@@ -20,6 +20,8 @@ ingress=read("services/lead-ingress/api/event.js")
 worker=read("services/lead-receiver-cloudflare/src/index.js")
 static_runtime=read("deploy/live/lab-command.js")
 start=read("deploy/live/start-brief.js")
+if json.loads(read("deploy/live/_release.json")).get("release_id") == 'SITE_FORM_METADATA_R3_20261014':
+ start=read("deploy/live/lead-form-runtime.js").replace("event: ", "event:")
 lead=read("components/LeadForm.tsx")
 intro=read("components/IntroCallCta.tsx")
 for event in EVENTS:

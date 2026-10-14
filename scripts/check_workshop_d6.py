@@ -11,11 +11,17 @@ def req(c,m):
  global checks; checks+=1
  if not c: errors.append(m)
 def read(rel): return source_path(rel).read_text(encoding='utf-8')
+from site_form_metadata_r3 import is_current
+SITE_R3 = is_current(ROOT)
 source=read('components/workshop/WorkshopStart.tsx')
 for marker in ['import { LeadForm } from "@/components/LeadForm";','<LeadForm locale={locale}/>','START · APPLICATION + CONTACT','START · ЗАЯВКА + КОНТАКТ']:
  req(marker in source,f'WorkshopStart missing {marker}')
-for marker in ['The application form requires JavaScript. Contact us directly instead — Telegram, WhatsApp, LINE or email, all listed below on this page.','Форма заявки работает только с включённым JavaScript. Напишите напрямую — Telegram, WhatsApp, LINE или email, контакты ниже на этой странице.']:
- req(marker in read('components/LeadForm.tsx'),f'LeadForm missing no-JS fallback {marker}')
+if SITE_R3:
+ for marker in ['The form is not ready yet. You can contact us directly.', 'Форма пока не готова к отправке. Можно связаться напрямую.', 'data-lead-readiness', 'data-lead-direct-contact']:
+  req(marker in read("components/LeadForm.tsx"), f"LeadForm readiness missing {marker}")
+else:
+ for marker in ['The application form requires JavaScript. Contact us directly instead — Telegram, WhatsApp, LINE or email, all listed below on this page.','Форма заявки работает только с включённым JavaScript. Напишите напрямую — Telegram, WhatsApp, LINE или email, контакты ниже на этой странице.']:
+  req(marker in read('components/LeadForm.tsx'),f'LeadForm missing no-JS fallback {marker}')
 for rel,en in [('deploy/live/start.html',False),('deploy/live/en/start.html',True)]:
  t=read(rel); prefix='/en' if en else ''
  req(t.lower().count('<form')==1,f'{rel}: exactly one form')
@@ -24,11 +30,20 @@ for rel,en in [('deploy/live/start.html',False),('deploy/live/en/start.html',Tru
  req(f'name="locale" value="{"en" if en else "ru"}"' in t,f'{rel}: locale')
  req(f'name="sourcePath" value="{prefix}/start"' in t,f'{rel}: sourcePath')
  expected_notice='The application form requires JavaScript. Contact us directly instead — Telegram, WhatsApp, LINE or email, all listed below on this page.' if en else 'Форма заявки работает только с включённым JavaScript. Напишите напрямую — Telegram, WhatsApp, LINE или email, контакты ниже на этой странице.'
- req(t.count('<noscript><p class="formNote">'+expected_notice+'</p></noscript>')==1,f'{rel}: exact no-JS application fallback')
+ if SITE_R3:
+  from build_site_form_preview_r1 import COPY
+  req(COPY['en' if en else 'ru'][0] in t and 'data-lead-readiness' in t and 'data-lead-direct-contact' in t, f'{rel}: permanent unavailable guidance')
+  req('type="submit" disabled>' in t, f'{rel}: starts disabled')
+  req(t.count('<script src="/lead-form-runtime.js" defer></script>') == 1, f'{rel}: runtime loaded once')
+ else:
+  req(t.count('<noscript><p class="formNote">'+expected_notice+'</p></noscript>')==1,f'{rel}: exact no-JS application fallback')
  req('action=' not in t.lower(),f'{rel}: native action forbidden')
  for url in ['https://t.me/BiTFormer','mailto:robert@aiskillab.work','https://wa.me/66649701204','https://line.me/ti/p/~iwf555']:
   req(url in t,f'{rel}: direct fallback {url}')
 brief=read('deploy/live/start-brief.js')
+if SITE_R3:
+ req('fetch(' not in brief, 'brief-only script has no form handler')
+ brief=read('deploy/live/lead-form-runtime.js').replace('"Content-Type": ', '"Content-Type":')
 req(brief.count('fetch("/api/lead"')==1,'exact one same-origin fetch')
 for marker in ['new FormData(form)','"Content-Type":"application/json"','data-adult-confirmation']:
  req(marker in brief,f'start runtime missing {marker}')

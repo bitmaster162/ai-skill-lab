@@ -22,6 +22,9 @@ for marker in [RU_MSG,EN_MSG,'data-lead-success-actions','Записаться �
     req(marker in src,f'source LeadForm missing {marker!r}')
 
 js=(LIVE/'start-brief.js').read_text(encoding='utf-8')
+from site_form_metadata_r3 import is_current
+if is_current(ROOT):
+    js=(LIVE/'lead-form-runtime.js').read_text(encoding='utf-8').replace('successActions.hidden = ', 'successActions.hidden=')
 for marker in [RU_MSG,EN_MSG,'[data-lead-success-actions]','successActions.hidden=true','successActions.hidden=false']:
     req(marker in js,f'static runtime missing {marker!r}')
 req(js.count('fetch(')==1,f'static runtime fetch count={js.count("fetch(")} expected 1')

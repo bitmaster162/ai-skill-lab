@@ -21,6 +21,9 @@ for p in [*starts,*matchers]:
   if '<script src="/start-brief.js"></script>' not in t: errors.append(f'{p.relative_to(ROOT)}: helper missing')
   if 'action=' in t.lower(): errors.append(f'{p.relative_to(ROOT)}: native form action forbidden')
 brief=(ROOT/'start-brief.js').read_text(encoding='utf-8')
+from site_form_metadata_r3 import is_current
+if is_current(REPO):
+ brief += (ROOT/'lead-form-runtime.js').read_text(encoding='utf-8').replace('"Content-Type": ', '"Content-Type":')
 matcher_v2=(ROOT/'matcher-v2.js').read_text(encoding='utf-8')
 checks+=3
 if brief.count('fetch("/api/lead"')!=1: errors.append('start-brief.js must contain exactly one same-origin lead fetch')

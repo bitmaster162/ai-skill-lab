@@ -68,7 +68,7 @@ def inspect_build() -> tuple[dict, dict]:
     require(len(details['/en/guides/ai-safety-for-kids']['description']) == 150, 'Next guide description')
     return routes, {'routes': 54, 'locale_count': {'ru': 27, 'en': 27}, 'h1_passed': 54,
                     'metadata_targets': {r: details[r] for r in ('/en', '/en/start', '/en/guides/ai-safety-for-kids')},
-                    'build_id': (ROOT / '.next/BUILD_ID').read_text().strip()}
+                    'build_id': (ROOT / '.next/BUILD_ID').read_text(encoding='utf-8').strip()}
 
 
 def run(chrome: str, report: dict) -> None:

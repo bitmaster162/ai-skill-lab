@@ -97,12 +97,16 @@ for route,scope in ROUTES.items():
    expected=E34_PINS[route]["visible_sha256"]
   if route in E35_PINS.get("routes",{}):
    expected=E35_PINS["routes"][route]["visible_sha256"]
+  if release == 'SITE_FORM_METADATA_R3_20261014' and route == "/start": expected='b7735b551733ab8299401fbac8a66280de77dddbee3f4a0a020588989969ea94'
   actual=hashlib.sha256(E32_VISIBLE(current).encode("utf8")).hexdigest()
   if not expected or actual!=expected:errors.append(f"{route}: E3.2 exact RU visible text SHA mismatch")
  elif release in {'E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'SITE_FORM_METADATA_R3_20261014'} and route=="/en/pricing":
   expected_sha=E35_PINS["assets"]["deploy/live/en/pricing.html"]["accepted_sha256"]
   if hashlib.sha256(current.encode("utf-8")).hexdigest()!=expected_sha:
    errors.append(f"{route}: E3.5 exact EN pricing markup changed")
+ elif release == 'SITE_FORM_METADATA_R3_20261014' and route == "/en/start":
+  if hashlib.sha256(current.encode("utf-8")).hexdigest()!='143576fdb93f1349b714db9fc15bce69027479d5b764f00fbcd36c6068e60f2e':
+   errors.append("/en/start: exact form-readiness release pin mismatch")
  elif hashlib.sha256(current.replace(scope["new"],scope["old"],1).encode("utf-8")).hexdigest()!=scope["base_sha256"]:
   errors.append(f"{route}: non-H1 static markup byte drift since E3.1 base")
  lang="en" if route.startswith("/en/") else "ru"

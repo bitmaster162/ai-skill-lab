@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RELEASE = "SITE_FORM_METADATA_R3_20261014"
 PARENT = "T1_6F2_ADULT_FIRST_TASKS_R1"
 PAYLOAD_SHA = "ae8e2affc11c6d946b08a14c2d90b1a312b3efdf16334234998bcc087c090a57"
-PINS_SHA = "UNSEALED_LOCAL_DRAFT"
+PINS_SHA = "bbc7780dada7127b26ed24acad245f7966d008552e4ad29ddbfc75bdcbcba890"
 PINS_PATH = "data/site_form_metadata_r3_pins.json"
 
 
@@ -90,7 +90,7 @@ def validate(root: Path = ROOT, overrides: Mapping[str, bytes | None] | None = N
         need(raw == (json.dumps(manifest, ensure_ascii=False, sort_keys=True, indent=2) + "\n").encode(), "canonical manifest")
         need(manifest.get("files") == pins["files"], "exact independent inventory")
         actual = {p.relative_to(root / "deploy/live").as_posix()
-                  for p in (root / "deploy/live").rglob("*") if p.is_file() and p.name != "_release.json"}
+                  for p in (root / "deploy/live").rglob("*") if p.is_file() and p != root / "deploy/live/_release.json"}
         for name, data in supplied.items():
             if name.startswith("deploy/live/") and name != "deploy/live/_release.json":
                 rel = name.removeprefix("deploy/live/")

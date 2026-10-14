@@ -1,0 +1,542 @@
+{
+  "delta": {
+    "added": [
+      "lead-form-runtime.js"
+    ],
+    "modified": [
+      "en.html",
+      "en/guides/ai-safety-for-kids.html",
+      "en/start.html",
+      "start-brief.js",
+      "start.html",
+      "vercel.json"
+    ],
+    "preserved": 92,
+    "removed": []
+  },
+  "files": [
+    {
+      "path": "404.html",
+      "sha256": "c47c3d76d0cdbae30470ae3d8d4c45ccbf50a588a3973dcab9776042bde9e18f",
+      "size": 1952
+    },
+    {
+      "path": "98ac1c70-f355-43f0-84f5-57cbf4c68e18.txt",
+      "sha256": "464000dca8907fbe778ead1e70c10110c45bb844c94a040da8ed6656c1c57329",
+      "size": 37
+    },
+    {
+      "path": "about.html",
+      "sha256": "78016dc45f5a8be438e12e724024437407e390af08e7b1d1315fdc2238cdf4b4",
+      "size": 12787
+    },
+    {
+      "path": "apple-touch-icon.png",
+      "sha256": "9cb88cac8049098fdfec1bb9e61bc25e9e2fa3fb8e1ac56516d06e4b332399f0",
+      "size": 793
+    },
+    {
+      "path": "build.html",
+      "sha256": "70e3d63366aebbeabf21505c7823488cf558d427b71f2e5ce576025de4561db1",
+      "size": 19588
+    },
+    {
+      "path": "business.html",
+      "sha256": "c71a4b1176484a8477b9e5f5c97c3fd5e874085acd769164ed039c46f8e9d5e2",
+      "size": 36825
+    },
+    {
+      "path": "certificate.html",
+      "sha256": "f253f34371206df5a3a2a53ceaef2623e7465b5a70476beff7d0654690637174",
+      "size": 12844
+    },
+    {
+      "path": "challenge.html",
+      "sha256": "56bf5dc9e12d3eb898cf1b8e6e85e3160e6178e45032a702ef1adb7641aa6b6f",
+      "size": 14126
+    },
+    {
+      "path": "curriculum.html",
+      "sha256": "7e836c31030f948cc320b7ea91a8d8c9ddaaff11a936770c021598cfdf45c095",
+      "size": 18266
+    },
+    {
+      "path": "en.html",
+      "sha256": "798dffdaf25a07d15192b21b8af897800fe8d10626f2596a03d961a732055526",
+      "size": 14012
+    },
+    {
+      "path": "en/about.html",
+      "sha256": "e5e7c89ed856beaa84b56e56694b02a78eb37a1abd8934da5ab8cdcfd3950530",
+      "size": 10492
+    },
+    {
+      "path": "en/build.html",
+      "sha256": "6a963b7bacfa0f9eecf57de0299afbff8ed015299f458d2754ab3166ed080c48",
+      "size": 14383
+    },
+    {
+      "path": "en/business.html",
+      "sha256": "31966492f3005b4b9f5f7747b5b75e511978d6e58502cf7a450413dc8f6964fc",
+      "size": 27133
+    },
+    {
+      "path": "en/certificate.html",
+      "sha256": "e43a3c1c5ca5ceed6c8ead1ec6412a7a363a2a1aa00d9b16451fc02696b7c232",
+      "size": 9880
+    },
+    {
+      "path": "en/challenge.html",
+      "sha256": "f381308ca6b344ed3785e8168a97768f30353a4c79a668c37b6b5705bfac7f61",
+      "size": 11790
+    },
+    {
+      "path": "en/curriculum.html",
+      "sha256": "7acce68cefdd9cf91f2e72727f202959d8f9db3fb5f19347ca601d91d2326105",
+      "size": 14491
+    },
+    {
+      "path": "en/family.html",
+      "sha256": "52d9880e9356d19c12ecde46d351b746c1d8e9543b5f1f64c230b087d4c11886",
+      "size": 9339
+    },
+    {
+      "path": "en/faq.html",
+      "sha256": "4a880b4aefdeb54d6ffd60bb7d804441c10c95111332b7bbb72e480469a47b62",
+      "size": 12063
+    },
+    {
+      "path": "en/guides.html",
+      "sha256": "5789cc163a22b3abeb239adc4216f26b66d3ab8d4ff571b616cb36c32796c1ea",
+      "size": 7224
+    },
+    {
+      "path": "en/guides/ai-first-tasks-for-adults.html",
+      "sha256": "dd43b529fac595d4ac5ea2d848de54db8dd11be761bf873b109593476f2c58aa",
+      "size": 20480
+    },
+    {
+      "path": "en/guides/ai-safety-for-kids.html",
+      "sha256": "f738c2e947095804322cc292ab55b099a35d38cee0fde2ff2ed21ef88d141e1f",
+      "size": 14830
+    },
+    {
+      "path": "en/kids.html",
+      "sha256": "06f7f7f643ba6222df484e68e34bed7611331374d3706a3b7f62876cb56fb3a2",
+      "size": 12706
+    },
+    {
+      "path": "en/matcher.html",
+      "sha256": "fb2ab78d51a941b87b8cae4d06e8074b9584fecdd8e888d4edc6375591546650",
+      "size": 10434
+    },
+    {
+      "path": "en/method.html",
+      "sha256": "65e3ab868a8f2aa2ebdcde000f3b01cfbc2acfaf17186eac32137e9b935d8617",
+      "size": 7417
+    },
+    {
+      "path": "en/parents.html",
+      "sha256": "c70ee6601a9395907cc00c51e22acf71252f814e8ebd0fcce84ae58087c3dcdd",
+      "size": 11573
+    },
+    {
+      "path": "en/personal.html",
+      "sha256": "eb2de9d3b280a9b2f542092b2dba551832cbbcd2f75e1a5e3fa132d502f0c10d",
+      "size": 14769
+    },
+    {
+      "path": "en/phuket.html",
+      "sha256": "10cf9ba9f1dd0b3077b767f5b73080a5c40b75f2ece6d209b77e727afd6f5946",
+      "size": 9334
+    },
+    {
+      "path": "en/pricing.html",
+      "sha256": "d240c6ac48a372f59f650aef52e5c474b224821b540d7bb65f0a6408116583cf",
+      "size": 15898
+    },
+    {
+      "path": "en/privacy.html",
+      "sha256": "1273aefe18ed6e938a55bf07776784332108bc794335dcdb12c3862f41ad1141",
+      "size": 8777
+    },
+    {
+      "path": "en/projects.html",
+      "sha256": "fb7ec221a02b3885e813beb1779b52f1c71fc752b3975801575622adee31e744",
+      "size": 20898
+    },
+    {
+      "path": "en/proof.html",
+      "sha256": "49d525cc0a4ebc268cb4a3d91e880815bd34a21cef5174c5298b46cae11d5353",
+      "size": 22603
+    },
+    {
+      "path": "en/safety.html",
+      "sha256": "7b276e429ff29d322a673f1e22fb611c45cfa6d2a97fd76897c673f9953aa16a",
+      "size": 11108
+    },
+    {
+      "path": "en/start.html",
+      "sha256": "143576fdb93f1349b714db9fc15bce69027479d5b764f00fbcd36c6068e60f2e",
+      "size": 16056
+    },
+    {
+      "path": "en/studio.html",
+      "sha256": "15d863d291acb92623f0cd163f0ec50af88bb302fb586447aff7a3439a2ae8e9",
+      "size": 12373
+    },
+    {
+      "path": "en/teens.html",
+      "sha256": "7643c5b46c066350f5b06d2c0114692138fb1a0905eb16fcb25707f3aa8f5f98",
+      "size": 16540
+    },
+    {
+      "path": "en/terms.html",
+      "sha256": "c0e97aefd66215d012395ec27a8f174bc0c26c9ae0b477d24789cd340e045ec9",
+      "size": 6834
+    },
+    {
+      "path": "family.html",
+      "sha256": "43b8dd5d53b0682eaa05a73230f835b2930cce2a221a7b22bf940ee4da5254bb",
+      "size": 11414
+    },
+    {
+      "path": "faq.html",
+      "sha256": "c88b3d384402b816ac7926eb129c68fad6a62b577e41fb660e53d303321addee",
+      "size": 16082
+    },
+    {
+      "path": "favicon.ico",
+      "sha256": "d81acfcbbdc40f45cebffe3378706282124fec993f182cab128b9346147d9b7d",
+      "size": 3775
+    },
+    {
+      "path": "favicon.svg",
+      "sha256": "3530c65a4a778bb4ad243457cffd36d6d3c063b33231e1838413a97f0b4ce927",
+      "size": 234
+    },
+    {
+      "path": "fonts/Onest-ru-en.woff2",
+      "sha256": "1527f4a5e3a2c65b9d789bf86a49cceefea2472bda0b1b3edc08b3adae4a9997",
+      "size": 30036
+    },
+    {
+      "path": "fonts/Unbounded-ru-en.woff2",
+      "sha256": "1600f2b8c27dc942601fdd2fc3f894f0375e371287d740289bf58945ab1991b1",
+      "size": 52016
+    },
+    {
+      "path": "guides.html",
+      "sha256": "204556755d618585651d44d52c8c0494986943364b67cfdf27b6ee9b4232c74e",
+      "size": 8528
+    },
+    {
+      "path": "guides/ai-first-tasks-for-adults.html",
+      "sha256": "f3cecb6ea3f46ab64ac3d3ab16db955ab8776d5edeb0c87b3b9b46bcaae2af91",
+      "size": 27314
+    },
+    {
+      "path": "guides/ai-safety-for-kids.html",
+      "sha256": "6624de9e37febea478fc0e3f13ede365db82dcc7e066ff7e8eb3bac30656a31e",
+      "size": 18878
+    },
+    {
+      "path": "icon-192.png",
+      "sha256": "9493b6adadc37e7a0a3408e0a9e6ec014e7502c15e7adec20c49cf40a4d8f09c",
+      "size": 858
+    },
+    {
+      "path": "icon-512.png",
+      "sha256": "d06c3ab86ab5268a5648eeeeb68a013298839d519e58bb2bed4139884c81f823",
+      "size": 2432
+    },
+    {
+      "path": "index.html",
+      "sha256": "f380d4f0d889829bd507dd32efb03a690fed5d7e51bb27b2c67bfd89de07523a",
+      "size": 18013
+    },
+    {
+      "path": "kids.html",
+      "sha256": "d869c20904db3b4f3d79e0b5fb94f1208eedfed0da2a0646ae28c7d00161d1ce",
+      "size": 16537
+    },
+    {
+      "path": "lab-command.js",
+      "sha256": "967f8b85b31a079e3077dd41fe0cf66305d59895cf06211f9baf4aca443d9ea3",
+      "size": 2974
+    },
+    {
+      "path": "lead-form-runtime.js",
+      "sha256": "0cc5c167d0a13e8b6fe9ac80217f9d50de9ee12a3f02c7cf78ed767c0fbb5ef9",
+      "size": 3799
+    },
+    {
+      "path": "llms.txt",
+      "sha256": "d10072a8332312030a015f62f60c5ae4af48b9d5fa7c0089c628f9e02dbc93c5",
+      "size": 2427
+    },
+    {
+      "path": "logo.png",
+      "sha256": "80b1e1966105ece5fa5e8727d5be472bff2c9efdc0ecbf8ea0af61fc7fe52a07",
+      "size": 7465
+    },
+    {
+      "path": "matcher-v2.js",
+      "sha256": "8b9b4b952e46375ead3ad01b6d6a070f52feebdef5e26a09d489d46d38e5be5b",
+      "size": 15796
+    },
+    {
+      "path": "matcher.html",
+      "sha256": "c043ad77d87a79d9838cdfaac3140ddd61e6fa14e0a6909ee468d82951bf328f",
+      "size": 12470
+    },
+    {
+      "path": "method.html",
+      "sha256": "55593e20a079ef361b250635731d5409ce991182dd6058e91e44007e1d54befd",
+      "size": 8700
+    },
+    {
+      "path": "og-en-business.png",
+      "sha256": "ea2e5fe1a2707b1875685bc231c95898988498701d819f0c54d247fe22b8a551",
+      "size": 8986
+    },
+    {
+      "path": "og-en-faq.png",
+      "sha256": "7c34e4daa11b6bfc4699deb0c3a2a3fa14c54d9fd914be50ca4303d88125a55c",
+      "size": 8276
+    },
+    {
+      "path": "og-en-home.png",
+      "sha256": "302cdb4cecbc76d5dba39338bb2c386d0db12fa25e6f69041b72c31596199eb8",
+      "size": 9349
+    },
+    {
+      "path": "og-en-kids.png",
+      "sha256": "f4248b79cbfd65d15c30a903accee50da3bb21e9c2cbb1c6da74d0aadb195918",
+      "size": 9946
+    },
+    {
+      "path": "og-en-parents.png",
+      "sha256": "de603bccb599389f9fde47434985521bcd4a406fdb2969246d184e1e26e6ab1f",
+      "size": 11208
+    },
+    {
+      "path": "og-en-personal.png",
+      "sha256": "3d0047a49199ec4d5732c21f9eae07231c565e0514acf85724da65974c65f56f",
+      "size": 10653
+    },
+    {
+      "path": "og-en-phuket.png",
+      "sha256": "476dad46df2d7b13bf797c382256f7f9c1b109ede651cb8e5248eed8f21399db",
+      "size": 8208
+    },
+    {
+      "path": "og-en-pricing.png",
+      "sha256": "d4a4cfeaa09be3e424a2a1c2dfb90a62962bc0a116723ee7e7b66eaf8df506e2",
+      "size": 8417
+    },
+    {
+      "path": "og-en-start.png",
+      "sha256": "8526784e01f7f718a184d7e80a4d680a894ff9c64f4bc5196b6a078ee43993d2",
+      "size": 7935
+    },
+    {
+      "path": "og-en-teens.png",
+      "sha256": "d214837b837fbc909e8159643125a92aca4ed9ba3ea4a4daa9172b86a9a1304e",
+      "size": 8263
+    },
+    {
+      "path": "og-ru-business.png",
+      "sha256": "cc4d2737c32b80abae1bb5a318e83198dc3054df1b210a519337e27f547804e6",
+      "size": 9080
+    },
+    {
+      "path": "og-ru-faq.png",
+      "sha256": "60362a7fa06131799ffbfdcda11030e775e8daef8bcc22799bd9adc3bc0bd6e0",
+      "size": 7826
+    },
+    {
+      "path": "og-ru-home.png",
+      "sha256": "636fdf86ef13749514f8b03c2df8913e66c97bc91f3d2f8fb4006dadcf79fefa",
+      "size": 9432
+    },
+    {
+      "path": "og-ru-kids.png",
+      "sha256": "280686326263971116903712f8330763c4cb1fe9fca1a1c23745ac414bcf4972",
+      "size": 9965
+    },
+    {
+      "path": "og-ru-parents.png",
+      "sha256": "8ccd91bde923c719992d06df6df77615cf8746682f6c4c21555a45dbc0ff1a5c",
+      "size": 11040
+    },
+    {
+      "path": "og-ru-personal.png",
+      "sha256": "ceaa3de7f42ee1c574877be557d5655e724a1c5408979a7d5856c9b2467b3771",
+      "size": 9743
+    },
+    {
+      "path": "og-ru-phuket.png",
+      "sha256": "6011b07763303074990e6fdbcb5809ef8c8d8094b5440404fa9540e649c0644b",
+      "size": 8379
+    },
+    {
+      "path": "og-ru-pricing.png",
+      "sha256": "c1a1fee223e67774bb66f62ee7b523b6b79f3081eba1f8b7addb074ab09d705d",
+      "size": 8983
+    },
+    {
+      "path": "og-ru-start.png",
+      "sha256": "7a695ab6b7eaf1916c7ad049f93ab327da7b0786a5fdd34f436cad682dbf39b6",
+      "size": 7828
+    },
+    {
+      "path": "og-ru-teens.png",
+      "sha256": "33b9eb38381e28d501aec3e7c027bafcc18c6e89de782f400ae145f17f3b5808",
+      "size": 9291
+    },
+    {
+      "path": "og.png",
+      "sha256": "673558d19bd5203c77db540ffd80d73f6ed8b7c791085fe92949f3d84fafd664",
+      "size": 7988
+    },
+    {
+      "path": "parents.html",
+      "sha256": "4f173d638dced8bccc729ef3c3953611f83ecda2a4aa739cb7feeb7a147c1d89",
+      "size": 14579
+    },
+    {
+      "path": "personal.html",
+      "sha256": "83be5caa0931c331fb8261c5e3475ca3ccf74a17e686a3d69c9c91c145557bd3",
+      "size": 18258
+    },
+    {
+      "path": "phuket.html",
+      "sha256": "0cc9f3644e0d97dffbbb9da70a43f1934bd4fce7470db7817e8439b46c532c53",
+      "size": 11799
+    },
+    {
+      "path": "pricing.html",
+      "sha256": "34c78eedc53ce9e68621f3a1f58f58afee757dcc3e02d60cb809ac4ab550ffb4",
+      "size": 19107
+    },
+    {
+      "path": "privacy.html",
+      "sha256": "8aefcd5d1aa55b1ce600d027f26749dc3f70b96243e53833f531886a5d3a212b",
+      "size": 11512
+    },
+    {
+      "path": "project-filter.js",
+      "sha256": "9ffbc90afc98556eb1539629ede2876362e2a00f2b84fe20df315fc09997dc28",
+      "size": 714
+    },
+    {
+      "path": "projects.html",
+      "sha256": "20faa3626b136f857886b7b240288005d8d71786edb8330dbda6fc5eda3014b6",
+      "size": 27431
+    },
+    {
+      "path": "prompt-auditor.js",
+      "sha256": "b39ca83a8200e6ffbbefe5fbb503a85bcbb0478d92ab90c52040c44daf8c82d4",
+      "size": 3080
+    },
+    {
+      "path": "proof.html",
+      "sha256": "a5b23dac38ffabe7f8e247d75cd21b6f27871eb29c39d441b7f503071890182d",
+      "size": 29626
+    },
+    {
+      "path": "robert-dumanyan-mentor.webp",
+      "sha256": "1ccb8e47747706274a47302ed1a379748269de24890b5778ab721fd62ff8251b",
+      "size": 10582
+    },
+    {
+      "path": "robots.txt",
+      "sha256": "332cbcca130fa5d82115641450e6b05b939f5a02243a141c7795281b5286af88",
+      "size": 67
+    },
+    {
+      "path": "safety-quiz.js",
+      "sha256": "c2ebe9fd79afcd3b7655286cd7610ecc2c0cb7f89052a3641244494778311937",
+      "size": 1240
+    },
+    {
+      "path": "safety.html",
+      "sha256": "fc5f25d641af4f7aefa0e32a035785da62f8e71393507775211775d6d52f00ad",
+      "size": 14196
+    },
+    {
+      "path": "site.webmanifest",
+      "sha256": "e81aa3eab6c8b595a0c90e7f42325e4baa8e379e463dd5207693194c0648268d",
+      "size": 336
+    },
+    {
+      "path": "sitemap.xml",
+      "sha256": "921f6e6a03e23cbf79d7a6efd8006bcea1f879e923fd03575839b751fd5a0d76",
+      "size": 4608
+    },
+    {
+      "path": "start-brief.js",
+      "sha256": "3a6e63cccdc1c9b67f5a99c3c3457c565a49e0a96d9b0ca33ed8313ac68f763a",
+      "size": 1844
+    },
+    {
+      "path": "start.html",
+      "sha256": "8ce2c257dee04f3c2eeff834148c92e65274bdf946bd4559ba9f3782448c6dea",
+      "size": 22347
+    },
+    {
+      "path": "studio.html",
+      "sha256": "d5e49d1199188e898285d075fa1fb3ec915b9ada4a0b832160d0780135c109df",
+      "size": 15782
+    },
+    {
+      "path": "teens.html",
+      "sha256": "93d7cbf210cdee8ba0c62fbe2216d37e9f63c0125edcff9267c69936929c7e58",
+      "size": 21271
+    },
+    {
+      "path": "terms.html",
+      "sha256": "d95cb20593a84e9e7d8ce406736484d05d7dfe7609e77d6dd3e531818e93bc55",
+      "size": 8824
+    },
+    {
+      "path": "vercel.json",
+      "sha256": "c7e452b59be09ed5e1a6fabeb69be8b55a898f541aed5b356f8e86a3daefc468",
+      "size": 4408
+    },
+    {
+      "path": "workshop.css",
+      "sha256": "a666815eb37b12ab643de504fd17e0a12255d25989c63b364ea5c58693a3da06",
+      "size": 41174
+    }
+  ],
+  "manifest_sha256": "1c6c539f2ce3fef04658132818493905e79fa9e417c1a37663a458cee2c18845",
+  "parent": {
+    "commit": "df78cffa5d68cbacbcc578dd1035248ae15a364c",
+    "manifest_sha256": "1c0486827cac8fceab7c2a395d3c12a47edaac56af0ecf72459cce256429e74f",
+    "payload_sha256": "188c0b7c3204dd4c1366a51facafeb09421c929e58913e34c7500d9fdf2ea30e"
+  },
+  "payload_sha256": "ae8e2affc11c6d946b08a14c2d90b1a312b3efdf16334234998bcc087c090a57",
+  "publication_authorization": false,
+  "release_id": "SITE_FORM_METADATA_R3_20261014",
+  "schema": "ai-skill-lab.site-form-metadata-r3.pins.v1",
+  "source_sha256_lf": {
+    "README.md": "36eac170fb5d428e2cca290db993527c8babe51fd428cf605ac1e791aeeba822",
+    "app/(en)/en/page.tsx": "2eb01fe95680d37d3bbc9e2dc51d2f74fb2521f7f3171f5e16fe33d6945ae4e9",
+    "app/(en)/en/start/page.tsx": "2eea0c7e5450b95c4d947f55e73feb273511ce322b990da26f3d73d4b8fb53ba",
+    "app/sitemap.ts": "1137cb927e61acd85b255935d591b93379d01e6c10ed5309656a874d2a791a54",
+    "components/LeadForm.tsx": "73b02cdcb652c9152eda709c0dbca8fc0e8869390c87c5dc4941aef75f6ce4ad",
+    "data/e3_5_heading_pins.json": "c7a65c3e4dfb110bbaa573f2c7f4939ee55753215e1b86f829ab84ce5ad9037d",
+    "data/e3_6_hero_panel_pins.json": "5d24c15bf8d62a0ea56a2559eaf78b7b98692ca727254a124e4982b95a88070e",
+    "guides/aiskillab/ai-first-tasks-for-adults.en.md": "b0bcd0a6b545d2d8d4b190e55ab9d3c76350a9a30a8e1c745fb23e04b48df671",
+    "guides/aiskillab/ai-first-tasks-for-adults.ru.md": "5c5f8d8da100a8657aeefbe5d9044462095e92db341e240a37bdebae57bba61b",
+    "guides/aiskillab/ai-safety-for-kids.en.md": "7c5362428fe712a3d092344db93ba0d8032919ec7271466d9b38b2e7f6f74afd",
+    "guides/aiskillab/ai-safety-for-kids.ru.md": "f8be315623ddcfb8b3e3f5da46a52305f943df3aecb6ea2915895d2ed6aff75e",
+    "lib/guides.ts": "78695e363c390c9420f345b3c7812318e5dc7954cfe011e1b57f333a1410e4dd",
+    "public/lead-form-runtime.js": "0cc5c167d0a13e8b6fe9ac80217f9d50de9ee12a3f02c7cf78ed767c0fbb5ef9",
+    "scripts/build_site_form_preview_r1.py": "4309b74c8d4bb7de2d5f63444c0e14a5a8eee20b6905fe73d339f847fc36881c",
+    "scripts/build_site_release_r3.py": "365dc0df3648c8eacf67a22058b8eb3cd81ea7afff4a2d5360e8daf6b01f17dd",
+    "scripts/verify_site_metadata_preview_r1.py": "7249d3a138af24fa0286e3ab0a1ba9be62ef075f32899e89895cc1abc768a06b"
+  }
+}
