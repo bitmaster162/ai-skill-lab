@@ -1,0 +1,30 @@
+{
+  "schema": "phuket-universe.agency-pilot-copy.v1",
+  "version": "pilot-r1",
+  "status": "LOCAL_CONTENT_DRAFT",
+  "source": {
+    "filename": "deep-research-report (9).md",
+    "title": "Phuket Universe: модель сотрудничества с агентствами, бесплатный пилот и условия размещения",
+    "research_date": "2026-10-14",
+    "sha256": "926336a8df1baa55d89de11bcbf96b87ebcf70acbf03db6a228a34aece056770",
+    "section": "Публичный блок «Условия для агентств» — RU и EN",
+    "public_paragraphs": "verbatim excerpt; no proposed numeric pilot limits adopted"
+  },
+  "authority": {"publish": false, "deploy": false, "legal_review_completed": false, "agency_consent_obtained": false},
+  "ru": {
+    "summary": "Бесплатный неэксклюзивный пилот — условия",
+    "paragraphs": [
+      "Phuket Universe приглашает агентства недвижимости Пхукета принять участие в бесплатном неэксклюзивном пилоте каталога. Мы планируем публиковать только согласованные краткие данные об объекте: тип сделки, район, тип жилья, количество спален, цену в THB, источник и дату обновления. Каждая карточка ведёт напрямую на HTTPS-страницу агентства. Phuket Universe не принимает заявки покупателей, платежи, депозиты или бронирования.",
+      "Участие в пилоте не предполагает гарантии трафика, переходов, лидов, аренды или продаж. Агентство подтверждает право предлагать переданные объекты и отвечает за актуальность предоставленных цены и статуса. Мы не заявляем проверку права собственности, если такая проверка не проводилась.",
+      "Размещение неэксклюзивно. Фото и полные описания не копируются. Название и согласованные данные публикуются с разрешения агентства; логотип используется только с отдельного согласия. Агентство может сообщить об ошибке или отозвать разрешение на публикацию. По итогам пилота условия могут быть пересмотрены; автоматического перехода на платный тариф нет."
+    ]
+  },
+  "en": {
+    "summary": "Free, non-exclusive pilot — terms",
+    "paragraphs": [
+      "Phuket Universe invites Phuket real estate agencies to join a free, non-exclusive catalogue pilot. We plan to publish only agreed summary property data: deal type, area, property type, bedrooms, price in THB, source and last update date. Each card links directly to the agency’s HTTPS page. Phuket Universe does not collect buyer enquiries, accept payments or deposits, or make bookings.",
+      "Participation does not include any guarantee of traffic, clicks, leads, rentals or sales. The agency confirms that it is entitled to offer the submitted properties and remains responsible for the accuracy of the price and availability information it provides. We do not claim to verify property ownership unless such verification has actually been performed.",
+      "Listings are non-exclusive. We do not copy agency photographs or full descriptions. The agency name and agreed data are published with permission; a logo is used only with separate consent. An agency may report an error or withdraw publication permission. Pilot terms may be reviewed after the test period, with no automatic conversion to a paid plan."
+    ]
+  }
+}
