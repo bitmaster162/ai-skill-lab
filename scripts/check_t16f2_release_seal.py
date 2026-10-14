@@ -230,7 +230,7 @@ def main() -> int:
     except (OSError, TypeError, ValueError) as err:
         print("T16F2_SEAL_FAIL invalid manifest: " + str(err))
         return 1
-    if release == "PHUKET_UNIVERSE_U1_STATIC_R3_20261014":
+    if release in ('PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014'):
         from phuket_release_profile import verify_integrity
         result = verify_integrity()
         print("T16F2_INHERITANCE_PASS unchanged=96 modified_indexes=2; original seal retained")

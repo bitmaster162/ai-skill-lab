@@ -5,6 +5,13 @@ import json
 from phuket_release_profile import active, verify_integrity, universe_page, ROOT, LIVE, UNIVERSE_FILES, profile, sha
 
 def main():
+    import phuket_agency_release_profile as agency_r5
+    if agency_r5.active():
+        result = agency_r5.check_release()
+        from test_phuket_agency_release_r5 import run_units
+        run_units()
+        print("PHUKET_R5_PROFILE_PASS " + json.dumps(result, sort_keys=True))
+        return 0
     if not active():
         print("PHUKET_R3_NOT_APPLICABLE")
         return 0

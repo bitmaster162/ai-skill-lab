@@ -133,8 +133,8 @@
     },
     {
       "path": "en/phuket-universe.html",
-      "sha256": "fc9de82b98d17e478131a16608783f38c552561355d789f8547a01476b76c00b",
-      "size": 25301
+      "sha256": "67d548df27ad507862e513ec57b4c39c64b3ff58993eb211119eb8dacbd1f7e7",
+      "size": 26619
     },
     {
       "path": "en/phuket.html",
@@ -413,13 +413,13 @@
     },
     {
       "path": "phuket-universe.css",
-      "sha256": "4e7beffe30099ea7bf3d0b520ff05fee40e24bcbd4d9169c6b9515050630bd00",
-      "size": 14192
+      "sha256": "c362ad0aa48033ad465c976619fb0d5a315610baf99e7b8caa2532e18ea6b287",
+      "size": 14806
     },
     {
       "path": "phuket-universe.html",
-      "sha256": "609b42e56c291b28baefb766c58378366d388c0f505f110088c8ee35e311ef75",
-      "size": 27925
+      "sha256": "dcf31a4b7ed41dfdf9fa4e8370271ef6760ce0a8d5405ee0d3fb1dbbbda2a94a",
+      "size": 30122
     },
     {
       "path": "phuket.html",
@@ -522,7 +522,7 @@
       "size": 41174
     }
   ],
-  "payload_sha256": "40606d00063d1ec99f495bf3623f8a8ddba23bc04298c530cf6cd97f92965c10",
-  "release_id": "PHUKET_UNIVERSE_U1_STATIC_R3_20261014",
+  "payload_sha256": "e8b41c9e6fed3e6b1f2b9edf66e1ddd227c4253fd1cb70c7030265dba1c63726",
+  "release_id": "PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014",
   "schema": "ai-skill-lab.static-release.v1"
 }

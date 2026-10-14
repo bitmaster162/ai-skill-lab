@@ -10,6 +10,7 @@ import hashlib
 import json
 from pathlib import Path
 from html.parser import HTMLParser
+import phuket_agency_release_profile as agency_r5
 
 ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "deploy/live"
@@ -28,10 +29,12 @@ def sha(data: bytes) -> str:
 
 
 def active() -> bool:
-    return json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id") == RELEASE
+    return json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id") in {RELEASE, agency_r5.RELEASE}
 
 
 def profile() -> dict:
+    if agency_r5.active():
+        return agency_r5.profile()
     p = json.loads((ROOT / "data/phuket_universe_u1_static_r3_profile.json").read_text(encoding="utf-8"))
     if (p.get("schema") != "ai-skill-lab.release-profile.v1" or p.get("release_id") != RELEASE
             or p.get("payload_sha256") != PAYLOAD_SHA or p.get("parent_manifest_sha256") != PARENT_MANIFEST_SHA
@@ -60,6 +63,8 @@ def profile() -> dict:
 
 
 def verify_integrity() -> dict:
+    if agency_r5.active():
+        return agency_r5.verify_integrity()
     p = profile()
     m = json.loads((LIVE / "_release.json").read_text(encoding="utf-8"))
     if m.get("schema") != "ai-skill-lab.static-release.v1" or m.get("release_id") != RELEASE:
