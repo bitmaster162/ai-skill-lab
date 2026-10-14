@@ -498,7 +498,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "b7b9664eef0ccdbc1b0748118bf407af2255afefb48ca17c15fba8e402554666",
+      "sha256": "5d93ae0731f365f8d2c033443b6619c54bbcfb932ed001a9137b2c481e10ea01",
       "size": 4903
     },
     {
@@ -537,7 +537,7 @@
       "size": 41174
     }
   ],
-  "payload_sha256": "7b74fffcd33b11c8985c5b9bc67bbee30c2d59594495183d129ab44399ab64cb",
-  "release_id": "PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015",
+  "payload_sha256": "bfe1742f1ce3946f700fff9a67d273d840809d33f5e279123a205696305d2cab",
+  "release_id": "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015",
   "schema": "ai-skill-lab.static-release.v1"
 }

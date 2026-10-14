@@ -552,7 +552,7 @@ def main() -> int:
             fail(errors, route, "og:description must equal meta description")
         if og.get("og:url") != expected_url:
             fail(errors, route, "og:url must equal canonical")
-        if RELEASE in {"OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1', 'T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015'} and route in OG20_META:
+        if RELEASE in {"OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1', 'T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'} and route in OG20_META:
             og_file, expected_og_alt = OG20_META[route]
             expected_og_image = f"{ORIGIN}/{og_file}"
         else:
@@ -594,7 +594,9 @@ def main() -> int:
     from phuket_release_profile import active, universe_page, UNIVERSE_ROUTES
     public_html_paths = [path for path in pages if route_for(path) != "/404"]
     if active():
-        if source_sitemap.count('lastModified: universeRoutes.includes(route) ? "2026-10-14" : lastModified') != 1:
+        universe_lastmod = "2026-10-15" if RELEASE=="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015" else "2026-10-14"
+        expected_expression = f'lastModified: universeRoutes.includes(route) ? "{universe_lastmod}" : lastModified'
+        if source_sitemap.count(expected_expression) != 1:
             errors.append("R3 exact per-route lastModified expression missing")
         public_html_paths = [path for path in public_html_paths if not universe_page(path)]
     latest_html_date = latest_public_html_commit_date(public_html_paths, errors)
@@ -617,7 +619,7 @@ def main() -> int:
             date.fromisoformat(value)
         except ValueError:
             errors.append(f"invalid sitemap lastmod {loc_text}: {value}")
-        per_route_lastmod = "2026-10-14" if active() and loc_text in {ORIGIN + p for p in UNIVERSE_ROUTES} else expected_lastmod
+        per_route_lastmod = ("2026-10-15" if RELEASE=="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015" else "2026-10-14") if active() and loc_text in {ORIGIN + p for p in UNIVERSE_ROUTES} else expected_lastmod
         if per_route_lastmod and value != per_route_lastmod:
             errors.append(f"sitemap lastmod/source mismatch {loc_text}: {value} != {per_route_lastmod}")
         lastmod_urls.add(loc_text)

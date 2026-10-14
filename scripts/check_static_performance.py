@@ -16,12 +16,12 @@ MAX_HTML=(36 if release in {'N15_AGENT_SAFETY_R1','A4_PHUKET_LOCAL_R1','A3_CALCO
 MAX_CSS=(41 if release in {'A5_MENTOR_R1','E1_3_POST_SUBMIT_R1','DESIGN_TYPOGRAPHY_R1','OG20_R1','A7_SAFETY_QUIZ_R1','A8_PROMPT_AUDITOR_R1','A9_REAL_PROJECTS_R1','N25_CERTIFICATE_RECORD_R1','E3_8_LEAD_EVENTS_R1','E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014'} else 39 if release in {'A4_PHUKET_LOCAL_R1','A3_CALCOM_R1'} else 38 if release=='N15_AGENT_SAFETY_R1' else 36)*1024
 MAX_IMAGE=128*1024
 MAX_INLINE_JS=24*1024
-if release in ('PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015'):
+if release in ('PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'):
     from phuket_release_profile import verify_integrity, profile
     verify_integrity()
     MAX_NON_FONT_TOTAL = profile()["budgets"]["nonfont_max_bytes"]
     MAX_FONT_TOTAL = 121388
-    if release == "PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015":
+    if release in {"PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015", "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"}:
         MAX_HTML = profile()["budgets"]["html_max_file_bytes"]
         MAX_CSS = profile()["budgets"]["css_max_file_bytes"]
         MAX_FONT_FILE = profile()["budgets"]["font_max_file_bytes"]
@@ -68,7 +68,7 @@ if non_font_total>MAX_NON_FONT_TOTAL:errors.append(f'non-font payload {non_font_
 checks+=1
 if font_total>MAX_FONT_TOTAL:errors.append(f'font payload {font_total} > {MAX_FONT_TOTAL}')
 checks+=1
-if len(font_files)!=(4 if release in ('PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015') else 2):errors.append(f'woff2 files {len(font_files)} != 2')
+if len(font_files)!=(4 if release in ('PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015') else 2):errors.append(f'woff2 files {len(font_files)} != 2')
 for font in font_files:
     checks+=1
     if font.stat().st_size>MAX_FONT_FILE:errors.append(f'{font.relative_to(LIVE)} {font.stat().st_size} > {MAX_FONT_FILE}')
@@ -95,7 +95,7 @@ for p in sorted(LIVE.rglob('*.html')):
     if size>MAX_HTML:errors.append(f'{rel}: HTML {size} > {MAX_HTML}')
     a=Audit();a.feed(p.read_text(encoding='utf-8'))
     checks+=1
-    u2_page = release in {'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015'} and rel in {'phuket-universe.html', 'en/phuket-universe.html'}
+    u2_page = release in {'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'} and rel in {'phuket-universe.html', 'en/phuket-universe.html'}
     expected_stylesheets = 2 if u2_page else 1
     if a.stylesheets != expected_stylesheets:errors.append(f'{rel}: expected {expected_stylesheets} stylesheets, got {a.stylesheets}')
     if u2_page and [url for kind, url in a.subresources if kind == 'stylesheet'] != ['/phuket-universe.css', '/phuket-housing-u2.css']:

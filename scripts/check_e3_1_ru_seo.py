@@ -139,7 +139,7 @@ def main() -> int:
         if route.startswith("/en") or route == "/404":
             continue
         page = Page()
-        page.feed((__import__("phuket_universe_r7_release_profile").legacy_r6_html(path.relative_to(LIVE).as_posix()).decode("utf-8") if RELEASE_ID=="PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015" else path.read_text(encoding="utf-8")))
+        page.feed((__import__("phuket_universe_r7b_release_profile" if RELEASE_ID=="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015" else "phuket_universe_r7_release_profile").legacy_r6_html(path.relative_to(LIVE).as_posix()).decode("utf-8") if RELEASE_ID in {"PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015", "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"} else path.read_text(encoding="utf-8")))
         title = " ".join(page.title.split())
         desc = page.description.strip()
         lead = " ".join("".join(page.first_p).split())
@@ -148,7 +148,7 @@ def main() -> int:
         if page.lang != "ru":
             errors.append(f"{route}: wrong lang={page.lang!r}")
         allow_reviewed_future_title = (
-            RELEASE_ID in ('T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015')
+            RELEASE_ID in ('T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015')
             and route == "/guides/ai-first-tasks-for-adults"
             and title == "С чего начать работать с AI взрослому: первые задачи"
             and hashlib.sha256((ROOT / "guides/aiskillab/ai-first-tasks-for-adults.ru.md").read_bytes()).hexdigest()
@@ -177,7 +177,7 @@ def main() -> int:
             f"Пхукет={combined.count('Пхукет')} ИИ={combined.count('ИИ')} "
             f"нейросет={combined.lower().count('нейросет')}"
         )
-    expected_routes = 27 if RELEASE_ID in ('T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015') else 26
+    expected_routes = 27 if RELEASE_ID in ('T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015') else 26
     if len(routes) != expected_routes:
         errors.append(f"expected {expected_routes} RU pages, got {len(routes)}")
     if errors:

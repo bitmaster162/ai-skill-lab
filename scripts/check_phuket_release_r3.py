@@ -5,6 +5,13 @@ import json
 from phuket_release_profile import active, verify_integrity, universe_page, ROOT, LIVE, UNIVERSE_FILES, profile, sha
 
 def main():
+    import phuket_universe_r7b_release_profile as universe_r7b
+    if universe_r7b.active():
+        result = universe_r7b.check_release()
+        from test_phuket_universe_r7b import run_units
+        run_units()
+        print("PHUKET_R7B_PROFILE_PASS " + json.dumps(result,sort_keys=True))
+        return 0
     import phuket_universe_r7_release_profile as universe_r7
     if universe_r7.active():
         result = universe_r7.check_release()

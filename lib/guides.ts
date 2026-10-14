@@ -64,12 +64,13 @@ function futureGuidePairApproved(): boolean {
     const isU1R5 = header.release_id === "PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014";
     const isU2R6 = header.release_id === "PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014";
     const isU3R7 = header.release_id === "PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015";
-    const expectedRecords = isU3R7 ? 107 : isU2R6 ? 106 : isU1R3 || isU1R5 ? 104 : 98;
+    const isU3R7B = header.release_id === "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015";
+    const expectedRecords = isU3R7B || isU3R7 ? 107 : isU2R6 ? 106 : isU1R3 || isU1R5 ? 104 : 98;
     if (
       header.schema !== "ai-skill-lab.static-release.v1" ||
-      header.release_id !== (isU3R7 ? "PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015" : isU2R6 ? "PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014" : isU1R5 ? "PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014" : isU1R3 ? "PHUKET_UNIVERSE_U1_STATIC_R3_20261014" : FUTURE_GUIDE_RELEASE) ||
+      header.release_id !== (isU3R7B ? "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015" : isU3R7 ? "PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015" : isU2R6 ? "PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014" : isU1R5 ? "PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014" : isU1R3 ? "PHUKET_UNIVERSE_U1_STATIC_R3_20261014" : FUTURE_GUIDE_RELEASE) ||
       header.file_count !== expectedRecords ||
-      header.payload_sha256 !== (isU3R7 ? "7b74fffcd33b11c8985c5b9bc67bbee30c2d59594495183d129ab44399ab64cb" : isU2R6 ? "0b5f3b9d20d3dbcb9dcb03c6e65c0f9b513792c7cbaf71d958ee15d13914ec94" : isU1R5 ? "e8b41c9e6fed3e6b1f2b9edf66e1ddd227c4253fd1cb70c7030265dba1c63726" : isU1R3 ? "40606d00063d1ec99f495bf3623f8a8ddba23bc04298c530cf6cd97f92965c10" : FUTURE_GUIDE_PAYLOAD_SHA)
+      header.payload_sha256 !== (isU3R7B ? "bfe1742f1ce3946f700fff9a67d273d840809d33f5e279123a205696305d2cab" : isU3R7 ? "7b74fffcd33b11c8985c5b9bc67bbee30c2d59594495183d129ab44399ab64cb" : isU2R6 ? "0b5f3b9d20d3dbcb9dcb03c6e65c0f9b513792c7cbaf71d958ee15d13914ec94" : isU1R5 ? "e8b41c9e6fed3e6b1f2b9edf66e1ddd227c4253fd1cb70c7030265dba1c63726" : isU1R3 ? "40606d00063d1ec99f495bf3623f8a8ddba23bc04298c530cf6cd97f92965c10" : FUTURE_GUIDE_PAYLOAD_SHA)
     ) return false;
     const files = header.files;
     if (!Array.isArray(files) || files.length !== expectedRecords) return false;
@@ -85,7 +86,7 @@ function futureGuidePairApproved(): boolean {
       ) return false;
       indexed.set(asset.path, { size: asset.size as number, sha256: asset.sha256 });
     }
-    for (const [assetPath, expectedSize, expectedSHA] of (isU3R7 ? FUTURE_GUIDE_R7_STATIC_ASSETS : FUTURE_GUIDE_STATIC_ASSETS)) {
+    for (const [assetPath, expectedSize, expectedSHA] of ((isU3R7 || isU3R7B) ? FUTURE_GUIDE_R7_STATIC_ASSETS : FUTURE_GUIDE_STATIC_ASSETS)) {
       const actual = indexed.get(assetPath);
       if (!actual || actual.size !== expectedSize || actual.sha256 !== expectedSHA) return false;
     }
