@@ -1,0 +1,16 @@
+/* Use the owner-approved v2 palette. All rules are scoped to the housing section. */
+#homes [hidden]{display:none!important}
+#homes [data-u2-deal][aria-pressed="true"],#homes [data-u2-area][aria-pressed="true"]{background:#39E1C6;color:#070A12}
+#homes [data-u2-deal][aria-pressed="false"],#homes [data-u2-area][aria-pressed="false"]{background:#0D1320;color:#EEF2F6}
+#homes [data-u2-status]{color:#B9FF3F;margin:18px 0;overflow-wrap:anywhere}
+#homes .u2-card{display:grid;grid-template-columns:72px minmax(0,1fr);gap:16px;margin:14px 0;padding:18px;border:1px solid #1B2638;border-radius:16px;background:#0D1320;color:#EEF2F6}
+#homes .u2-card h3{font-size:18px;line-height:1.4;margin:8px 0;overflow-wrap:anywhere}
+#homes .u2-card p{font-size:14px;line-height:1.55;margin:8px 0;overflow-wrap:anywhere}
+#homes .u2-card .u2-price{font-size:21px;font-weight:800;color:#B9FF3F}
+#homes .u2-card a{display:inline-flex;align-items:center;min-height:44px;line-height:1.5;color:#39E1C6;overflow-wrap:anywhere}
+#homes .u2-card-map{width:72px;height:100px;max-width:100%;align-self:center}
+#homes .u2-card-map path{fill:#102A30;stroke:#39E1C6;stroke-width:3}
+#homes .u2-card-map circle{fill:#B9FF3F}
+#homes .u2-card-meta{color:#ADBACA}
+#homes [aria-invalid="true"]{outline:2px solid #B9FF3F;outline-offset:2px}
+@media(max-width:430px){#homes .u2-card{grid-template-columns:48px minmax(0,1fr);padding:14px;gap:12px}#homes .u2-card-map{width:48px;height:76px}}
