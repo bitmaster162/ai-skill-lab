@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { LabCommand } from "@/components/LabCommand";
+import { UniverseFooterLink } from "@/components/UniverseFooterLink";
+import { UniverseEventRuntime } from "@/components/UniverseEventRuntime";
 import styles from "./WorkshopShell.module.css";
 
 export type WorkshopLocale = "ru" | "en";
@@ -92,9 +94,11 @@ export function WorkshopShell({ locale = "ru", alternateHref, showReach = true, 
           <Link href={en ? "/en/method" : "/method"}>{en ? "Method" : "Метод"}</Link>
           <Link href={en ? "/en/curriculum" : "/curriculum"}>{en ? "Curriculum" : "Программа"}</Link>
           <Link href={en ? "/en/phuket" : "/phuket"}>{en ? "Phuket" : "Пхукет"}</Link>
+          <UniverseFooterLink locale={locale} />
         </nav>
         <span>© 2026</span>
       </footer>
+      <UniverseEventRuntime />
     </div>
   );
 }
