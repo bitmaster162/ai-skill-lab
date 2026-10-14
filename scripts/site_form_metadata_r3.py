@@ -10,11 +10,11 @@ from pathlib import Path
 from typing import Mapping
 
 ROOT = Path(__file__).resolve().parents[1]
-RELEASE = "SITE_FORM_METADATA_R3_20261014"
+RELEASE = "SITE_FORM_METADATA_R3_1_20261014"
 PARENT = "T1_6F2_ADULT_FIRST_TASKS_R1"
-PAYLOAD_SHA = "ae8e2affc11c6d946b08a14c2d90b1a312b3efdf16334234998bcc087c090a57"
-PINS_SHA = "bbc7780dada7127b26ed24acad245f7966d008552e4ad29ddbfc75bdcbcba890"
-PINS_PATH = "data/site_form_metadata_r3_pins.json"
+PAYLOAD_SHA = "336e17e77dd2d94dcd799e9bcd9c90611a074f6bec19257cf92650964983a4e4"
+PINS_SHA = "eb3978ee4a69587d0d268e30f3e70da9d196300e244c2fe17797651d11f6f2e4"
+PINS_PATH = "data/site_form_metadata_r3_1_pins.json"
 
 
 def sha(raw: bytes) -> str:

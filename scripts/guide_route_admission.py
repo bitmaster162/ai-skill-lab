@@ -103,7 +103,7 @@ def _reviewed_future_guide_slugs() -> tuple[str, ...]:
         manifest = json.loads((root / "deploy/live/_release.json").read_text(encoding="utf-8"))
         if not isinstance(manifest, dict):
             return ()
-        if manifest.get("release_id") == "SITE_FORM_METADATA_R3_20261014":
+        if manifest.get("release_id") == "SITE_FORM_METADATA_R3_1_20261014":
             from site_form_metadata_r3 import load_pins
             pins = load_pins(root)
             if hashlib.sha256((root / "deploy/live/_release.json").read_bytes()).hexdigest() != pins["manifest_sha256"]:

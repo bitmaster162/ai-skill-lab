@@ -230,7 +230,7 @@ def main() -> int:
     except (OSError, TypeError, ValueError) as err:
         print("T16F2_SEAL_FAIL invalid manifest: " + str(err))
         return 1
-    if release == "SITE_FORM_METADATA_R3_20261014":
+    if release == "SITE_FORM_METADATA_R3_1_20261014":
         from site_form_metadata_r3 import cli
         return cli()
     if release == HISTORICAL:

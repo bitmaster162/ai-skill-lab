@@ -100,6 +100,12 @@ def render() -> dict[str, bytes]:
     need(files["start-brief.js"].count(split) == 1, "legacy handler boundary drift")
     files["start-brief.js"] = files["start-brief.js"].split(split, 1)[0]
     files["lead-form-runtime.js"] = (ROOT / "public/lead-form-runtime.js").read_bytes()
+    for route, stamp in {'/en': '2026-10-14', '/en/guides/ai-safety-for-kids': '2026-10-14', '/en/start': '2026-10-14', '/start': '2026-10-14'}.items():
+        xml = files["sitemap.xml"].decode("utf-8")
+        pattern = r'(<loc>https://aiskillab\.work' + re.escape(route) + r'</loc>\s*<lastmod>)2026-10-11(</lastmod>)'
+        xml, count = re.subn(pattern, lambda m: m.group(1) + stamp + m.group(2), xml)
+        need(count == 1, "exact changed-route sitemap date")
+        files["sitemap.xml"] = xml.encode("utf-8")
     new_hashes = inline_hashes(files)
     removed, added = old_hashes - new_hashes, new_hashes - old_hashes
     need(len(removed) == len(added) == 1, "unexpected inline-script change")
@@ -108,7 +114,7 @@ def render() -> dict[str, bytes]:
     files["vercel.json"] = text.replace(next(iter(removed)), next(iter(added)), 1).encode()
     records = [{"path": k, "size": len(v), "sha256": sha(v)} for k, v in sorted(files.items())]
     aggregate = "".join(f"{f['path']}\t{f['size']}\t{f['sha256']}\n" for f in records).encode()
-    need(len(records) == 99 and sha(aggregate) == PAYLOAD_SHA, "candidate payload differs from tested R2")
+    need(len(records) == 99 and sha(aggregate) == PAYLOAD_SHA, "candidate payload differs from exact R3.1 patch")
     manifest = {"schema": "ai-skill-lab.static-release.v1", "release_id": RELEASE,
                 "file_count": 99, "files": records, "payload_sha256": PAYLOAD_SHA}
     files["_release.json"] = (json.dumps(manifest, ensure_ascii=False, sort_keys=True, indent=2) + "\n").encode()

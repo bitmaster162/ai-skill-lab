@@ -458,7 +458,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "921f6e6a03e23cbf79d7a6efd8006bcea1f879e923fd03575839b751fd5a0d76",
+      "sha256": "4a69e78cf7131d892064ce1dba08b3ad7e9daec6eae3a336c2287c0453b1f5ec",
       "size": 4608
     },
     {
@@ -497,7 +497,7 @@
       "size": 41174
     }
   ],
-  "payload_sha256": "ae8e2affc11c6d946b08a14c2d90b1a312b3efdf16334234998bcc087c090a57",
-  "release_id": "SITE_FORM_METADATA_R3_20261014",
+  "payload_sha256": "336e17e77dd2d94dcd799e9bcd9c90611a074f6bec19257cf92650964983a4e4",
+  "release_id": "SITE_FORM_METADATA_R3_1_20261014",
   "schema": "ai-skill-lab.static-release.v1"
 }

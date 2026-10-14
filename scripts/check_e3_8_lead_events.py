@@ -20,7 +20,7 @@ ingress=read("services/lead-ingress/api/event.js")
 worker=read("services/lead-receiver-cloudflare/src/index.js")
 static_runtime=read("deploy/live/lab-command.js")
 start=read("deploy/live/start-brief.js")
-if json.loads(read("deploy/live/_release.json")).get("release_id") == 'SITE_FORM_METADATA_R3_20261014':
+if json.loads(read("deploy/live/_release.json")).get("release_id") == 'SITE_FORM_METADATA_R3_1_20261014':
  start=read("deploy/live/lead-form-runtime.js").replace("event: ", "event:")
 lead=read("components/LeadForm.tsx")
 intro=read("components/IntroCallCta.tsx")
@@ -57,8 +57,8 @@ for rel,phrase in [
 ]:
  req(read(rel).count(phrase)==1,f"{rel}: privacy sentence exact once")
 manifest=json.loads(read("deploy/live/_release.json"))
-req(manifest.get("release_id")in {"E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'SITE_FORM_METADATA_R3_20261014'},"E3.8 release identity")
-req(manifest.get("file_count")==((99 if manifest.get("release_id") == 'SITE_FORM_METADATA_R3_20261014' else 98) if manifest.get("release_id") in {'T1_6F2_ADULT_FIRST_TASKS_R1', 'SITE_FORM_METADATA_R3_20261014'} else 96),"E3.8 static file_count 96")
+req(manifest.get("release_id")in {"E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'SITE_FORM_METADATA_R3_1_20261014'},"E3.8 release identity")
+req(manifest.get("file_count")==((99 if manifest.get("release_id") == 'SITE_FORM_METADATA_R3_1_20261014' else 98) if manifest.get("release_id") in {'T1_6F2_ADULT_FIRST_TASKS_R1', 'SITE_FORM_METADATA_R3_1_20261014'} else 96),"E3.8 static file_count 96")
 ingress_project=json.loads(read("services/lead-ingress/vercel.json"))
 req(
  ingress_project.get("git",{}).get("deploymentEnabled")

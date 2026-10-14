@@ -34,7 +34,7 @@ FUTURE_PAIR = frozenset({
 def expected_live_routes() -> frozenset[str]:
     """Preserve 52 historical routes; require two SHA-admitted future routes."""
     release = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
-    return BASELINE_ROUTES | FUTURE_PAIR if release in {FUTURE_RELEASE, "SITE_FORM_METADATA_R3_20261014"} else BASELINE_ROUTES
+    return BASELINE_ROUTES | FUTURE_PAIR if release in {FUTURE_RELEASE, "SITE_FORM_METADATA_R3_1_20261014"} else BASELINE_ROUTES
 
 
 class RouteAdmissionTest(unittest.TestCase):

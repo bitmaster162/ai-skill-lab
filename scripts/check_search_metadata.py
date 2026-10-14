@@ -319,7 +319,7 @@ def fail(errors: list[str], route: str, msg: str) -> None:
     errors.append(f"{route}: {msg}")
 
 
-if RELEASE == 'SITE_FORM_METADATA_R3_20261014':
+if RELEASE == 'SITE_FORM_METADATA_R3_1_20261014':
     TITLE_CONTRACT["/en/start"] = 'Start — pick a track and first task | AI Skill Lab · Phuket'
 
 def main() -> int:
@@ -555,7 +555,7 @@ def main() -> int:
             fail(errors, route, "og:description must equal meta description")
         if og.get("og:url") != expected_url:
             fail(errors, route, "og:url must equal canonical")
-        if RELEASE in {"OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1', 'T1_6F2_ADULT_FIRST_TASKS_R1', 'SITE_FORM_METADATA_R3_20261014'} and route in OG20_META:
+        if RELEASE in {"OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1', 'T1_6F2_ADULT_FIRST_TASKS_R1', 'SITE_FORM_METADATA_R3_1_20261014'} and route in OG20_META:
             og_file, expected_og_alt = OG20_META[route]
             expected_og_image = f"{ORIGIN}/{og_file}"
         else:
@@ -595,13 +595,29 @@ def main() -> int:
         errors.append("source sitemap must expose one stable lastModified value")
     expected_lastmod = source_lastmod.group(1) if source_lastmod else None
     public_html_paths = [path for path in pages if route_for(path) != "/404"]
-    latest_html_date = latest_public_html_commit_date(public_html_paths, errors)
-    if expected_lastmod and latest_html_date is not None:
-        source_lastmod_date = date.fromisoformat(expected_lastmod)
-        if source_lastmod_date < latest_html_date:
-            errors.append(
-                f"sitemap lastmod {expected_lastmod} older than latest public HTML commit {latest_html_date.isoformat()}"
-            )
+    route_lastmod = {}
+    if RELEASE == 'SITE_FORM_METADATA_R3_1_20261014':
+        from site_form_metadata_r3 import load_pins
+        route_lastmod = load_pins(ROOT)["sitemap_lastmod_overrides"]
+        match = re.search(r'const routeLastModified: Record<string, string> = (\{.*?\});', source_sitemap, re.S)
+        if not match or json.loads(match.group(1)) != route_lastmod:
+            errors.append("exact per-route source sitemap dates mismatch")
+        latest_html_date = None
+        for stamp in sorted({expected_lastmod, *route_lastmod.values()}):
+            group = [p for p in public_html_paths if route_lastmod.get(route_for(p), expected_lastmod) == stamp]
+            newest = latest_public_html_commit_date(group, errors)
+            if newest is not None:
+                latest_html_date = max(latest_html_date, newest) if latest_html_date is not None else newest
+                if date.fromisoformat(stamp) < newest:
+                    errors.append(f"sitemap date {stamp} older than that route group's last HTML change {newest}")
+    else:
+        latest_html_date = latest_public_html_commit_date(public_html_paths, errors)
+        if expected_lastmod and latest_html_date is not None:
+            source_lastmod_date = date.fromisoformat(expected_lastmod)
+            if source_lastmod_date < latest_html_date:
+                errors.append(
+                    f"sitemap lastmod {expected_lastmod} older than latest public HTML commit {latest_html_date.isoformat()}"
+                )
     lastmod_urls = set()
     for entry in root.findall("sm:url", ns):
         loc = entry.find("sm:loc", ns)
@@ -615,8 +631,9 @@ def main() -> int:
             date.fromisoformat(value)
         except ValueError:
             errors.append(f"invalid sitemap lastmod {loc_text}: {value}")
-        if expected_lastmod and value != expected_lastmod:
-            errors.append(f"sitemap lastmod/source mismatch {loc_text}: {value} != {expected_lastmod}")
+        expected_for_url = route_lastmod.get(loc_text.removeprefix(ORIGIN), expected_lastmod)
+        if expected_for_url and value != expected_for_url:
+            errors.append(f"sitemap lastmod/source mismatch {loc_text}: {value} != {expected_for_url}")
         lastmod_urls.add(loc_text)
     if lastmod_urls != expected_urls:
         errors.append("sitemap lastmod coverage must equal public route coverage")

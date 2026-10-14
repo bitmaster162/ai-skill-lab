@@ -55,9 +55,9 @@ function futureGuidePairApproved(): boolean {
     );
     if (manifest === null || typeof manifest !== "object" || Array.isArray(manifest)) return false;
     const header = manifest as Record<string, unknown>;
-    if (header.release_id === "SITE_FORM_METADATA_R3_20261014") {
+    if (header.release_id === "SITE_FORM_METADATA_R3_1_20261014") {
       const raw = fs.readFileSync(path.join(process.cwd(), "deploy", "live", "_release.json"));
-      if (createHash("sha256").update(raw).digest("hex") !== "1c6c539f2ce3fef04658132818493905e79fa9e417c1a37663a458cee2c18845") return false;
+      if (createHash("sha256").update(raw).digest("hex") !== "c421131415217f28a99061090be95bd7d75975940ec5251430ab0a96c328e21e") return false;
       for (const locale of ["ru", "en"] as const) {
         const bytes = fs.readFileSync(path.join(GUIDE_DIR, `${FUTURE_GUIDE_SLUG}.${locale}.md`));
         if (createHash("sha256").update(bytes).digest("hex") !== FUTURE_GUIDE_SOURCE_SHA[locale]) return false;
