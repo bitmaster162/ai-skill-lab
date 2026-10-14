@@ -10,7 +10,6 @@ from pathlib import Path
 from guide_route_admission import (
     APPROVED_ADDITIONAL_GUIDE_SLUGS,
     BASELINE_ROUTES,
-    U1_SOURCE_ONLY_ROUTES,
     ORIGIN,
     RouteAdmissionError,
     admitted_route_count,
@@ -18,7 +17,6 @@ from guide_route_admission import (
     require_canonical_urls,
     require_public_html,
     require_route_set,
-    require_next_renderer_route_set,
 )
 
 LIVE = Path(__file__).resolve().parents[1] / "deploy" / "live"
@@ -44,28 +42,6 @@ class RouteAdmissionTest(unittest.TestCase):
         self.assertEqual(APPROVED_ADDITIONAL_GUIDE_SLUGS, frozenset())
         self.assertEqual(admitted_routes(), expected_live_routes())
         self.assertEqual(admitted_route_count(), len(expected_live_routes()))
-
-    def test_u1_pair_source_only_not_static_release_authority(self) -> None:
-        candidate = admitted_routes() | U1_SOURCE_ONLY_ROUTES
-        self.assertEqual(U1_SOURCE_ONLY_ROUTES, frozenset({
-            "/phuket-universe", "/en/phuket-universe"
-        }))
-        self.assertEqual(require_next_renderer_route_set(candidate), len(candidate))
-        self.assertEqual(require_route_set(admitted_routes()), admitted_route_count())
-        with self.assertRaisesRegex(RouteAdmissionError, "unexpected="):
-            require_route_set(candidate)
-
-    def test_u1_source_pair_is_fail_closed(self) -> None:
-        candidate = admitted_routes() | U1_SOURCE_ONLY_ROUTES
-        for bad in (
-            admitted_routes() | {"/phuket-universe"},
-            candidate | {"/not-approved"},
-            candidate - {"/business"},
-        ):
-            with self.subTest(routes=len(bad)), self.assertRaises(RouteAdmissionError):
-                require_next_renderer_route_set(bad)
-        with self.assertRaisesRegex(RouteAdmissionError, "duplicate"):
-            require_next_renderer_route_set(list(candidate) + ["/phuket-universe"])
 
     def test_52_baseline_exact(self) -> None:
         self.assertEqual(len(BASELINE_ROUTES), 52)

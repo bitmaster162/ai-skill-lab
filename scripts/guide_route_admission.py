@@ -70,13 +70,6 @@ BASELINE_ROUTES = frozenset(
 /terms
     """.split()
 )
-# Approved U1 source-only Next renderer pair. This is NOT release admission:
-# the sealed deploy/live route set remains unchanged until a separate approval.
-U1_SOURCE_ONLY_ROUTES = frozenset({
-    "/phuket-universe",
-    "/en/phuket-universe",
-})
-
 # Current owner approval is for the admission infrastructure only, not content.
 # A later owner-approved content change must explicitly add its reviewed slug.
 APPROVED_ADDITIONAL_GUIDE_SLUGS: frozenset[str] = frozenset()
@@ -186,23 +179,6 @@ def require_route_set(
             f"{label}: missing={sorted(missing)} unexpected={sorted(unexpected)}"
         )
     return len(expected)
-
-
-def require_next_renderer_route_set(
-    routes: Iterable[str], label: str = "Next renderer canonical routes"
-) -> int:
-    """Accept precisely U1's RU/EN pair in Next source, never in deploy/live."""
-    actual = tuple(routes)
-    if len(actual) != len(set(actual)):
-        raise RouteAdmissionError(f"{label}: duplicate routes")
-    missing_u1 = U1_SOURCE_ONLY_ROUTES.difference(actual)
-    if missing_u1:
-        raise RouteAdmissionError(
-            f"{label}: missing={sorted(missing_u1)} unexpected=[]"
-        )
-    historical = (route for route in actual if route not in U1_SOURCE_ONLY_ROUTES)
-    require_route_set(historical, label=f"{label} sealed-release baseline")
-    return admitted_route_count() + len(U1_SOURCE_ONLY_ROUTES)
 
 
 def require_canonical_urls(
