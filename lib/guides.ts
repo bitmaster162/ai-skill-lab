@@ -43,6 +43,11 @@ const FUTURE_GUIDE_SOURCE_SHA: Record<GuideLocale, string> = {
   ru: "5c5f8d8da100a8657aeefbe5d9044462095e92db341e240a37bdebae57bba61b",
   en: "b0bcd0a6b545d2d8d4b190e55ab9d3c76350a9a30a8e1c745fb23e04b48df671",
 };
+const FUTURE_GUIDE_R7_STATIC_ASSETS = [
+  ["guides/ai-first-tasks-for-adults.html", 27846, "580cc6096fe22e0a27d60543d7d3d93b8b61fd1db582511d31087c29fd57497c"],
+  ["en/guides/ai-first-tasks-for-adults.html", 20997, "5831839b802f7755adaf8d17420e0b6cbc8ee5445713924b92dfa29c1325a20b"],
+] as const;
+
 const FUTURE_GUIDE_STATIC_ASSETS = [
   ["guides/ai-first-tasks-for-adults.html", 27314, "f3cecb6ea3f46ab64ac3d3ab16db955ab8776d5edeb0c87b3b9b46bcaae2af91"],
   ["en/guides/ai-first-tasks-for-adults.html", 20480, "dd43b529fac595d4ac5ea2d848de54db8dd11be761bf873b109593476f2c58aa"],
@@ -58,12 +63,13 @@ function futureGuidePairApproved(): boolean {
     const isU1R3 = header.release_id === "PHUKET_UNIVERSE_U1_STATIC_R3_20261014";
     const isU1R5 = header.release_id === "PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014";
     const isU2R6 = header.release_id === "PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014";
-    const expectedRecords = isU2R6 ? 106 : isU1R3 || isU1R5 ? 104 : 98;
+    const isU3R7 = header.release_id === "PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015";
+    const expectedRecords = isU3R7 ? 107 : isU2R6 ? 106 : isU1R3 || isU1R5 ? 104 : 98;
     if (
       header.schema !== "ai-skill-lab.static-release.v1" ||
-      header.release_id !== (isU2R6 ? "PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014" : isU1R5 ? "PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014" : isU1R3 ? "PHUKET_UNIVERSE_U1_STATIC_R3_20261014" : FUTURE_GUIDE_RELEASE) ||
+      header.release_id !== (isU3R7 ? "PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015" : isU2R6 ? "PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014" : isU1R5 ? "PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014" : isU1R3 ? "PHUKET_UNIVERSE_U1_STATIC_R3_20261014" : FUTURE_GUIDE_RELEASE) ||
       header.file_count !== expectedRecords ||
-      header.payload_sha256 !== (isU2R6 ? "0b5f3b9d20d3dbcb9dcb03c6e65c0f9b513792c7cbaf71d958ee15d13914ec94" : isU1R5 ? "e8b41c9e6fed3e6b1f2b9edf66e1ddd227c4253fd1cb70c7030265dba1c63726" : isU1R3 ? "40606d00063d1ec99f495bf3623f8a8ddba23bc04298c530cf6cd97f92965c10" : FUTURE_GUIDE_PAYLOAD_SHA)
+      header.payload_sha256 !== (isU3R7 ? "7b74fffcd33b11c8985c5b9bc67bbee30c2d59594495183d129ab44399ab64cb" : isU2R6 ? "0b5f3b9d20d3dbcb9dcb03c6e65c0f9b513792c7cbaf71d958ee15d13914ec94" : isU1R5 ? "e8b41c9e6fed3e6b1f2b9edf66e1ddd227c4253fd1cb70c7030265dba1c63726" : isU1R3 ? "40606d00063d1ec99f495bf3623f8a8ddba23bc04298c530cf6cd97f92965c10" : FUTURE_GUIDE_PAYLOAD_SHA)
     ) return false;
     const files = header.files;
     if (!Array.isArray(files) || files.length !== expectedRecords) return false;
@@ -79,7 +85,7 @@ function futureGuidePairApproved(): boolean {
       ) return false;
       indexed.set(asset.path, { size: asset.size as number, sha256: asset.sha256 });
     }
-    for (const [assetPath, expectedSize, expectedSHA] of FUTURE_GUIDE_STATIC_ASSETS) {
+    for (const [assetPath, expectedSize, expectedSHA] of (isU3R7 ? FUTURE_GUIDE_R7_STATIC_ASSETS : FUTURE_GUIDE_STATIC_ASSETS)) {
       const actual = indexed.get(assetPath);
       if (!actual || actual.size !== expectedSize || actual.sha256 !== expectedSHA) return false;
     }

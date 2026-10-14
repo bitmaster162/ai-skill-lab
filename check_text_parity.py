@@ -172,11 +172,23 @@ def main():
     if args.mode == "snapshot":
         json.dump({"routes": cur}, open(args.out, "w", encoding="utf-8"), ensure_ascii=False)
         print(f"snapshot: {len(cur)} routes -> {args.out}"); return
+    # For R7, assert each current page's exact approved U3 patch before
+    # running historical D1 parity on the cryptographically pinned R6 text.
+    if args.dir:
+        release_id = json.load(open(os.path.join(args.dir, "_release.json"), encoding="utf-8")).get("release_id")
+        if release_id == "PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015":
+            sys.path.insert(0, os.path.join(os.path.dirname(__file__), "scripts"))
+            import phuket_universe_r7_release_profile as r7
+            r7.verify_integrity()
+            for route in ROUTES:
+                rel = "index.html" if route == "/" else "en.html" if route == "/en" else route.lstrip("/") + ".html"
+                cur[route] = parse(r7.legacy_r6_html(rel).decode("utf-8"))
+            print("R7_LEGACY_TEXT_PARITY inherited_R6_verified=46 current_R7_pinned=56")
     base = json.load(open(args.baseline, encoding="utf-8"))["routes"]
     allow = json.load(open(args.allow, encoding="utf-8")) if args.allow else {}
     if args.dir:
         release_meta = json.load(open(os.path.join(args.dir, "_release.json"), encoding="utf-8"))
-        if release_meta.get("release_id") in {"E3_4_AI_SAFETY_AUDIENCE_R1", "E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1', 'T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014'}:
+        if release_meta.get("release_id") in {"E3_4_AI_SAFETY_AUDIENCE_R1", "E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1', 'T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015'}:
             route_pins = json.load(open(os.path.join(os.path.dirname(__file__), "data/e3_4_ru_route_sha_pins.json"), encoding="utf-8"))
             assert route_pins.get("release") == "E3_4_AI_SAFETY_AUDIENCE_R1"
             assert set(route_pins.get("routes", {})) == {"/personal", "/teens"}
@@ -185,7 +197,7 @@ def main():
                 assert observed == item["d1_words_sha256"], f"E3.4 D1 exact text drift {route}"
                 assert route in allow.get("approved_text_sha256", {}), f"E3.2 D1 inheritance missing {route}"
                 allow["approved_text_sha256"][route] = item["d1_words_sha256"]
-        if release_meta.get("release_id") in {"E3_5_HEADING_STRUCTURE_R1","E3_6_WORKSHOP_HERO_PANEL_R1", "T1_6F2_ADULT_FIRST_TASKS_R1", 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014'}:
+        if release_meta.get("release_id") in {"E3_5_HEADING_STRUCTURE_R1","E3_6_WORKSHOP_HERO_PANEL_R1", "T1_6F2_ADULT_FIRST_TASKS_R1", 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015'}:
             pins = json.load(open(os.path.join(os.path.dirname(__file__), "data/e3_5_heading_pins.json"), encoding="utf-8"))
             assert pins["release_id"] == "E3_5_HEADING_STRUCTURE_R1"
             route = "/pricing"
