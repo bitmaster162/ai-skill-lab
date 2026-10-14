@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
 """Targeted U1 acceptance only: source fidelity, CSP, no-JS browser, mobile."""
 from __future__ import annotations
+import hashlib
 import json
 from pathlib import Path
 import re
 import sys
 from urllib.parse import urlsplit
-from playwright.sync_api import sync_playwright
 
 sys.stdout.reconfigure(encoding="utf-8")
 ROOT = Path(__file__).resolve().parents[1]
 raw = (ROOT / "components/phuketUniverseMarkup.ts").read_text(encoding="utf-8")
 markup = json.loads(raw.split("export const phuketUniverseMarkup = ", 1)[1].rsplit(" as const;", 1)[0])
-original = (ROOT / "design/PHUKET-UNIVERSE-MAKET-v2.html").read_text(encoding="utf-8")
+source_bytes = (ROOT / "design/PHUKET-UNIVERSE-MAKET-v2.html").read_bytes()
+assert hashlib.sha256(source_bytes).hexdigest() == "2d5112f138e7364a83b15471179b5767891e3448e188f0f566d139702dd97024", "U1 source pin changed"
+original = source_bytes.decode("utf-8")
 css = (ROOT / "app/phuket-universe.css").read_text(encoding="utf-8")
 svg_paths = re.findall(r'<path\b[^>]*\bd="([^"]+)"', original)
 svg_ellipses = re.findall(r'<ellipse\b[^>]*\brx="([^"]+)"[^>]*\bry="([^"]+)"', original)
@@ -43,8 +45,15 @@ assert "style-src 'self'" in policy and "font-src 'self'" in policy
 static_css = ("globals.css", "r69.css", "r70.css", "commercial-mobile.css",
               "proof-contrast.css", "phuket-universe.css")
 route_css = {"/" + f: ROOT / "app" / f for f in static_css}
+assert all(p.is_file() for p in route_css.values()), "missing CSS"
 base = "https://aiskillab.work"
 chrome = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+if sys.argv[1:] == ["--source-only"]:
+    print("U1_SOURCE_CSP_PASS routes=2 svgs=8 partner_links=10 browser=NOT_RUN", flush=True)
+    raise SystemExit(0)
+if sys.argv[1:]:
+    raise SystemExit("U1 unknown check argument")
+from playwright.sync_api import sync_playwright
 with sync_playwright() as p:
     browser = p.chromium.launch(executable_path=chrome, headless=True, timeout=20000,
         args=["--disable-background-networking", "--no-first-run", "--disable-component-update"])

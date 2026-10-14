@@ -38,7 +38,7 @@ jobs:
           from urllib.parse import urlparse
           import sys
           sys.path.insert(0, 'scripts')
-          from guide_route_admission import admitted_route_count, require_route_set
+          from guide_route_admission import admitted_route_count, U1_SOURCE_ONLY_ROUTES, require_next_renderer_route_set
 
           class P(HTMLParser):
               def __init__(self):
@@ -69,7 +69,7 @@ jobs:
               rows[route] = (path.as_posix(), parser.lang)
 
           try:
-              require_route_set(rows, label="Next renderer canonical routes")
+              require_next_renderer_route_set(rows, label="Next renderer canonical routes")
           except ValueError as exc:
               raise SystemExit(f"LANG_PARITY_ROUTE_ADMISSION_FAIL {exc}")
 
@@ -84,7 +84,8 @@ jobs:
               if lang != expected:
                   bad.append((route, path, lang, expected))
 
-          if ru != admitted_route_count() // 2 or en != admitted_route_count() // 2:
+          expected_per_locale = (admitted_route_count() + len(U1_SOURCE_ONLY_ROUTES)) // 2
+          if ru != expected_per_locale or en != expected_per_locale:
               raise SystemExit(f"LANG_PARITY_LOCALE_COUNT_FAIL ru={ru} en={en}")
           if bad:
               for row in bad:
