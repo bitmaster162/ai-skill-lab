@@ -32,6 +32,34 @@ def git_blob(ref,path)->bytes:
                   capture_output=True,timeout=50)
  need(p.returncode==0,"Git reference unavailable: "+path)
  return p.stdout
+# Separate, exactly bounded PR232 CI-only correction. The originally sealed
+# R7B profile and ALL static release hashes remain unchanged.
+CI_WORKFLOW=".github/workflows/next-renderer-language-parity.yml"
+CI_PARENT_HEAD="907c24662de5b6360f210324a13a0c2e2d309f21"
+CI_ORIGINAL_SHA="5271ce0716ae8ae20c6553402993877f04d3d15aea5c3c38dca2d24ebbf62908"
+CI_REPAIRED_SHA="631469b6d3d692c01921f145875d8d11447569966551d6ed96c87a1580c57f1d"
+CI_CHECKOUT_LINE=(b"      - uses: actions/checkout@"
+ b"3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1\\n").replace(b"\\n",b"\n")
+CI_FETCH_DEPTH_SETTING=b"        with:\n          fetch-depth: 0\n"
+
+def prove_ci_fetch_depth_repair(candidate: bytes, baseline: bytes | None = None) -> str:
+ """Exact additive 39-byte replacement. Any unexpected workflow mutation fails."""
+ need(type(candidate) is bytes,"CI candidate must be bytes")
+ original=git_blob(CI_PARENT_HEAD,CI_WORKFLOW) if baseline is None else baseline
+ need(type(original) is bytes and sha(original)==CI_ORIGINAL_SHA,
+      "CI original workflow baseline SHA drift")
+ need(original.count(CI_CHECKOUT_LINE)==1 and b"fetch-depth:" not in original,
+      "CI original checkout step changed")
+ expected=original.replace(CI_CHECKOUT_LINE, CI_CHECKOUT_LINE+CI_FETCH_DEPTH_SETTING,1)
+ need(sha(expected)==CI_REPAIRED_SHA and len(expected)==len(original)+39,
+      "CI repaired workflow expected SHA drift")
+ need(candidate==expected and sha(candidate)==CI_REPAIRED_SHA,
+      "CI patch must be exact fetch-depth 0 only")
+ need(candidate.count(b"      - uses: actions/checkout@")==1
+      and candidate.count(b"          fetch-depth: 0\n")==1,
+      "CI checkout count / full history guarantee mismatch")
+ return CI_REPAIRED_SHA
+
 def active()->bool:
  return json.loads((LIVE/"_release.json").read_text("utf-8")).get("release_id")==RELEASE
 
@@ -69,6 +97,13 @@ def profile()->dict:
  need(set(p.get("r7b_source_sha256",{}))=={
        "app/sitemap.ts","scripts/build_phuket_universe_r7b.py",
        "scripts/test_phuket_universe_r7b.py"},"R7B exact new source scope")
+ need(p["source_override_sha256"].get(CI_WORKFLOW)==CI_ORIGINAL_SHA,
+      "R7B sealed workflow historical source pin changed")
+ # One authorized CI-only addendum. Do not mutate the independently pinned
+ # profile JSON on disk or any earlier commit. Historical QA receives a copy
+ # of the one updated, exact SHA through the normal inherited pin mechanism.
+ p["source_override_sha256"][CI_WORKFLOW]=prove_ci_fetch_depth_repair(
+     (ROOT/CI_WORKFLOW).read_bytes())
  return p
 
 def verify_integrity()->dict:
@@ -154,4 +189,7 @@ def check_release()->dict:
               "services/lead-receiver-cloudflare/wrangler.jsonc","package-lock.json","package.json"):
   need((ROOT/file).read_bytes()==git_blob(PREV_HEAD,file),
        "R7B prohibited schema/ingress/dependency mutation: "+file)
+ # Targeted fail-closed CI amendment regression suite; never executes GitHub Actions.
+ from test_phuket_universe_r7b_ci_fetch_depth import run_units
+ run_units()
  return status
