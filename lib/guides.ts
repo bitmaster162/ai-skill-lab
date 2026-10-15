@@ -39,6 +39,11 @@ const GUIDE_DIR = path.join(process.cwd(), "guides", "aiskillab");
 const FUTURE_GUIDE_RELEASE = "T1_6F2_ADULT_FIRST_TASKS_R1";
 const FUTURE_GUIDE_SLUG = "ai-first-tasks-for-adults";
 const FUTURE_GUIDE_PAYLOAD_SHA = "188c0b7c3204dd4c1366a51facafeb09421c929e58913e34c7500d9fdf2ea30e";
+// R7C is a separately pinned, exact-copy withdrawal, not a new guide admission.
+const R7C_TERMS_PATCH = "PHUKET_UNIVERSE_U3_R7C_TERMS_WITHDRAWAL_20261015";
+const R7C_PARENT_MANIFEST_SHA = "a8166f8a45f17df8b7359dfb62bba467c6061f61cab1db164183216d31c42bb6";
+const R7C_MANIFEST_SHA = "b10b2ad45184e2f19a329dbe22b7e2c18fef0c075f13a31a435abdf83167adc3";
+const R7C_PAYLOAD_SHA = "34881e21029130c17ee6ed5fae6f4355ffda71daf5c4d32f6eb9d64cc62db832";
 const FUTURE_GUIDE_SOURCE_SHA: Record<GuideLocale, string> = {
   ru: "5c5f8d8da100a8657aeefbe5d9044462095e92db341e240a37bdebae57bba61b",
   en: "b0bcd0a6b545d2d8d4b190e55ab9d3c76350a9a30a8e1c745fb23e04b48df671",
@@ -55,9 +60,8 @@ const FUTURE_GUIDE_STATIC_ASSETS = [
 
 function futureGuidePairApproved(): boolean {
   try {
-    const manifest: unknown = JSON.parse(
-      fs.readFileSync(path.join(process.cwd(), "deploy", "live", "_release.json"), "utf8"),
-    );
+    const manifestBytes = fs.readFileSync(path.join(process.cwd(), "deploy", "live", "_release.json"));
+    const manifest: unknown = JSON.parse(manifestBytes.toString("utf8"));
     if (manifest === null || typeof manifest !== "object" || Array.isArray(manifest)) return false;
     const header = manifest as Record<string, unknown>;
     const isU1R3 = header.release_id === "PHUKET_UNIVERSE_U1_STATIC_R3_20261014";
@@ -65,12 +69,18 @@ function futureGuidePairApproved(): boolean {
     const isU2R6 = header.release_id === "PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014";
     const isU3R7 = header.release_id === "PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015";
     const isU3R7B = header.release_id === "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015";
+    const isU3R7C = isU3R7B && header.patch_id === R7C_TERMS_PATCH;
+    if (header.patch_id !== undefined && !isU3R7C) return false;
+    if (isU3R7C && (
+      header.parent_manifest_sha256 !== R7C_PARENT_MANIFEST_SHA ||
+      createHash("sha256").update(manifestBytes).digest("hex") !== R7C_MANIFEST_SHA
+    )) return false;
     const expectedRecords = isU3R7B || isU3R7 ? 107 : isU2R6 ? 106 : isU1R3 || isU1R5 ? 104 : 98;
     if (
       header.schema !== "ai-skill-lab.static-release.v1" ||
       header.release_id !== (isU3R7B ? "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015" : isU3R7 ? "PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015" : isU2R6 ? "PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014" : isU1R5 ? "PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014" : isU1R3 ? "PHUKET_UNIVERSE_U1_STATIC_R3_20261014" : FUTURE_GUIDE_RELEASE) ||
       header.file_count !== expectedRecords ||
-      header.payload_sha256 !== (isU3R7B ? "bfe1742f1ce3946f700fff9a67d273d840809d33f5e279123a205696305d2cab" : isU3R7 ? "7b74fffcd33b11c8985c5b9bc67bbee30c2d59594495183d129ab44399ab64cb" : isU2R6 ? "0b5f3b9d20d3dbcb9dcb03c6e65c0f9b513792c7cbaf71d958ee15d13914ec94" : isU1R5 ? "e8b41c9e6fed3e6b1f2b9edf66e1ddd227c4253fd1cb70c7030265dba1c63726" : isU1R3 ? "40606d00063d1ec99f495bf3623f8a8ddba23bc04298c530cf6cd97f92965c10" : FUTURE_GUIDE_PAYLOAD_SHA)
+      header.payload_sha256 !== (isU3R7C ? R7C_PAYLOAD_SHA : isU3R7B ? "bfe1742f1ce3946f700fff9a67d273d840809d33f5e279123a205696305d2cab" : isU3R7 ? "7b74fffcd33b11c8985c5b9bc67bbee30c2d59594495183d129ab44399ab64cb" : isU2R6 ? "0b5f3b9d20d3dbcb9dcb03c6e65c0f9b513792c7cbaf71d958ee15d13914ec94" : isU1R5 ? "e8b41c9e6fed3e6b1f2b9edf66e1ddd227c4253fd1cb70c7030265dba1c63726" : isU1R3 ? "40606d00063d1ec99f495bf3623f8a8ddba23bc04298c530cf6cd97f92965c10" : FUTURE_GUIDE_PAYLOAD_SHA)
     ) return false;
     const files = header.files;
     if (!Array.isArray(files) || files.length !== expectedRecords) return false;

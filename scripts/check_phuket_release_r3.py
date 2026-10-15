@@ -5,7 +5,7 @@ import json
 from phuket_release_profile import active, verify_integrity, universe_page, ROOT, LIVE, UNIVERSE_FILES, profile, sha
 
 def main():
-    import check_phuket_terms_withdrawal_r7c as terms_hotfix
+    import phuket_terms_withdrawal_r7c_profile as terms_hotfix
     if terms_hotfix.active():
         result = terms_hotfix.check_release()
         print("PHUKET_R7C_TERMS_WITHDRAWAL_PASS " + json.dumps(result, sort_keys=True))

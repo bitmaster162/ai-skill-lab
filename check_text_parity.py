@@ -175,18 +175,32 @@ def main():
     # For R7, assert each current page's exact approved U3 patch before
     # running historical D1 parity on the cryptographically pinned R6 text.
     if args.dir:
-        release_id = json.load(open(os.path.join(args.dir, "_release.json"), encoding="utf-8")).get("release_id")
-        if release_id in {"PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015", "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"}:
+        release_meta = json.load(open(os.path.join(args.dir, "_release.json"), encoding="utf-8"))
+        release_id = release_meta.get("release_id")
+        patch_id = release_meta.get("patch_id")
+        r7b_id = "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"
+        r7_id = "PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015"
+        if release_id in {r7_id, r7b_id}:
             sys.path.insert(0, os.path.join(os.path.dirname(__file__), "scripts"))
-            if release_id == "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015":
+            if release_id == r7b_id:
                 import phuket_universe_r7b_release_profile as reviewed_release
             else:
                 import phuket_universe_r7_release_profile as reviewed_release
-            reviewed_release.verify_integrity()
+            if patch_id is not None:
+                from phuket_terms_withdrawal_r7c_profile import (
+                    PATCH, check_release, legacy_r6_html_for_parity,
+                )
+                if release_id != r7b_id or patch_id != PATCH:
+                    raise ValueError("Unknown R7 parity patch; fail closed")
+                check_release()
+                legacy_html = legacy_r6_html_for_parity
+            else:
+                reviewed_release.verify_integrity()
+                legacy_html = reviewed_release.legacy_r6_html
             for route in ROUTES:
                 rel = "index.html" if route == "/" else "en.html" if route == "/en" else route.lstrip("/") + ".html"
-                cur[route] = parse(reviewed_release.legacy_r6_html(rel).decode("utf-8"))
-            print("R7_LEGACY_TEXT_PARITY inherited_R6_verified=46 current_R7_pinned=56")
+                cur[route] = parse(legacy_html(rel).decode("utf-8"))
+            print("R7_LEGACY_TEXT_PARITY inherited_R6_verified=46 current_R7_or_R7C_pinned=56")
     base = json.load(open(args.baseline, encoding="utf-8"))["routes"]
     allow = json.load(open(args.allow, encoding="utf-8")) if args.allow else {}
     if args.dir:
