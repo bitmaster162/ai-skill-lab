@@ -5,7 +5,7 @@ alternate: /guides/ai-safety-for-kids
 lang: en
 title: "AI and your child (8–13): a safety checklist for parents"
 seo_title: "AI and your child (8–13): a parent checklist — AI Skill Lab"
-description: "Age rules for ChatGPT, Gemini, Claude, Suno, Replit and GitHub, five questions to ask of any AI tool, and how ChatGPT parental controls work. Checked 1 October 2026."
+description: "Age rules for ChatGPT, Gemini, Claude, Suno, Replit and GitHub, five questions for any AI tool, and ChatGPT parental controls. Checked 1 October 2026."
 reviewed: 2026-10-01
 next_review: 2027-01-01
 related: [/en/safety, /en/parents, /en/kids]

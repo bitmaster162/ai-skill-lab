@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from html.parser import HTMLParser
 from pathlib import Path
+import site_r31_post_r7c_profile as post_r31
 import sys
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';errors=[];checks=0
 class P(HTMLParser):
@@ -14,10 +15,17 @@ class P(HTMLParser):
   if tag=='a' and self.current is not None:
    self.current['text']=' '.join(''.join(self.current['text']).split());self.anchors.append(self.current);self.current=None
 def anchors(path):p=P();p.feed(path.read_text(encoding='utf-8'));return p.anchors
+POST_R31=post_r31.active()
+if POST_R31:post_r31.check_release()
 for path in sorted(LIVE.rglob('*.html')):
  rel=path.relative_to(ROOT).as_posix()
  for a in anchors(path):
   label=a['text'].casefold();href=a['href'];checks+=1
+  # Exact form fallback points to the on-page channel directory, not a direct channel.
+  if POST_R31 and rel in {'deploy/live/start.html','deploy/live/en/start.html'}:
+   locale='en' if rel=='deploy/live/en/start.html' else 'ru'
+   if href=='#contact-channels' and label==post_r31.candidate.NOTE[locale][1].casefold():
+    continue
   if 'telegram' in label and not href.startswith('https://t.me/'):errors.append(f'{rel}: Telegram label mismatch {href}')
   if ('почта' in label or label.startswith('email')) and not href.startswith('mailto:'):errors.append(f'{rel}: email label mismatch {href}')
   if 'whatsapp' in label and not href.startswith('https://wa.me/'):errors.append(f'{rel}: WhatsApp label mismatch {href}')

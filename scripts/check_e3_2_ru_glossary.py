@@ -45,7 +45,12 @@ if E35_PINS:
   ENGLISH[rel]=E35_PINS["assets"]["deploy/live/"+rel]["accepted_sha256"]
 if RELEASE_ID in ('T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'):
  ENGLISH['en/guides.html']='5789cc163a22b3abeb239adc4216f26b66d3ab8d4ff571b616cb36c32796c1ea'
+import site_r31_post_r7c_profile as post_r31
+POST_R31 = post_r31.active()
+
 def inherited_bytes(rel):
+ if POST_R31:
+  return post_r31.legacy_r6_html_for_parity(rel)
  if RELEASE_ID in {"PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015", "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"}:
   if RELEASE_ID=="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015":
    from phuket_universe_r7b_release_profile import legacy_r6_html
@@ -57,6 +62,8 @@ def inherited_text(rel):return inherited_bytes(rel).decode("utf8")
 def route_for(rel):
  return "/" if rel=="index.html" else "/"+rel[:-5]
 def main():
+ if POST_R31:
+  post_r31.check_release()  # Whole-payload proof before the route loop.
  errors=[]
  total_before=0;total_after=0
  for route,x in EXPECTED.items():
@@ -98,6 +105,8 @@ def main():
  if "e.key.toLowerCase()==='k'" not in source or "e.metaKey||e.ctrlKey" not in source:
   errors.append("Ctrl+K runtime keyboard handler removed")
  if "asl:lead-event" not in source:errors.append("E3.8 telemetry integration removed")
+ if POST_R31:
+  post_r31.check_release()  # Whole-payload proof after the route loop.
  print(f"E3_2_GLOSSARY_METRICS routes={len(EXPECTED)} latin_before={total_before} latin_after={total_after} factor={total_before/max(total_after,1):.3f}x english_pages={len(ENGLISH)} protected_pages={len(PROTECTED)}")
  if errors:
   print("E3_2_RU_GLOSSARY_FAIL")

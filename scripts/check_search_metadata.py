@@ -83,6 +83,10 @@ TITLE_CONTRACT = {
     "/about": "О проекте: обучение ИИ — AI Skill Lab · Пхукет",
     "/parents": "Родителям: обучение ИИ — AI Skill Lab · Пхукет",
 }
+import site_r31_post_r7c_profile as post_r31
+if post_r31.active():
+    post_r31.check_release()
+    TITLE_CONTRACT["/en/start"] = "Start — pick a track and first task | AI Skill Lab · Phuket"
 
 
 def route_for(path: Path) -> str:

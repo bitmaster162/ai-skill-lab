@@ -53,6 +53,12 @@ if RELEASE in {"E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_
     ARTICLES["/guides/ai-safety-for-kids"]["title"] = "ИИ и ребёнок 8–13: чек-лист безопасности для родителей"
 
 
+# R3.1 modifies only the EN guide frontmatter description, with exact post-R7C gate.
+import site_r31_post_r7c_profile as post_r7c
+if post_r7c.active():
+    post_r7c.check_release()
+    EXPECTED_MD["guides/aiskillab/ai-safety-for-kids.en.md"] = "7c5362428fe712a3d092344db93ba0d8032919ec7271466d9b38b2e7f6f74afd"
+
 FUTURE_RELEASE = "T1_6F2_ADULT_FIRST_TASKS_R1"
 FUTURE_ARTICLES = {
     "/guides/ai-first-tasks-for-adults": {

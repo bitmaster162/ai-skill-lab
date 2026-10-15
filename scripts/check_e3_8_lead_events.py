@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import phuket_release_profile as u1
+import site_r31_post_r7c_profile as post_r31
 from pathlib import Path
 import json, sys
 
@@ -21,6 +22,12 @@ ingress=read("services/lead-ingress/api/event.js")
 worker=read("services/lead-receiver-cloudflare/src/index.js")
 static_runtime=read("deploy/live/lab-command.js")
 start=read("deploy/live/start-brief.js")
+POST_R31=post_r31.active()
+if POST_R31:
+ post_r31.check_release()
+ start_runtime=read("deploy/live/lead-form-runtime.js")
+else:
+ start_runtime=start
 lead=read("components/LeadForm.tsx")
 intro=read("components/IntroCallCta.tsx")
 for event in EVENTS:
@@ -47,7 +54,11 @@ req('credentials:"omit"' in static_runtime,"static tracker credentials omit")
 req('body: JSON.stringify({ event, page: pagePath(), locale: pageLocale() })' in tracker,"source client payload exact")
 for event in ["lead_submit_ok","lead_submit_error"]:
  req(f'event: "{event}"' in lead,f"source form dispatch {event}")
- req(f'event:"{event}"' in start,f"static form dispatch {event}")
+ req((f'event:"{event}"' in start_runtime if not POST_R31 else (f'event: "{event}"' in start_runtime)),f"static form dispatch {event}")
+if POST_R31:
+ req(all(f'event: "{event}"' in start_runtime for event in ("lead_submit_ok","lead_submit_error")),"split static handler both events")
+ req('fetch("/api/lead"' not in start,"legacy submission handler absent")
+ req(start_runtime==read("public/lead-form-runtime.js"),"source and static form JS identical")
 req("window.va" not in intro and "intro_call_click" not in intro,"old Vercel custom event source removed")
 req("window.va" not in static_runtime and "intro_call_click" not in static_runtime,"old Vercel custom event static removed")
 for rel,phrase in [
