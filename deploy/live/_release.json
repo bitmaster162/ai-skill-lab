@@ -133,8 +133,8 @@
     },
     {
       "path": "en/phuket-universe.html",
-      "sha256": "69e0b85291c5dc28b54c5936b31839f66202e11afbfc61a4b5be0d2351be0eaa",
-      "size": 26081
+      "sha256": "5acd537b8c1d8e346f05ac04719c7a9e1b3978ccd130d680b3216f0ef93eefa6",
+      "size": 24878
     },
     {
       "path": "en/phuket.html",
@@ -433,8 +433,8 @@
     },
     {
       "path": "phuket-universe.html",
-      "sha256": "2d29b2c2ff61443f1975b204ea958f4e1d621e7a4ed7e88eaded71068dd4fd63",
-      "size": 29489
+      "sha256": "2b7c61e013d25815d27b98bb64db9357a64c36a7ec2e6c53a5dfc0ccf357de3a",
+      "size": 27460
     },
     {
       "path": "phuket.html",
@@ -537,7 +537,9 @@
       "size": 41174
     }
   ],
-  "payload_sha256": "bfe1742f1ce3946f700fff9a67d273d840809d33f5e279123a205696305d2cab",
+  "parent_manifest_sha256": "a8166f8a45f17df8b7359dfb62bba467c6061f61cab1db164183216d31c42bb6",
+  "patch_id": "PHUKET_UNIVERSE_U3_R7C_TERMS_WITHDRAWAL_20261015",
+  "payload_sha256": "34881e21029130c17ee6ed5fae6f4355ffda71daf5c4d32f6eb9d64cc62db832",
   "release_id": "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015",
   "schema": "ai-skill-lab.static-release.v1"
 }

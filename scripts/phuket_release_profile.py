@@ -72,6 +72,9 @@ def profile() -> dict:
 
 
 def verify_integrity() -> dict:
+    import check_phuket_terms_withdrawal_r7c as terms_hotfix
+    if terms_hotfix.active():
+        return terms_hotfix.check_release()
     if universe_r7b.active():
         return universe_r7b.verify_integrity()
     if universe_r7.active():
