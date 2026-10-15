@@ -6,7 +6,6 @@ release manifests and output directories are never overwritten by this builder.
 """
 from __future__ import annotations
 import argparse
-import base64
 import hashlib
 import io
 import json
@@ -17,6 +16,7 @@ import tarfile
 from verify_site_metadata_preview_r1 import CHANGES
 from build_site_form_preview_r1 import COPY
 from site_form_metadata_r3 import RELEASE, PAYLOAD_SHA
+from site_inline_script_csp_r3 import inline_script_hashes
 
 ROOT = Path(__file__).resolve().parents[1]
 PARENT_COMMIT = "df78cffa5d68cbacbcc578dd1035248ae15a364c"
@@ -67,9 +67,7 @@ def inline_hashes(files):
     for name, raw in files.items():
         if not name.endswith(".html"):
             continue
-        for attrs, script in re.findall(r"<script\b([^>]*)>([\s\S]*?)</script>", raw.decode()):
-            if not re.search(r"\bsrc\s*=", attrs) and script.strip():
-                hashes.add("'sha256-" + base64.b64encode(hashlib.sha256(script.encode()).digest()).decode() + "'")
+        hashes.update(inline_script_hashes(raw.decode("utf-8")))
     return hashes
 
 

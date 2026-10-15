@@ -548,7 +548,8 @@
     "lib/guides.ts": "cfd40e3ec0440028fa89ecbcb22be81287388687ae378f5f25173105f9ef6747",
     "public/lead-form-runtime.js": "0cc5c167d0a13e8b6fe9ac80217f9d50de9ee12a3f02c7cf78ed767c0fbb5ef9",
     "scripts/build_site_form_preview_r1.py": "4309b74c8d4bb7de2d5f63444c0e14a5a8eee20b6905fe73d339f847fc36881c",
-    "scripts/build_site_release_r3.py": "37208563484943b6d53cb67f69c8c317694c189a3f010406ae695e1ef28696c1",
-    "scripts/verify_site_metadata_preview_r1.py": "7249d3a138af24fa0286e3ab0a1ba9be62ef075f32899e89895cc1abc768a06b"
+    "scripts/build_site_release_r3.py": "0b4218121ba988d41bb3b2711c28dfd684dac4f1d717522cb07dd0161b1eaf27",
+    "scripts/site_inline_script_csp_r3.py": "2363fb02d586b6eb788fca6c9e6a42067a919b3c095061763dcd94d160b71f1b",
+    "scripts/verify_site_metadata_preview_r1.py": "60db9c19592b8d852086a3725cbffc444117243952b33c202b11bb34822cb15e"
   }
 }

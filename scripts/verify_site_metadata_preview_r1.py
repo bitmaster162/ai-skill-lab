@@ -9,7 +9,6 @@ This script does not publish, install packages, change accounts, or contact a ba
 """
 from __future__ import annotations
 import argparse
-import base64
 import hashlib
 import json
 import mimetypes
@@ -22,6 +21,7 @@ import time
 from html.parser import HTMLParser
 from urllib.parse import urlsplit, unquote
 import xml.etree.ElementTree as ET
+from site_inline_script_csp_r3 import inline_script_hashes
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "df78cffa5d68cbacbcc578dd1035248ae15a364c"
@@ -77,9 +77,7 @@ def html(path: Path) -> Html:
 def script_hashes(folder: Path) -> set[str]:
     out: set[str] = set()
     for path in folder.rglob("*.html"):
-        for attrs, text in re.findall(r"<script\b([^>]*)>([\s\S]*?)</script>", path.read_text(encoding="utf-8")):
-            if not re.search(r"\bsrc\s*=", attrs) and text.strip():
-                out.add("'sha256-" + base64.b64encode(hashlib.sha256(text.encode()).digest()).decode() + "'")
+        out.update(inline_script_hashes(path.read_text(encoding="utf-8")))
     return out
 
 def verify_manifest(folder: Path) -> dict:
