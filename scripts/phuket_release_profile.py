@@ -72,6 +72,9 @@ def profile() -> dict:
 
 
 def verify_integrity() -> dict:
+    import phuket_terms_withdrawal_r7c_profile as terms_hotfix
+    if terms_hotfix.active():
+        return terms_hotfix.check_release()
     if universe_r7b.active():
         return universe_r7b.verify_integrity()
     if universe_r7.active():
@@ -126,7 +129,7 @@ def inherited_pin_overrides() -> dict[str, str]:
     if not active():
         return {}
     p = profile()
-    verify_integrity()
+    verified = verify_integrity()
     inherited = {"deploy/live/" + name: pin["sha256"] for name, pin in p["parent_file_pins"].items() if name not in {"sitemap.xml", "llms.txt"}}
     inherited.update(p["source_override_sha256"])
     if universe_r7b.active():
@@ -135,6 +138,17 @@ def inherited_pin_overrides() -> dict[str, str]:
     if universe_r7.active():
         inherited.update({"deploy/live/" + name: pin["sha256"]
                           for name, pin in p["r7_html_pins"].items()})
+    # Only the independently verified R7C withdrawal supersedes these three R7B pins.
+    # All other historical seals stay unchanged; never derive expected hashes from live files.
+    import phuket_terms_withdrawal_r7c_profile as r7c
+    if r7c.active():
+        if verified.get("manifest_sha256") != r7c.R7C_MANIFEST_SHA:
+            raise ValueError("R7C inheritance not independently verified")
+        inherited.update({
+            "deploy/live/_release.json": r7c.R7C_MANIFEST_SHA,
+            "deploy/live/phuket-universe.html": "2b7c61e013d25815d27b98bb64db9357a64c36a7ec2e6c53a5dfc0ccf357de3a",
+            "deploy/live/en/phuket-universe.html": "5acd537b8c1d8e346f05ac04719c7a9e1b3978ccd130d680b3216f0ef93eefa6",
+        })
     return inherited
 
 
