@@ -5,6 +5,13 @@ import json
 from phuket_release_profile import active, verify_integrity, universe_page, ROOT, LIVE, UNIVERSE_FILES, profile, sha
 
 def main():
+    import site_r31_post_r7c_profile as post_r7c
+    if post_r7c.active():
+        result = post_r7c.check_release()
+        from test_site_r31_post_r7c import run_units
+        run_units()
+        print("SITE_R31_POST_R7C_PROFILE_PASS " + json.dumps(result, sort_keys=True))
+        return 0
     import phuket_terms_withdrawal_r7c_profile as terms_hotfix
     if terms_hotfix.active():
         result = terms_hotfix.check_release()

@@ -36,6 +36,10 @@ def active() -> bool:
 
 
 def profile() -> dict:
+    import site_r31_post_r7c_profile as post_r31
+    if post_r31.active():
+        post_r31.check_release()
+        return {**universe_r7b.profile(), "file_count": 108}
     if universe_r7b.active():
         return universe_r7b.profile()
     if universe_r7.active():
@@ -72,6 +76,9 @@ def profile() -> dict:
 
 
 def verify_integrity() -> dict:
+    import site_r31_post_r7c_profile as post_r7c
+    if post_r7c.active():
+        return post_r7c.check_release()
     import phuket_terms_withdrawal_r7c_profile as terms_hotfix
     if terms_hotfix.active():
         return terms_hotfix.check_release()
@@ -149,6 +156,11 @@ def inherited_pin_overrides() -> dict[str, str]:
             "deploy/live/phuket-universe.html": "2b7c61e013d25815d27b98bb64db9357a64c36a7ec2e6c53a5dfc0ccf357de3a",
             "deploy/live/en/phuket-universe.html": "5acd537b8c1d8e346f05ac04719c7a9e1b3978ccd130d680b3216f0ef93eefa6",
         })
+    import site_r31_post_r7c_profile as post_r7c
+    if post_r7c.active():
+        if verified.get("manifest_sha256") != post_r7c.EXPECTED_MANIFEST_SHA:
+            raise ValueError("Post-R7C site inheritance not independently verified")
+        inherited.update(post_r7c.inherited_pin_overrides())
     return inherited
 
 

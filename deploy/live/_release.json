@@ -1,5 +1,5 @@
 {
-  "file_count": 107,
+  "file_count": 108,
   "files": [
     {
       "path": "404.html",
@@ -48,8 +48,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "7b68d1b0e7e4bbc0fd197778281b939134a36efdfec27272535b620412193c87",
-      "size": 14559
+      "sha256": "e7d52686cea7f383c37bcb6e5e2773a23845dfe9a4f538151153f04a3fccacaa",
+      "size": 14529
     },
     {
       "path": "en/about.html",
@@ -103,8 +103,8 @@
     },
     {
       "path": "en/guides/ai-safety-for-kids.html",
-      "sha256": "d6db89a44dea811646f7d0057bdab7f9b59fc50c6019120f87a7eff66a8483f5",
-      "size": 15407
+      "sha256": "fe89326ba58644c69465eada31e1a2aecd9a96f7bab8990b9c9b62d8805b56eb",
+      "size": 15347
     },
     {
       "path": "en/kids.html",
@@ -168,8 +168,8 @@
     },
     {
       "path": "en/start.html",
-      "sha256": "c23bbbf90a1a5868a39d5ebcb19fbd2d546b7b3c8f9a730a24d067552bd1f63f",
-      "size": 16433
+      "sha256": "794b8e690da15803b324eb6824b5d42265d7e976a32a7da014d2b4afd49fe4ba",
+      "size": 16573
     },
     {
       "path": "en/studio.html",
@@ -270,6 +270,11 @@
       "path": "lab-command.js",
       "sha256": "967f8b85b31a079e3077dd41fe0cf66305d59895cf06211f9baf4aca443d9ea3",
       "size": 2974
+    },
+    {
+      "path": "lead-form-runtime.js",
+      "sha256": "0cc5c167d0a13e8b6fe9ac80217f9d50de9ee12a3f02c7cf78ed767c0fbb5ef9",
+      "size": 3799
     },
     {
       "path": "llms.txt",
@@ -503,13 +508,13 @@
     },
     {
       "path": "start-brief.js",
-      "sha256": "6a40549cb3b1272b552e0da3d4c8b0cc11fd7ba31b4c3c84bbc5a8259650e1ae",
-      "size": 3934
+      "sha256": "3a6e63cccdc1c9b67f5a99c3c3457c565a49e0a96d9b0ca33ed8313ac68f763a",
+      "size": 1844
     },
     {
       "path": "start.html",
-      "sha256": "8dbabff36bcc6168bd07de23f5428382e52900309651cece6fcf0c9df6e2e4ce",
-      "size": 22749
+      "sha256": "6e08eec31622894b9e0f661822dd7fadeeebf7a986005e391ca6444f9bba7add",
+      "size": 22879
     },
     {
       "path": "studio.html",
@@ -528,7 +533,7 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "ba4fefee6a7401d7959473bc126ce743eaccacddda2fdffacb9a725afc8f049e",
+      "sha256": "c7e452b59be09ed5e1a6fabeb69be8b55a898f541aed5b356f8e86a3daefc468",
       "size": 4408
     },
     {
@@ -537,9 +542,9 @@
       "size": 41174
     }
   ],
-  "parent_manifest_sha256": "a8166f8a45f17df8b7359dfb62bba467c6061f61cab1db164183216d31c42bb6",
-  "patch_id": "PHUKET_UNIVERSE_U3_R7C_TERMS_WITHDRAWAL_20261015",
-  "payload_sha256": "34881e21029130c17ee6ed5fae6f4355ffda71daf5c4d32f6eb9d64cc62db832",
+  "parent_manifest_sha256": "b10b2ad45184e2f19a329dbe22b7e2c18fef0c075f13a31a435abdf83167adc3",
+  "patch_id": "SITE_FORM_METADATA_R31_POST_R7C_LOCAL_20261016",
+  "payload_sha256": "33fce831c34403b7236c8267ea4adf37c57d3412ce796a8858cbf8ce28debf61",
   "release_id": "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015",
   "schema": "ai-skill-lab.static-release.v1"
 }

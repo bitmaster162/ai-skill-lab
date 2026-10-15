@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 from guide_route_admission import admitted_route_count, require_public_html, require_route_set, require_canonical_urls
 from pathlib import Path
+import site_r31_post_r7c_profile as post_r31
 import sys
 REPO=Path(__file__).resolve().parents[1]
 ROOT=REPO/'deploy'/'live'
 starts=[ROOT/'start.html',ROOT/'en'/'start.html']; matchers=[ROOT/'matcher.html',ROOT/'en'/'matcher.html']
 errors=[]; checks=0
+POST_R31=post_r31.active()
+if POST_R31: post_r31.check_release()
 for p in [*starts,*matchers]:
  t=p.read_text(encoding='utf-8')
  for token in ['fetch(', 'XMLHttpRequest', 'localStorage', 'sessionStorage', 'document.cookie', 'sendBeacon(', 'WebSocket(']:
@@ -21,18 +24,29 @@ for p in [*starts,*matchers]:
   if '<script src="/start-brief.js"></script>' not in t: errors.append(f'{p.relative_to(ROOT)}: helper missing')
   if 'action=' in t.lower(): errors.append(f'{p.relative_to(ROOT)}: native form action forbidden')
 brief=(ROOT/'start-brief.js').read_text(encoding='utf-8')
+form_runtime=(ROOT/'lead-form-runtime.js').read_text(encoding='utf-8') if POST_R31 else brief
 matcher_v2=(ROOT/'matcher-v2.js').read_text(encoding='utf-8')
 checks+=3
-if brief.count('fetch("/api/lead"')!=1: errors.append('start-brief.js must contain exactly one same-origin lead fetch')
+if form_runtime.count('fetch("/api/lead"')!=1: errors.append('active form runtime must contain exactly one same-origin lead fetch')
+if POST_R31:
+ checks+=3
+ if brief.count('fetch("/api/lead"')!=0: errors.append('legacy handler must not submit forms')
+ if form_runtime!=(REPO/'public/lead-form-runtime.js').read_text(encoding='utf-8'): errors.append('form runtime shipped/source parity')
+ for page in starts:
+  t=page.read_text('utf-8')
+  if t.count('src="/lead-form-runtime.js"')!=1: errors.append('separate runtime absent')
 if matcher_v2.count('fetch("/api/route"')!=1: errors.append('matcher-v2.js must contain exactly one same-origin route fetch')
 if matcher_v2.count('fetch("/api/lead"')!=1: errors.append('matcher-v2.js must contain exactly one consent-gated lead fetch')
 for token in ['XMLHttpRequest','localStorage','sessionStorage','document.cookie','sendBeacon(','WebSocket(','https://ai-skill-lab-ingress']:
  checks+=2
- if token in brief: errors.append(f'start-brief.js forbidden {token}')
+ if token in brief or (POST_R31 and token in form_runtime): errors.append(f'form runtime forbidden {token}')
  if token in matcher_v2: errors.append(f'matcher-v2.js forbidden {token}')
-for marker in ['navigator.clipboard.writeText','document.querySelectorAll(".briefSendLink")','document.querySelectorAll(".briefCopy")','new FormData(form)','"Content-Type":"application/json"','data-adult-confirmation']:
+for marker in ['navigator.clipboard.writeText','document.querySelectorAll(".briefSendLink")','document.querySelectorAll(".briefCopy")']:
  checks+=1
- if marker not in brief: errors.append(f'start-brief.js missing {marker}')
+ if marker not in brief: errors.append(f'copy/brief helper missing {marker}')
+for marker in (['new FormData(form)','"Content-Type": "application/json"','data-adult-confirmation'] if POST_R31 else ['new FormData(form)','"Content-Type":"application/json"','data-adult-confirmation']):
+ checks+=1
+ if marker not in form_runtime: errors.append(f'form submission runtime missing {marker}')
 static_css=(ROOT/'workshop.css').read_text(encoding='utf-8')
 checks+=2
 if '.leadForm .consentRow{grid-template-columns:24px 1fr;min-height:24px;padding:3px 0;' not in static_css:

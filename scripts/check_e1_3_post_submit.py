@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
+import site_r31_post_r7c_profile as post_r31
 import re
 import sys
 
@@ -21,10 +22,18 @@ src=(ROOT/'components/LeadForm.tsx').read_text(encoding='utf-8')
 for marker in [RU_MSG,EN_MSG,'data-lead-success-actions','Записаться на диагностику','Book diagnostic','Написать в Telegram','Message on Telegram','href={site.telegram}','start#contact-channels']:
     req(marker in src,f'source LeadForm missing {marker!r}')
 
-js=(LIVE/'start-brief.js').read_text(encoding='utf-8')
-for marker in [RU_MSG,EN_MSG,'[data-lead-success-actions]','successActions.hidden=true','successActions.hidden=false']:
+POST_R31=post_r31.active()
+if POST_R31:post_r31.check_release()
+old_js=(LIVE/'start-brief.js').read_text(encoding='utf-8')
+js=(LIVE/'lead-form-runtime.js').read_text(encoding='utf-8') if POST_R31 else old_js
+markers=([RU_MSG,EN_MSG,'[data-lead-success-actions]','successActions.hidden = true','successActions.hidden = false']
+         if POST_R31 else [RU_MSG,EN_MSG,'[data-lead-success-actions]','successActions.hidden=true','successActions.hidden=false'])
+for marker in markers:
     req(marker in js,f'static runtime missing {marker!r}')
 req(js.count('fetch(')==1,f'static runtime fetch count={js.count("fetch(")} expected 1')
+if POST_R31:
+    req('fetch("/api/lead"' not in old_js,'legacy script must no longer send leads')
+    req(js==(ROOT/'public/lead-form-runtime.js').read_text(encoding='utf-8'),'source/shipped separate runtime parity')
 
 for rel,en in [('start.html',False),('en/start.html',True)]:
     raw=(LIVE/rel).read_text(encoding='utf-8')

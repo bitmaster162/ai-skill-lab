@@ -1,13 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState, useSyncExternalStore } from "react";
 import { site } from "@/lib/site";
 import { ArrowIcon } from "./ArrowIcon";
 
 type State = "idle" | "sending" | "sent" | "error";
 type Audience = "adult" | "parent" | "teen" | "business";
 type Locale = "ru" | "en";
+
+// These browser capabilities are fixed for this mounted page; no polling or listeners.
+const subscribeToFormCapabilities = () => () => undefined;
+const getServerFormCapabilities = () => false;
+const getClientFormCapabilities = () =>
+  typeof window.fetch === "function" &&
+  typeof window.FormData === "function" &&
+  typeof Object.fromEntries === "function";
 
 export function LeadForm({
   defaultAudience = "adult",
@@ -19,6 +27,11 @@ export function LeadForm({
   program?: string;
 }) {
   const [state, setState] = useState<State>("idle");
+  // Keep SSR and the first hydration render disabled; enable only with browser APIs ready.
+  const ready = useSyncExternalStore(
+    subscribeToFormCapabilities, getClientFormCapabilities, getServerFormCapabilities,
+  );
+  const inFlight = useRef(false);
   const [message, setMessage] = useState("");
   const [audience, setAudience] = useState<Audience>(defaultAudience);
   const en = locale === "en";
@@ -44,20 +57,21 @@ export function LeadForm({
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
+    if (!ready || inFlight.current || !form.checkValidity()) return;
+    inFlight.current = true;
     setState("sending");
     setMessage("");
 
-    const form = event.currentTarget;
-    const data = Object.fromEntries(new FormData(form).entries());
-
     try {
+      const data = Object.fromEntries(new FormData(form).entries());
       const response = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
       const result = (await response.json()) as { ok?: boolean; error?: string };
-      if (!response.ok || !result.ok) throw new Error(result.error || (en ? "Could not send the application" : "Не удалось отправить заявку"));
+      if (!response.ok || !result || result.ok !== true) throw new Error(result.error || (en ? "Could not send the application" : "Не удалось отправить заявку"));
       form.reset();
       setAudience(defaultAudience);
       setState("sent");
@@ -67,13 +81,20 @@ export function LeadForm({
       setState("error");
       window.dispatchEvent(new CustomEvent("asl:lead-event", { detail: { event: "lead_submit_error" } }));
       setMessage(error instanceof Error ? error.message : (en ? "Could not send the application" : "Не удалось отправить заявку"));
+    } finally {
+      inFlight.current = false;
     }
   }
 
   return (
     <>
-      <noscript><p className="formNote">{en ? "The application form requires JavaScript. Contact us directly instead — Telegram, WhatsApp, LINE or email, all listed below on this page." : "Форма заявки работает только с включённым JavaScript. Напишите напрямую — Telegram, WhatsApp, LINE или email, контакты ниже на этой странице."}</p></noscript>
-      <form className="leadForm" onSubmit={onSubmit}>
+      <form className="leadForm" onSubmit={onSubmit} data-lead-state={ready ? "ready" : "unready"} aria-busy={state === "sending"}>
+      <p className="formNote" data-lead-readiness hidden={ready} role="status">
+        {en ? "The form is not ready yet. You can contact us directly." : "Форма пока не готова к отправке. Можно связаться напрямую."}
+      </p>
+      <p className="formNote" data-lead-direct-contact>
+        <a href={`${base}/start#contact-channels`}>{en ? "Direct contacts: Telegram, WhatsApp, LINE or email" : "Прямые контакты: Telegram, WhatsApp, LINE или email"}</a>
+      </p>
       <input type="hidden" name="locale" value={locale} />
       <input type="hidden" name="program" value={program} />
       <div className="formRow">
@@ -123,7 +144,7 @@ export function LeadForm({
       ) : null}
 
       <input name="website" tabIndex={-1} autoComplete="off" className="honeypot" aria-hidden="true" />
-      <button className="button buttonPrimary buttonWide" type="submit" disabled={state === "sending"}>
+      <button className="button buttonPrimary buttonWide" type="submit" disabled={!ready || state === "sending"}>
         {state === "sending" ? (en ? "Sending…" : "Отправляем…") : (en ? "Get my program" : "Получить программу")}
       </button>
       <p className="formNote">

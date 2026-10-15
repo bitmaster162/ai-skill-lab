@@ -187,12 +187,20 @@ def main():
             else:
                 import phuket_universe_r7_release_profile as reviewed_release
             if patch_id is not None:
+                import site_r31_post_r7c_profile as post
                 from phuket_terms_withdrawal_r7c_profile import (
-                    PATCH, check_release, legacy_r6_html_for_parity,
+                    PATCH as R7C_PATCH, check_release as verify_r7c,
+                    legacy_r6_html_for_parity,
                 )
-                if release_id != r7b_id or patch_id != PATCH:
+                if release_id != r7b_id:
+                    raise ValueError("Unknown R7 parity release; fail closed")
+                if patch_id == R7C_PATCH:
+                    verify_r7c()
+                elif patch_id == post.PATCH:
+                    post.check_release()
+                    legacy_r6_html_for_parity = post.legacy_r6_html_for_parity
+                else:
                     raise ValueError("Unknown R7 parity patch; fail closed")
-                check_release()
                 legacy_html = legacy_r6_html_for_parity
             else:
                 reviewed_release.verify_integrity()

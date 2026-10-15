@@ -133,13 +133,23 @@ def route_for(path: Path) -> str:
 def main() -> int:
     errors: list[str] = []
     routes = []
+    import site_r31_post_r7c_profile as post_r31
+    post_active = post_r31.active()
+    if post_active:
+        post_r31.check_release()  # Full candidate proof before any historical comparison.
     for path in sorted(LIVE.rglob("*.html")):
         if u1.universe_page(path): continue
         route = route_for(path)
         if route.startswith("/en") or route == "/404":
             continue
         page = Page()
-        page.feed((__import__("phuket_universe_r7b_release_profile" if RELEASE_ID=="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015" else "phuket_universe_r7_release_profile").legacy_r6_html(path.relative_to(LIVE).as_posix()).decode("utf-8") if RELEASE_ID in {"PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015", "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"} else path.read_text(encoding="utf-8")))
+        if post_active:
+            reviewed_html = post_r31.legacy_r6_html_for_parity(path.relative_to(LIVE).as_posix()).decode("utf-8")
+        elif RELEASE_ID in {"PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015", "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"}:
+            reviewed_html = __import__("phuket_universe_r7b_release_profile" if RELEASE_ID=="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015" else "phuket_universe_r7_release_profile").legacy_r6_html(path.relative_to(LIVE).as_posix()).decode("utf-8")
+        else:
+            reviewed_html = path.read_text(encoding="utf-8")
+        page.feed(reviewed_html)
         title = " ".join(page.title.split())
         desc = page.description.strip()
         lead = " ".join("".join(page.first_p).split())
@@ -177,6 +187,8 @@ def main() -> int:
             f"Пхукет={combined.count('Пхукет')} ИИ={combined.count('ИИ')} "
             f"нейросет={combined.lower().count('нейросет')}"
         )
+    if post_active:
+        post_r31.check_release()  # Full candidate proof again after all routes.
     expected_routes = 27 if RELEASE_ID in ('T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015') else 26
     if len(routes) != expected_routes:
         errors.append(f"expected {expected_routes} RU pages, got {len(routes)}")

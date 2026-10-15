@@ -75,12 +75,21 @@ if release in {"E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_
 else:E32_TEXT={}
 E34_PINS=json.loads((ROOT/"data/e3_4_ru_route_sha_pins.json").read_text(encoding="utf-8"))["routes"] if release in {"E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'} else {}
 E35_PINS=json.loads((ROOT/"data/e3_5_heading_pins.json").read_text(encoding="utf-8")) if release in {'E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'} else {}
+import site_r31_post_r7c_profile as post_r31
+POST_R31 = post_r31.active()
+if POST_R31:
+ post_r31.check_release()  # Verify candidate before historical H1 lineage.
 errors=[]
 counts={"ru":0,"en":0,"line_splits":0,"em":0,"span":0,"unchanged_root":0}
 for route,scope in ROUTES.items():
  rel="index.html" if route=="/" else route.lstrip("/")+".html"
  path=LIVE/rel
- current=(__import__("phuket_universe_r7b_release_profile" if release=="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015" else "phuket_universe_r7_release_profile").legacy_r6_html(rel).decode("utf-8") if release in {"PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015", "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"} else path.read_text(encoding="utf-8"))
+ if POST_R31:
+  current=post_r31.legacy_r6_html_for_parity(rel).decode("utf-8")
+ elif release in {"PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015", "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"}:
+  current=__import__("phuket_universe_r7b_release_profile" if release=="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015" else "phuket_universe_r7_release_profile").legacy_r6_html(rel).decode("utf-8")
+ else:
+  current=path.read_text(encoding="utf-8")
  h1=re.findall(r"<h1\b[^>]*>[\s\S]*?</h1>",current)
  if len(h1)!=1 or h1[0]!=scope["new"]:
   errors.append(f"{route}: exact H1 markup mismatch")
@@ -137,6 +146,8 @@ for rel,tokens in other.items():
  source=(ROOT/rel).read_text(encoding="utf-8")
  for token in tokens:
   if token not in source:errors.append(f"source missing {rel} token {token}")
+if POST_R31:
+ post_r31.check_release()  # Revalidate all assets after the last H1 comparison.
 if counts!={"ru":8,"en":7,"line_splits":14,"em":12,"span":2,"unchanged_root":1}:
  errors.append(f"heading structural counts {counts}")
 print(f"E3_3_H1_CHECK routes={len(ROUTES)} ru={counts['ru']} en={counts['en']} two_line={counts['line_splits']} italic={counts['em']} span={counts['span']} protected_html_baselines=15")
