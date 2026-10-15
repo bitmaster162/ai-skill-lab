@@ -34,7 +34,7 @@ readme=(ROOT/"README.md").read_text(encoding="utf-8")
 sitemap=(LIVE/"sitemap.xml").read_text(encoding="utf-8")
 llms=(LIVE/"llms.txt").read_text(encoding="utf-8")
 manifest=json.loads((LIVE/"_release.json").read_text(encoding="utf-8"))
-E32=manifest.get('release_id') in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014'}
+E32=manifest.get('release_id') in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}
 
 for label,src in [("RU source",src_ru),("EN source",src_en)]:
     req(''"use client"'' not in src,f"{label}: must stay server-rendered")
@@ -48,7 +48,12 @@ for label,text,canon,alt in [
     p=P(); p.feed(text)
     req(p.h1==1,f"{label}: exactly one H1")
     req(p.forms==0,f"{label}: no form")
-    req(p.scripts==["/lab-command.js","/_vercel/insights/script.js"],f"{label}: no certificate-specific runtime")
+    expected_scripts=["/lab-command.js","/_vercel/insights/script.js"]
+    if manifest.get("release_id") in {"PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015", "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"}:
+        from phuket_release_profile import verify_integrity
+        verify_integrity()
+        expected_scripts.append("/phuket-universe-events.js")
+    req(p.scripts==expected_scripts,f"{label}: no certificate-specific runtime")
     req(f'<link rel="canonical" href="{canon}">' in text,f"{label}: canonical")
     req(f'href="{alt}"' in text,f"{label}: language alternate/link")
     marker=("ШАБЛОН · НЕ ВЫДАН" if E32 and label=="RU static" else "TEMPLATE · NOT ISSUED")
@@ -88,7 +93,7 @@ req("/certificate" in readme and "/en/certificate" in readme,"README route inven
 req("consent-bound completion-record policy/template only" in readme,"README N25 truth")
 req("issued certificates" in readme,"README no-fabricated-issued-certificate discipline")
 
-req(manifest.get("release_id") in {"N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014'},"N25-or-successor release identity")
+req(manifest.get("release_id") in {"N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'},"N25-or-successor release identity")
 req(manifest.get("file_count")==(u1.profile()["file_count"] if u1.active() else 98 if manifest.get("release_id")=='T1_6F2_ADULT_FIRST_TASKS_R1' else 96),"N25 static file_count 96")
 listed={x.get("path") for x in manifest.get("files",[])}
 req({"certificate.html","en/certificate.html"}<=listed,"manifest certificate pair")

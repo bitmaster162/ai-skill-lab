@@ -12,6 +12,8 @@ from pathlib import Path
 from html.parser import HTMLParser
 import phuket_agency_release_profile as agency_r5
 import phuket_housing_release_profile as housing_r6
+import phuket_universe_r7_release_profile as universe_r7
+import phuket_universe_r7b_release_profile as universe_r7b
 
 ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "deploy/live"
@@ -30,10 +32,14 @@ def sha(data: bytes) -> str:
 
 
 def active() -> bool:
-    return json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id") in {RELEASE, agency_r5.RELEASE, housing_r6.RELEASE}
+    return json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id") in {RELEASE, agency_r5.RELEASE, housing_r6.RELEASE, universe_r7.RELEASE, universe_r7b.RELEASE}
 
 
 def profile() -> dict:
+    if universe_r7b.active():
+        return universe_r7b.profile()
+    if universe_r7.active():
+        return universe_r7.profile()
     if housing_r6.active():
         return housing_r6.profile()
     if agency_r5.active():
@@ -66,6 +72,10 @@ def profile() -> dict:
 
 
 def verify_integrity() -> dict:
+    if universe_r7b.active():
+        return universe_r7b.verify_integrity()
+    if universe_r7.active():
+        return universe_r7.verify_integrity()
     if housing_r6.active():
         return housing_r6.verify_integrity()
     if agency_r5.active():
@@ -119,6 +129,12 @@ def inherited_pin_overrides() -> dict[str, str]:
     verify_integrity()
     inherited = {"deploy/live/" + name: pin["sha256"] for name, pin in p["parent_file_pins"].items() if name not in {"sitemap.xml", "llms.txt"}}
     inherited.update(p["source_override_sha256"])
+    if universe_r7b.active():
+        inherited.update({"deploy/live/" + name: pin["sha256"]
+                          for name, pin in p["r7_html_pins"].items()})
+    if universe_r7.active():
+        inherited.update({"deploy/live/" + name: pin["sha256"]
+                          for name, pin in p["r7_html_pins"].items()})
     return inherited
 
 
@@ -147,7 +163,7 @@ def universe_page(path: Path) -> bool:
     text = path.read_text(encoding="utf-8")
     tags = Tags(text).tags
     if ([a.get("id") for t, a in tags if t == "section"] != ["top", "orbit", "homes", "agencies"]
-            or sum(t == "h1" for t, a in tags) != 1 or sum(t == "svg" for t, a in tags) != (7 if housing_r6.active() else 8)
+            or sum(t == "h1" for t, a in tags) != 1 or sum(t == "svg" for t, a in tags) != (7 if housing_r6.active() or universe_r7.active() or universe_r7b.active() else 8)
             or not any(t == "main" and a.get("id") == "main" for t, a in tags)
             or not any(t == "header" for t, a in tags) or not any(t == "footer" for t, a in tags)
             or any(t == "style" or "style" in a for t, a in tags)
