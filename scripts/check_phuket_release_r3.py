@@ -8,7 +8,10 @@ def main():
     import site_r31_post_r7c_profile as post_r7c
     if post_r7c.active():
         result = post_r7c.check_release()
-        from test_site_r31_post_r7c import run_units
+        if post_r7c.is_sitemap_r2():
+            from test_site_r31_sitemap_r2 import run_units
+        else:
+            from test_site_r31_post_r7c import run_units
         run_units()
         print("SITE_R31_POST_R7C_PROFILE_PASS " + json.dumps(result, sort_keys=True))
         return 0

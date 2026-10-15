@@ -25,12 +25,27 @@ def sha(raw: bytes) -> str:
 def active() -> bool:
     try:
         m = json.loads((LIVE / "_release.json").read_bytes())
-        return m.get("release_id") == RELEASE and m.get("patch_id") == PATCH
+        import site_r31_sitemap_r2_profile as sitemap_r2
+        return (m.get("release_id") == RELEASE and
+                m.get("patch_id") in {PATCH, sitemap_r2.PATCH})
     except (OSError, ValueError, TypeError):
         return False
 
 
+def is_sitemap_r2() -> bool:
+    import site_r31_sitemap_r2_profile as sitemap_r2
+    return sitemap_r2.active()
+
+
+def expected_manifest_sha() -> str:
+    import site_r31_sitemap_r2_profile as sitemap_r2
+    return sitemap_r2.EXPECTED_MANIFEST_SHA if sitemap_r2.active() else EXPECTED_MANIFEST_SHA
+
+
 def check_release(overrides: Mapping[str, bytes | None] | None = None) -> dict:
+    if is_sitemap_r2():
+        from site_r31_sitemap_r2_profile import check_release as check_sitemap
+        return check_sitemap(overrides)
     generated, expected = candidate.render()
     if expected["manifest_sha256"] != EXPECTED_MANIFEST_SHA or expected["payload_sha256"] != EXPECTED_PAYLOAD_SHA:
         raise ValueError("R31_PORT_HOLD expected_digest_drift")
@@ -112,7 +127,7 @@ def legacy_r6_html_for_parity(rel: str) -> bytes:
         raise ValueError("R31_PORT_HOLD r6_to_r7_replay")
     # The caller has already verified the full exact manifest and candidate replay.
     manifest = json.loads((LIVE / "_release.json").read_bytes())
-    if sha((LIVE / "_release.json").read_bytes()) != EXPECTED_MANIFEST_SHA:
+    if sha((LIVE / "_release.json").read_bytes()) != expected_manifest_sha():
         raise ValueError("R31_PORT_HOLD parity_manifest_drift")
     entries = {entry["path"]: entry for entry in manifest["files"]}
     pin = entries.get(rel)
@@ -130,6 +145,9 @@ def inherited_pin_overrides() -> dict[str, str]:
     result = {"deploy/live/" + rel: sha(files[rel]) for rel in changed}
     for rel in ("phuket-universe.html", "en/phuket-universe.html"):
         result["deploy/live/" + rel] = sha(files[rel])
+    if is_sitemap_r2():
+        from site_r31_sitemap_r2_profile import inherited_pin_overrides as add_sitemap_pins
+        result.update(add_sitemap_pins())
     return result
 
 

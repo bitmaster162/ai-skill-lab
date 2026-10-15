@@ -9,10 +9,13 @@ import {execFileSync} from 'node:child_process';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const rawManifest=fs.readFileSync(path.join(root,'deploy/live/_release.json'));
 const manifest=JSON.parse(rawManifest.toString('utf8'));
-if (manifest.patch_id === 'SITE_FORM_METADATA_R31_POST_R7C_LOCAL_20261016') {
+if (['SITE_FORM_METADATA_R31_POST_R7C_LOCAL_20261016',
+     'SITE_FORM_METADATA_R31_POST_R7C_SITEMAP_20261016_LOCAL_R2'].includes(manifest.patch_id)) {
   if (manifest.release_id !== 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'
       || createHash('sha256').update(rawManifest).digest('hex')
-         !== 'c9c1ffa4a227a4ed324901c7bb6019e16dcf28722fc70c72e70badfb22752505')
+         !== (manifest.patch_id === 'SITE_FORM_METADATA_R31_POST_R7C_SITEMAP_20261016_LOCAL_R2'
+           ? 'fc57c61c7ac502644665f7cc06152f43fb0b5d7f67827eb6fd4b12aadfc83f37'
+           : 'c9c1ffa4a227a4ed324901c7bb6019e16dcf28722fc70c72e70badfb22752505'))
     throw new Error('Post-R7C candidate identity mismatch');
   execFileSync('python',['-B','scripts/site_r31_post_r7c_profile.py'],{
     cwd:root,timeout:60000,stdio:'pipe'

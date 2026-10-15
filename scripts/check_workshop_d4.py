@@ -163,8 +163,16 @@ if release in {'E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1','E3_4_
  expected_e32_sitemap_lastmod = '2026-10-09' if release in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'} else '2026-10-08'
  if release in ('T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'): expected_e32_sitemap_lastmod = '2026-10-11'
  if release=='PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015': expected_e32_sitemap_lastmod = '2026-10-15'
- require(f'lastModified = "{expected_e32_sitemap_lastmod}"' in read('app/sitemap.ts'),'E3.1 sitemap source freshness')
- require(read('deploy/live/sitemap.xml').count(f'<lastmod>{expected_e32_sitemap_lastmod}</lastmod>')==(56 if release=='PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015' else 54 if release in ('PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015') else admitted_route_count()),'E3.1 sitemap static freshness route authority')
+ import site_r31_sitemap_r2_profile as sitemap_r2
+ if sitemap_r2.active():
+  sitemap_r2.check_release()
+  require('const lastModified = "2026-10-16";' in read('app/sitemap.ts'),'R2 exact standard sitemap source day')
+  require(read('deploy/live/sitemap.xml').count('<lastmod>2026-10-16</lastmod>')==54
+          and read('deploy/live/sitemap.xml').count('<lastmod>2026-10-15</lastmod>')==2,
+          'R2 54 normal + 2 universe lastmod cardinality')
+ else:
+  require(f'lastModified = "{expected_e32_sitemap_lastmod}"' in read('app/sitemap.ts'),'E3.1 sitemap source freshness')
+  require(read('deploy/live/sitemap.xml').count(f'<lastmod>{expected_e32_sitemap_lastmod}</lastmod>')==(56 if release=='PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015' else 54 if release in ('PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015') else admitted_route_count()),'E3.1 sitemap static freshness route authority')
  require('Практический ИИ · онлайн / Пхукет' in read('components/workshop/WorkshopShell.tsx'),'E3.1 RU footer caption')
  require('Content-Security-Policy' in read('deploy/live/vercel.json'),'E3.1 CSP retained')
 # E3.2: release-specific byte seal for nine approved RU glossary/UI source assets.

@@ -196,7 +196,7 @@ def main():
                     raise ValueError("Unknown R7 parity release; fail closed")
                 if patch_id == R7C_PATCH:
                     verify_r7c()
-                elif patch_id == post.PATCH:
+                elif patch_id == post.PATCH or post.is_sitemap_r2():
                     post.check_release()
                     legacy_r6_html_for_parity = post.legacy_r6_html_for_parity
                 else:

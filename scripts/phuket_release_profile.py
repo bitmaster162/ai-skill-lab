@@ -158,7 +158,7 @@ def inherited_pin_overrides() -> dict[str, str]:
         })
     import site_r31_post_r7c_profile as post_r7c
     if post_r7c.active():
-        if verified.get("manifest_sha256") != post_r7c.EXPECTED_MANIFEST_SHA:
+        if verified.get("manifest_sha256") != post_r7c.expected_manifest_sha():
             raise ValueError("Post-R7C site inheritance not independently verified")
         inherited.update(post_r7c.inherited_pin_overrides())
     return inherited
