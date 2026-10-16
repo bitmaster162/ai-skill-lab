@@ -22,6 +22,20 @@ workflow = WORKFLOW.read_text(encoding="utf-8")
 preflight = PREFLIGHT.read_text(encoding="utf-8")
 
 errors = []
+# R4E: explicit mandatory test registration; `test_*` is not covered by
+# historical check_*.py auto-discovery. Preserve the old quarantine verbatim.
+REQUIRED_RELEASE_TESTS = (
+    "scripts/test_guide_route_admission.py",
+    "scripts/test_release_profile_admission.py",
+)
+for test_path in REQUIRED_RELEASE_TESTS:
+    if not (ROOT / test_path).is_file():
+        errors.append(f"{test_path}: required test file missing")
+    for surface, source in (("workflow", workflow), ("preflight", preflight)):
+        count = source.count(test_path)
+        if count != 1:
+            errors.append(f"{test_path}: {surface} refs={count}, expected 1")
+
 
 for name, owner_name in sorted(QUARANTINED.items()):
     path = SCRIPTS / name
