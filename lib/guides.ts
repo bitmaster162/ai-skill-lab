@@ -52,6 +52,12 @@ const R31_POST_R7C_PAYLOAD_SHA = "33fce831c34403b7236c8267ea4adf37c57d3412ce796a
 const R31_SITEMAP_R2_PATCH = "SITE_FORM_METADATA_R31_POST_R7C_SITEMAP_20261016_LOCAL_R2";
 const R31_SITEMAP_R2_MANIFEST_SHA = "fc57c61c7ac502644665f7cc06152f43fb0b5d7f67827eb6fd4b12aadfc83f37";
 const R31_SITEMAP_R2_PAYLOAD_SHA = "9a8e8b41646a2dcb07ef7fa849088666c07891a41e5050d56bcfc99a1ff03b0e";
+const SITE_A2_PATCH = "SITE_A1_A2_R2_20261026_DRAFT_REVIEW";
+const SITE_A2_MANIFEST_SHA = "11d341f50a1ed97b4c1335f27524a2383b2db92a52a19d44a33674e4013dd727";
+const SITE_A2_PAYLOAD_SHA = "10c21322ee0fdfecf3f841b4f286f12494325d70440b7057482ebd807f821d82";
+const SITE_A2_PARENT_SHA = "ad8282f6b7a670c9e5e5f840dd0d427f3c24f87a2210f64d40dab1cf7bf497e5";
+const SITE_A2_ADMISSION_SHA = "9102807cee2df87332543e53f83d8b645d81876d9cf6bd1ad26745df0f83eadd";
+
 const FUTURE_GUIDE_SOURCE_SHA: Record<GuideLocale, string> = {
   ru: "5c5f8d8da100a8657aeefbe5d9044462095e92db341e240a37bdebae57bba61b",
   en: "b0bcd0a6b545d2d8d4b190e55ab9d3c76350a9a30a8e1c745fb23e04b48df671",
@@ -80,7 +86,25 @@ function futureGuidePairApproved(): boolean {
     const isU3R7C = isU3R7B && header.patch_id === R7C_TERMS_PATCH;
     const isPostR7C = isU3R7B && header.patch_id === R31_POST_R7C_PATCH;
     const isSitemapR2 = isU3R7B && header.patch_id === R31_SITEMAP_R2_PATCH;
-    if (header.patch_id !== undefined && !isU3R7C && !isPostR7C && !isSitemapR2) return false;
+    const isSiteA2 = isU3R7B && header.patch_id === SITE_A2_PATCH;
+    if (isSiteA2) {
+      // No wildcard: bind manifest bytes AND standalone immutable admission.
+      const digest = createHash("sha256").update(manifestBytes).digest("hex");
+      if (digest !== SITE_A2_MANIFEST_SHA ||
+          header.parent_manifest_sha256 !== SITE_A2_PARENT_SHA ||
+          header.payload_sha256 !== SITE_A2_PAYLOAD_SHA ||
+          header.file_count !== 108) return false;
+      const admissionBytes = fs.readFileSync(path.join(
+        process.cwd(), "data", "SITE_A1_A2_R2_METADATA_SUCCESSOR_ADMISSION_V2_20261026.json"
+      ));
+      if (createHash("sha256").update(admissionBytes).digest("hex") !== SITE_A2_ADMISSION_SHA) return false;
+      const admission = JSON.parse(admissionBytes.toString("utf8")) as Record<string, unknown>;
+      if (admission.patch_id !== SITE_A2_PATCH ||
+          admission.candidate_manifest_sha256 !== SITE_A2_MANIFEST_SHA ||
+          admission.candidate_payload_sha256 !== SITE_A2_PAYLOAD_SHA ||
+          admission.historical_r7b_manifest_sha256 !== "a8166f8a45f17df8b7359dfb62bba467c6061f61cab1db164183216d31c42bb6") return false;
+    }
+    if (header.patch_id !== undefined && !isU3R7C && !isPostR7C && !isSitemapR2 && !isSiteA2) return false;
     if (isU3R7C && (
       header.parent_manifest_sha256 !== R7C_PARENT_MANIFEST_SHA ||
       createHash("sha256").update(manifestBytes).digest("hex") !== R7C_MANIFEST_SHA
@@ -93,12 +117,12 @@ function futureGuidePairApproved(): boolean {
       header.parent_manifest_sha256 !== R31_POST_R7C_MANIFEST_SHA ||
       createHash("sha256").update(manifestBytes).digest("hex") !== R31_SITEMAP_R2_MANIFEST_SHA
     )) return false;
-    const expectedRecords = isPostR7C || isSitemapR2 ? 108 : isU3R7B || isU3R7 ? 107 : isU2R6 ? 106 : isU1R3 || isU1R5 ? 104 : 98;
+    const expectedRecords = isPostR7C || isSitemapR2 || isSiteA2 ? 108 : isU3R7B || isU3R7 ? 107 : isU2R6 ? 106 : isU1R3 || isU1R5 ? 104 : 98;
     if (
       header.schema !== "ai-skill-lab.static-release.v1" ||
       header.release_id !== (isU3R7B ? "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015" : isU3R7 ? "PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015" : isU2R6 ? "PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014" : isU1R5 ? "PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014" : isU1R3 ? "PHUKET_UNIVERSE_U1_STATIC_R3_20261014" : FUTURE_GUIDE_RELEASE) ||
       header.file_count !== expectedRecords ||
-      header.payload_sha256 !== (isSitemapR2 ? R31_SITEMAP_R2_PAYLOAD_SHA : isPostR7C ? R31_POST_R7C_PAYLOAD_SHA : isU3R7C ? R7C_PAYLOAD_SHA : isU3R7B ? "bfe1742f1ce3946f700fff9a67d273d840809d33f5e279123a205696305d2cab" : isU3R7 ? "7b74fffcd33b11c8985c5b9bc67bbee30c2d59594495183d129ab44399ab64cb" : isU2R6 ? "0b5f3b9d20d3dbcb9dcb03c6e65c0f9b513792c7cbaf71d958ee15d13914ec94" : isU1R5 ? "e8b41c9e6fed3e6b1f2b9edf66e1ddd227c4253fd1cb70c7030265dba1c63726" : isU1R3 ? "40606d00063d1ec99f495bf3623f8a8ddba23bc04298c530cf6cd97f92965c10" : FUTURE_GUIDE_PAYLOAD_SHA)
+      header.payload_sha256 !== (isSiteA2 ? SITE_A2_PAYLOAD_SHA : isSitemapR2 ? R31_SITEMAP_R2_PAYLOAD_SHA : isPostR7C ? R31_POST_R7C_PAYLOAD_SHA : isU3R7C ? R7C_PAYLOAD_SHA : isU3R7B ? "bfe1742f1ce3946f700fff9a67d273d840809d33f5e279123a205696305d2cab" : isU3R7 ? "7b74fffcd33b11c8985c5b9bc67bbee30c2d59594495183d129ab44399ab64cb" : isU2R6 ? "0b5f3b9d20d3dbcb9dcb03c6e65c0f9b513792c7cbaf71d958ee15d13914ec94" : isU1R5 ? "e8b41c9e6fed3e6b1f2b9edf66e1ddd227c4253fd1cb70c7030265dba1c63726" : isU1R3 ? "40606d00063d1ec99f495bf3623f8a8ddba23bc04298c530cf6cd97f92965c10" : FUTURE_GUIDE_PAYLOAD_SHA)
     ) return false;
     const files = header.files;
     if (!Array.isArray(files) || files.length !== expectedRecords) return false;

@@ -162,6 +162,24 @@ def compare(base, cur, allow):
     return report, bad
 
 
+def require_site_a2_exact_bytes(manifest_raw: bytes, admission_raw: bytes) -> None:
+    """Only the cryptographically sealed SITE-A1/A2 R2 is eligible."""
+    manifest_sha = "11d341f50a1ed97b4c1335f27524a2383b2db92a52a19d44a33674e4013dd727"
+    admission_sha = "9102807cee2df87332543e53f83d8b645d81876d9cf6bd1ad26745df0f83eadd"
+    if hashlib.sha256(manifest_raw).hexdigest() != manifest_sha:
+        raise ValueError("SITE_A2_PARITY_STOP manifest SHA mismatch")
+    if hashlib.sha256(admission_raw).hexdigest() != admission_sha:
+        raise ValueError("SITE_A2_PARITY_STOP admission SHA mismatch")
+    m, a = json.loads(manifest_raw), json.loads(admission_raw)
+    if (m.get("patch_id") != "SITE_A1_A2_R2_20261026_DRAFT_REVIEW"
+        or m.get("release_id") != "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"
+        or m.get("payload_sha256") != "10c21322ee0fdfecf3f841b4f286f12494325d70440b7057482ebd807f821d82"
+        or a.get("candidate_manifest_sha256") != manifest_sha
+        or a.get("patch_id") != m.get("patch_id")
+        or a.get("historical_r7b_manifest_sha256") != "a8166f8a45f17df8b7359dfb62bba467c6061f61cab1db164183216d31c42bb6"):
+        raise ValueError("SITE_A2_PARITY_STOP exact identity mismatch")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("mode", choices=["snapshot", "compare"])
@@ -199,6 +217,40 @@ def main():
                 elif patch_id == post.PATCH or post.is_sitemap_r2():
                     post.check_release()
                     legacy_r6_html_for_parity = post.legacy_r6_html_for_parity
+                elif patch_id == "SITE_A1_A2_R2_20261026_DRAFT_REVIEW":
+                    # New successor ONLY; historical R7B/R7C/R31 branches unchanged.
+                    import site_a1_a2_r2_successor as successor
+                    from phuket_universe_r7b_release_profile import (
+                        profile as r7b_profile, git_blob as r7b_blob, PREV_HEAD,
+                    )
+                    from build_phuket_universe_r7 import make_page as replay_r7
+                    manifest_raw = open(os.path.join(args.dir, "_release.json"), "rb").read()
+                    admission_raw = open(
+                        os.path.join(os.path.dirname(__file__),
+                        "data/SITE_A1_A2_R2_METADATA_SUCCESSOR_ADMISSION_V2_20261026.json"),
+                        "rb",
+                    ).read()
+                    require_site_a2_exact_bytes(manifest_raw, admission_raw)
+                    successor.verify()  # 108 assets, immutable 6-ancestor chain, 28 pinned R2 sources
+                    historical = r7b_profile()
+                    def site_a2_legacy_r6_for_parity(rel: str) -> bytes:
+                        if rel not in historical["changed_r6_files"] or not rel.endswith(".html"):
+                            raise ValueError("SITE_A2_PARITY_STOP unapproved historical HTML route")
+                        r6 = r7b_blob(
+                            "3d58999a382b2c11eae7da3d97e9e650c1326f46",
+                            "deploy/live/" + rel,
+                        )
+                        r7 = r7b_blob(PREV_HEAD, "deploy/live/" + rel)
+                        old_pin = historical["r6_file_pins"][rel]
+                        r7_pin = historical["r7_html_pins"][rel]
+                        if (len(r6) != old_pin["size"] or
+                            hashlib.sha256(r6).hexdigest() != old_pin["sha256"] or
+                            len(r7) != r7_pin["size"] or
+                            hashlib.sha256(r7).hexdigest() != r7_pin["sha256"] or
+                            replay_r7(rel, r6.decode("utf-8")).encode("utf-8") != r7):
+                            raise ValueError("SITE_A2_PARITY_STOP historical R6/R7 replay drift")
+                        return r6
+                    legacy_r6_html_for_parity = site_a2_legacy_r6_for_parity
                 else:
                     raise ValueError("Unknown R7 parity patch; fail closed")
                 legacy_html = legacy_r6_html_for_parity
