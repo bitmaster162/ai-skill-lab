@@ -5,6 +5,11 @@ import json
 from phuket_release_profile import active, verify_integrity, universe_page, ROOT, LIVE, UNIVERSE_FILES, profile, sha
 
 def main():
+    import site_a1_a2_r2_successor as site_a2
+    if site_a2.active():
+        result = site_a2.verify()
+        print("SITE_A1_A2_R2_SUCCESSOR_PROFILE_PASS " + json.dumps(result, sort_keys=True))
+        return 0
     import site_r31_post_r7c_profile as post_r7c
     if post_r7c.active():
         result = post_r7c.check_release()

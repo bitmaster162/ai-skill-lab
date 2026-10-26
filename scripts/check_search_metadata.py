@@ -77,7 +77,7 @@ RU_TITLE_SOURCE = {route: "app" + route + "/page.tsx" for route in RU_TITLE_CONT
 TITLE_CONTRACT = {
     "/en/faq": "FAQ — sessions, projects and payment | AI Skill Lab · Phuket",
     "/en/about": "About the practice and the method | AI Skill Lab · Phuket",
-    "/en/start": "Start — pick a track and a first task | AI Skill Lab · Phuket",
+    "/en/start": "Start — pick a track and first task | AI Skill Lab · Phuket",
     "/en/terms": "Terms of service | AI Skill Lab · Phuket",
     "/en/privacy": "Privacy policy and data handling | AI Skill Lab · Phuket",
     "/about": "О проекте: обучение ИИ — AI Skill Lab · Пхукет",
@@ -597,18 +597,35 @@ def main() -> int:
     expected_lastmod = source_lastmod.group(1) if source_lastmod else None
     from phuket_release_profile import active, universe_page, UNIVERSE_ROUTES
     public_html_paths = [path for path in pages if route_for(path) != "/404"]
-    if active():
+    import site_a1_a2_r2_successor as site_a2
+    successor_routes = frozenset(("/business", "/challenge", "/faq", "/phuket",
+        "/privacy", "/projects", "/proof", "/start", "/studio", "/teens", "/terms"))
+    successor_price = frozenset(("/pricing", "/en/pricing"))
+    successor_verified = site_a2.active()
+    if successor_verified:
+        site_a2.verify()
+        expected_routes = '  const siteA2Routes = ["/business", "/challenge", "/faq", "/phuket", "/privacy", "/projects", "/proof", "/start", "/studio", "/teens", "/terms"];'
+        expected_expression = 'lastModified: universeRoutes.includes(route) ? "2026-10-15" : (route === "/pricing" || route === "/en/pricing") ? "2026-10-26" : siteA2Routes.includes(route) ? "2026-10-26" : lastModified'
+        if source_sitemap.count(expected_routes) != 1:
+            errors.append("SITE-A2 exact changed-route list missing")
+        if source_sitemap.count(expected_expression) != 1:
+            errors.append("SITE-A2 exact per-route lastModified expression missing")
+        if len(successor_routes) != 11 or len(successor_price) != 2:
+            errors.append("SITE-A2 route scope drift")
+    elif active():
         universe_lastmod = "2026-10-15" if RELEASE=="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015" else "2026-10-14"
         expected_expression = f'lastModified: universeRoutes.includes(route) ? "{universe_lastmod}" : lastModified'
         if source_sitemap.count(expected_expression) != 1:
             errors.append("R3 exact per-route lastModified expression missing")
+    if active():
         public_html_paths = [path for path in public_html_paths if not universe_page(path)]
     latest_html_date = latest_public_html_commit_date(public_html_paths, errors)
     if expected_lastmod and latest_html_date is not None:
         source_lastmod_date = date.fromisoformat(expected_lastmod)
-        if source_lastmod_date < latest_html_date:
+        freshness_date = date(2026, 10, 26) if successor_verified else source_lastmod_date
+        if freshness_date < latest_html_date:
             errors.append(
-                f"sitemap lastmod {expected_lastmod} older than latest public HTML commit {latest_html_date.isoformat()}"
+                f"sitemap lastmod {freshness_date.isoformat()} older than latest public HTML commit {latest_html_date.isoformat()}"
             )
     lastmod_urls = set()
     for entry in root.findall("sm:url", ns):
@@ -624,6 +641,8 @@ def main() -> int:
         except ValueError:
             errors.append(f"invalid sitemap lastmod {loc_text}: {value}")
         per_route_lastmod = ("2026-10-15" if RELEASE=="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015" else "2026-10-14") if active() and loc_text in {ORIGIN + p for p in UNIVERSE_ROUTES} else expected_lastmod
+        if successor_verified and loc_text in {ORIGIN + p for p in (successor_routes | successor_price)}:
+            per_route_lastmod = "2026-10-26"
         if per_route_lastmod and value != per_route_lastmod:
             errors.append(f"sitemap lastmod/source mismatch {loc_text}: {value} != {per_route_lastmod}")
         lastmod_urls.add(loc_text)

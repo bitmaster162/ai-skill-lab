@@ -1,0 +1,68 @@
+{
+  "base_main_sha": "d0a858a7787088dabf6d914e45fb0cde41b743e8",
+  "can_deploy": false,
+  "can_merge": false,
+  "candidate_manifest_parent_sha256": "ad8282f6b7a670c9e5e5f840dd0d427f3c24f87a2210f64d40dab1cf7bf497e5",
+  "candidate_manifest_sha256": "11d341f50a1ed97b4c1335f27524a2383b2db92a52a19d44a33674e4013dd727",
+  "candidate_payload_sha256": "10c21322ee0fdfecf3f841b4f286f12494325d70440b7057482ebd807f821d82",
+  "changed_static_assets_from_source_commit": [
+    "sitemap.xml"
+  ],
+  "exact_2026_10_26_bilingual_pricing_routes": [
+    "/pricing",
+    "/en/pricing"
+  ],
+  "exact_2026_10_26_ru_routes": [
+    "/business",
+    "/challenge",
+    "/faq",
+    "/phuket",
+    "/privacy",
+    "/projects",
+    "/proof",
+    "/start",
+    "/studio",
+    "/teens",
+    "/terms"
+  ],
+  "files_exact": [
+    "app/sitemap.ts",
+    "data/SITE_A1_A2_R2_METADATA_SUCCESSOR_ADMISSION_V2_20261026.json",
+    "deploy/live/_release.json",
+    "deploy/live/sitemap.xml",
+    "scripts/check_phuket_release_r3.py",
+    "scripts/check_search_metadata.py",
+    "scripts/phuket_release_profile.py",
+    "scripts/site_a1_a2_r2_successor.py",
+    "scripts/test_site_a1_a2_r2_successor.py",
+    "scripts/test_site_a2_metadata_gate.py"
+  ],
+  "historical_r7b_manifest_sha256": "a8166f8a45f17df8b7359dfb62bba467c6061f61cab1db164183216d31c42bb6",
+  "historical_rules_modified": false,
+  "patch_id": "SITE_A1_A2_R2_20261026_DRAFT_REVIEW",
+  "preview_bypass": false,
+  "release_id": "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015",
+  "schema": "ai-skill-lab.site-a1-a2-r2-metadata-successor-admission.v2",
+  "sha_pins_non_recursive": {
+    "app/sitemap.ts": {
+      "bytes": 1603,
+      "sha256": "aaa42ef58032b7026496c251893bade8896240b92f37653cf915e5d3f5c79fb5"
+    },
+    "deploy/live/_release.json": {
+      "bytes": 16586,
+      "sha256": "11d341f50a1ed97b4c1335f27524a2383b2db92a52a19d44a33674e4013dd727"
+    },
+    "deploy/live/sitemap.xml": {
+      "bytes": 4903,
+      "sha256": "8be155b3e4c35908578a64721da5fc82dc35614d8497f0a85d2c80fd41e390d6"
+    },
+    "scripts/check_search_metadata.py": {
+      "bytes": 33081,
+      "sha256": "56068e82593a90b056c2adee294d54084d2654a332dd56b9c80b74920cba563f"
+    }
+  },
+  "source_commit_sha": "9d2ed0c1fa98d94457052392208cb3526385a2ba",
+  "source_commit_tree": "96a3619cd476d4174f6fff016fdfa3945fe7cc58",
+  "source_r2_manifest_sha256": "ad8282f6b7a670c9e5e5f840dd0d427f3c24f87a2210f64d40dab1cf7bf497e5",
+  "status": "EXACT_LOCAL_REVIEW_ONLY_NO_PRODUCTION_AUTHORITY"
+}
