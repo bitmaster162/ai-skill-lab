@@ -28,8 +28,8 @@
     },
     {
       "path": "business.html",
-      "sha256": "1ac42da4349d872b29d657bd4d1283cf959372e26b3b1ef77e6297f353f0811e",
-      "size": 37357
+      "sha256": "c9be8eec0e42f3ca84d582cdcd5534a1b8c85b49257023b7e853ee25d141d60f",
+      "size": 37538
     },
     {
       "path": "certificate.html",
@@ -38,8 +38,8 @@
     },
     {
       "path": "challenge.html",
-      "sha256": "e8dbe5d31b7c88ef48f86692291c56018634f7f2e90caf4dd09b5fa1c99f3d2d",
-      "size": 14658
+      "sha256": "f85503a1ad426473b2fa4b7bb8d88248104aec080e2372717dc09577f15e9305",
+      "size": 14850
     },
     {
       "path": "curriculum.html",
@@ -193,8 +193,8 @@
     },
     {
       "path": "faq.html",
-      "sha256": "2ff316d11571681613e494c442d61a0371f6fbf434bc638eab575576a855abcc",
-      "size": 16614
+      "sha256": "642d13c0b6d14a01acb700459ab6210f6f28416bcd03abcad0d89515a9bd4303",
+      "size": 17074
     },
     {
       "path": "favicon.ico",
@@ -443,8 +443,8 @@
     },
     {
       "path": "phuket.html",
-      "sha256": "1ed5e84658640a54f717bfaa27eeab2a433066b33111c467b9353cde12b9c7e6",
-      "size": 13046
+      "sha256": "92e22b89466ed9a3407e07d6b3505c0db1caa430941b277fbd748f447389c6a9",
+      "size": 13073
     },
     {
       "path": "pricing.html",
@@ -453,8 +453,8 @@
     },
     {
       "path": "privacy.html",
-      "sha256": "56516dc5df47b4007362634a1815e4dd8904fc2526a26e929b48274aa08353d8",
-      "size": 12044
+      "sha256": "1d396d4df494fa8198e03e34bd0641bcd40318fba635ae35379573d6b0e4971b",
+      "size": 12152
     },
     {
       "path": "project-filter.js",
@@ -463,8 +463,8 @@
     },
     {
       "path": "projects.html",
-      "sha256": "07e1928de90102c83acf841a24f2757e644afb3954d433deb79b36219ae2ba03",
-      "size": 27963
+      "sha256": "2f96255923562450e387c96840bc68349df689dae97a1f22827855aeeae6d002",
+      "size": 28271
     },
     {
       "path": "prompt-auditor.js",
@@ -473,8 +473,8 @@
     },
     {
       "path": "proof.html",
-      "sha256": "0d129eafc7dfcc65c557e79e0203375852465dce706f549bbe26abae85513425",
-      "size": 30158
+      "sha256": "6a51c106e674eb3f11404a8440ab5616d6b4f17119dbe08710243991539b6f4d",
+      "size": 30361
     },
     {
       "path": "robert-dumanyan-mentor.webp",
@@ -513,28 +513,28 @@
     },
     {
       "path": "start.html",
-      "sha256": "6e08eec31622894b9e0f661822dd7fadeeebf7a986005e391ca6444f9bba7add",
-      "size": 22879
+      "sha256": "c216628f0560f2856ea81be4635b91922a803a6fdece60ec61a0ea7ef9b2604c",
+      "size": 22960
     },
     {
       "path": "studio.html",
-      "sha256": "f85afa18873f7df48e1c7e4798e8308cfd1ae8e91a6308702d6c2f5d31126c1d",
-      "size": 16314
+      "sha256": "fc6d15de784831e19649aa3a7115daf9dbb579df89356fc5b97a4d12431187a0",
+      "size": 16577
     },
     {
       "path": "teens.html",
-      "sha256": "592dfc94cf4d7edd2cb4f9131d8721b4fe7a5dfdff2edac6ab07400ba4e3481b",
-      "size": 21803
+      "sha256": "29d44ab19ab31f73c6d40b575343dfd9435ac1033fa63b063d087ccf5526ff46",
+      "size": 21825
     },
     {
       "path": "terms.html",
-      "sha256": "cffce69362adc2815085ce27b29ce3506704008f56b061e53514dfa11d62dae8",
-      "size": 9356
+      "sha256": "d639d20fd0883e22688f3f2349c8c4133545913fd8bc3128c66c2bb865275742",
+      "size": 9437
     },
     {
       "path": "vercel.json",
-      "sha256": "5ac7df377dac8a413f47c6269761bb3157bb3d8e8df248a19376ea43dd44ee37",
-      "size": 5867
+      "sha256": "997a9eeb9c9972b2089ab4b74ac4af9edc89e9c9bd33e00612b201ca70a7298d",
+      "size": 5975
     },
     {
       "path": "workshop.css",
@@ -542,9 +542,9 @@
       "size": 41174
     }
   ],
-  "parent_manifest_sha256": "fc57c61c7ac502644665f7cc06152f43fb0b5d7f67827eb6fd4b12aadfc83f37",
-  "patch_id": "SITE_A1_PRICING_COPY_20261026_LOCAL_R1",
-  "payload_sha256": "f1a50555270db107d2c3cdd4f17825748e50ffed8b957753da76582bc81609f8",
+  "parent_manifest_sha256": "6159de33768a88d9d945fc3fc2cbfde194cc2cf087783acb63b65acaabcffc56",
+  "patch_id": "SITE_A1_A2_R2_20261026_DRAFT_REVIEW",
+  "payload_sha256": "ec35a0007cbb3e88687af6443e8ab704cc82c10199d45d914ccc2cdf0ce2724e",
   "release_id": "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015",
   "schema": "ai-skill-lab.static-release.v1"
 }

@@ -1,0 +1,148 @@
+{
+  "base_branch": "main",
+  "base_sha": "d0a858a7787088dabf6d914e45fb0cde41b743e8",
+  "base_tree": "dd5605cc32c6323396ce23a97afb79b30a09ba66",
+  "candidate_commit_sha": null,
+  "candidate_commit_tree": null,
+  "candidate_manifest_sha256": "ad8282f6b7a670c9e5e5f840dd0d427f3c24f87a2210f64d40dab1cf7bf497e5",
+  "candidate_payload_sha256": "ec35a0007cbb3e88687af6443e8ab704cc82c10199d45d914ccc2cdf0ce2724e",
+  "candidate_static_file_count": 108,
+  "changed_files_count": 28,
+  "changed_files_relative_to_existing_pr_head": {
+    "app/(ru)/challenge/page.tsx": {
+      "sha256": "961f2b5de990831e6483518010b452562fc13d153fc78530e793127b0ed800b4",
+      "size": 3825
+    },
+    "app/(ru)/faq/page.tsx": {
+      "sha256": "dea6eed6ab516de4378e4989ed160c90a8b9c02651ce078d8f3fc751a004c125",
+      "size": 5109
+    },
+    "app/(ru)/privacy/page.tsx": {
+      "sha256": "62744a75116170b3ffc83e291776d3e4a1de8e6f17276c8f08de4d3519b6330f",
+      "size": 6917
+    },
+    "app/(ru)/projects/page.tsx": {
+      "sha256": "d4f04c665cdf3dcca9c464e646be6881c4e30acfdd4c93e02c38805b653bac60",
+      "size": 3962
+    },
+    "app/(ru)/proof/page.tsx": {
+      "sha256": "afaef143181d48efa5d7f5af149c507eb8931ca853a8e0842fb1ff451ce29de6",
+      "size": 12473
+    },
+    "app/(ru)/studio/page.tsx": {
+      "sha256": "4abf06adbfb8056a6c813a7ab7aa1e6d3fdbf93fae4f24adb7688c27e9c9fc69",
+      "size": 10552
+    },
+    "components/LegalPage.tsx": {
+      "sha256": "12a8f0a2a29ad9ed1923ccf9491b1aeb54cbca52136509e0377153e5015ebd21",
+      "size": 1006
+    },
+    "components/ProjectStudio.tsx": {
+      "sha256": "6f5acd278f268075aadf51e4bb79bc6ede67bb7d60e96895f36a353bfd22bc34",
+      "size": 15536
+    },
+    "components/RealProjectGallery.tsx": {
+      "sha256": "863c6bb4cef6a7b96c7d4d483788c16b51f78ab8a500aea0e584ad1897b9e377",
+      "size": 8666
+    },
+    "components/workshop/PhuketLocal.tsx": {
+      "sha256": "99f83475338cc64792e1203ec36d793ee6a3f86787a89c9002d6c6ce5a39502b",
+      "size": 5132
+    },
+    "components/workshop/WorkshopAudience.tsx": {
+      "sha256": "be7f68db93db6b18bf007c6715a24fe30c7c67116e619f36780c98a8c07903f7",
+      "size": 18933
+    },
+    "components/workshop/WorkshopBusiness.tsx": {
+      "sha256": "0d60ea7885a2d6a46a8e33a0cf806359911378935c0c06cdd84412072a2a97d0",
+      "size": 14924
+    },
+    "components/workshop/WorkshopFaq.tsx": {
+      "sha256": "4a5967378a389ddd71781f5fa1fdda04814b0b1c449ed1ea7ce385c5dcd0bba2",
+      "size": 1263
+    },
+    "components/workshop/WorkshopHome.tsx": {
+      "sha256": "d8237a518dad67b1badd659d155f7a188c28b4de929d003b4e56345a9f3b4923",
+      "size": 8963
+    },
+    "components/workshop/WorkshopStart.tsx": {
+      "sha256": "6fed2228517860b12aa730c5534e40c3cf04c6a15ba9be907bff55811c777d71",
+      "size": 8172
+    },
+    "deploy/live/_release.json": {
+      "sha256": "ad8282f6b7a670c9e5e5f840dd0d427f3c24f87a2210f64d40dab1cf7bf497e5",
+      "size": 16586
+    },
+    "deploy/live/business.html": {
+      "sha256": "c9be8eec0e42f3ca84d582cdcd5534a1b8c85b49257023b7e853ee25d141d60f",
+      "size": 37538
+    },
+    "deploy/live/challenge.html": {
+      "sha256": "f85503a1ad426473b2fa4b7bb8d88248104aec080e2372717dc09577f15e9305",
+      "size": 14850
+    },
+    "deploy/live/faq.html": {
+      "sha256": "642d13c0b6d14a01acb700459ab6210f6f28416bcd03abcad0d89515a9bd4303",
+      "size": 17074
+    },
+    "deploy/live/phuket.html": {
+      "sha256": "92e22b89466ed9a3407e07d6b3505c0db1caa430941b277fbd748f447389c6a9",
+      "size": 13073
+    },
+    "deploy/live/privacy.html": {
+      "sha256": "1d396d4df494fa8198e03e34bd0641bcd40318fba635ae35379573d6b0e4971b",
+      "size": 12152
+    },
+    "deploy/live/projects.html": {
+      "sha256": "2f96255923562450e387c96840bc68349df689dae97a1f22827855aeeae6d002",
+      "size": 28271
+    },
+    "deploy/live/proof.html": {
+      "sha256": "6a51c106e674eb3f11404a8440ab5616d6b4f17119dbe08710243991539b6f4d",
+      "size": 30361
+    },
+    "deploy/live/start.html": {
+      "sha256": "c216628f0560f2856ea81be4635b91922a803a6fdece60ec61a0ea7ef9b2604c",
+      "size": 22960
+    },
+    "deploy/live/studio.html": {
+      "sha256": "fc6d15de784831e19649aa3a7115daf9dbb579df89356fc5b97a4d12431187a0",
+      "size": 16577
+    },
+    "deploy/live/teens.html": {
+      "sha256": "29d44ab19ab31f73c6d40b575343dfd9435ac1033fa63b063d087ccf5526ff46",
+      "size": 21825
+    },
+    "deploy/live/terms.html": {
+      "sha256": "d639d20fd0883e22688f3f2349c8c4133545913fd8bc3128c66c2bb865275742",
+      "size": 9437
+    },
+    "deploy/live/vercel.json": {
+      "sha256": "997a9eeb9c9972b2089ab4b74ac4af9edc89e9c9bd33e00612b201ca70a7298d",
+      "size": 5975
+    }
+  },
+  "ci_green": false,
+  "existing_pr_head_sha": "74095414ea1fa3f41b879ebfa9b55fd525242d2a",
+  "existing_pr_head_tree": "44900123b12cfd29d50a2fcbe48a3b8b51ee8a53",
+  "historic_lineage": {
+    "historical_r7b_manifest_sha256": "a8166f8a45f17df8b7359dfb62bba467c6061f61cab1db164183216d31c42bb6",
+    "historical_r7b_profile_sha256": "4bb0b241618a3d75aee2de39ffd1771279e4d13399e00af2fa45661e57b26d39",
+    "historical_r7b_release_id": "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015",
+    "r31_post_r7c_parent_manifest_sha256": "fc57c61c7ac502644665f7cc06152f43fb0b5d7f67827eb6fd4b12aadfc83f37",
+    "site_a1_r1_parent_manifest_sha256": "6159de33768a88d9d945fc3fc2cbfde194cc2cf087783acb63b65acaabcffc56"
+  },
+  "historical_r7b_gates_modified": false,
+  "merged": false,
+  "patch_id": "SITE_A1_A2_R2_20261026_DRAFT_REVIEW",
+  "pr_draft": true,
+  "pr_number": 236,
+  "production_deployed": false,
+  "pushed": false,
+  "reason": "R7B and R31 historical exact manifest/profile gates reject candidate; successor routing requires separately authorized change to gate admission rules",
+  "release_id": "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015",
+  "repo": "bitmaster162/ai-skill-lab",
+  "schema": "ai-skill-lab.site-a1-a2.r2-successor-admission-candidate.v1",
+  "status": "HOLD_UNACTIVATED_CANDIDATE_NO_GATE_MUTATION",
+  "successor_admission_integrated_into_existing_gates": false
+}
