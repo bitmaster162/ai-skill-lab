@@ -10,7 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const universeRoutes = ["/phuket-universe", "/en/phuket-universe"];
   return [...routes, ...guideRoutes, ...universeRoutes].map((route) => ({
     url: `${base}${route}`,
-    lastModified: universeRoutes.includes(route) ? "2026-10-15" : lastModified,
+    lastModified: universeRoutes.includes(route) ? "2026-10-15" : (route === "/pricing" || route === "/en/pricing") ? "2026-10-26" : lastModified,
     changeFrequency: "monthly",
     priority: route === "" || route === "/en" ? 1 : 0.8,
   }));

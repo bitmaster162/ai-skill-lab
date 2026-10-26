@@ -4,6 +4,7 @@ import html,json,re,sys
 from html.parser import HTMLParser
 from pathlib import Path
 from public_origin import PUBLIC_ORIGIN
+from site_a1_pricing_contract import catalog as site_a1_catalog
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/"deploy/live";ORIGIN=PUBLIC_ORIGIN
 RELEASE=json.loads((LIVE/"_release.json").read_text(encoding="utf-8")).get("release_id")
 ORG_ID=f"{ORIGIN}/#organization";WEB_ID=f"{ORIGIN}/#website";PERSON_ID=f"{ORIGIN}/about#person"
@@ -82,6 +83,9 @@ def main():
    want=course_list(lang);found=[x for x in objs if x.get("@type")=="ItemList"]
    if found!=[want]:errors.append(f"{route}: pricing Course list drift")
    else:course_items+=len(want["itemListElement"])
+   found_offers=[x for x in objs if x.get("@type")=="OfferCatalog"]
+   expected_offers=site_a1_catalog(lang)
+   if found_offers != [expected_offers]:errors.append(f"{route}: SITE-A1 OfferCatalog vs commercial facts / visible prices drift")
   if route in {"/faq","/en/faq"}:
    want=faq_page(p,lang);found=[x for x in objs if x.get("@type")=="FAQPage"]
    if found!=[want]:errors.append(f"{route}: FAQPage drift")

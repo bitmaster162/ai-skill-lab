@@ -38,6 +38,22 @@ Do not infer guarantees or commercial terms from this index.
 - [RU](https://aiskillab.work/privacy) [EN](https://aiskillab.work/en/privacy)
 - [RU](https://aiskillab.work/safety) [EN](https://aiskillab.work/en/safety)
 
+## Pricing snapshot (USD)
+RU: https://aiskillab.work/pricing | EN: https://aiskillab.work/en/pricing
+- Introductory call: free, 15 minutes
+- Diagnostic: $120, 60 minutes, 14-day package credit
+- Adults: Start $390, Personal $890, Intensive $1,290
+- Kids 8-13: Mini $290, Creator $890, Studio $1,190
+- Teens 14-18: Explorer $490, Portfolio $890, Builder $1,290
+- Family Concierge: $1,490
+- Workflow audit: $890
+- Team training: from $390/session; 4-session minimum from $1,560; up to 5 people
+- Implementation pilot: from $4,900; scope cap 35 hours
+- Operating support: $490/month, 4 hours
+- Operating partner: $890/month, 8 hours
+- Office hours: $178/month, 2 sessions
+- Pair: 1.6x the individual package; each participant 20% less
+
 ## Guides
 - [RU](https://aiskillab.work/guides) [EN](https://aiskillab.work/en/guides)
 - [RU](https://aiskillab.work/guides/ai-first-tasks-for-adults) [EN](https://aiskillab.work/en/guides/ai-first-tasks-for-adults)

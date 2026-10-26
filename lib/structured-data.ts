@@ -89,6 +89,36 @@ export function courseListSchema(locale: WorkshopLocale) {
   };
 }
 
+/** SITE-A1: only published data/commercial_facts.json supplies pricing amounts. */
+export function pricingOfferCatalogSchema(locale: WorkshopLocale) {
+ const en=locale==="en", p=en?"/en/pricing":"/pricing";
+ const rows:Array<{name:string;price:string;description?:string}>=[];
+ const add=(name:string,raw:string,description?:string) =>
+   rows.push({name,price:raw.replace(/[$,]/g,""),...(description?{description}:{})});
+ add(en?"Free introductory call":"Бесплатный звонок-знакомство","0",en?"15 minutes":"15 минут");
+ add(en?commercialFacts.diagnostic.name_en:commercialFacts.diagnostic.name_ru,commercialFacts.diagnostic.price);
+ for (const plans of [commercialFacts.tracks.adult,commercialFacts.tracks.kids,commercialFacts.tracks.teens])
+   for (const plan of plans)add(plan.name,plan.price);
+ add(commercialFacts.family.name,commercialFacts.family.price);
+ const b=commercialFacts.business;
+ add(en?b.workflow_audit.name_en:"Аудит рабочего процесса",b.workflow_audit.price);
+ add(en?b.team_training.name_en:b.team_training.name_ru,b.team_training.total_from,
+  en?"From "+b.team_training.price_from_per_session+" per session; minimum "+b.team_training.min_sessions+" sessions; up to "+b.team_training.max_people+" participants":
+  "От "+b.team_training.price_from_per_session+" за занятие; минимум "+b.team_training.min_sessions+" занятия; до "+b.team_training.max_people+" человек");
+ add(en?b.implementation_pilot.name_en:"Внедрение пилота",b.implementation_pilot.price_from,
+  en?"Starting at; scope cap "+b.implementation_pilot.scope_cap_hours+" hours":
+  "От указанной суммы; предел объёма работ "+b.implementation_pilot.scope_cap_hours+" часов");
+ const r=commercialFacts.recurring;
+ add(en?r.operating_support.name_en:"Операционная поддержка",r.operating_support.price_monthly,en?"per month":"в месяц");
+ add(en?r.operating_partner.name_en:"Операционный партнёр",r.operating_partner.price_monthly,en?"per month":"в месяц");
+ add(en?r.office_hours.name_en:"Часы консультаций",r.office_hours.price_monthly,en?"per month":"в месяц");
+ return {"@context":"https://schema.org","@type":"OfferCatalog","@id":site.url+p+"#offers",
+   name:en?"AI Skill Lab pricing":"Цены AI Skill Lab",
+   itemListElement:rows.map(row=>({"@type":"Offer",name:row.name,price:row.price,
+     priceCurrency:commercialFacts.currency,url:site.url+p,
+     ...(row.description?{description:row.description}:{})}))};
+}
+
 export function faqPageSchema(items: string[][], locale: WorkshopLocale) {
   const path = locale === "en" ? "/en/faq" : "/faq";
   return {
