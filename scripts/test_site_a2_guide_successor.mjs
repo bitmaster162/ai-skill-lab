@@ -43,7 +43,7 @@ function guideRoutes(manifestBytes, admissionBytes) {
     },
   };
   const exports = {};
-  const module = { exports };
+  const fakeModule = { exports };
   const require = name => {
     if (name === "node:fs") return fakeFs;
     if (name === "node:path") return path;
@@ -51,12 +51,12 @@ function guideRoutes(manifestBytes, admissionBytes) {
     throw new Error("Unapproved module import: " + name);
   };
   vm.runInNewContext(compiled.outputText, {
-    require, module, exports, process: { cwd: () => repo }, Buffer, console, Date,
+    require, module: fakeModule, exports, process: { cwd: () => repo }, Buffer, console, Date,
   }, { filename: "lib/guides.ts (transpiled)", timeout: 4000 });
   const adult = "ai-first-tasks-for-adults";
   return {
-    ru: module.exports.listGuides("ru").some(x => x.slug === adult),
-    en: module.exports.listGuides("en").some(x => x.slug === adult),
+    ru: fakeModule.exports.listGuides("ru").some(x => x.slug === adult),
+    en: fakeModule.exports.listGuides("en").some(x => x.slug === adult),
   };
 }
 
