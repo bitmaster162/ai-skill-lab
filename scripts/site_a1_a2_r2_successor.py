@@ -8,10 +8,10 @@ ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/"deploy/live"
 RELEASE="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"
 PATCH="SITE_A1_A2_R2_20261026_DRAFT_REVIEW"
-MANIFEST_SHA="11d341f50a1ed97b4c1335f27524a2383b2db92a52a19d44a33674e4013dd727"
-PAYLOAD_SHA="10c21322ee0fdfecf3f841b4f286f12494325d70440b7057482ebd807f821d82"
+MANIFEST_SHA="d03a2e227bae748dfb03d4d35bf2b619c500e8d73802ab60e58c1fa221914606"
+PAYLOAD_SHA="cbac82a237c62c416f2ef6163ac2c276a3d2674283626df9d3f2988f3effd324"
 ADMISSION="data/SITE_A1_A2_R2_METADATA_SUCCESSOR_ADMISSION_V2_20261026.json"
-ADMISSION_SHA="9102807cee2df87332543e53f83d8b645d81876d9cf6bd1ad26745df0f83eadd"
+ADMISSION_SHA="4ff3e62bcacc46aa299e7225a32d765a537bd936e8b6aa3232e14994121283ea"
 SOURCE_COMMIT="9d2ed0c1fa98d94457052392208cb3526385a2ba"
 SOURCE_TREE="96a3619cd476d4174f6fff016fdfa3945fe7cc58"
 BASE="d0a858a7787088dabf6d914e45fb0cde41b743e8"
@@ -23,7 +23,7 @@ CHAIN=(
  ("74095414ea1fa3f41b879ebfa9b55fd525242d2a","6159de33768a88d9d945fc3fc2cbfde194cc2cf087783acb63b65acaabcffc56","fc57c61c7ac502644665f7cc06152f43fb0b5d7f67827eb6fd4b12aadfc83f37"),
  (SOURCE_COMMIT,"ad8282f6b7a670c9e5e5f840dd0d427f3c24f87a2210f64d40dab1cf7bf497e5","6159de33768a88d9d945fc3fc2cbfde194cc2cf087783acb63b65acaabcffc56"),
 )
-STATIC_DELTA=frozenset({"sitemap.xml"})
+STATIC_DELTA=frozenset({"sitemap.xml","start.html"})
 HISTORIC_FILES=(
  "scripts/phuket_universe_r7b_release_profile.py",
  "data/phuket_universe_u3_e38_r7b_profile.json",
@@ -129,9 +129,9 @@ def verify(manifest_override:bytes|None=None,extra_file:str|None=None,
       adm.get("source_commit_sha")==SOURCE_COMMIT and
       adm.get("historical_r7b_manifest_sha256")==CHAIN[0][1],"METADATA_ADMISSION_IDENTITY")
  expected_files={
-  "app/sitemap.ts",
+  "app/sitemap.ts","components/workshop/WorkshopStart.tsx",
   "data/SITE_A1_A2_R2_METADATA_SUCCESSOR_ADMISSION_V2_20261026.json",
-  "deploy/live/_release.json","deploy/live/sitemap.xml",
+  "deploy/live/_release.json","deploy/live/sitemap.xml","deploy/live/start.html",
   "scripts/check_phuket_release_r3.py","scripts/check_search_metadata.py",
   "scripts/phuket_release_profile.py","scripts/site_a1_a2_r2_successor.py",
   "scripts/test_site_a1_a2_r2_successor.py","scripts/test_site_a2_metadata_gate.py"}
@@ -140,7 +140,7 @@ def verify(manifest_override:bytes|None=None,extra_file:str|None=None,
   raw=(ROOT/name).read_bytes()
   must(sha(raw)==entry["sha256"] and len(raw)==entry["bytes"],"METADATA_PIN:"+name)
  must(set(adm.get("sha_pins_non_recursive",{}))==
-      {"app/sitemap.ts","deploy/live/_release.json","deploy/live/sitemap.xml",
+      {"app/sitemap.ts","components/workshop/WorkshopStart.tsx","deploy/live/_release.json","deploy/live/sitemap.xml","deploy/live/start.html",
        "scripts/check_search_metadata.py"},"METADATA_PIN_SET")
  must(set(adm.get("exact_2026_10_26_ru_routes",[]))==
       {"/business","/challenge","/faq","/phuket","/privacy",
