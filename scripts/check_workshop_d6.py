@@ -13,10 +13,13 @@ def req(c,m):
  global checks; checks+=1
  if not c: errors.append(m)
 def read(rel): return source_path(rel).read_text(encoding='utf-8')
-POST_R31=post_r31.active()
-if POST_R31:post_r31.check_release()
+import site_a1_a2_r2_successor as site_a2
+SUCCESSOR=site_a2.active()
+POST_R31=post_r31.active() or SUCCESSOR
+if POST_R31:
+ (site_a2.verify() if SUCCESSOR else post_r31.check_release())
 source=read('components/workshop/WorkshopStart.tsx')
-for marker in ['import { LeadForm } from "@/components/LeadForm";','<LeadForm locale={locale}/>','START · APPLICATION + CONTACT','START · ЗАЯВКА + КОНТАКТ']:
+for marker in ['import { LeadForm } from "@/components/LeadForm";','<LeadForm locale={locale}/>','START · APPLICATION + CONTACT',('НАЧАЛО · ЗАЯВКА + КОНТАКТ' if SUCCESSOR else 'START · ЗАЯВКА + КОНТАКТ')]:
  req(marker in source,f'WorkshopStart missing {marker}')
 if POST_R31:
  for marker in ['The form is not ready yet. You can contact us directly.','Форма пока не готова к отправке. Можно связаться напрямую.']:
