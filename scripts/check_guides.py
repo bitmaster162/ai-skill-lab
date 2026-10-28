@@ -58,6 +58,12 @@ import site_r31_post_r7c_profile as post_r7c
 if post_r7c.active():
     post_r7c.check_release()
     EXPECTED_MD["guides/aiskillab/ai-safety-for-kids.en.md"] = "7c5362428fe712a3d092344db93ba0d8032919ec7271466d9b38b2e7f6f74afd"
+else:
+    import site_a1_a2_r2_successor as site_a2
+    if site_a2.active():
+        site_a2.verify()
+        # The EN source equals main and is already pinned in the R31 predecessor.
+        EXPECTED_MD["guides/aiskillab/ai-safety-for-kids.en.md"] = "7c5362428fe712a3d092344db93ba0d8032919ec7271466d9b38b2e7f6f74afd"
 
 FUTURE_RELEASE = "T1_6F2_ADULT_FIRST_TASKS_R1"
 FUTURE_ARTICLES = {
