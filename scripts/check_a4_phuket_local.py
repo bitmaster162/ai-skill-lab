@@ -17,6 +17,12 @@ TARGETS = {
 }
 AREAS = ["Rawai / Nai Harn", "Chalong", "Kata / Karon", "Phuket Town"]
 FORMATS = ["LOCAL 1:1", "ONLINE 1:1", "HYBRID"]
+# SITE-A2 localizes only the RU static format labels; historical A4 unchanged.
+import site_a1_a2_r2_successor as successor
+SITE_A2 = successor.active()
+if SITE_A2:
+    successor.verify()
+RU_FORMATS = {"LOCAL 1:1": "ОЧНО 1:1", "ONLINE 1:1": "ОНЛАЙН 1:1", "HYBRID": "СМЕШАННЫЙ"}
 
 def req(cond: bool, message: str) -> None:
     global checks
@@ -58,7 +64,10 @@ for rel, locale in TARGETS.items():
     for area in AREAS:
         req(text.count(f"<strong>{area}</strong>") == 1, f"{rel}: area {area}")
     for fmt in FORMATS:
-        req(text.count(f"<span>{fmt}</span>") == 1, f"{rel}: format {fmt}")
+        exact = RU_FORMATS[fmt] if SITE_A2 and locale == "ru" else fmt
+        req(text.count(f"<span>{exact}</span>") == 1, f"{rel}: format {exact}")
+        if SITE_A2 and locale == "ru":
+            req(text.count(f"<span>{fmt}</span>") == 0, f"{rel}: historical English format must be absent {fmt}")
     req(text.count('class="phuketAreaGrid"') == 1, f"{rel}: area grid")
     req(text.count('class="phuketFormatGrid"') == 1, f"{rel}: format grid")
     req("permanent school location" in text if locale == "en" else "постоянные классы" in text, f"{rel}: no-campus truth")
