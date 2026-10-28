@@ -135,6 +135,11 @@ def main() -> int:
     routes = []
     import site_r31_post_r7c_profile as post_r31
     post_active = post_r31.active()
+    import site_a1_a2_r2_successor as site_a2
+    import site_a2_e3_history as successor_e3
+    site_a2_mode = site_a2.active()
+    if site_a2_mode:
+        successor_e3.authorize()
     if post_active:
         post_r31.check_release()  # Full candidate proof before any historical comparison.
     for path in sorted(LIVE.rglob("*.html")):
@@ -143,7 +148,9 @@ def main() -> int:
         if route.startswith("/en") or route == "/404":
             continue
         page = Page()
-        if post_active:
+        if site_a2_mode:
+            reviewed_html = successor_e3.legacy_r6_html(path.relative_to(LIVE).as_posix()).decode("utf-8")
+        elif post_active:
             reviewed_html = post_r31.legacy_r6_html_for_parity(path.relative_to(LIVE).as_posix()).decode("utf-8")
         elif RELEASE_ID in {"PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015", "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"}:
             reviewed_html = __import__("phuket_universe_r7b_release_profile" if RELEASE_ID=="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015" else "phuket_universe_r7_release_profile").legacy_r6_html(path.relative_to(LIVE).as_posix()).decode("utf-8")

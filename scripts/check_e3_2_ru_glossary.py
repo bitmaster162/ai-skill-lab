@@ -46,9 +46,14 @@ if E35_PINS:
 if RELEASE_ID in ('T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'):
  ENGLISH['en/guides.html']='5789cc163a22b3abeb239adc4216f26b66d3ab8d4ff571b616cb36c32796c1ea'
 import site_r31_post_r7c_profile as post_r31
+import site_a1_a2_r2_successor as site_a2
+import site_a2_e3_history as successor_e3
+SITE_A2=site_a2.active()
+if SITE_A2: successor_e3.authorize()
 POST_R31 = post_r31.active()
 
 def inherited_bytes(rel):
+ if SITE_A2: return successor_e3.legacy_r6_html(rel)
  if POST_R31:
   return post_r31.legacy_r6_html_for_parity(rel)
  if RELEASE_ID in {"PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015", "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"}:
