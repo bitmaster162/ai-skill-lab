@@ -29,8 +29,9 @@ class Sitemaps(unittest.TestCase):
   self.assertEqual(len(CHANGED),11)
  def test_only_thirteen_new_sitemap_dates(self):
   got={p for p,date in self.data.items() if date=="2026-10-26"}
-  self.assertEqual(got,CHANGED|PRICE)
-  self.assertEqual(len(got),13)
+  self.assertEqual(got,(CHANGED - {"/start"})|PRICE)
+  self.assertEqual(self.data["/start"],"2026-10-28")
+  self.assertEqual(len(got),12)
  def test_preserve_every_other_date(self):
   previous=git("show","9d2ed0c1fa98d94457052392208cb3526385a2ba:deploy/live/sitemap.xml")
   namespace={"x":"http://www.sitemaps.org/schemas/sitemap/0.9"}
@@ -51,6 +52,7 @@ class Sitemaps(unittest.TestCase):
   self.assertNotIn('"/en/start": "Start — pick a track and a first task | AI Skill Lab · Phuket"',self.gate)
  def test_exact_gate_pricing_routes(self):
   self.assertIn('successor_price = frozenset(("/pricing", "/en/pricing"))',self.gate)
+  self.assertIn('per_route_lastmod = "2026-10-28"',self.gate)
   self.assertIn('per_route_lastmod = "2026-10-26"',self.gate)
   self.assertIn('SITE-A2 exact per-route lastModified expression missing',self.gate)
  def test_historic_r7b_files_unchanged(self):

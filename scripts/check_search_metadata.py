@@ -605,7 +605,7 @@ def main() -> int:
     if successor_verified:
         site_a2.verify()
         expected_routes = '  const siteA2Routes = ["/business", "/challenge", "/faq", "/phuket", "/privacy", "/projects", "/proof", "/start", "/studio", "/teens", "/terms"];'
-        expected_expression = 'lastModified: universeRoutes.includes(route) ? "2026-10-15" : (route === "/pricing" || route === "/en/pricing") ? "2026-10-26" : siteA2Routes.includes(route) ? "2026-10-26" : lastModified'
+        expected_expression = 'lastModified: universeRoutes.includes(route) ? "2026-10-15" : (route === "/pricing" || route === "/en/pricing") ? "2026-10-26" : route === "/start" ? "2026-10-28" : siteA2Routes.includes(route) ? "2026-10-26" : lastModified'
         if source_sitemap.count(expected_routes) != 1:
             errors.append("SITE-A2 exact changed-route list missing")
         if source_sitemap.count(expected_expression) != 1:
@@ -622,7 +622,7 @@ def main() -> int:
     latest_html_date = latest_public_html_commit_date(public_html_paths, errors)
     if expected_lastmod and latest_html_date is not None:
         source_lastmod_date = date.fromisoformat(expected_lastmod)
-        freshness_date = date(2026, 10, 26) if successor_verified else source_lastmod_date
+        freshness_date = date(2026, 10, 28) if successor_verified else source_lastmod_date
         if freshness_date < latest_html_date:
             errors.append(
                 f"sitemap lastmod {freshness_date.isoformat()} older than latest public HTML commit {latest_html_date.isoformat()}"
@@ -641,7 +641,9 @@ def main() -> int:
         except ValueError:
             errors.append(f"invalid sitemap lastmod {loc_text}: {value}")
         per_route_lastmod = ("2026-10-15" if RELEASE=="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015" else "2026-10-14") if active() and loc_text in {ORIGIN + p for p in UNIVERSE_ROUTES} else expected_lastmod
-        if successor_verified and loc_text in {ORIGIN + p for p in (successor_routes | successor_price)}:
+        if successor_verified and loc_text == ORIGIN + "/start":
+            per_route_lastmod = "2026-10-28"
+        elif successor_verified and loc_text in {ORIGIN + p for p in (successor_routes | successor_price)}:
             per_route_lastmod = "2026-10-26"
         if per_route_lastmod and value != per_route_lastmod:
             errors.append(f"sitemap lastmod/source mismatch {loc_text}: {value} != {per_route_lastmod}")

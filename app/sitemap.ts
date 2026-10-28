@@ -11,7 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const siteA2Routes = ["/business", "/challenge", "/faq", "/phuket", "/privacy", "/projects", "/proof", "/start", "/studio", "/teens", "/terms"];
   return [...routes, ...guideRoutes, ...universeRoutes].map((route) => ({
     url: `${base}${route}`,
-    lastModified: universeRoutes.includes(route) ? "2026-10-15" : (route === "/pricing" || route === "/en/pricing") ? "2026-10-26" : siteA2Routes.includes(route) ? "2026-10-26" : lastModified,
+    lastModified: universeRoutes.includes(route) ? "2026-10-15" : (route === "/pricing" || route === "/en/pricing") ? "2026-10-26" : route === "/start" ? "2026-10-28" : siteA2Routes.includes(route) ? "2026-10-26" : lastModified,
     changeFrequency: "monthly",
     priority: route === "" || route === "/en" ? 1 : 0.8,
   }));

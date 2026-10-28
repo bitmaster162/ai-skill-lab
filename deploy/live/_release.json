@@ -503,7 +503,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "8be155b3e4c35908578a64721da5fc82dc35614d8497f0a85d2c80fd41e390d6",
+      "sha256": "0d8761805d10f0ea4cd33f357972c1ca8aaedf941b85827ff6c42d4c7bd9de0c",
       "size": 4903
     },
     {
@@ -544,7 +544,7 @@
   ],
   "parent_manifest_sha256": "ad8282f6b7a670c9e5e5f840dd0d427f3c24f87a2210f64d40dab1cf7bf497e5",
   "patch_id": "SITE_A1_A2_R2_20261026_DRAFT_REVIEW",
-  "payload_sha256": "cbac82a237c62c416f2ef6163ac2c276a3d2674283626df9d3f2988f3effd324",
+  "payload_sha256": "1393d778de86ba69b0a187f545d1aa606ef3ccf0d89f189cc0be75ec21e9fcca",
   "release_id": "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015",
   "schema": "ai-skill-lab.static-release.v1"
 }

@@ -4,13 +4,13 @@ import hashlib
 import json
 import re
 
-MANIFEST_SHA = "d03a2e227bae748dfb03d4d35bf2b619c500e8d73802ab60e58c1fa221914606"
-ADMISSION_SHA = "4ff3e62bcacc46aa299e7225a32d765a537bd936e8b6aa3232e14994121283ea"
+MANIFEST_SHA = "f8cdc7b27aca6ea5815c8237a97acf53a5c7ef9f9db24d4ff19e6c5ae9c5ec53"
+ADMISSION_SHA = "279ee064f8a93f25af5ca6b64362bd6f16d6a048a74fd611977c8585f76ff1ef"
 PATCH = "SITE_A1_A2_R2_20261026_DRAFT_REVIEW"
 EXACT_PAYLOAD = 1371163
 PINNED = {
     "README.md": "f92a12b93b041ac68a4768fa93f21fd58a27a1f7b904db2c2d97fdd4b4e5eff2",
-    "app/sitemap.ts": "aaa42ef58032b7026496c251893bade8896240b92f37653cf915e5d3f5c79fb5",
+    "app/sitemap.ts": "3624828306a7040d1e7769881b95fd1df7dca3e3c02cdb0d5a344f037643a05d",
     "components/ProjectStudio.tsx": "6f5acd278f268075aadf51e4bb79bc6ede67bb7d60e96895f36a353bfd22bc34",
     "components/workshop/WorkshopAudience.tsx": "be7f68db93db6b18bf007c6715a24fe30c7c67116e619f36780c98a8c07903f7",
     "deploy/live/personal.html": "288ed72d677b37a80510413e647f0bf87ae3365a9d29a354a657b373d009fc69",
@@ -21,7 +21,7 @@ RU_CHANGED = frozenset(("/business", "/challenge", "/faq", "/phuket", "/privacy"
 PRICING = frozenset(("/pricing", "/en/pricing"))
 SITEMAP_EXPRESSION = ('lastModified: universeRoutes.includes(route) ? "2026-10-15" : '
     '(route === "/pricing" || route === "/en/pricing") ? "2026-10-26" : '
-    'siteA2Routes.includes(route) ? "2026-10-26" : lastModified')
+    'route === "/start" ? "2026-10-28" : siteA2Routes.includes(route) ? "2026-10-26" : lastModified')
 
 def sha(data):
     return hashlib.sha256(data).hexdigest()
@@ -62,11 +62,14 @@ def verify_sitemap(root):
     xml = (root / "deploy/live/sitemap.xml").read_text(encoding="utf-8")
     if source.count(SITEMAP_EXPRESSION) != 1:
         raise ValueError("SITE_A2_D4_DENY source lastmod expression")
-    for route in RU_CHANGED | PRICING:
+    for route in (RU_CHANGED | PRICING) - {"/start"}:
         if xml.count('<loc>https://aiskillab.work' + route +
             '</loc><lastmod>2026-10-26</lastmod>') != 1:
             raise ValueError("SITE_A2_D4_DENY changed route " + route)
-    if (xml.count("<lastmod>2026-10-26</lastmod>") != 13
+    if xml.count('<loc>https://aiskillab.work/start</loc><lastmod>2026-10-28</lastmod>') != 1:
+        raise ValueError("SITE_A2_D4_DENY exact Start lastmod")
+    if (xml.count("<lastmod>2026-10-26</lastmod>") != 12
+        or xml.count("<lastmod>2026-10-28</lastmod>") != 1
         or xml.count("<lastmod>2026-10-15</lastmod>") != 2
         or xml.count("<lastmod>2026-10-16</lastmod>") != 41):
         raise ValueError("SITE_A2_D4_DENY sitemap counts")

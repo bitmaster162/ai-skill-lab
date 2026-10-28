@@ -164,8 +164,8 @@ def compare(base, cur, allow):
 
 def require_site_a2_exact_bytes(manifest_raw: bytes, admission_raw: bytes) -> None:
     """Only the cryptographically sealed SITE-A1/A2 R2 is eligible."""
-    manifest_sha = "d03a2e227bae748dfb03d4d35bf2b619c500e8d73802ab60e58c1fa221914606"
-    admission_sha = "4ff3e62bcacc46aa299e7225a32d765a537bd936e8b6aa3232e14994121283ea"
+    manifest_sha = "f8cdc7b27aca6ea5815c8237a97acf53a5c7ef9f9db24d4ff19e6c5ae9c5ec53"
+    admission_sha = "279ee064f8a93f25af5ca6b64362bd6f16d6a048a74fd611977c8585f76ff1ef"
     if hashlib.sha256(manifest_raw).hexdigest() != manifest_sha:
         raise ValueError("SITE_A2_PARITY_STOP manifest SHA mismatch")
     if hashlib.sha256(admission_raw).hexdigest() != admission_sha:
@@ -173,7 +173,7 @@ def require_site_a2_exact_bytes(manifest_raw: bytes, admission_raw: bytes) -> No
     m, a = json.loads(manifest_raw), json.loads(admission_raw)
     if (m.get("patch_id") != "SITE_A1_A2_R2_20261026_DRAFT_REVIEW"
         or m.get("release_id") != "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"
-        or m.get("payload_sha256") != "cbac82a237c62c416f2ef6163ac2c276a3d2674283626df9d3f2988f3effd324"
+        or m.get("payload_sha256") != "1393d778de86ba69b0a187f545d1aa606ef3ccf0d89f189cc0be75ec21e9fcca"
         or a.get("candidate_manifest_sha256") != manifest_sha
         or a.get("patch_id") != m.get("patch_id")
         or a.get("historical_r7b_manifest_sha256") != "a8166f8a45f17df8b7359dfb62bba467c6061f61cab1db164183216d31c42bb6"):

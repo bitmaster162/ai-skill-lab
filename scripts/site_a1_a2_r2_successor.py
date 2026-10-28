@@ -8,10 +8,10 @@ ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/"deploy/live"
 RELEASE="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"
 PATCH="SITE_A1_A2_R2_20261026_DRAFT_REVIEW"
-MANIFEST_SHA="d03a2e227bae748dfb03d4d35bf2b619c500e8d73802ab60e58c1fa221914606"
-PAYLOAD_SHA="cbac82a237c62c416f2ef6163ac2c276a3d2674283626df9d3f2988f3effd324"
+MANIFEST_SHA="f8cdc7b27aca6ea5815c8237a97acf53a5c7ef9f9db24d4ff19e6c5ae9c5ec53"
+PAYLOAD_SHA="1393d778de86ba69b0a187f545d1aa606ef3ccf0d89f189cc0be75ec21e9fcca"
 ADMISSION="data/SITE_A1_A2_R2_METADATA_SUCCESSOR_ADMISSION_V2_20261026.json"
-ADMISSION_SHA="4ff3e62bcacc46aa299e7225a32d765a537bd936e8b6aa3232e14994121283ea"
+ADMISSION_SHA="279ee064f8a93f25af5ca6b64362bd6f16d6a048a74fd611977c8585f76ff1ef"
 SOURCE_COMMIT="9d2ed0c1fa98d94457052392208cb3526385a2ba"
 SOURCE_TREE="96a3619cd476d4174f6fff016fdfa3945fe7cc58"
 BASE="d0a858a7787088dabf6d914e45fb0cde41b743e8"
@@ -144,7 +144,8 @@ def verify(manifest_override:bytes|None=None,extra_file:str|None=None,
        "scripts/check_search_metadata.py"},"METADATA_PIN_SET")
  must(set(adm.get("exact_2026_10_26_ru_routes",[]))==
       {"/business","/challenge","/faq","/phuket","/privacy",
-       "/projects","/proof","/start","/studio","/teens","/terms"},"RU_DATE_ROUTES")
+       "/projects","/proof","/studio","/teens","/terms"},"RU_DATE_ROUTES")
+ must(adm.get("exact_2026_10_28_ru_start_route")=="/start","RU_START_28")
  must(set(adm.get("exact_2026_10_26_bilingual_pricing_routes",[]))==
       {"/pricing","/en/pricing"},"PRICE_DATE_ROUTES")
 
