@@ -3,6 +3,22 @@ from pathlib import Path
 import json
 from source_paths import source_path
 import sys
+import hashlib
+import site_a1_a2_r2_successor as site_a2
+SITE_A2=site_a2.active()
+if SITE_A2: site_a2.verify()
+SITE_A2_PROOF_PINS={
+ "app/proof/page.tsx":"afaef143181d48efa5d7f5af149c507eb8931ca853a8e0842fb1ff451ce29de6",
+ "deploy/live/proof.html":"6a51c106e674eb3f11404a8440ab5616d6b4f17119dbe08710243991539b6f4d",
+}
+SITE_A2_RU_COMMON={
+ "SITE AS PROOF":"САЙТ КАК ДОКАЗАТЕЛЬСТВО",
+ "DEFINE":"ПОСТАНОВКА", "BUILD":"СБОРКА",
+ "VERIFY":"ПРОВЕРКА", "SHIP":"ВЫПУСК",
+ "HASHED CSP":"CSP ПО ХЕШАМ",
+ "BYTE-EXACT":"БАЙТ В БАЙТ",
+ "Release manifest":"МАНИФЕСТ ВЫПУСКА",
+}
 
 ROOT = Path(__file__).resolve().parents[1]
 E32 = json.loads((ROOT / "deploy/live/_release.json").read_text(encoding="utf-8")).get("release_id")  in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}
@@ -30,10 +46,15 @@ E32_PROOF_COMMON = {
  "Release manifest":"МАНИФЕСТ ВЫПУСКА",
 }
 for rel, en, label in proof_surfaces:
-    text = source_path(ROOT, rel).read_text(encoding="utf-8")
+    resolved=source_path(ROOT,rel)
+    text = resolved.read_text(encoding="utf-8")
+    if SITE_A2 and not en:
+        pinned=hashlib.sha256(resolved.read_bytes().replace(b"\r\n",b"\n")).hexdigest()
+        if pinned != SITE_A2_PROOF_PINS[rel]:
+            errors.append(f"{label}: SITE_A2 exact RU proof SHA drift")
     for marker in common:
         checks += 1
-        required = E32_PROOF_COMMON.get(marker,marker) if E32 and not en else marker
+        required = (SITE_A2_RU_COMMON[marker] if SITE_A2 and not en else E32_PROOF_COMMON.get(marker,marker) if E32 and not en else marker)
         if required not in text:
             errors.append(f"{label}: missing {required}")
     honesty = (
@@ -59,11 +80,11 @@ for rel, en, label in proof_surfaces:
     checks += 3
     if privacy not in text:
         errors.append(f"{label}: current client-privacy fact missing")
-    if "<b>public_forms</b><strong>2</strong>" not in text:
+    if ("<b>формы сайта</b><strong>2</strong>" if SITE_A2 and not en else "<b>public_forms</b><strong>2</strong>") not in text:
         errors.append(f"{label}: public_forms must equal 2")
     if "<b>public_forms</b><strong>0</strong>" in text or "<b>public_forms</b><strong>1</strong>" in text:
         errors.append(f"{label}: stale public_forms count")
-    if "<b>ad_trackers</b><strong>0</strong>" not in text or "<b>trackers</b><strong>0</strong>" in text:
+    if ("<b>рекламные трекеры</b><strong>0</strong>" if SITE_A2 and not en else "<b>ad_trackers</b><strong>0</strong>") not in text or "<b>trackers</b><strong>0</strong>" in text:
         errors.append(f"{label}: analytics/ad-tracker truth drift")
 
 mounts = {
