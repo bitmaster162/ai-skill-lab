@@ -29,12 +29,12 @@ export function WorkshopHome({ locale = "ru" }: { locale?: WorkshopLocale }) {
       <main id="main">
         <section className={styles.hero}>
           <div className={styles.heroCopy}>
-            <span className={styles.eyebrow}>AI SKILL LAB · 1:1 · ONLINE / PHUKET</span>
+            <span className={styles.eyebrow}>{en ? "AI SKILL LAB · 1:1 · ONLINE / PHUKET" : "AI SKILL LAB · 1:1 · ОНЛАЙН / ПХУКЕТ"}</span>
             <h1>{en ? <>Learn AI so the <em>capability stays with you.</em></> : <>Освойте ИИ так, чтобы <em>результат остался у вас.</em></>}</h1>
             <p>{en ? "Practical learning, hands-on building and one-workflow business implementation. You understand the system, verify it and can keep using it." : "Практическое обучение: искусственный интеллект (ИИ) и нейросети, сборка проектов и внедрение одного бизнес-процесса. Вы понимаете систему, проверяете её и можете пользоваться дальше."}</p>
             <IntroCallCta locale={locale}/>
             <div className={styles.heroActions}><Link className="workshopButton workshopButtonPrimary" href={p("/start")}>{en ? "Find my route →" : "Подобрать маршрут →"}</Link><Link className="workshopButton workshopButtonSecondary" href={p("/proof")}>Proof Lab</Link></div>
-            <div className={styles.signalRow}><span>1:1</span><span>{sessionDurationMinutes} {en ? "minutes" : "минут"}</span><span>{en ? "Real project" : "Реальный проект"}</span><span>Human review</span></div>
+            <div className={styles.signalRow}><span>1:1</span><span>{sessionDurationMinutes} {en ? "minutes" : "минут"}</span><span>{en ? "Real project" : "Реальный проект"}</span><span>{en ? "Human review" : "Проверка человеком"}</span></div>
           </div>
           <aside className={styles.heroPanel}>
             <span>{en ? "THE WORKSHOP LOOP" : "ЦИКЛ МАСТЕРСКОЙ"}</span>
@@ -49,8 +49,8 @@ export function WorkshopHome({ locale = "ru" }: { locale?: WorkshopLocale }) {
           <div className={styles.sectionActions}><Link className="workshopButton workshopButtonSecondary" href={p("/parents")}>{en ? "For parents →" : "Родителям →"}</Link></div>
         </section>
         <section className={styles.darkBand}>
-          <div><span>{en ? "BUILD / BUSINESS" : "СБОРКА / БИЗНЕС"}</span><h2>{en ? "Not AI theatre. One bounded system with ownership." : "Не ИИ-театр. Одна ограниченная система с владельцем результата."}</h2><p>{en ? "AI Studio for an assistant, automation or product — built with explicit scope, verification and handoff." : "Студия для ассистента, автоматизации или продукта — с явным объём работ, проверкой и передача."}</p></div>
-          <div className={styles.bandSteps}><span>MAP</span><span>BUILD</span><span>VERIFY</span><span>HANDOFF</span></div>
+          <div><span>{en ? "BUILD / BUSINESS" : "СБОРКА / БИЗНЕС"}</span><h2>{en ? "Not AI theatre. One bounded system with ownership." : "Не ИИ-театр. Одна ограниченная система с владельцем результата."}</h2><p>{en ? "AI Studio for an assistant, automation or product — built with explicit scope, verification and handoff." : "Студия для ассистента, автоматизации или продукта — с согласованным объёмом работ, проверкой и передачей."}</p></div>
+          <div className={styles.bandSteps}><span>{en?"MAP":"КАРТА"}</span><span>{en?"BUILD":"СБОРКА"}</span><span>{en?"VERIFY":"ПРОВЕРКА"}</span><span>{en?"HANDOFF":"ПЕРЕДАЧА"}</span></div>
           <div className={styles.bandActions}><Link className="workshopButton workshopButtonLight" href={p("/business")}>{en ? "See business formats →" : "Посмотреть бизнес-форматы →"}</Link><Link className="workshopButton workshopButtonSecondary" href={studioHref}>{en ? "Open Studio →" : "Открыть студию →"}</Link></div>
         </section>
         <section className={`${styles.section} ${styles.paper}`}>
@@ -59,7 +59,7 @@ export function WorkshopHome({ locale = "ru" }: { locale?: WorkshopLocale }) {
           <div className={styles.sectionActions}><Link className="workshopButton workshopButtonDark" href={p("/pricing")}>{en ? "All prices and formats →" : "Все цены и форматы →"}</Link></div>
         </section>
         <section className={styles.proofBand}><div><span>{en ? "VERIFIABLE PRACTICE" : "ПРОВЕРЯЕМЫЙ ПОДХОД"}</span><h2>{en ? "Sources, tests, human gates and fallback remain visible." : "Источники, тесты, проверка человеком и запасной вариант остаются видимыми."}</h2></div><p>{en ? "Proof stays — after the offer, not instead of it." : "Проверка остаётся — после оффера, а не вместо него."}</p><Link href={p("/proof")}>{en ? "Open Proof Lab →" : "Открыть примеры и проверку →"}</Link></section>
-        <section className={styles.finalCta}><span>BRIEF</span><h2>{en ? "Describe the task, level and outcome." : "Опишите задачу, уровень и желаемый результат."}</h2><Link className="workshopButton workshopButtonPrimary" href={p("/start")}>{en ? "Start →" : "Начать →"}</Link></section>
+        <section className={styles.finalCta}><span>{en?"BRIEF":"КОРОТКОЕ ОПИСАНИЕ ЗАДАЧИ"}</span><h2>{en ? "Describe the task, level and outcome." : "Опишите задачу, уровень и желаемый результат."}</h2><Link className="workshopButton workshopButtonPrimary" href={p("/start")}>{en ? "Start →" : "Начать →"}</Link></section>
       </main>
     </WorkshopShell>
   );

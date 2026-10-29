@@ -36,6 +36,11 @@ def active() -> bool:
 
 
 def profile() -> dict:
+    import site_a1_a2_r2_successor as site_a2
+    if site_a2.active():
+        status = site_a2.verify()
+        return {**json.loads((ROOT / "data/phuket_universe_u3_e38_r7b_profile.json").read_text(encoding="utf-8")),
+                "file_count": status["static_assets"], "payload_sha256": status["payload_sha256"]}
     import site_r31_post_r7c_profile as post_r31
     if post_r31.active():
         post_r31.check_release()
@@ -76,6 +81,9 @@ def profile() -> dict:
 
 
 def verify_integrity() -> dict:
+    import site_a1_a2_r2_successor as site_a2
+    if site_a2.active():
+        return site_a2.verify()
     import site_r31_post_r7c_profile as post_r7c
     if post_r7c.active():
         return post_r7c.check_release()
@@ -133,6 +141,9 @@ def verify_integrity() -> dict:
 
 def inherited_pin_overrides() -> dict[str, str]:
     """Use committed R3 pins only; do not regenerate expected hashes at runtime."""
+    import site_a1_a2_r2_successor as site_a2
+    if site_a2.active():
+        return site_a2.inherited_pin_overrides()
     if not active():
         return {}
     p = profile()

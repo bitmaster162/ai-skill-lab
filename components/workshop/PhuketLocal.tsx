@@ -23,9 +23,9 @@ const areas: Record<WorkshopLocale, Area[]> = {
 
 const formats: Record<WorkshopLocale, Array<[string,string,string]>> = {
   ru: [
-    ["LOCAL 1:1", "Очная персональная сессия", "Место и время согласуем заранее. AI Skill Lab не заявляет постоянный учебный центр или публичный classroom address."],
-    ["ONLINE 1:1", "Персональная работа online", "Экран, совместная сборка проектов и персональный маршрут работают независимо от страны."],
-    ["HYBRID", "Часть очно, часть online", "Если программе нужен смешанный режим, очные и online-сессии можно сочетать после согласования маршрута."],
+    ["ОЧНО 1:1", "Очная персональная сессия", "Место и время согласуем заранее. AI Skill Lab не заявляет постоянный учебный центр или публичный classroom address."],
+    ["ОНЛАЙН 1:1", "Персональная работа online", "Экран, совместная сборка проектов и персональный маршрут работают независимо от страны."],
+    ["СМЕШАННЫЙ", "Часть очно, часть online", "Если программе нужен смешанный режим, очные и online-сессии можно сочетать после согласования маршрута."],
   ],
   en: [
     ["LOCAL 1:1", "In-person one-to-one", "Venue and timing are agreed in advance. AI Skill Lab does not claim a permanent school location or public classroom address."],
@@ -39,7 +39,7 @@ export function PhuketLocal({ locale = "ru" }: { locale?: WorkshopLocale }) {
   return <>
     <section className={styles.phuketLocal} data-a4-phuket-local="true">
       <div className={styles.phuketLocalHead}>
-        <span>{en ? "PHUKET · LOCAL COORDINATION" : "PHUKET · ЛОКАЛЬНАЯ КООРДИНАЦИЯ"}</span>
+        <span>{en ? "PHUKET · LOCAL COORDINATION" : "ПХУКЕТ · ЛОКАЛЬНАЯ КООРДИНАЦИЯ"}</span>
         <h2>{en ? "Real areas, no invented campus." : "Реальные районы, без выдуманного кампуса."}</h2>
         <p>{en
           ? "For local planning we use recognizable Phuket areas. They are coordination areas, not branches or permanent classrooms. The exact venue, availability and travel time are confirmed before booking."

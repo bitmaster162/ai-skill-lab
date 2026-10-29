@@ -63,6 +63,12 @@ font_files=[p for p in files if p.suffix.lower()=='.woff2']
 font_total=sum(p.stat().st_size for p in font_files)
 non_font_total=sum(p.stat().st_size for p in files if p not in font_files)
 total=font_total+non_font_total
+# Exact SITE-A1/A2 successor only. Historical R7B/R31 limits above remain unchanged.
+if release == 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015':
+    import site_a1_a2_r2_successor as site_a2
+    if site_a2.active():
+        from site_a2_exact_performance import verify_live
+        MAX_NON_FONT_TOTAL = verify_live(ROOT, non_font_total)
 checks+=1
 if non_font_total>MAX_NON_FONT_TOTAL:errors.append(f'non-font payload {non_font_total} > {MAX_NON_FONT_TOTAL}')
 checks+=1

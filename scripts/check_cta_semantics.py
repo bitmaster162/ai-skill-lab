@@ -15,8 +15,11 @@ class P(HTMLParser):
   if tag=='a' and self.current is not None:
    self.current['text']=' '.join(''.join(self.current['text']).split());self.anchors.append(self.current);self.current=None
 def anchors(path):p=P();p.feed(path.read_text(encoding='utf-8'));return p.anchors
-POST_R31=post_r31.active()
-if POST_R31:post_r31.check_release()
+import site_a1_a2_r2_successor as site_a2
+SITE_A2=site_a2.active()
+POST_R31=post_r31.active() or SITE_A2
+if POST_R31:
+ (site_a2.verify() if SITE_A2 else post_r31.check_release())
 for path in sorted(LIVE.rglob('*.html')):
  rel=path.relative_to(ROOT).as_posix()
  for a in anchors(path):

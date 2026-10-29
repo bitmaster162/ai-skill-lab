@@ -22,9 +22,11 @@ ingress=read("services/lead-ingress/api/event.js")
 worker=read("services/lead-receiver-cloudflare/src/index.js")
 static_runtime=read("deploy/live/lab-command.js")
 start=read("deploy/live/start-brief.js")
-POST_R31=post_r31.active()
+import site_a1_a2_r2_successor as site_a2
+SUCCESSOR=site_a2.active()
+POST_R31=post_r31.active() or SUCCESSOR
 if POST_R31:
- post_r31.check_release()
+ (site_a2.verify() if SUCCESSOR else post_r31.check_release())
  start_runtime=read("deploy/live/lead-form-runtime.js")
 else:
  start_runtime=start

@@ -22,8 +22,12 @@ src=(ROOT/'components/LeadForm.tsx').read_text(encoding='utf-8')
 for marker in [RU_MSG,EN_MSG,'data-lead-success-actions','Записаться на диагностику','Book diagnostic','Написать в Telegram','Message on Telegram','href={site.telegram}','start#contact-channels']:
     req(marker in src,f'source LeadForm missing {marker!r}')
 
-POST_R31=post_r31.active()
-if POST_R31:post_r31.check_release()
+# SITE-A1/A2 inherits the exact R31 split runtime under its sealed successor proof.
+import site_a1_a2_r2_successor as successor
+SITE_A2=successor.active()
+POST_R31=post_r31.active() or SITE_A2
+if POST_R31:
+    (successor.verify() if SITE_A2 else post_r31.check_release())
 old_js=(LIVE/'start-brief.js').read_text(encoding='utf-8')
 js=(LIVE/'lead-form-runtime.js').read_text(encoding='utf-8') if POST_R31 else old_js
 markers=([RU_MSG,EN_MSG,'[data-lead-success-actions]','successActions.hidden = true','successActions.hidden = false']

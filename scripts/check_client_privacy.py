@@ -7,8 +7,10 @@ REPO=Path(__file__).resolve().parents[1]
 ROOT=REPO/'deploy'/'live'
 starts=[ROOT/'start.html',ROOT/'en'/'start.html']; matchers=[ROOT/'matcher.html',ROOT/'en'/'matcher.html']
 errors=[]; checks=0
-POST_R31=post_r31.active()
-if POST_R31: post_r31.check_release()
+import site_a1_a2_r2_successor as site_a2
+SUCCESSOR=site_a2.active()
+POST_R31=post_r31.active() or SUCCESSOR
+if POST_R31: (site_a2.verify() if SUCCESSOR else post_r31.check_release())
 for p in [*starts,*matchers]:
  t=p.read_text(encoding='utf-8')
  for token in ['fetch(', 'XMLHttpRequest', 'localStorage', 'sessionStorage', 'document.cookie', 'sendBeacon(', 'WebSocket(']:
@@ -71,7 +73,7 @@ for p in public_html:
  if t.count(analytics_tag)!=1: errors.append(f'{p.relative_to(ROOT)}: analytics script count {t.count(analytics_tag)} != 1')
 for p,privacy in proofs:
  t=p.read_text(encoding='utf-8'); checks+=4
- if '<b>public_forms</b><strong>2</strong>' not in t: errors.append(f'{p.relative_to(ROOT)}: public_forms must equal 2')
+ if (('<b>формы сайта</b><strong>2</strong>' if SUCCESSOR and p.name=='proof.html' and p.parent==ROOT else '<b>public_forms</b><strong>2</strong>') not in t): errors.append(f'{p.relative_to(ROOT)}: public_forms must equal 2')
  if '<b>public_forms</b><strong>0</strong>' in t or '<b>public_forms</b><strong>1</strong>' in t: errors.append(f'{p.relative_to(ROOT)}: stale public_forms count')
  if privacy not in t: errors.append(f'{p.relative_to(ROOT)}: current privacy statement missing')
  if 'first-party lead forms' in t or 'first-party lead forms' in t.lower(): errors.append(f'{p.relative_to(ROOT)}: stale no-form claim')

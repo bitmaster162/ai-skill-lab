@@ -2,7 +2,19 @@
 from pathlib import Path
 import json
 from source_paths import source_path
-import re, sys, html
+import re, sys, html, hashlib
+import site_a1_a2_r2_successor as site_a2
+SITE_A2=site_a2.active()
+if SITE_A2:
+    site_a2.verify()
+    exact={
+      "app/(ru)/projects/page.tsx": "d4f04c665cdf3dcca9c464e646be6881c4e30acfdd4c93e02c38805b653bac60",
+      "deploy/live/projects.html": "2f96255923562450e387c96840bc68349df689dae97a1f22827855aeeae6d002",
+    }
+    for name,want in exact.items():
+        raw=(Path(__file__).resolve().parents[1]/name).read_bytes().replace(b"\r\n",b"\n")
+        if hashlib.sha256(raw).hexdigest()!=want:
+            raise ValueError("SITE_A2_PROJECTS_DENY exact RU proof: "+name)
 ROOT=Path(__file__).resolve().parents[1]
 E32 = json.loads((ROOT / "deploy/live/_release.json").read_text(encoding="utf-8")).get("release_id")  in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}
 errors=[]; checks=0
@@ -25,7 +37,7 @@ for label,text,titles in [('source',source,titles_ru+titles_en),('static RU',ru_
 for label,text in [('page RU',ru_page),('page EN',en_page),('static RU',ru_static),('static EN',en_static)]:
     for marker in ['Project Studio','EXAMPLE OUTPUTS · NOT TESTIMONIALS']:
         checks+=1
-        required = ('ПРИМЕРЫ РЕЗУЛЬТАТОВ · НЕ ОТЗЫВЫ' if E32 and label in ('page RU','static RU') and marker == 'EXAMPLE OUTPUTS · NOT TESTIMONIALS' else marker)
+        required = ('И мастерская проектов.' if SITE_A2 and label in ('page RU','static RU') and marker == 'Project Studio' else 'ПРИМЕРЫ РЕЗУЛЬТАТОВ · НЕ ОТЗЫВЫ' if E32 and label in ('page RU','static RU') and marker == 'EXAMPLE OUTPUTS · NOT TESTIMONIALS' else marker)
         if required not in text: errors.append(f'{label}: missing {required!r}')
 for marker in ['goal','ai','human','artifact','data-project-tags','research','create','build','automate']:
     checks+=1

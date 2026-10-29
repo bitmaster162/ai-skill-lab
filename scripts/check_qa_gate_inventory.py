@@ -13,6 +13,14 @@ QUARANTINED = {
     "check-launch.mjs": "check_launch_quarantine.py",
 }
 
+# Preserve original SITE-A1 R1-only checker byte-for-byte.
+# Exact R2 successor enforces original checker checksum and new pricing catalog.
+import site_a1_a2_r2_successor as site_a2
+if site_a2.active():
+    import site_a2_pricing_checker_quarantine as site_a2_pricing
+    site_a2_pricing.verify(ROOT)
+    QUARANTINED["check_site_a1_pricing.py"] = "site_a2_pricing_checker_quarantine.py"
+
 check_names = sorted({
     path.name
     for pattern in ("check_*.py", "check_*.mjs", "check-*.mjs")

@@ -28,8 +28,8 @@
     },
     {
       "path": "business.html",
-      "sha256": "1ac42da4349d872b29d657bd4d1283cf959372e26b3b1ef77e6297f353f0811e",
-      "size": 37357
+      "sha256": "c9be8eec0e42f3ca84d582cdcd5534a1b8c85b49257023b7e853ee25d141d60f",
+      "size": 37538
     },
     {
       "path": "certificate.html",
@@ -38,8 +38,8 @@
     },
     {
       "path": "challenge.html",
-      "sha256": "e8dbe5d31b7c88ef48f86692291c56018634f7f2e90caf4dd09b5fa1c99f3d2d",
-      "size": 14658
+      "sha256": "f85503a1ad426473b2fa4b7bb8d88248104aec080e2372717dc09577f15e9305",
+      "size": 14850
     },
     {
       "path": "curriculum.html",
@@ -143,8 +143,8 @@
     },
     {
       "path": "en/pricing.html",
-      "sha256": "936bae93c6bcf16c9b829a00a5b816f1ec8006673766a835235003b5c8458943",
-      "size": 16415
+      "sha256": "7fc24e3abc30e8205fb2b5ccaf25cc0fdff49a58855b5b639e5ecb50c0d3561f",
+      "size": 18971
     },
     {
       "path": "en/privacy.html",
@@ -163,8 +163,8 @@
     },
     {
       "path": "en/safety.html",
-      "sha256": "9525fd9dce6426f17c58dd7077eb33c92edd1276dd2b3adf35a1a5a15636aa46",
-      "size": 11625
+      "sha256": "4080d3603dcee43c2f13977c2e28c51b2a65dfd296833be3f3460cc26f91af70",
+      "size": 11623
     },
     {
       "path": "en/start.html",
@@ -193,8 +193,8 @@
     },
     {
       "path": "faq.html",
-      "sha256": "2ff316d11571681613e494c442d61a0371f6fbf434bc638eab575576a855abcc",
-      "size": 16614
+      "sha256": "642d13c0b6d14a01acb700459ab6210f6f28416bcd03abcad0d89515a9bd4303",
+      "size": 17074
     },
     {
       "path": "favicon.ico",
@@ -278,8 +278,8 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "15f8e773352f3019a61788313c9df3d8820219ad8d2c960f632107be50c8c8d9",
-      "size": 2542
+      "sha256": "7d59fa37937eb0af7c3c6646ae8aa663da642a9bb172b18e01e285cbe251847d",
+      "size": 3275
     },
     {
       "path": "logo.png",
@@ -443,18 +443,18 @@
     },
     {
       "path": "phuket.html",
-      "sha256": "1ed5e84658640a54f717bfaa27eeab2a433066b33111c467b9353cde12b9c7e6",
-      "size": 13046
+      "sha256": "92e22b89466ed9a3407e07d6b3505c0db1caa430941b277fbd748f447389c6a9",
+      "size": 13073
     },
     {
       "path": "pricing.html",
-      "sha256": "0583f79cb4da5ab68e98fa37d02648ba10a5fd1e1b6c3477273c6a14e37f969a",
-      "size": 19639
+      "sha256": "b906aacd0fdc1fed539aa323246766b9cb349f6eeda1129de152344a2c35551c",
+      "size": 22472
     },
     {
       "path": "privacy.html",
-      "sha256": "56516dc5df47b4007362634a1815e4dd8904fc2526a26e929b48274aa08353d8",
-      "size": 12044
+      "sha256": "1d396d4df494fa8198e03e34bd0641bcd40318fba635ae35379573d6b0e4971b",
+      "size": 12152
     },
     {
       "path": "project-filter.js",
@@ -463,8 +463,8 @@
     },
     {
       "path": "projects.html",
-      "sha256": "07e1928de90102c83acf841a24f2757e644afb3954d433deb79b36219ae2ba03",
-      "size": 27963
+      "sha256": "2f96255923562450e387c96840bc68349df689dae97a1f22827855aeeae6d002",
+      "size": 28271
     },
     {
       "path": "prompt-auditor.js",
@@ -473,8 +473,8 @@
     },
     {
       "path": "proof.html",
-      "sha256": "0d129eafc7dfcc65c557e79e0203375852465dce706f549bbe26abae85513425",
-      "size": 30158
+      "sha256": "6a51c106e674eb3f11404a8440ab5616d6b4f17119dbe08710243991539b6f4d",
+      "size": 30361
     },
     {
       "path": "robert-dumanyan-mentor.webp",
@@ -493,8 +493,8 @@
     },
     {
       "path": "safety.html",
-      "sha256": "1d2c6ac9efa7b3dcf495ad5781cd0bf8283b73d01709e97036cf7be39c69a893",
-      "size": 14728
+      "sha256": "b5d01d5a4ea8ae1337c8e43c2279b5e7b0f6f2fccc5332f9c6f32bbca03ad233",
+      "size": 14726
     },
     {
       "path": "site.webmanifest",
@@ -503,7 +503,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "831ddc0121cbabd34562f711d5383b8504cdc892a275c7c897394ead219cdb73",
+      "sha256": "7900485455ba3b1527bbccc4c843283d81f7d9ca5b1a05d0567109a45ad1a907",
       "size": 4903
     },
     {
@@ -513,28 +513,28 @@
     },
     {
       "path": "start.html",
-      "sha256": "6e08eec31622894b9e0f661822dd7fadeeebf7a986005e391ca6444f9bba7add",
-      "size": 22879
+      "sha256": "5c07217e7aa7bd3d1856e4266e5d9e4d4a7002f280d392bc6558022d9741c023",
+      "size": 22923
     },
     {
       "path": "studio.html",
-      "sha256": "f85afa18873f7df48e1c7e4798e8308cfd1ae8e91a6308702d6c2f5d31126c1d",
-      "size": 16314
+      "sha256": "fc6d15de784831e19649aa3a7115daf9dbb579df89356fc5b97a4d12431187a0",
+      "size": 16577
     },
     {
       "path": "teens.html",
-      "sha256": "592dfc94cf4d7edd2cb4f9131d8721b4fe7a5dfdff2edac6ab07400ba4e3481b",
-      "size": 21803
+      "sha256": "29d44ab19ab31f73c6d40b575343dfd9435ac1033fa63b063d087ccf5526ff46",
+      "size": 21825
     },
     {
       "path": "terms.html",
-      "sha256": "cffce69362adc2815085ce27b29ce3506704008f56b061e53514dfa11d62dae8",
-      "size": 9356
+      "sha256": "d639d20fd0883e22688f3f2349c8c4133545913fd8bc3128c66c2bb865275742",
+      "size": 9437
     },
     {
       "path": "vercel.json",
-      "sha256": "c7e452b59be09ed5e1a6fabeb69be8b55a898f541aed5b356f8e86a3daefc468",
-      "size": 4408
+      "sha256": "997a9eeb9c9972b2089ab4b74ac4af9edc89e9c9bd33e00612b201ca70a7298d",
+      "size": 5975
     },
     {
       "path": "workshop.css",
@@ -542,9 +542,9 @@
       "size": 41174
     }
   ],
-  "parent_manifest_sha256": "c9c1ffa4a227a4ed324901c7bb6019e16dcf28722fc70c72e70badfb22752505",
-  "patch_id": "SITE_FORM_METADATA_R31_POST_R7C_SITEMAP_20261016_LOCAL_R2",
-  "payload_sha256": "9a8e8b41646a2dcb07ef7fa849088666c07891a41e5050d56bcfc99a1ff03b0e",
+  "parent_manifest_sha256": "ad8282f6b7a670c9e5e5f840dd0d427f3c24f87a2210f64d40dab1cf7bf497e5",
+  "patch_id": "SITE_A1_A2_R2_20261026_DRAFT_REVIEW",
+  "payload_sha256": "9c5bcc257f49e53172abddd1b9f366e560adbbd00f269950cc408c555536efe3",
   "release_id": "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015",
   "schema": "ai-skill-lab.static-release.v1"
 }

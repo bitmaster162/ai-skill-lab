@@ -5,6 +5,7 @@ from urllib.parse import urlparse
 import re, sys
 
 from public_origin import PUBLIC_ORIGIN
+from site_a1_pricing_contract import snapshot as expected_pricing_snapshot
 
 ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/'deploy'/'live'
@@ -40,8 +41,14 @@ if 'Do not infer guarantees or commercial terms from this index.' not in text:
     errors.append('missing anti-inference guidance')
 
 checks+=1
-if re.search(r'(?i)(?:[$€£฿]\s*\d|\b\d[\d,.]*\s*(?:USD|EUR|GBP|THB)\b)',text):
-    errors.append('hard-coded price/currency found')
+pricing_block=expected_pricing_snapshot()+'\n'
+if text.count(pricing_block)!=1:
+    errors.append('SITE-A1 pricing snapshot missing or differs from commercial facts')
+    unpriced=text
+else:
+    unpriced=text.replace(pricing_block,'',1)
+if re.search(r'(?i)(?:[$€£฿]\s*\d|\b\d[\d,.]*\s*(?:USD|EUR|GBP|THB)\b)',unpriced):
+    errors.append('hard-coded price/currency outside exact SITE-A1 snapshot')
 
 checks+=1
 if re.search(r'(?mi)^(?:User-agent|Allow|Disallow)\s*:',text):

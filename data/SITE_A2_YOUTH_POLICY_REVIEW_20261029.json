@@ -1,0 +1,83 @@
+{
+  "schema": "ai-skill-lab.site-a2-youth-policy-review.v1",
+  "review_date": "2026-10-29",
+  "status": "FACTUAL_REVIEW_COMPLETE_NO_SUBSTANTIVE_SITE_CLAIM_CHANGE",
+  "sources": [
+    {
+      "url": "https://help.openai.com/en/articles/8313401",
+      "title": "Is ChatGPT safe for all ages?",
+      "checked_sections": [
+        "age under 13",
+        "parent or legal guardian consent for 13–18",
+        "adult operates ChatGPT when educating under 13"
+      ],
+      "conclusion": "Age requirements unchanged relative to site."
+    },
+    {
+      "url": "https://help.openai.com/en/articles/12315553-managing-parental-controls-in-chatgpt",
+      "previous_site_link": "https://help.openai.com/en/articles/12315553-parental-controls-on-chatgpt-faq/",
+      "title": "Managing parental controls in ChatGPT",
+      "checked_sections": [
+        "parent/teen account linking",
+        "selected settings",
+        "study hours",
+        "quiet hours",
+        "limited safety notifications",
+        "no parent access to conversation history",
+        "model improvement setting is configurable"
+      ],
+      "conclusion": "Core site claims supported; extra features not enumerated on site; no default settings stated."
+    }
+  ],
+  "document_updates_seen": [
+    "Health settings documented",
+    "multiple Quiet hours blocks documented",
+    "safety notification scope expanded"
+  ],
+  "historical_caution": "No verified 2026-09-26 archived snapshot of parental-control defaults; do not assert them on site.",
+  "site_claims_verified": [
+    "No independent ChatGPT account required for under 13",
+    "13–18 parental permission",
+    "adult actual ChatGPT operation in educational demonstration for under 13",
+    "settings, study hours, quiet hours and limited notifications for linked teen accounts",
+    "parent does not get access to teen chats"
+  ],
+  "site_model_improvement_default_claims_found": false,
+  "site_change_decision": "Update verification dates only; leave RU/EN substantive copy unchanged.",
+  "surfaces": {
+    "app/(ru)/safety/page.tsx": {
+      "language": "ru",
+      "sha256_before": "9167fa6eb671597083d0173ef5aaf535aa8a4a01afe77263bfd4d2a5b17247db",
+      "sha256_after": "c0b76e17e7fb2257848b1fab1e1c36aca520d14e30e9b146e68b314ae45402f5",
+      "date_before": "2026-09-26",
+      "date_after": "2026-10-29",
+      "only_date_edits": true
+    },
+    "app/(en)/en/safety/page.tsx": {
+      "language": "en",
+      "sha256_before": "96b4adc052e517f30933b56cbb72932fca31170a61d84d75032b8335bfa79efa",
+      "sha256_after": "a001f4928466e6f43af23179cca68ab86f0e807eab72097cfd38b1773d47f597",
+      "date_before": "2026-09-26",
+      "date_after": "2026-10-29",
+      "only_date_edits": true
+    },
+    "deploy/live/safety.html": {
+      "language": "ru",
+      "sha256_before": "1d2c6ac9efa7b3dcf495ad5781cd0bf8283b73d01709e97036cf7be39c69a893",
+      "sha256_after": "b5d01d5a4ea8ae1337c8e43c2279b5e7b0f6f2fccc5332f9c6f32bbca03ad233",
+      "date_before": "2026-09-26",
+      "date_after": "2026-10-29",
+      "only_date_edits": true
+    },
+    "deploy/live/en/safety.html": {
+      "language": "en",
+      "sha256_before": "9525fd9dce6426f17c58dd7077eb33c92edd1276dd2b3adf35a1a5a15636aa46",
+      "sha256_after": "4080d3603dcee43c2f13977c2e28c51b2a65dfd296833be3f3460cc26f91af70",
+      "date_before": "2026-09-26",
+      "date_after": "2026-10-29",
+      "only_date_edits": true
+    }
+  },
+  "no_policy_gate_modification": true,
+  "no_live_user_data": true
+}
