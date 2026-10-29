@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import json
-import sys, html
+import sys, html, hashlib
+import site_a1_a2_r2_successor as site_a2
+SITE_A2=site_a2.active()
+if SITE_A2:
+ site_a2.verify()
+ raw=(Path(__file__).resolve().parents[1]/"deploy/live/business.html").read_bytes()
+ if hashlib.sha256(raw).hexdigest()!="c9be8eec0e42f3ca84d582cdcd5534a1b8c85b49257023b7e853ee25d141d60f":
+  raise ValueError("SITE_A2_PILOT_DENY exact RU static SHA")
 ROOT=Path(__file__).resolve().parents[1]
 E32 = json.loads((ROOT / "deploy/live/_release.json").read_text(encoding="utf-8")).get("release_id")  in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}
 errors=[];checks=0
@@ -30,7 +37,7 @@ for rel in ['components/PilotSimulator.tsx','deploy/live/business.html','deploy/
  text=html.unescape((ROOT/rel).read_text(encoding='utf-8'))
  for marker in ['SOURCE-BOUND','REVIEWABLE','MEASURABLE','HUMAN-OWNED','Candidate scope','AI role','Human checkpoint','Success signal','Stop condition','Pilot artifact']:
   checks+=1
-  required = E32_PILOT.get(marker,marker) if E32 and rel == 'deploy/live/business.html' else marker
+  required = ('ПОД КОНТРОЛЕМ ЧЕЛОВЕКА' if SITE_A2 and rel == 'deploy/live/business.html' and marker == 'HUMAN-OWNED' else E32_PILOT.get(marker,marker) if E32 and rel == 'deploy/live/business.html' else marker)
   if required not in text:errors.append(f'{rel}: missing {required!r}')
 for rel in ['deploy/live/business.html','deploy/live/en/business.html']:
  text=(ROOT/rel).read_text(encoding='utf-8')
