@@ -8,10 +8,10 @@ ROOT=Path(__file__).resolve().parents[1]
 LIVE=ROOT/"deploy/live"
 RELEASE="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"
 PATCH="SITE_A1_A2_R2_20261026_DRAFT_REVIEW"
-MANIFEST_SHA="f8cdc7b27aca6ea5815c8237a97acf53a5c7ef9f9db24d4ff19e6c5ae9c5ec53"
-PAYLOAD_SHA="1393d778de86ba69b0a187f545d1aa606ef3ccf0d89f189cc0be75ec21e9fcca"
+MANIFEST_SHA="79ecdcd892a308ef3ae93b6f551a4c01e59e9a584eee39764daba5498df11889"
+PAYLOAD_SHA="9c5bcc257f49e53172abddd1b9f366e560adbbd00f269950cc408c555536efe3"
 ADMISSION="data/SITE_A1_A2_R2_METADATA_SUCCESSOR_ADMISSION_V2_20261026.json"
-ADMISSION_SHA="279ee064f8a93f25af5ca6b64362bd6f16d6a048a74fd611977c8585f76ff1ef"
+ADMISSION_SHA="fb4a04354f1a99a2d2d0cc7b5364403b2b520406660cdeb9d4ce3eaf865c7034"
 SOURCE_COMMIT="9d2ed0c1fa98d94457052392208cb3526385a2ba"
 SOURCE_TREE="96a3619cd476d4174f6fff016fdfa3945fe7cc58"
 BASE="d0a858a7787088dabf6d914e45fb0cde41b743e8"
@@ -23,7 +23,7 @@ CHAIN=(
  ("74095414ea1fa3f41b879ebfa9b55fd525242d2a","6159de33768a88d9d945fc3fc2cbfde194cc2cf087783acb63b65acaabcffc56","fc57c61c7ac502644665f7cc06152f43fb0b5d7f67827eb6fd4b12aadfc83f37"),
  (SOURCE_COMMIT,"ad8282f6b7a670c9e5e5f840dd0d427f3c24f87a2210f64d40dab1cf7bf497e5","6159de33768a88d9d945fc3fc2cbfde194cc2cf087783acb63b65acaabcffc56"),
 )
-STATIC_DELTA=frozenset({"sitemap.xml","start.html"})
+STATIC_DELTA=frozenset({"sitemap.xml","start.html","safety.html","en/safety.html"})
 HISTORIC_FILES=(
  "scripts/phuket_universe_r7b_release_profile.py",
  "data/phuket_universe_u3_e38_r7b_profile.json",
@@ -134,18 +134,24 @@ def verify(manifest_override:bytes|None=None,extra_file:str|None=None,
   "deploy/live/_release.json","deploy/live/sitemap.xml","deploy/live/start.html",
   "scripts/check_phuket_release_r3.py","scripts/check_search_metadata.py",
   "scripts/phuket_release_profile.py","scripts/site_a1_a2_r2_successor.py",
-  "scripts/test_site_a1_a2_r2_successor.py","scripts/test_site_a2_metadata_gate.py"}
+  "scripts/test_site_a1_a2_r2_successor.py","scripts/test_site_a2_metadata_gate.py",
+  "app/(ru)/safety/page.tsx","app/(en)/en/safety/page.tsx",
+  "deploy/live/safety.html","deploy/live/en/safety.html",
+  "data/SITE_A2_YOUTH_POLICY_REVIEW_20261029.json",
+  "scripts/test_site_a2_youth_policy_review.py"}
  must(set(adm.get("files_exact",[]))==expected_files,"METADATA_EXACT_FILE_SCOPE")
  for name,entry in adm.get("sha_pins_non_recursive",{}).items():
   raw=(ROOT/name).read_bytes()
   must(sha(raw)==entry["sha256"] and len(raw)==entry["bytes"],"METADATA_PIN:"+name)
  must(set(adm.get("sha_pins_non_recursive",{}))==
-      {"app/sitemap.ts","components/workshop/WorkshopStart.tsx","deploy/live/_release.json","deploy/live/sitemap.xml","deploy/live/start.html",
+      {"app/sitemap.ts","components/workshop/WorkshopStart.tsx","deploy/live/_release.json","deploy/live/sitemap.xml","deploy/live/start.html","app/(ru)/safety/page.tsx","app/(en)/en/safety/page.tsx","deploy/live/safety.html","deploy/live/en/safety.html","data/SITE_A2_YOUTH_POLICY_REVIEW_20261029.json",
        "scripts/check_search_metadata.py"},"METADATA_PIN_SET")
  must(set(adm.get("exact_2026_10_26_ru_routes",[]))==
       {"/business","/challenge","/faq","/phuket","/privacy",
        "/projects","/proof","/studio","/teens","/terms"},"RU_DATE_ROUTES")
  must(adm.get("exact_2026_10_28_ru_start_route")=="/start","RU_START_28")
+ must(adm.get("exact_2026_10_29_youth_routes")==["/safety","/en/safety"],"YOUTH_29_ROUTES")
+ must(adm.get("policy_evidence_sha256")==sha((ROOT/"data/SITE_A2_YOUTH_POLICY_REVIEW_20261029.json").read_bytes()),"YOUTH_EVIDENCE_SHA")
  must(set(adm.get("exact_2026_10_26_bilingual_pricing_routes",[]))==
       {"/pricing","/en/pricing"},"PRICE_DATE_ROUTES")
 

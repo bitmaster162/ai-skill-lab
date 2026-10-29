@@ -29,8 +29,8 @@ assert.deepEqual((compiled.diagnostics ?? []).filter(x => x.category === ts.Diag
 const originalManifest = readFileSync(path.join(repo, "deploy/live/_release.json"));
 const originalAdmission = readFileSync(path.join(repo, "data/SITE_A1_A2_R2_METADATA_SUCCESSOR_ADMISSION_V2_20261026.json"));
 const digest = bytes => createHash("sha256").update(bytes).digest("hex");
-assert.equal(digest(originalManifest), "f8cdc7b27aca6ea5815c8237a97acf53a5c7ef9f9db24d4ff19e6c5ae9c5ec53");
-assert.equal(digest(originalAdmission), "279ee064f8a93f25af5ca6b64362bd6f16d6a048a74fd611977c8585f76ff1ef");
+assert.equal(digest(originalManifest), "79ecdcd892a308ef3ae93b6f551a4c01e59e9a584eee39764daba5498df11889");
+assert.equal(digest(originalAdmission), "fb4a04354f1a99a2d2d0cc7b5364403b2b520406660cdeb9d4ce3eaf865c7034");
 
 function guideRoutes(manifestBytes, admissionBytes) {
   const fakeFs = {

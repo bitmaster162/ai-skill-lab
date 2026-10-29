@@ -1,9 +1,9 @@
 /** Exact SITE-A1/A2 successor admission for inherited R31 offline form test. */
 import { createHash } from "node:crypto";
 const PATCH="SITE_A1_A2_R2_20261026_DRAFT_REVIEW";
-const MANIFEST="f8cdc7b27aca6ea5815c8237a97acf53a5c7ef9f9db24d4ff19e6c5ae9c5ec53";
-const ADMISSION="279ee064f8a93f25af5ca6b64362bd6f16d6a048a74fd611977c8585f76ff1ef";
-const PAYLOAD="1393d778de86ba69b0a187f545d1aa606ef3ccf0d89f189cc0be75ec21e9fcca";
+const MANIFEST="79ecdcd892a308ef3ae93b6f551a4c01e59e9a584eee39764daba5498df11889";
+const ADMISSION="fb4a04354f1a99a2d2d0cc7b5364403b2b520406660cdeb9d4ce3eaf865c7034";
+const PAYLOAD="9c5bcc257f49e53172abddd1b9f366e560adbbd00f269950cc408c555536efe3";
 const RELEASE="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015";
 const HISTORIC="a8166f8a45f17df8b7359dfb62bba467c6061f61cab1db164183216d31c42bb6";
 const sha = b => createHash("sha256").update(b).digest("hex");

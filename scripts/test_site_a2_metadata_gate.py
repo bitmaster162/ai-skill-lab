@@ -31,6 +31,8 @@ class Sitemaps(unittest.TestCase):
   got={p for p,date in self.data.items() if date=="2026-10-26"}
   self.assertEqual(got,(CHANGED - {"/start"})|PRICE)
   self.assertEqual(self.data["/start"],"2026-10-28")
+  self.assertEqual(self.data["/safety"],"2026-10-29")
+  self.assertEqual(self.data["/en/safety"],"2026-10-29")
   self.assertEqual(len(got),12)
  def test_preserve_every_other_date(self):
   previous=git("show","9d2ed0c1fa98d94457052392208cb3526385a2ba:deploy/live/sitemap.xml")
@@ -41,7 +43,7 @@ class Sitemaps(unittest.TestCase):
        for node in xml.findall("x:url",namespace)}
   self.assertEqual(set(old),set(self.data))
   for route,stamp in self.data.items():
-   if route not in CHANGED:self.assertEqual(stamp,old[route],route)
+   if route not in CHANGED | {"/safety","/en/safety"}:self.assertEqual(stamp,old[route],route)
  def test_en_start_historic_title_main_unchanged(self):
   baseline=git("show","d0a858a7787088dabf6d914e45fb0cde41b743e8:deploy/live/en/start.html")
   pr=git("show","9d2ed0c1fa98d94457052392208cb3526385a2ba:deploy/live/en/start.html")

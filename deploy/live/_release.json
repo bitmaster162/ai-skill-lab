@@ -163,8 +163,8 @@
     },
     {
       "path": "en/safety.html",
-      "sha256": "9525fd9dce6426f17c58dd7077eb33c92edd1276dd2b3adf35a1a5a15636aa46",
-      "size": 11625
+      "sha256": "4080d3603dcee43c2f13977c2e28c51b2a65dfd296833be3f3460cc26f91af70",
+      "size": 11623
     },
     {
       "path": "en/start.html",
@@ -493,8 +493,8 @@
     },
     {
       "path": "safety.html",
-      "sha256": "1d2c6ac9efa7b3dcf495ad5781cd0bf8283b73d01709e97036cf7be39c69a893",
-      "size": 14728
+      "sha256": "b5d01d5a4ea8ae1337c8e43c2279b5e7b0f6f2fccc5332f9c6f32bbca03ad233",
+      "size": 14726
     },
     {
       "path": "site.webmanifest",
@@ -503,7 +503,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "0d8761805d10f0ea4cd33f357972c1ca8aaedf941b85827ff6c42d4c7bd9de0c",
+      "sha256": "7900485455ba3b1527bbccc4c843283d81f7d9ca5b1a05d0567109a45ad1a907",
       "size": 4903
     },
     {
@@ -544,7 +544,7 @@
   ],
   "parent_manifest_sha256": "ad8282f6b7a670c9e5e5f840dd0d427f3c24f87a2210f64d40dab1cf7bf497e5",
   "patch_id": "SITE_A1_A2_R2_20261026_DRAFT_REVIEW",
-  "payload_sha256": "1393d778de86ba69b0a187f545d1aa606ef3ccf0d89f189cc0be75ec21e9fcca",
+  "payload_sha256": "9c5bcc257f49e53172abddd1b9f366e560adbbd00f269950cc408c555536efe3",
   "release_id": "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015",
   "schema": "ai-skill-lab.static-release.v1"
 }

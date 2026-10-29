@@ -4,13 +4,13 @@ import hashlib
 import json
 import re
 
-MANIFEST_SHA = "f8cdc7b27aca6ea5815c8237a97acf53a5c7ef9f9db24d4ff19e6c5ae9c5ec53"
-ADMISSION_SHA = "279ee064f8a93f25af5ca6b64362bd6f16d6a048a74fd611977c8585f76ff1ef"
+MANIFEST_SHA = "79ecdcd892a308ef3ae93b6f551a4c01e59e9a584eee39764daba5498df11889"
+ADMISSION_SHA = "fb4a04354f1a99a2d2d0cc7b5364403b2b520406660cdeb9d4ce3eaf865c7034"
 PATCH = "SITE_A1_A2_R2_20261026_DRAFT_REVIEW"
-EXACT_PAYLOAD = 1371163
+EXACT_PAYLOAD = 1371159
 PINNED = {
     "README.md": "f92a12b93b041ac68a4768fa93f21fd58a27a1f7b904db2c2d97fdd4b4e5eff2",
-    "app/sitemap.ts": "3624828306a7040d1e7769881b95fd1df7dca3e3c02cdb0d5a344f037643a05d",
+    "app/sitemap.ts": "3c950c53fa311d564a6c5ff0ab124395c4252eca80e0bfbfe6bdf0e903a71c04",
     "components/ProjectStudio.tsx": "6f5acd278f268075aadf51e4bb79bc6ede67bb7d60e96895f36a353bfd22bc34",
     "components/workshop/WorkshopAudience.tsx": "be7f68db93db6b18bf007c6715a24fe30c7c67116e619f36780c98a8c07903f7",
     "deploy/live/personal.html": "288ed72d677b37a80510413e647f0bf87ae3365a9d29a354a657b373d009fc69",
@@ -21,7 +21,7 @@ RU_CHANGED = frozenset(("/business", "/challenge", "/faq", "/phuket", "/privacy"
 PRICING = frozenset(("/pricing", "/en/pricing"))
 SITEMAP_EXPRESSION = ('lastModified: universeRoutes.includes(route) ? "2026-10-15" : '
     '(route === "/pricing" || route === "/en/pricing") ? "2026-10-26" : '
-    'route === "/start" ? "2026-10-28" : siteA2Routes.includes(route) ? "2026-10-26" : lastModified')
+    'route === "/start" ? "2026-10-28" : (route === "/safety" || route === "/en/safety") ? "2026-10-29" : siteA2Routes.includes(route) ? "2026-10-26" : lastModified')
 
 def sha(data):
     return hashlib.sha256(data).hexdigest()
@@ -66,12 +66,16 @@ def verify_sitemap(root):
         if xml.count('<loc>https://aiskillab.work' + route +
             '</loc><lastmod>2026-10-26</lastmod>') != 1:
             raise ValueError("SITE_A2_D4_DENY changed route " + route)
+    for route in ("/safety","/en/safety"):
+        if xml.count('<loc>https://aiskillab.work' + route + '</loc><lastmod>2026-10-29</lastmod>') != 1:
+            raise ValueError("SITE_A2_D4_DENY policy lastmod " + route)
     if xml.count('<loc>https://aiskillab.work/start</loc><lastmod>2026-10-28</lastmod>') != 1:
         raise ValueError("SITE_A2_D4_DENY exact Start lastmod")
-    if (xml.count("<lastmod>2026-10-26</lastmod>") != 12
+    if (xml.count("<lastmod>2026-10-29</lastmod>") != 2
+        or xml.count("<lastmod>2026-10-26</lastmod>") != 12
         or xml.count("<lastmod>2026-10-28</lastmod>") != 1
         or xml.count("<lastmod>2026-10-15</lastmod>") != 2
-        or xml.count("<lastmod>2026-10-16</lastmod>") != 41):
+        or xml.count("<lastmod>2026-10-16</lastmod>") != 39):
         raise ValueError("SITE_A2_D4_DENY sitemap counts")
     return True
 
@@ -92,6 +96,8 @@ def exact_payload_limit(measured):
 D5_LEGAL_RU = "62744a75116170b3ffc83e291776d3e4a1de8e6f17276c8f08de4d3519b6330f"
 D5_STATIC_MAIN = {
     "privacy.html": "fb5afd0bf70e30e4368797536970ca12e5532d5cc52b494530a2c1639745dd9c",
+    "safety.html": "4d765afa123087851fd580793cda17b55b7cf4e9afaa1458947fc80572dc086e",
+    "en/safety.html": "36e427fe4c8257d759837176218dbad3e953c6e3accc1c10d13c281ff759415a",
     "terms.html": "46efe3eea549f4d95d35cdbe8151bce58d74cfda9701ea8a8131f3447874dffe",
 }
 def d5_legal_source(root):
@@ -107,3 +113,17 @@ def d5_main_pins(root):
         if match is None or sha(match.group(0).encode()) != expected:
             raise ValueError("SITE_A2_D5_DENY static main: "+rel)
     return dict(D5_STATIC_MAIN)
+
+def d5_safety_source(root, rel):
+    """Exact 29-Oct reviewed source; historical D5 legal hashes remain unchanged."""
+    actual = {"app/safety/page.tsx": "app/(ru)/safety/page.tsx",
+              "app/en/safety/page.tsx": "app/(en)/en/safety/page.tsx"}
+    if rel not in actual:
+        raise ValueError("SITE_A2_D5_DENY unapproved safety source")
+    import site_a1_a2_r2_successor as successor
+    successor.verify()
+    review=json.loads((root/"data/SITE_A2_YOUTH_POLICY_REVIEW_20261029.json").read_bytes())
+    expected=review["surfaces"][actual[rel]]["sha256_after"]
+    if review.get("review_date")!="2026-10-29" or source_sha(root,actual[rel])!=expected:
+        raise ValueError("SITE_A2_D5_DENY source evidence")
+    return expected

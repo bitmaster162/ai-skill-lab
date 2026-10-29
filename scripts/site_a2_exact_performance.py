@@ -3,11 +3,11 @@ import hashlib
 import json
 from pathlib import Path
 
-MANIFEST_SHA = "f8cdc7b27aca6ea5815c8237a97acf53a5c7ef9f9db24d4ff19e6c5ae9c5ec53"
-ADMISSION_SHA = "279ee064f8a93f25af5ca6b64362bd6f16d6a048a74fd611977c8585f76ff1ef"
-PAYLOAD_SHA = "1393d778de86ba69b0a187f545d1aa606ef3ccf0d89f189cc0be75ec21e9fcca"
+MANIFEST_SHA = "79ecdcd892a308ef3ae93b6f551a4c01e59e9a584eee39764daba5498df11889"
+ADMISSION_SHA = "fb4a04354f1a99a2d2d0cc7b5364403b2b520406660cdeb9d4ce3eaf865c7034"
+PAYLOAD_SHA = "9c5bcc257f49e53172abddd1b9f366e560adbbd00f269950cc408c555536efe3"
 PATCH = "SITE_A1_A2_R2_20261026_DRAFT_REVIEW"
-EXACT_NON_FONT_BYTES = 1249775
+EXACT_NON_FONT_BYTES = 1249771
 
 def approved(manifest_raw: bytes, admission_raw: bytes, measured_nonfont: int) -> int:
     digest = lambda data: hashlib.sha256(data).hexdigest()

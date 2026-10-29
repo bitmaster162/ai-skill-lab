@@ -3,11 +3,13 @@
   "can_deploy": false,
   "can_merge": false,
   "candidate_manifest_parent_sha256": "ad8282f6b7a670c9e5e5f840dd0d427f3c24f87a2210f64d40dab1cf7bf497e5",
-  "candidate_manifest_sha256": "f8cdc7b27aca6ea5815c8237a97acf53a5c7ef9f9db24d4ff19e6c5ae9c5ec53",
-  "candidate_payload_sha256": "1393d778de86ba69b0a187f545d1aa606ef3ccf0d89f189cc0be75ec21e9fcca",
+  "candidate_manifest_sha256": "79ecdcd892a308ef3ae93b6f551a4c01e59e9a584eee39764daba5498df11889",
+  "candidate_payload_sha256": "9c5bcc257f49e53172abddd1b9f366e560adbbd00f269950cc408c555536efe3",
   "changed_static_assets_from_source_commit": [
     "sitemap.xml",
-    "start.html"
+    "start.html",
+    "safety.html",
+    "en/safety.html"
   ],
   "exact_2026_10_26_bilingual_pricing_routes": [
     "/pricing",
@@ -26,10 +28,15 @@
     "/terms"
   ],
   "files_exact": [
+    "app/(en)/en/safety/page.tsx",
+    "app/(ru)/safety/page.tsx",
     "app/sitemap.ts",
     "components/workshop/WorkshopStart.tsx",
     "data/SITE_A1_A2_R2_METADATA_SUCCESSOR_ADMISSION_V2_20261026.json",
+    "data/SITE_A2_YOUTH_POLICY_REVIEW_20261029.json",
     "deploy/live/_release.json",
+    "deploy/live/en/safety.html",
+    "deploy/live/safety.html",
     "deploy/live/sitemap.xml",
     "deploy/live/start.html",
     "scripts/check_phuket_release_r3.py",
@@ -37,7 +44,8 @@
     "scripts/phuket_release_profile.py",
     "scripts/site_a1_a2_r2_successor.py",
     "scripts/test_site_a1_a2_r2_successor.py",
-    "scripts/test_site_a2_metadata_gate.py"
+    "scripts/test_site_a2_metadata_gate.py",
+    "scripts/test_site_a2_youth_policy_review.py"
   ],
   "historical_r7b_manifest_sha256": "a8166f8a45f17df8b7359dfb62bba467c6061f61cab1db164183216d31c42bb6",
   "historical_rules_modified": false,
@@ -46,34 +54,59 @@
   "release_id": "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015",
   "schema": "ai-skill-lab.site-a1-a2-r2-metadata-successor-admission.v2",
   "sha_pins_non_recursive": {
+    "app/(en)/en/safety/page.tsx": {
+      "bytes": 3925,
+      "sha256": "a001f4928466e6f43af23179cca68ab86f0e807eab72097cfd38b1773d47f597"
+    },
+    "app/(ru)/safety/page.tsx": {
+      "bytes": 6324,
+      "sha256": "c0b76e17e7fb2257848b1fab1e1c36aca520d14e30e9b146e68b314ae45402f5"
+    },
     "app/sitemap.ts": {
-      "bytes": 1639,
-      "sha256": "3624828306a7040d1e7769881b95fd1df7dca3e3c02cdb0d5a344f037643a05d"
+      "bytes": 1704,
+      "sha256": "3c950c53fa311d564a6c5ff0ab124395c4252eca80e0bfbfe6bdf0e903a71c04"
     },
     "components/workshop/WorkshopStart.tsx": {
       "bytes": 8135,
       "sha256": "f5b6a774e93d4846f439e30e073f027044db3b1bbdb2d95db7d8987bacb7ba81"
     },
+    "data/SITE_A2_YOUTH_POLICY_REVIEW_20261029.json": {
+      "bytes": 3494,
+      "sha256": "808c69bc3df3249214db2adae7025e9503bb76d62059665b7a430d071cedcc14"
+    },
     "deploy/live/_release.json": {
       "bytes": 16586,
-      "sha256": "f8cdc7b27aca6ea5815c8237a97acf53a5c7ef9f9db24d4ff19e6c5ae9c5ec53"
+      "sha256": "79ecdcd892a308ef3ae93b6f551a4c01e59e9a584eee39764daba5498df11889"
+    },
+    "deploy/live/en/safety.html": {
+      "bytes": 11623,
+      "sha256": "4080d3603dcee43c2f13977c2e28c51b2a65dfd296833be3f3460cc26f91af70"
+    },
+    "deploy/live/safety.html": {
+      "bytes": 14726,
+      "sha256": "b5d01d5a4ea8ae1337c8e43c2279b5e7b0f6f2fccc5332f9c6f32bbca03ad233"
     },
     "deploy/live/sitemap.xml": {
       "bytes": 4903,
-      "sha256": "0d8761805d10f0ea4cd33f357972c1ca8aaedf941b85827ff6c42d4c7bd9de0c"
+      "sha256": "7900485455ba3b1527bbccc4c843283d81f7d9ca5b1a05d0567109a45ad1a907"
     },
     "deploy/live/start.html": {
       "bytes": 22923,
       "sha256": "5c07217e7aa7bd3d1856e4266e5d9e4d4a7002f280d392bc6558022d9741c023"
     },
     "scripts/check_search_metadata.py": {
-      "bytes": 33229,
-      "sha256": "5cda329454e1bc383eb00507a4d50ba27c64ddd4f6a6b7c7ebbb60526c73a0b9"
+      "bytes": 33432,
+      "sha256": "aae61c65d96ab3fd99e27fbadbcb25eb70844c5dbce64b53ac766b4b73cf67c3"
     }
   },
   "source_commit_sha": "9d2ed0c1fa98d94457052392208cb3526385a2ba",
   "source_commit_tree": "96a3619cd476d4174f6fff016fdfa3945fe7cc58",
   "source_r2_manifest_sha256": "ad8282f6b7a670c9e5e5f840dd0d427f3c24f87a2210f64d40dab1cf7bf497e5",
   "status": "EXACT_LOCAL_REVIEW_ONLY_NO_PRODUCTION_AUTHORITY",
-  "exact_2026_10_28_ru_start_route": "/start"
+  "exact_2026_10_28_ru_start_route": "/start",
+  "exact_2026_10_29_youth_routes": [
+    "/safety",
+    "/en/safety"
+  ],
+  "policy_evidence_sha256": "808c69bc3df3249214db2adae7025e9503bb76d62059665b7a430d071cedcc14"
 }
