@@ -168,6 +168,12 @@ jobs:
         run: python scripts/check_e1_6_mobile_header.py
       - name: Validate E2 guides pipeline
         run: python scripts/check_guides.py
+      - name: Verify release profile candidate evidence (NO owner authorization)
+        run: python scripts/check_release_profile_admission.py
+      - name: Test exact guide route admission negative cases
+        run: python scripts/test_guide_route_admission.py
+      - name: Test fail-closed release profile negative cases
+        run: python scripts/test_release_profile_admission.py
       - name: Validate T1.4 guide translation parity
         run: python guides/aiskillab/check_translation_parity.py
       - name: Validate N15 agent safety lesson
