@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { FormEvent, useRef, useState, useSyncExternalStore } from "react";
 import { site } from "@/lib/site";
+import { diagnosticApplicationHref } from "@/lib/diagnostic-intent";
 import { ArrowIcon } from "./ArrowIcon";
 
 type State = "idle" | "sending" | "sent" | "error";
@@ -118,7 +119,7 @@ export function LeadForm({
           required
           maxLength={120}
           placeholder={needsAdultConfirmation ? (en ? "Adult Telegram, WhatsApp or email" : "Telegram, WhatsApp или email взрослого") : (en ? "Telegram, WhatsApp or email" : "Telegram, WhatsApp или email")}
-          autoComplete="email"
+          autoComplete="off"
         />
       </label>
       <label>
@@ -152,7 +153,7 @@ export function LeadForm({
       </p>
       {message ? <p className={state === "sent" ? "formMessage success" : "formMessage error"}>{message}</p> : null}
       {state === "sent" ? <div className="formSuccessActions" data-lead-success-actions>
-        <Link className="workshopButton workshopButtonSecondary" href={`${base}/start#contact-channels`}>{en ? "Book diagnostic" : "Записаться на диагностику"}</Link>
+        <Link className="workshopButton workshopButtonSecondary" href={diagnosticApplicationHref(locale)}>{en ? "Book diagnostic" : "Записаться на диагностику"}</Link>
         <a className="workshopButton workshopButtonPrimary" href={site.telegram} target="_blank" rel="noreferrer">{en ? "Message on Telegram" : "Написать в Telegram"}</a>
       </div> : null}
       </form>

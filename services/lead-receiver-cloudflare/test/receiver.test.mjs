@@ -344,3 +344,12 @@ test("cleanup is disabled by default and deletes expired rows only when enabled"
   assert.equal(db.calls[0].sql, "DELETE FROM lead_intake_r101b WHERE expires_at <= ?");
   assert.deepEqual(db.calls[0].bindings, ["2026-09-07T09:00:00.000Z"]);
 });
+
+test("diagnostic is stored only as lead-intent metadata", async () => {
+  const db = makeDb();
+  const payload = { ...basePayload(), program: "diagnostic" };
+  const response = await handleReceiver(signedRequest(payload), env(db), nowMs);
+  assert.equal(response.status, 200);
+  assert.equal(db.calls.length, 1);
+  assert.equal(db.calls[0].bindings[8], "diagnostic");
+});

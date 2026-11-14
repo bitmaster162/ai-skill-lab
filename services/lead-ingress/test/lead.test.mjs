@@ -334,3 +334,14 @@ test("trusted idempotent replay treats receiver duplicate as accepted while publ
   assert.equal(publicResponse.status, 502);
   assert.deepEqual(await body(publicResponse), { ok: false, error: "Application channel unavailable" });
 });
+
+test("diagnostic inquiry keeps its label without asserting purchase or bypassing consent", async () => {
+  const calls = captureDownstream();
+  const inquiry = { ...valid, program: "diagnostic" };
+  assert.equal((await handleLead(req(inquiry), baseEnv)).status, 200);
+  assert.equal(calls.length, 1);
+  const forwarded = JSON.parse(calls[0].init.body);
+  assert.equal(forwarded.program, "diagnostic");
+  assert.equal("paymentStatus" in forwarded, false);
+  assert.equal((await handleLead(req({ ...inquiry, privacyConsent: "" }), baseEnv)).status, 400);
+});
