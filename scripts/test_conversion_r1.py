@@ -1,6 +1,7 @@
 """Exercise the complete static release candidate offline, including both form paths."""
 import hashlib
 import json
+import os
 import tempfile
 import unittest
 from html.parser import HTMLParser
@@ -9,6 +10,7 @@ from urllib.parse import urlsplit
 from xml.etree.ElementTree import parse
 
 import build_conversion_r1 as release
+from conversion_mobile_r1 import run as check_mobile
 
 
 class Page(HTMLParser):
@@ -16,12 +18,15 @@ class Page(HTMLParser):
         super().__init__()
         self.links = []
         self.ids = set()
+        self.tables = 0
         self.canonical = None
         self.alternates = {}
         self.feed(path.read_text(encoding="utf-8"))
 
     def handle_starttag(self, tag, attrs):
         attr = dict(attrs)
+        if tag == "table":
+            self.tables += 1
         if "id" in attr:
             self.ids.add(attr["id"])
         if tag == "a" and "href" in attr:
@@ -36,8 +41,11 @@ class ConversionCandidateTest(unittest.TestCase):
     def test_release(self):
         with tempfile.TemporaryDirectory() as work:
             out, repeat = Path(work) / "first", Path(work) / "second"
+            if os.environ.get("CONVERSION_CANDIDATE_DIR"):
+                out = Path(os.environ["CONVERSION_CANDIDATE_DIR"])
             release.build(out)
             release.build(repeat)
+            check_mobile(out)
             self.assertEqual((out / "_release.json").read_bytes(), (repeat / "_release.json").read_bytes())
             parent = json.loads((release.LIVE / "_release.json").read_bytes())
             old = {row["path"]: row["sha256"] for row in parent["files"]}
@@ -66,6 +74,7 @@ class ConversionCandidateTest(unittest.TestCase):
                 self.assertGreaterEqual(home.links.count(form_url), 2)
                 self.assertIn(f"{prefix}/matcher", home.links)
                 self.assertGreaterEqual(home.links.count(f"{prefix}/guides"), 2)
+                self.assertGreaterEqual(home.links.count(f"{prefix}/proof"), 3)
                 form = Page(out / (prefix.lstrip("/") + "/start.html").lstrip("/"))
                 self.assertIn("application-form", form.ids)
                 listing = Page(out / (prefix.lstrip("/") + "/guides.html").lstrip("/"))
@@ -74,6 +83,7 @@ class ConversionCandidateTest(unittest.TestCase):
                     article = Page(out / (route.lstrip("/") + ".html"))
                     self.assertIn(route, listing.links)
                     self.assertIn(form_url, article.links)
+                    self.assertEqual(article.tables, 4)
                     self.assertEqual(article.canonical, release.guides.ORIGIN + route)
                     self.assertEqual(article.alternates["ru" if locale == "en" else "en"], release.guides.ORIGIN + alt + "/guides/" + slug)
                     self.assertIn(article.canonical, sitemap)

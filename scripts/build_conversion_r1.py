@@ -50,9 +50,9 @@ def build_home(out: Path, lang: str, copy: dict) -> None:
     pricing = re.escape(f'<a class="workshopButton workshopButtonDark" href="{prefix}/pricing">') + r'[^<]+</a>'
     pricing_cta = re.search(pricing, text)[0]
     text = replace_one(text, pricing, pricing_cta + f'<a class="workshopButton workshopButtonSecondary" href="{form}">{copy["pricing"]} →</a>')
-    band = (f'<section class="proofBand"><div><span>{copy["guides"]}</span><h2>{copy["guideHeading"]}</h2></div>'
-            f'<p>{copy["guideIntro"]}</p><a href="{prefix}/guides">{copy["guideLink"]}</a></section>')
-    text = replace_one(text, r'<section class="proofBand">.*?</section>', band)
+    parents = re.escape(f'<a class="workshopButton workshopButtonSecondary" href="{prefix}/parents">') + r'[^<]+</a>'
+    parents_cta = re.search(parents, text)[0]
+    text = replace_one(text, parents, parents_cta + f'<a class="workshopButton workshopButtonSecondary" href="{prefix}/guides">{copy["guideLink"]}</a>')
     write_text(page, text)
 
 
