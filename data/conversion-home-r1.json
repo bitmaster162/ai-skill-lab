@@ -1,0 +1,20 @@
+{
+  "ru": {
+    "heading": "Освойте ИИ на своей задаче",
+    "intro": "На занятиях один на один вы соберёте проект для учёбы или работы. На бесплатном звонке обсудим вашу задачу и подберём формат.",
+    "apply": "Оставить заявку",
+    "pricing": "Обсудить пакет",
+    "guideLink": "Гайды для взрослых и команд →",
+    "businessAction": "Обсудить пилот для бизнеса",
+    "adultAction": "Обсудить индивидуальное обучение"
+  },
+  "en": {
+    "heading": "Learn AI with a project of your own",
+    "intro": "Build a project for work or study in one-to-one sessions. On the free intro call, we’ll discuss your task and find a format that fits.",
+    "apply": "Send an enquiry",
+    "pricing": "Ask about a package",
+    "guideLink": "Guides for adults and teams →",
+    "businessAction": "Discuss a business pilot",
+    "adultAction": "Ask about one-to-one lessons"
+  }
+}
