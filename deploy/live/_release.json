@@ -1,5 +1,5 @@
 {
-  "file_count": 108,
+  "file_count": 112,
   "files": [
     {
       "path": "404.html",
@@ -48,8 +48,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "e7d52686cea7f383c37bcb6e5e2773a23845dfe9a4f538151153f04a3fccacaa",
-      "size": 14529
+      "sha256": "7190ee9a65abc15ca8940ee67c93f0baf8d963f2c8778fcd54bb7bb5f8e3b591",
+      "size": 14751
     },
     {
       "path": "en/about.html",
@@ -93,8 +93,8 @@
     },
     {
       "path": "en/guides.html",
-      "sha256": "eb511d7809b35d0c080881d4ef69e57b2379055514619e16ec4e0b84353cd7a7",
-      "size": 7741
+      "sha256": "f6ae9890778490ab650817d51766fbb4f6e65c7aef49291ea62b0a3b2ca3816b",
+      "size": 8711
     },
     {
       "path": "en/guides/ai-first-tasks-for-adults.html",
@@ -102,9 +102,19 @@
       "size": 20997
     },
     {
+      "path": "en/guides/ai-pilot-for-small-business.html",
+      "sha256": "cf1db9991971773fc3b753fc1c6ac3297506b0bf18c36a41c1f53b3c34088558",
+      "size": 30900
+    },
+    {
       "path": "en/guides/ai-safety-for-kids.html",
       "sha256": "fe89326ba58644c69465eada31e1a2aecd9a96f7bab8990b9c9b62d8805b56eb",
       "size": 15347
+    },
+    {
+      "path": "en/guides/ai-start-for-adults.html",
+      "sha256": "7ae92b7059ec8a7fdc2786f439bc9db1c2aece3bb7aec4e17c6fcfcd828d0206",
+      "size": 30777
     },
     {
       "path": "en/kids.html",
@@ -233,8 +243,8 @@
     },
     {
       "path": "guides.html",
-      "sha256": "0a956a3237417d4fac31ed5664042242428da7cd03b3b7686bad520f8fed9c4e",
-      "size": 9060
+      "sha256": "6b2e5f1857ce3b475cf3fefd91be6c4c894694f2808ce8d82fc37fa412e30f25",
+      "size": 10477
     },
     {
       "path": "guides/ai-first-tasks-for-adults.html",
@@ -242,9 +252,19 @@
       "size": 27846
     },
     {
+      "path": "guides/ai-pilot-for-small-business.html",
+      "sha256": "6bd77843d4345b2436b36c458927c1e3442fa4473fd68f56846e3c31703d9d67",
+      "size": 47626
+    },
+    {
       "path": "guides/ai-safety-for-kids.html",
       "sha256": "e63c4e2b819d5f1078fe782a53eb0317e50878c1b7584ee6810de066810a4f3a",
       "size": 19410
+    },
+    {
+      "path": "guides/ai-start-for-adults.html",
+      "sha256": "3b1572e1b911537300035139ae41762a9a596823a2a06623c2bab729f26cfb06",
+      "size": 44597
     },
     {
       "path": "icon-192.png",
@@ -258,8 +278,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "408583aac0b8a7f712f6261f0dd21eb4a7fdbb621befc42500cc3dae1bf77880",
-      "size": 18545
+      "sha256": "eb16e7f347cedb3e7991b60042421bd9d5eee08628b6563d8e149f7bd160dd5b",
+      "size": 18688
     },
     {
       "path": "kids.html",
@@ -278,8 +298,8 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "7d59fa37937eb0af7c3c6646ae8aa663da642a9bb172b18e01e285cbe251847d",
-      "size": 3275
+      "sha256": "d9db6e389304305d2016f11de643a59e03655622c0f012c912d7956e4b8f4036",
+      "size": 3525
     },
     {
       "path": "logo.png",
@@ -503,8 +523,8 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "7900485455ba3b1527bbccc4c843283d81f7d9ca5b1a05d0567109a45ad1a907",
-      "size": 4903
+      "sha256": "46e073011890b6e4fcc2068dd457f425004f81b42eef798852a24e1a0ab7ac08",
+      "size": 5329
     },
     {
       "path": "start-brief.js",
@@ -533,8 +553,8 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "997a9eeb9c9972b2089ab4b74ac4af9edc89e9c9bd33e00612b201ca70a7298d",
-      "size": 5975
+      "sha256": "8765888f6ef0066f99a6f9579101419814c1a38ab70707aba80d523988c570c5",
+      "size": 6407
     },
     {
       "path": "workshop.css",
@@ -542,9 +562,8 @@
       "size": 41174
     }
   ],
-  "parent_manifest_sha256": "ad8282f6b7a670c9e5e5f840dd0d427f3c24f87a2210f64d40dab1cf7bf497e5",
-  "patch_id": "SITE_A1_A2_R2_20261026_DRAFT_REVIEW",
-  "payload_sha256": "9c5bcc257f49e53172abddd1b9f366e560adbbd00f269950cc408c555536efe3",
-  "release_id": "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015",
+  "parent_manifest_sha256": "79ecdcd892a308ef3ae93b6f551a4c01e59e9a584eee39764daba5498df11889",
+  "payload_sha256": "16525f7fd5034bcee2c87eeeb3a90c6eb8982455f3fce6c36dea0e3fe34bd582",
+  "release_id": "CONVERSION_R1_20261118",
   "schema": "ai-skill-lab.static-release.v1"
 }
