@@ -55,6 +55,8 @@ RU: https://aiskillab.work/pricing | EN: https://aiskillab.work/en/pricing
 - Pair: 1.6x the individual package; each participant 20% less
 
 ## Guides
+- [RU](https://aiskillab.work/guides/ai-pilot-for-small-business) [EN](https://aiskillab.work/en/guides/ai-pilot-for-small-business)
+- [RU](https://aiskillab.work/guides/ai-start-for-adults) [EN](https://aiskillab.work/en/guides/ai-start-for-adults)
 - [RU](https://aiskillab.work/guides) [EN](https://aiskillab.work/en/guides)
 - [RU](https://aiskillab.work/guides/ai-first-tasks-for-adults) [EN](https://aiskillab.work/en/guides/ai-first-tasks-for-adults)
 - [RU](https://aiskillab.work/guides/ai-safety-for-kids) [EN](https://aiskillab.work/en/guides/ai-safety-for-kids)
