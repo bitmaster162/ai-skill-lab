@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useRef, useState, useSyncExternalStore } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { FormEvent, Suspense, useRef, useState, useSyncExternalStore } from "react";
 import { site } from "@/lib/site";
-import { diagnosticApplicationHref } from "@/lib/diagnostic-intent";
+import { diagnosticApplicationHref, selectStartProgramValues } from "@/lib/diagnostic-intent";
 import { ArrowIcon } from "./ArrowIcon";
 
 type State = "idle" | "sending" | "sent" | "error";
@@ -18,15 +19,36 @@ const getClientFormCapabilities = () =>
   typeof window.FormData === "function" &&
   typeof Object.fromEntries === "function";
 
-export function LeadForm({
-  defaultAudience = "adult",
-  locale = "ru",
-  program = "",
-}: {
+type LeadFormProps = {
   defaultAudience?: Audience;
   locale?: Locale;
   program?: string;
-}) {
+};
+
+// Keep the sealed WorkshopStart source unchanged; resolve URL intent inside a
+// Suspense boundary. Server output remains generic until browser hydration.
+export function LeadForm(props: LeadFormProps) {
+  return (
+    <Suspense fallback={<LeadFormBody {...props} />}>
+      <StartQueryLeadForm {...props} />
+    </Suspense>
+  );
+}
+
+function StartQueryLeadForm(props: LeadFormProps) {
+  const pathname = usePathname();
+  const params = useSearchParams();
+  const startOnly = pathname === "/start" || pathname === "/en/start";
+  const queryProgram = startOnly ? selectStartProgramValues(params?.getAll("program") ?? []) : "";
+  // An explicit program from a youth/program-specific form always takes priority.
+  return <LeadFormBody {...props} program={props.program || queryProgram} />;
+}
+
+function LeadFormBody({
+  defaultAudience = "adult",
+  locale = "ru",
+  program = "",
+}: LeadFormProps) {
   const [state, setState] = useState<State>("idle");
   // Keep SSR and the first hydration render disabled; enable only with browser APIs ready.
   const ready = useSyncExternalStore(

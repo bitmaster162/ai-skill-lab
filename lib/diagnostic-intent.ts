@@ -7,6 +7,11 @@ export function selectStartProgram(candidate: string | null): StartProgram {
   return candidate === "diagnostic" ? "diagnostic" : "";
 }
 
+// Repeated parameters are ambiguous: fail closed to a generic inquiry.
+export function selectStartProgramValues(values: readonly string[]): StartProgram {
+  return values.length === 1 ? selectStartProgram(values[0]) : "";
+}
+
 export function diagnosticApplicationHref(locale: "ru" | "en"): string {
   return `${locale === "en" ? "/en" : ""}/start?program=diagnostic#application-form`;
 }
