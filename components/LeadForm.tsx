@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useRef, useState, useSyncExternalStore } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { FormEvent, Suspense, useRef, useState, useSyncExternalStore } from "react";
 import { site } from "@/lib/site";
+import { diagnosticApplicationHref, selectStartProgramValues } from "@/lib/diagnostic-intent";
 import { ArrowIcon } from "./ArrowIcon";
 
 type State = "idle" | "sending" | "sent" | "error";
@@ -17,15 +19,36 @@ const getClientFormCapabilities = () =>
   typeof window.FormData === "function" &&
   typeof Object.fromEntries === "function";
 
-export function LeadForm({
-  defaultAudience = "adult",
-  locale = "ru",
-  program = "",
-}: {
+type LeadFormProps = {
   defaultAudience?: Audience;
   locale?: Locale;
   program?: string;
-}) {
+};
+
+// Keep the sealed WorkshopStart source unchanged; resolve URL intent inside a
+// Suspense boundary. Server output remains generic until browser hydration.
+export function LeadForm(props: LeadFormProps) {
+  return (
+    <Suspense fallback={<LeadFormBody {...props} />}>
+      <StartQueryLeadForm {...props} />
+    </Suspense>
+  );
+}
+
+function StartQueryLeadForm(props: LeadFormProps) {
+  const pathname = usePathname();
+  const params = useSearchParams();
+  const startOnly = pathname === "/start" || pathname === "/en/start";
+  const queryProgram = startOnly ? selectStartProgramValues(params?.getAll("program") ?? []) : "";
+  // An explicit program from a youth/program-specific form always takes priority.
+  return <LeadFormBody {...props} program={props.program || queryProgram} />;
+}
+
+function LeadFormBody({
+  defaultAudience = "adult",
+  locale = "ru",
+  program = "",
+}: LeadFormProps) {
   const [state, setState] = useState<State>("idle");
   // Keep SSR and the first hydration render disabled; enable only with browser APIs ready.
   const ready = useSyncExternalStore(
@@ -118,7 +141,7 @@ export function LeadForm({
           required
           maxLength={120}
           placeholder={needsAdultConfirmation ? (en ? "Adult Telegram, WhatsApp or email" : "Telegram, WhatsApp или email взрослого") : (en ? "Telegram, WhatsApp or email" : "Telegram, WhatsApp или email")}
-          autoComplete="email"
+          autoComplete="off"
         />
       </label>
       <label>
@@ -152,7 +175,7 @@ export function LeadForm({
       </p>
       {message ? <p className={state === "sent" ? "formMessage success" : "formMessage error"}>{message}</p> : null}
       {state === "sent" ? <div className="formSuccessActions" data-lead-success-actions>
-        <Link className="workshopButton workshopButtonSecondary" href={`${base}/start#contact-channels`}>{en ? "Book diagnostic" : "Записаться на диагностику"}</Link>
+        <Link className="workshopButton workshopButtonSecondary" href={diagnosticApplicationHref(locale)}>{en ? "Book diagnostic" : "Записаться на диагностику"}</Link>
         <a className="workshopButton workshopButtonPrimary" href={site.telegram} target="_blank" rel="noreferrer">{en ? "Message on Telegram" : "Написать в Telegram"}</a>
       </div> : null}
       </form>
