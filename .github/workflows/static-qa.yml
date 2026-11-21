@@ -80,6 +80,8 @@ jobs:
         run: python scripts/check_workshop_d3.py
       - name: Validate Workshop D4 remaining product and interactive authority
         run: python scripts/check_workshop_d4.py
+      - name: Verify exact SEO-method D5 candidate and negative fixtures (draft only)
+        run: python -B scripts/test_seo_method_d5_successor_r1.py
       - name: Validate Workshop D5 final trust and legal authority
         run: python scripts/check_workshop_d5.py
       - name: Validate Workshop D6 public form authority

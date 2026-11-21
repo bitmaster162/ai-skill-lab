@@ -347,8 +347,13 @@ if site_a2_mode:
  site_a2_d5.d5_main_pins(ROOT)
 for rel,d in protected.items():
  req((site_a2_d5.source_sha(ROOT,rel) if site_a2_mode and rel in site_a2_d5.PINNED else e34_repo_byte_sha(rel) if (release in {'E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'} and rel in E34_GIT_EOL_SOURCE_FILES) or (release=='E3_5_HEADING_STRUCTURE_R1' and rel in E35_CANONICAL_FILES) else sha(rel))==d,f'protected byte drift {rel}')
+# The historical source pins remain unchanged. Only the exact SHA-bound, full
+# 108-file draft candidate can authorize the two successor method main blocks.
+from seo_method_d5_successor_r1 import verified_source_main
+seo_method_candidate_pins = verified_source_main(ROOT) if site_a2_mode else {}
 for rel,d in SOURCE_MAIN.items():
- t=read(rel); req(main_digest(t)==d,f'source main drift {rel}'); req('WorkshopEditorial' in t and 'Header' not in t and 'Footer' not in t,f'source Workshop shell {rel}')
+ t=read(rel); expected = seo_method_candidate_pins.get(rel,d)
+ req(main_digest(t)==expected,f'source main drift {rel}'); req('WorkshopEditorial' in t and 'Header' not in t and 'Footer' not in t,f'source Workshop shell {rel}')
 legalpage=read('components/LegalPage.tsx'); req('WorkshopEditorial' in legalpage and '<main id="main" className="legalMain">' in legalpage,'LegalPage Workshop shell/id'); req('Header' not in legalpage and 'Footer' not in legalpage,'LegalPage legacy shell')
 for rel,d in static_main.items():
  t=read('deploy/live/'+rel); en=rel.startswith('en/'); route=rel.split('/')[-1][:-5]; alt='/'+route if en else '/en/'+route; start='/en/start' if en else '/start'
