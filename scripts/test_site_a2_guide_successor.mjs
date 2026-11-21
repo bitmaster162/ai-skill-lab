@@ -83,25 +83,36 @@ test("unknown patch id denies both guide routes", () => {
   assert.deepEqual(guideRoutes(Buffer.from(JSON.stringify(modified)), originalAdmission), { ru: false, en: false });
 });
 
-test("the frozen analytics R3 payload still admits both existing locales", () => {
-  const revision = "3b77fdf9d3a48571420ef588bbf33e72e53df71a";
-  const atR3 = rel => execFileSync("git", ["show", revision + ":" + rel], {cwd:repo});
-  const parents = ["deploy/live/index.html", "deploy/live/en/method.html"];
-  const files = new Map(parents.map(rel => [path.join(repo, rel), atR3(rel)]));
-  const r3 = atR3("deploy/live/_release.json");
-  assert.equal(digest(r3), "9758df02a2c862c643cd87c5005176ff3751ca72011ffbdaacd7112588043c73");
-  assert.deepEqual(guideRoutes(r3, originalAdmission, files), {ru:true, en:true});
-  assert.deepEqual(guideRoutes(r3, originalAdmission), {ru:false, en:false});
-});
-
-test("the sealed donor successor admits both existing guide locales", () => {
+// Historical manifest admission must use the matching shipped inventory. A later
+// release can change a different set of rows without weakening these fixtures.
+for (const [label, revision, manifestSha] of [
+  ["analytics R3", "3b77fdf9d3a48571420ef588bbf33e72e53df71a", "9758df02a2c862c643cd87c5005176ff3751ca72011ffbdaacd7112588043c73"],
+  ["guide donor", "5c004dd5fb45d0621999e50e6ff2ec30b03d9e61", "b222558702afafb10849792f693b8322272461098c2385b7a3b6acf4fdbd5fc7"],
+]) {
+  test(`the frozen ${label} payload still admits both existing locales`, () => {
+    const atRevision = rel => execFileSync("git", ["show", revision + ":" + rel], {cwd:repo});
+    const prior = atRevision("deploy/live/_release.json");
+    assert.equal(digest(prior), manifestSha);
+    const files = new Map();
+    for (const row of JSON.parse(prior).files) {
+      const rel = "deploy/live/" + row.path;
+      const file = path.join(repo, rel);
+      if (digest(readFileSync(file)) !== row.sha256) files.set(file, atRevision(rel));
+    }
+    assert.deepEqual(guideRoutes(prior, originalAdmission, files), {ru:true, en:true});
+    assert.ok(files.size > 0, "the live release must differ from this frozen parent");
+    assert.deepEqual(guideRoutes(prior, originalAdmission), {ru:false, en:false});
+  });
+}
+test("the sealed live successor admits both existing guide locales", () => {
   assert.deepEqual(guideRoutes(liveManifest, originalAdmission), {ru:true, en:true});
 });
 test("an edited successor manifest or shipped byte denies both locales", () => {
   const hidden = {ru:false, en:false};
   assert.deepEqual(guideRoutes(Buffer.concat([liveManifest, Buffer.from(" ")]), originalAdmission), hidden);
   for (const rel of ["deploy/live/guides/ai-first-tasks-for-adults.html",
-    "deploy/live/en/guides/ai-first-tasks-for-adults.html", "deploy/live/analytics/preferences.js"]) {
+    "deploy/live/en/guides/ai-first-tasks-for-adults.html", "deploy/live/analytics/preferences.js",
+    "deploy/live/en/pricing.html", "deploy/live/lead-form-runtime.js"]) {
     const file = path.join(repo, rel);
     const changed = Buffer.concat([readFileSync(file), Buffer.from(" ")]);
     assert.deepEqual(guideRoutes(liveManifest, originalAdmission, new Map([[file, changed]])), hidden);

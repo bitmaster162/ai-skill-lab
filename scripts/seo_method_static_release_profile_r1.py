@@ -58,8 +58,8 @@ def verified_live_lineage():
 def inherited_gate_family(release_id: str) -> str:
  # Only unchanged historical content may use the R7B/SITE-A2 gate family.
  # This is not a release-id alias in the on-disk manifest or production policy.
- from adult_analytics_lineage import current_release, guide_donors, r3
- if release_id in {RELEASE_ID, r3.RELEASE_ID, guide_donors.RELEASE_ID}:
+ from adult_analytics_lineage import current_release, diagnostic, guide_donors, r3
+ if release_id in {RELEASE_ID, r3.RELEASE_ID, guide_donors.RELEASE_ID, diagnostic.RELEASE_ID}:
   adult = current_release()
   require(active() if release_id == RELEASE_ID else
           adult.active() and adult.RELEASE_ID == release_id, "RELEASE_PROFILE_UNSEALED")
@@ -117,8 +117,8 @@ def verify(*,source_overrides=None,file_overrides=None,archive_override=None,man
  require(set(files)==set(bypath),"OVERRIDE_FILESET")
  # A reviewed child changes EN source. Verify the historical archive against its
  # pinned pre-edit source and give explicit negative fixtures precedence.
- from adult_analytics_lineage import guide_donors
- sources = guide_donors.old_method_source() if guide_donors.active() else {}
+ from adult_analytics_lineage import diagnostic, guide_donors
+ sources = guide_donors.old_method_source() if guide_donors.active() or diagnostic.active() else {}
  sources.update(source_overrides or {})
  # Original legal/header/CTA envelopes must be identical on each changed method route.
  for page,source in (("method.html","app/(ru)/method/page.tsx"),("en/method.html","app/(en)/en/method/page.tsx")):

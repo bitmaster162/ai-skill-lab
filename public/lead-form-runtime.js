@@ -11,6 +11,7 @@
   const audience = form.elements.namedItem("audience");
   const adultWrap = form.querySelector("[data-adult-confirmation]");
   const adult = form.querySelector('input[name="adultConfirmation"]');
+  const startProgram = form.querySelector('input[type="hidden"][name="program"][value=""]');
   if (!submit || !readiness || !direct || !message || !audience || !adultWrap || !adult) return;
   submit.disabled = true;
   if (typeof window.fetch !== "function" || typeof window.FormData !== "function" ||
@@ -18,6 +19,15 @@
   const en = document.documentElement.lang === "en";
   let ready = false;
   let busy = false;
+  function syncStartProgram() {
+    if (!startProgram) return;
+    const path = window.location.pathname;
+    if (path !== "/start" && path !== "/en/start") return;
+    const values = typeof window.URLSearchParams === "function"
+      ? new window.URLSearchParams(window.location.search).getAll("program")
+      : [];
+    startProgram.value = values.length === 1 && values[0] === "diagnostic" ? "diagnostic" : "";
+  }
   function syncAudience() {
     const needed = audience.value === "parent" || audience.value === "teen";
     adultWrap.hidden = !needed;
@@ -35,6 +45,7 @@
     message.textContent = en ? "Sending…" : "Отправляем…";
     message.className = "formMessage";
     try {
+      syncStartProgram();
       const data = Object.fromEntries(new FormData(form).entries());
       const response = await fetch("/api/lead", {
         method: "POST",
@@ -65,6 +76,7 @@
     }
   }
   try {
+    syncStartProgram();
     syncAudience();
     audience.addEventListener("change", syncAudience);
     form.addEventListener("submit", onSubmit);

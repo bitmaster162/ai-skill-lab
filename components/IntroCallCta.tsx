@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { diagnosticCtaSummary, introCall, introWhatsappHref } from "@/lib/e1_4";
+import { diagnosticApplicationHref } from "@/lib/diagnostic-intent";
 import type { WorkshopLocale } from "@/lib/commercial";
 
 export function IntroCallCta({ locale = "ru", showDiagnostic = true, bookingHref }: { locale?: WorkshopLocale; showDiagnostic?: boolean; bookingHref?: string }) {
   const en = locale === "en";
-  const start = en ? "/en/start#application-form" : "/start#application-form";
+  const start = diagnosticApplicationHref(locale);
   const primaryHref = bookingHref ?? introWhatsappHref(locale);
   const primaryChannel = bookingHref ? "calcom" : "whatsapp";
   return <div className={`e14EntryStart ${showDiagnostic ? "" : "e14EntryStartSingle"}`} data-e14-entry>

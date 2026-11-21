@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useRef, useState, useSyncExternalStore } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { FormEvent, Suspense, useRef, useState, useSyncExternalStore } from "react";
+import { startInquiryProgram } from "@/lib/diagnostic-intent";
 import { site } from "@/lib/site";
 import { ArrowIcon } from "./ArrowIcon";
 
@@ -16,6 +18,13 @@ const getClientFormCapabilities = () =>
   typeof window.fetch === "function" &&
   typeof window.FormData === "function" &&
   typeof Object.fromEntries === "function";
+
+function StartProgramInput() {
+  const pathname = usePathname();
+  const params = useSearchParams();
+  const program = startInquiryProgram(pathname, params);
+  return <input type="hidden" name="program" value={program} />;
+}
 
 export function LeadForm({
   defaultAudience = "adult",
@@ -65,6 +74,8 @@ export function LeadForm({
 
     try {
       const data = Object.fromEntries(new FormData(form).entries());
+      // Submit against the current URL even if the router is still hydrating.
+      if (!program) data.program = startInquiryProgram(window.location.pathname, new URLSearchParams(window.location.search));
       const response = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -96,7 +107,11 @@ export function LeadForm({
         <a href={`${base}/start#contact-channels`}>{en ? "Direct contacts: Telegram, WhatsApp, LINE or email" : "Прямые контакты: Telegram, WhatsApp, LINE или email"}</a>
       </p>
       <input type="hidden" name="locale" value={locale} />
-      <input type="hidden" name="program" value={program} />
+      {program ? <input type="hidden" name="program" value={program} /> : (
+        <Suspense fallback={<input type="hidden" name="program" value="" />}>
+          <StartProgramInput />
+        </Suspense>
+      )}
       <div className="formRow">
         <label>
           {en ? "Your name" : "Ваше имя"}
