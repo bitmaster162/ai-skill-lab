@@ -5,12 +5,17 @@ from source_paths import source_path
 import sys
 import hashlib
 import site_a1_a2_r2_successor as site_a2
+import adult_analytics_release as adult
 SITE_A2=site_a2.active()
 if SITE_A2: site_a2.verify()
 SITE_A2_PROOF_PINS={
  "app/proof/page.tsx":"afaef143181d48efa5d7f5af149c507eb8931ca853a8e0842fb1ff451ce29de6",
  "deploy/live/proof.html":"6a51c106e674eb3f11404a8440ab5616d6b4f17119dbe08710243991539b6f4d",
 }
+if adult.active():
+    pins = {row["path"]: row["sha256"] for row in adult.verify()["files"]}
+    SITE_A2_PROOF_PINS.update({"app/proof/page.tsx": adult.source_sha("app/(ru)/proof/page.tsx"),
+                               "deploy/live/proof.html": pins["proof.html"]})
 SITE_A2_RU_COMMON={
  "SITE AS PROOF":"САЙТ КАК ДОКАЗАТЕЛЬСТВО",
  "DEFINE":"ПОСТАНОВКА", "BUILD":"СБОРКА",
@@ -22,9 +27,8 @@ SITE_A2_RU_COMMON={
 
 ROOT = Path(__file__).resolve().parents[1]
 E32 = json.loads((ROOT / "deploy/live/_release.json").read_text(encoding="utf-8")).get("release_id")  in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}
-from seo_method_static_release_profile_r1 import active as _method_active, verify as _method_verify
-if _method_active():
-    _method_verify(require_live=True)
+from seo_method_static_release_profile_r1 import verified_live_lineage
+if verified_live_lineage():
     E32=True
 errors = []
 checks = 0
@@ -81,6 +85,11 @@ for rel, en, label in proof_surfaces:
         if en
         else "Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Формы есть на /start и /matcher: matcher вызывает /api/route только по кнопке, а brief отправляет в /api/lead только по согласию."
     )
+    if adult.active():
+        privacy = (privacy.replace("; it uses no cookies or advertising trackers.",
+                    ". Only adults who opt in on the adult or business pages enable Google Analytics and its analytics cookies.")
+                   if en else privacy.replace("; cookies и рекламные trackers не используются.",
+                    ". Только совершеннолетние посетители могут включить Google Аналитику и её аналитические cookies на страницах для взрослых или бизнеса."))
     checks += 3
     if privacy not in text:
         errors.append(f"{label}: current client-privacy fact missing")

@@ -37,12 +37,30 @@ def active()->bool:
   m=json.loads(raw)
   return m.get("release_id")==RELEASE_ID and m.get("patch_id")==RELEASE_ID and m.get("parent_manifest_sha256")==PARENT_SHA
  except (OSError,ValueError,TypeError):return False
+def lineage_active():
+ import adult_analytics_release as adult
+ return active() or adult.active()
+
+def verified_live_lineage():
+ """Run the exact release proof before inheriting unchanged method-generation gates."""
+ import adult_analytics_release as adult
+ if adult.active():
+  adult.verify()
+  # The prior review bundle and method sources must still satisfy their original seals.
+  verify()
+ elif active():
+  verify(require_live=True)
+ else:
+  return False
+ return True
+
 def inherited_gate_family(release_id: str) -> str:
  # Only unchanged historical content may use the R7B/SITE-A2 gate family.
  # This is not a release-id alias in the on-disk manifest or production policy.
- if release_id==RELEASE_ID:
-  require(active(),"RELEASE_PROFILE_UNSEALED")
-  verify(require_live=True)
+ import adult_analytics_release as adult
+ if release_id in {RELEASE_ID, adult.RELEASE_ID}:
+  require(active() if release_id == RELEASE_ID else adult.active(),"RELEASE_PROFILE_UNSEALED")
+  require(verified_live_lineage(),"RELEASE_PROFILE_UNSEALED")
   return "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"
  return release_id
 def trusted_git(*args)->bytes:

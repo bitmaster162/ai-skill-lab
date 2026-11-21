@@ -7,13 +7,16 @@ SITE_A2=site_a2.active()
 if SITE_A2:
  site_a2.verify()
  raw=(Path(__file__).resolve().parents[1]/"deploy/live/business.html").read_bytes()
- if hashlib.sha256(raw).hexdigest()!="c9be8eec0e42f3ca84d582cdcd5534a1b8c85b49257023b7e853ee25d141d60f":
+ expected = "c9be8eec0e42f3ca84d582cdcd5534a1b8c85b49257023b7e853ee25d141d60f"
+ import adult_analytics_release as adult
+ if adult.active():
+  expected = next(row["sha256"] for row in adult.verify()["files"] if row["path"] == "business.html")
+ if hashlib.sha256(raw).hexdigest() != expected:
   raise ValueError("SITE_A2_PILOT_DENY exact RU static SHA")
 ROOT=Path(__file__).resolve().parents[1]
 E32 = json.loads((ROOT / "deploy/live/_release.json").read_text(encoding="utf-8")).get("release_id")  in {'E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}
-from seo_method_static_release_profile_r1 import active as _method_active, verify as _method_verify
-if _method_active():
-    _method_verify(require_live=True)
+from seo_method_static_release_profile_r1 import verified_live_lineage
+if verified_live_lineage():
     E32=True
 errors=[];checks=0
 surfaces=[

@@ -1,3 +1,4 @@
+import { AdultAnalyticsPreference } from "@/components/AdultAnalyticsPreference";
 import type { Metadata } from "next";
 import { ogPageMetadata } from "@/lib/og-assets";
 import { JsonLd } from "@/components/JsonLd";
@@ -10,4 +11,4 @@ export const metadata: Metadata = {
 
   ...ogPageMetadata({ locale: "ru", slug: "personal", title: "Персональное обучение ИИ 1-на-1 — AI Skill Lab · Пхукет", description: "Занятия по ИИ и нейросетям 1-на-1 вокруг вашей реальной задачи: практика, свой проект и разбор инструментов. На Пхукете или онлайн." }),
 };
-export default function Page(){return <><JsonLd data={coursePageSchema("personal", "ru")} /><WorkshopAudience audience="adult" locale="ru"/></>;}
+export default function Page(){return <><JsonLd data={coursePageSchema("personal", "ru")} /><WorkshopAudience audience="adult" locale="ru"/><AdultAnalyticsPreference locale="ru"/></>;}

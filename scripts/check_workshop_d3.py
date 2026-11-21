@@ -57,7 +57,7 @@ facts = json.loads(read('data/commercial_facts.json'))
 release_id = json.loads(read('deploy/live/_release.json')).get('release_id')
 from seo_method_static_release_profile_r1 import inherited_gate_family
 release_id=inherited_gate_family(release_id)
-from seo_method_static_release_profile_r1 import active as seo_method_active
+from seo_method_static_release_profile_r1 import lineage_active as seo_method_active
 if seo_method_active():E32=True
 N15_RESEARCH_URLS = ['https://replit.com/blog/doubling-down-on-our-commitment-to-secure-vibe-coding','https://www.scworld.com/news/microsoft-365-copilot-zero-click-vulnerability-enabled-data-exfiltration','https://unit42.paloaltonetworks.com/ai-agent-prompt-injection/']
 source = read('components/workshop/WorkshopAudience.tsx')

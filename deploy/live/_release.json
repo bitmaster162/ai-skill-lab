@@ -1,5 +1,5 @@
 {
-  "file_count": 108,
+  "file_count": 112,
   "files": [
     {
       "path": "404.html",
@@ -17,6 +17,26 @@
       "size": 13319
     },
     {
+      "path": "analytics/preferences.css",
+      "sha256": "f01b317812dfb7d66a33c9a2a71c04644aa16344bbb231b8d0c23a8fd64c15ac",
+      "size": 511
+    },
+    {
+      "path": "analytics/preferences.htm",
+      "sha256": "7abf4359d21644d5ee5d0e622a67fdaf3ff7fa34e0c1a47a6d873858a1df8edc",
+      "size": 644
+    },
+    {
+      "path": "analytics/preferences.js",
+      "sha256": "74dfa71045f4dff74ebc7773dc6a729f7008a82e3648605c1c3b1678c7708499",
+      "size": 9424
+    },
+    {
+      "path": "analytics/restore.js",
+      "sha256": "514cb77287256018bf4f23590da4e5c431a96e2b9681e19445bb92876731a33f",
+      "size": 202
+    },
+    {
       "path": "apple-touch-icon.png",
       "sha256": "9cb88cac8049098fdfec1bb9e61bc25e9e2fa3fb8e1ac56516d06e4b332399f0",
       "size": 793
@@ -28,8 +48,8 @@
     },
     {
       "path": "business.html",
-      "sha256": "c9be8eec0e42f3ca84d582cdcd5534a1b8c85b49257023b7e853ee25d141d60f",
-      "size": 37538
+      "sha256": "206863224b4cc69543c5e1a4d8ef2bb5e0507a86f7d8e09d319cfb48f43bbdff",
+      "size": 37798
     },
     {
       "path": "certificate.html",
@@ -63,8 +83,8 @@
     },
     {
       "path": "en/business.html",
-      "sha256": "5c0d9335f77a1f35c1f23421972aa771f918f90302bb515f4836c5887d2d3635",
-      "size": 27650
+      "sha256": "a256ae2e56e7586124fc773e53cbe5293a5b71f98729495c06febbb88a89bb4d",
+      "size": 27881
     },
     {
       "path": "en/certificate.html",
@@ -128,8 +148,8 @@
     },
     {
       "path": "en/personal.html",
-      "sha256": "5895420ff41a4213dd95b6a7b6743f0479332fc575359e4cc967a1a1f7543ad0",
-      "size": 15286
+      "sha256": "bcedaf0e056bfe013ec7a2c836763b90185655f3064de219f89158d8bf08d027",
+      "size": 15517
     },
     {
       "path": "en/phuket-universe.html",
@@ -148,8 +168,8 @@
     },
     {
       "path": "en/privacy.html",
-      "sha256": "3ba522b24c719b7034adff93c8d3d02bd50053a00dfc2a46895c4b7b17b2fa09",
-      "size": 9294
+      "sha256": "84e684ee96f3705811b4c66efff3fdde73f225c54b9de7513c45fe1501773c18",
+      "size": 9938
     },
     {
       "path": "en/projects.html",
@@ -158,8 +178,8 @@
     },
     {
       "path": "en/proof.html",
-      "sha256": "1d3ea5d3d8d6a89cbcc1108702d8dc60c5f1219ecf975178a73b39930c2ebb26",
-      "size": 23120
+      "sha256": "8f8513b775105c3b7794747efbd77ede24eb9f3ab519f3442e21de8a8e27bb63",
+      "size": 23181
     },
     {
       "path": "en/safety.html",
@@ -413,8 +433,8 @@
     },
     {
       "path": "personal.html",
-      "sha256": "288ed72d677b37a80510413e647f0bf87ae3365a9d29a354a657b373d009fc69",
-      "size": 18790
+      "sha256": "1a4594770897ece40d6ce8f4107e8143f467eab3d695b10364a4af2a84d2bc77",
+      "size": 19050
     },
     {
       "path": "phuket-housing-u2.css",
@@ -453,8 +473,8 @@
     },
     {
       "path": "privacy.html",
-      "sha256": "1d396d4df494fa8198e03e34bd0641bcd40318fba635ae35379573d6b0e4971b",
-      "size": 12152
+      "sha256": "e08a553a611e9414a2bf0b78e86a4a6cc3e2a92af16e6f5eded5ef758bc277ee",
+      "size": 13358
     },
     {
       "path": "project-filter.js",
@@ -473,8 +493,8 @@
     },
     {
       "path": "proof.html",
-      "sha256": "6a51c106e674eb3f11404a8440ab5616d6b4f17119dbe08710243991539b6f4d",
-      "size": 30361
+      "sha256": "7efb388d98f52382fa6b1a2ccd39256322dfd225d785e265efde3dbc05e349fb",
+      "size": 30526
     },
     {
       "path": "robert-dumanyan-mentor.webp",
@@ -533,8 +553,8 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "997a9eeb9c9972b2089ab4b74ac4af9edc89e9c9bd33e00612b201ca70a7298d",
-      "size": 5975
+      "sha256": "55e8ce870e4ddb525890c623095bd98e151dea073c513c5d6380d5995cc1da07",
+      "size": 12296
     },
     {
       "path": "workshop.css",
@@ -542,9 +562,9 @@
       "size": 41174
     }
   ],
-  "parent_manifest_sha256": "79ecdcd892a308ef3ae93b6f551a4c01e59e9a584eee39764daba5498df11889",
-  "patch_id": "AISL_SEO_METHOD_R1_DRAFT_20261121",
-  "payload_sha256": "f2678f7fb3ff5381e421795f83bd8115fa7365613806443cfeea9802efacdf88",
-  "release_id": "AISL_SEO_METHOD_R1_DRAFT_20261121",
+  "parent_manifest_sha256": "ef0bc7d77b523c480fa78e3ea4c87ac1ebfbffc2567f461b077b9328c7341ab0",
+  "patch_id": "AISL_ADULT_GA4_OPT_IN_R3_20261121",
+  "payload_sha256": "a436546681cb59eafb62b7faf8237fee7202c85cb5517cb57bd5bd1ad3db5113",
+  "release_id": "AISL_ADULT_GA4_OPT_IN_R3_20261121",
   "schema": "ai-skill-lab.static-release.v1"
 }

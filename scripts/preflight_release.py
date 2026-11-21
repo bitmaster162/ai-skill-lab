@@ -44,6 +44,8 @@ CHECKS = [
     ("workshop_d6", ["python", "scripts/check_workshop_d6.py"]),
     ("tracked_python_artifacts", ["python", "scripts/check_tracked_python_artifacts.py"]),
     ("python_text_encoding", ["python", "scripts/check_python_text_encoding.py"]),
+    ("adult_analytics_release", ["python", "-B", "scripts/test_adult_analytics_release.py"]),
+    ("adult_analytics_runtime", ["node", "--test", "scripts/test_adult_analytics_runtime.mjs"]),
     ("client_privacy", ["python", "scripts/check_client_privacy.py"]),
     ("e3_8_lead_events", ["python", "scripts/check_e3_8_lead_events.py"]),
     ("e3_1_ru_seo", ["python", "scripts/check_e3_1_ru_seo.py"]),

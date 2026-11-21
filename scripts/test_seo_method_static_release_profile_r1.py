@@ -1,5 +1,6 @@
 """Negative and inheritance fixtures for unapproved /method static successor."""
 from pathlib import Path
+import adult_analytics_release as adult
 from seo_method_static_release_profile_r1 import verify,SuccessorDeny,ROOT,BUNDLE,RELEASE_ID,active
 result=verify()
 assert result["status"]=="CANDIDATE_VALIDATED_NOT_ADMITTED"
@@ -31,6 +32,8 @@ if active():
  evidence=verify(require_live=True)
  assert evidence["status"]=="STATIC_PAYLOAD_MATCH_ONLY"
  reject("live_mutated_html","PAYLOAD_BYTE",require_live=True,file_overrides={"method.html":ru+b" "})
+elif adult.active():
+ reject("successor_has_distinct_inventory","LIVE_FILESET",require_live=True)
 else:
  reject("old_release_not_live_candidate","LIVE_MANIFEST",require_live=True)
 print(f"SEO_METHOD_STATIC_SUCCESSOR=PASS candidate_files=108 immutable_parent=PASS changed=3 public_routes=56 negative_fixtures={denied} release_authority=DENY")

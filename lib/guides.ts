@@ -87,18 +87,26 @@ function futureGuidePairApproved(): boolean {
     const isPostR7C = isU3R7B && header.patch_id === R31_POST_R7C_PATCH;
     const isSitemapR2 = isU3R7B && header.patch_id === R31_SITEMAP_R2_PATCH;
     const isSiteA2 = isU3R7B && header.patch_id === SITE_A2_PATCH;
-    // SEO-method successor: release identity alone must never grant guide routes.
-    // Admit both adult-guide locales only for the exact 108-file SHA-sealed payload.
+    // Keep the existing guide pair on releases that attest all shipped static bytes.
     const isSeoMethod = header.release_id === "AISL_SEO_METHOD_R1_DRAFT_20261121";
-    if (isSeoMethod) {
-      if (header.patch_id !== "AISL_SEO_METHOD_R1_DRAFT_20261121" ||
-          header.parent_manifest_sha256 !== "79ecdcd892a308ef3ae93b6f551a4c01e59e9a584eee39764daba5498df11889" ||
-          header.payload_sha256 !== "f2678f7fb3ff5381e421795f83bd8115fa7365613806443cfeea9802efacdf88" ||
-          header.file_count !== 108 ||
-          createHash("sha256").update(manifestBytes).digest("hex") !==
-            "ef0bc7d77b523c480fa78e3ea4c87ac1ebfbffc2567f461b077b9328c7341ab0") return false;
+    const isAdultAnalytics = header.release_id === "AISL_ADULT_GA4_OPT_IN_R3_20261121";
+    if (isSeoMethod || isAdultAnalytics) {
+      const seal = isAdultAnalytics ? {
+        count: 112,
+        parent: "ef0bc7d77b523c480fa78e3ea4c87ac1ebfbffc2567f461b077b9328c7341ab0",
+        payload: "a436546681cb59eafb62b7faf8237fee7202c85cb5517cb57bd5bd1ad3db5113",
+        manifest: "9758df02a2c862c643cd87c5005176ff3751ca72011ffbdaacd7112588043c73",
+      } : {
+        count: 108,
+        parent: "79ecdcd892a308ef3ae93b6f551a4c01e59e9a584eee39764daba5498df11889",
+        payload: "f2678f7fb3ff5381e421795f83bd8115fa7365613806443cfeea9802efacdf88",
+        manifest: "ef0bc7d77b523c480fa78e3ea4c87ac1ebfbffc2567f461b077b9328c7341ab0",
+      };
+      if (header.patch_id !== header.release_id || header.parent_manifest_sha256 !== seal.parent ||
+          header.payload_sha256 !== seal.payload || header.file_count !== seal.count ||
+          createHash("sha256").update(manifestBytes).digest("hex") !== seal.manifest) return false;
       const records = header.files;
-      if (!Array.isArray(records) || records.length !== 108) return false;
+      if (!Array.isArray(records) || records.length !== seal.count) return false;
       const indexed = new Map<string, { size: number; sha256: string }>();
       for (const item of records) {
         if (!item || typeof item !== "object" || Array.isArray(item)) return false;
@@ -113,7 +121,7 @@ function futureGuidePairApproved(): boolean {
             createHash("sha256").update(bytes).digest("hex") !== asset.sha256) return false;
         indexed.set(rel, { size: asset.size as number, sha256: asset.sha256 });
       }
-      if (indexed.size !== 108) return false;
+      if (indexed.size !== seal.count) return false;
       for (const [assetPath, expectedSize, expectedSHA] of FUTURE_GUIDE_R7_STATIC_ASSETS) {
         const item = indexed.get(assetPath);
         if (!item || item.size !== expectedSize || item.sha256 !== expectedSHA) return false;
