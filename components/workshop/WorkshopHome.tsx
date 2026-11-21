@@ -45,6 +45,7 @@ export function WorkshopHome({ locale = "ru" }: { locale?: WorkshopLocale }) {
         <section className={`${styles.section} ${styles.paper}`}><PromptAuditor locale={locale}/></section>
         <section className={styles.section}>
           <div className={styles.sectionHead}><span>{en ? "CHOOSE A TRACK" : "ВЫБЕРИТЕ ТРЕК"}</span><h2>{en ? "Different buyers. One standard: a result you can explain." : "Разные аудитории. Один стандарт: результат, который можно объяснить."}</h2></div>
+          {!en && <p>Если вы осваиваете ИИ для работы, попробуйте <Link href="/guides/ai-first-tasks-for-adults"><u>первые практические задачи для взрослых</u></Link>.</p>}
           <div className={styles.trackGrid}>{routes.map(([tag,title,text,href,color]) => <Link className={styles.trackCard} data-track={tag} style={{"--track": color} as CSSProperties} href={href} key={href}><span>{tag}</span><h3>{title}</h3><p>{text}</p><b>{en ? "Open track →" : "Открыть трек →"}</b></Link>)}</div>
           <div className={styles.sectionActions}><Link className="workshopButton workshopButtonSecondary" href={p("/parents")}>{en ? "For parents →" : "Родителям →"}</Link></div>
         </section>

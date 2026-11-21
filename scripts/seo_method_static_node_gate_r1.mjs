@@ -49,14 +49,17 @@ export function isVerifiedMethodLineage(root, manifestOverride = null) {
   let manifest;
   try { manifest = JSON.parse(raw.toString('utf8')); }
   catch { throw new Error('METHOD_LINEAGE_DENY_JSON'); }
-  if (manifest.release_id !== 'AISL_ADULT_GA4_OPT_IN_R3_20261121') {
+  if (!['AISL_ADULT_GA4_OPT_IN_R3_20261121', 'AISL_ADULT_GUIDE_DONORS_R1_20261121',
+        'AISL_DIAGNOSTIC_INTENT_R1_20261121', 'AISL_DIAGNOSTIC_INTENT_R2_20261121'].includes(manifest.release_id)) {
     return isVerifiedSeoMethodRelease(root, raw);
   }
   const result = spawnSync('python', ['-B', '-c', [
     'import sys',
     "sys.path.insert(0, 'scripts')",
-    'import adult_analytics_release as adult',
-    "matched = adult.active() and adult.sha(sys.stdin.buffer.read()) == adult.MANIFEST_SHA",
+    'from hashlib import sha256',
+    'from adult_analytics_lineage import current_release',
+    'release = current_release()',
+    'matched = release.active() and sha256(sys.stdin.buffer.read()).hexdigest() == release.MANIFEST_SHA',
     'from seo_method_static_release_profile_r1 import verified_live_lineage',
     'sys.exit(0 if matched and verified_live_lineage() else 1)',
   ].join(';')], {cwd: root, input: raw, timeout: 80000, encoding: 'utf8'});

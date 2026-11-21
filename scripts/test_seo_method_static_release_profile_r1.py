@@ -1,7 +1,7 @@
 """Negative and inheritance fixtures for unapproved /method static successor."""
-from pathlib import Path
-import adult_analytics_release as adult
-from seo_method_static_release_profile_r1 import verify,SuccessorDeny,ROOT,BUNDLE,RELEASE_ID,active
+from adult_analytics_lineage import current_release, diagnostic, guide_donors, r3
+adult = current_release()
+from seo_method_static_release_profile_r1 import verify,SuccessorDeny,ROOT,BUNDLE,RELEASE_ID,active,inherited_gate_family
 result=verify()
 assert result["status"]=="CANDIDATE_VALIDATED_NOT_ADMITTED"
 assert result["release_id"]==RELEASE_ID and result["public_routes"]==56
@@ -34,6 +34,17 @@ if active():
  reject("live_mutated_html","PAYLOAD_BYTE",require_live=True,file_overrides={"method.html":ru+b" "})
 elif adult.active():
  reject("successor_has_distinct_inventory","LIVE_FILESET",require_live=True)
+ if guide_donors.active() or diagnostic.active():
+  # The child source is valid for its own release but cannot stand in for archived R1.
+  en = "app/(en)/en/method/page.tsx"
+  reject("child_source_in_old_release", "SOURCE_SHA", source_overrides={en: (ROOT/en).read_bytes()})
+  try:
+   inherited_gate_family(r3.RELEASE_ID)
+  except SuccessorDeny as error:
+   assert "RELEASE_PROFILE_UNSEALED" in str(error)
+   denied += 1
+  else:
+   raise AssertionError("ancestor release ID accepted for a different active child")
 else:
  reject("old_release_not_live_candidate","LIVE_MANIFEST",require_live=True)
 print(f"SEO_METHOD_STATIC_SUCCESSOR=PASS candidate_files=108 immutable_parent=PASS changed=3 public_routes=56 negative_fixtures={denied} release_authority=DENY")

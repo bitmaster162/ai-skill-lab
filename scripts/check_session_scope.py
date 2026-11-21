@@ -3,10 +3,13 @@ from pathlib import Path
 from source_paths import source_path
 import re,sys,json,hashlib
 import site_a1_a2_r2_successor as site_a2
+from adult_analytics_lineage import diagnostic
 SITE_A2=site_a2.active()
 if SITE_A2:
     site_a2.verify()
     doc=(Path(__file__).resolve().parents[1]/"deploy/live/en/pricing.html").read_bytes()
+    if diagnostic.active():
+        doc = diagnostic.restore_parent_link("en/pricing.html", doc)
     if hashlib.sha256(doc).hexdigest()!="7fc24e3abc30e8205fb2b5ccaf25cc0fdff49a58855b5b639e5ecb50c0d3561f":
         raise ValueError("SITE_A2_DURATION_DENY pricing SHA drift")
 ROOT=Path(__file__).resolve().parents[1]

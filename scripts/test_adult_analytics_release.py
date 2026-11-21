@@ -2,6 +2,17 @@
 import json
 
 import adult_analytics_release as release
+import guide_donor_release as child
+import diagnostic_intent_release as diagnostic
+
+if child.active() or diagnostic.active():
+    # Execute every original negative fixture against the exact retained R3.
+    import subprocess
+    import sys
+    with child.parent_r3_workspace() as workspace:
+        subprocess.run([sys.executable, "-B", "scripts/test_adult_analytics_release.py"],
+                       cwd=workspace, check=True)
+    raise SystemExit(0)
 
 
 def rejects(contains, **fixture):

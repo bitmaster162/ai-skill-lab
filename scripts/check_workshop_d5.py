@@ -301,7 +301,8 @@ def main_digest(text):
 # All inherited E3.2 and earlier byte seals stay active unchanged.
 if release in {'E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}:
  protected.update({'components/workshop/AgentSafetyLesson.tsx': '2f8e73d06debbce37e58fc5abb91f662c55ada9bd12bafdd7a1d991d0edc0105', 'components/workshop/WorkshopAudience.tsx': '6f49c5a4394db2818342e8d9ea1b786f733e0abca54b9b83ccc7d7bf6c03ba67', 'scripts/build_n15_agent_safety.py': 'b272f8206bec06f9802e745283642d83d14730d18c863297d16a45c68425f182', 'scripts/check_e3_4_ai_safety.py': '648d976993fa471946edb980e1e13e3e704559164bf6f7c69c8458eb0dbf9d62', 'data/e3_4_ru_route_sha_pins.json': 'd3dbbc063156f2c6ad1492c191b12f747116ec2f40225a34d13bc4a3ba671e90', 'deploy/live/personal.html': '83be5caa0931c331fb8261c5e3475ca3ccf74a17e686a3d69c9c91c145557bd3', 'deploy/live/teens.html': '93d7cbf210cdee8ba0c62fbe2216d37e9f63c0125edcff9267c69936929c7e58', 'deploy/live/_release.json': 'ed6f9270d56b6d2be2c02fb51fcf8b1f23ec518209dc36d00563ad8397f9cb53'})
-import adult_analytics_release as adult
+from adult_analytics_lineage import current_release, diagnostic, guide_donors, r3
+adult = current_release()
 for rel,d in legal.items():
  if adult.active() and rel in {"app/privacy/page.tsx", "app/en/privacy/page.tsx"}:
   source = "app/(ru)/privacy/page.tsx" if rel == "app/privacy/page.tsx" else "app/(en)/en/privacy/page.tsx"
@@ -366,12 +367,16 @@ from seo_method_d5_successor_r1 import verified_source_main, SOURCES as SEO_METH
 # uses full exact-byte successor proof and independently sealed source pins.
 seo_method_candidate_pins = ({name: record[2] for name,record in SEO_METHOD_SOURCES.items()}
   if method_generation else verified_source_main(ROOT) if site_a2_mode else {})
+if guide_donors.active() or diagnostic.active():
+ # The child's full source and rendered file were admitted by verified_live_lineage.
+ seo_method_candidate_pins["app/en/method/page.tsx"] = "6f12e546b8b49a77d12b2e3fc467407d83ed269cb615e27b802b356ccd732a6b"
+ static_main["en/method.html"] = adult.static_main_sha("en/method.html")
 for rel,d in SOURCE_MAIN.items():
  t=read(rel); expected = seo_method_candidate_pins.get(rel,d)
  req(main_digest(t)==expected,f'source main drift {rel}'); req('WorkshopEditorial' in t and 'Header' not in t and 'Footer' not in t,f'source Workshop shell {rel}')
 legalpage=read('components/LegalPage.tsx'); req('WorkshopEditorial' in legalpage and '<main id="main" className="legalMain">' in legalpage,'LegalPage Workshop shell/id'); req('Header' not in legalpage and 'Footer' not in legalpage,'LegalPage legacy shell')
 if adult.active():
- for rel in adult.DISCLOSURES & set(static_main):
+ for rel in r3.DISCLOSURES & set(static_main):
   static_main[rel] = adult.static_main_sha(rel)
 for rel,d in static_main.items():
  t=read('deploy/live/'+rel); en=rel.startswith('en/'); route=rel.split('/')[-1][:-5]; alt='/'+route if en else '/en/'+route; start='/en/start' if en else '/start'

@@ -92,6 +92,14 @@ jobs:
         run: python scripts/check_tracked_python_artifacts.py
       - name: Validate Python text encoding portability
         run: python scripts/check_python_text_encoding.py
+      - name: Verify two localized guide donors and immutable R3 parent
+        run: python -B scripts/test_guide_donor_release.py
+      - name: Verify exact diagnostic CTA successor
+        run: python -B scripts/test_diagnostic_intent_release.py
+      - name: Install the offline browser fixture driver
+        run: pip install --disable-pip-version-check playwright==1.55.0
+      - name: Follow diagnostic CTAs and verify mocked form intent in Chrome
+        run: python -B scripts/test_diagnostic_intent_browser.py
       - name: Verify exact adult analytics successor
         run: python -B scripts/test_adult_analytics_release.py
       - name: Test optional adult pageview consent boundaries
