@@ -125,11 +125,11 @@ function futureGuidePairApproved(): boolean {
         payload: "0e377c619f86a36f55d925056b4073dc17a3cc5e5ff2f19962a7a5fedf77202f",
         manifest: "eafa144171a7deed62f06d4a18b6fa98bab7c169cf6ec829b6709060be4b52ca",
       }],
-      ["AISL_CERTIFICATE_DONORS_R1_20261122", {
+      ["AISL_CERTIFICATE_DONORS_R2_20261122", {
         count: 112,
         parent: "eafa144171a7deed62f06d4a18b6fa98bab7c169cf6ec829b6709060be4b52ca",
-        payload: "3e00d5460f488ae3a80f5c754601c7f27d544400b8700411c6e6ae4feb356755",
-        manifest: "a1906e1cd855e9fa54fe20de10c3769f2df650cf3efb1c6d3e1ce987b7a3a4c6",
+        payload: "9d2ea15d2f201981f14c6d3d0f431d3c3302e5b808855bc8608121b76e92641a",
+        manifest: "ce4124e6afe3a8ec1fbf00131f1f8b8cad2444faac37a928f37ac632809240ed",
       }],
     ]);
     const seal = typeof header.release_id === "string" ? seals.get(header.release_id) : undefined;

@@ -7,11 +7,11 @@ import sitemap_route_dates_release as previous
 from guide_donor_release import git, sha
 
 ROOT, LIVE = previous.ROOT, previous.LIVE
-RELEASE_ID = "AISL_CERTIFICATE_DONORS_R1_20261122"
+RELEASE_ID = "AISL_CERTIFICATE_DONORS_R2_20261122"
 PARENT_COMMIT = "880009028f22d89da7a70d4867c8f9509f87e9ff"
 PARENT_SHA = previous.MANIFEST_SHA
-MANIFEST_SHA = "a1906e1cd855e9fa54fe20de10c3769f2df650cf3efb1c6d3e1ce987b7a3a4c6"
-PAYLOAD_SHA = "3e00d5460f488ae3a80f5c754601c7f27d544400b8700411c6e6ae4feb356755"
+MANIFEST_SHA = "ce4124e6afe3a8ec1fbf00131f1f8b8cad2444faac37a928f37ac632809240ed"
+PAYLOAD_SHA = "9d2ea15d2f201981f14c6d3d0f431d3c3302e5b808855bc8608121b76e92641a"
 DATE = "2026-11-22"
 # The production static pages and the Next pages use different layouts.
 # Each insertion follows the existing privacy statement in its own layout.
@@ -68,9 +68,9 @@ def amended(rel):
         return data
     for page, (source, href, label, static_text, source_text) in LINKS.items():
         if rel == "deploy/live/" + page:
-            return replace_once(data, static_text + "</li>", f'{static_text} <a href="{href}">{label}</a>.</li>')
+            return replace_once(data, static_text + "</li>", f'{static_text} <a href="{href}"><u>{label}</u></a>.</li>')
         if rel == source:
-            return replace_once(data, source_text + "</p>", f'{source_text} <Link href="{href}">{label}</Link>.</p>')
+            return replace_once(data, source_text + "</p>", f'{source_text} <Link href="{href}"><u>{label}</u></Link>.</p>')
     raise ValueError("Unknown certificate-donor release path: " + rel)
 
 

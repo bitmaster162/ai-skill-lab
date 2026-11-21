@@ -38,6 +38,9 @@ for page, (source, href, label, _, _) in release.LINKS.items():
     other = "/certificate" if page.startswith("en/") else "/en/certificate"
     rejects("static " + page, file_overrides={page: html.replace(f'href="{href}"'.encode(),
                                                                 f'href="{other}"'.encode())})
+    visible = ("<u>" + label + "</u>").encode()
+    assert html.count(visible) == 1
+    rejects("static " + page, file_overrides={page: html.replace(visible, label.encode())})
     assert html.count(b'data-policy-verified="2026-10-29"') == 1
     rejects("static " + page, file_overrides={page: html.replace(b"2026-10-29", b"2026-11-22", 1)})
     rejects("source " + source, source_overrides={source: release.original(source)})
