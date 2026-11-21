@@ -107,6 +107,18 @@ function futureGuidePairApproved(): boolean {
         payload: "b0042500ae2b8ef56311d2c6d14807f94742a64b56ce207bd4916e4e6280b2e1",
         manifest: "b222558702afafb10849792f693b8322272461098c2385b7a3b6acf4fdbd5fc7",
       }],
+      ["AISL_DIAGNOSTIC_INTENT_R1_20261121", {
+        count: 112,
+        parent: "b222558702afafb10849792f693b8322272461098c2385b7a3b6acf4fdbd5fc7",
+        payload: "8a0a23c11b4977021bb8b1ef8417746e21f0aef0f49beba2aaaf88edcb55be29",
+        manifest: "78cb75d81138d54f47a37555f6eea6dff9f53f578a76779d902f0c39e97530dc",
+      }],
+      ["AISL_DIAGNOSTIC_INTENT_R2_20261121", {
+        count: 112,
+        parent: "78cb75d81138d54f47a37555f6eea6dff9f53f578a76779d902f0c39e97530dc",
+        payload: "b5a10b18ca918fd8f5de0e9746c0f12ed337b7760c23ee8a10aee9b8770d7c0b",
+        manifest: "aa60dba1a0760c0b74eb02e84a5168d397d87d38263fc27e54935687ce12a6ff",
+      }],
     ]);
     const seal = typeof header.release_id === "string" ? seals.get(header.release_id) : undefined;
     if (seal) {

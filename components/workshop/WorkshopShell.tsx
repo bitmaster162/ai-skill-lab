@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { LabCommand } from "@/components/LabCommand";
 import { UniverseFooterLink } from "@/components/UniverseFooterLink";
 import { UniverseEventRuntime } from "@/components/UniverseEventRuntime";
+import { StartLanguageLink } from "./StartLanguageLink";
 import styles from "./WorkshopShell.module.css";
 
 export type WorkshopLocale = "ru" | "en";
@@ -67,7 +69,11 @@ export function WorkshopShell({ locale = "ru", alternateHref, showReach = true, 
         <div className={styles.actions}>
           <Link className={styles.utility} href={en ? "/en/proof" : "/proof"} aria-label={en ? "Proof Lab" : "Инструменты"}>{en ? "LAB" : "Инструменты"}</Link>
           <LabCommand locale={locale} />
-          <Link className={styles.utility} href={alternateHref}>{en ? "RU" : "EN"}</Link>
+          {alternateHref === (en ? "/start" : "/en/start") ? (
+            <Suspense fallback={<a className={styles.utility} href={alternateHref} referrerPolicy="no-referrer">{en ? "RU" : "EN"}</a>}>
+              <StartLanguageLink targetLocale={en ? "ru" : "en"} alternateHref={alternateHref} />
+            </Suspense>
+          ) : <Link className={styles.utility} href={alternateHref}>{en ? "RU" : "EN"}</Link>}
           <Link className={styles.primary} href={start}>{en ? "Start application" : "Открыть заявку"}</Link>
         </div>
       </header>

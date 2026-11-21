@@ -1,5 +1,5 @@
 """Negative and inheritance fixtures for unapproved /method static successor."""
-from adult_analytics_lineage import current_release, guide_donors, r3
+from adult_analytics_lineage import current_release, diagnostic, guide_donors, r3
 adult = current_release()
 from seo_method_static_release_profile_r1 import verify,SuccessorDeny,ROOT,BUNDLE,RELEASE_ID,active,inherited_gate_family
 result=verify()
@@ -34,7 +34,7 @@ if active():
  reject("live_mutated_html","PAYLOAD_BYTE",require_live=True,file_overrides={"method.html":ru+b" "})
 elif adult.active():
  reject("successor_has_distinct_inventory","LIVE_FILESET",require_live=True)
- if guide_donors.active():
+ if guide_donors.active() or diagnostic.active():
   # The child source is valid for its own release but cannot stand in for archived R1.
   en = "app/(en)/en/method/page.tsx"
   reject("child_source_in_old_release", "SOURCE_SHA", source_overrides={en: (ROOT/en).read_bytes()})

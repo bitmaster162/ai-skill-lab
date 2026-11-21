@@ -1,8 +1,18 @@
 """Semantic and tamper regression fixtures for the two new crawler-visible donor links."""
 from html.parser import HTMLParser
 import json
+import subprocess
+import sys
 
+import diagnostic_intent_release as diagnostic
 import guide_donor_release as donor
+
+if diagnostic.active():
+    # The donor's fixtures and original verifier run together on their sealed Git parent.
+    with diagnostic.parent_guide_workspace() as workspace:
+        subprocess.run([sys.executable, "-B", "scripts/test_guide_donor_release.py"],
+                       cwd=workspace, check=True)
+    raise SystemExit(0)
 
 
 class Links(HTMLParser):
