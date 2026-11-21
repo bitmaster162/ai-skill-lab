@@ -183,8 +183,8 @@
     },
     {
       "path": "en/safety.html",
-      "sha256": "4080d3603dcee43c2f13977c2e28c51b2a65dfd296833be3f3460cc26f91af70",
-      "size": 11623
+      "sha256": "7126ee85395de385095611ac8c3766da1419afe4fdeaba6d75603cf81afff6d7",
+      "size": 11689
     },
     {
       "path": "en/start.html",
@@ -513,8 +513,8 @@
     },
     {
       "path": "safety.html",
-      "sha256": "b5d01d5a4ea8ae1337c8e43c2279b5e7b0f6f2fccc5332f9c6f32bbca03ad233",
-      "size": 14726
+      "sha256": "ce4b7dd8d3b198bec83e152f98b0f2552f38f2f24b86bf9ed88b8c8b62df98e5",
+      "size": 14836
     },
     {
       "path": "site.webmanifest",
@@ -523,7 +523,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "3dea6318c610c3d062590aafebc427936fa9f7adfa2cbcd128e13c4a682a47cd",
+      "sha256": "56e520505aec74eae1278dfff1133e85cd51e1730c2aa976c746d3f1902b997d",
       "size": 4903
     },
     {
@@ -562,9 +562,9 @@
       "size": 41174
     }
   ],
-  "parent_manifest_sha256": "aa60dba1a0760c0b74eb02e84a5168d397d87d38263fc27e54935687ce12a6ff",
-  "patch_id": "AISL_SITEMAP_ROUTE_DATES_R1_20261122",
-  "payload_sha256": "0e377c619f86a36f55d925056b4073dc17a3cc5e5ff2f19962a7a5fedf77202f",
-  "release_id": "AISL_SITEMAP_ROUTE_DATES_R1_20261122",
+  "parent_manifest_sha256": "eafa144171a7deed62f06d4a18b6fa98bab7c169cf6ec829b6709060be4b52ca",
+  "patch_id": "AISL_CERTIFICATE_DONORS_R1_20261122",
+  "payload_sha256": "3e00d5460f488ae3a80f5c754601c7f27d544400b8700411c6e6ae4feb356755",
+  "release_id": "AISL_CERTIFICATE_DONORS_R1_20261122",
   "schema": "ai-skill-lab.static-release.v1"
 }

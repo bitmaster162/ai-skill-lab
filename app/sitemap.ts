@@ -18,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   function lastModifiedFor(route: string): string {
     if (november21Routes.has(route)) return "2026-11-21";
     if (october26Routes.has(route)) return "2026-10-26";
-    if (route === "/safety" || route === "/en/safety") return "2026-10-29";
+    if (route === "/safety" || route === "/en/safety") return "2026-11-22";
     if (universeRoutes.includes(route)) return "2026-10-15";
     return lastModified;
   }

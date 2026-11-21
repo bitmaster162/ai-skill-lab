@@ -592,12 +592,13 @@ def main() -> int:
         extra = sorted(sitemap_urls - expected_urls)
         errors.append(f"sitemap mismatch missing={missing} extra={extra}")
 
-    import sitemap_route_dates_release as route_dates
-    published_dates = route_dates.active()
+    from adult_analytics_lineage import certificate_donors, current_release, has_route_dates
+    published_dates = has_route_dates()
+    certificate_dates = certificate_donors.active()
     diagnostic_urls = set()
     if published_dates:
         from diagnostic_intent_release import DONOR_PAGES
-        route_dates.verify()
+        current_release().verify()
         diagnostic_urls = {ORIGIN + route_for(LIVE / page) for page in DONOR_PAGES}
 
     source_sitemap = (ROOT / "app/sitemap.ts").read_text(encoding="utf-8")
@@ -637,6 +638,8 @@ def main() -> int:
         from seo_method_static_release_profile_r1 import verified_live_lineage
         if verified_live_lineage():
             freshness_date = date(2026, 11, 21)  # Exact two method URLs verified against the new manifest.
+        if certificate_dates:
+            freshness_date = date.fromisoformat(certificate_donors.DATE)
         if freshness_date < latest_html_date:
             errors.append(
                 f"sitemap lastmod {freshness_date.isoformat()} older than latest public HTML commit {latest_html_date.isoformat()}"
@@ -658,7 +661,7 @@ def main() -> int:
             errors.append(f"invalid sitemap lastmod {loc_text}: {value}")
         per_route_lastmod = ("2026-10-15" if RELEASE=="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015" else "2026-10-14") if active() and loc_text in {ORIGIN + p for p in UNIVERSE_ROUTES} else expected_lastmod
         if successor_verified and loc_text in {ORIGIN + "/safety", ORIGIN + "/en/safety"}:
-            per_route_lastmod = "2026-10-29"
+            per_route_lastmod = certificate_donors.DATE if certificate_dates else "2026-10-29"
         elif successor_verified and loc_text == ORIGIN + "/start":
             per_route_lastmod = "2026-10-28"
         elif successor_verified and loc_text in {ORIGIN + p for p in (successor_routes | successor_price)}:
