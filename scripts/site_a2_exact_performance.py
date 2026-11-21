@@ -29,6 +29,12 @@ def approved(manifest_raw: bytes, admission_raw: bytes, measured_nonfont: int) -
     return EXACT_NON_FONT_BYTES
 
 def verify_live(root: Path, measured_nonfont: int) -> int:
+    import adult_analytics_release as adult
+    if adult.active():
+        exact = sum(r["size"] for r in adult.verify()["files"] if not r["path"].endswith(".woff2"))
+        if measured_nonfont != exact:
+            raise ValueError("ADULT_ANALYTICS_DENY exact nonfont payload")
+        return exact
     from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify
     if method_active():
         evidence=method_verify(require_live=True)

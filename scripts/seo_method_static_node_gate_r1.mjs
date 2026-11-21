@@ -41,3 +41,25 @@ export function isVerifiedSeoMethodRelease(root, manifestOverride = null) {
   }
   return true;
 }
+
+// Consumers of the unchanged historical gates can also validate the sealed child.
+export function isVerifiedMethodLineage(root, manifestOverride = null) {
+  const raw = manifestOverride ?? fs.readFileSync(path.join(root, 'deploy/live/_release.json'));
+  if (!Buffer.isBuffer(raw)) throw new Error('METHOD_LINEAGE_DENY_NON_BYTES');
+  let manifest;
+  try { manifest = JSON.parse(raw.toString('utf8')); }
+  catch { throw new Error('METHOD_LINEAGE_DENY_JSON'); }
+  if (manifest.release_id !== 'AISL_ADULT_GA4_OPT_IN_R1_20261121') {
+    return isVerifiedSeoMethodRelease(root, raw);
+  }
+  const result = spawnSync('python', ['-B', '-c', [
+    'import sys',
+    "sys.path.insert(0, 'scripts')",
+    'import adult_analytics_release as adult',
+    "matched = adult.active() and adult.sha(sys.stdin.buffer.read()) == adult.MANIFEST_SHA",
+    'from seo_method_static_release_profile_r1 import verified_live_lineage',
+    'sys.exit(0 if matched and verified_live_lineage() else 1)',
+  ].join(';')], {cwd: root, input: raw, timeout: 80000, encoding: 'utf8'});
+  if (result.error || result.status !== 0) throw new Error('METHOD_LINEAGE_DENY_EXACT_PROOF');
+  return true;
+}

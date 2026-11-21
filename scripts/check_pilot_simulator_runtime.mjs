@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import fs from 'node:fs'; import path from 'node:path'; import vm from 'node:vm'; import process from 'node:process'; import { fileURLToPath } from 'node:url';
 import { verifySiteA2FormRuntime } from './site_a2_form_runtime_dispatch.mjs';
-import { isVerifiedSeoMethodRelease } from './seo_method_static_node_gate_r1.mjs';
+import { isVerifiedMethodLineage } from './seo_method_static_node_gate_r1.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const releaseRaw=fs.readFileSync(path.join(root,'deploy/live/_release.json'));
 const legacySiteA2=JSON.parse(releaseRaw.toString('utf8')).patch_id==='SITE_A1_A2_R2_20261026_DRAFT_REVIEW';
-const SITE_A2=legacySiteA2 || isVerifiedSeoMethodRelease(root);
+const SITE_A2=legacySiteA2 || isVerifiedMethodLineage(root);
 if(legacySiteA2) verifySiteA2FormRuntime(releaseRaw,fs.readFileSync(path.join(root,'data/SITE_A1_A2_R2_METADATA_SUCCESSOR_ADMISSION_V2_20261026.json')));
 class CL{constructor(el){this.el=el}toggle(name,on){const s=new Set((this.el.className||'').split(/\s+/).filter(Boolean));on?s.add(name):s.delete(name);this.el.className=[...s].join(' ')}}
 class E{constructor({key='',id=''}={}){this.dataset=key?{pilotKey:key}:{};this.id=id;this.attrs={};this.listeners={};this.textContent='';this.className=key==='knowledge'?'proofLabTab isActive':'proofLabTab';this.classList=new CL(this)}addEventListener(t,f){this.listeners[t]=f}setAttribute(k,v){this.attrs[k]=String(v)}getAttribute(k){return this.attrs[k]??null}trigger(){if(!this.listeners.click)throw new Error('listener missing');this.listeners.click.call(this,{target:this})}}

@@ -1,3 +1,4 @@
+import { AdultAnalyticsPreference } from "@/components/AdultAnalyticsPreference";
 import type { Metadata } from "next";
 import { ogPageMetadata } from "@/lib/og-assets";
 import { JsonLd } from "@/components/JsonLd";
@@ -11,4 +12,4 @@ export const metadata: Metadata = {
 
   ...ogPageMetadata({ locale: "en", slug: "business", title: "AI for business — AI Skill Lab · Phuket", description: "Business AI at AI Skill Lab: workflow audit, team training, bounded pilots, QA and handoff from a defined process problem to a verifiable result." }),
 };
-export default function Page(){return <><JsonLd data={coursePageSchema("business", "en")} /><WorkshopBusiness locale="en"/></>;}
+export default function Page(){return <><JsonLd data={coursePageSchema("business", "en")} /><WorkshopBusiness locale="en"/><AdultAnalyticsPreference locale="en"/></>;}

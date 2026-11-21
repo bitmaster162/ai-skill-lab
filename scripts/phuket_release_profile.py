@@ -32,7 +32,7 @@ def sha(data: bytes) -> str:
 
 
 def active() -> bool:
-    from seo_method_static_release_profile_r1 import active as method_active
+    from seo_method_static_release_profile_r1 import lineage_active as method_active
     return (json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id") in {RELEASE, agency_r5.RELEASE, housing_r6.RELEASE, universe_r7.RELEASE, universe_r7b.RELEASE} or method_active())
 
 
@@ -198,7 +198,7 @@ def universe_page(path: Path) -> bool:
     if rel not in UNIVERSE_FILES:
         return False
     verify_integrity()
-    from seo_method_static_release_profile_r1 import active as method_active
+    from seo_method_static_release_profile_r1 import lineage_active as method_active
     text = path.read_text(encoding="utf-8")
     tags = Tags(text).tags
     if ([a.get("id") for t, a in tags if t == "section"] != ["top", "orbit", "homes", "agencies"]

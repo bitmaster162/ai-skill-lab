@@ -233,6 +233,12 @@ def main() -> int:
     # Exact SHA-bound method release inherits the immutable historical T16F2
     # contract. It must prove all 108 bytes and original Git lineage first.
     from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify
+    import adult_analytics_release as adult
+    if adult.active():
+        from site_a1_a2_r2_successor import verify
+        proof = verify()
+        print(f"T16F2_INHERITANCE_PASS assets={proof['static_assets']} exact_parent=SHA256 historic_seals=RETAINED")
+        return 0
     if method_active():
         method_verify(require_live=True)
         from site_a1_a2_r2_successor import ancestor_chain

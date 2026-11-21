@@ -625,9 +625,8 @@ def main() -> int:
     if expected_lastmod and latest_html_date is not None:
         source_lastmod_date = date.fromisoformat(expected_lastmod)
         freshness_date = date(2026, 10, 29) if successor_verified else source_lastmod_date
-        from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify
-        if method_active():
-            method_verify(require_live=True)
+        from seo_method_static_release_profile_r1 import verified_live_lineage
+        if verified_live_lineage():
             freshness_date = date(2026, 11, 21)  # Exact two method URLs verified against the new manifest.
         if freshness_date < latest_html_date:
             errors.append(
@@ -654,7 +653,7 @@ def main() -> int:
         elif successor_verified and loc_text in {ORIGIN + p for p in (successor_routes | successor_price)}:
             per_route_lastmod = "2026-10-26"
         # The only new sitemap dates are two exact method pages in the sealed candidate.
-        from seo_method_static_release_profile_r1 import active as method_active
+        from seo_method_static_release_profile_r1 import lineage_active as method_active
         if method_active() and loc_text in {ORIGIN + "/method", ORIGIN + "/en/method"}:
             per_route_lastmod = "2026-11-21"
         if per_route_lastmod and value != per_route_lastmod:

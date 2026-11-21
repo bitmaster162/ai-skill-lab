@@ -60,8 +60,8 @@ checks+=1
 if 'grid-template-columns: 24px 1fr; min-height: 24px; padding: 3px 0;' not in source_css:
  errors.append('source consent label target must be >=24px')
 proofs=[
- (ROOT/'proof.html',"Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений; cookies и рекламные trackers не используются. Формы есть на /start и /matcher: matcher вызывает /api/route только по кнопке, а brief отправляет в /api/lead только по согласию."),
- (ROOT/'en'/'proof.html',"The public site uses Vercel Web Analytics for anonymized visit statistics; it uses no cookies or advertising trackers. Forms exist on /start and /matcher: matcher calls /api/route only on button press, and sends its brief to /api/lead only with consent."),
+ (ROOT/'proof.html',"Публичный сайт использует Vercel Web Analytics для обезличенной статистики посещений. Только совершеннолетние посетители могут включить Google Аналитику и её аналитические cookies на страницах для взрослых или бизнеса. Формы есть на /start и /matcher: matcher вызывает /api/route только по кнопке, а brief отправляет в /api/lead только по согласию."),
+ (ROOT/'en'/'proof.html',"The public site uses Vercel Web Analytics for anonymized visit statistics. Only adults who opt in on the adult or business pages enable Google Analytics and its analytics cookies. Forms exist on /start and /matcher: matcher calls /api/route only on button press, and sends its brief to /api/lead only with consent."),
 ]
 analytics_tag='<script defer src="/_vercel/insights/script.js"></script>'
 public_html=[p for p in ROOT.rglob('*.html') if p.name!='404.html']

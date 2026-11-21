@@ -1,0 +1,121 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import test from 'node:test';
+import vm from 'node:vm';
+
+const source = readFileSync(new URL('../deploy/live/analytics/preferences.js', import.meta.url), 'utf8');
+const origin = 'https://aiskillab.work';
+const key = 'aisl.adult-analytics.v1';
+const id = 'G-6RY1HZ75FD';
+
+function fixture({ path = '/en/business', prior, gpc = false, dnt = '0', originOverride = origin,
+  top = false, referrer = 'https://www.google.com/search?q=private-contact', readOnly = false } = {}) {
+  const nodes = new Map();
+  const handlers = {};
+  const scripts = [];
+  const writes = [];
+  const values = new Map(prior ? [[key, prior]] : []);
+  const element = name => {
+    if (!nodes.has(name)) nodes.set(name, { hidden: true, addEventListener(type, listener) { this[type] = listener; } });
+    return nodes.get(name);
+  };
+  let reloaded = 0;
+  const loc = { origin: originOverride, pathname: '/analytics/preferences.htm', search: '', hash: '',
+    reload() { reloaded++; } };
+  const document = {
+    documentElement: {}, head: { appendChild(script) { scripts.push(script); } },
+    getElementById: element, querySelector: element, createElement() { return {}; },
+    get cookie() { return 'aisl_ga=client; unrelated=keep'; },
+    set cookie(value) { writes.push(value); },
+  };
+  const parent = { location: { origin, pathname: path, search: '?email=raw-canary', hash: '#secret-fragment' },
+    document: { referrer, title: 'Private browser title', cookie: 'private-credential' } };
+  const window = { location: loc, parent, addEventListener(type, cb) { handlers[type] = cb; } };
+  if (top) window.parent = window;
+  const navigator = { globalPrivacyControl: gpc, doNotTrack: dnt };
+  const localStorage = { getItem(k) { return values.get(k) ?? null; },
+    setItem(k, v) { if (readOnly) throw Error('read-only'); values.set(k, v); },
+    removeItem(k) { if (readOnly) throw Error('read-only'); values.delete(k); } };
+  const history = { replaceState(_state, _title, url) { loc.hash = new URL(url, origin).hash; } };
+  vm.runInNewContext(source, { window, parent: window.parent, document, location: loc, URL, navigator, localStorage, history });
+  return { window, navigator, scripts, nodes, handlers, values, writes, reloaded: () => reloaded,
+    events: () => Array.from(window.dataLayer || [], args => Array.from(args)) };
+}
+
+test('a fresh visitor, refusal and privacy signals never initialize Google', () => {
+  for (const settings of [{}, {prior:'deny'}, {prior:'allow', gpc:true}, {prior:'allow', dnt:'1'}, {prior:'allow', readOnly:true}]) {
+    const f = fixture(settings);
+    assert.equal(f.scripts.length, 0);
+    assert.deepEqual(f.events(), []);
+    f.nodes.get('decline').click();
+    assert.equal(f.scripts.length, 0);
+    if (settings.gpc || settings.dnt || settings.readOnly) {
+      f.nodes.get('allow').click();
+      assert.equal(f.scripts.length, 0);
+    }
+  }
+});
+
+test('four adult routes send one explicitly sanitized pageview per document', () => {
+  for (const path of ['/personal', '/business', '/en/personal', '/en/business']) {
+    const f = fixture({path});
+    f.nodes.get('allow').click();
+    f.nodes.get('allow').click();
+    assert.equal(f.values.get(key), 'allow');
+    assert.equal(f.scripts.length, 1);
+    assert.equal(f.scripts[0].referrerPolicy, 'no-referrer');
+    assert.equal(f.scripts[0].src, 'https://www.googletagmanager.com/gtag/js?id=' + id);
+    const events = f.events(), config = events.find(e => e[0] === 'config')[2];
+    assert.equal(config.send_page_view, false);
+    assert.equal(config.allow_google_signals, false);
+    assert.equal(config.allow_ad_personalization_signals, false);
+    assert.equal(config.cookie_path, '/analytics/');
+    assert.equal(config.cookie_expires, 2592000);
+    const [event] = events.filter(e => e[0] === 'event');
+    assert.equal(events.filter(e => e[0] === 'event').length, 1);
+    assert.equal(event[1], 'page_view');
+    assert.equal(event[2].page_location, origin + path);
+    assert.equal(event[2].page_referrer, 'https://www.google.com/');
+    assert.doesNotMatch(JSON.stringify(events), /private-contact|raw-canary|secret-fragment|Private browser|private-credential/);
+    assert.equal(f.nodes.get('allow').disabled, true);
+  }
+});
+
+test('direct access, alternate hosts and excluded pages ignore a stored opt-in', () => {
+  for (const opts of [{top:true}, {originOverride:'https://preview.example'},
+    ...['/', '/en/teens', '/safety', '/en/start', '/matcher', '/en/business/child'].map(path => ({path}))]) {
+    const f = fixture({prior:'allow', ...opts});
+    assert.equal(f.scripts.length, 0); assert.deepEqual(f.events(), []);
+  }
+  for (const referrer of ['https://internal.example/secret', 'https://www.google.com.evil.example/secret',
+    'https://private@www.google.com/', 'https://www.google.com:8443/secret', '', 'javascript:ignored']) {
+    const f = fixture({prior:'allow', referrer});
+    assert.equal(f.events().find(e => e[0] === 'event')[2].page_referrer, '');
+  }
+});
+
+test('withdrawal unloads the tag and clears only scoped analytics cookies', () => {
+  const f = fixture({prior:'allow'});
+  f.nodes.get('decline').click();
+  assert.equal(f.values.get(key), 'deny'); assert.equal(f.reloaded(),1);
+  assert.equal(f.window['ga-disable-' + id], true);
+  assert.equal(f.window.location.hash, '#off');
+  assert.equal(f.writes.length,1); assert.match(f.writes[0], /^aisl_ga=; Max-Age=0; Path=\/analytics\//);
+  const other = fixture({prior:'allow'});
+  other.handlers.storage({key, newValue:'deny'});
+  assert.equal(other.reloaded(),1); assert.equal(other.window['ga-disable-' + id],true);
+});
+
+test('a cached document rechecks consent and privacy signals without a duplicate event', () => {
+  for (const change of ['none','revoke','signal']) {
+    const f=fixture({prior:'allow'});
+    f.handlers.pagehide({persisted:true});
+    assert.equal(f.window['ga-disable-' + id], true);
+    if (change === 'revoke') f.values.set(key,'deny');
+    if (change === 'signal') f.navigator.globalPrivacyControl=true;
+    f.handlers.pageshow({persisted:true});
+    assert.equal(f.window['ga-disable-' + id], change !== 'none');
+    assert.equal(f.reloaded(), change === 'none' ? 0 : 1);
+    assert.equal(f.scripts.length,1); assert.equal(f.events().filter(e => e[0] === 'event').length,1);
+  }
+});

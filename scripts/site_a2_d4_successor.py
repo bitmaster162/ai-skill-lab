@@ -48,6 +48,17 @@ def source_sha(root, path):
 def admit(root):
     import site_a1_a2_r2_successor as successor
     from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify, NEW_MANIFEST_SHA
+    import adult_analytics_release as adult
+    if adult.active():
+        rows = {r["path"]: r["sha256"] for r in adult.verify()["files"]}
+        result = dict(PINNED)
+        result.update({"deploy/live/_release.json": adult.MANIFEST_SHA,
+                       "deploy/live/personal.html": rows["personal.html"],
+                       "deploy/live/sitemap.xml": rows["sitemap.xml"]})
+        for rel, expected in result.items():
+            if source_sha(root, rel) != expected:
+                raise ValueError("ADULT_ANALYTICS_DENY inherited pin: " + rel)
+        return result
     if method_active():
         method_verify(require_live=True)
         result=dict(PINNED)
@@ -68,8 +79,8 @@ def admit(root):
     return dict(PINNED)
 
 def verify_sitemap(root):
-    from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify
-    if method_active():method_verify(require_live=True)
+    from seo_method_static_release_profile_r1 import verified_live_lineage
+    method_generation = verified_live_lineage()
     source = (root / "app/sitemap.ts").read_text(encoding="utf-8")
     xml = (root / "deploy/live/sitemap.xml").read_text(encoding="utf-8")
     if source.count(SITEMAP_EXPRESSION) != 1:
@@ -87,8 +98,8 @@ def verify_sitemap(root):
         or xml.count("<lastmod>2026-10-26</lastmod>") != 12
         or xml.count("<lastmod>2026-10-28</lastmod>") != 1
         or xml.count("<lastmod>2026-10-15</lastmod>") != 2
-        or xml.count("<lastmod>2026-10-16</lastmod>") != (37 if method_active() else 39)
-        or xml.count("<lastmod>2026-11-21</lastmod>") != (2 if method_active() else 0)):
+        or xml.count("<lastmod>2026-10-16</lastmod>") != (37 if method_generation else 39)
+        or xml.count("<lastmod>2026-11-21</lastmod>") != (2 if method_generation else 0)):
         raise ValueError("SITE_A2_D4_DENY sitemap counts")
     return True
 
@@ -100,6 +111,12 @@ def semantic(rel, original, expected):
     return expected
 
 def exact_payload_limit(measured):
+    import adult_analytics_release as adult
+    if adult.active():
+        exact = sum(row["size"] for row in adult.verify()["files"])
+        if measured != exact:
+            raise ValueError("ADULT_ANALYTICS_DENY exact payload size")
+        return exact
     from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify
     if method_active():
         method_verify(require_live=True)
@@ -126,12 +143,16 @@ def d5_legal_source(root):
 
 def d5_main_pins(root):
     import re
-    for rel,expected in D5_STATIC_MAIN.items():
+    import adult_analytics_release as adult
+    pins = dict(D5_STATIC_MAIN)
+    if adult.active():
+        pins["privacy.html"] = adult.static_main_sha("privacy.html")
+    for rel,expected in pins.items():
         text=(root/"deploy/live"/rel).read_text(encoding="utf-8")
         match=re.search(r'<main id="main".*?</main>', text, re.S)
         if match is None or sha(match.group(0).encode()) != expected:
             raise ValueError("SITE_A2_D5_DENY static main: "+rel)
-    return dict(D5_STATIC_MAIN)
+    return pins
 
 def d5_safety_source(root, rel):
     """Exact 29-Oct reviewed source; historical D5 legal hashes remain unchanged."""

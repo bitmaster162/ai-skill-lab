@@ -198,23 +198,22 @@ def main():
         patch_id = release_meta.get("patch_id")
         r7b_id = "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"
         r7_id = "PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015"
-        if release_id == "AISL_SEO_METHOD_R1_DRAFT_20261121":
+        if release_id in {"AISL_SEO_METHOD_R1_DRAFT_20261121", "AISL_ADULT_GA4_OPT_IN_R1_20261121"}:
             # Explicit versioned successor: 108 exact assets and three authorized
             # changes; historic D1 compares immutable pinned R6, not mutated HTML.
             repository_root = os.path.dirname(__file__)
             if os.path.realpath(args.dir) != os.path.realpath(os.path.join(repository_root, "deploy/live")):
                 raise ValueError("SEO_METHOD_PARITY_DENY wrong release root")
             sys.path.insert(0, os.path.join(repository_root, "scripts"))
-            from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify
-            if not method_active():
+            from seo_method_static_release_profile_r1 import verified_live_lineage
+            if not verified_live_lineage():
                 raise ValueError("SEO_METHOD_PARITY_DENY unsealed manifest")
-            method_verify(require_live=True)
             from site_a2_e3_history import authorize as pinned_history, legacy_r6_html
             pinned_history()
             for route in ROUTES:
                 rel = "index.html" if route == "/" else "en.html" if route == "/en" else route.lstrip("/") + ".html"
                 cur[route] = parse(legacy_r6_html(rel).decode("utf-8"))
-            print("SEO_METHOD_D1_HISTORIC_PARITY parent_sha=79ecdcd8 inherited_R6_verified=46 static_delta=3")
+            print(f"D1_HISTORIC_PARITY sealed_release={release_id} inherited_R6_verified={len(ROUTES)}")
         if release_id in {r7_id, r7b_id}:
             sys.path.insert(0, os.path.join(os.path.dirname(__file__), "scripts"))
             if release_id == r7b_id:

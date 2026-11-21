@@ -7,7 +7,7 @@ import crypto from 'node:crypto';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { closeOwnedBrowser } from './owned_browser_cleanup.mjs';
-import { isVerifiedSeoMethodRelease } from './seo_method_static_node_gate_r1.mjs';
+import { isVerifiedMethodLineage } from './seo_method_static_node_gate_r1.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const LIVE = path.join(ROOT, 'deploy', 'live');
@@ -15,7 +15,7 @@ const errors = [];
 let checks = 0;
 const req = (cond, msg) => { checks++; if (!cond) errors.push(msg); };
 
-const methodVerified = isVerifiedSeoMethodRelease(ROOT);
+const methodVerified = isVerifiedMethodLineage(ROOT);
 const U1_R3 = methodVerified || ['PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'].includes(JSON.parse(fs.readFileSync(path.join(LIVE, '_release.json'), 'utf8')).release_id);
 const expected = {
   'Onest-ru-en.woff2': { size: 30036, sha: '1527f4a5e3a2c65b9d789bf86a49cceefea2472bda0b1b3edc08b3adae4a9997' },
