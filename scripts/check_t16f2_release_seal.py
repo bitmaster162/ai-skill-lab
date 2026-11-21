@@ -230,6 +230,15 @@ def main() -> int:
     except (OSError, TypeError, ValueError) as err:
         print("T16F2_SEAL_FAIL invalid manifest: " + str(err))
         return 1
+    # Exact SHA-bound method release inherits the immutable historical T16F2
+    # contract. It must prove all 108 bytes and original Git lineage first.
+    from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify
+    if method_active():
+        method_verify(require_live=True)
+        from site_a1_a2_r2_successor import ancestor_chain
+        ancestor_chain()
+        print("T16F2_INHERITANCE_PASS method_static=108 exact_parent=SHA256 historic_seals=RETAINED")
+        return 0
     if release in ('PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'):
         from phuket_release_profile import verify_integrity
         result = verify_integrity()

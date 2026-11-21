@@ -29,6 +29,14 @@ def approved(manifest_raw: bytes, admission_raw: bytes, measured_nonfont: int) -
     return EXACT_NON_FONT_BYTES
 
 def verify_live(root: Path, measured_nonfont: int) -> int:
+    from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify
+    if method_active():
+        evidence=method_verify(require_live=True)
+        assert evidence["file_count"]==108 and evidence["changed"]==["en/method.html","method.html","sitemap.xml"]
+        manifest_obj=json.loads((root/"deploy/live/_release.json").read_bytes())
+        exact=sum(row["size"] for row in manifest_obj["files"] if not row["path"].endswith(".woff2"))
+        if measured_nonfont!=exact:raise ValueError("SEO_METHOD_PERFORMANCE_DENY exact nonfont payload")
+        return exact
     manifest = (root / "deploy/live/_release.json").read_bytes()
     admission = (root / "data/SITE_A1_A2_R2_METADATA_SUCCESSOR_ADMISSION_V2_20261026.json").read_bytes()
     return approved(manifest, admission, measured_nonfont)

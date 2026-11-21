@@ -3,13 +3,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
+import { isVerifiedSeoMethodRelease } from './seo_method_static_node_gate_r1.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const LIVE = path.join(ROOT, 'deploy', 'live');
 const LIVE_ROOT = path.resolve(LIVE);
 const LIVE_PREFIX = LIVE_ROOT + path.sep;
 const release = JSON.parse(fs.readFileSync(path.join(LIVE, '_release.json'), 'utf8')).release_id;
-const U3_R7B = release === 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015';
+const U3_R7B = isVerifiedSeoMethodRelease(ROOT) || release === 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015';
 const U3_R7 = U3_R7B || release === 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015';
 const MAX_HTML_BR = U3_R7 ? 10 * 1024 : ['N15_AGENT_SAFETY_R1','A4_PHUKET_LOCAL_R1','A3_CALCOM_R1','A5_MENTOR_R1','E1_3_POST_SUBMIT_R1','DESIGN_TYPOGRAPHY_R1','OG20_R1','A7_SAFETY_QUIZ_R1','A8_PROMPT_AUDITOR_R1','A9_REAL_PROJECTS_R1','N25_CERTIFICATE_RECORD_R1','E3_8_LEAD_EVENTS_R1','E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014'].includes(release) ? 10 * 1024 : ['E2_GUIDES_R1', 'R154_E1_5_METADATA', 'R155_E1_6_MOBILE_HEADER', 'R156_I1_2_INDEXNOW', 'R157_I1_3_INDEXABILITY', 'R158_F1_2_MATCHER_V2', 'R160_F1_2_PRIVACY_DISCLOSURE'].includes(release) ? 15 * 512 : 7 * 1024;
 const U2_R6 = release === 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014';

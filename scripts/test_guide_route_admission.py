@@ -34,6 +34,8 @@ FUTURE_PAIR = frozenset({
 def expected_live_routes() -> frozenset[str]:
     """Preserve 52 historical routes; require two SHA-admitted future routes."""
     release = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
+    from seo_method_static_release_profile_r1 import inherited_gate_family
+    release = inherited_gate_family(release)
     if release in ('PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'):
         return BASELINE_ROUTES | FUTURE_PAIR | frozenset({"/phuket-universe", "/en/phuket-universe"})
     return BASELINE_ROUTES | FUTURE_PAIR if release == FUTURE_RELEASE else BASELINE_ROUTES
