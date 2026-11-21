@@ -4,6 +4,8 @@ from html.parser import HTMLParser
 import json,re,sys
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/"deploy/live";BRAND="AI Skill Lab · Phuket"
 RELEASE=json.loads((LIVE/"_release.json").read_text(encoding="utf-8")).get("release_id")
+from seo_method_static_release_profile_r1 import inherited_gate_family
+RELEASE=inherited_gate_family(RELEASE)
 OG20_ALT={
  "/":"Освойте AI так, чтобы результат остался у вас.","/en":"Learn AI so the capability stays with you.",
  "/pricing":"Знайте цену. Фиксируйте scope.","/en/pricing":"Know the price. Define the scope.",

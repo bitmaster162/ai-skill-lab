@@ -7,6 +7,7 @@ import crypto from 'node:crypto';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { closeOwnedBrowser } from './owned_browser_cleanup.mjs';
+import { isVerifiedSeoMethodRelease } from './seo_method_static_node_gate_r1.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const LIVE = path.join(ROOT, 'deploy', 'live');
@@ -14,7 +15,8 @@ const errors = [];
 let checks = 0;
 const req = (cond, msg) => { checks++; if (!cond) errors.push(msg); };
 
-const U1_R3 = ['PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'].includes(JSON.parse(fs.readFileSync(path.join(LIVE, '_release.json'), 'utf8')).release_id);
+const methodVerified = isVerifiedSeoMethodRelease(ROOT);
+const U1_R3 = methodVerified || ['PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'].includes(JSON.parse(fs.readFileSync(path.join(LIVE, '_release.json'), 'utf8')).release_id);
 const expected = {
   'Onest-ru-en.woff2': { size: 30036, sha: '1527f4a5e3a2c65b9d789bf86a49cceefea2472bda0b1b3edc08b3adae4a9997' },
   'Unbounded-ru-en.woff2': { size: 52016, sha: '1600f2b8c27dc942601fdd2fc3f894f0375e371287d740289bf58945ab1991b1' },
@@ -44,7 +46,9 @@ for (const rel of ['licenses/Onest-OFL.txt', 'licenses/Unbounded-OFL.txt']) {
 
 const css = fs.readFileSync(path.join(LIVE, 'workshop.css'), 'utf8');
 const sourceCss = fs.readFileSync(path.join(ROOT, 'components', 'workshop', 'WorkshopShell.module.css'), 'utf8');
-const release = JSON.parse(fs.readFileSync(path.join(LIVE, '_release.json'), 'utf8')).release_id;
+const release = methodVerified
+  ? 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015' // inherited behavior only after full exact proof
+  : JSON.parse(fs.readFileSync(path.join(LIVE, '_release.json'), 'utf8')).release_id;
 for (const marker of [
   '@font-face{font-family:"Onest"', 'font-weight:100 900', '@font-face{font-family:"Unbounded"',
   'font-weight:200 900', 'font-display:swap', 'font-family:"Onest"', 'font-family:"Unbounded"',
