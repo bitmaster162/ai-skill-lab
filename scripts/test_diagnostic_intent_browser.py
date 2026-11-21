@@ -33,6 +33,9 @@ def check_language_switch(page, start, locale):
 
     def follow(label, target, expected_program):
         switch = page.get_by_role("link", name=label, exact=True)
+        menu = page.locator("header input#workshop-menu")
+        if not switch.is_visible() and menu.is_visible():
+            menu.check()
         expect(switch).to_have_count(1)
         expect(switch).to_have_attribute("href", target)
         with page.expect_request(lambda request: request.is_navigation_request()
