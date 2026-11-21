@@ -24,6 +24,47 @@ def browser_path():
             shutil.which("chromium") or (str(windows_chrome) if windows_chrome.is_file() else None))
 
 
+def check_language_switch(page, start, locale):
+    other = "/en/start" if locale == "ru" else "/start"
+    language = "EN" if locale == "ru" else "RU"
+    selected = "?program=diagnostic#application-form"
+    form = page.locator("form#application-form")
+    program = form.locator('[name="program"]')
+
+    def follow(label, target, expected_program):
+        switch = page.get_by_role("link", name=label, exact=True)
+        expect(switch).to_have_count(1)
+        expect(switch).to_have_attribute("href", target)
+        with page.expect_request(lambda request: request.is_navigation_request()
+                                 and request.frame == page.main_frame) as navigation:
+            switch.click()
+        # A clean href alone does not protect the source URL on a same-origin GET.
+        assert navigation.value.header_value("referer") in (None, "", ORIGIN, ORIGIN + "/")
+        expect(page).to_have_url(ORIGIN + target)
+        expect(form).to_have_attribute("data-lead-state", "ready")
+        expect(program).to_have_value(expected_program)
+
+    cases = (
+        ("", ""),
+        ("?contact=qa%40example.invalid#private-note", ""),
+        ("?program=other&contact=qa%40example.invalid#application-form", ""),
+        ("?program=DIAGNOSTIC#application-form", ""),
+        ("?program=diagnostic&program=diagnostic", ""),
+        ("?program=other&program=diagnostic", ""),
+        (selected, selected),
+        ("?contact=qa%40example.invalid&program=diagnostic&utm_source=qa#private-note", selected),
+    )
+    for source_suffix, target_suffix in cases:
+        page.goto(ORIGIN + start + source_suffix)
+        expect(form).to_have_attribute("data-lead-state", "ready")
+        expected_program = "diagnostic" if target_suffix else ""
+        expect(program).to_have_value(expected_program)
+        follow(language, other + target_suffix, expected_program)
+
+    # Return through the actual header link and submit the form in this locale.
+    follow(locale.upper(), start + selected, "diagnostic")
+
+
 def run_locale(browser, prefix, locale):
     start = prefix + "/start"
     captured = []
@@ -68,6 +109,7 @@ def run_locale(browser, prefix, locale):
             expect(form).to_have_attribute("data-lead-state", "ready")
             expect(program).to_have_value("diagnostic")
 
+        check_language_switch(page, start, locale)
         name = form.locator('[name="name"]')
         submit = form.locator('button[type="submit"]')
         def fill_synthetic():
@@ -110,4 +152,5 @@ if __name__ == "__main__":
             browser.close()
     delivery = Path(__file__).with_name("verify_diagnostic_intent_delivery.mjs")
     subprocess.run(["node", str(delivery)], check=True, input=json.dumps(successful_forms), text=True)
-    print("Diagnostic intent verified: 18 links in Chromium, RU/EN retries, four in-memory SQL rows, zero live requests.")
+    print("Diagnostic intent verified: 18 links in Chromium, RU/EN language switches and retries, "
+          "four in-memory SQL rows, zero live requests.")

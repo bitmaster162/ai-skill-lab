@@ -48,7 +48,7 @@ def source_sha(root, path):
 def admit(root):
     import site_a1_a2_r2_successor as successor
     from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify, NEW_MANIFEST_SHA
-    from adult_analytics_lineage import current_release
+    from adult_analytics_lineage import current_release, diagnostic
     adult = current_release()
     if adult.active():
         rows = {r["path"]: r["sha256"] for r in adult.verify()["files"]}
@@ -56,6 +56,9 @@ def admit(root):
         result.update({"deploy/live/_release.json": adult.MANIFEST_SHA,
                        "deploy/live/personal.html": rows["personal.html"],
                        "deploy/live/sitemap.xml": rows["sitemap.xml"]})
+        if adult is diagnostic:
+            shell = "components/workshop/WorkshopShell.tsx"
+            result[shell] = diagnostic.source_sha(shell)
         for rel, expected in result.items():
             if source_sha(root, rel) != expected:
                 raise ValueError("ADULT_ANALYTICS_DENY inherited pin: " + rel)

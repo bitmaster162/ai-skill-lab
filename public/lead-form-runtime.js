@@ -14,9 +14,9 @@
   const startProgram = form.querySelector('input[type="hidden"][name="program"][value=""]');
   if (!submit || !readiness || !direct || !message || !audience || !adultWrap || !adult) return;
   submit.disabled = true;
-  if (typeof window.fetch !== "function" || typeof window.FormData !== "function" ||
-      typeof Object.fromEntries !== "function") return;
   const en = document.documentElement.lang === "en";
+  const alternatePath = en ? "/start" : "/en/start";
+  const languageLink = document.querySelector(`header a.workshopUtility[href="${alternatePath}"]`);
   let ready = false;
   let busy = false;
   function syncStartProgram() {
@@ -27,6 +27,9 @@
       ? new window.URLSearchParams(window.location.search).getAll("program")
       : [];
     startProgram.value = values.length === 1 && values[0] === "diagnostic" ? "diagnostic" : "";
+    if (languageLink) {
+      languageLink.href = startProgram.value ? alternatePath + "?program=diagnostic#application-form" : alternatePath;
+    }
   }
   function syncAudience() {
     const needed = audience.value === "parent" || audience.value === "teen";
@@ -77,6 +80,9 @@
   }
   try {
     syncStartProgram();
+    if (languageLink) window.addEventListener("popstate", syncStartProgram);
+    if (typeof window.fetch !== "function" || typeof window.FormData !== "function" ||
+        typeof Object.fromEntries !== "function") return;
     syncAudience();
     audience.addEventListener("change", syncAudience);
     form.addEventListener("submit", onSubmit);

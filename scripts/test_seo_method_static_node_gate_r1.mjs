@@ -9,7 +9,7 @@ const live = fs.readFileSync(path.join(root, 'deploy/live/_release.json'));
 const r3 = 'AISL_ADULT_GA4_OPT_IN_R3_20261121';
 const child = 'AISL_ADULT_GUIDE_DONORS_R1_20261121';
 const liveId = JSON.parse(live).release_id;
-const inherited = [r3, child, 'AISL_DIAGNOSTIC_INTENT_R1_20261121'].includes(liveId);
+const inherited = [r3, child, 'AISL_DIAGNOSTIC_INTENT_R1_20261121', 'AISL_DIAGNOSTIC_INTENT_R2_20261121'].includes(liveId);
 const original = inherited ? fs.readFileSync(path.join(root, 'docs/release-candidates/seo-method-r1-20261121/manifest.json')) : live;
 const o = JSON.parse(original);
 assert.equal(o.release_id, EXACT_RELEASE_ID);

@@ -188,8 +188,8 @@
     },
     {
       "path": "en/start.html",
-      "sha256": "d1999aad7c48388cc884d7fb4feb5b59bc0abca5d31361ecc8518e49a20beeb5",
-      "size": 16592
+      "sha256": "8dbe2b0ba550f85fca22e4c6663e12be773308e2b4b7fbe72596127e52744fc1",
+      "size": 16621
     },
     {
       "path": "en/studio.html",
@@ -293,8 +293,8 @@
     },
     {
       "path": "lead-form-runtime.js",
-      "sha256": "8637e076806ad5291b0ec438337428108c6798f81adbd950f6346024d02bd8cf",
-      "size": 4360
+      "sha256": "cb0582dcccfb813112b06c70f9ab2638586af346383f2f9c919e4bea94b1cc17",
+      "size": 4743
     },
     {
       "path": "llms.txt",
@@ -533,8 +533,8 @@
     },
     {
       "path": "start.html",
-      "sha256": "92a20c5c1ff3999ea0fabc1fc40999406ac1c1a531353fb582dc70988bb35905",
-      "size": 22942
+      "sha256": "ab62d5aacf4dfdcea10ed98554154bfc6ec44e1fa61de7d5eeff721576c06f75",
+      "size": 22971
     },
     {
       "path": "studio.html",
@@ -562,9 +562,9 @@
       "size": 41174
     }
   ],
-  "parent_manifest_sha256": "b222558702afafb10849792f693b8322272461098c2385b7a3b6acf4fdbd5fc7",
-  "patch_id": "AISL_DIAGNOSTIC_INTENT_R1_20261121",
-  "payload_sha256": "8a0a23c11b4977021bb8b1ef8417746e21f0aef0f49beba2aaaf88edcb55be29",
-  "release_id": "AISL_DIAGNOSTIC_INTENT_R1_20261121",
+  "parent_manifest_sha256": "78cb75d81138d54f47a37555f6eea6dff9f53f578a76779d902f0c39e97530dc",
+  "patch_id": "AISL_DIAGNOSTIC_INTENT_R2_20261121",
+  "payload_sha256": "b5a10b18ca918fd8f5de0e9746c0f12ed337b7760c23ee8a10aee9b8770d7c0b",
+  "release_id": "AISL_DIAGNOSTIC_INTENT_R2_20261121",
   "schema": "ai-skill-lab.static-release.v1"
 }
