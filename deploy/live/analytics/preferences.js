@@ -122,22 +122,22 @@
     window['ga-disable-' + id] = false;
     const gtag = function () { (window.dataLayer ||= []).push(arguments); };
     // Keep the actual document URL, parent referrer and all form/input text out of GA.
-    const context = {
+    const settings = {
       page_location: 'https://aiskillab.work' + page,
-      page_title: pages.get(page), page_referrer: searchOrigin()
+      page_title: pages.get(page), page_referrer: searchOrigin(),
+      allow_google_signals: false, allow_ad_personalization_signals: false,
+      cookie_domain: 'none', cookie_path: '/analytics/', cookie_prefix: 'aisl',
+      cookie_expires: thirtyDays, cookie_update: false
     };
     gtag('consent', 'default', {
       analytics_storage: 'granted', ad_storage: 'denied',
       ad_user_data: 'denied', ad_personalization: 'denied'
     });
-    gtag('set', context);
+    // The SDK initializes cookies from global settings. Set them before js/config.
+    gtag('set', settings);
     gtag('js', new Date());
-    gtag('config', id, {
-      ...context, send_page_view: false, allow_google_signals: false,
-      allow_ad_personalization_signals: false, cookie_domain: 'none',
-      cookie_path: '/analytics/', cookie_prefix: 'aisl', cookie_expires: thirtyDays
-    });
-    gtag('event', 'page_view', { ...context, send_to: id });
+    // Configure exactly one automatic page view for this document.
+    gtag('config', id, { ...settings, send_page_view: true });
     const script = document.createElement('script');
     script.async = true;
     script.referrerPolicy = 'no-referrer';

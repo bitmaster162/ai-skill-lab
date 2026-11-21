@@ -9,10 +9,10 @@ ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "deploy/live"
 PARENT_COMMIT = "dbc97ca6537df48a96e8eb9273fed1f0a4e69d93"
 PARENT_SHA = "ef0bc7d77b523c480fa78e3ea4c87ac1ebfbffc2567f461b077b9328c7341ab0"
-RELEASE_ID = "AISL_ADULT_GA4_OPT_IN_R2_20261121"
+RELEASE_ID = "AISL_ADULT_GA4_OPT_IN_R3_20261121"
 # Frozen release identity
-MANIFEST_SHA = "e2df72f6556f4acbdb4134ad1856fdccd99f1c9b4240395337222b8a14a8d027"
-PAYLOAD_SHA = "f3210579ea6f7d682e85e60e49f41321d2ab9989e0406dd49bdaa2347093ad22"
+MANIFEST_SHA = "9758df02a2c862c643cd87c5005176ff3751ca72011ffbdaacd7112588043c73"
+PAYLOAD_SHA = "a436546681cb59eafb62b7faf8237fee7202c85cb5517cb57bd5bd1ad3db5113"
 SOURCE_SHA = {
     "app/(en)/en/business/page.tsx": "961c660eca8e453076ff88cf1fdabcc01ca7c2f99a218e5702c6ec86ff1de750",
     "app/(en)/en/personal/page.tsx": "1f1d2cf6970c7866d297fd7a2dbf42c3b253d2acf1181298109039440e4f2386",
@@ -23,9 +23,10 @@ SOURCE_SHA = {
     "app/(ru)/privacy/page.tsx": "b10f651c3d0b324d3f170e2d1913861c98eaa7c86cd13a98e9ff8291ddd8dc8b",
     "app/(ru)/proof/page.tsx": "af2f02e2d49a01be42d884de1333413f247256aa83b385fb910cc92bee8f457a",
     "components/AdultAnalyticsPreference.tsx": "99225a7c1a756eb6fe06739d3bf55c9d902662e7bb8264b5d4fe1a3a08e3e340",
+    "lib/guides.ts": "9baa1778d79a1b3b44de9e707f1acf48065a11331dcaef88b54acbb84d9b06a0",
     "public/analytics/preferences.css": "f01b317812dfb7d66a33c9a2a71c04644aa16344bbb231b8d0c23a8fd64c15ac",
     "public/analytics/preferences.htm": "7abf4359d21644d5ee5d0e622a67fdaf3ff7fa34e0c1a47a6d873858a1df8edc",
-    "public/analytics/preferences.js": "87e252c1b355991be83ca09d107bbcce480386dc9b9f910571ad702774d67b7a",
+    "public/analytics/preferences.js": "74dfa71045f4dff74ebc7773dc6a729f7008a82e3648605c1c3b1678c7708499",
     "public/analytics/restore.js": "514cb77287256018bf4f23590da4e5c431a96e2b9681e19445bb92876731a33f"
 }
 # End release identity

@@ -80,17 +80,22 @@ test('four adult routes send one explicitly sanitized pageview per document', ()
     assert.equal(f.scripts.length, 1);
     assert.equal(f.scripts[0].referrerPolicy, 'no-referrer');
     assert.equal(f.scripts[0].src, 'https://www.googletagmanager.com/gtag/js?id=' + id);
-    const events = f.events(), config = events.find(e => e[0] === 'config')[2];
-    assert.equal(config.send_page_view, false);
-    assert.equal(config.allow_google_signals, false);
-    assert.equal(config.allow_ad_personalization_signals, false);
-    assert.equal(config.cookie_path, '/analytics/');
-    assert.equal(config.cookie_expires, 2592000);
-    const [event] = events.filter(e => e[0] === 'event');
-    assert.equal(events.filter(e => e[0] === 'event').length, 1);
-    assert.equal(event[1], 'page_view');
-    assert.equal(event[2].page_location, origin + path);
-    assert.equal(event[2].page_referrer, 'https://www.google.com/');
+    const events = f.events();
+    assert.deepEqual(events.map(e => e[0]), ['consent', 'set', 'js', 'config']);
+    const global = events[1][1];
+    const config = events[3][2];
+    assert.equal(events[3][1], id);
+    assert.equal(config.send_page_view, true);
+    assert.equal(global.allow_google_signals, false);
+    assert.equal(global.allow_ad_personalization_signals, false);
+    assert.equal(global.cookie_prefix, 'aisl');
+    assert.equal(global.cookie_domain, 'none');
+    assert.equal(global.cookie_path, '/analytics/');
+    assert.equal(global.cookie_expires, 2592000);
+    assert.equal(global.cookie_update, false);
+    for (const [name,value] of Object.entries(global)) assert.equal(config[name], value);
+    assert.equal(global.page_location, origin + path);
+    assert.equal(global.page_referrer, 'https://www.google.com/');
     assert.doesNotMatch(JSON.stringify(events), /private-contact|raw-canary|secret-fragment|Private browser|private-credential/);
     assert.equal(f.nodes.get('allow').disabled, true);
   }
@@ -105,7 +110,7 @@ test('direct access, alternate hosts and excluded pages ignore a stored opt-in',
   for (const referrer of ['https://internal.example/secret', 'https://www.google.com.evil.example/secret',
     'https://private@www.google.com/', 'https://www.google.com:8443/secret', '', 'javascript:ignored']) {
     const f = fixture({prior:'allow', referrer});
-    assert.equal(f.events().find(e => e[0] === 'event')[2].page_referrer, '');
+    assert.equal(f.events().find(e => e[0] === 'config')[2].page_referrer, '');
   }
 });
 
@@ -133,7 +138,7 @@ test('a cached document rechecks consent and privacy signals without a duplicate
     f.handlers.pageshow({persisted:true});
     assert.equal(f.window['ga-disable-' + id], change !== 'none');
     assert.equal(f.reloaded(), change === 'none' ? 0 : 1);
-    assert.equal(f.scripts.length,1); assert.equal(f.events().filter(e => e[0] === 'event').length,1);
+    assert.equal(f.scripts.length,1); assert.equal(f.events().filter(e => e[0] === 'config').length,1);
   }
 });
 

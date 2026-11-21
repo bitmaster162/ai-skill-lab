@@ -30,6 +30,8 @@ jobs:
         run: npm ci --ignore-scripts --audit=false --fund=false
       - name: Validate T1.5 approved guide routes (read-only)
         run: python -B scripts/test_guide_route_admission.py
+      - name: Check sealed bilingual guide successors and tamper fixtures
+        run: node --test scripts/test_site_a2_guide_successor.mjs
       - name: Build Next renderer
         run: npm run build
       - name: Verify generated html lang by canonical route

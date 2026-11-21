@@ -49,7 +49,7 @@ export function isVerifiedMethodLineage(root, manifestOverride = null) {
   let manifest;
   try { manifest = JSON.parse(raw.toString('utf8')); }
   catch { throw new Error('METHOD_LINEAGE_DENY_JSON'); }
-  if (manifest.release_id !== 'AISL_ADULT_GA4_OPT_IN_R2_20261121') {
+  if (manifest.release_id !== 'AISL_ADULT_GA4_OPT_IN_R3_20261121') {
     return isVerifiedSeoMethodRelease(root, raw);
   }
   const result = spawnSync('python', ['-B', '-c', [

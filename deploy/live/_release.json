@@ -28,8 +28,8 @@
     },
     {
       "path": "analytics/preferences.js",
-      "sha256": "87e252c1b355991be83ca09d107bbcce480386dc9b9f910571ad702774d67b7a",
-      "size": 9313
+      "sha256": "74dfa71045f4dff74ebc7773dc6a729f7008a82e3648605c1c3b1678c7708499",
+      "size": 9424
     },
     {
       "path": "analytics/restore.js",
@@ -563,8 +563,8 @@
     }
   ],
   "parent_manifest_sha256": "ef0bc7d77b523c480fa78e3ea4c87ac1ebfbffc2567f461b077b9328c7341ab0",
-  "patch_id": "AISL_ADULT_GA4_OPT_IN_R2_20261121",
-  "payload_sha256": "f3210579ea6f7d682e85e60e49f41321d2ab9989e0406dd49bdaa2347093ad22",
-  "release_id": "AISL_ADULT_GA4_OPT_IN_R2_20261121",
+  "patch_id": "AISL_ADULT_GA4_OPT_IN_R3_20261121",
+  "payload_sha256": "a436546681cb59eafb62b7faf8237fee7202c85cb5517cb57bd5bd1ad3db5113",
+  "release_id": "AISL_ADULT_GA4_OPT_IN_R3_20261121",
   "schema": "ai-skill-lab.static-release.v1"
 }

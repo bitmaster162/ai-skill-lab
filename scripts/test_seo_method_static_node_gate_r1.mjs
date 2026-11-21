@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { isVerifiedMethodLineage, isVerifiedSeoMethodRelease, EXACT_MANIFEST_SHA256, EXACT_RELEASE_ID } from './seo_method_static_node_gate_r1.mjs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const live = fs.readFileSync(path.join(root, 'deploy/live/_release.json'));
-const inherited = JSON.parse(live).release_id === 'AISL_ADULT_GA4_OPT_IN_R2_20261121';
+const inherited = JSON.parse(live).release_id === 'AISL_ADULT_GA4_OPT_IN_R3_20261121';
 const original = inherited ? fs.readFileSync(path.join(root, 'docs/release-candidates/seo-method-r1-20261121/manifest.json')) : live;
 const o = JSON.parse(original);
 assert.equal(o.release_id, EXACT_RELEASE_ID);
