@@ -3,9 +3,9 @@ import json
 
 import adult_analytics_release as release
 import guide_donor_release as child
-import diagnostic_intent_release as diagnostic
+from adult_analytics_lineage import has_guide_links
 
-if child.active() or diagnostic.active():
+if has_guide_links():
     # Execute every original negative fixture against the exact retained R3.
     import subprocess
     import sys

@@ -592,9 +592,17 @@ def main() -> int:
         extra = sorted(sitemap_urls - expected_urls)
         errors.append(f"sitemap mismatch missing={missing} extra={extra}")
 
+    import sitemap_route_dates_release as route_dates
+    published_dates = route_dates.active()
+    diagnostic_urls = set()
+    if published_dates:
+        from diagnostic_intent_release import DONOR_PAGES
+        route_dates.verify()
+        diagnostic_urls = {ORIGIN + route_for(LIVE / page) for page in DONOR_PAGES}
+
     source_sitemap = (ROOT / "app/sitemap.ts").read_text(encoding="utf-8")
     source_lastmod = re.search(r'const lastModified = "(\d{4}-\d{2}-\d{2})";', source_sitemap)
-    if not source_lastmod or source_sitemap.count("lastModified,") != 1:
+    if not source_lastmod or (not published_dates and source_sitemap.count("lastModified,") != 1):
         errors.append("source sitemap must expose one stable lastModified value")
     expected_lastmod = source_lastmod.group(1) if source_lastmod else None
     from phuket_release_profile import active, universe_page, UNIVERSE_ROUTES
@@ -606,6 +614,7 @@ def main() -> int:
     successor_verified = site_a2.active()
     if successor_verified:
         site_a2.verify()
+    if successor_verified and not published_dates:
         expected_routes = '  const siteA2Routes = ["/business", "/challenge", "/faq", "/phuket", "/privacy", "/projects", "/proof", "/start", "/studio", "/teens", "/terms"];'
         expected_expression = 'lastModified: universeRoutes.includes(route) ? "2026-10-15" : (route === "/pricing" || route === "/en/pricing") ? "2026-10-26" : route === "/start" ? "2026-10-28" : (route === "/safety" || route === "/en/safety") ? "2026-10-29" : siteA2Routes.includes(route) ? "2026-10-26" : lastModified'
         if source_sitemap.count(expected_routes) != 1:
@@ -614,7 +623,7 @@ def main() -> int:
             errors.append("SITE-A2 exact per-route lastModified expression missing")
         if len(successor_routes) != 11 or len(successor_price) != 2:
             errors.append("SITE-A2 route scope drift")
-    elif active():
+    elif active() and not published_dates:
         universe_lastmod = "2026-10-15" if RELEASE=="PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015" else "2026-10-14"
         expected_expression = f'lastModified: universeRoutes.includes(route) ? "{universe_lastmod}" : lastModified'
         if source_sitemap.count(expected_expression) != 1:
@@ -632,6 +641,8 @@ def main() -> int:
             errors.append(
                 f"sitemap lastmod {freshness_date.isoformat()} older than latest public HTML commit {latest_html_date.isoformat()}"
             )
+    from seo_method_static_release_profile_r1 import lineage_active as method_active
+    method_dates = method_active() or published_dates
     lastmod_urls = set()
     for entry in root.findall("sm:url", ns):
         loc = entry.find("sm:loc", ns)
@@ -652,9 +663,7 @@ def main() -> int:
             per_route_lastmod = "2026-10-28"
         elif successor_verified and loc_text in {ORIGIN + p for p in (successor_routes | successor_price)}:
             per_route_lastmod = "2026-10-26"
-        # The only new sitemap dates are two exact method pages in the sealed candidate.
-        from seo_method_static_release_profile_r1 import lineage_active as method_active
-        if method_active() and loc_text in {ORIGIN + "/method", ORIGIN + "/en/method"}:
+        if (method_dates and loc_text in {ORIGIN + "/method", ORIGIN + "/en/method"}) or loc_text in diagnostic_urls:
             per_route_lastmod = "2026-11-21"
         if per_route_lastmod and value != per_route_lastmod:
             errors.append(f"sitemap lastmod/source mismatch {loc_text}: {value} != {per_route_lastmod}")

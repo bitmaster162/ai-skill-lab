@@ -523,7 +523,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "37a8a3852c13f7ca7cfabfd65a83bce979f2a5321e592b9d12bd0f5f586e75a6",
+      "sha256": "3dea6318c610c3d062590aafebc427936fa9f7adfa2cbcd128e13c4a682a47cd",
       "size": 4903
     },
     {
@@ -562,9 +562,9 @@
       "size": 41174
     }
   ],
-  "parent_manifest_sha256": "78cb75d81138d54f47a37555f6eea6dff9f53f578a76779d902f0c39e97530dc",
-  "patch_id": "AISL_DIAGNOSTIC_INTENT_R2_20261121",
-  "payload_sha256": "b5a10b18ca918fd8f5de0e9746c0f12ed337b7760c23ee8a10aee9b8770d7c0b",
-  "release_id": "AISL_DIAGNOSTIC_INTENT_R2_20261121",
+  "parent_manifest_sha256": "aa60dba1a0760c0b74eb02e84a5168d397d87d38263fc27e54935687ce12a6ff",
+  "patch_id": "AISL_SITEMAP_ROUTE_DATES_R1_20261122",
+  "payload_sha256": "0e377c619f86a36f55d925056b4073dc17a3cc5e5ff2f19962a7a5fedf77202f",
+  "release_id": "AISL_SITEMAP_ROUTE_DATES_R1_20261122",
   "schema": "ai-skill-lab.static-release.v1"
 }
