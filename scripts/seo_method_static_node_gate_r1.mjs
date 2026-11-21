@@ -50,7 +50,7 @@ export function isVerifiedMethodLineage(root, manifestOverride = null) {
   try { manifest = JSON.parse(raw.toString('utf8')); }
   catch { throw new Error('METHOD_LINEAGE_DENY_JSON'); }
   if (!['AISL_ADULT_GA4_OPT_IN_R3_20261121', 'AISL_ADULT_GUIDE_DONORS_R1_20261121',
-        'AISL_DIAGNOSTIC_INTENT_R1_20261121', 'AISL_DIAGNOSTIC_INTENT_R2_20261121'].includes(manifest.release_id)) {
+        'AISL_DIAGNOSTIC_INTENT_R1_20261121', 'AISL_DIAGNOSTIC_INTENT_R2_20261121', 'AISL_SITEMAP_ROUTE_DATES_R1_20261122'].includes(manifest.release_id)) {
     return isVerifiedSeoMethodRelease(root, raw);
   }
   const result = spawnSync('python', ['-B', '-c', [

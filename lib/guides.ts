@@ -119,6 +119,12 @@ function futureGuidePairApproved(): boolean {
         payload: "b5a10b18ca918fd8f5de0e9746c0f12ed337b7760c23ee8a10aee9b8770d7c0b",
         manifest: "aa60dba1a0760c0b74eb02e84a5168d397d87d38263fc27e54935687ce12a6ff",
       }],
+      ["AISL_SITEMAP_ROUTE_DATES_R1_20261122", {
+        count: 112,
+        parent: "aa60dba1a0760c0b74eb02e84a5168d397d87d38263fc27e54935687ce12a6ff",
+        payload: "0e377c619f86a36f55d925056b4073dc17a3cc5e5ff2f19962a7a5fedf77202f",
+        manifest: "eafa144171a7deed62f06d4a18b6fa98bab7c169cf6ec829b6709060be4b52ca",
+      }],
     ]);
     const seal = typeof header.release_id === "string" ? seals.get(header.release_id) : undefined;
     if (seal) {

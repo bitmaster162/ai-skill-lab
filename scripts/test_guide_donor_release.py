@@ -4,10 +4,10 @@ import json
 import subprocess
 import sys
 
-import diagnostic_intent_release as diagnostic
+from adult_analytics_lineage import diagnostic, has_diagnostic_forms
 import guide_donor_release as donor
 
-if diagnostic.active():
+if has_diagnostic_forms():
     # The donor's fixtures and original verifier run together on their sealed Git parent.
     with diagnostic.parent_guide_workspace() as workspace:
         subprocess.run([sys.executable, "-B", "scripts/test_guide_donor_release.py"],

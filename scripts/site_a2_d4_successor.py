@@ -48,7 +48,7 @@ def source_sha(root, path):
 def admit(root):
     import site_a1_a2_r2_successor as successor
     from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify, NEW_MANIFEST_SHA
-    from adult_analytics_lineage import current_release, diagnostic
+    from adult_analytics_lineage import current_release, has_diagnostic_forms, sitemap_dates
     adult = current_release()
     if adult.active():
         rows = {r["path"]: r["sha256"] for r in adult.verify()["files"]}
@@ -56,9 +56,11 @@ def admit(root):
         result.update({"deploy/live/_release.json": adult.MANIFEST_SHA,
                        "deploy/live/personal.html": rows["personal.html"],
                        "deploy/live/sitemap.xml": rows["sitemap.xml"]})
-        if adult is diagnostic:
+        if has_diagnostic_forms():
             shell = "components/workshop/WorkshopShell.tsx"
-            result[shell] = diagnostic.source_sha(shell)
+            result[shell] = adult.source_sha(shell)
+        if adult is sitemap_dates:
+            result["app/sitemap.ts"] = adult.source_sha("app/sitemap.ts")
         for rel, expected in result.items():
             if source_sha(root, rel) != expected:
                 raise ValueError("ADULT_ANALYTICS_DENY inherited pin: " + rel)
@@ -83,6 +85,12 @@ def admit(root):
     return dict(PINNED)
 
 def verify_sitemap(root):
+    import sitemap_route_dates_release as sitemap_dates
+    if sitemap_dates.active() and root.resolve() == sitemap_dates.ROOT:
+        # This successor proves the exact 18 date substitutions in its parent XML
+        # and the new Next sitemap source before reusing any historical D4 gate.
+        sitemap_dates.verify()
+        return True
     from seo_method_static_release_profile_r1 import verified_live_lineage
     method_generation = verified_live_lineage()
     source = (root / "app/sitemap.ts").read_text(encoding="utf-8")
