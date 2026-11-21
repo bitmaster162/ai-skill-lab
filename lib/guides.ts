@@ -125,6 +125,12 @@ function futureGuidePairApproved(): boolean {
         payload: "0e377c619f86a36f55d925056b4073dc17a3cc5e5ff2f19962a7a5fedf77202f",
         manifest: "eafa144171a7deed62f06d4a18b6fa98bab7c169cf6ec829b6709060be4b52ca",
       }],
+      ["AISL_CERTIFICATE_DONORS_R2_20261122", {
+        count: 112,
+        parent: "eafa144171a7deed62f06d4a18b6fa98bab7c169cf6ec829b6709060be4b52ca",
+        payload: "9d2ea15d2f201981f14c6d3d0f431d3c3302e5b808855bc8608121b76e92641a",
+        manifest: "ce4124e6afe3a8ec1fbf00131f1f8b8cad2444faac37a928f37ac632809240ed",
+      }],
     ]);
     const seal = typeof header.release_id === "string" ? seals.get(header.release_id) : undefined;
     if (seal) {

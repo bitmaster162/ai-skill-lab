@@ -48,7 +48,7 @@ def source_sha(root, path):
 def admit(root):
     import site_a1_a2_r2_successor as successor
     from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify, NEW_MANIFEST_SHA
-    from adult_analytics_lineage import current_release, has_diagnostic_forms, sitemap_dates
+    from adult_analytics_lineage import current_release, has_diagnostic_forms, has_route_dates
     adult = current_release()
     if adult.active():
         rows = {r["path"]: r["sha256"] for r in adult.verify()["files"]}
@@ -59,7 +59,7 @@ def admit(root):
         if has_diagnostic_forms():
             shell = "components/workshop/WorkshopShell.tsx"
             result[shell] = adult.source_sha(shell)
-        if adult is sitemap_dates:
+        if has_route_dates():
             result["app/sitemap.ts"] = adult.source_sha("app/sitemap.ts")
         for rel, expected in result.items():
             if source_sha(root, rel) != expected:
@@ -85,11 +85,11 @@ def admit(root):
     return dict(PINNED)
 
 def verify_sitemap(root):
-    import sitemap_route_dates_release as sitemap_dates
-    if sitemap_dates.active() and root.resolve() == sitemap_dates.ROOT:
-        # This successor proves the exact 18 date substitutions in its parent XML
-        # and the new Next sitemap source before reusing any historical D4 gate.
-        sitemap_dates.verify()
+    from adult_analytics_lineage import current_release, has_route_dates
+    release = current_release()
+    if has_route_dates() and root.resolve() == release.ROOT:
+        # The selected verifier checks every date against its sealed predecessor.
+        release.verify()
         return True
     from seo_method_static_release_profile_r1 import verified_live_lineage
     method_generation = verified_live_lineage()
@@ -156,11 +156,14 @@ def d5_legal_source(root):
 
 def d5_main_pins(root):
     import re
-    from adult_analytics_lineage import current_release
+    from adult_analytics_lineage import certificate_donors, current_release
     adult = current_release()
     pins = dict(D5_STATIC_MAIN)
     if adult.active():
         pins["privacy.html"] = adult.static_main_sha("privacy.html")
+        if adult is certificate_donors:
+            for rel in certificate_donors.LINKS:
+                pins[rel] = certificate_donors.static_main_sha(rel)
     for rel,expected in pins.items():
         text=(root/"deploy/live"/rel).read_text(encoding="utf-8")
         match=re.search(r'<main id="main".*?</main>', text, re.S)
@@ -178,6 +181,13 @@ def d5_safety_source(root, rel):
     successor.verify()
     review=json.loads((root/"data/SITE_A2_YOUTH_POLICY_REVIEW_20261029.json").read_bytes())
     expected=review["surfaces"][actual[rel]]["sha256_after"]
+    from adult_analytics_lineage import certificate_donors
+    if certificate_donors.active() and root.resolve() == certificate_donors.ROOT:
+        # The policy itself retains its reviewed parent bytes and review date.
+        parent = certificate_donors.original(actual[rel])
+        if sha(parent) != expected:
+            raise ValueError("SITE_A2_D5_DENY parent safety source")
+        expected = certificate_donors.source_sha(actual[rel])
     if review.get("review_date")!="2026-10-29" or source_sha(root,actual[rel])!=expected:
         raise ValueError("SITE_A2_D5_DENY source evidence")
     return expected
