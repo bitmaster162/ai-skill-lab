@@ -118,8 +118,8 @@
     },
     {
       "path": "en/method.html",
-      "sha256": "416fcd5b3849786227584a4aedfd4bc8903451f6eafcea24923fcdb48ceb0a8e",
-      "size": 7934
+      "sha256": "b3efff723c213a6390ba789994051f475598c3aec8c06f760389c1b53f4afc49",
+      "size": 9255
     },
     {
       "path": "en/parents.html",
@@ -298,8 +298,8 @@
     },
     {
       "path": "method.html",
-      "sha256": "f375edcdef29367f97c6a45ebeaf4abac2af632bf9ae89ca9fc2b58d42563992",
-      "size": 9232
+      "sha256": "52c740db4161b3d409fe6396c0525ebd551997394ebacdd66bd34f49f9d37340",
+      "size": 11298
     },
     {
       "path": "og-en-business.png",
@@ -503,7 +503,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "7900485455ba3b1527bbccc4c843283d81f7d9ca5b1a05d0567109a45ad1a907",
+      "sha256": "37a8a3852c13f7ca7cfabfd65a83bce979f2a5321e592b9d12bd0f5f586e75a6",
       "size": 4903
     },
     {
@@ -542,9 +542,9 @@
       "size": 41174
     }
   ],
-  "parent_manifest_sha256": "ad8282f6b7a670c9e5e5f840dd0d427f3c24f87a2210f64d40dab1cf7bf497e5",
-  "patch_id": "SITE_A1_A2_R2_20261026_DRAFT_REVIEW",
-  "payload_sha256": "9c5bcc257f49e53172abddd1b9f366e560adbbd00f269950cc408c555536efe3",
-  "release_id": "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015",
+  "parent_manifest_sha256": "79ecdcd892a308ef3ae93b6f551a4c01e59e9a584eee39764daba5498df11889",
+  "patch_id": "AISL_SEO_METHOD_R1_DRAFT_20261121",
+  "payload_sha256": "f2678f7fb3ff5381e421795f83bd8115fa7365613806443cfeea9802efacdf88",
+  "release_id": "AISL_SEO_METHOD_R1_DRAFT_20261121",
   "schema": "ai-skill-lab.static-release.v1"
 }

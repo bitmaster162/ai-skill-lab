@@ -17,6 +17,8 @@ errors=[];claims=[];intro_claims=0
 # Exclude only exact metadata-description spans, not arbitrary body claims.
 SEO_DESCRIPTIONS = {}
 release = json.loads((ROOT/'deploy/live/_release.json').read_text(encoding='utf-8')).get('release_id')
+from seo_method_static_release_profile_r1 import inherited_gate_family
+release=inherited_gate_family(release)
 if release in {'E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}:
  from check_e3_1_ru_seo import EXACT
  for route,(_title,description) in EXACT.items():

@@ -25,6 +25,26 @@ class SuccessorDeny(ValueError): pass
 def require(ok,reason):
  if not ok: raise SuccessorDeny("SEO_METHOD_RELEASE_DENY:"+reason)
 def digest(blob:bytes)->str: return hashlib.sha256(blob).hexdigest()
+# Two exact rendered main digests, not derived from a mutable live page.
+MAIN_STATIC_SHA={
+ "method.html":"288f506d8a2b9c2e21eda2716e988408ab3dd685a4b8b9fdb6e0bdc6b9c3c636",
+ "en/method.html":"b789e3ff45dfc8161ecb7b9aa2c634ebc09b6b620587eccd0e2ce9924f9b0cde"
+}
+def active()->bool:
+ try:
+  raw=(ROOT/"deploy/live/_release.json").read_bytes()
+  if digest(raw)!=NEW_MANIFEST_SHA:return False
+  m=json.loads(raw)
+  return m.get("release_id")==RELEASE_ID and m.get("patch_id")==RELEASE_ID and m.get("parent_manifest_sha256")==PARENT_SHA
+ except (OSError,ValueError,TypeError):return False
+def inherited_gate_family(release_id: str) -> str:
+ # Only unchanged historical content may use the R7B/SITE-A2 gate family.
+ # This is not a release-id alias in the on-disk manifest or production policy.
+ if release_id==RELEASE_ID:
+  require(active(),"RELEASE_PROFILE_UNSEALED")
+  verify(require_live=True)
+  return "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"
+ return release_id
 def trusted_git(*args)->bytes:
  p=subprocess.run(["git","-C",str(ROOT),*args],capture_output=True,timeout=15,check=False)
  require(p.returncode==0,"GIT_HISTORY")

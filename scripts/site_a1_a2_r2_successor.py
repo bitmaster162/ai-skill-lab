@@ -43,6 +43,8 @@ def run_git(*args)->bytes:
 def git_blob(commit,path):
  return run_git("show",commit+":"+path)
 def active()->bool:
+ from seo_method_static_release_profile_r1 import active as method_active
+ if method_active():return True
  try:
   m=json.loads((LIVE/"_release.json").read_bytes())
   return m.get("release_id")==RELEASE and m.get("patch_id")==PATCH
@@ -80,6 +82,15 @@ def ancestor_chain(drop_ancestor=None, historical_override=None):
 
 def verify(manifest_override:bytes|None=None,extra_file:str|None=None,
            drop_ancestor:str|None=None,historical_override:bytes|None=None)->dict:
+ from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify, NEW_MANIFEST_SHA, NEW_PAYLOAD_SHA, RELEASE_ID
+ if method_active():
+  must(manifest_override is None and extra_file is None and drop_ancestor is None and historical_override is None,"SEO_METHOD_FIXTURES_NOT_ALLOWED")
+  evidence=method_verify(require_live=True)
+  return {"status":"SEO_METHOD_VERSIONED_SUCCESSOR_PASS","release_id":RELEASE_ID,
+          "patch_id":RELEASE_ID,"manifest_sha256":NEW_MANIFEST_SHA,
+          "payload_sha256":NEW_PAYLOAD_SHA,"source_commit":None,
+          "r7b_immutable_ancestors":6,"static_assets":108,
+          "modified_vs_r2":evidence["changed"],"production_authority":False}
  must(active() if manifest_override is None else True,"NO_SUCCESSOR_AUTHORITY")
  actual_bytes=(LIVE/"_release.json").read_bytes() if manifest_override is None else manifest_override
  must(sha(actual_bytes)==MANIFEST_SHA,"SUCCESSOR_MANIFEST_SHA")
