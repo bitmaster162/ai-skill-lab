@@ -38,6 +38,7 @@ CHECKS = [
     ("workshop_d2", ["python", "scripts/check_workshop_d2.py"]),
     ("workshop_d3", ["python", "scripts/check_workshop_d3.py"]),
     ("workshop_d4", ["python", "scripts/check_workshop_d4.py"]),
+    ("seo_method_d5_successor", ["python", "-B", "scripts/test_seo_method_d5_successor_r1.py"]),
     ("workshop_d5", ["python", "scripts/check_workshop_d5.py"]),
     ("workshop_d6", ["python", "scripts/check_workshop_d6.py"]),
     ("tracked_python_artifacts", ["python", "scripts/check_tracked_python_artifacts.py"]),
