@@ -6,6 +6,8 @@ import sys
 import json
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/'deploy/live';errors=[];checks=0
 RELEASE_ID=json.loads((LIVE/'_release.json').read_text(encoding='utf-8')).get('release_id')
+from seo_method_static_release_profile_r1 import inherited_gate_family
+RELEASE_ID=inherited_gate_family(RELEASE_ID)
 channels={'telegram':'https://t.me/BiTFormer','email':'mailto:robert@aiskillab.work','whatsapp':'https://wa.me/66649701204','line':'https://line.me/ti/p/~iwf555'}
 class Links(HTMLParser):
  def __init__(self):super().__init__();self.hrefs=[]

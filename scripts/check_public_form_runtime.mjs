@@ -24,6 +24,13 @@ if (['SITE_FORM_METADATA_R31_POST_R7C_LOCAL_20261016',
   await import('./site_form_runtime_r3.mjs');
   process.exit(0);
 }
+// Exact versioned method successor reuses the unchanged R3 form runtime,
+ // but requires the full 108-file static SHA/parent/lineage proof first.
+const { isVerifiedSeoMethodRelease } = await import('./seo_method_static_node_gate_r1.mjs');
+if (isVerifiedSeoMethodRelease(root)) {
+  await import('./site_form_runtime_r3.mjs');
+  process.exit(0);
+}
 if (manifest.patch_id === 'SITE_A1_A2_R2_20261026_DRAFT_REVIEW') {
   const admission=fs.readFileSync(path.join(root,'data/SITE_A1_A2_R2_METADATA_SUCCESSOR_ADMISSION_V2_20261026.json'));
   verifySiteA2FormRuntime(rawManifest,admission);

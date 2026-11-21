@@ -43,6 +43,8 @@ for files,label,diag,wa in [(RU,RU_LABEL,RU_DIAG,RU_WA),(EN,EN_LABEL,EN_DIAG,EN_
 
 runtime=(LIVE/"lab-command.js").read_text(encoding="utf-8")
 release=json.loads((LIVE/"_release.json").read_text(encoding="utf-8")).get("release_id")
+from seo_method_static_release_profile_r1 import inherited_gate_family
+release=inherited_gate_family(release)
 if release in {"E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}:
     for marker in ['fetch("/api/event"','"cal.com":"cal"','n+"_click"']:
         if marker not in runtime:

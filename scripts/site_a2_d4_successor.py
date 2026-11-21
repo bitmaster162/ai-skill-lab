@@ -47,6 +47,16 @@ def source_sha(root, path):
 
 def admit(root):
     import site_a1_a2_r2_successor as successor
+    from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify, NEW_MANIFEST_SHA
+    if method_active():
+        method_verify(require_live=True)
+        result=dict(PINNED)
+        result["deploy/live/_release.json"]=NEW_MANIFEST_SHA
+        result["deploy/live/sitemap.xml"]=source_sha(root,"deploy/live/sitemap.xml")
+        for rel,expected in result.items():
+            if source_sha(root,rel)!=expected:
+                raise ValueError("SEO_METHOD_D5_DENY inherited metadata pin: "+rel)
+        return result
     successor.verify()
     m = (root / "deploy/live/_release.json").read_bytes()
     a = (root / "data/SITE_A1_A2_R2_METADATA_SUCCESSOR_ADMISSION_V2_20261026.json").read_bytes()
@@ -58,6 +68,8 @@ def admit(root):
     return dict(PINNED)
 
 def verify_sitemap(root):
+    from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify
+    if method_active():method_verify(require_live=True)
     source = (root / "app/sitemap.ts").read_text(encoding="utf-8")
     xml = (root / "deploy/live/sitemap.xml").read_text(encoding="utf-8")
     if source.count(SITEMAP_EXPRESSION) != 1:
@@ -75,7 +87,8 @@ def verify_sitemap(root):
         or xml.count("<lastmod>2026-10-26</lastmod>") != 12
         or xml.count("<lastmod>2026-10-28</lastmod>") != 1
         or xml.count("<lastmod>2026-10-15</lastmod>") != 2
-        or xml.count("<lastmod>2026-10-16</lastmod>") != 39):
+        or xml.count("<lastmod>2026-10-16</lastmod>") != (37 if method_active() else 39)
+        or xml.count("<lastmod>2026-11-21</lastmod>") != (2 if method_active() else 0)):
         raise ValueError("SITE_A2_D4_DENY sitemap counts")
     return True
 
@@ -87,6 +100,12 @@ def semantic(rel, original, expected):
     return expected
 
 def exact_payload_limit(measured):
+    from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify
+    if method_active():
+        method_verify(require_live=True)
+        if measured != 1374546:
+            raise ValueError("SEO_METHOD_STATIC_DENY exact 108-asset payload limit")
+        return 1374546
     if measured != EXACT_PAYLOAD:
         raise ValueError("SITE_A2_D4_DENY changed payload")
     return EXACT_PAYLOAD

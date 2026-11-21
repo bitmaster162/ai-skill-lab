@@ -1,0 +1,17 @@
+{
+  "verdict": "PASS_WITH_CONDITIONS",
+  "candidate": "DRAFT_ONLY",
+  "parent_sha256": "79ecdcd892a308ef3ae93b6f551a4c01e59e9a584eee39764daba5498df11889",
+  "manifest_sha256": "ef0bc7d77b523c480fa78e3ea4c87ac1ebfbffc2567f461b077b9328c7341ab0",
+  "payload_sha256": "f2678f7fb3ff5381e421795f83bd8115fa7365613806443cfeea9802efacdf88",
+  "files_verified": 108,
+  "exact_changed_files": [
+    "en/method.html",
+    "method.html",
+    "sitemap.xml"
+  ],
+  "source_head": "8f122d15e7a88b4ce926cc0f27f122cfbd6c1638",
+  "site_merges": 0,
+  "production_deploys": 0,
+  "gsc_reads": 0
+}

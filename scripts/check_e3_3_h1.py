@@ -70,6 +70,8 @@ def normalized(h: str)->str:
  return " ".join(re.sub(r"<[^>]+>"," ",h).split())
 import json
 release=json.loads((LIVE/"_release.json").read_text(encoding="utf8")).get("release_id")
+from seo_method_static_release_profile_r1 import inherited_gate_family
+release=inherited_gate_family(release)
 if release in {"E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}:
  from check_e3_2_ru_glossary import EXPECTED as E32_TEXT,visible as E32_VISIBLE
 else:E32_TEXT={}

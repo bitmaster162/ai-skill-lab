@@ -1,0 +1,31 @@
+{
+  "status": "PREPARED_NOT_ADMITTED",
+  "source_head": "8f122d15e7a88b4ce926cc0f27f122cfbd6c1638",
+  "parent_manifest_sha256": "79ecdcd892a308ef3ae93b6f551a4c01e59e9a584eee39764daba5498df11889",
+  "new_release_id": "AISL_SEO_METHOD_R1_DRAFT_20261121",
+  "new_manifest_sha256": "ef0bc7d77b523c480fa78e3ea4c87ac1ebfbffc2567f461b077b9328c7341ab0",
+  "payload_sha256": "f2678f7fb3ff5381e421795f83bd8115fa7365613806443cfeea9802efacdf88",
+  "file_count": 108,
+  "changed": {
+    "en/method.html": {
+      "old": "416fcd5b3849786227584a4aedfd4bc8903451f6eafcea24923fcdb48ceb0a8e",
+      "new": "b3efff723c213a6390ba789994051f475598c3aec8c06f760389c1b53f4afc49",
+      "old_bytes": 7934,
+      "new_bytes": 9255
+    },
+    "method.html": {
+      "old": "f375edcdef29367f97c6a45ebeaf4abac2af632bf9ae89ca9fc2b58d42563992",
+      "new": "52c740db4161b3d409fe6396c0525ebd551997394ebacdd66bd34f49f9d37340",
+      "old_bytes": 9232,
+      "new_bytes": 11298
+    },
+    "sitemap.xml": {
+      "old": "7900485455ba3b1527bbccc4c843283d81f7d9ca5b1a05d0567109a45ad1a907",
+      "new": "37a8a3852c13f7ca7cfabfd65a83bce979f2a5321e592b9d12bd0f5f586e75a6",
+      "old_bytes": 4903,
+      "new_bytes": 4903
+    }
+  },
+  "parent_bytes": 1371159,
+  "candidate_bytes": 1374546
+}

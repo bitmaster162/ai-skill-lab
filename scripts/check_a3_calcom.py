@@ -14,6 +14,8 @@ CALCOM = "https://cal.com/robert-dumanyan-vlck0x/15min"
 errors: list[str] = []
 checks = 0
 release = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
+from seo_method_static_release_profile_r1 import inherited_gate_family
+release=inherited_gate_family(release)
 
 STARTS = {
     "start.html": ("ru", "Бесплатный звонок-знакомство · 15 минут"),

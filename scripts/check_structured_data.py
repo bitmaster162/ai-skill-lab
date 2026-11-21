@@ -7,6 +7,8 @@ from public_origin import PUBLIC_ORIGIN
 from site_a1_pricing_contract import catalog as site_a1_catalog
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/"deploy/live";ORIGIN=PUBLIC_ORIGIN
 RELEASE=json.loads((LIVE/"_release.json").read_text(encoding="utf-8")).get("release_id")
+from seo_method_static_release_profile_r1 import inherited_gate_family
+RELEASE=inherited_gate_family(RELEASE)
 ORG_ID=f"{ORIGIN}/#organization";WEB_ID=f"{ORIGIN}/#website";PERSON_ID=f"{ORIGIN}/about#person"
 TELEGRAM="https://t.me/BiTFormer";WHATSAPP="https://wa.me/66649701204";LINE="https://line.me/ti/p/~iwf555"
 GITHUB="https://github.com/bitmaster162";LINKEDIN="https://www.linkedin.com/in/robert-dumanyan-984171335/";MENTOR_IMAGE=f"{ORIGIN}/robert-dumanyan-mentor.webp"
