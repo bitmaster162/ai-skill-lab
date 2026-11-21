@@ -1,6 +1,6 @@
 """Negative and inheritance fixtures for unapproved /method static successor."""
 from pathlib import Path
-from seo_method_static_release_profile_r1 import verify,SuccessorDeny,ROOT,BUNDLE,RELEASE_ID
+from seo_method_static_release_profile_r1 import verify,SuccessorDeny,ROOT,BUNDLE,RELEASE_ID,active
 result=verify()
 assert result["status"]=="CANDIDATE_VALIDATED_NOT_ADMITTED"
 assert result["release_id"]==RELEASE_ID and result["public_routes"]==56
@@ -27,5 +27,10 @@ reject("manifest_drift","CANDIDATE_MANIFEST_SHA",manifest_override=manifest+b" "
 archive=(BUNDLE/"review.zip").read_bytes()
 reject("archive_mutation","ARCHIVE_SHA",archive_override=archive[:-1]+bytes([archive[-1]^1]))
 reject("archive_truncated","ARCHIVE_SHA",archive_override=archive[:-1])
-reject("old_release_not_live_candidate","LIVE_MANIFEST",require_live=True)
+if active():
+ evidence=verify(require_live=True)
+ assert evidence["status"]=="STATIC_PAYLOAD_MATCH_ONLY"
+ reject("live_mutated_html","PAYLOAD_BYTE",require_live=True,file_overrides={"method.html":ru+b" "})
+else:
+ reject("old_release_not_live_candidate","LIVE_MANIFEST",require_live=True)
 print(f"SEO_METHOD_STATIC_SUCCESSOR=PASS candidate_files=108 immutable_parent=PASS changed=3 public_routes=56 negative_fixtures={denied} release_authority=DENY")

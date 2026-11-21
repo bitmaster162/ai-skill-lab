@@ -198,6 +198,23 @@ def main():
         patch_id = release_meta.get("patch_id")
         r7b_id = "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"
         r7_id = "PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015"
+        if release_id == "AISL_SEO_METHOD_R1_DRAFT_20261121":
+            # Explicit versioned successor: 108 exact assets and three authorized
+            # changes; historic D1 compares immutable pinned R6, not mutated HTML.
+            repository_root = os.path.dirname(__file__)
+            if os.path.realpath(args.dir) != os.path.realpath(os.path.join(repository_root, "deploy/live")):
+                raise ValueError("SEO_METHOD_PARITY_DENY wrong release root")
+            sys.path.insert(0, os.path.join(repository_root, "scripts"))
+            from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify
+            if not method_active():
+                raise ValueError("SEO_METHOD_PARITY_DENY unsealed manifest")
+            method_verify(require_live=True)
+            from site_a2_e3_history import authorize as pinned_history, legacy_r6_html
+            pinned_history()
+            for route in ROUTES:
+                rel = "index.html" if route == "/" else "en.html" if route == "/en" else route.lstrip("/") + ".html"
+                cur[route] = parse(legacy_r6_html(rel).decode("utf-8"))
+            print("SEO_METHOD_D1_HISTORIC_PARITY parent_sha=79ecdcd8 inherited_R6_verified=46 static_delta=3")
         if release_id in {r7_id, r7b_id}:
             sys.path.insert(0, os.path.join(os.path.dirname(__file__), "scripts"))
             if release_id == r7b_id:
@@ -265,7 +282,9 @@ def main():
     allow = json.load(open(args.allow, encoding="utf-8")) if args.allow else {}
     if args.dir:
         release_meta = json.load(open(os.path.join(args.dir, "_release.json"), encoding="utf-8"))
-        if release_meta.get("release_id") in {"E3_4_AI_SAFETY_AUDIENCE_R1", "E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1', 'T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}:
+        from seo_method_static_release_profile_r1 import inherited_gate_family
+        inherited_release = inherited_gate_family(release_meta.get("release_id"))
+        if inherited_release in {"E3_4_AI_SAFETY_AUDIENCE_R1", "E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1', 'T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}:
             route_pins = json.load(open(os.path.join(os.path.dirname(__file__), "data/e3_4_ru_route_sha_pins.json"), encoding="utf-8"))
             assert route_pins.get("release") == "E3_4_AI_SAFETY_AUDIENCE_R1"
             assert set(route_pins.get("routes", {})) == {"/personal", "/teens"}
@@ -274,7 +293,7 @@ def main():
                 assert observed == item["d1_words_sha256"], f"E3.4 D1 exact text drift {route}"
                 assert route in allow.get("approved_text_sha256", {}), f"E3.2 D1 inheritance missing {route}"
                 allow["approved_text_sha256"][route] = item["d1_words_sha256"]
-        if release_meta.get("release_id") in {"E3_5_HEADING_STRUCTURE_R1","E3_6_WORKSHOP_HERO_PANEL_R1", "T1_6F2_ADULT_FIRST_TASKS_R1", 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}:
+        if inherited_release in {"E3_5_HEADING_STRUCTURE_R1","E3_6_WORKSHOP_HERO_PANEL_R1", "T1_6F2_ADULT_FIRST_TASKS_R1", 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}:
             pins = json.load(open(os.path.join(os.path.dirname(__file__), "data/e3_5_heading_pins.json"), encoding="utf-8"))
             assert pins["release_id"] == "E3_5_HEADING_STRUCTURE_R1"
             route = "/pricing"

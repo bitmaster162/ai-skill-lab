@@ -32,7 +32,8 @@ def sha(data: bytes) -> str:
 
 
 def active() -> bool:
-    return json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id") in {RELEASE, agency_r5.RELEASE, housing_r6.RELEASE, universe_r7.RELEASE, universe_r7b.RELEASE}
+    from seo_method_static_release_profile_r1 import active as method_active
+    return (json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id") in {RELEASE, agency_r5.RELEASE, housing_r6.RELEASE, universe_r7.RELEASE, universe_r7b.RELEASE} or method_active())
 
 
 def profile() -> dict:
@@ -197,10 +198,11 @@ def universe_page(path: Path) -> bool:
     if rel not in UNIVERSE_FILES:
         return False
     verify_integrity()
+    from seo_method_static_release_profile_r1 import active as method_active
     text = path.read_text(encoding="utf-8")
     tags = Tags(text).tags
     if ([a.get("id") for t, a in tags if t == "section"] != ["top", "orbit", "homes", "agencies"]
-            or sum(t == "h1" for t, a in tags) != 1 or sum(t == "svg" for t, a in tags) != (7 if housing_r6.active() or universe_r7.active() or universe_r7b.active() else 8)
+            or sum(t == "h1" for t, a in tags) != 1 or sum(t == "svg" for t, a in tags) != (7 if housing_r6.active() or universe_r7.active() or universe_r7b.active() or method_active() else 8)
             or not any(t == "main" and a.get("id") == "main" for t, a in tags)
             or not any(t == "header" for t, a in tags) or not any(t == "footer" for t, a in tags)
             or any(t == "style" or "style" in a for t, a in tags)

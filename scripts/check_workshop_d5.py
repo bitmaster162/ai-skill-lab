@@ -19,7 +19,9 @@ def req(c,m):
  if not c: errors.append(m)
 def read(rel): return source_path(rel).read_text(encoding='utf-8')
 def sha(rel): return hashlib.sha256(source_path(rel).read_bytes()).hexdigest()
-manifest=json.loads(read('deploy/live/_release.json'));release=manifest.get('release_id')
+manifest=json.loads(read('deploy/live/_release.json'))
+from seo_method_static_release_profile_r1 import inherited_gate_family
+release=inherited_gate_family(manifest.get('release_id'))
 import site_a1_a2_r2_successor as site_a2_gate
 import site_a2_d4_successor as site_a2_d5
 site_a2_mode=site_a2_gate.active()
@@ -345,12 +347,20 @@ if release in {"PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015", "PHUKET_UNIVERSE_U3
 if site_a2_mode:
  protected.update(site_a2_d5.admit(ROOT))
  site_a2_d5.d5_main_pins(ROOT)
+# New method main changes are admitted only after full static candidate proof.
+from seo_method_static_release_profile_r1 import active as seo_method_active, verify as seo_method_verify, MAIN_STATIC_SHA
+if seo_method_active():
+ seo_method_verify(require_live=True)
+ static_main.update(MAIN_STATIC_SHA)
 for rel,d in protected.items():
  req((site_a2_d5.source_sha(ROOT,rel) if site_a2_mode and rel in site_a2_d5.PINNED else e34_repo_byte_sha(rel) if (release in {'E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'} and rel in E34_GIT_EOL_SOURCE_FILES) or (release=='E3_5_HEADING_STRUCTURE_R1' and rel in E35_CANONICAL_FILES) else sha(rel))==d,f'protected byte drift {rel}')
 # The historical source pins remain unchanged. Only the exact SHA-bound, full
 # 108-file draft candidate can authorize the two successor method main blocks.
-from seo_method_d5_successor_r1 import verified_source_main
-seo_method_candidate_pins = verified_source_main(ROOT) if site_a2_mode else {}
+from seo_method_d5_successor_r1 import verified_source_main, SOURCES as SEO_METHOD_SOURCES
+# The parent draft verifier expects old deploy/live; the promoted release
+# uses full exact-byte successor proof and independently sealed source pins.
+seo_method_candidate_pins = ({name: record[2] for name,record in SEO_METHOD_SOURCES.items()}
+  if seo_method_active() else verified_source_main(ROOT) if site_a2_mode else {})
 for rel,d in SOURCE_MAIN.items():
  t=read(rel); expected = seo_method_candidate_pins.get(rel,d)
  req(main_digest(t)==expected,f'source main drift {rel}'); req('WorkshopEditorial' in t and 'Header' not in t and 'Footer' not in t,f'source Workshop shell {rel}')

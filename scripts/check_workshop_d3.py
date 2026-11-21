@@ -55,6 +55,10 @@ class Page(HTMLParser):
 
 facts = json.loads(read('data/commercial_facts.json'))
 release_id = json.loads(read('deploy/live/_release.json')).get('release_id')
+from seo_method_static_release_profile_r1 import inherited_gate_family
+release_id=inherited_gate_family(release_id)
+from seo_method_static_release_profile_r1 import active as seo_method_active
+if seo_method_active():E32=True
 N15_RESEARCH_URLS = ['https://replit.com/blog/doubling-down-on-our-commitment-to-secure-vibe-coding','https://www.scworld.com/news/microsoft-365-copilot-zero-click-vulnerability-enabled-data-exfiltration','https://unit42.paloaltonetworks.com/ai-agent-prompt-injection/']
 source = read('components/workshop/WorkshopAudience.tsx')
 match = re.search(r'const programs = (.*?) as const;', source, re.S)
@@ -155,7 +159,7 @@ for command in ('python scripts/check_workshop_d3.py','node scripts/check_busine
 # R98_D3_C1: preserve the bounded static Lab Command readability correction.
 lab_dialog_css = '.labDialog :is(p,.proofConsoleTop,.proofConsoleFoot){display:flex;gap:8px;flex-wrap:wrap}.labDialog :is(a,button){padding:13px}\n'
 workshop_css = read('deploy/live/workshop.css')
-if manifest.get('release_id') in {'A5_MENTOR_R1','E1_3_POST_SUBMIT_R1','DESIGN_TYPOGRAPHY_R1','OG20_R1','A7_SAFETY_QUIZ_R1','A8_PROMPT_AUDITOR_R1','A9_REAL_PROJECTS_R1','N25_CERTIFICATE_RECORD_R1','E3_8_LEAD_EVENTS_R1','E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1','A3_CALCOM_R1','A4_PHUKET_LOCAL_R1','N15_AGENT_SAFETY_R1','E2_GUIDES_R1','R115_WORKSHOP_TYPOGRAPHY','R116_MONETARY_TYPOGRAPHY','R117_GLYPH_FALLBACK','R121_SITEMAP_LASTMOD_REFRESH','R130_STATIC_H2_OVERFLOW_GUARD','R142_A9_A11_FOOTER_TOOLCHAIN_PROOF_TRUTH','R143_R136_A1_A8_CLOSEOUT','R144_ICON_CACHE_PARITY','R145_PWA_INSTALLABILITY','R147_C2_DEPLOYMENT_FILTER_PWA_BACKGROUND','R149_D1_0_WORKSHOP_SHELL','R149_D1_0_VIEWPORT_CLOSEOUT','R151_E1_1_WEB_ANALYTICS','R152_E1_2_CACHE_POLICY','R153_E1_4_INTRO_CALL','R154_E1_5_METADATA','R155_E1_6_MOBILE_HEADER','R156_I1_2_INDEXNOW','R157_I1_3_INDEXABILITY','R158_F1_2_MATCHER_V2','R160_F1_2_PRIVACY_DISCLOSURE', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}:
+if release_id in {'A5_MENTOR_R1','E1_3_POST_SUBMIT_R1','DESIGN_TYPOGRAPHY_R1','OG20_R1','A7_SAFETY_QUIZ_R1','A8_PROMPT_AUDITOR_R1','A9_REAL_PROJECTS_R1','N25_CERTIFICATE_RECORD_R1','E3_8_LEAD_EVENTS_R1','E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1','A3_CALCOM_R1','A4_PHUKET_LOCAL_R1','N15_AGENT_SAFETY_R1','E2_GUIDES_R1','R115_WORKSHOP_TYPOGRAPHY','R116_MONETARY_TYPOGRAPHY','R117_GLYPH_FALLBACK','R121_SITEMAP_LASTMOD_REFRESH','R130_STATIC_H2_OVERFLOW_GUARD','R142_A9_A11_FOOTER_TOOLCHAIN_PROOF_TRUTH','R143_R136_A1_A8_CLOSEOUT','R144_ICON_CACHE_PARITY','R145_PWA_INSTALLABILITY','R147_C2_DEPLOYMENT_FILTER_PWA_BACKGROUND','R149_D1_0_WORKSHOP_SHELL','R149_D1_0_VIEWPORT_CLOSEOUT','R151_E1_1_WEB_ANALYTICS','R152_E1_2_CACHE_POLICY','R153_E1_4_INTRO_CALL','R154_E1_5_METADATA','R155_E1_6_MOBILE_HEADER','R156_I1_2_INDEXNOW','R157_I1_3_INDEXABILITY','R158_F1_2_MATCHER_V2','R160_F1_2_PRIVACY_DISCLOSURE', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}:
     require(lab_dialog_css in workshop_css, 'Lab dialog correction preserved')
 else:
     require(workshop_css.endswith(lab_dialog_css), 'Lab dialog correction suffix')

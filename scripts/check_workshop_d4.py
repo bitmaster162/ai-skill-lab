@@ -21,6 +21,8 @@ def require(c,m):
 def read(rel):return source_path(rel).read_text(encoding='utf-8')
 def sha(rel):return hashlib.sha256(source_path(rel).read_bytes()).hexdigest()
 manifest=json.loads(read('deploy/live/_release.json'));release=manifest.get('release_id')
+from seo_method_static_release_profile_r1 import inherited_gate_family
+release=inherited_gate_family(release)
 import site_a1_a2_r2_successor as site_a2_gate
 import site_a2_d4_successor as site_a2_d4
 site_a2_mode = site_a2_gate.active()

@@ -13,6 +13,8 @@ import hashlib
 ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "deploy" / "live"
 RELEASE_ID = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
+from seo_method_static_release_profile_r1 import inherited_gate_family
+RELEASE_ID=inherited_gate_family(RELEASE_ID)
 EXACT = {
     "/": (
         "Обучение ИИ 1-на-1 на Пхукете и онлайн — AI Skill Lab",

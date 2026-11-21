@@ -50,6 +50,8 @@ FOOTER_E2={
  "en":["/en/faq","/en/guides","/en/about","/en/challenge","/en/build","/en/proof","/en/pricing","/en/start","/en/kids","/en/teens","/en/parents","/en/personal","/en/business","/en/method","/en/curriculum","/en/phuket"],
 }
 release=json.loads((LIVE/"_release.json").read_text(encoding="utf-8")).get("release_id")
+from seo_method_static_release_profile_r1 import inherited_gate_family
+release=inherited_gate_family(release)
 CAPTION={"ru":"Практический AI · online / Phuket","en":"Practical AI capability · online / Phuket"}
 
 errors=[]; checks=0
