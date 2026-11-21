@@ -5,7 +5,8 @@ from source_paths import source_path
 import sys
 import hashlib
 import site_a1_a2_r2_successor as site_a2
-import adult_analytics_release as adult
+from adult_analytics_lineage import current_release
+adult = current_release()
 SITE_A2=site_a2.active()
 if SITE_A2: site_a2.verify()
 SITE_A2_PROOF_PINS={

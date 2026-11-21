@@ -88,20 +88,28 @@ function futureGuidePairApproved(): boolean {
     const isSitemapR2 = isU3R7B && header.patch_id === R31_SITEMAP_R2_PATCH;
     const isSiteA2 = isU3R7B && header.patch_id === SITE_A2_PATCH;
     // Keep the existing guide pair on releases that attest all shipped static bytes.
-    const isSeoMethod = header.release_id === "AISL_SEO_METHOD_R1_DRAFT_20261121";
-    const isAdultAnalytics = header.release_id === "AISL_ADULT_GA4_OPT_IN_R3_20261121";
-    if (isSeoMethod || isAdultAnalytics) {
-      const seal = isAdultAnalytics ? {
-        count: 112,
-        parent: "ef0bc7d77b523c480fa78e3ea4c87ac1ebfbffc2567f461b077b9328c7341ab0",
-        payload: "a436546681cb59eafb62b7faf8237fee7202c85cb5517cb57bd5bd1ad3db5113",
-        manifest: "9758df02a2c862c643cd87c5005176ff3751ca72011ffbdaacd7112588043c73",
-      } : {
+    const seals = new Map([
+      ["AISL_SEO_METHOD_R1_DRAFT_20261121", {
         count: 108,
         parent: "79ecdcd892a308ef3ae93b6f551a4c01e59e9a584eee39764daba5498df11889",
         payload: "f2678f7fb3ff5381e421795f83bd8115fa7365613806443cfeea9802efacdf88",
         manifest: "ef0bc7d77b523c480fa78e3ea4c87ac1ebfbffc2567f461b077b9328c7341ab0",
-      };
+      }],
+      ["AISL_ADULT_GA4_OPT_IN_R3_20261121", {
+        count: 112,
+        parent: "ef0bc7d77b523c480fa78e3ea4c87ac1ebfbffc2567f461b077b9328c7341ab0",
+        payload: "a436546681cb59eafb62b7faf8237fee7202c85cb5517cb57bd5bd1ad3db5113",
+        manifest: "9758df02a2c862c643cd87c5005176ff3751ca72011ffbdaacd7112588043c73",
+      }],
+      ["AISL_ADULT_GUIDE_DONORS_R1_20261121", {
+        count: 112,
+        parent: "9758df02a2c862c643cd87c5005176ff3751ca72011ffbdaacd7112588043c73",
+        payload: "b0042500ae2b8ef56311d2c6d14807f94742a64b56ce207bd4916e4e6280b2e1",
+        manifest: "b222558702afafb10849792f693b8322272461098c2385b7a3b6acf4fdbd5fc7",
+      }],
+    ]);
+    const seal = typeof header.release_id === "string" ? seals.get(header.release_id) : undefined;
+    if (seal) {
       if (header.patch_id !== header.release_id || header.parent_manifest_sha256 !== seal.parent ||
           header.payload_sha256 !== seal.payload || header.file_count !== seal.count ||
           createHash("sha256").update(manifestBytes).digest("hex") !== seal.manifest) return false;

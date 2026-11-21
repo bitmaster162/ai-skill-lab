@@ -29,7 +29,8 @@ def approved(manifest_raw: bytes, admission_raw: bytes, measured_nonfont: int) -
     return EXACT_NON_FONT_BYTES
 
 def verify_live(root: Path, measured_nonfont: int) -> int:
-    import adult_analytics_release as adult
+    from adult_analytics_lineage import current_release
+    adult = current_release()
     if adult.active():
         exact = sum(r["size"] for r in adult.verify()["files"] if not r["path"].endswith(".woff2"))
         if measured_nonfont != exact:

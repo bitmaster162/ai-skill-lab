@@ -38,12 +38,13 @@ def active()->bool:
   return m.get("release_id")==RELEASE_ID and m.get("patch_id")==RELEASE_ID and m.get("parent_manifest_sha256")==PARENT_SHA
  except (OSError,ValueError,TypeError):return False
 def lineage_active():
- import adult_analytics_release as adult
- return active() or adult.active()
+ from adult_analytics_lineage import current_release
+ return active() or current_release().active()
 
 def verified_live_lineage():
  """Run the exact release proof before inheriting unchanged method-generation gates."""
- import adult_analytics_release as adult
+ from adult_analytics_lineage import current_release
+ adult = current_release()
  if adult.active():
   adult.verify()
   # The prior review bundle and method sources must still satisfy their original seals.
@@ -57,9 +58,11 @@ def verified_live_lineage():
 def inherited_gate_family(release_id: str) -> str:
  # Only unchanged historical content may use the R7B/SITE-A2 gate family.
  # This is not a release-id alias in the on-disk manifest or production policy.
- import adult_analytics_release as adult
- if release_id in {RELEASE_ID, adult.RELEASE_ID}:
-  require(active() if release_id == RELEASE_ID else adult.active(),"RELEASE_PROFILE_UNSEALED")
+ from adult_analytics_lineage import current_release, guide_donors, r3
+ if release_id in {RELEASE_ID, r3.RELEASE_ID, guide_donors.RELEASE_ID}:
+  adult = current_release()
+  require(active() if release_id == RELEASE_ID else
+          adult.active() and adult.RELEASE_ID == release_id, "RELEASE_PROFILE_UNSEALED")
   require(verified_live_lineage(),"RELEASE_PROFILE_UNSEALED")
   return "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"
  return release_id
@@ -112,6 +115,11 @@ def verify(*,source_overrides=None,file_overrides=None,archive_override=None,man
  for p,r in bypath.items():
   require(len(files[p])==r["size"] and digest(files[p])==r["sha256"],"PAYLOAD_BYTE:"+p)
  require(set(files)==set(bypath),"OVERRIDE_FILESET")
+ # A reviewed child changes EN source. Verify the historical archive against its
+ # pinned pre-edit source and give explicit negative fixtures precedence.
+ from adult_analytics_lineage import guide_donors
+ sources = guide_donors.old_method_source() if guide_donors.active() else {}
+ sources.update(source_overrides or {})
  # Original legal/header/CTA envelopes must be identical on each changed method route.
  for page,source in (("method.html","app/(ru)/method/page.tsx"),("en/method.html","app/(en)/en/method/page.tsx")):
   parent=parent_file(page)
@@ -123,7 +131,7 @@ def verify(*,source_overrides=None,file_overrides=None,archive_override=None,man
     and second.count(b"<article")==5 and second.count(b"<h1")==1
     and b"<script" not in second and b"<form" not in second,"PAGE_BOUNDARY:"+page)
   require(current==(BUNDLE/page).read_bytes(),"REVIEW_PAGE_BYTES:"+page)
-  raw=(source_overrides or {}).get(source)
+  raw=sources.get(source)
   if raw is None:raw=(ROOT/source).read_bytes()
   require(digest(raw)==SOURCE_SHA[source],"SOURCE_SHA:"+source)
  # No new, removed or changed sitemap URL; only two known updated lastmod values.

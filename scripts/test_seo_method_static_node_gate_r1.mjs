@@ -6,7 +6,10 @@ import { fileURLToPath } from 'node:url';
 import { isVerifiedMethodLineage, isVerifiedSeoMethodRelease, EXACT_MANIFEST_SHA256, EXACT_RELEASE_ID } from './seo_method_static_node_gate_r1.mjs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const live = fs.readFileSync(path.join(root, 'deploy/live/_release.json'));
-const inherited = JSON.parse(live).release_id === 'AISL_ADULT_GA4_OPT_IN_R3_20261121';
+const r3 = 'AISL_ADULT_GA4_OPT_IN_R3_20261121';
+const child = 'AISL_ADULT_GUIDE_DONORS_R1_20261121';
+const liveId = JSON.parse(live).release_id;
+const inherited = [r3, child].includes(liveId);
 const original = inherited ? fs.readFileSync(path.join(root, 'docs/release-candidates/seo-method-r1-20261121/manifest.json')) : live;
 const o = JSON.parse(original);
 assert.equal(o.release_id, EXACT_RELEASE_ID);
@@ -14,6 +17,8 @@ assert.equal(isVerifiedSeoMethodRelease(root), !inherited);
 if (inherited) {
   assert.throws(() => isVerifiedSeoMethodRelease(root, original), /STATIC_PROOF/);
   assert.equal(isVerifiedMethodLineage(root, live), true);
+  const wrongGeneration = Buffer.from(live.toString('utf8').replace(liveId, liveId === child ? r3 : child));
+  assert.throws(() => isVerifiedMethodLineage(root, wrongGeneration), /EXACT_PROOF/);
   assert.throws(() => isVerifiedMethodLineage(root, Buffer.concat([live, Buffer.from(' ')])), /EXACT_PROOF/);
 }
 const wrongHash = Buffer.concat([original, Buffer.from(' ')]);

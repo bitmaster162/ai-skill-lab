@@ -138,8 +138,8 @@
     },
     {
       "path": "en/method.html",
-      "sha256": "b3efff723c213a6390ba789994051f475598c3aec8c06f760389c1b53f4afc49",
-      "size": 9255
+      "sha256": "2c15cc2b174d323facd601cb99a68ff53e7fdb7c732bc7c08801314fdad72f9a",
+      "size": 9385
     },
     {
       "path": "en/parents.html",
@@ -278,8 +278,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "408583aac0b8a7f712f6261f0dd21eb4a7fdbb621befc42500cc3dae1bf77880",
-      "size": 18545
+      "sha256": "4abe9b3fe190de7a281fba4bf9a9d265248cd79db8bed697a550a2ef0198acd2",
+      "size": 18764
     },
     {
       "path": "kids.html",
@@ -562,9 +562,9 @@
       "size": 41174
     }
   ],
-  "parent_manifest_sha256": "ef0bc7d77b523c480fa78e3ea4c87ac1ebfbffc2567f461b077b9328c7341ab0",
-  "patch_id": "AISL_ADULT_GA4_OPT_IN_R3_20261121",
-  "payload_sha256": "a436546681cb59eafb62b7faf8237fee7202c85cb5517cb57bd5bd1ad3db5113",
-  "release_id": "AISL_ADULT_GA4_OPT_IN_R3_20261121",
+  "parent_manifest_sha256": "9758df02a2c862c643cd87c5005176ff3751ca72011ffbdaacd7112588043c73",
+  "patch_id": "AISL_ADULT_GUIDE_DONORS_R1_20261121",
+  "payload_sha256": "b0042500ae2b8ef56311d2c6d14807f94742a64b56ce207bd4916e4e6280b2e1",
+  "release_id": "AISL_ADULT_GUIDE_DONORS_R1_20261121",
   "schema": "ai-skill-lab.static-release.v1"
 }

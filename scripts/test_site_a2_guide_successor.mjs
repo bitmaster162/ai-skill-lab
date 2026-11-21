@@ -83,7 +83,18 @@ test("unknown patch id denies both guide routes", () => {
   assert.deepEqual(guideRoutes(Buffer.from(JSON.stringify(modified)), originalAdmission), { ru: false, en: false });
 });
 
-test("the sealed analytics release preserves both existing guide locales", () => {
+test("the frozen analytics R3 payload still admits both existing locales", () => {
+  const revision = "3b77fdf9d3a48571420ef588bbf33e72e53df71a";
+  const atR3 = rel => execFileSync("git", ["show", revision + ":" + rel], {cwd:repo});
+  const parents = ["deploy/live/index.html", "deploy/live/en/method.html"];
+  const files = new Map(parents.map(rel => [path.join(repo, rel), atR3(rel)]));
+  const r3 = atR3("deploy/live/_release.json");
+  assert.equal(digest(r3), "9758df02a2c862c643cd87c5005176ff3751ca72011ffbdaacd7112588043c73");
+  assert.deepEqual(guideRoutes(r3, originalAdmission, files), {ru:true, en:true});
+  assert.deepEqual(guideRoutes(r3, originalAdmission), {ru:false, en:false});
+});
+
+test("the sealed donor successor admits both existing guide locales", () => {
   assert.deepEqual(guideRoutes(liveManifest, originalAdmission), {ru:true, en:true});
 });
 test("an edited successor manifest or shipped byte denies both locales", () => {

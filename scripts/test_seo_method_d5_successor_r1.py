@@ -5,7 +5,8 @@ from seo_method_d5_successor_r1 import CandidateDeny, verified_source_main, SOUR
 
 ROOT = Path(__file__).resolve().parents[1]
 from seo_method_static_release_profile_r1 import active as new_active, verify as new_verify, SuccessorDeny, SOURCE_SHA, BUNDLE
-import adult_analytics_release as adult
+from adult_analytics_lineage import current_release
+adult = current_release()
 if new_active() or adult.active():
  if adult.active(): adult.verify()
  method_is_live = new_active()

@@ -8,7 +8,8 @@ if SITE_A2:
  site_a2.verify()
  raw=(Path(__file__).resolve().parents[1]/"deploy/live/business.html").read_bytes()
  expected = "c9be8eec0e42f3ca84d582cdcd5534a1b8c85b49257023b7e853ee25d141d60f"
- import adult_analytics_release as adult
+ from adult_analytics_lineage import current_release
+ adult = current_release()
  if adult.active():
   expected = next(row["sha256"] for row in adult.verify()["files"] if row["path"] == "business.html")
  if hashlib.sha256(raw).hexdigest() != expected:

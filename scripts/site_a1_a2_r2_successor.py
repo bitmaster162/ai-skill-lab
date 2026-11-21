@@ -83,12 +83,14 @@ def ancestor_chain(drop_ancestor=None, historical_override=None):
 def verify(manifest_override:bytes|None=None,extra_file:str|None=None,
            drop_ancestor:str|None=None,historical_override:bytes|None=None)->dict:
  from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify, NEW_MANIFEST_SHA, NEW_PAYLOAD_SHA, RELEASE_ID
- import adult_analytics_release as adult
+ from adult_analytics_lineage import current_release, r3
+ adult = current_release()
  if adult.active():
   must(manifest_override is None and extra_file is None and drop_ancestor is None and historical_override is None,"ADULT_ANALYTICS_FIXTURES_NOT_ALLOWED")
   manifest = adult.verify()
   method_verify()  # Retain the independently archived 108-file method release.
-  return {"status":"ADULT_ANALYTICS_SUCCESSOR_PASS", "release_id":manifest["release_id"],
+  return {"status":"ADULT_ANALYTICS_SUCCESSOR_PASS" if adult.RELEASE_ID == r3.RELEASE_ID else "GUIDE_DONOR_SUCCESSOR_PASS",
+          "release_id":manifest["release_id"],
           "patch_id":manifest["patch_id"], "manifest_sha256":adult.MANIFEST_SHA,
           "payload_sha256":manifest["payload_sha256"], "source_commit":adult.PARENT_COMMIT,
           "r7b_immutable_ancestors":len(ancestor_chain()), "static_assets":manifest["file_count"],

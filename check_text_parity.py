@@ -198,9 +198,9 @@ def main():
         patch_id = release_meta.get("patch_id")
         r7b_id = "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"
         r7_id = "PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015"
-        if release_id in {"AISL_SEO_METHOD_R1_DRAFT_20261121", "AISL_ADULT_GA4_OPT_IN_R3_20261121"}:
-            # Explicit versioned successor: 108 exact assets and three authorized
-            # changes; historic D1 compares immutable pinned R6, not mutated HTML.
+        if release_id in {"AISL_SEO_METHOD_R1_DRAFT_20261121", "AISL_ADULT_GA4_OPT_IN_R3_20261121",
+                          "AISL_ADULT_GUIDE_DONORS_R1_20261121"}:
+            # Verify the current release before checking the historical R6 text.
             repository_root = os.path.dirname(__file__)
             if os.path.realpath(args.dir) != os.path.realpath(os.path.join(repository_root, "deploy/live")):
                 raise ValueError("SEO_METHOD_PARITY_DENY wrong release root")
