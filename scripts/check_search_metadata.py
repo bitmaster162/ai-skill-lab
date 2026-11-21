@@ -625,6 +625,10 @@ def main() -> int:
     if expected_lastmod and latest_html_date is not None:
         source_lastmod_date = date.fromisoformat(expected_lastmod)
         freshness_date = date(2026, 10, 29) if successor_verified else source_lastmod_date
+        from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify
+        if method_active():
+            method_verify(require_live=True)
+            freshness_date = date(2026, 11, 21)  # Exact two method URLs verified against the new manifest.
         if freshness_date < latest_html_date:
             errors.append(
                 f"sitemap lastmod {freshness_date.isoformat()} older than latest public HTML commit {latest_html_date.isoformat()}"
