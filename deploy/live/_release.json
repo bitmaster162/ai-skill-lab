@@ -28,8 +28,8 @@
     },
     {
       "path": "analytics/preferences.js",
-      "sha256": "1faa439bafeb4a753c4f45609a555292e10a0afed60623748d307f50d8ad71d2",
-      "size": 6708
+      "sha256": "87e252c1b355991be83ca09d107bbcce480386dc9b9f910571ad702774d67b7a",
+      "size": 9313
     },
     {
       "path": "analytics/restore.js",
@@ -168,8 +168,8 @@
     },
     {
       "path": "en/privacy.html",
-      "sha256": "2349ee9e640a436b26ba024a5fddcbf21483d3d3411a1e0d09a295223983620f",
-      "size": 9866
+      "sha256": "84e684ee96f3705811b4c66efff3fdde73f225c54b9de7513c45fe1501773c18",
+      "size": 9938
     },
     {
       "path": "en/projects.html",
@@ -473,8 +473,8 @@
     },
     {
       "path": "privacy.html",
-      "sha256": "e26c0c59d28ff62392726acaac81a78ffb6415888158aee61ff8ee4d6e29b612",
-      "size": 13258
+      "sha256": "e08a553a611e9414a2bf0b78e86a4a6cc3e2a92af16e6f5eded5ef758bc277ee",
+      "size": 13358
     },
     {
       "path": "project-filter.js",
@@ -563,8 +563,8 @@
     }
   ],
   "parent_manifest_sha256": "ef0bc7d77b523c480fa78e3ea4c87ac1ebfbffc2567f461b077b9328c7341ab0",
-  "patch_id": "AISL_ADULT_GA4_OPT_IN_R1_20261121",
-  "payload_sha256": "96a71368037021fb9f995f7be97158c92aacd61fa4e10d86a4b7dbe5824a97e2",
-  "release_id": "AISL_ADULT_GA4_OPT_IN_R1_20261121",
+  "patch_id": "AISL_ADULT_GA4_OPT_IN_R2_20261121",
+  "payload_sha256": "f3210579ea6f7d682e85e60e49f41321d2ab9989e0406dd49bdaa2347093ad22",
+  "release_id": "AISL_ADULT_GA4_OPT_IN_R2_20261121",
   "schema": "ai-skill-lab.static-release.v1"
 }

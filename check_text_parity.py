@@ -198,7 +198,7 @@ def main():
         patch_id = release_meta.get("patch_id")
         r7b_id = "PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015"
         r7_id = "PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015"
-        if release_id in {"AISL_SEO_METHOD_R1_DRAFT_20261121", "AISL_ADULT_GA4_OPT_IN_R1_20261121"}:
+        if release_id in {"AISL_SEO_METHOD_R1_DRAFT_20261121", "AISL_ADULT_GA4_OPT_IN_R2_20261121"}:
             # Explicit versioned successor: 108 exact assets and three authorized
             # changes; historic D1 compares immutable pinned R6, not mutated HTML.
             repository_root = os.path.dirname(__file__)

@@ -9,23 +9,23 @@ ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "deploy/live"
 PARENT_COMMIT = "dbc97ca6537df48a96e8eb9273fed1f0a4e69d93"
 PARENT_SHA = "ef0bc7d77b523c480fa78e3ea4c87ac1ebfbffc2567f461b077b9328c7341ab0"
-RELEASE_ID = "AISL_ADULT_GA4_OPT_IN_R1_20261121"
+RELEASE_ID = "AISL_ADULT_GA4_OPT_IN_R2_20261121"
 # Frozen release identity
-MANIFEST_SHA = "577e8854d69aac847e22466612578f80b6c538469fd92f6cd44994338cba1d36"
-PAYLOAD_SHA = "96a71368037021fb9f995f7be97158c92aacd61fa4e10d86a4b7dbe5824a97e2"
+MANIFEST_SHA = "e2df72f6556f4acbdb4134ad1856fdccd99f1c9b4240395337222b8a14a8d027"
+PAYLOAD_SHA = "f3210579ea6f7d682e85e60e49f41321d2ab9989e0406dd49bdaa2347093ad22"
 SOURCE_SHA = {
     "app/(en)/en/business/page.tsx": "961c660eca8e453076ff88cf1fdabcc01ca7c2f99a218e5702c6ec86ff1de750",
     "app/(en)/en/personal/page.tsx": "1f1d2cf6970c7866d297fd7a2dbf42c3b253d2acf1181298109039440e4f2386",
-    "app/(en)/en/privacy/page.tsx": "242a9ae89e56ee24277e03776f66924e8f7c124af3ec6a64f7b32451c4b93e9c",
+    "app/(en)/en/privacy/page.tsx": "2a731d0abda2ccfd573125afcae3012893b139a47d92d39b6c3e558a65ef8e97",
     "app/(en)/en/proof/page.tsx": "e96bd4411cdd70a094e1d832e62ac92a5170bb8f62df1a47b93248a30ecef241",
     "app/(ru)/business/page.tsx": "80bc0fc1f28a2fa79d79e89535267a6f358199c608dd46599fcf0464e3851562",
     "app/(ru)/personal/page.tsx": "5ce8d669f612f9d6bd366802366342c489b294bb155733d9d7d412930fb469e2",
-    "app/(ru)/privacy/page.tsx": "721b0439a07d93738eacba77d24d7dd7e22bcb9caae36dbdb1a041ea57332aba",
+    "app/(ru)/privacy/page.tsx": "b10f651c3d0b324d3f170e2d1913861c98eaa7c86cd13a98e9ff8291ddd8dc8b",
     "app/(ru)/proof/page.tsx": "af2f02e2d49a01be42d884de1333413f247256aa83b385fb910cc92bee8f457a",
     "components/AdultAnalyticsPreference.tsx": "99225a7c1a756eb6fe06739d3bf55c9d902662e7bb8264b5d4fe1a3a08e3e340",
     "public/analytics/preferences.css": "f01b317812dfb7d66a33c9a2a71c04644aa16344bbb231b8d0c23a8fd64c15ac",
     "public/analytics/preferences.htm": "7abf4359d21644d5ee5d0e622a67fdaf3ff7fa34e0c1a47a6d873858a1df8edc",
-    "public/analytics/preferences.js": "1faa439bafeb4a753c4f45609a555292e10a0afed60623748d307f50d8ad71d2",
+    "public/analytics/preferences.js": "87e252c1b355991be83ca09d107bbcce480386dc9b9f910571ad702774d67b7a",
     "public/analytics/restore.js": "514cb77287256018bf4f23590da4e5c431a96e2b9681e19445bb92876731a33f"
 }
 # End release identity

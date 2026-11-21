@@ -9,24 +9,39 @@ const key = 'aisl.adult-analytics.v1';
 const id = 'G-6RY1HZ75FD';
 
 function fixture({ path = '/en/business', prior, gpc = false, dnt = '0', originOverride = origin,
-  top = false, referrer = 'https://www.google.com/search?q=private-contact', readOnly = false } = {}) {
+  top = false, referrer = 'https://www.google.com/search?q=private-contact', readOnly = false,
+  savedValues, savedCookies, hash = '' } = {}) {
   const nodes = new Map();
   const handlers = {};
   const scripts = [];
   const writes = [];
-  const values = new Map(prior ? [[key, prior]] : []);
+  const values = savedValues || new Map(prior ? [[key, prior]] : []);
+  const cookies = savedCookies || new Map([['unrelated','keep'], ['aisl_ga','client']]);
+  if (prior === 'allow' && !savedCookies) cookies.set('aisl_consent_grant', '1');
+  const blocked = { storage: readOnly, cookies: false };
+  const messages = [];
+  class BroadcastChannel {
+    constructor() { messages.push(this); }
+    postMessage(value) { this.sent = value; }
+  }
   const element = name => {
     if (!nodes.has(name)) nodes.set(name, { hidden: true, addEventListener(type, listener) { this[type] = listener; } });
     return nodes.get(name);
   };
   let reloaded = 0;
-  const loc = { origin: originOverride, pathname: '/analytics/preferences.htm', search: '', hash: '',
+  const loc = { origin: originOverride, pathname: '/analytics/preferences.htm', search: '', hash,
     reload() { reloaded++; } };
   const document = {
     documentElement: {}, head: { appendChild(script) { scripts.push(script); } },
     getElementById: element, querySelector: element, createElement() { return {}; },
-    get cookie() { return 'aisl_ga=client; unrelated=keep'; },
-    set cookie(value) { writes.push(value); },
+    get cookie() { return [...cookies].map(([name,value]) => name + '=' + value).join('; '); },
+    set cookie(value) {
+      if (blocked.cookies) return;
+      writes.push(value);
+      const [name, data] = value.split(';')[0].split('=');
+      if (value.includes('Max-Age=0;')) cookies.delete(name);
+      else cookies.set(name, data);
+    },
   };
   const parent = { location: { origin, pathname: path, search: '?email=raw-canary', hash: '#secret-fragment' },
     document: { referrer, title: 'Private browser title', cookie: 'private-credential' } };
@@ -34,11 +49,11 @@ function fixture({ path = '/en/business', prior, gpc = false, dnt = '0', originO
   if (top) window.parent = window;
   const navigator = { globalPrivacyControl: gpc, doNotTrack: dnt };
   const localStorage = { getItem(k) { return values.get(k) ?? null; },
-    setItem(k, v) { if (readOnly) throw Error('read-only'); values.set(k, v); },
-    removeItem(k) { if (readOnly) throw Error('read-only'); values.delete(k); } };
+    setItem(k, v) { if (blocked.storage) throw Error('read-only'); values.set(k, v); },
+    removeItem(k) { if (blocked.storage) throw Error('read-only'); values.delete(k); } };
   const history = { replaceState(_state, _title, url) { loc.hash = new URL(url, origin).hash; } };
-  vm.runInNewContext(source, { window, parent: window.parent, document, location: loc, URL, navigator, localStorage, history });
-  return { window, navigator, scripts, nodes, handlers, values, writes, reloaded: () => reloaded,
+  vm.runInNewContext(source, { window, parent: window.parent, document, location: loc, URL, navigator, localStorage, history, BroadcastChannel });
+  return { window, navigator, scripts, nodes, handlers, values, writes, cookies, blocked, messages, reloaded: () => reloaded,
     events: () => Array.from(window.dataLayer || [], args => Array.from(args)) };
 }
 
@@ -100,7 +115,9 @@ test('withdrawal unloads the tag and clears only scoped analytics cookies', () =
   assert.equal(f.values.get(key), 'deny'); assert.equal(f.reloaded(),1);
   assert.equal(f.window['ga-disable-' + id], true);
   assert.equal(f.window.location.hash, '#off');
-  assert.equal(f.writes.length,1); assert.match(f.writes[0], /^aisl_ga=; Max-Age=0; Path=\/analytics\//);
+  assert(f.writes.some(write => /^aisl_ga=; Max-Age=0; Path=\/analytics\//.test(write)));
+  assert.equal(f.cookies.has('aisl_consent_grant'), false);
+  assert.equal(f.cookies.get('unrelated'), 'keep');
   const other = fixture({prior:'allow'});
   other.handlers.storage({key, newValue:'deny'});
   assert.equal(other.reloaded(),1); assert.equal(other.window['ga-disable-' + id],true);
@@ -118,4 +135,37 @@ test('a cached document rechecks consent and privacy signals without a duplicate
     assert.equal(f.reloaded(), change === 'none' ? 0 : 1);
     assert.equal(f.scripts.length,1); assert.equal(f.events().filter(e => e[0] === 'event').length,1);
   }
+});
+
+test('revocation survives failure of either store, navigation and storage recovery', () => {
+  for (const store of ['storage', 'cookies']) {
+    const current = fixture({prior:'allow'});
+    assert.equal(current.scripts.length, 1);
+    current.blocked[store] = true;
+    current.nodes.get('decline').click();
+    assert.equal(current.reloaded(), 1);
+    assert.equal(current.messages[0].sent, 'deny');
+    const revisit = fixture({savedValues:current.values, savedCookies:current.cookies});
+    assert.equal(revisit.scripts.length, 0);
+    assert.deepEqual(revisit.events(), []);
+    assert.equal(revisit.nodes.get('state').textContent, 'Off');
+    revisit.nodes.get('allow').click();
+    assert.equal(revisit.scripts.length, 1);
+    assert.equal(revisit.cookies.get('aisl_consent_grant'), '1');
+  }
+  const otherTab = fixture({prior:'allow'});
+  otherTab.messages[0].onmessage({data:'deny'});
+  assert.equal(otherTab.reloaded(), 1);
+  assert.equal(otherTab.window['ga-disable-' + id], true);
+});
+
+test('blocked persistence is disclosed when neither store can record withdrawal', () => {
+  const f = fixture({prior:'allow'});
+  f.blocked.cookies = f.blocked.storage = true;
+  f.nodes.get('decline').click();
+  assert.equal(f.reloaded(),1);
+  assert.equal(f.window.location.hash, '#off-storage');
+  const reloaded = fixture({hash:'#off-storage', savedValues:f.values, savedCookies:f.cookies});
+  assert.equal(reloaded.scripts.length, 0);
+  assert.match(reloaded.nodes.get('state').textContent, /Clear the site data/);
 });
