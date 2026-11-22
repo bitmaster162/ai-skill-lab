@@ -73,6 +73,7 @@ const FUTURE_GUIDE_STATIC_ASSETS = [
 ] as const;
 
 const RESTORED_GUIDE_RELEASE = "AISL_RESTORED_GUIDES_R1_20261122";
+const MATCHER_BRIEF_RELEASE = "AISL_MATCHER_FALLBACK_BRIEF_R1_20261122";
 const RESTORED_GUIDE_SOURCE_SHA = new Map<string, Record<GuideLocale, string>>([
   ["ai-pilot-for-small-business", {
     ru: "cf7e4c696d27a21116097938af013200daacb6d886c0eb91da0c1da95b07b111",
@@ -161,6 +162,12 @@ function approvedAdditionalGuideSlugs(): string[] | false {
         payload: "f11a64758e9c5661eea55a24b9a98c6c078e17dcdfca8e335bd04c23776d99e5",
         manifest: "66c02d9bda23b0424330596b6e74a14576be0259d31f4e1b5a5f8ba07cb251d5",
       }],
+      [MATCHER_BRIEF_RELEASE, {
+        count: 116,
+        parent: "66c02d9bda23b0424330596b6e74a14576be0259d31f4e1b5a5f8ba07cb251d5",
+        payload: "78156621b653912264fc2a540f6f455c17b3b4a76be384ee744948805ec04615",
+        manifest: "d4de99d99f7542afb5e853fecfbcc85674ac6dcd07d5c10d3c72154e20268329",
+      }],
     ]);
     const seal = typeof header.release_id === "string" ? seals.get(header.release_id) : undefined;
     if (seal) {
@@ -192,7 +199,7 @@ function approvedAdditionalGuideSlugs(): string[] | false {
         const bytes = fs.readFileSync(path.join(GUIDE_DIR, `${FUTURE_GUIDE_SLUG}.${locale}.md`));
         if (createHash("sha256").update(bytes).digest("hex") !== FUTURE_GUIDE_SOURCE_SHA[locale]) return false;
       }
-      if (header.release_id === RESTORED_GUIDE_RELEASE) {
+      if (header.release_id === RESTORED_GUIDE_RELEASE || header.release_id === MATCHER_BRIEF_RELEASE) {
         for (const [slug, digests] of RESTORED_GUIDE_SOURCE_SHA) {
           for (const locale of ["ru", "en"] as const) {
             const assetPath = `${locale === "en" ? "en/" : ""}guides/${slug}.html`;

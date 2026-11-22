@@ -49,14 +49,27 @@ function planTable(audience){
     {id:"business:implementation_pilot",name:en?b.implementation_pilot.name_en:b.implementation_pilot.name_ru,price:(en?"from ":"от ")+b.implementation_pilot.price_from,sessions:en?"scope cap "+b.implementation_pilot.scope_cap_hours+" hours":"потолок scope "+b.implementation_pilot.scope_cap_hours+" часов"}
   ];
 }
-function localResult(){
+const business=FACTS.business;
+const allowedPrices=new Set([
+  FACTS.diagnostic.price,FACTS.family.price,...Object.values(FACTS.tracks).flat().map(plan=>plan.price),
+  business.workflow_audit.price,business.team_training.price_from_per_session,business.team_training.total_from,
+  business.implementation_pilot.price_from,...Object.values(FACTS.recurring).map(plan=>plan.price_monthly)
+]);
+function sanitizeGoalMoney(goal){
+  return goal.replace(/(?:\$\s?\d[\d,]*(?:\.\d+)?|\d[\d,]*(?:\.\d+)?\s?\$)/g,token=>{
+    const price="$"+token.replace(/[$\s]/g,"");
+    return allowedPrices.has(price)?token:"[unsupported price removed]";
+  });
+}
+function localResult(goalText){
   if(!S.audience||!S.goal||!S.depth)return null;
   const table=planTable(S.audience);let pkg;
   if(S.audience==="business"){
     pkg=S.goal==="automate"||S.depth==="deep"?table[2]:S.goal==="team"?table[1]:table[0];
   }else pkg=table[S.depth==="deep"?2:S.depth==="core"?1:0];
   const third=en?"Start "+pkg.name+" with one bounded project and a review checkpoint.":"Начать "+pkg.name+" с одного ограниченного проекта и контрольной точки проверки.";
-  const brief=(en?"Route request: ":"Запрос на маршрут: ")+pkg.name+(en?". Goal provided in matcher.":". Цель описана в matcher.");
+  const goal=sanitizeGoalMoney(goalText);
+  const brief=(en?`Route request: ${pkg.name}. Goal: ${goal}`:`Запрос на маршрут: ${pkg.name}. Цель: ${goal}`).slice(0,600);
   return {status:"fallback",package:pkg,steps:[intro,diagnostic,third],brief};
 }
 async function copyText(text){
@@ -82,19 +95,22 @@ function renderResult(result,notice){
   document.getElementById("mcopy").addEventListener("click",async function(){const ok=await copyText(S.result.brief);this.textContent=ok?copy.copied:copy.copyError});
   document.getElementById("matcher-lead-form").addEventListener("submit",sendLead);
 }
+let routeVersion=0;
 async function runRoute(){
   const goalText=(goalInput.value||"").trim();
   if(!S.audience||!S.goal||!S.depth||!goalText)return;
   if(hasSecret(goalText)){S.state="secret";S.result=null;renderEmpty(copy.secret);return}
+  const version=++routeVersion;
   S.state="loading";runButton.disabled=true;runButton.textContent=copy.running;
   try{
     const response=await fetch("/api/route",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({audience:S.audience,answers:[S.audience,S.goal,S.depth],goal:goalText,locale,adultConfirmed:false})});
     const body=await response.json().catch(()=>null);
+    if(version!==routeVersion)return;
     if(body&&body.status==="secret_detected"){S.state="secret";S.result=null;renderEmpty(copy.secret);return}
     if(response.ok&&body&&(body.status==="ok"||body.status==="fallback")&&body.package&&Array.isArray(body.steps)&&body.steps.length===3){S.state="ready";renderResult(body,"");return}
-    S.state="error";renderResult(localResult(),copy.unavailable);
-  }catch{S.state="error";renderResult(localResult(),copy.unavailable)}
-  finally{runButton.disabled=false;runButton.textContent=copy.run}
+    S.state="error";renderResult(localResult(goalText),copy.unavailable);
+  }catch{if(version!==routeVersion)return;S.state="error";renderResult(localResult(goalText),copy.unavailable)}
+  finally{if(version===routeVersion){runButton.disabled=false;runButton.textContent=copy.run}}
 }
 async function sendLead(event){
   event.preventDefault();
@@ -115,18 +131,23 @@ async function sendLead(event){
   }catch{message.textContent=copy.sendError;message.className="formMessage error"}
   finally{button.disabled=false;button.textContent=copy.send}
 }
+function clearRoute(){
+  routeVersion++;
+  S.result=null;S.state="idle";runButton.textContent=copy.run;
+  renderEmpty();
+  runButton.disabled=!(S.audience&&S.goal&&S.depth&&(goalInput.value||"").trim());
+}
 function reset(){
-  S.audience=S.goal=S.depth=S.result=null;S.state="idle";goalInput.value="";
+  S.audience=S.goal=S.depth=null;goalInput.value="";
   document.querySelectorAll(".mopt").forEach(b=>b.setAttribute("aria-pressed","false"));
-  renderEmpty();runButton.disabled=true;runButton.textContent=copy.run;
+  clearRoute();
 }
 document.querySelectorAll(".mopt").forEach(b=>b.addEventListener("click",()=>{
   const k=b.dataset.kind;S[k]=b.dataset.value;
   document.querySelectorAll('.mopt[data-kind="'+k+'"]').forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
-  S.result=null;S.state="idle";renderEmpty();
-  runButton.disabled=!(S.audience&&S.goal&&S.depth&&(goalInput.value||"").trim());
+  clearRoute();
 }));
-goalInput.addEventListener("input",()=>{S.result=null;S.state="idle";renderEmpty();runButton.disabled=!(S.audience&&S.goal&&S.depth&&(goalInput.value||"").trim())});
+goalInput.addEventListener("input",clearRoute);
 runButton.addEventListener("click",runRoute);
 renderEmpty();runButton.disabled=true;
 })();
