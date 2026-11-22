@@ -83,7 +83,7 @@ def ancestor_chain(drop_ancestor=None, historical_override=None):
 def verify(manifest_override:bytes|None=None,extra_file:str|None=None,
            drop_ancestor:str|None=None,historical_override:bytes|None=None)->dict:
  from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify, NEW_MANIFEST_SHA, NEW_PAYLOAD_SHA, RELEASE_ID
- from adult_analytics_lineage import certificate_donors, current_release, diagnostic, guide_donors, r3, sitemap_dates
+ from adult_analytics_lineage import certificate_donors, current_release, diagnostic, guide_donors, r3, sitemap_dates, telegram_card
  adult = current_release()
  if adult.active():
   must(manifest_override is None and extra_file is None and drop_ancestor is None and historical_override is None,"ADULT_ANALYTICS_FIXTURES_NOT_ALLOWED")
@@ -93,7 +93,8 @@ def verify(manifest_override:bytes|None=None,extra_file:str|None=None,
             guide_donors.RELEASE_ID: "GUIDE_DONOR_SUCCESSOR_PASS",
             diagnostic.RELEASE_ID: "DIAGNOSTIC_INTENT_SUCCESSOR_PASS",
             sitemap_dates.RELEASE_ID: "SITEMAP_ROUTE_DATES_SUCCESSOR_PASS",
-            certificate_donors.RELEASE_ID: "CERTIFICATE_DONORS_SUCCESSOR_PASS"}
+            certificate_donors.RELEASE_ID: "CERTIFICATE_DONORS_SUCCESSOR_PASS",
+            telegram_card.RELEASE_ID: "TELEGRAM_CARD_SUCCESSOR_PASS"}
   return {"status":status[adult.RELEASE_ID],
           "release_id":manifest["release_id"],
           "patch_id":manifest["patch_id"], "manifest_sha256":adult.MANIFEST_SHA,
