@@ -328,8 +328,8 @@
     },
     {
       "path": "matcher-v2.js",
-      "sha256": "8b9b4b952e46375ead3ad01b6d6a070f52feebdef5e26a09d489d46d38e5be5b",
-      "size": 15796
+      "sha256": "c720cbcd006f81ce90fb04bd36f844bf500d2932970966af01c54720a3fba6ae",
+      "size": 16532
     },
     {
       "path": "matcher.html",
@@ -582,9 +582,9 @@
       "size": 41174
     }
   ],
-  "parent_manifest_sha256": "ba386c11a929a0a668e5d7d0be72dd272e93fcf924e11d7cd505c2354c9e4c5a",
-  "patch_id": "AISL_RESTORED_GUIDES_R1_20261122",
-  "payload_sha256": "f11a64758e9c5661eea55a24b9a98c6c078e17dcdfca8e335bd04c23776d99e5",
-  "release_id": "AISL_RESTORED_GUIDES_R1_20261122",
+  "parent_manifest_sha256": "66c02d9bda23b0424330596b6e74a14576be0259d31f4e1b5a5f8ba07cb251d5",
+  "patch_id": "AISL_MATCHER_FALLBACK_BRIEF_R1_20261122",
+  "payload_sha256": "78156621b653912264fc2a540f6f455c17b3b4a76be384ee744948805ec04615",
+  "release_id": "AISL_MATCHER_FALLBACK_BRIEF_R1_20261122",
   "schema": "ai-skill-lab.static-release.v1"
 }

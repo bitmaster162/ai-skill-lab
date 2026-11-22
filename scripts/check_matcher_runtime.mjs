@@ -149,5 +149,57 @@ secret.goal.value="Используй sk-proj-TEST123456789";await secret.goal.t
 req(secret.calls.length===0,"secret reached network");
 req(secret.output.innerHTML.includes("секрет"),"secret warning not rendered");
 
-console.log(`matcher_runtime_checks=${checks} pages=2 ai_success=1 fallback=1 secret_preflight=1 lead_consent=2`);
+for(const lang of ["ru","en"]){
+  const fallback=makeHarness(lang,async url=>{
+    if(url==="/api/lead")return apiResponse({ok:true});
+    if(lang==="ru")throw new Error("offline fixture");
+    return apiResponse({status:"error"},503);
+  });
+  await pick(fallback,"audience","adult");
+  await pick(fallback,"goal","research");
+  await pick(fallback,"depth","core");
+  fallback.goal.value="   ";
+  await fallback.goal.trigger("input");
+  await fallback.run.trigger();
+  req(fallback.calls.length===0&&!fallback.byId.has("mcopy"),"blank goal reached routing");
+
+  const text=lang==="en"?"Compare two fictional schedules":"Сравнить два вымышленных расписания";
+  fallback.goal.value=`  ${text} $390 / 750 $ / $999.99 ${"z".repeat(660)}  `;
+  await fallback.goal.trigger("input");
+  await fallback.run.trigger();
+  const prefix=lang==="en"?"Route request: Personal. Goal: ":"Запрос на маршрут: Personal. Цель: ";
+  const expected=(prefix+text+" $390 / [unsupported price removed] / [unsupported price removed] "+"z".repeat(660)).slice(0,600);
+  req(fallback.getClipboard()===""&&fallback.calls.length===1,"fallback sent or copied without user action");
+  await fallback.byId.get("mcopy").trigger();
+  req(fallback.getClipboard()===expected&&expected.length===600,"fallback lost the goal, money filtering or limit");
+  req(fallback.calls.length===1,"copy sent a request");
+  fallback.byId.get("matcher-lead-name").value="Fixture";
+  fallback.byId.get("matcher-lead-contact").value="fixture@example.invalid";
+  await fallback.byId.get("matcher-lead-form").trigger("submit");
+  req(fallback.calls.length===1,"fallback submitted without consent");
+  fallback.byId.get("matcher-lead-consent").checked=true;
+  await fallback.byId.get("matcher-lead-form").trigger("submit");
+  req(fallback.calls.length===2&&fallback.calls[1].url==="/api/lead","unexpected fallback requests");
+  req(JSON.parse(fallback.calls[1].opts.body).goal===expected,"copied and submitted fallback briefs differ");
+}
+
+for(const failure of ["http","network"]){
+  let finish;
+  const changed=makeHarness("en",()=>new Promise((resolve,reject)=>{
+    finish=()=>failure==="http"?resolve(apiResponse({},503)):reject(new Error("offline fixture"));
+  }));
+  await pick(changed,"audience","adult");
+  await pick(changed,"goal","research");
+  await pick(changed,"depth","core");
+  changed.goal.value="Previous goal";
+  await changed.goal.trigger("input");
+  const pending=changed.run.trigger();
+  changed.goal.value="";
+  await changed.goal.trigger("input");
+  finish();
+  await pending;
+  req(changed.run.disabled&&!changed.byId.has("mcopy")&&!changed.byId.has("matcher-lead-form"),
+      "outdated response exposed an erased goal");
+}
+console.log(`matcher_runtime_checks=${checks} pages=2 ai_success=1 fallback=3 stale_response=2 secret_preflight=1 lead_consent=2`);
 console.log("MATCHER_RUNTIME_SMOKE_PASS");

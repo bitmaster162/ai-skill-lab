@@ -94,8 +94,8 @@ jobs:
         run: python scripts/check_python_text_encoding.py
       - name: Verify two localized guide donors and immutable R3 parent
         run: python -B scripts/test_guide_donor_release.py
-      - name: Verify the four restored guides and archived release fixtures
-        run: python -B scripts/test_restored_guides_release.py
+      - name: Verify the matcher successor and replay all four restored guides
+        run: python -B scripts/test_matcher_brief_release.py
       - name: Install the offline browser fixture driver
         run: pip install --disable-pip-version-check playwright==1.55.0
       - name: Follow diagnostic CTAs and verify mocked form intent in Chrome
