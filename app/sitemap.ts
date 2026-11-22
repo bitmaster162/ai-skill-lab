@@ -10,7 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const universeRoutes = ["/phuket-universe", "/en/phuket-universe"];
   // Both language versions received new links or form navigation in the 21 November release.
   const november21Routes = new Set(
-    ["", "/business", "/kids", "/matcher", "/method", "/parents", "/personal", "/pricing", "/start", "/teens"]
+    ["", "/business", "/kids", "/matcher", "/method", "/parents", "/personal", "/pricing", "/teens"]
       .flatMap((route) => [route, `/en${route}`]),
   );
   const october26Routes = new Set(["/challenge", "/faq", "/phuket", "/privacy", "/projects", "/proof", "/studio", "/terms"]);
@@ -18,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   function lastModifiedFor(route: string): string {
     if (november21Routes.has(route)) return "2026-11-21";
     if (october26Routes.has(route)) return "2026-10-26";
-    if (route === "/safety" || route === "/en/safety") return "2026-11-22";
+    if (["/safety", "/en/safety", "/start", "/en/start"].includes(route)) return "2026-11-22";
     if (universeRoutes.includes(route)) return "2026-10-15";
     return lastModified;
   }

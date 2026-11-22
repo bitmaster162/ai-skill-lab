@@ -4,10 +4,15 @@ import certificate_donor_release as certificate_donors
 import diagnostic_intent_release as diagnostic
 import guide_donor_release as guide_donors
 import sitemap_route_dates_release as sitemap_dates
+import telegram_card_release as telegram_card
+
+
+def has_certificate_links():
+    return certificate_donors.active() or telegram_card.active()
 
 
 def has_route_dates():
-    return sitemap_dates.active() or certificate_donors.active()
+    return sitemap_dates.active() or has_certificate_links()
 
 
 def has_diagnostic_forms():
@@ -20,6 +25,8 @@ def has_guide_links():
 
 def current_release():
     """Callers must still admit the selected release using active() and verify()."""
+    if telegram_card.active():
+        return telegram_card
     if certificate_donors.active():
         return certificate_donors
     if sitemap_dates.active():

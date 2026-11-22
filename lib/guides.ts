@@ -131,6 +131,12 @@ function futureGuidePairApproved(): boolean {
         payload: "9d2ea15d2f201981f14c6d3d0f431d3c3302e5b808855bc8608121b76e92641a",
         manifest: "ce4124e6afe3a8ec1fbf00131f1f8b8cad2444faac37a928f37ac632809240ed",
       }],
+      ["AISL_TELEGRAM_CARD_R1_20261122", {
+        count: 112,
+        parent: "ce4124e6afe3a8ec1fbf00131f1f8b8cad2444faac37a928f37ac632809240ed",
+        payload: "bd07783abfa0c8313d334ef33dd5449f09c2544385fedf72c0323455994b9d1c",
+        manifest: "e70b076b1f754bc3dac1b402c70362d773d61e9ba2a4fbe7f7dc12c56bfd28f2",
+      }],
     ]);
     const seal = typeof header.release_id === "string" ? seals.get(header.release_id) : undefined;
     if (seal) {

@@ -156,14 +156,14 @@ def d5_legal_source(root):
 
 def d5_main_pins(root):
     import re
-    from adult_analytics_lineage import certificate_donors, current_release
+    from adult_analytics_lineage import certificate_donors, current_release, has_certificate_links
     adult = current_release()
     pins = dict(D5_STATIC_MAIN)
     if adult.active():
         pins["privacy.html"] = adult.static_main_sha("privacy.html")
-        if adult is certificate_donors:
+        if has_certificate_links():
             for rel in certificate_donors.LINKS:
-                pins[rel] = certificate_donors.static_main_sha(rel)
+                pins[rel] = adult.static_main_sha(rel)
     for rel,expected in pins.items():
         text=(root/"deploy/live"/rel).read_text(encoding="utf-8")
         match=re.search(r'<main id="main".*?</main>', text, re.S)
@@ -181,8 +181,8 @@ def d5_safety_source(root, rel):
     successor.verify()
     review=json.loads((root/"data/SITE_A2_YOUTH_POLICY_REVIEW_20261029.json").read_bytes())
     expected=review["surfaces"][actual[rel]]["sha256_after"]
-    from adult_analytics_lineage import certificate_donors
-    if certificate_donors.active() and root.resolve() == certificate_donors.ROOT:
+    from adult_analytics_lineage import certificate_donors, has_certificate_links
+    if has_certificate_links() and root.resolve() == certificate_donors.ROOT:
         # The policy itself retains its reviewed parent bytes and review date.
         parent = certificate_donors.original(actual[rel])
         if sha(parent) != expected:

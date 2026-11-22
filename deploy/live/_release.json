@@ -188,8 +188,8 @@
     },
     {
       "path": "en/start.html",
-      "sha256": "8dbe2b0ba550f85fca22e4c6663e12be773308e2b4b7fbe72596127e52744fc1",
-      "size": 16621
+      "sha256": "d86be38ecf0a6796d5800dac04af84fafc081621794ec10e877323d802bf0d74",
+      "size": 16622
     },
     {
       "path": "en/studio.html",
@@ -523,7 +523,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "56e520505aec74eae1278dfff1133e85cd51e1730c2aa976c746d3f1902b997d",
+      "sha256": "bdffe05db145e4a31e4bae02e2221b7a59dcf4674d57daf99a86270cf2713207",
       "size": 4903
     },
     {
@@ -533,8 +533,8 @@
     },
     {
       "path": "start.html",
-      "sha256": "ab62d5aacf4dfdcea10ed98554154bfc6ec44e1fa61de7d5eeff721576c06f75",
-      "size": 22971
+      "sha256": "3f109253334b31915d4943ee1d5cc8e16218709a9da23363c25b22a2b02c6b1e",
+      "size": 22919
     },
     {
       "path": "studio.html",
@@ -562,9 +562,9 @@
       "size": 41174
     }
   ],
-  "parent_manifest_sha256": "eafa144171a7deed62f06d4a18b6fa98bab7c169cf6ec829b6709060be4b52ca",
-  "patch_id": "AISL_CERTIFICATE_DONORS_R2_20261122",
-  "payload_sha256": "9d2ea15d2f201981f14c6d3d0f431d3c3302e5b808855bc8608121b76e92641a",
-  "release_id": "AISL_CERTIFICATE_DONORS_R2_20261122",
+  "parent_manifest_sha256": "ce4124e6afe3a8ec1fbf00131f1f8b8cad2444faac37a928f37ac632809240ed",
+  "patch_id": "AISL_TELEGRAM_CARD_R1_20261122",
+  "payload_sha256": "bd07783abfa0c8313d334ef33dd5449f09c2544385fedf72c0323455994b9d1c",
+  "release_id": "AISL_TELEGRAM_CARD_R1_20261122",
   "schema": "ai-skill-lab.static-release.v1"
 }
