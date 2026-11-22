@@ -1,5 +1,5 @@
 {
-  "file_count": 112,
+  "file_count": 116,
   "files": [
     {
       "path": "404.html",
@@ -113,8 +113,8 @@
     },
     {
       "path": "en/guides.html",
-      "sha256": "eb511d7809b35d0c080881d4ef69e57b2379055514619e16ec4e0b84353cd7a7",
-      "size": 7741
+      "sha256": "c286bf7c698056351f1b0eec10a5a18be622a6cf8f3c10b1ba6c164a72e67303",
+      "size": 8650
     },
     {
       "path": "en/guides/ai-first-tasks-for-adults.html",
@@ -122,9 +122,19 @@
       "size": 20997
     },
     {
+      "path": "en/guides/ai-pilot-for-small-business.html",
+      "sha256": "eee69b48d498df6a3ba6477a4d225d6923a2de804708417b6f0c54d02c5bea22",
+      "size": 22542
+    },
+    {
       "path": "en/guides/ai-safety-for-kids.html",
       "sha256": "fe89326ba58644c69465eada31e1a2aecd9a96f7bab8990b9c9b62d8805b56eb",
       "size": 15347
+    },
+    {
+      "path": "en/guides/ai-start-for-adults.html",
+      "sha256": "00f1c2ead1f7a3845f0fdff18e43692e664213e4a94e05e153ef9f8e4869b2de",
+      "size": 24827
     },
     {
       "path": "en/kids.html",
@@ -253,8 +263,8 @@
     },
     {
       "path": "guides.html",
-      "sha256": "0a956a3237417d4fac31ed5664042242428da7cd03b3b7686bad520f8fed9c4e",
-      "size": 9060
+      "sha256": "ff53748467ea3b65103ee26ed65154f7ae761410402956fae468903db37ddc38",
+      "size": 10413
     },
     {
       "path": "guides/ai-first-tasks-for-adults.html",
@@ -262,9 +272,19 @@
       "size": 27846
     },
     {
+      "path": "guides/ai-pilot-for-small-business.html",
+      "sha256": "ec63bec22f1ce238525f10946b4df83b86db9325ace40b2c5579fca0332e5d99",
+      "size": 32954
+    },
+    {
       "path": "guides/ai-safety-for-kids.html",
       "sha256": "e63c4e2b819d5f1078fe782a53eb0317e50878c1b7584ee6810de066810a4f3a",
       "size": 19410
+    },
+    {
+      "path": "guides/ai-start-for-adults.html",
+      "sha256": "4121b9a5c5a7e2cfe733732f12b8cdf56e0004e0ed9071a470a02d580f03730a",
+      "size": 36138
     },
     {
       "path": "icon-192.png",
@@ -298,8 +318,8 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "7d59fa37937eb0af7c3c6646ae8aa663da642a9bb172b18e01e285cbe251847d",
-      "size": 3275
+      "sha256": "5b084e3ca99aaee6e2090eb6e1ddf27868a0444aea6c4ed8cc47e00e27cbbc0c",
+      "size": 3525
     },
     {
       "path": "logo.png",
@@ -523,8 +543,8 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "24018fe9a66f2821072b19d5f77efbfb9990332d0bdec1d672d41cb587b08216",
-      "size": 4903
+      "sha256": "232305ab57fec5a42fddfcbb02a85c738a7ddef513bfc42b79a7e0d7f36fffbe",
+      "size": 5325
     },
     {
       "path": "start-brief.js",
@@ -553,8 +573,8 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "55e8ce870e4ddb525890c623095bd98e151dea073c513c5d6380d5995cc1da07",
-      "size": 12296
+      "sha256": "691fa69c52d689ece2ded370065690a72d37ceea648a2952b0fd13db4865773f",
+      "size": 12728
     },
     {
       "path": "workshop.css",
@@ -562,9 +582,9 @@
       "size": 41174
     }
   ],
-  "parent_manifest_sha256": "e70b076b1f754bc3dac1b402c70362d773d61e9ba2a4fbe7f7dc12c56bfd28f2",
-  "patch_id": "AISL_UNIVERSE_EN_HOME_R1_20261122",
-  "payload_sha256": "4e2f844016e35b5b60b371ad3839cc284ee65be921bb976bca88b815b1c5fd24",
-  "release_id": "AISL_UNIVERSE_EN_HOME_R1_20261122",
+  "parent_manifest_sha256": "ba386c11a929a0a668e5d7d0be72dd272e93fcf924e11d7cd505c2354c9e4c5a",
+  "patch_id": "AISL_RESTORED_GUIDES_R1_20261122",
+  "payload_sha256": "f11a64758e9c5661eea55a24b9a98c6c078e17dcdfca8e335bd04c23776d99e5",
+  "release_id": "AISL_RESTORED_GUIDES_R1_20261122",
   "schema": "ai-skill-lab.static-release.v1"
 }

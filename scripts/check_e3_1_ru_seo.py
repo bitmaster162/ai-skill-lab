@@ -144,13 +144,22 @@ def main() -> int:
         successor_e3.authorize()
     if post_active:
         post_r31.check_release()  # Full candidate proof before any historical comparison.
+    from guide_route_admission import restored_guide_routes
+    restored_ru = {route for route in restored_guide_routes() if not route.startswith("/en/")}
     for path in sorted(LIVE.rglob("*.html")):
         if u1.universe_page(path): continue
         route = route_for(path)
         if route.startswith("/en") or route == "/404":
             continue
         page = Page()
-        if site_a2_mode:
+        if route in restored_ru:
+            reviewed_html = path.read_text(encoding="utf-8")
+            # The inherited footer links to the product under its proper name.
+            reviewed_html = re.sub(
+                r'(<a\b[^>]*href="/phuket-universe"[^>]*>[^<]*(?:<svg\b.*?</svg>)?\s*)Phuket Universe(</a>)',
+                r'\1\2', reviewed_html, count=1, flags=re.S,
+            )
+        elif site_a2_mode:
             reviewed_html = successor_e3.legacy_r6_html(path.relative_to(LIVE).as_posix()).decode("utf-8")
         elif post_active:
             reviewed_html = post_r31.legacy_r6_html_for_parity(path.relative_to(LIVE).as_posix()).decode("utf-8")
@@ -199,6 +208,7 @@ def main() -> int:
     if post_active:
         post_r31.check_release()  # Full candidate proof again after all routes.
     expected_routes = 27 if RELEASE_ID in ('T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015') else 26
+    expected_routes += len(restored_ru)
     if len(routes) != expected_routes:
         errors.append(f"expected {expected_routes} RU pages, got {len(routes)}")
     if errors:

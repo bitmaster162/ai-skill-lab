@@ -111,7 +111,8 @@ for p in public:
    links=hrefs(block)
    req(links==[CONTACT[lang]["start"],*CONTACT_URLS],f"{rel}: reach links drift {links}")
 
-req((reach_count,light_count,start_reply_count)==((48,4,2) if release in ('T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015') else (46,4,2)),f"D1 distribution reach/light/start={(reach_count,light_count,start_reply_count)}")
+from guide_route_admission import restored_guide_routes
+req((reach_count,light_count,start_reply_count)==((48 + len(restored_guide_routes()),4,2) if release in ('T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015') else (46,4,2)),f"D1 distribution reach/light/start={(reach_count,light_count,start_reply_count)}")
 
 for p in sorted(LIVE.rglob("*.html")):
  req(' style=' not in p.read_text(encoding="utf-8"),f"{p.relative_to(LIVE)}: inline style")

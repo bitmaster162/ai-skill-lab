@@ -35,6 +35,11 @@ def expected_live_routes() -> frozenset[str]:
     """Preserve 52 historical routes; require two SHA-admitted future routes."""
     release = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
     from seo_method_static_release_profile_r1 import inherited_gate_family
+    from restored_guides_release import RELEASE_ID as restored_guides_id
+    if release == restored_guides_id:
+        slugs = ("ai-start-for-adults", "ai-pilot-for-small-business")
+        restored = {f"{prefix}/guides/{slug}" for prefix in ("", "/en") for slug in slugs}
+        return BASELINE_ROUTES | FUTURE_PAIR | {"/phuket-universe", "/en/phuket-universe"} | restored
     release = inherited_gate_family(release)
     if release in ('PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'):
         return BASELINE_ROUTES | FUTURE_PAIR | frozenset({"/phuket-universe", "/en/phuket-universe"})

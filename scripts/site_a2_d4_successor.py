@@ -48,7 +48,7 @@ def source_sha(root, path):
 def admit(root):
     import site_a1_a2_r2_successor as successor
     from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify, NEW_MANIFEST_SHA
-    from adult_analytics_lineage import current_release, has_diagnostic_forms, has_route_dates
+    from adult_analytics_lineage import current_release, has_diagnostic_forms, has_route_dates, restored_guides
     adult = current_release()
     if adult.active():
         rows = {r["path"]: r["sha256"] for r in adult.verify()["files"]}
@@ -59,6 +59,8 @@ def admit(root):
         if has_diagnostic_forms():
             shell = "components/workshop/WorkshopShell.tsx"
             result[shell] = adult.source_sha(shell)
+        if restored_guides.active():
+            result["README.md"] = restored_guides.source_sha("README.md")
         if has_route_dates():
             result["app/sitemap.ts"] = adult.source_sha("app/sitemap.ts")
         for rel, expected in result.items():

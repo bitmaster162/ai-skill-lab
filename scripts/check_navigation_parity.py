@@ -11,6 +11,11 @@ WORKSHOP={'index.html': ('/start', '/en', False), 'en.html': ('/en/start', '/', 
 if release in ('T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'):
  WORKSHOP['guides/ai-first-tasks-for-adults.html']=('/start','/en/guides/ai-first-tasks-for-adults',False)
  WORKSHOP['en/guides/ai-first-tasks-for-adults.html']=('/en/start','/guides/ai-first-tasks-for-adults',True)
+from guide_route_admission import restored_guide_routes
+for route in restored_guide_routes():
+ en = route.startswith("/en/")
+ alternate = route[3:] if en else "/en" + route
+ WORKSHOP[route[1:] + ".html"] = ("/en/start" if en else "/start", alternate, en)
 public=set();legacy=0;sitemap=(LIVE/'sitemap.xml').read_text(encoding='utf-8')
 for p in sorted(LIVE.rglob('*.html')):
  if p.name=='404.html':continue

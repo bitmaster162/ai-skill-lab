@@ -13,12 +13,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ["", "/business", "/kids", "/matcher", "/method", "/parents", "/personal", "/pricing", "/teens"]
       .flatMap((route) => [route, `/en${route}`]),
   );
+  const november22Routes = new Set([
+    "/safety", "/start", "/guides",
+    "/guides/ai-pilot-for-small-business", "/guides/ai-start-for-adults",
+  ].flatMap((route) => [route, `/en${route}`]));
+  november22Routes.add("/en/phuket-universe");
   const october26Routes = new Set(["/challenge", "/faq", "/phuket", "/privacy", "/projects", "/proof", "/studio", "/terms"]);
 
   function lastModifiedFor(route: string): string {
+    if (november22Routes.has(route)) return "2026-11-22";
     if (november21Routes.has(route)) return "2026-11-21";
     if (october26Routes.has(route)) return "2026-10-26";
-    if (["/safety", "/en/safety", "/start", "/en/start", "/en/phuket-universe"].includes(route)) return "2026-11-22";
     if (universeRoutes.includes(route)) return "2026-10-15";
     return lastModified;
   }

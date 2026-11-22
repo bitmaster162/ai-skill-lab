@@ -136,6 +136,12 @@ def _reviewed_future_guide_slugs() -> tuple[str, ...]:
     return (_FUTURE_GUIDE_SLUG,)
 
 
+def restored_guide_routes() -> frozenset[str]:
+    """The successor manifest identifies the four reviewed guide URLs."""
+    from restored_guides_release import NEW_ROUTES, active
+    return frozenset(NEW_ROUTES) if active() else frozenset()
+
+
 def admitted_routes(
     approved_slugs: Iterable[str] | None = None,
 ) -> frozenset[str]:
@@ -143,7 +149,7 @@ def admitted_routes(
     from phuket_release_profile import active, verify_integrity, UNIVERSE_ROUTES, ADULT_ROUTES
     if approved_slugs is None and active():
         verify_integrity()
-        return BASELINE_ROUTES | ADULT_ROUTES | UNIVERSE_ROUTES
+        return BASELINE_ROUTES | ADULT_ROUTES | UNIVERSE_ROUTES | restored_guide_routes()
     slugs = (
         tuple(APPROVED_ADDITIONAL_GUIDE_SLUGS) + _reviewed_future_guide_slugs()
         if approved_slugs is None else tuple(approved_slugs)

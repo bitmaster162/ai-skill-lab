@@ -16,8 +16,8 @@ The canonical production host is `https://aiskillab.work`. The legacy public Ver
 
 ## Routes
 
-- RU: `/`, `/about`, `/build`, `/business`, `/certificate`, `/challenge`, `/curriculum`, `/family`, `/faq`, `/guides`, `/guides/ai-first-tasks-for-adults`, `/guides/ai-safety-for-kids`, `/kids`, `/matcher`, `/method`, `/parents`, `/personal`, `/phuket`, `/pricing`, `/privacy`, `/projects`, `/proof`, `/safety`, `/start`, `/studio`, `/teens`, `/terms`, `/phuket-universe`
-- EN: `/en`, `/en/about`, `/en/build`, `/en/business`, `/en/certificate`, `/en/challenge`, `/en/curriculum`, `/en/family`, `/en/faq`, `/en/guides`, `/en/guides/ai-first-tasks-for-adults`, `/en/guides/ai-safety-for-kids`, `/en/kids`, `/en/matcher`, `/en/method`, `/en/parents`, `/en/personal`, `/en/phuket`, `/en/pricing`, `/en/privacy`, `/en/projects`, `/en/proof`, `/en/safety`, `/en/start`, `/en/studio`, `/en/teens`, `/en/terms`, `/en/phuket-universe`
+- RU: `/`, `/about`, `/build`, `/business`, `/certificate`, `/challenge`, `/curriculum`, `/family`, `/faq`, `/guides`, `/guides/ai-first-tasks-for-adults`, `/guides/ai-pilot-for-small-business`, `/guides/ai-safety-for-kids`, `/guides/ai-start-for-adults`, `/kids`, `/matcher`, `/method`, `/parents`, `/personal`, `/phuket`, `/pricing`, `/privacy`, `/projects`, `/proof`, `/safety`, `/start`, `/studio`, `/teens`, `/terms`, `/phuket-universe`
+- EN: `/en`, `/en/about`, `/en/build`, `/en/business`, `/en/certificate`, `/en/challenge`, `/en/curriculum`, `/en/family`, `/en/faq`, `/en/guides`, `/en/guides/ai-first-tasks-for-adults`, `/en/guides/ai-pilot-for-small-business`, `/en/guides/ai-safety-for-kids`, `/en/guides/ai-start-for-adults`, `/en/kids`, `/en/matcher`, `/en/method`, `/en/parents`, `/en/personal`, `/en/phuket`, `/en/pricing`, `/en/privacy`, `/en/projects`, `/en/proof`, `/en/safety`, `/en/start`, `/en/studio`, `/en/teens`, `/en/terms`, `/en/phuket-universe`
 
 ## Environment
 
