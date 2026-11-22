@@ -74,6 +74,7 @@ const FUTURE_GUIDE_STATIC_ASSETS = [
 
 const RESTORED_GUIDE_RELEASE = "AISL_RESTORED_GUIDES_R1_20261122";
 const RU_GUIDE_CARDS_RELEASE = "AISL_RU_GUIDE_CARDS_R1_20261122";
+const BUSINESS_PILOT_LINKS_RELEASE = "AISL_BUSINESS_PILOT_LINKS_R2_20261122";
 const RU_GUIDE_CARD_STATIC_ASSETS = [
   ["guides/ai-first-tasks-for-adults.html", 28020, "c11fd355535a82fc8f58e4b6ccd553520e1671366f10e5ddc77dac46cc1820e2"],
   ["guides/ai-pilot-for-small-business.html", 33140, "0025f25dff05c45476441b03ef1110ba48028b2c5422d5057cf0b9c7990a385b"],
@@ -173,6 +174,12 @@ function approvedAdditionalGuideSlugs(): string[] | false {
         payload: "097e44a211afe7b7b37be8544bc1ec798dc414ed5f63400733d3cf7c4cad9bbc",
         manifest: "3cf9c37a1487444c73d8631bbc39c2c4b48b5101d321f37fb3fbb65e37fea25a",
       }],
+      [BUSINESS_PILOT_LINKS_RELEASE, {
+        count: 116,
+        parent: "3cf9c37a1487444c73d8631bbc39c2c4b48b5101d321f37fb3fbb65e37fea25a",
+        payload: "da4c30eb94eef0c360cd63aaa87f954600c58e5420dc04d8b8fad5f2b3d1f00c",
+        manifest: "f0d308a383d92bd5ab21e13e77b09d8461e87b39749789d4db65e504e9df50ed",
+      }],
     ]);
     const seal = typeof header.release_id === "string" ? seals.get(header.release_id) : undefined;
     if (seal) {
@@ -196,7 +203,7 @@ function approvedAdditionalGuideSlugs(): string[] | false {
         indexed.set(rel, { size: asset.size as number, sha256: asset.sha256 });
       }
       if (indexed.size !== seal.count) return false;
-      const isRuGuideCards = header.release_id === RU_GUIDE_CARDS_RELEASE;
+      const isRuGuideCards = header.release_id === RU_GUIDE_CARDS_RELEASE || header.release_id === BUSINESS_PILOT_LINKS_RELEASE;
       const guideAssets = isRuGuideCards ? RU_GUIDE_CARD_STATIC_ASSETS : FUTURE_GUIDE_R7_STATIC_ASSETS;
       for (const [assetPath, expectedSize, expectedSHA] of guideAssets) {
         const item = indexed.get(assetPath);
