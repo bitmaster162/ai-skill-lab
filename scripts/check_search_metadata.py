@@ -20,7 +20,7 @@ ORIGIN = PUBLIC_ORIGIN
 OG_IMAGE = f"{ORIGIN}/og.png"
 RELEASE = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
 from seo_method_static_release_profile_r1 import inherited_gate_family
-from ru_guide_cards_release import reviewed_cards
+from adult_analytics_lineage import reviewed_cards
 CARD_METADATA = reviewed_cards()
 RELEASE=inherited_gate_family(RELEASE)
 OG20_META = {

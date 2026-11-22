@@ -45,7 +45,7 @@ CHECKS = [
     ("tracked_python_artifacts", ["python", "scripts/check_tracked_python_artifacts.py"]),
     ("python_text_encoding", ["python", "scripts/check_python_text_encoding.py"]),
     ("guide_donor_release", ["python", "-B", "scripts/test_guide_donor_release.py"]),
-    ("ru_guide_cards_release", ["python", "-B", "scripts/test_ru_guide_cards_release.py"]),
+    ("business_pilot_links_and_ru_cards", ["python", "-B", "scripts/test_business_pilot_links_release.py"]),
     ("diagnostic_intent_browser", ["python", "-B", "scripts/test_diagnostic_intent_browser.py"]),
     ("adult_analytics_release", ["python", "-B", "scripts/test_adult_analytics_release.py"]),
     ("adult_analytics_runtime", ["node", "--test", "scripts/test_adult_analytics_runtime.mjs"]),

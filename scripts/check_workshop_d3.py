@@ -2,6 +2,7 @@
 """R98: source/static audience, business and FAQ release contracts."""
 import phuket_release_profile as u1
 from html.parser import HTMLParser
+from business_pilot_links_release import expected_contact_url
 from pathlib import Path
 from urllib.parse import quote, urlsplit
 import json
@@ -90,7 +91,7 @@ for locale, prefix in [('ru', ''), ('en', 'en/')]:
             expected_external = ['https://wa.me/66649701204?text='+quote(intro_text,safe=''), 'https://t.me/BiTFormer'] + (N15_RESEARCH_URLS if release_id in {'N15_AGENT_SAFETY_R1','A4_PHUKET_LOCAL_R1','A3_CALCOM_R1','A5_MENTOR_R1','E1_3_POST_SUBMIT_R1','DESIGN_TYPOGRAPHY_R1','OG20_R1','A7_SAFETY_QUIZ_R1','A8_PROMPT_AUDITOR_R1','A9_REAL_PROJECTS_R1','N25_CERTIFICATE_RECORD_R1','E3_8_LEAD_EVENTS_R1','E3_1_RU_SEO_R1','E3_3_H1_ACTION_R1','E3_2_RU_GLOSSARY_R1','E3_4_AI_SAFETY_AUDIENCE_R1','E3_5_HEADING_STRUCTURE_R1','E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'} and route in ('personal','teens','business') else []) + CONTACT_URLS
         else:
             expected_external = CONTACT_URLS
-        require(external == expected_external, f'{rel}: approved contact anchors {external}')
+        require(external == [expected_contact_url(prefix + route + ".html", url) for url in expected_external], f'{rel}: approved contact anchors {external}')
         start = '/' + prefix + 'start' + ('#business-brief' if route == 'business' else '')
         require(start in page.hrefs, f'{rel}: Start route')
         require('<header class="workshopHeader">' in html and html.count('data-lab-command-open') == 1, f'{rel}: Workshop navigation')

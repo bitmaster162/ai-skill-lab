@@ -202,7 +202,7 @@ def main():
                           "AISL_ADULT_GUIDE_DONORS_R1_20261121", "AISL_DIAGNOSTIC_INTENT_R1_20261121", "AISL_DIAGNOSTIC_INTENT_R2_20261121",
                           "AISL_SITEMAP_ROUTE_DATES_R1_20261122", "AISL_CERTIFICATE_DONORS_R2_20261122",
                           "AISL_TELEGRAM_CARD_R1_20261122", "AISL_UNIVERSE_EN_HOME_R1_20261122", "AISL_RESTORED_GUIDES_R1_20261122",
-                          "AISL_RU_GUIDE_CARDS_R1_20261122"}:
+                          "AISL_RU_GUIDE_CARDS_R1_20261122", "AISL_BUSINESS_PILOT_LINKS_R2_20261122"}:
             # Verify the current release before checking the historical R6 text.
             repository_root = os.path.dirname(__file__)
             if os.path.realpath(args.dir) != os.path.realpath(os.path.join(repository_root, "deploy/live")):

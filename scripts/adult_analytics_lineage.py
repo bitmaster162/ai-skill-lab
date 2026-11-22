@@ -8,10 +8,11 @@ import telegram_card_release as telegram_card
 import universe_en_home_release as universe_home
 import restored_guides_release as restored_guides
 import ru_guide_cards_release as ru_guide_cards
+import business_pilot_links_release as business_pilot_links
 
 
 def has_restored_guides():
-    return restored_guides.active() or ru_guide_cards.active()
+    return restored_guides.active() or ru_guide_cards.active() or business_pilot_links.active()
 
 
 def has_universe_home():
@@ -38,8 +39,19 @@ def has_guide_links():
     return guide_donors.active() or has_diagnostic_forms()
 
 
+def reviewed_cards():
+    if business_pilot_links.active():
+        import json
+        rel = "guides/aiskillab/social-cards.json"
+        business_pilot_links.source_sha(rel)
+        return json.loads((business_pilot_links.ROOT / rel).read_bytes())
+    return ru_guide_cards.reviewed_cards()
+
+
 def current_release():
     """Callers must still admit the selected release using active() and verify()."""
+    if business_pilot_links.active():
+        return business_pilot_links
     if ru_guide_cards.active():
         return ru_guide_cards
     if restored_guides.active():

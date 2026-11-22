@@ -5,7 +5,7 @@ import json,re,sys
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/"deploy/live";BRAND="AI Skill Lab · Phuket"
 RELEASE=json.loads((LIVE/"_release.json").read_text(encoding="utf-8")).get("release_id")
 from seo_method_static_release_profile_r1 import inherited_gate_family
-from ru_guide_cards_release import reviewed_cards
+from adult_analytics_lineage import reviewed_cards
 CARD_METADATA = reviewed_cards()
 RELEASE=inherited_gate_family(RELEASE)
 OG20_ALT={

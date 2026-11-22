@@ -48,8 +48,8 @@
     },
     {
       "path": "business.html",
-      "sha256": "4c57525899de9399ba4cbc1f2e49bb56563696774f8391af779f1d0430f90c3e",
-      "size": 37803
+      "sha256": "63f6eda4190aee838c28afeac9fc47f8e9fb79671cd6407a3c2dd0277557b309",
+      "size": 37767
     },
     {
       "path": "certificate.html",
@@ -83,8 +83,8 @@
     },
     {
       "path": "en/business.html",
-      "sha256": "3d8c281eec5e18895774b63f9139240a65aec78795257480f2c394bf78aa328d",
-      "size": 27900
+      "sha256": "7814a0883725876104d2d63f5fadeee6d0915b860ec78f5d438c38a16e9e3aa0",
+      "size": 28075
     },
     {
       "path": "en/certificate.html",
@@ -582,9 +582,9 @@
       "size": 41174
     }
   ],
-  "parent_manifest_sha256": "66c02d9bda23b0424330596b6e74a14576be0259d31f4e1b5a5f8ba07cb251d5",
-  "patch_id": "AISL_RU_GUIDE_CARDS_R1_20261122",
-  "payload_sha256": "097e44a211afe7b7b37be8544bc1ec798dc414ed5f63400733d3cf7c4cad9bbc",
-  "release_id": "AISL_RU_GUIDE_CARDS_R1_20261122",
+  "parent_manifest_sha256": "3cf9c37a1487444c73d8631bbc39c2c4b48b5101d321f37fb3fbb65e37fea25a",
+  "patch_id": "AISL_BUSINESS_PILOT_LINKS_R2_20261122",
+  "payload_sha256": "da4c30eb94eef0c360cd63aaa87f954600c58e5420dc04d8b8fad5f2b3d1f00c",
+  "release_id": "AISL_BUSINESS_PILOT_LINKS_R2_20261122",
   "schema": "ai-skill-lab.static-release.v1"
 }

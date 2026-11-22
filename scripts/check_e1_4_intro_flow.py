@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from business_pilot_links_release import expected_contact_url
 from pathlib import Path
 from urllib.parse import quote
 import json, sys
@@ -34,7 +35,7 @@ for files,label,diag,wa in [(RU,RU_LABEL,RU_DIAG,RU_WA),(EN,EN_LABEL,EN_DIAG,EN_
             if 'data-intro-call-channel="calcom"' not in text:
                 problems.append(f"{rel}: Cal.com tracker missing")
         else:
-            if wa not in text:
+            if expected_contact_url(rel, wa) not in text:
                 problems.append(f"{rel}: WhatsApp route missing")
             if 'data-intro-call-channel="whatsapp"' not in text:
                 problems.append(f"{rel}: WhatsApp tracker missing")

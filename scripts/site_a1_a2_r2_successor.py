@@ -83,7 +83,7 @@ def ancestor_chain(drop_ancestor=None, historical_override=None):
 def verify(manifest_override:bytes|None=None,extra_file:str|None=None,
            drop_ancestor:str|None=None,historical_override:bytes|None=None)->dict:
  from seo_method_static_release_profile_r1 import active as method_active, verify as method_verify, NEW_MANIFEST_SHA, NEW_PAYLOAD_SHA, RELEASE_ID
- from adult_analytics_lineage import certificate_donors, current_release, diagnostic, guide_donors, r3, sitemap_dates, telegram_card, universe_home, restored_guides, ru_guide_cards
+ from adult_analytics_lineage import certificate_donors, current_release, diagnostic, guide_donors, r3, sitemap_dates, telegram_card, universe_home, restored_guides, ru_guide_cards, business_pilot_links
  adult = current_release()
  if adult.active():
   must(manifest_override is None and extra_file is None and drop_ancestor is None and historical_override is None,"ADULT_ANALYTICS_FIXTURES_NOT_ALLOWED")
@@ -97,7 +97,8 @@ def verify(manifest_override:bytes|None=None,extra_file:str|None=None,
             telegram_card.RELEASE_ID: "TELEGRAM_CARD_SUCCESSOR_PASS",
             universe_home.RELEASE_ID: "UNIVERSE_EN_HOME_SUCCESSOR_PASS",
             restored_guides.RELEASE_ID: "RESTORED_GUIDES_SUCCESSOR_PASS",
-            ru_guide_cards.RELEASE_ID: "RU_GUIDE_CARDS_SUCCESSOR_PASS"}
+            ru_guide_cards.RELEASE_ID: "RU_GUIDE_CARDS_SUCCESSOR_PASS",
+            business_pilot_links.RELEASE_ID: "BUSINESS_PILOT_LINKS_SUCCESSOR_PASS"}
   return {"status":status[adult.RELEASE_ID],
           "release_id":manifest["release_id"],
           "patch_id":manifest["patch_id"], "manifest_sha256":adult.MANIFEST_SHA,

@@ -5,6 +5,7 @@ from guide_route_admission import admitted_route_count, require_public_html, req
 import json
 import re
 import sys
+from business_pilot_links_release import expected_contact_url
 from pathlib import Path
 from urllib.parse import quote
 
@@ -82,7 +83,7 @@ for files, wa in [(OTHER_RU, ru_wa), (OTHER_EN, en_wa)]:
         req(CALCOM not in text, f"{rel}: Cal.com leaked outside /start")
         req(text.count('data-intro-call-channel="whatsapp"') == 1, f"{rel}: WhatsApp tracker drift")
         req(text.count('data-intro-call-channel="telegram"') == 1, f"{rel}: Telegram tracker drift")
-        req(wa in text, f"{rel}: WhatsApp URL drift")
+        req(expected_contact_url(rel, wa) in text, f"{rel}: WhatsApp URL drift")
 
 runtime = (LIVE / "lab-command.js").read_text(encoding="utf-8")
 if release in {"E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'}:
