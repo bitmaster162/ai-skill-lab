@@ -110,3 +110,57 @@ jobs:
               raise SystemExit(1)
 
           print(f"LANG_PARITY_PASS routes={len(rows)} ru={ru} en={en} mismatches=0")
+
+      - name: Rebuild the two-card archive from the reviewed parent
+        if: github.event_name == 'pull_request' && github.event.pull_request.number == 255
+        run: |
+          python scripts/stage_first_tasks_card.py --parent restored --include-pilot \
+            --output "$RUNNER_TEMP/AI-Skill-Lab-RU-guide-cards.zip"
+          cd "$RUNNER_TEMP"
+          echo "7456bda87a2baf08d75db7d12ee88bba28b2818ff495c2fd6fe325eefc2e1acf  AI-Skill-Lab-RU-guide-cards.zip" > SHA256SUMS
+          sha256sum --check SHA256SUMS
+
+      - name: Check routes and social cards in the archived site
+        if: github.event_name == 'pull_request' && github.event.pull_request.number == 255
+        run: |
+          review_checkout="$RUNNER_TEMP/guide-card-checkout"
+          git worktree add --quiet --detach "$review_checkout" HEAD
+          cd "$review_checkout"
+          mv deploy/live "$RUNNER_TEMP/guide-card-original-site"
+          unzip -q "$RUNNER_TEMP/AI-Skill-Lab-RU-guide-cards.zip" -d deploy/live
+          python scripts/check_static_release.py
+          PYTHONPATH=scripts python - <<'PY'
+          import json
+          from pathlib import Path
+          from xml.etree import ElementTree
+          from check_og20_r1 import MetaParser, png_dimensions
+          from public_origin import PUBLIC_ORIGIN
+
+          live = Path("deploy/live")
+          sitemap = ElementTree.parse(live / "sitemap.xml")
+          routes = [node.text for node in sitemap.findall("{*}url/{*}loc")]
+          assert len(routes) == len(set(routes)) == 60
+          cards = json.loads(Path("guides/aiskillab/social-cards.json").read_text())
+          for route in ("/guides/ai-first-tasks-for-adults", "/guides/ai-pilot-for-small-business"):
+              assert PUBLIC_ORIGIN + route in routes, route
+              card = cards[route]
+              page = MetaParser()
+              page.feed((live / (route.lstrip("/") + ".html")).read_text())
+              for prefix in ("og", "twitter"):
+                  assert page.meta[prefix + ":image"] == PUBLIC_ORIGIN + card["url"], route
+                  assert page.meta[prefix + ":image:alt"] == card["alt"], route
+              assert png_dimensions((live / card["url"].lstrip("/")).read_bytes()) == (1200, 630), route
+              print(route, card["url"])
+          PY
+
+      - name: Save the verified release candidate for review
+        if: github.event_name == 'pull_request' && github.event.pull_request.number == 255
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: aisl-ru-guide-cards-restored
+          path: |
+            ${{ runner.temp }}/AI-Skill-Lab-RU-guide-cards.zip
+            ${{ runner.temp }}/SHA256SUMS
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14

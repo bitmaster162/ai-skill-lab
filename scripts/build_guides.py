@@ -299,7 +299,7 @@ def sub_one(pattern: str, repl: str, value: str, label: str) -> str:
     return result
 
 
-def apply_card_metadata(prefix: str, route: str, image_alt: str) -> str:
+def apply_card_metadata(prefix: str, route: str | None, image_alt: str) -> str:
     if card := SOCIAL_CARDS.get(route):
         image_url = html.escape(ORIGIN + card["url"], quote=True)
         image_alt = card["alt"]
@@ -311,7 +311,7 @@ def apply_card_metadata(prefix: str, route: str, image_alt: str) -> str:
     return prefix
 
 
-def update_head(prefix: str, *, title: str, description: str, route: str, alternate: str, lang: str, page_type: str, image_alt: str, schemas: list[dict]) -> str:
+def update_head(prefix: str, *, title: str, description: str, route: str, alternate: str, lang: str, page_type: str, schemas: list[dict]) -> str:
     ru_path = route if lang == "ru" else alternate
     en_path = route if lang == "en" else alternate
     prefix = sub_one(r"<title>.*?</title>", f"<title>{html.escape(title)}</title>", prefix, "title")
@@ -327,7 +327,6 @@ def update_head(prefix: str, *, title: str, description: str, route: str, altern
     prefix = sub_one(r'<meta property="og:title" content="[^"]*">', f'<meta property="og:title" content="{html.escape(title, quote=True)}">', prefix, "og:title")
     prefix = sub_one(r'<meta property="og:description" content="[^"]*">', f'<meta property="og:description" content="{html.escape(description, quote=True)}">', prefix, "og:description")
     prefix = sub_one(r'<meta property="og:url" content="[^"]*">', f'<meta property="og:url" content="{ORIGIN}{route}">', prefix, "og:url")
-    prefix = apply_card_metadata(prefix, route, image_alt)
     prefix = sub_one(r'<meta name="twitter:title" content="[^"]*">', f'<meta name="twitter:title" content="{html.escape(title, quote=True)}">', prefix, "twitter:title")
     prefix = sub_one(r'<meta name="twitter:description" content="[^"]*">', f'<meta name="twitter:description" content="{html.escape(description, quote=True)}">', prefix, "twitter:description")
     blocks = "".join(f'<script type="application/ld+json">{html.escape(json.dumps(obj, ensure_ascii=False, separators=(",", ":")), quote=False)}</script>' for obj in schemas)
@@ -435,7 +434,7 @@ def listing_main(locale: str, locale_guides: list[dict]) -> str:
     )
 
 
-def build_page(locale: str, *, title: str, description: str, route: str, alternate: str, page_type: str, image_alt: str, main: str, schemas: list[dict] | None = None) -> str:
+def build_page(locale: str, *, title: str, description: str, route: str, alternate: str, page_type: str, image_alt: str, main: str, schemas: list[dict] | None = None, use_current_card: bool = False) -> str:
     prefix, suffix = shell(locale)
     organization_present(prefix)
     if locale == "en":
@@ -447,7 +446,9 @@ def build_page(locale: str, *, title: str, description: str, route: str, alterna
     if prefix.count(old_switch) != 1:
         raise RuntimeError(f"language switch template drift for {route}: count={prefix.count(old_switch)}")
     prefix = prefix.replace(old_switch, new_switch, 1)
-    prefix = update_head(prefix, title=title, description=description, route=route, alternate=alternate, lang=locale, page_type=page_type, image_alt=image_alt, schemas=schemas or [])
+    prefix = update_head(prefix, title=title, description=description, route=route, alternate=alternate, lang=locale, page_type=page_type, schemas=schemas or [])
+    # Sealed releases replay this renderer with the original template metadata.
+    prefix = apply_card_metadata(prefix, route if use_current_card else None, image_alt)
     return prefix + main + suffix
 
 
@@ -582,7 +583,7 @@ def main() -> int:
     }
     for lang in ("ru", "en"):
         title, desc, route, alt = listing_meta[lang]
-        page = build_page(lang, title=title, description=desc, route=route, alternate=alt, page_type="website", image_alt="AI Skill Lab · Phuket", main=listing_main(lang, by_lang[lang]))
+        page = build_page(lang, title=title, description=desc, route=route, alternate=alt, page_type="website", image_alt="AI Skill Lab · Phuket", main=listing_main(lang, by_lang[lang]), use_current_card=True)
         out = output_path(route)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(page, encoding="utf-8", newline="\n")
@@ -599,6 +600,7 @@ def main() -> int:
             image_alt="AI Skill Lab · Phuket",
             main=article_main(guide),
             schemas=schemas_for(guide),
+            use_current_card=True,
         )
         out = output_path(guide["path"])
         out.parent.mkdir(parents=True, exist_ok=True)

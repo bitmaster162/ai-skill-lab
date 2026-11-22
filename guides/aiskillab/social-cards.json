@@ -2,5 +2,9 @@
   "/guides/ai-first-tasks-for-adults": {
     "url": "/og-ru-personal.png",
     "alt": "Не курс про AI, а ваш рабочий процесс."
+  },
+  "/guides/ai-pilot-for-small-business": {
+    "url": "/og-ru-business.png",
+    "alt": "Не «добавить AI». Изменить один процесс."
   }
 }
