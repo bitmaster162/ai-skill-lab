@@ -33,6 +33,7 @@ CHECKS = [
     ("contrast_tokens", ["python", "scripts/check_contrast_tokens.py"]),
     ("motion_policy", ["python", "scripts/check_motion_policy.py"]),
     ("static_accessibility", ["python", "scripts/check_static_accessibility.py"]),
+    ("conversion_r1_candidate", ["python", "-B", "scripts/test_conversion_r1.py"]),
     ("attention_hierarchy", ["python", "scripts/check_attention_hierarchy.py"]),
     ("workshop_d1", ["python", "scripts/check_workshop_d1.py"]),
     ("workshop_d2", ["python", "scripts/check_workshop_d2.py"]),
