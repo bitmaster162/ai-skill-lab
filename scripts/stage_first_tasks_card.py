@@ -14,7 +14,7 @@ from build_release_artifacts import deterministic_zip, sha256
 from restored_guides_release import manifest_bytes
 
 ROUTE = "/guides/ai-first-tasks-for-adults"
-PAGE = ROUTE[1:] + ".html"
+PILOT_ROUTE = "/guides/ai-pilot-for-small-business"
 PARENTS = {
     "restored": (
         "2444bd77f7616ba916c37b2b3bcba11898926be0",
@@ -31,16 +31,27 @@ PARENTS = {
 }
 # A change to the reviewed card or its text requires a new release identity.
 PAGE_SHA = "c11fd355535a82fc8f58e4b6ccd553520e1671366f10e5ddc77dac46cc1820e2"
+PILOT_SHA = "0025f25dff05c45476441b03ef1110ba48028b2c5422d5057cf0b9c7990a385b"
+PAIRED_RELEASES = {
+    "restored": ("AISL_RU_GUIDE_CARDS_R1_20261122",
+                 "3cf9c37a1487444c73d8631bbc39c2c4b48b5101d321f37fb3fbb65e37fea25a"),
+    "matcher": ("AISL_MATCHER_RU_GUIDE_CARDS_R1_20261122",
+                "00bbab12c212d6bf1f8a9154e7f282c81cea1674ac562d142cf75465bd205414"),
+}
 
 
-def update_card(page):
+def update_card(page, route=ROUTE):
     head, body = page.decode("utf-8").split("</head>", 1)
-    head = apply_card_metadata(head, ROUTE, "AI Skill Lab · Phuket")
+    head = apply_card_metadata(head, route, "AI Skill Lab · Phuket")
     return (head + "</head>" + body).encode("utf-8")
 
 
-def candidate(parent):
+def candidate(parent, include_pilot=False):
     commit, parent_digest, release_id, expected_digest = PARENTS[parent]
+    cards = [(ROUTE, PAGE_SHA)]
+    if include_pilot:
+        release_id, expected_digest = PAIRED_RELEASES[parent]
+        cards.append((PILOT_ROUTE, PILOT_SHA))
     archive = subprocess.check_output(
         ["git", "archive", "--format=zip", commit + ":deploy/live"], cwd=ROOT)
     with zipfile.ZipFile(io.BytesIO(archive)) as source:
@@ -56,11 +67,13 @@ def candidate(parent):
         raw = files[row["path"]]
         if len(raw) != row["size"] or sha256(raw) != row["sha256"]:
             raise ValueError("Parent asset mismatch: " + row["path"])
-    files[PAGE] = update_card(files[PAGE])
-    if sha256(files[PAGE]) != PAGE_SHA:
-        raise ValueError("Card changed since this release was sealed")
-    target, = (row for row in rows if row["path"] == PAGE)
-    target.update(size=len(files[PAGE]), sha256=PAGE_SHA)
+    for route, expected_page_sha in cards:
+        page = route[1:] + ".html"
+        files[page] = update_card(files[page], route)
+        if sha256(files[page]) != expected_page_sha:
+            raise ValueError("Card changed since this release was sealed: " + route)
+        target, = (row for row in rows if row["path"] == page)
+        target.update(size=len(files[page]), sha256=expected_page_sha)
     listing = "".join(f"{r['path']}\t{r['size']}\t{r['sha256']}\n" for r in rows)
     manifest.update(release_id=release_id, patch_id=release_id, parent_manifest_sha256=parent_digest,
                     payload_sha256=sha256(listing.encode()))
@@ -74,12 +87,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--parent", choices=PARENTS, required=True,
                         help="Matcher requires the exact reviewed PR 253 commit in local Git history.")
+    parser.add_argument("--include-pilot", action="store_true",
+                        help="Stage both Russian guide cards together against the selected parent.")
     parser.add_argument("--output", type=Path, required=True, help="New ZIP file outside the checkout.")
     args = parser.parse_args()
     output = args.output.resolve()
     if output.is_relative_to(ROOT.resolve()):
         parser.error("Choose a destination outside the checkout.")
-    files = candidate(args.parent)
+    files = candidate(args.parent, include_pilot=args.include_pilot)
     with TemporaryDirectory(dir=output.parent) as temp:
         staged = Path(temp) / "candidate.zip"
         deterministic_zip(staged, files)
