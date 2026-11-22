@@ -73,6 +73,12 @@ const FUTURE_GUIDE_STATIC_ASSETS = [
 ] as const;
 
 const RESTORED_GUIDE_RELEASE = "AISL_RESTORED_GUIDES_R1_20261122";
+const RU_GUIDE_CARDS_RELEASE = "AISL_RU_GUIDE_CARDS_R1_20261122";
+const RU_GUIDE_CARD_STATIC_ASSETS = [
+  ["guides/ai-first-tasks-for-adults.html", 28020, "c11fd355535a82fc8f58e4b6ccd553520e1671366f10e5ddc77dac46cc1820e2"],
+  ["guides/ai-pilot-for-small-business.html", 33140, "0025f25dff05c45476441b03ef1110ba48028b2c5422d5057cf0b9c7990a385b"],
+  FUTURE_GUIDE_R7_STATIC_ASSETS[1],
+] as const;
 const RESTORED_GUIDE_SOURCE_SHA = new Map<string, Record<GuideLocale, string>>([
   ["ai-pilot-for-small-business", {
     ru: "cf7e4c696d27a21116097938af013200daacb6d886c0eb91da0c1da95b07b111",
@@ -161,6 +167,12 @@ function approvedAdditionalGuideSlugs(): string[] | false {
         payload: "f11a64758e9c5661eea55a24b9a98c6c078e17dcdfca8e335bd04c23776d99e5",
         manifest: "66c02d9bda23b0424330596b6e74a14576be0259d31f4e1b5a5f8ba07cb251d5",
       }],
+      [RU_GUIDE_CARDS_RELEASE, {
+        count: 116,
+        parent: "66c02d9bda23b0424330596b6e74a14576be0259d31f4e1b5a5f8ba07cb251d5",
+        payload: "097e44a211afe7b7b37be8544bc1ec798dc414ed5f63400733d3cf7c4cad9bbc",
+        manifest: "3cf9c37a1487444c73d8631bbc39c2c4b48b5101d321f37fb3fbb65e37fea25a",
+      }],
     ]);
     const seal = typeof header.release_id === "string" ? seals.get(header.release_id) : undefined;
     if (seal) {
@@ -184,7 +196,9 @@ function approvedAdditionalGuideSlugs(): string[] | false {
         indexed.set(rel, { size: asset.size as number, sha256: asset.sha256 });
       }
       if (indexed.size !== seal.count) return false;
-      for (const [assetPath, expectedSize, expectedSHA] of FUTURE_GUIDE_R7_STATIC_ASSETS) {
+      const isRuGuideCards = header.release_id === RU_GUIDE_CARDS_RELEASE;
+      const guideAssets = isRuGuideCards ? RU_GUIDE_CARD_STATIC_ASSETS : FUTURE_GUIDE_R7_STATIC_ASSETS;
+      for (const [assetPath, expectedSize, expectedSHA] of guideAssets) {
         const item = indexed.get(assetPath);
         if (!item || item.size !== expectedSize || item.sha256 !== expectedSHA) return false;
       }
@@ -192,7 +206,7 @@ function approvedAdditionalGuideSlugs(): string[] | false {
         const bytes = fs.readFileSync(path.join(GUIDE_DIR, `${FUTURE_GUIDE_SLUG}.${locale}.md`));
         if (createHash("sha256").update(bytes).digest("hex") !== FUTURE_GUIDE_SOURCE_SHA[locale]) return false;
       }
-      if (header.release_id === RESTORED_GUIDE_RELEASE) {
+      if (header.release_id === RESTORED_GUIDE_RELEASE || isRuGuideCards) {
         for (const [slug, digests] of RESTORED_GUIDE_SOURCE_SHA) {
           for (const locale of ["ru", "en"] as const) {
             const assetPath = `${locale === "en" ? "en/" : ""}guides/${slug}.html`;

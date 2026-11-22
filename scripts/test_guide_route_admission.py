@@ -35,8 +35,8 @@ def expected_live_routes() -> frozenset[str]:
     """Preserve 52 historical routes; require two SHA-admitted future routes."""
     release = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
     from seo_method_static_release_profile_r1 import inherited_gate_family
-    from restored_guides_release import RELEASE_ID as restored_guides_id
-    if release == restored_guides_id:
+    from adult_analytics_lineage import ru_guide_cards, restored_guides
+    if release in (restored_guides.RELEASE_ID, ru_guide_cards.RELEASE_ID):
         slugs = ("ai-start-for-adults", "ai-pilot-for-small-business")
         restored = {f"{prefix}/guides/{slug}" for prefix in ("", "/en") for slug in slugs}
         return BASELINE_ROUTES | FUTURE_PAIR | {"/phuket-universe", "/en/phuket-universe"} | restored
