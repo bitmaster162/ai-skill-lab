@@ -20,9 +20,8 @@ ORIGIN = PUBLIC_ORIGIN
 OG_IMAGE = f"{ORIGIN}/og.png"
 RELEASE = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
 from seo_method_static_release_profile_r1 import inherited_gate_family
-from ru_guide_cards_release import RELEASE_ID as CARD_RELEASE_ID
-CARD_METADATA = (json.loads((ROOT / "guides/aiskillab/social-cards.json").read_text(encoding="utf-8"))
-                 if RELEASE == CARD_RELEASE_ID else {})
+from ru_guide_cards_release import reviewed_cards
+CARD_METADATA = reviewed_cards()
 RELEASE=inherited_gate_family(RELEASE)
 OG20_META = {
     "/": ("og-ru-home.png", "Освойте AI так, чтобы результат остался у вас."),

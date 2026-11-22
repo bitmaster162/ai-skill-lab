@@ -63,13 +63,13 @@ with TemporaryDirectory() as tmp:
         with checks.assertRaisesRegex(ValueError, "static og-ru-personal.png"):
             release.verify()
         unchanged.write_bytes(original_image)
-        (live / "unscheduled.html").write_text("extra")
+        (live / "unscheduled.html").write_text("extra", encoding="utf-8")
         with checks.assertRaisesRegex(ValueError, "unexpected or missing asset"):
             release.verify()
     rel = "guides/aiskillab/social-cards.json"
     source = root / rel
     source.parent.mkdir(parents=True)
-    source.write_text("{}")
+    source.write_text("{}", encoding="utf-8")
     with patch.object(release, "ROOT", root), checks.assertRaisesRegex(ValueError, "source"):
         release.source_sha(rel)
 

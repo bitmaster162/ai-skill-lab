@@ -51,6 +51,15 @@ def source_sha(rel):
     return SOURCE_SHA[rel]
 
 
+def reviewed_cards():
+    """Return the pinned two-route card map only on this exact manifest."""
+    if not active():
+        return {}
+    rel = "guides/aiskillab/social-cards.json"
+    source_sha(rel)
+    return json.loads((ROOT / rel).read_bytes())
+
+
 @lru_cache(maxsize=1)
 def expected_files():
     """Cache only the reconstruction from sealed Git inputs; verify live inputs on every call."""
