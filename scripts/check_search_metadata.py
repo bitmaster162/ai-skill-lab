@@ -20,6 +20,8 @@ ORIGIN = PUBLIC_ORIGIN
 OG_IMAGE = f"{ORIGIN}/og.png"
 RELEASE = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
 from seo_method_static_release_profile_r1 import inherited_gate_family
+from ru_guide_cards_release import reviewed_cards
+CARD_METADATA = reviewed_cards()
 RELEASE=inherited_gate_family(RELEASE)
 OG20_META = {
     "/": ("og-ru-home.png", "Освойте AI так, чтобы результат остался у вас."),
@@ -564,6 +566,11 @@ def main() -> int:
         else:
             expected_og_image = OG_IMAGE
             expected_og_alt = "AI Skill Lab · Phuket"
+        if route in CARD_METADATA:
+            expected_og_image = ORIGIN + CARD_METADATA[route]["url"]
+            expected_og_alt = CARD_METADATA[route]["alt"]
+            if parser.meta_name.get("twitter:image:alt") != expected_og_alt:
+                fail(errors, route, "Twitter image description differs from the reviewed guide card")
         if og.get("og:image") != expected_og_image:
             fail(errors, route, f"og:image {og.get('og:image')!r} != {expected_og_image!r}")
         if og.get("og:image:alt") != expected_og_alt:
@@ -592,12 +599,12 @@ def main() -> int:
         extra = sorted(sitemap_urls - expected_urls)
         errors.append(f"sitemap mismatch missing={missing} extra={extra}")
 
-    from adult_analytics_lineage import certificate_donors, current_release, has_certificate_links, has_route_dates, has_telegram_card, has_universe_home, restored_guides, telegram_card, universe_home
+    from adult_analytics_lineage import certificate_donors, current_release, has_certificate_links, has_route_dates, has_telegram_card, has_universe_home, has_restored_guides, restored_guides, telegram_card, universe_home
     published_dates = has_route_dates()
     certificate_dates = has_certificate_links()
     telegram_card_dates = has_telegram_card()
     universe_home_date = has_universe_home()
-    restored_dates = {ORIGIN + r for r in (*restored_guides.NEW_ROUTES, "/guides", "/en/guides")} if restored_guides.active() else set()
+    restored_dates = {ORIGIN + r for r in (*restored_guides.NEW_ROUTES, "/guides", "/en/guides")} if has_restored_guides() else set()
     diagnostic_urls = set()
     if published_dates:
         from diagnostic_intent_release import DONOR_PAGES

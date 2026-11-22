@@ -11,7 +11,7 @@ const child = 'AISL_ADULT_GUIDE_DONORS_R1_20261121';
 const liveId = JSON.parse(live).release_id;
 const inherited = [r3, child, 'AISL_DIAGNOSTIC_INTENT_R1_20261121', 'AISL_DIAGNOSTIC_INTENT_R2_20261121', 'AISL_SITEMAP_ROUTE_DATES_R1_20261122',
         'AISL_CERTIFICATE_DONORS_R2_20261122', 'AISL_TELEGRAM_CARD_R1_20261122', 'AISL_UNIVERSE_EN_HOME_R1_20261122',
-        'AISL_RESTORED_GUIDES_R1_20261122'].includes(liveId);
+        'AISL_RESTORED_GUIDES_R1_20261122', 'AISL_RU_GUIDE_CARDS_R1_20261122'].includes(liveId);
 const original = inherited ? fs.readFileSync(path.join(root, 'docs/release-candidates/seo-method-r1-20261121/manifest.json')) : live;
 const o = JSON.parse(original);
 assert.equal(o.release_id, EXACT_RELEASE_ID);

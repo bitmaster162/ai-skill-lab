@@ -138,8 +138,8 @@ def _reviewed_future_guide_slugs() -> tuple[str, ...]:
 
 def restored_guide_routes() -> frozenset[str]:
     """The successor manifest identifies the four reviewed guide URLs."""
-    from restored_guides_release import NEW_ROUTES, active
-    return frozenset(NEW_ROUTES) if active() else frozenset()
+    from adult_analytics_lineage import has_restored_guides, restored_guides
+    return frozenset(restored_guides.NEW_ROUTES) if has_restored_guides() else frozenset()
 
 
 def admitted_routes(
