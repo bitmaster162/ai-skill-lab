@@ -58,8 +58,8 @@ def verified_live_lineage():
 def inherited_gate_family(release_id: str) -> str:
  # Only unchanged historical content may use the R7B/SITE-A2 gate family.
  # This is not a release-id alias in the on-disk manifest or production policy.
- from adult_analytics_lineage import certificate_donors, current_release, diagnostic, guide_donors, r3, sitemap_dates, telegram_card
- if release_id in {RELEASE_ID, r3.RELEASE_ID, guide_donors.RELEASE_ID, diagnostic.RELEASE_ID, sitemap_dates.RELEASE_ID, certificate_donors.RELEASE_ID, telegram_card.RELEASE_ID}:
+ from adult_analytics_lineage import certificate_donors, current_release, diagnostic, guide_donors, r3, sitemap_dates, telegram_card, universe_home
+ if release_id in {RELEASE_ID, r3.RELEASE_ID, guide_donors.RELEASE_ID, diagnostic.RELEASE_ID, sitemap_dates.RELEASE_ID, certificate_donors.RELEASE_ID, telegram_card.RELEASE_ID, universe_home.RELEASE_ID}:
   adult = current_release()
   require(active() if release_id == RELEASE_ID else
           adult.active() and adult.RELEASE_ID == release_id, "RELEASE_PROFILE_UNSEALED")

@@ -201,7 +201,7 @@ def main():
         if release_id in {"AISL_SEO_METHOD_R1_DRAFT_20261121", "AISL_ADULT_GA4_OPT_IN_R3_20261121",
                           "AISL_ADULT_GUIDE_DONORS_R1_20261121", "AISL_DIAGNOSTIC_INTENT_R1_20261121", "AISL_DIAGNOSTIC_INTENT_R2_20261121",
                           "AISL_SITEMAP_ROUTE_DATES_R1_20261122", "AISL_CERTIFICATE_DONORS_R2_20261122",
-                          "AISL_TELEGRAM_CARD_R1_20261122"}:
+                          "AISL_TELEGRAM_CARD_R1_20261122", "AISL_UNIVERSE_EN_HOME_R1_20261122"}:
             # Verify the current release before checking the historical R6 text.
             repository_root = os.path.dirname(__file__)
             if os.path.realpath(args.dir) != os.path.realpath(os.path.join(repository_root, "deploy/live")):
