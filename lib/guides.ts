@@ -137,6 +137,12 @@ function futureGuidePairApproved(): boolean {
         payload: "bd07783abfa0c8313d334ef33dd5449f09c2544385fedf72c0323455994b9d1c",
         manifest: "e70b076b1f754bc3dac1b402c70362d773d61e9ba2a4fbe7f7dc12c56bfd28f2",
       }],
+      ["AISL_UNIVERSE_EN_HOME_R1_20261122", {
+        count: 112,
+        parent: "e70b076b1f754bc3dac1b402c70362d773d61e9ba2a4fbe7f7dc12c56bfd28f2",
+        payload: "4e2f844016e35b5b60b371ad3839cc284ee65be921bb976bca88b815b1c5fd24",
+        manifest: "ba386c11a929a0a668e5d7d0be72dd272e93fcf924e11d7cd505c2354c9e4c5a",
+      }],
     ]);
     const seal = typeof header.release_id === "string" ? seals.get(header.release_id) : undefined;
     if (seal) {

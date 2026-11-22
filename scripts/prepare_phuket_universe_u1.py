@@ -175,6 +175,10 @@ def normalize_markup(body: str, *, locale: str) -> str:
     # External project and site URLs: only the five approved project links.
     body = re.sub(r'<a href="(https://[^"]+)"', r'<a rel="noopener" href="\1"', body)
     if locale == "en":
+        home_link = 'href="https://aiskillab.work"'
+        require(body.count(home_link) == 1, "English site link boundary")
+        body = body.replace(home_link, 'href="/en"', 1)
+
         def tr_text(match: re.Match[str]) -> str:
             value = match.group(1)
             t = value.strip()

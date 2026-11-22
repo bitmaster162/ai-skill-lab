@@ -153,8 +153,8 @@
     },
     {
       "path": "en/phuket-universe.html",
-      "sha256": "5acd537b8c1d8e346f05ac04719c7a9e1b3978ccd130d680b3216f0ef93eefa6",
-      "size": 24878
+      "sha256": "74f02c92d9595673c289b6dc714a32c8fa099f565fa7272194967fd6befdb9ba",
+      "size": 24859
     },
     {
       "path": "en/phuket.html",
@@ -523,7 +523,7 @@
     },
     {
       "path": "sitemap.xml",
-      "sha256": "bdffe05db145e4a31e4bae02e2221b7a59dcf4674d57daf99a86270cf2713207",
+      "sha256": "24018fe9a66f2821072b19d5f77efbfb9990332d0bdec1d672d41cb587b08216",
       "size": 4903
     },
     {
@@ -562,9 +562,9 @@
       "size": 41174
     }
   ],
-  "parent_manifest_sha256": "ce4124e6afe3a8ec1fbf00131f1f8b8cad2444faac37a928f37ac632809240ed",
-  "patch_id": "AISL_TELEGRAM_CARD_R1_20261122",
-  "payload_sha256": "bd07783abfa0c8313d334ef33dd5449f09c2544385fedf72c0323455994b9d1c",
-  "release_id": "AISL_TELEGRAM_CARD_R1_20261122",
+  "parent_manifest_sha256": "e70b076b1f754bc3dac1b402c70362d773d61e9ba2a4fbe7f7dc12c56bfd28f2",
+  "patch_id": "AISL_UNIVERSE_EN_HOME_R1_20261122",
+  "payload_sha256": "4e2f844016e35b5b60b371ad3839cc284ee65be921bb976bca88b815b1c5fd24",
+  "release_id": "AISL_UNIVERSE_EN_HOME_R1_20261122",
   "schema": "ai-skill-lab.static-release.v1"
 }
