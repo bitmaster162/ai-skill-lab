@@ -31,6 +31,7 @@ CHANGED = ADDITIONS | {"guides.html", "en/guides.html", "sitemap.xml", "llms.txt
 MANIFEST_SHA = "66c02d9bda23b0424330596b6e74a14576be0259d31f4e1b5a5f8ba07cb251d5"
 PAYLOAD_SHA = "f11a64758e9c5661eea55a24b9a98c6c078e17dcdfca8e335bd04c23776d99e5"
 SOURCE_SHA = {
+    "README.md": "7dfff9761911106b2babfd01c0e331a45055f491fcd1423dcac2858fa1a8bf33",
     "components/guides/GuidePages.tsx": "dcd057d215f3fd52497bd8fa19c3e5a5bd203a96c580e9a96b8f1fb584d47c33",
     "app/sitemap.ts": "ea3c6b4b2c817a3e0751d3595c237ba782a6f9d607e80ab928225e875bf8d9be",
     "guides/aiskillab/ai-pilot-for-small-business.en.md": "a2da0faf2c0a92d693672d2c956aafdf14fad3772f0d05751603d200796d4115",
@@ -163,6 +164,10 @@ def verify():
         source_sha(rel)
     for rel in ("scripts/universe_en_home_release.py", "scripts/test_universe_en_home_release.py"):
         require((ROOT / rel).read_bytes() == original(rel), "historical verifier " + rel)
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    for route in sorted(NEW_ROUTES):
+        readme = replace_once(readme, f"`{route}`, ", "")
+    require(readme.encode() == original("README.md"), "guide inventory README preimage")
     manifest = successor(static_delta())
     require(raw == manifest_bytes(manifest) and manifest["payload_sha256"] == PAYLOAD_SHA and
             manifest["file_count"] == 116, "manifest reconstruction")
