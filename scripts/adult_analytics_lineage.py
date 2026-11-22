@@ -6,10 +6,15 @@ import guide_donor_release as guide_donors
 import sitemap_route_dates_release as sitemap_dates
 import telegram_card_release as telegram_card
 import universe_en_home_release as universe_home
+import restored_guides_release as restored_guides
+
+
+def has_universe_home():
+    return universe_home.active() or restored_guides.active()
 
 
 def has_telegram_card():
-    return telegram_card.active() or universe_home.active()
+    return telegram_card.active() or has_universe_home()
 
 
 def has_certificate_links():
@@ -30,6 +35,8 @@ def has_guide_links():
 
 def current_release():
     """Callers must still admit the selected release using active() and verify()."""
+    if restored_guides.active():
+        return restored_guides
     if universe_home.active():
         return universe_home
     if telegram_card.active():

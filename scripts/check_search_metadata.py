@@ -592,11 +592,12 @@ def main() -> int:
         extra = sorted(sitemap_urls - expected_urls)
         errors.append(f"sitemap mismatch missing={missing} extra={extra}")
 
-    from adult_analytics_lineage import certificate_donors, current_release, has_certificate_links, has_route_dates, has_telegram_card, telegram_card, universe_home
+    from adult_analytics_lineage import certificate_donors, current_release, has_certificate_links, has_route_dates, has_telegram_card, has_universe_home, restored_guides, telegram_card, universe_home
     published_dates = has_route_dates()
     certificate_dates = has_certificate_links()
     telegram_card_dates = has_telegram_card()
-    universe_home_date = universe_home.active()
+    universe_home_date = has_universe_home()
+    restored_dates = {ORIGIN + r for r in (*restored_guides.NEW_ROUTES, "/guides", "/en/guides")} if restored_guides.active() else set()
     diagnostic_urls = set()
     if published_dates:
         from diagnostic_intent_release import DONOR_PAGES
@@ -668,7 +669,9 @@ def main() -> int:
             per_route_lastmod = "2026-10-28"
         elif successor_verified and loc_text in {ORIGIN + p for p in (successor_routes | successor_price)}:
             per_route_lastmod = "2026-10-26"
-        if universe_home_date and loc_text == ORIGIN + "/en/phuket-universe":
+        if loc_text in restored_dates:
+            per_route_lastmod = restored_guides.DATE
+        elif universe_home_date and loc_text == ORIGIN + "/en/phuket-universe":
             per_route_lastmod = universe_home.DATE
         elif telegram_card_dates and loc_text in {ORIGIN + "/start", ORIGIN + "/en/start"}:
             per_route_lastmod = telegram_card.DATE

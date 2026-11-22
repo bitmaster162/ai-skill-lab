@@ -15,8 +15,9 @@ const errors = [];
 let checks = 0;
 const req = (cond, msg) => { checks++; if (!cond) errors.push(msg); };
 
+const manifest = JSON.parse(fs.readFileSync(path.join(LIVE, '_release.json'), 'utf8'));
 const methodVerified = isVerifiedMethodLineage(ROOT);
-const U1_R3 = methodVerified || ['PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'].includes(JSON.parse(fs.readFileSync(path.join(LIVE, '_release.json'), 'utf8')).release_id);
+const U1_R3 = methodVerified || ['PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'].includes(manifest.release_id);
 const expected = {
   'Onest-ru-en.woff2': { size: 30036, sha: '1527f4a5e3a2c65b9d789bf86a49cceefea2472bda0b1b3edc08b3adae4a9997' },
   'Unbounded-ru-en.woff2': { size: 52016, sha: '1600f2b8c27dc942601fdd2fc3f894f0375e371287d740289bf58945ab1991b1' },
@@ -108,7 +109,9 @@ const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) =
   return e.isDirectory() ? walk(p) : [p];
 });
 const htmls = walk(LIVE).filter((p) => p.endsWith('.html')).sort();
-req(htmls.length === (U1_R3 ? 57 : release === 'T1_6F2_ADULT_FIRST_TASKS_R1' ? 55 : 53), 'html surfaces ' + htmls.length + ' != approved ' + (U1_R3 ? 57 : release === 'T1_6F2_ADULT_FIRST_TASKS_R1' ? 55 : 53));
+const expectedHtml = methodVerified ? manifest.files.filter(row => row.path.endsWith('.html')).length
+  : U1_R3 ? 57 : release === 'T1_6F2_ADULT_FIRST_TASKS_R1' ? 55 : 53;
+req(htmls.length === expectedHtml, 'html surfaces ' + htmls.length + ' != approved ' + expectedHtml);
 
 const forbiddenStatusGlyph = String.fromCodePoint(0x25CF);
 const namedEntities = new Map([['&amp;', '&'], ['&lt;', '<'], ['&gt;', '>'], ['&quot;', '"'], ['&copy;', '©']]);
@@ -145,7 +148,7 @@ const corpusSet = new Set();
 // Onest/Unbounded legacy coverage applies to the inherited Workshop text.
 // Universe uses a different Manrope stack, checked by its own browser cases.
 const workshopGlyphPages = htmls.filter(hp => !(U1_R3 && ['phuket-universe.html','en/phuket-universe.html'].includes(path.relative(LIVE, hp).replaceAll('\\', '/'))));
-req(workshopGlyphPages.length === (U1_R3 ? 55 : htmls.length), 'Workshop glyph corpus route coverage');
+req(workshopGlyphPages.length === (U1_R3 ? expectedHtml - 2 : expectedHtml), 'Workshop glyph corpus route coverage');
 for (const hp of workshopGlyphPages) {
   let body = fs.readFileSync(hp, 'utf8').match(/<body[^>]*>([\s\S]*?)<\/body>/i)?.[1] || '';
   body = stripElementBlocks(body, 'script');

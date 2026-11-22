@@ -72,7 +72,19 @@ const FUTURE_GUIDE_STATIC_ASSETS = [
   ["en/guides/ai-first-tasks-for-adults.html", 20480, "dd43b529fac595d4ac5ea2d848de54db8dd11be761bf873b109593476f2c58aa"],
 ] as const;
 
-function futureGuidePairApproved(): boolean {
+const RESTORED_GUIDE_RELEASE = "AISL_RESTORED_GUIDES_R1_20261122";
+const RESTORED_GUIDE_SOURCE_SHA = new Map<string, Record<GuideLocale, string>>([
+  ["ai-pilot-for-small-business", {
+    ru: "cf7e4c696d27a21116097938af013200daacb6d886c0eb91da0c1da95b07b111",
+    en: "a2da0faf2c0a92d693672d2c956aafdf14fad3772f0d05751603d200796d4115",
+  }],
+  ["ai-start-for-adults", {
+    ru: "9ef353f732c8527222918022dd80f0452d585997d120e25db848a9b7f89f5fc5",
+    en: "87e15c28a5642277a840cc3848c9588acd5db5a2370f9a94fb12acd203855623",
+  }],
+]);
+
+function approvedAdditionalGuideSlugs(): string[] | false {
   try {
     const manifestBytes = fs.readFileSync(path.join(process.cwd(), "deploy", "live", "_release.json"));
     const manifest: unknown = JSON.parse(manifestBytes.toString("utf8"));
@@ -143,6 +155,12 @@ function futureGuidePairApproved(): boolean {
         payload: "4e2f844016e35b5b60b371ad3839cc284ee65be921bb976bca88b815b1c5fd24",
         manifest: "ba386c11a929a0a668e5d7d0be72dd272e93fcf924e11d7cd505c2354c9e4c5a",
       }],
+      [RESTORED_GUIDE_RELEASE, {
+        count: 116,
+        parent: "ba386c11a929a0a668e5d7d0be72dd272e93fcf924e11d7cd505c2354c9e4c5a",
+        payload: "f11a64758e9c5661eea55a24b9a98c6c078e17dcdfca8e335bd04c23776d99e5",
+        manifest: "66c02d9bda23b0424330596b6e74a14576be0259d31f4e1b5a5f8ba07cb251d5",
+      }],
     ]);
     const seal = typeof header.release_id === "string" ? seals.get(header.release_id) : undefined;
     if (seal) {
@@ -174,7 +192,17 @@ function futureGuidePairApproved(): boolean {
         const bytes = fs.readFileSync(path.join(GUIDE_DIR, `${FUTURE_GUIDE_SLUG}.${locale}.md`));
         if (createHash("sha256").update(bytes).digest("hex") !== FUTURE_GUIDE_SOURCE_SHA[locale]) return false;
       }
-      return true;
+      if (header.release_id === RESTORED_GUIDE_RELEASE) {
+        for (const [slug, digests] of RESTORED_GUIDE_SOURCE_SHA) {
+          for (const locale of ["ru", "en"] as const) {
+            const assetPath = `${locale === "en" ? "en/" : ""}guides/${slug}.html`;
+            const source = fs.readFileSync(path.join(GUIDE_DIR, `${slug}.${locale}.md`));
+            if (!indexed.has(assetPath) || createHash("sha256").update(source).digest("hex") !== digests[locale]) return false;
+          }
+        }
+        return [FUTURE_GUIDE_SLUG, ...RESTORED_GUIDE_SOURCE_SHA.keys()];
+      }
+      return [FUTURE_GUIDE_SLUG];
     }
     if (isSiteA2) {
       // No wildcard: bind manifest bytes AND standalone immutable admission.
@@ -235,7 +263,7 @@ function futureGuidePairApproved(): boolean {
       const bytes = fs.readFileSync(path.join(GUIDE_DIR, `${FUTURE_GUIDE_SLUG}.${locale}.md`));
       if (createHash("sha256").update(bytes).digest("hex") !== FUTURE_GUIDE_SOURCE_SHA[locale]) return false;
     }
-    return true;
+    return [FUTURE_GUIDE_SLUG];
   } catch {
     return false;
   }
@@ -292,12 +320,10 @@ function parseGuideFile(filePath: string): Guide {
 
 export function listGuides(locale: GuideLocale): Guide[] {
   if (!fs.existsSync(GUIDE_DIR)) return [];
-  const futureApproved = futureGuidePairApproved();
+  const approvedSlugs = ["ai-safety-for-kids", ...(approvedAdditionalGuideSlugs() || [])];
+  const approvedFiles = new Set(approvedSlugs.map((slug) => `${slug}.${locale}.md`));
   return fs.readdirSync(GUIDE_DIR)
-    .filter((name) =>
-      name === `ai-safety-for-kids.${locale}.md` ||
-      (futureApproved && name === `${FUTURE_GUIDE_SLUG}.${locale}.md`)
-    )
+    .filter((name) => approvedFiles.has(name))
     .sort()
     .map((name) => parseGuideFile(path.join(GUIDE_DIR, name)));
 }
