@@ -15,6 +15,7 @@ RELEASE_ID = "AISL_BUSINESS_PILOT_LINKS_R2_20261122"
 MANIFEST_SHA = "f0d308a383d92bd5ab21e13e77b09d8461e87b39749789d4db65e504e9df50ed"
 PAYLOAD_SHA = "da4c30eb94eef0c360cd63aaa87f954600c58e5420dc04d8b8fad5f2b3d1f00c"
 COMPONENT = "components/workshop/WorkshopBusiness.tsx"
+GUIDES_SOURCE_SHA = "e22a1c424eda5e05117f4d892b91638781c8e056bd4d35745a2be9776214cb69"
 COMPONENT_SHA = "92cb07fa0c645eaec0930df4954618cf7f1c5be97312ce8294570ffe2b8108ab"
 LINKS = {
     "business.html": ("/guides/ai-pilot-for-small-business", "Как выбрать первую задачу для ИИ-пилота"),
@@ -34,6 +35,10 @@ def active():
 
 
 def source_sha(rel):
+    if rel == "lib/guides.ts":
+        path = ROOT / rel
+        require(path.is_file() and not path.is_symlink() and sha(path.read_bytes()) == GUIDES_SOURCE_SHA, "guide renderer")
+        return GUIDES_SOURCE_SHA
     if rel != COMPONENT:
         return cards.source_sha(rel)
     path = ROOT / rel
