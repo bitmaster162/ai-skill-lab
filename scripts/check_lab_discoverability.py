@@ -12,6 +12,8 @@ if release in ('T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_2026
  from guide_route_admission import require_public_html
  WORKSHOP|={'guides/ai-first-tasks-for-adults.html','en/guides/ai-first-tasks-for-adults.html'}
  require_public_html(LIVE)
+ from guide_route_admission import restored_guide_routes
+ WORKSHOP.update(route.lstrip('/') + '.html' for route in restored_guide_routes())
 for p in sorted(LIVE.rglob('*.html')):
  if p.name=='404.html':continue
  rel=p.relative_to(LIVE).as_posix();text=p.read_text(encoding='utf-8');en=rel=='en.html' or rel.startswith('en/');expect='/en/proof' if en else '/proof'

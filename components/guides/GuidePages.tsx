@@ -7,6 +7,12 @@ import styles from "./GuidePages.module.css";
 const ORIGIN = "https://aiskillab.work";
 const ORG_ID = `${ORIGIN}/#organization`;
 
+const applicationLinks: Record<string, Record<WorkshopLocale, string>> = {
+  "ai-pilot-for-small-business": { ru: "Обсудить пилот для бизнеса →", en: "Discuss a business pilot →" },
+  "ai-start-for-adults": { ru: "Обсудить индивидуальное обучение →", en: "Ask about one-to-one lessons →" },
+};
+
+
 function guideSchema(guide: Guide) {
   const { meta } = guide;
   return {
@@ -64,6 +70,7 @@ export function GuideArticle({ guide }: { guide: Guide }) {
   const doc = renderGuideMarkdown(guide.markdown);
   if (doc.h1 !== guide.meta.title) throw new Error(`guide H1/title mismatch: ${guide.meta.path}`);
   const schema = guideSchema(guide);
+  const applicationLabel = applicationLinks[guide.slug]?.[guide.meta.lang];
   return <>
     <JsonLd data={schema.article} />
     <JsonLd data={schema.breadcrumbs} />
@@ -89,6 +96,7 @@ export function GuideArticle({ guide }: { guide: Guide }) {
             <ol>{doc.toc.map((item) => <li key={item.id}><a href={`#${item.id}`}>{item.label}</a></li>)}</ol>
           </nav>
           <div className={styles.body} dangerouslySetInnerHTML={{ __html: doc.bodyHtml }} />
+          {applicationLabel && <p><Link className={styles.cardLink} href={en ? "/en/start#application-form" : "/start#application-form"}>{applicationLabel}</Link></p>}
         </article>
       </main>
     </WorkshopShell>

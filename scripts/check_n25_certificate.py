@@ -103,7 +103,7 @@ req(manifest.get("file_count")==(u1.profile()["file_count"] if u1.active() else 
 listed={x.get("path") for x in manifest.get("files",[])}
 req({"certificate.html","en/certificate.html"}<=listed,"manifest certificate pair")
 req(require_public_html(LIVE)==admitted_route_count(),"approved public HTML routes")
-req(len(list(LIVE.rglob("*.html")))==(57 if u1.active() else 55 if manifest.get("release_id")=='T1_6F2_ADULT_FIRST_TASKS_R1' else 53),"53 HTML including 404")
+req(len(list(LIVE.rglob("*.html")))==admitted_route_count() + 1,"approved HTML inventory including 404")
 
 print(f"N25_CERTIFICATE_CHECK checks={checks} public_routes={admitted_route_count()} issued_records=0 minor_public_pii=0")
 if errors:

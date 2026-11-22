@@ -4,6 +4,7 @@ from source_paths import source_path
 import re,sys,json,hashlib
 import site_a1_a2_r2_successor as site_a2
 from adult_analytics_lineage import diagnostic, has_diagnostic_forms
+from guide_route_admission import restored_guide_routes
 SITE_A2=site_a2.active()
 if SITE_A2:
     site_a2.verify()
@@ -16,6 +17,8 @@ ROOT=Path(__file__).resolve().parents[1]
 scan=[*ROOT.joinpath('app').rglob('*.tsx'),*ROOT.joinpath('components').rglob('*.tsx'),*ROOT.joinpath('deploy/live').rglob('*.html')]
 rx=re.compile(r'\b(?:\d{2,3}\s*[–-]\s*\d{2,3}|\d{2,3})(?:\s*[-–]\s*|\s+)(?:минут(?:ы|у)?|minutes?)\b',re.I)
 errors=[];claims=[];intro_claims=0
+# Keep the baseline counts independent of the introductory call described in the restored articles.
+guide_intro = {"deploy/live" + route + ".html": 0 for route in restored_guide_routes()}
 # E3.1 SEO copy is approved byte-for-byte and describes a free intro call.
 # Exclude only exact metadata-description spans, not arbitrary body claims.
 SEO_DESCRIPTIONS = {}
@@ -52,8 +55,12 @@ for p in scan:
   if normalized in {'60 минут','60 minute','60 minutes'}:continue
   if normalized in {'15 минут','15 minute','15 minutes'}:
    window=text[max(0,m.start()-320):min(len(text),m.end()+320)].casefold()
-   if any(marker in window for marker in ('data-e14-entry','data-intro-call-channel','звонок-знакомство','intro call','intro-call')) or (SITE_A2 and rel=='deploy/live/en/pricing.html' and 'free introductory call' in window and 'description' in window):
-    intro_claims+=1;continue
+   restored_intro = (rel == 'deploy/live/guides/ai-pilot-for-small-business.html' and rel in guide_intro
+                    and text[m.start()-len('первый разговор занял '):m.start()].casefold() == 'первый разговор занял ')
+   if restored_intro or any(marker in window for marker in ('data-e14-entry','data-intro-call-channel','звонок-знакомство','intro call','intro-call')) or (SITE_A2 and rel=='deploy/live/en/pricing.html' and 'free introductory call' in window and 'description' in window):
+    if rel in guide_intro: guide_intro[rel] += 1
+    else: intro_claims += 1
+    continue
   errors.append(f'{p.relative_to(ROOT)}: conflicting duration {claim!r}')
 required={
  'data/commercial_facts.json':['"session_duration_minutes": 60'],
@@ -81,6 +88,9 @@ for rel,needles in required.items():
 if not claims:errors.append('no numeric duration claims found')
 expected_intro=38 if SITE_A2 else 36
 if intro_claims!=expected_intro:errors.append(f'E1.4 intro-call duration claims {intro_claims} != {expected_intro}')
+for page, count in guide_intro.items():
+ expected = 2 if page == 'deploy/live/guides/ai-pilot-for-small-business.html' else 1
+ if count != expected: errors.append(f'{page}: expected {expected} introductory call references, found {count}')
 print(f'session_duration_checks={checks} claims={len(claims)} authority=60 intro_call=15 intro_claims={intro_claims}')
 if errors:
  print('SESSION_DURATION_POLICY_FAIL');[print('-',e) for e in errors];sys.exit(1)
