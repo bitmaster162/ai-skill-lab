@@ -7,10 +7,15 @@ import sitemap_route_dates_release as sitemap_dates
 import telegram_card_release as telegram_card
 import universe_en_home_release as universe_home
 import restored_guides_release as restored_guides
+import ru_guide_cards_release as ru_guide_cards
+
+
+def has_restored_guides():
+    return restored_guides.active() or ru_guide_cards.active()
 
 
 def has_universe_home():
-    return universe_home.active() or restored_guides.active()
+    return universe_home.active() or has_restored_guides()
 
 
 def has_telegram_card():
@@ -35,6 +40,8 @@ def has_guide_links():
 
 def current_release():
     """Callers must still admit the selected release using active() and verify()."""
+    if ru_guide_cards.active():
+        return ru_guide_cards
     if restored_guides.active():
         return restored_guides
     if universe_home.active():

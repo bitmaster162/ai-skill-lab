@@ -5,6 +5,8 @@ import json,re,sys
 ROOT=Path(__file__).resolve().parents[1];LIVE=ROOT/"deploy/live";BRAND="AI Skill Lab · Phuket"
 RELEASE=json.loads((LIVE/"_release.json").read_text(encoding="utf-8")).get("release_id")
 from seo_method_static_release_profile_r1 import inherited_gate_family
+from ru_guide_cards_release import reviewed_cards
+CARD_METADATA = reviewed_cards()
 RELEASE=inherited_gate_family(RELEASE)
 OG20_ALT={
  "/":"Освойте AI так, чтобы результат остался у вас.","/en":"Learn AI so the capability stays with you.",
@@ -52,6 +54,8 @@ for f in sorted(p for p in LIVE.rglob("*.html") if p.name!="404.html"):
  if props.get("og:locale")!=("en_US" if en else "ru_RU"):errors.append(f"{route}: og locale")
  if props.get("og:locale:alternate")!=("ru_RU" if en else "en_US"):errors.append(f"{route}: og alternate")
  expected_alt=OG20_ALT.get(route,BRAND) if RELEASE in {"OG20_R1","A7_SAFETY_QUIZ_R1","A8_PROMPT_AUDITOR_R1","A9_REAL_PROJECTS_R1","N25_CERTIFICATE_RECORD_R1","E3_8_LEAD_EVENTS_R1","E3_1_RU_SEO_R1","E3_3_H1_ACTION_R1","E3_2_RU_GLOSSARY_R1","E3_4_AI_SAFETY_AUDIENCE_R1","E3_5_HEADING_STRUCTURE_R1",'E3_6_WORKSHOP_HERO_PANEL_R1','T1_6F2_ADULT_FIRST_TASKS_R1', 'PHUKET_UNIVERSE_U1_STATIC_R3_20261014', 'PHUKET_UNIVERSE_U1_AGENCY_TERMS_R5_20261014', 'PHUKET_UNIVERSE_U2_EMPTY_CATALOG_R6_20261014', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7_20261015', 'PHUKET_UNIVERSE_U3_E38_DORMANT_R7B_20261015'} else BRAND
+ if route in CARD_METADATA:
+  expected_alt = CARD_METADATA[route]["alt"]
  if props.get("og:image:alt")!=expected_alt:errors.append(f"{route}: og image alt")
  if (props.get("og:image:width"),props.get("og:image:height"))!=("1200","630"):errors.append(f"{route}: og dimensions")
  alts={a.get("hreflang"):a.get("href") for a in x.links if a.get("rel")=="alternate"}
