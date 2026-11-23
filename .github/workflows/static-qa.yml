@@ -13,7 +13,7 @@ permissions:
 jobs:
   static-release:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -295,3 +295,17 @@ jobs:
         run: python scripts/check_lab_hub.py
       - name: Smoke-test Lab Command runtime
         run: node scripts/check_lab_command_runtime.mjs
+      - name: Compare all release checks on the exact published pilot and its R2 candidate
+        if: github.event_name == 'pull_request' && github.head_ref == 'review/pilot-language-r2'
+        run: |
+          python -B scripts/rehearse_pilot_audience_release.py \
+            --original "$RUNNER_TEMP/pilot-original/deploy/live" \
+            --candidate "$RUNNER_TEMP/business-pilot-audience" \
+            --receipt "$RUNNER_TEMP/pilot-preflight-comparison.json"
+      - name: Save both absolute preflight results and the differential
+        if: always() && github.event_name == 'pull_request' && github.head_ref == 'review/pilot-language-r2'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: pilot-full-preflight-comparison
+          path: ${{ runner.temp }}/pilot-preflight-comparison.json
+          if-no-files-found: error
