@@ -47,7 +47,11 @@ def check_locale(browser, root, headers, locale):
         guardian = form.locator('[name="adultConfirmation"]')
         submit = form.locator('[type="submit"]')
 
-        page.goto(guide)
+        page.goto(ORIGIN + prefix + "/business")
+        guide_entry = page.locator(f'main a[href="{urlsplit(guide).path}"]')
+        expect(guide_entry).to_have_count(1)
+        guide_entry.click()
+        expect(page).to_have_url(guide)
         article_links = page.locator("main article a[href]").evaluate_all(
             """(links, start) => links.filter(link => link.origin === location.origin
                 && link.pathname === start).map(link => link.getAttribute('href'))""",
@@ -108,6 +112,39 @@ def check_locale(browser, root, headers, locale):
             expect(form).to_have_attribute("data-lead-state", "ready")
             expect(audience).to_have_value("adult")
             expect(form.locator('[name="program"]')).to_have_value(program)
+
+        alternate = "/start" if locale == "en" else "/en/start"
+        language_link = page.locator(f'header a.workshopUtility[href^="{alternate}"]')
+        for initial in ("adult", "business"):
+            for selected in ("adult", "parent", "teen", "business"):
+                page.goto(ORIGIN + start + "?program=diagnostic&audience=" + initial + "#application-form")
+                expect(audience).to_have_value(initial)
+                audience.select_option(selected)
+                language_link.click()
+                expect(page).to_have_url(ORIGIN + alternate + "?program=diagnostic"
+                                         + ("&audience=" + selected if selected != "adult" else "")
+                                         + "#application-form")
+                expect(audience).to_have_value(selected)
+                expect(form.locator('[name="program"]')).to_have_value("diagnostic")
+                assert guardian.evaluate("el => el.required") == (selected in ("parent", "teen"))
+                expect(guardian).not_to_be_checked()
+
+        page.goto(ORIGIN + start)
+        audience.select_option("business")
+        expect(language_link).to_have_attribute("href", alternate + BUSINESS)
+        language_link.click()
+        expect(audience).to_have_value("business")
+        audience.select_option("adult")
+        page.locator(f'header a.workshopUtility[href^="{start}"]').click()
+        expect(page).to_have_url(ORIGIN + start + "#application-form")
+        expect(audience).to_have_value("adult")
+
+        page.goto(ORIGIN + start + "?audience=parent")
+        audience.select_option("business")
+        page.evaluate("document.querySelector('#application-form').reset()")
+        expect(audience).to_have_value("parent")
+        expect(guardian).to_be_visible()
+        expect(language_link).to_have_attribute("href", alternate + "?audience=parent#application-form")
 
     return {"guide": urlsplit(guide).path, "application_links": article_links,
             "simulated_submissions": len(submissions)}

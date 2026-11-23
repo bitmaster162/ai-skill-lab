@@ -1,4 +1,4 @@
-"""Build the bilingual business-pilot preview from the exact published static release."""
+"""Build the bilingual business-pilot preview from the sealed static source."""
 from __future__ import annotations
 
 import argparse
@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "deploy" / "live"
 ADAPTER = ROOT / "scripts" / "static-adapters" / "pilot-business-audience.js"
 PARENT_SHA256 = "66c02d9bda23b0424330596b6e74a14576be0259d31f4e1b5a5f8ba07cb251d5"
+R1_MANIFEST_SHA256 = "ffd5a97b043203de2fac992c75fba5386116c8c66386a9c1c949d4cff9b84430"
 GUIDE = "guides/ai-pilot-for-small-business.html"
 RUNTIME = "lead-form-runtime.js"
 MANIFEST = "_release.json"
@@ -58,12 +59,26 @@ def article_links(raw: bytes, start: str) -> bytes:
     return raw[:match.start()] + after + raw[match.end():]
 
 
+def business_guide_link(raw: bytes, prefix: str, label: str) -> bytes:
+    """Place the reviewed guide link after the four implementation steps."""
+    target = f'/{prefix}guides/ai-pilot-for-small-business'
+    marker = b'</section><section class="section panelSection" id="pilot-simulator">'
+    require(raw.count(marker) == 1 and f'href="{target}"'.encode() not in raw,
+            f"unexpected business page layout: {target}")
+    link = (f'<div class="heroActions"><a class="workshopButton workshopButtonSecondary" '
+            f'href="{target}">{label}</a></div>').encode()
+    return raw.replace(marker, link + marker, 1)
+
+
 def build_files(parent_root: Path = LIVE) -> tuple[dict[str, bytes], dict]:
     parent, files = load_parent(parent_root)
-    for locale in ("", "en/"):
+    for locale, label in (("", "Как выбрать первую задачу для ИИ-пилота"),
+                          ("en/", "How to choose the first task for an AI pilot")):
         start = "/" + locale + "start"
         name = locale + GUIDE
         files[name] = article_links(files[name], start)
+        business = locale + "business.html"
+        files[business] = business_guide_link(files[business], locale, label)
 
     adapter = ADAPTER.read_bytes()
     require(bool(adapter.strip()), "empty business-audience adapter")
@@ -71,12 +86,12 @@ def build_files(parent_root: Path = LIVE) -> tuple[dict[str, bytes], dict]:
     rows = [record(name, files[name]) for name in sorted(files)]
     original = {row["path"]: row for row in parent["files"]}
     changed = {row["path"] for row in rows if row != original[row["path"]]}
-    require(changed == {GUIDE, "en/" + GUIDE, RUNTIME}, "unexpected preview delta")
+    require(changed == {GUIDE, "en/" + GUIDE, "business.html", "en/business.html", RUNTIME}, "unexpected preview delta")
     listing = "".join(f"{r['path']}\t{r['size']}\t{r['sha256']}\n" for r in rows)
     payload = digest(listing.encode())
-    release_id = "AISL_BUSINESS_PILOT_AUDIENCE_PREVIEW_" + payload
+    release_id = "AISL_FORM_LANGUAGE_AUDIENCE_REVIEW_R2_" + payload
     manifest = dict(parent, release_id=release_id, patch_id=release_id, files=rows,
-                    file_count=len(rows), parent_manifest_sha256=PARENT_SHA256, payload_sha256=payload)
+                    file_count=len(rows), parent_manifest_sha256=R1_MANIFEST_SHA256, payload_sha256=payload)
     files[MANIFEST] = (json.dumps(manifest, indent=2, sort_keys=True) + "\n").encode()
     return files, manifest
 
@@ -110,7 +125,7 @@ def main() -> None:
     files, manifest = build_files(args.parent_root)
     write_preview(output, files)
     print(json.dumps({"directory": str(output), "assets": manifest["file_count"],
-                      "changed_assets": 3, "manifest_sha256": digest(files[MANIFEST]),
+                      "changed_assets_from_source": 5, "manifest_sha256": digest(files[MANIFEST]),
                       "payload_sha256": manifest["payload_sha256"]}))
 
 

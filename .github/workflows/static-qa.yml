@@ -107,7 +107,7 @@ jobs:
           git archive 2444bd77f7616ba916c37b2b3bcba11898926be0 deploy/live | tar -x -C "$RUNNER_TEMP/pilot-original"
           python -B scripts/build_business_pilot_audience_preview.py "$RUNNER_TEMP/business-pilot-audience" --parent-root "$RUNNER_TEMP/pilot-original/deploy/live"
           cd "$RUNNER_TEMP/business-pilot-audience"
-          echo "c70f71cc58d4977b82600adf5b12db773606542573d28ad309cde4ad39d94799  _release.json" | sha256sum --check
+          echo "6c721edc6a40aa16080180db847e3ad2d18128358b62db7cce988791a693245c  _release.json" | sha256sum --check
           python -B "$GITHUB_WORKSPACE/scripts/test_pilot_audience_browser.py" . --receipt "$RUNNER_TEMP/reference-audience.json"
       - name: Check the submitted static site whenever a pull request changes its payload
         if: github.event_name == 'pull_request'
