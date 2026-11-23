@@ -15,9 +15,65 @@
   const languageLink = document.querySelector(
     `header a.workshopUtility[href="${alternate}"], header a.workshopUtility[href^="${alternate}?"]`
   );
-  const originalAdultDefault = adult.defaultSelected;
+  const options = Array.from(audience.options);
+  const defaults = options.map(option => option.defaultSelected);
+  const defaultAudience = options.find(option => option.defaultSelected)?.value || options[0].value;
+  const refreshEvent = new Event("change");
   let manual = false;
-  let businessIntent = false;
+  let routeAudience;
+
+  const goal = form.elements.namedItem("goal");
+  const labelText = goal?.labels?.[0]?.firstChild;
+  const defaultLabel = labelText?.textContent;
+  const defaultPlaceholder = goal?.placeholder;
+  const en = document.documentElement.lang === "en";
+
+
+  // Ingress counts trimmed UTF-8 bytes. Native maxlength counts UTF-16 units.
+  const encoder = new TextEncoder();
+  const textFields = ["name", "contact", "goal"].map(name => form.elements.namedItem(name));
+  function validateText(field) {
+    const bytes = encoder.encode(field.value.trim()).byteLength;
+    const limit = field.maxLength;
+    let msg = "";
+    if (bytes > limit) {
+      msg = en ? `Shorten this field. It uses ${bytes} of ${limit} allowed bytes.`
+               : `Сократите текст в этом поле. Сейчас ${bytes} байт, допустимо ${limit}.`;
+    } else if (field.required && field.value && bytes === 0) {
+      msg = en ? "Enter more than spaces." : "Введите текст, кроме пробелов.";
+    }
+    field.setCustomValidity(msg);
+  }
+  function validateTextFields() {
+    textFields.forEach(validateText);
+  }
+  textFields.forEach(field => {
+    field.addEventListener("input", () => validateText(field));
+    field.addEventListener("change", () => validateText(field));
+  });
+  // Programmatic values and autofill may arrive without an input event.
+  form.addEventListener("submit", event => {
+    validateTextFields();
+    if (!form.reportValidity()) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+  }, true);
+  form.addEventListener("reset", () => queueMicrotask(validateTextFields));
+  window.addEventListener("pageshow", validateTextFields);
+  validateTextFields();
+
+  function updateGoalHint() {
+    if (!goal || labelText?.nodeType !== Node.TEXT_NODE) return;
+    const team = audience.value === "business";
+    labelText.textContent = team
+      ? (en ? "Which process would your team like to pilot with AI?" : "На каком процессе команда хочет испытать ИИ?")
+      : defaultLabel;
+    goal.placeholder = team
+      ? (en ? "We want AI to draft replies to service requests. A coordinator checks each draft before sending."
+            : "Хотим, чтобы ИИ готовил черновики ответов на заявки. Перед отправкой их проверяет координатор.")
+      : defaultPlaceholder;
+  }
 
   function updateLanguageLink() {
     if (!languageLink) return;
@@ -25,26 +81,43 @@
     const program = params.getAll("program");
     const target = new URLSearchParams();
     if (program.length === 1 && program[0] === "diagnostic") target.set("program", "diagnostic");
-    if (businessIntent) target.set("audience", "business");
+    if (audience.value && audience.value !== defaultAudience) target.set("audience", audience.value);
     const query = target.toString();
-    languageLink.href = query ? alternate + "?" + query + "#application-form" : alternate;
+    const plainFormLink = !window.location.search && window.location.hash === "#application-form";
+    const audienceFormLink = routeAudience != null && window.location.hash === "#application-form";
+    const stayAtForm = query || manual || plainFormLink || audienceFormLink;
+    languageLink.href = alternate + (query ? "?" + query : "") + (stayAtForm ? "#application-form" : "");
   }
 
   function syncIntent() {
     const values = new URLSearchParams(window.location.search).getAll("audience");
-    const next = values.length === 1 && values[0] === "business";
-    if (next !== businessIntent) {
+    const next = values.length === 1 && options.some(option => option.value === values[0]) ? values[0] : null;
+    if (next !== routeAudience) {
       const selection = audience.value;
-      businessIntent = next;
-      adult.defaultSelected = !next && originalAdultDefault;
-      business.defaultSelected = next;
-      audience.value = manual ? selection : next ? "business" : "adult";
+      routeAudience = next;
+      options.forEach((option, index) => {
+        option.defaultSelected = next ? option.value === next : defaults[index];
+      });
+      audience.value = manual ? selection : next || defaultAudience;
     }
-    updateLanguageLink();
+    refreshForm();
   }
 
-  audience.addEventListener("change", () => { manual = true; });
-  form.addEventListener("reset", () => { manual = false; });
+  // Run the base form's guardian-consent handler as well after a restore or reset.
+  function refreshForm() {
+    audience.dispatchEvent(refreshEvent);
+  }
+
+  audience.addEventListener("change", event => {
+    if (event !== refreshEvent) manual = true;
+    updateLanguageLink();
+    updateGoalHint();
+  });
+  form.addEventListener("reset", () => {
+    manual = false;
+    queueMicrotask(refreshForm);
+  });
+  window.addEventListener("pageshow", refreshForm);
   // The base form refreshes its diagnostic language link on submission.
   form.addEventListener("submit", updateLanguageLink);
   window.addEventListener("popstate", syncIntent);

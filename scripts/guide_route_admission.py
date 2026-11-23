@@ -142,11 +142,53 @@ def restored_guide_routes() -> frozenset[str]:
     return frozenset(NEW_ROUTES) if active() else frozenset()
 
 
+# Only the existing URLs inherited from these verified snapshots are shared.
+# Matching this route profile is not approval to deploy its content.
+PILOT_ROUTE_MANIFESTS = {
+    "AISL_BUSINESS_PILOT_AUDIENCE_PREVIEW_adfb99a562c0961e885adc58ec14532d9493f1b575f515e196ff7eb9b4782760":
+        "c70f71cc58d4977b82600adf5b12db773606542573d28ad309cde4ad39d94799",
+    "AISL_FORM_LANGUAGE_AUDIENCE_REVIEW_R4_3f3cdef5f29a8d1da570d39b8ea0eac14d9a1f2d9b2f69ed9efe5a6d8b8c519f":
+        "ed753e4324d6fce0f1d258d8bad422730271f46a865934d32c4abab9267a6430",
+    "AISL_ADULT_GUIDE_AND_BUSINESS_PILOT_R4_REVIEW_1_6d14ccd85663e6e45b9ac81cc55a15f7fd9a3fa31a7af0af7c9e4f56ca121a65":
+        "8e7824978e4e4d7a898e8214ab4b337b92209b80b06d51dcf2dc2133d6e84793",
+}
+
+
+def pilot_snapshot_routes(live: Path) -> frozenset[str] | None:
+    from phuket_release_profile import ADULT_ROUTES, UNIVERSE_ROUTES
+    from prepare_phuket_universe_static_r1 import verify_manifest
+    from restored_guides_release import NEW_ROUTES
+
+    manifest_path = live / "_release.json"
+    raw = manifest_path.read_bytes()
+    expected_sha = PILOT_ROUTE_MANIFESTS.get(json.loads(raw).get("release_id"))
+    if expected_sha is None:
+        return None
+    if hashlib.sha256(raw).hexdigest() != expected_sha:
+        raise RouteAdmissionError("pilot snapshot manifest digest mismatch")
+    paths = list(live.rglob("*"))
+    if live.is_symlink() or any(p.is_symlink() for p in paths):
+        raise RouteAdmissionError("symlink in pilot snapshot")
+    assets = {p.relative_to(live).as_posix(): p.read_bytes() for p in paths
+              if p != manifest_path and p.is_file()}
+    verify_manifest(assets, raw)
+    expected = BASELINE_ROUTES | ADULT_ROUTES | UNIVERSE_ROUTES | NEW_ROUTES
+    actual = {route_for_html(live, live / name) for name in assets
+              if name.endswith(".html") and name != "404.html"}
+    if actual != expected:
+        raise RouteAdmissionError("pilot snapshot changed its public routes")
+    return expected
+
+
 def admitted_routes(
     approved_slugs: Iterable[str] | None = None,
 ) -> frozenset[str]:
     """Return exact allowed paths; approved_slugs is for synthetic QA only."""
     from phuket_release_profile import active, verify_integrity, UNIVERSE_ROUTES, ADULT_ROUTES
+    if approved_slugs is None:
+        pilot = pilot_snapshot_routes(Path(__file__).resolve().parents[1] / "deploy/live")
+        if pilot is not None:
+            return pilot
     if approved_slugs is None and active():
         verify_integrity()
         return BASELINE_ROUTES | ADULT_ROUTES | UNIVERSE_ROUTES | restored_guide_routes()

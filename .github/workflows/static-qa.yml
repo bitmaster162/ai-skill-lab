@@ -13,7 +13,7 @@ permissions:
 jobs:
   static-release:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -107,7 +107,7 @@ jobs:
           git archive 2444bd77f7616ba916c37b2b3bcba11898926be0 deploy/live | tar -x -C "$RUNNER_TEMP/pilot-original"
           python -B scripts/build_business_pilot_audience_preview.py "$RUNNER_TEMP/business-pilot-audience" --parent-root "$RUNNER_TEMP/pilot-original/deploy/live"
           cd "$RUNNER_TEMP/business-pilot-audience"
-          echo "c70f71cc58d4977b82600adf5b12db773606542573d28ad309cde4ad39d94799  _release.json" | sha256sum --check
+          echo "ed753e4324d6fce0f1d258d8bad422730271f46a865934d32c4abab9267a6430  _release.json" | sha256sum --check
           python -B "$GITHUB_WORKSPACE/scripts/test_pilot_audience_browser.py" . --receipt "$RUNNER_TEMP/reference-audience.json"
       - name: Check the submitted static site whenever a pull request changes its payload
         if: github.event_name == 'pull_request'
@@ -295,3 +295,30 @@ jobs:
         run: python scripts/check_lab_hub.py
       - name: Smoke-test Lab Command runtime
         run: node scripts/check_lab_command_runtime.mjs
+      - name: Rebuild and browse the exact combined adult lesson and form review
+        if: github.event_name == 'pull_request' && github.head_ref == 'review/pilot-language-r2'
+        run: |
+          python -B scripts/rebuild_joint_pilot_review.py "$RUNNER_TEMP/business-pilot-audience" "$RUNNER_TEMP/joint-pilot-review"
+          python -B scripts/test_pilot_audience_browser.py "$RUNNER_TEMP/joint-pilot-review" --exercise --receipt "$RUNNER_TEMP/joint-browser.json"
+      - name: Save the joint browser receipt
+        if: github.event_name == 'pull_request' && github.head_ref == 'review/pilot-language-r2'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: joint-pilot-browser
+          path: ${{ runner.temp }}/joint-browser.json
+          if-no-files-found: error
+      - name: Compare all release checks on the published pilot, R4, and the combined review
+        if: github.event_name == 'pull_request' && github.head_ref == 'review/pilot-language-r2'
+        run: |
+          python -B scripts/rehearse_pilot_audience_release.py \
+            --original "$RUNNER_TEMP/pilot-original/deploy/live" \
+            --candidate "$RUNNER_TEMP/business-pilot-audience" \
+            --joint "$RUNNER_TEMP/joint-pilot-review" \
+            --receipt "$RUNNER_TEMP/pilot-preflight-comparison.json"
+      - name: Save absolute preflight results and the differentials
+        if: always() && github.event_name == 'pull_request' && github.head_ref == 'review/pilot-language-r2'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: pilot-full-preflight-comparison
+          path: ${{ runner.temp }}/pilot-preflight-comparison.json
+          if-no-files-found: error

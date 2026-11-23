@@ -31,7 +31,37 @@ def serve_fixture(route, root, headers, submissions):
     return route.fulfill(path=path, content_type=media, headers=headers if path.suffix == ".html" else {})
 
 
-def check_locale(browser, root, headers, locale):
+def check_text_limits(page, form, locale, submissions):
+    fields = {name: form.locator(f'[name="{name}"]') for name in ("name", "contact", "goal")}
+    fields["name"].fill("Test")
+    fields["contact"].fill("qa@example.invalid")
+    form.locator('[name="privacyConsent"]').check()
+    before = len(submissions)
+    for name, limit in (("name", 80), ("contact", 120), ("goal", 600)):
+        field = fields[name]
+        old = field.input_value()
+        for glyph in ("я", "ก", "🙂"):
+            count = limit // len(glyph.encode()) + 1
+            field.fill(glyph * count)
+            expect(field).to_be_focused()
+            assert field.evaluate("el => el.validity.customError")
+            assert ("Сократите" if locale == "ru" else "Shorten") in field.evaluate("el => el.validationMessage")
+            form.locator('[type="submit"]').click()
+            expect(field).to_be_focused()
+            assert len(submissions) == before
+        field.fill("я" * (limit // 2))
+        assert field.evaluate("el => el.checkValidity()")
+        field.fill(old)
+
+    # Match the server's trimming, multibyte boundary and the full click-to-submit path.
+    fields["goal"].fill("  " + "я" * 300 + "  ")
+    with page.expect_response(lambda response: response.url == ORIGIN + "/api/lead"):
+        form.locator('[type="submit"]').click()
+    assert len(submissions) == before + 1
+    assert len(submissions[-1]["goal"].strip().encode()) == 600
+
+
+def check_locale(browser, root, headers, locale, exercise=False):
     prefix = "/en" if locale == "en" else ""
     guide = ORIGIN + prefix + "/guides/ai-pilot-for-small-business"
     start = prefix + "/start"
@@ -47,7 +77,20 @@ def check_locale(browser, root, headers, locale):
         guardian = form.locator('[name="adultConfirmation"]')
         submit = form.locator('[type="submit"]')
 
-        page.goto(guide)
+        if exercise:
+            page.goto(ORIGIN + prefix + "/guides/ai-first-tasks-for-adults#section-4")
+            lesson = page.locator("main article")
+            for phrase in (
+                ("Упражнение из ролика", "Анна пришлёт смету к пятнице", "Осталось выяснить")
+                if locale == "ru" else
+                ("Video exercise", "Anna will send the estimate by Friday", "still needs to establish")
+            ):
+                expect(lesson.get_by_text(phrase, exact=False)).to_be_visible()
+        page.goto(ORIGIN + prefix + "/business")
+        guide_entry = page.locator(f'main a[href="{urlsplit(guide).path}"]')
+        expect(guide_entry).to_have_count(1)
+        guide_entry.click()
+        expect(page).to_have_url(guide)
         article_links = page.locator("main article a[href]").evaluate_all(
             """(links, start) => links.filter(link => link.origin === location.origin
                 && link.pathname === start).map(link => link.getAttribute('href'))""",
@@ -95,6 +138,9 @@ def check_locale(browser, root, headers, locale):
             assert sent["privacyConsent"] == "yes"
             assert (sent.get("adultConfirmation") == "yes") == (selection in ("parent", "teen"))
         assert len(submissions) == 4
+        page.goto(ORIGIN + target)
+        expect(form).to_have_attribute("data-lead-state", "ready")
+        check_text_limits(page, form, locale, submissions)
 
         page.goto(ORIGIN + start + "?program=diagnostic&audience=business#application-form")
         expect(audience).to_have_value("business")
@@ -109,6 +155,53 @@ def check_locale(browser, root, headers, locale):
             expect(audience).to_have_value("adult")
             expect(form.locator('[name="program"]')).to_have_value(program)
 
+        alternate = "/start" if locale == "en" else "/en/start"
+        language_link = page.locator(f'header a.workshopUtility[href^="{alternate}"]')
+        # A direct form link and an explicit default audience retain position. Invalid
+        # intent alone must not transport query data or scroll the other language.
+        for source, suffix in (
+            ("#application-form", "#application-form"),
+            ("?audience=adult#application-form", "#application-form"),
+            ("?audience=unknown#application-form", ""),
+            ("?program=other&contact=qa%40example.invalid#application-form", ""),
+        ):
+            page.goto(ORIGIN + start + source)
+            expect(language_link).to_have_attribute("href", alternate + suffix)
+            language_link.click()
+            expect(page).to_have_url(ORIGIN + alternate + suffix)
+            expect(audience).to_have_value("adult")
+
+        for initial in ("adult", "business"):
+            for selected in ("adult", "parent", "teen", "business"):
+                page.goto(ORIGIN + start + "?program=diagnostic&audience=" + initial + "#application-form")
+                expect(audience).to_have_value(initial)
+                audience.select_option(selected)
+                language_link.click()
+                expect(page).to_have_url(ORIGIN + alternate + "?program=diagnostic"
+                                         + ("&audience=" + selected if selected != "adult" else "")
+                                         + "#application-form")
+                expect(audience).to_have_value(selected)
+                expect(form.locator('[name="program"]')).to_have_value("diagnostic")
+                assert guardian.evaluate("el => el.required") == (selected in ("parent", "teen"))
+                expect(guardian).not_to_be_checked()
+
+        page.goto(ORIGIN + start)
+        audience.select_option("business")
+        expect(language_link).to_have_attribute("href", alternate + BUSINESS)
+        language_link.click()
+        expect(audience).to_have_value("business")
+        audience.select_option("adult")
+        page.locator(f'header a.workshopUtility[href^="{start}"]').click()
+        expect(page).to_have_url(ORIGIN + start + "#application-form")
+        expect(audience).to_have_value("adult")
+
+        page.goto(ORIGIN + start + "?audience=parent")
+        audience.select_option("business")
+        page.evaluate("document.querySelector('#application-form').reset()")
+        expect(audience).to_have_value("parent")
+        expect(guardian).to_be_visible()
+        expect(language_link).to_have_attribute("href", alternate + "?audience=parent#application-form")
+
     return {"guide": urlsplit(guide).path, "application_links": article_links,
             "simulated_submissions": len(submissions)}
 
@@ -117,6 +210,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("static_root", type=Path, help="Directory containing the static release")
     parser.add_argument("--receipt", type=Path, help="Write the offline result and tested manifest hash as JSON")
+    parser.add_argument("--exercise", action="store_true", help="check the reviewed adult lesson, too")
     args = parser.parse_args()
     root = args.static_root.resolve()
     paths = list(root.rglob("*"))
@@ -131,11 +225,13 @@ if __name__ == "__main__":
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(executable_path=browser_path())
         try:
-            results = {locale: check_locale(browser, root, headers, locale) for locale in ("ru", "en")}
+            results = {locale: check_locale(browser, root, headers, locale, exercise=args.exercise) for locale in ("ru", "en")}
         finally:
             browser.close()
     if args.receipt:
         receipt = {"manifest_sha256": sha(manifest_raw),
                    "release_id": manifest["release_id"], "locales": results}
+        if args.exercise:
+            receipt["adult_exercise_locales"] = sorted(results)
         args.receipt.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
-    print("Pilot audience verified: six guide links, eight simulated submissions, zero live requests.")
+    print("Pilot audience verified: six guide links, ten simulated submissions, zero live requests.")
