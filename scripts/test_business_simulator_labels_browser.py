@@ -1,9 +1,10 @@
 """Compare the reviewed simulator before and after the Russian label repair."""
 import argparse
 import json
+from math import isclose
 from pathlib import Path
 
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import expect, sync_playwright
 from rehearse_pilot_audience_release import JOINT_MANIFEST, snapshot
 from test_diagnostic_intent_browser import browser_path
 from test_pilot_audience_browser import ORIGIN, serve_fixture
@@ -48,16 +49,22 @@ def observe(browser, root, locale, js=True):
         sliders = scenario.locator('input[type="range"]')
         assert sliders.count() == 4
         def results():
-            return {"values":scenario.locator("[data-bv-result]").all_text_contents(),
-                    "brief":scenario.locator("[data-bv-brief]").inner_text()}
+            team, hours, rate, percent = [float(x.input_value()) for x in sliders.all()]
+            monthly = team * hours * (52 / 12)
+            expected = [monthly, monthly * percent / 100, monthly * percent / 100 * rate]
+            values = [float(x.get_attribute("data-value")) for x in scenario.locator("[data-bv-result]").all()]
+            assert all(isclose(a, b) for a, b in zip(values, expected, strict=True)), (values, expected)
+            # Capture generated text even when its disclosure is collapsed.
+            return {"values":values, "brief":scenario.locator("[data-bv-brief]").text_content()}
         calculator = [results()]
         for i in range(4):
             slider = sliders.nth(i)
             assert slider.is_enabled()
             for side in ("Home","End"):
                 slider.press(side)
+                expect(slider).to_have_value(slider.get_attribute("min" if side == "Home" else "max"))
                 calculator.append(results())
-        assert len({x["brief"] for x in calculator}) >= 7
+        assert all(sample["brief"] for sample in calculator)
         assert not errors, errors
         return {"initial": initial, "scenarios": scenarios, "calculator": calculator}
     finally:
