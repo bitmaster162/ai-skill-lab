@@ -32,8 +32,19 @@ def build(parent: Path, output: Path) -> None:
     for field in ("signal", "success"):
         require(f'id="pilot-{field}">{data["knowledge"][field]}<' in page,
                 f"source and initial HTML disagree for {field}")
+    # The default scenario already exists in the server-rendered DOM. Capture it
+    # before the first click so returning to it restores exactly the same words.
+    # Button labels are static markup; this runtime only renders scenario fields.
+    del data["knowledge"]
+    for scenario in data.values():
+        del scenario["label"]
     body = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
     updated = original[:match.start(1)] + body + original[match.end(1):]
+    hook = "buttons.forEach(b=>b.addEventListener"
+    require(updated.count(hook) == 1, "unexpected simulator initialization")
+    capture = ("D.knowledge={};for(const k of Object.keys(D.documents))"
+               "D.knowledge[k]=document.getElementById('pilot-'+k).textContent;")
+    updated = updated.replace(hook, capture + hook)
     files["business.html"] = page.replace(original, updated, 1).encode("utf-8")
     policy = files["vercel.json"]
     old_hash, new_hash = [b64encode(sha256(s.encode("utf-8")).digest()) for s in (original, updated)]
@@ -41,7 +52,7 @@ def build(parent: Path, output: Path) -> None:
     files["vercel.json"] = policy.replace(old_hash, new_hash)
     rows = file_index(files)
     payload = payload_digest(rows)
-    version = "AISL_BUSINESS_SIMULATOR_LABELS_R1_REVIEW_" + payload
+    version = "AISL_BUSINESS_SIMULATOR_LABELS_R2_REVIEW_" + payload
     files[MANIFEST] = manifest_bytes({"schema": "ai-skill-lab.static-release.v1", "files": rows,
         "file_count": len(rows), "release_id": version, "patch_id": version,
         "parent_manifest_sha256": JOINT_MANIFEST, "payload_sha256": payload})

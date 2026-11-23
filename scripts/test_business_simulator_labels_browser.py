@@ -8,7 +8,7 @@ from rehearse_pilot_audience_release import JOINT_MANIFEST, snapshot
 from test_diagnostic_intent_browser import browser_path
 from test_pilot_audience_browser import ORIGIN, serve_fixture
 
-CANDIDATE = "46faff5923c7f310e05b9fd2559341266904b66554389981f9510311da342a00"
+CANDIDATE = "0e2702981427152474dbdfbe12380bdd02b9ea08fa9dc3ab73ed5931941550b7"
 KEYS = ("knowledge", "documents", "routing", "decision")
 FIELDS = ("title", "signal", "scope", "ai", "human", "success", "stop", "artifact")
 STATUS = ["ПРИВЯЗАНО К ИСТОЧНИКУ", "ПРОВЕРЯЕМО", "MEASURABLE", "ПОД КОНТРОЛЕМ ЧЕЛОВЕКА"]
