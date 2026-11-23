@@ -6,6 +6,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from playwright.sync_api import expect, sync_playwright
+from prepare_phuket_universe_static_r1 import sha, verify_manifest
 from test_diagnostic_intent_browser import browser_path
 
 ORIGIN = "https://127.0.0.1"
@@ -46,7 +47,15 @@ def check_locale(browser, root, headers, locale):
         guardian = form.locator('[name="adultConfirmation"]')
         submit = form.locator('[type="submit"]')
 
-        for index in range(3):
+        page.goto(guide)
+        article_links = page.locator("main article a[href]").evaluate_all(
+            """(links, start) => links.filter(link => link.origin === location.origin
+                && link.pathname === start).map(link => link.getAttribute('href'))""",
+            start,
+        )
+        if article_links != [target] * 3:
+            raise AssertionError(f"{locale} pilot application links: {article_links!r}")
+        for index in range(len(article_links)):
             page.goto(guide)
             calls_to_action = page.locator(f'main a[href="{target}"]')
             expect(calls_to_action).to_have_count(3)
@@ -100,19 +109,33 @@ def check_locale(browser, root, headers, locale):
             expect(audience).to_have_value("adult")
             expect(form.locator('[name="program"]')).to_have_value(program)
 
+    return {"guide": urlsplit(guide).path, "application_links": article_links,
+            "simulated_submissions": len(submissions)}
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("static_root", type=Path, help="Directory containing the static release")
-    root = parser.parse_args().static_root.resolve()
+    parser.add_argument("--receipt", type=Path, help="Write the offline result and tested manifest hash as JSON")
+    args = parser.parse_args()
+    root = args.static_root.resolve()
+    paths = list(root.rglob("*"))
+    if any(path.is_symlink() for path in paths):
+        raise ValueError("Unexpected symlink in static site")
+    assets = {path.relative_to(root).as_posix(): path.read_bytes() for path in paths if path.is_file()}
+    manifest_raw = assets.pop("_release.json")
+    manifest = verify_manifest(assets, manifest_raw)
     config = json.loads((root / "vercel.json").read_bytes())
     headers = next({h["key"]: h["value"] for h in rule["headers"]}
                    for rule in config["headers"] if rule["source"] == "/(.*)")
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(executable_path=browser_path())
         try:
-            for locale in ("ru", "en"):
-                check_locale(browser, root, headers, locale)
+            results = {locale: check_locale(browser, root, headers, locale) for locale in ("ru", "en")}
         finally:
             browser.close()
+    if args.receipt:
+        receipt = {"manifest_sha256": sha(manifest_raw),
+                   "release_id": manifest["release_id"], "locales": results}
+        args.receipt.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
     print("Pilot audience verified: six guide links, eight simulated submissions, zero live requests.")

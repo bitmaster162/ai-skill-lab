@@ -30,14 +30,14 @@ def require(condition: bool, message: str) -> None:
         raise ValueError(message)
 
 
-def load_parent() -> tuple[dict, dict[str, bytes]]:
-    raw = (LIVE / MANIFEST).read_bytes()
+def load_parent(parent_root: Path) -> tuple[dict, dict[str, bytes]]:
+    raw = (parent_root / MANIFEST).read_bytes()
     require(digest(raw) == PARENT_SHA256, "unexpected parent manifest")
     parent = json.loads(raw)
     files = {}
     for row in parent["files"]:
         name = row["path"]
-        contents = (LIVE / name).read_bytes()
+        contents = (parent_root / name).read_bytes()
         require(record(name, contents) == row, f"parent asset mismatch: {name}")
         files[name] = contents
     return parent, files
@@ -58,8 +58,8 @@ def article_links(raw: bytes, start: str) -> bytes:
     return raw[:match.start()] + after + raw[match.end():]
 
 
-def build_files() -> tuple[dict[str, bytes], dict]:
-    parent, files = load_parent()
+def build_files(parent_root: Path = LIVE) -> tuple[dict[str, bytes], dict]:
+    parent, files = load_parent(parent_root)
     for locale in ("", "en/"):
         start = "/" + locale + "start"
         name = locale + GUIDE
@@ -102,10 +102,12 @@ def write_preview(output: Path, files: dict[str, bytes]) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output", type=Path, help="separate directory for the complete static preview")
+    parser.add_argument("--parent-root", type=Path, default=LIVE,
+                        help="Directory containing the original 116-asset parent release")
     args = parser.parse_args()
     output = args.output.resolve()
     require(not output.is_relative_to(LIVE.resolve()), "choose an output outside deploy/live")
-    files, manifest = build_files()
+    files, manifest = build_files(args.parent_root)
     write_preview(output, files)
     print(json.dumps({"directory": str(output), "assets": manifest["file_count"],
                       "changed_assets": 3, "manifest_sha256": digest(files[MANIFEST]),
