@@ -100,6 +100,11 @@ jobs:
         run: pip install --disable-pip-version-check playwright==1.55.0
       - name: Follow diagnostic CTAs and verify mocked form intent in Chrome
         run: python -B scripts/test_diagnostic_intent_browser.py
+      - name: Verify the business-pilot audience candidate in both languages
+        run: |
+          git apply --check docs/release-candidates/business-pilot-audience/next-source.patch
+          python -B scripts/build_business_pilot_audience_preview.py "$RUNNER_TEMP/business-pilot-audience"
+          python -B scripts/test_pilot_audience_browser.py "$RUNNER_TEMP/business-pilot-audience"
       - name: Verify exact adult analytics successor
         run: python -B scripts/test_adult_analytics_release.py
       - name: Test optional adult pageview consent boundaries

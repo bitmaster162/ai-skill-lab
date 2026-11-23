@@ -1,0 +1,156 @@
+diff --git a/components/LeadForm.tsx b/components/LeadForm.tsx
+index 57341705789df5ad1e73cf2571c037d1fd919059..3506218d5c6004a73fdf037a824997a42b4d0be1 100644
+--- a/components/LeadForm.tsx
++++ b/components/LeadForm.tsx
+@@ -4,6 +4,7 @@ import Link from "next/link";
+ import { usePathname, useSearchParams } from "next/navigation";
+ import { FormEvent, Suspense, useRef, useState, useSyncExternalStore } from "react";
+ import { startInquiryProgram } from "@/lib/diagnostic-intent";
++import { isBusinessStart } from "@/lib/start-audience";
+ import { site } from "@/lib/site";
+ import { ArrowIcon } from "./ArrowIcon";
+
+@@ -26,6 +27,12 @@ function StartProgramInput() {
+   return <input type="hidden" name="program" value={program} />;
+ }
+
++export function StartLeadForm({ locale }: { locale: Locale }) {
++  const pathname = usePathname();
++  const params = useSearchParams();
++  return <LeadForm locale={locale} defaultAudience={isBusinessStart(pathname, params) ? "business" : "adult"} />;
++}
++
+ export function LeadForm({
+   defaultAudience = "adult",
+   locale = "ru",
+@@ -42,7 +49,8 @@ export function LeadForm({
+   );
+   const inFlight = useRef(false);
+   const [message, setMessage] = useState("");
+-  const [audience, setAudience] = useState<Audience>(defaultAudience);
++  const [chosenAudience, setChosenAudience] = useState<Audience | null>(null);
++  const audience = chosenAudience ?? defaultAudience;
+   const en = locale === "en";
+   const kidsProgram = program.startsWith("kids-");
+   const teenProgram = program.startsWith("teens-");
+@@ -84,7 +92,7 @@ export function LeadForm({
+       const result = (await response.json()) as { ok?: boolean; error?: string };
+       if (!response.ok || !result || result.ok !== true) throw new Error(result.error || (en ? "Could not send the application" : "Не удалось отправить заявку"));
+       form.reset();
+-      setAudience(defaultAudience);
++      setChosenAudience(null);
+       setState("sent");
+       window.dispatchEvent(new CustomEvent("asl:lead-event", { detail: { event: "lead_submit_ok" } }));
+       setMessage(en ? "Application sent. We reply within 1–2 business days." : "Заявка отправлена. Ответим в течение 1–2 рабочих дней.");
+@@ -119,7 +127,7 @@ export function LeadForm({
+         </label>
+         <label>
+           {en ? "I am" : "Кто вы"}
+-          <select name="audience" value={audience} onChange={(event) => setAudience(event.target.value as Audience)}>
++          <select name="audience" value={audience} onChange={(event) => setChosenAudience(event.target.value as Audience)}>
+             {kidsProgram ? <option value="parent">{en ? "A parent / guardian" : "Я родитель / опекун"}</option> : null}
+             {teenProgram ? <><option value="parent">{en ? "A parent / guardian" : "Я родитель / опекун"}</option><option value="teen">{en ? "Teen program — adult contact" : "Программа 14–18 — контакт взрослого"}</option></> : null}
+             {!youthProgram ? <><option value="adult">{en ? "Learning for myself" : "Хочу учиться сам(а)"}</option><option value="parent">{en ? "A parent / guardian" : "Я родитель / опекун"}</option><option value="teen">{en ? "Teen program — adult contact" : "Программа 14–18 — контакт взрослого"}</option><option value="business">{en ? "Team / business" : "Для команды / бизнеса"}</option></> : null}
+diff --git a/components/guides/GuidePages.tsx b/components/guides/GuidePages.tsx
+index 49603bb6c9ce2b8724e3c3d67e1f33c337a6d698..6e9ef97db2f64b45c02b6d9ce0207a0828e60c60 100644
+--- a/components/guides/GuidePages.tsx
++++ b/components/guides/GuidePages.tsx
+@@ -2,6 +2,7 @@ import Link from "next/link";
+ import { JsonLd } from "@/components/JsonLd";
+ import { WorkshopShell, type WorkshopLocale } from "@/components/workshop/WorkshopShell";
+ import { formatGuideDate, renderGuideMarkdown, type Guide } from "@/lib/guides";
++import { businessApplicationHref } from "@/lib/start-audience";
+ import styles from "./GuidePages.module.css";
+
+ const ORIGIN = "https://aiskillab.work";
+@@ -67,7 +68,13 @@ export function GuideListing({ locale, guides }: { locale: WorkshopLocale; guide
+
+ export function GuideArticle({ guide }: { guide: Guide }) {
+   const en = guide.meta.lang === "en";
+-  const doc = renderGuideMarkdown(guide.markdown);
++  const startPath = en ? "/en/start" : "/start";
++  const businessPilot = guide.slug === "ai-pilot-for-small-business";
++  const applicationHref = businessPilot ? businessApplicationHref(guide.meta.lang) : `${startPath}#application-form`;
++  const markdown = businessPilot
++    ? guide.markdown.replaceAll(`](${startPath})`, `](${applicationHref})`)
++    : guide.markdown;
++  const doc = renderGuideMarkdown(markdown);
+   if (doc.h1 !== guide.meta.title) throw new Error(`guide H1/title mismatch: ${guide.meta.path}`);
+   const schema = guideSchema(guide);
+   const applicationLabel = applicationLinks[guide.slug]?.[guide.meta.lang];
+@@ -96,7 +103,7 @@ export function GuideArticle({ guide }: { guide: Guide }) {
+             <ol>{doc.toc.map((item) => <li key={item.id}><a href={`#${item.id}`}>{item.label}</a></li>)}</ol>
+           </nav>
+           <div className={styles.body} dangerouslySetInnerHTML={{ __html: doc.bodyHtml }} />
+-          {applicationLabel && <p><Link className={styles.cardLink} href={en ? "/en/start#application-form" : "/start#application-form"}>{applicationLabel}</Link></p>}
++          {applicationLabel && <p><Link className={styles.cardLink} href={applicationHref}>{applicationLabel}</Link></p>}
+         </article>
+       </main>
+     </WorkshopShell>
+diff --git a/components/workshop/StartLanguageLink.tsx b/components/workshop/StartLanguageLink.tsx
+index 7a7a5e57f2ed8c4892b6d4a5a7252d5d6cb4fc75..d317eb8b4f9f4e7c5d08b2b7d32e1a017dd381c9 100644
+--- a/components/workshop/StartLanguageLink.tsx
++++ b/components/workshop/StartLanguageLink.tsx
+@@ -2,6 +2,7 @@
+
+ import { usePathname, useSearchParams } from "next/navigation";
+ import { diagnosticApplicationHref, startInquiryProgram } from "@/lib/diagnostic-intent";
++import { businessApplicationHref, isBusinessStart } from "@/lib/start-audience";
+ import styles from "./WorkshopShell.module.css";
+
+ type Props = { targetLocale: "ru" | "en"; alternateHref: string };
+@@ -9,8 +10,12 @@ type Props = { targetLocale: "ru" | "en"; alternateHref: string };
+ export function StartLanguageLink({ targetLocale, alternateHref }: Props) {
+   const pathname = usePathname();
+   const params = useSearchParams();
+-  const href = startInquiryProgram(pathname, params) === "diagnostic"
+-    ? diagnosticApplicationHref(targetLocale)
+-    : alternateHref;
++  const diagnostic = startInquiryProgram(pathname, params) === "diagnostic";
++  let href = alternateHref;
++  if (isBusinessStart(pathname, params)) {
++    href = businessApplicationHref(targetLocale, diagnostic);
++  } else if (diagnostic) {
++    href = diagnosticApplicationHref(targetLocale);
++  }
+   return <a className={styles.utility} href={href} referrerPolicy="no-referrer">{targetLocale.toUpperCase()}</a>;
+ }
+diff --git a/components/workshop/WorkshopStart.tsx b/components/workshop/WorkshopStart.tsx
+index 1f20bb685ef46e54771731fec4fb5708b0e78ea6..6b0a27b8440ef17f54732bc1067133962937f0b5 100644
+--- a/components/workshop/WorkshopStart.tsx
++++ b/components/workshop/WorkshopStart.tsx
+@@ -1,6 +1,7 @@
+ import Link from "next/link";
++import { Suspense } from "react";
+ import { CopyBriefButton } from "@/components/CopyBriefButton";
+-import { LeadForm } from "@/components/LeadForm";
++import { LeadForm, StartLeadForm } from "@/components/LeadForm";
+ import { IntroCallCta } from "@/components/IntroCallCta";
+ import { sessionDurationMinutes } from "@/lib/commercial";
+ import { introCall } from "@/lib/e1_4";
+@@ -32,7 +33,7 @@ export function WorkshopStart({ locale = "ru" }: { locale?: WorkshopLocale }) {
+     <WorkshopShell locale={locale} alternateHref={en ? "/start" : "/en/start"} showReach={false}>
+       <main id="main">
+         <section className={styles.startHero}><span>{en ? "START · APPLICATION + CONTACT" : "НАЧАЛО · ЗАЯВКА + КОНТАКТ"}</span><h1>{en ? <>Start with a free<br/><em>15-minute call.</em></> : <>Начните с бесплатного звонка<br/><em>на 15 минут.</em></>}</h1><p>{en ? `A session is ${sessionDurationMinutes} minutes. Use the application form or a direct channel; for a minor, coordination stays with an adult.` : `Сессия длится ${sessionDurationMinutes} минут. Для обучения ИИ оставьте заявку или используйте прямой канал; для несовершеннолетнего контакт ведёт взрослый.`}</p><IntroCallCta locale={locale} bookingHref={introCall.calcomUrl}/></section>
+-        <section className={styles.section} id="application-form"><div className={styles.sectionHead}><span>{en ? "APPLICATION" : "ЗАЯВКА"}</span><h2>{en ? "Send a short application. Direct channels remain available below." : "Оставьте короткую заявку. Прямые каналы остаются ниже."}</h2></div><LeadForm locale={locale}/><p className={styles.dataNote}>{en ? "Do not send identity documents, passwords, API keys, payment data or a child’s direct contact." : "Не присылайте документы, пароли, API-ключи, платёжные данные или прямой контакт ребёнка."}</p></section>
++        <section className={styles.section} id="application-form"><div className={styles.sectionHead}><span>{en ? "APPLICATION" : "ЗАЯВКА"}</span><h2>{en ? "Send a short application. Direct channels remain available below." : "Оставьте короткую заявку. Прямые каналы остаются ниже."}</h2></div><Suspense fallback={<LeadForm locale={locale} />}><StartLeadForm locale={locale} /></Suspense><p className={styles.dataNote}>{en ? "Do not send identity documents, passwords, API keys, payment data or a child’s direct contact." : "Не присылайте документы, пароли, API-ключи, платёжные данные или прямой контакт ребёнка."}</p></section>
+         <section className={styles.section}><div className={styles.sectionHead}><span>{en ? "DIRECT CONTACT" : "ПРЯМОЙ КОНТАКТ"}</span><h2>{en ? "Prefer a messenger or email? Four direct routes remain." : "Предпочитаете мессенджер или email? Четыре прямых канала остаются."}</h2></div><ChannelLinks locale={locale}/><p className={styles.dataNote}>{en ? "For minors, organizational communication uses an adult contact only." : "Для несовершеннолетних организационная коммуникация идёт только через контакт взрослого."}</p><p className={styles.reachReply}>{en ? "Reply within 1–2 business days." : "Ответ в течение 1–2 рабочих дней."}</p></section>
+         <section className={`${styles.section} ${styles.panelSection}`}><div className={styles.sectionHead}><span>{en ? "CHOOSE A BRIEF" : "ВЫБЕРИТЕ КОРОТКОЕ ОПИСАНИЕ ЗАДАЧИ"}</span><h2>{en ? "Five messages that remove an unnecessary call." : "Пять сообщений, которые экономят лишний созвон."}</h2></div><noscript><p>{en ? "Copy the fields manually and use one of the channels above." : "Перепишите пункты вручную и используйте один из каналов выше."}</p></noscript><div className={styles.briefGrid}>{briefs.map((brief, index) => <article className={styles.briefCard} key={brief.meta} id={index === 3 ? "studio-brief" : index === 4 ? "business-brief" : undefined}><span>{brief.meta}</span><h3>{brief.title}</h3><ol>{brief.lines.map(line => <li key={line}>{line}</li>)}</ol><CopyBriefButton title={brief.title} lines={[...brief.lines]} locale={locale}/><Link href={brief.href}>{en ? "View track →" : "Посмотреть направление →"}</Link></article>)}</div></section>
+         <section className={`${styles.section} ${styles.paper}`}><div className={styles.sectionHead}><span>{en ? "NEXT" : "ДАЛЬШЕ"}</span><h2>{en ? "No hidden checkout." : "Без скрытой онлайн-оплаты."}</h2></div><ol className={styles.nextSteps}><li>{en ? "Confirm the goal and format." : "Сверяем цель и формат."}</li><li>{en ? "Recommend a package or smaller start." : "Предлагаем пакет или более короткий старт."}</li><li>{en ? "Confirm scope, schedule, payment and rescheduling in writing." : "Письменно подтверждаем объём работ, расписание, оплату и переносы."}</li><li>{en ? "Only then does the program start." : "Только после этого начинается программа."}</li></ol></section>
+diff --git a/lib/start-audience.ts b/lib/start-audience.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..bbbbb0753b1252967a892186287cdbeaf89bd30f
+--- /dev/null
++++ b/lib/start-audience.ts
+@@ -0,0 +1,11 @@
++export function isBusinessStart(pathname: string | null, params: Pick<URLSearchParams, "getAll"> | null): boolean {
++  if (pathname !== "/start" && pathname !== "/en/start") return false;
++  const values = params?.getAll("audience");
++  return values?.length === 1 && values[0] === "business";
++}
++
++export function businessApplicationHref(locale: "ru" | "en", diagnostic = false): string {
++  const prefix = locale === "en" ? "/en" : "";
++  const query = diagnostic ? "program=diagnostic&audience=business" : "audience=business";
++  return `${prefix}/start?${query}#application-form`;
++}
