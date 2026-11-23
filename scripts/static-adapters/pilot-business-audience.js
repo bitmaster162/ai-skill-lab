@@ -48,7 +48,9 @@
     if (program.length === 1 && program[0] === "diagnostic") target.set("program", "diagnostic");
     if (audience.value && audience.value !== defaultAudience) target.set("audience", audience.value);
     const query = target.toString();
-    const stayAtForm = query || manual || window.location.hash === "#application-form";
+    const plainFormLink = !window.location.search && window.location.hash === "#application-form";
+    const audienceFormLink = routeAudience != null && window.location.hash === "#application-form";
+    const stayAtForm = query || manual || plainFormLink || audienceFormLink;
     languageLink.href = alternate + (query ? "?" + query : "") + (stayAtForm ? "#application-form" : "");
   }
 

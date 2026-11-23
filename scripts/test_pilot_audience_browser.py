@@ -115,6 +115,20 @@ def check_locale(browser, root, headers, locale):
 
         alternate = "/start" if locale == "en" else "/en/start"
         language_link = page.locator(f'header a.workshopUtility[href^="{alternate}"]')
+        # A direct form link and an explicit default audience retain position. Invalid
+        # intent alone must not transport query data or scroll the other language.
+        for source, suffix in (
+            ("#application-form", "#application-form"),
+            ("?audience=adult#application-form", "#application-form"),
+            ("?audience=unknown#application-form", ""),
+            ("?program=other&contact=qa%40example.invalid#application-form", ""),
+        ):
+            page.goto(ORIGIN + start + source)
+            expect(language_link).to_have_attribute("href", alternate + suffix)
+            language_link.click()
+            expect(page).to_have_url(ORIGIN + alternate + suffix)
+            expect(audience).to_have_value("adult")
+
         for initial in ("adult", "business"):
             for selected in ("adult", "parent", "teen", "business"):
                 page.goto(ORIGIN + start + "?program=diagnostic&audience=" + initial + "#application-form")

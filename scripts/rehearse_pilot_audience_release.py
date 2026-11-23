@@ -1,4 +1,4 @@
-"""Compare the complete preflight on the published bilingual pilot and its reviewed R2.
+"""Compare the complete preflight on the published bilingual pilot and its reviewed R3.
 
 The report is diagnostic. Its release preflight status stays failed whenever any
 gate fails, including a gate that already failed on the published snapshot.
@@ -14,14 +14,15 @@ import subprocess
 import sys
 from tempfile import TemporaryDirectory
 
-from build_business_pilot_audience_preview import MANIFEST, R1_MANIFEST_SHA256, digest, require
+from build_business_pilot_audience_preview import MANIFEST, R2_MANIFEST_SHA256, digest, require
 from preflight_release import CHECKS
 from prepare_phuket_universe_static_r1 import verify_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLISHED_BUILDER = "da921cb58fe7cd2b03265d3681508d1be432509e"
 PUBLISHED = "c70f71cc58d4977b82600adf5b12db773606542573d28ad309cde4ad39d94799"
-CANDIDATE = "6c721edc6a40aa16080180db847e3ad2d18128358b62db7cce988791a693245c"
+R2_BUILDER = "57175d50e7d35a2c7bdfc1277b30a6f11abc0e13"
+CANDIDATE = "39b725e547cf639f1800807a96cad78fe2690262b7766a9f47b64179eb5e4ba9"
 CHANGED = {"business.html", "en/business.html", "lead-form-runtime.js"}
 BUILDER = "scripts/build_business_pilot_audience_preview.py"
 ADAPTER = "scripts/static-adapters/pilot-business-audience.js"
@@ -35,26 +36,29 @@ def snapshot(site: Path, expected_digest: str) -> dict[str, bytes]:
     require(digest(manifest) == expected_digest, "unrecognized release manifest")
     verified = verify_manifest(assets, manifest)
     if expected_digest == CANDIDATE:
-        require(verified["parent_manifest_sha256"] == R1_MANIFEST_SHA256, "unexpected R2 parent")
+        require(verified["parent_manifest_sha256"] == R2_MANIFEST_SHA256, "unexpected R3 parent")
     return assets
 
 
-def build_published(work: Path, original: Path) -> Path:
-    builder_root = work / "published-builder"
+def build_historical(work: Path, original: Path, commit: str, label: str) -> Path:
+    builder_root = work / (label + "-builder")
     for name in (BUILDER, ADAPTER):
         target = builder_root / name
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(subprocess.check_output(["git", "show", f"{PUBLISHED_BUILDER}:{name}"], cwd=ROOT))
-    output = work / "published"
+        target.write_bytes(subprocess.check_output(["git", "show", f"{commit}:{name}"], cwd=ROOT))
+    output = work / label
     subprocess.run([sys.executable, "-B", str(builder_root / BUILDER), str(output),
                     "--parent-root", str(original)], cwd=ROOT, check=True)
     return output
 
 
-def compare_scope(published: Path, candidate: Path) -> list[str]:
+def compare_scope(published: Path, previous: Path, candidate: Path) -> list[str]:
     old = snapshot(published, PUBLISHED)
     new = snapshot(candidate, CANDIDATE)
-    require(old.keys() == new.keys(), "asset inventory changed")
+    r2 = snapshot(previous, R2_MANIFEST_SHA256)
+    require(old.keys() == r2.keys() == new.keys(), "asset inventory changed")
+    require({name for name in r2 if r2[name] != new[name]} == {"lead-form-runtime.js"},
+            "R3 must change only the form runtime relative to R2")
     changed = {name for name in old if old[name] != new[name]}
     require(changed == CHANGED, f"unexpected changes: {sorted(changed)}")
     return sorted(changed)
@@ -88,15 +92,17 @@ def failures(results: dict) -> set[str]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--original", required=True, type=Path, help="original sealed static builder input")
-    parser.add_argument("--candidate", required=True, type=Path, help="assembled R2 static directory")
+    parser.add_argument("--candidate", required=True, type=Path, help="assembled R3 static directory")
     parser.add_argument("--receipt", required=True, type=Path)
     args = parser.parse_args()
     revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     require((ROOT / "node_modules/eslint/bin/eslint.js").is_file(), "locked npm dependencies required")
     with TemporaryDirectory(prefix="pilot-preflight-") as tmp:
         work = Path(tmp)
-        published = build_published(work, args.original.resolve())
-        changed = compare_scope(published, args.candidate)
+        original = args.original.resolve()
+        published = build_historical(work, original, PUBLISHED_BUILDER, "published")
+        previous = build_historical(work, original, R2_BUILDER, "r2")
+        changed = compare_scope(published, previous, args.candidate)
         before = run_preflight(work / "control", published, PUBLISHED, revision)
         after = run_preflight(work / "review", args.candidate.resolve(), CANDIDATE, revision)
     old = failures(before["checks"])
@@ -104,7 +110,7 @@ def main() -> int:
     summary = {"tested_per_snapshot": len(after["checks"]), "previously_passing_now_failing": sorted(new - old),
                "failing_on_both": sorted(new & old), "now_passing": sorted(old - new)}
     receipt = {"schema": "ai-skill-lab.pilot-preflight-comparison.v1", "git": revision,
-               "changed_assets": changed, "published": before, "candidate": after, "summary": summary}
+               "changed_assets": changed, "previous_candidate": R2_MANIFEST_SHA256, "published": before, "candidate": after, "summary": summary}
     args.receipt.write_text(json.dumps(receipt, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps(summary))
     return int(bool(new - old))
