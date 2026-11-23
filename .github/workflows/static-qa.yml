@@ -109,6 +109,17 @@ jobs:
           cd "$RUNNER_TEMP/business-pilot-audience"
           echo "ed753e4324d6fce0f1d258d8bad422730271f46a865934d32c4abab9267a6430  _release.json" | sha256sum --check
           python -B "$GITHUB_WORKSPACE/scripts/test_pilot_audience_browser.py" . --receipt "$RUNNER_TEMP/reference-audience.json"
+      - name: Verify all simulator scenarios and calculator controls on the reviewed successor
+        run: |
+          python -B scripts/rebuild_joint_pilot_review.py "$RUNNER_TEMP/business-pilot-audience" "$RUNNER_TEMP/labels-parent"
+          python -B scripts/build_business_simulator_labels_preview.py "$RUNNER_TEMP/labels-parent" "$RUNNER_TEMP/labels-candidate"
+          python -B scripts/test_business_simulator_labels_browser.py "$RUNNER_TEMP/labels-parent" "$RUNNER_TEMP/labels-candidate" > "$RUNNER_TEMP/labels-browser.json"
+      - name: Save the simulator before-and-after browser comparison
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: simulator-labels-browser
+          path: ${{ runner.temp }}/labels-browser.json
+          if-no-files-found: error
       - name: Check the submitted static site whenever a pull request changes its payload
         if: github.event_name == 'pull_request'
         env:
