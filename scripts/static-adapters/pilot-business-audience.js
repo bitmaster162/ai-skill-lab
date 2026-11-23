@@ -28,6 +28,41 @@
   const defaultPlaceholder = goal?.placeholder;
   const en = document.documentElement.lang === "en";
 
+
+  // Ingress counts trimmed UTF-8 bytes. Native maxlength counts UTF-16 units.
+  const encoder = new TextEncoder();
+  const textFields = ["name", "contact", "goal"].map(name => form.elements.namedItem(name));
+  function validateText(field) {
+    const bytes = encoder.encode(field.value.trim()).byteLength;
+    const limit = field.maxLength;
+    let msg = "";
+    if (bytes > limit) {
+      msg = en ? `Shorten this field. It uses ${bytes} of ${limit} allowed bytes.`
+               : `Сократите текст в этом поле. Сейчас ${bytes} байт, допустимо ${limit}.`;
+    } else if (field.required && field.value && bytes === 0) {
+      msg = en ? "Enter more than spaces." : "Введите текст, кроме пробелов.";
+    }
+    field.setCustomValidity(msg);
+  }
+  function validateTextFields() {
+    textFields.forEach(validateText);
+  }
+  textFields.forEach(field => {
+    field.addEventListener("input", () => validateText(field));
+    field.addEventListener("change", () => validateText(field));
+  });
+  // Programmatic values and autofill may arrive without an input event.
+  form.addEventListener("submit", event => {
+    validateTextFields();
+    if (!form.reportValidity()) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+  }, true);
+  form.addEventListener("reset", () => queueMicrotask(validateTextFields));
+  window.addEventListener("pageshow", validateTextFields);
+  validateTextFields();
+
   function updateGoalHint() {
     if (!goal || labelText?.nodeType !== Node.TEXT_NODE) return;
     const team = audience.value === "business";

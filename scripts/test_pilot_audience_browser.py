@@ -31,6 +31,36 @@ def serve_fixture(route, root, headers, submissions):
     return route.fulfill(path=path, content_type=media, headers=headers if path.suffix == ".html" else {})
 
 
+def check_text_limits(page, form, locale, submissions):
+    fields = {name: form.locator(f'[name="{name}"]') for name in ("name", "contact", "goal")}
+    fields["name"].fill("Test")
+    fields["contact"].fill("qa@example.invalid")
+    form.locator('[name="privacyConsent"]').check()
+    before = len(submissions)
+    for name, limit in (("name", 80), ("contact", 120), ("goal", 600)):
+        field = fields[name]
+        old = field.input_value()
+        for glyph in ("я", "ก", "🙂"):
+            count = limit // len(glyph.encode()) + 1
+            field.fill(glyph * count)
+            expect(field).to_be_focused()
+            assert field.evaluate("el => el.validity.customError")
+            assert ("Сократите" if locale == "ru" else "Shorten") in field.evaluate("el => el.validationMessage")
+            form.locator('[type="submit"]').click()
+            expect(field).to_be_focused()
+            assert len(submissions) == before
+        field.fill("я" * (limit // 2))
+        assert field.evaluate("el => el.checkValidity()")
+        field.fill(old)
+
+    # Match the server's trimming, multibyte boundary and the full click-to-submit path.
+    fields["goal"].fill("  " + "я" * 300 + "  ")
+    with page.expect_response(lambda response: response.url == ORIGIN + "/api/lead"):
+        form.locator('[type="submit"]').click()
+    assert len(submissions) == before + 1
+    assert len(submissions[-1]["goal"].strip().encode()) == 600
+
+
 def check_locale(browser, root, headers, locale):
     prefix = "/en" if locale == "en" else ""
     guide = ORIGIN + prefix + "/guides/ai-pilot-for-small-business"
@@ -99,6 +129,9 @@ def check_locale(browser, root, headers, locale):
             assert sent["privacyConsent"] == "yes"
             assert (sent.get("adultConfirmation") == "yes") == (selection in ("parent", "teen"))
         assert len(submissions) == 4
+        page.goto(ORIGIN + target)
+        expect(form).to_have_attribute("data-lead-state", "ready")
+        check_text_limits(page, form, locale, submissions)
 
         page.goto(ORIGIN + start + "?program=diagnostic&audience=business#application-form")
         expect(audience).to_have_value("business")
@@ -189,4 +222,4 @@ if __name__ == "__main__":
         receipt = {"manifest_sha256": sha(manifest_raw),
                    "release_id": manifest["release_id"], "locales": results}
         args.receipt.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
-    print("Pilot audience verified: six guide links, eight simulated submissions, zero live requests.")
+    print("Pilot audience verified: six guide links, ten simulated submissions, zero live requests.")

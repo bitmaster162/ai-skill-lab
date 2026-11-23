@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LIVE = ROOT / "deploy" / "live"
 ADAPTER = ROOT / "scripts" / "static-adapters" / "pilot-business-audience.js"
 PARENT_SHA256 = "66c02d9bda23b0424330596b6e74a14576be0259d31f4e1b5a5f8ba07cb251d5"
-R2_MANIFEST_SHA256 = "6c721edc6a40aa16080180db847e3ad2d18128358b62db7cce988791a693245c"
+R3_MANIFEST_SHA256 = "39b725e547cf639f1800807a96cad78fe2690262b7766a9f47b64179eb5e4ba9"
 GUIDE = "guides/ai-pilot-for-small-business.html"
 RUNTIME = "lead-form-runtime.js"
 MANIFEST = "_release.json"
@@ -89,9 +89,9 @@ def build_files(parent_root: Path = LIVE) -> tuple[dict[str, bytes], dict]:
     require(changed == {GUIDE, "en/" + GUIDE, "business.html", "en/business.html", RUNTIME}, "unexpected preview delta")
     listing = "".join(f"{r['path']}\t{r['size']}\t{r['sha256']}\n" for r in rows)
     payload = digest(listing.encode())
-    release_id = "AISL_FORM_LANGUAGE_AUDIENCE_REVIEW_R3_" + payload
+    release_id = "AISL_FORM_LANGUAGE_AUDIENCE_REVIEW_R4_" + payload
     manifest = dict(parent, release_id=release_id, patch_id=release_id, files=rows,
-                    file_count=len(rows), parent_manifest_sha256=R2_MANIFEST_SHA256, payload_sha256=payload)
+                    file_count=len(rows), parent_manifest_sha256=R3_MANIFEST_SHA256, payload_sha256=payload)
     files[MANIFEST] = (json.dumps(manifest, indent=2, sort_keys=True) + "\n").encode()
     return files, manifest
 

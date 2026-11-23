@@ -107,7 +107,7 @@ jobs:
           git archive 2444bd77f7616ba916c37b2b3bcba11898926be0 deploy/live | tar -x -C "$RUNNER_TEMP/pilot-original"
           python -B scripts/build_business_pilot_audience_preview.py "$RUNNER_TEMP/business-pilot-audience" --parent-root "$RUNNER_TEMP/pilot-original/deploy/live"
           cd "$RUNNER_TEMP/business-pilot-audience"
-          echo "39b725e547cf639f1800807a96cad78fe2690262b7766a9f47b64179eb5e4ba9  _release.json" | sha256sum --check
+          echo "ed753e4324d6fce0f1d258d8bad422730271f46a865934d32c4abab9267a6430  _release.json" | sha256sum --check
           python -B "$GITHUB_WORKSPACE/scripts/test_pilot_audience_browser.py" . --receipt "$RUNNER_TEMP/reference-audience.json"
       - name: Check the submitted static site whenever a pull request changes its payload
         if: github.event_name == 'pull_request'
@@ -295,7 +295,7 @@ jobs:
         run: python scripts/check_lab_hub.py
       - name: Smoke-test Lab Command runtime
         run: node scripts/check_lab_command_runtime.mjs
-      - name: Compare all release checks on the exact published pilot and its R3 candidate
+      - name: Compare all release checks on the exact published pilot and its R4 candidate
         if: github.event_name == 'pull_request' && github.head_ref == 'review/pilot-language-r2'
         run: |
           python -B scripts/rehearse_pilot_audience_release.py \
