@@ -16,6 +16,7 @@ from tempfile import TemporaryDirectory
 
 from build_business_pilot_audience_preview import MANIFEST, R3_MANIFEST_SHA256, digest, require
 from preflight_release import CHECKS
+from test_pilot_snapshot_routes import test_snapshot
 from prepare_phuket_universe_static_r1 import verify_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -103,6 +104,8 @@ def main() -> int:
         published = build_historical(work, original, PUBLISHED_BUILDER, "published")
         previous = build_historical(work, original, R3_BUILDER, "r3")
         changed = compare_scope(published, previous, args.candidate)
+        for site in (published, args.candidate):
+            test_snapshot(site)
         before = run_preflight(work / "control", published, PUBLISHED, revision)
         after = run_preflight(work / "review", args.candidate.resolve(), CANDIDATE, revision)
     old = failures(before["checks"])
