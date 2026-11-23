@@ -1,14 +1,16 @@
 # Meeting minutes exercise · editorial candidate R1
 
-This candidate places a bilingual exercise immediately after the heading targeted by the video's `#section-4` link. Readers compare the approved design with an AI-generated assignment, then reveal the answer using a native HTML disclosure. Each language has one editable fragment.
+The two Markdown fragments are the sole sources of the exercise copy. They add a practical example at the start of the adult guide’s fourth section. Readers compare the meeting notes with an AI-generated assignment and write down their answers before reading the worked example below.
 
-From the repository root, prepare and check the UTF-8 page diff:
+From the repository root, generate a single UTF-8 patch for both canonical guides and both static articles:
 
 ```sh
-python docs/release-candidates/meeting-notes-r1-20261123/prepare.py > meeting-notes.patch
+python -B docs/release-candidates/meeting-notes-r1-20261123/prepare.py > meeting-notes.patch
 git apply --check meeting-notes.patch
 ```
 
-The script checks the SHA-256 of each input page and writes the patch to standard output. Use a disposable copy of the static site to preview the diff. The candidate keeps the current release manifest, route roster and deployed files intact. A future release needs the current production parent and matching Next/Markdown sources in the normal admission process.
+For a preview, apply the patch in a disposable checkout. The generator verifies the SHA-256 of all four inputs and verifies that the repository's guide renderer produces the complete original article body. It uses the same renderer to generate the revised body while preserving each page's surrounding bytes. The existing Next and Python renderers support all markup in the fragments.
 
-Prepared against main commit `2444bd77f7616ba916c37b2b3bcba11898926be0`. On 23 November 2026 the public RU and EN article bytes matched the two checked inputs. At that time the full public manifest SHA-256 was `c70f71cc58d4977b82600adf5b12db773606542573d28ad309cde4ad39d94799` and the main branch manifest SHA-256 was `66c02d9bda23b0424330596b6e74a14576be0259d31f4e1b5a5f8ba07cb251d5`.
+The committed candidate leaves the current Markdown, release manifest, deployed files and admission checks intact. Incorporate the four-file patch when preparing a new release from the authoritative production parent. Its source and static hashes will need separate admission for that successor.
+
+Prepared against main commit `2444bd77f7616ba916c37b2b3bcba11898926be0`. On 23 November 2026 the public RU and EN article bytes matched the checked static inputs. The full public manifest SHA-256 was `c70f71cc58d4977b82600adf5b12db773606542573d28ad309cde4ad39d94799`; the main branch manifest SHA-256 was `66c02d9bda23b0424330596b6e74a14576be0259d31f4e1b5a5f8ba07cb251d5`.
