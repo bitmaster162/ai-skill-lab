@@ -24,6 +24,7 @@ PUBLISHED_BUILDER = "da921cb58fe7cd2b03265d3681508d1be432509e"
 PUBLISHED = "c70f71cc58d4977b82600adf5b12db773606542573d28ad309cde4ad39d94799"
 R3_BUILDER = "f39fff8cba3e5bb59b4503721972421169685c37"
 CANDIDATE = "ed753e4324d6fce0f1d258d8bad422730271f46a865934d32c4abab9267a6430"
+JOINT_MANIFEST = "8e7824978e4e4d7a898e8214ab4b337b92209b80b06d51dcf2dc2133d6e84793"
 CHANGED = {"business.html", "en/business.html", "lead-form-runtime.js"}
 BUILDER = "scripts/build_business_pilot_audience_preview.py"
 ADAPTER = "scripts/static-adapters/pilot-business-audience.js"
@@ -94,6 +95,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--original", required=True, type=Path, help="original sealed static builder input")
     parser.add_argument("--candidate", required=True, type=Path, help="assembled R4 static directory")
+    parser.add_argument("--joint", type=Path, help="optional byte-pinned combined review of PRs 254, 259 and 260")
     parser.add_argument("--receipt", required=True, type=Path)
     args = parser.parse_args()
     revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
@@ -108,15 +110,23 @@ def main() -> int:
             test_snapshot(site)
         before = run_preflight(work / "control", published, PUBLISHED, revision)
         after = run_preflight(work / "review", args.candidate.resolve(), CANDIDATE, revision)
+        joint = run_preflight(work / "joint", args.joint.resolve(), JOINT_MANIFEST, revision) if args.joint else None
     old = failures(before["checks"])
     new = failures(after["checks"])
     summary = {"tested_per_snapshot": len(after["checks"]), "previously_passing_now_failing": sorted(new - old),
                "failing_on_both": sorted(new & old), "now_passing": sorted(old - new)}
     receipt = {"schema": "ai-skill-lab.pilot-preflight-comparison.v1", "git": revision,
                "changed_assets": changed, "previous_candidate": R3_MANIFEST_SHA256, "published": before, "candidate": after, "summary": summary}
+    joint_regressions = set()
+    if joint is not None:
+        joint_failed = failures(joint["checks"])
+        joint_regressions = joint_failed - new
+        receipt["joint"] = joint
+        summary["joint_previously_passing_now_failing_vs_r4"] = sorted(joint_regressions)
+        summary["joint_now_passing_vs_r4"] = sorted(new - joint_failed)
     args.receipt.write_text(json.dumps(receipt, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps(summary))
-    return int(bool(new - old))
+    return int(bool((new - old) or joint_regressions))
 
 
 if __name__ == "__main__":

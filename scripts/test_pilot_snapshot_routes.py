@@ -40,7 +40,7 @@ def test_snapshot(source: Path) -> None:
         guide.write_bytes(content)
 
         extra = site / "unreviewed.html"
-        extra.write_text("unreviewed")
+        extra.write_text("unreviewed", encoding="utf-8")
         with case.assertRaisesRegex(RuntimeError, "Manifest count"):
             pilot_snapshot_routes(site)
         extra.unlink()
@@ -51,5 +51,5 @@ def test_snapshot(source: Path) -> None:
 
         spoof = json.loads(original)
         spoof["release_id"] += "_UNKNOWN"
-        manifest.write_text(json.dumps(spoof))
+        manifest.write_text(json.dumps(spoof), encoding="utf-8")
         case.assertIsNone(pilot_snapshot_routes(site))

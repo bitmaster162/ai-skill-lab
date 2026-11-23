@@ -61,7 +61,7 @@ def check_text_limits(page, form, locale, submissions):
     assert len(submissions[-1]["goal"].strip().encode()) == 600
 
 
-def check_locale(browser, root, headers, locale):
+def check_locale(browser, root, headers, locale, exercise=False):
     prefix = "/en" if locale == "en" else ""
     guide = ORIGIN + prefix + "/guides/ai-pilot-for-small-business"
     start = prefix + "/start"
@@ -77,6 +77,15 @@ def check_locale(browser, root, headers, locale):
         guardian = form.locator('[name="adultConfirmation"]')
         submit = form.locator('[type="submit"]')
 
+        if exercise:
+            page.goto(ORIGIN + prefix + "/guides/ai-first-tasks-for-adults#section-4")
+            lesson = page.locator("main article")
+            for phrase in (
+                ("Упражнение из ролика", "Анна пришлёт смету к пятнице", "Осталось выяснить")
+                if locale == "ru" else
+                ("Video exercise", "Anna will send the estimate by Friday", "still needs to establish")
+            ):
+                expect(lesson.get_by_text(phrase, exact=False)).to_be_visible()
         page.goto(ORIGIN + prefix + "/business")
         guide_entry = page.locator(f'main a[href="{urlsplit(guide).path}"]')
         expect(guide_entry).to_have_count(1)
@@ -201,6 +210,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("static_root", type=Path, help="Directory containing the static release")
     parser.add_argument("--receipt", type=Path, help="Write the offline result and tested manifest hash as JSON")
+    parser.add_argument("--exercise", action="store_true", help="check the reviewed adult lesson, too")
     args = parser.parse_args()
     root = args.static_root.resolve()
     paths = list(root.rglob("*"))
@@ -215,11 +225,13 @@ if __name__ == "__main__":
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(executable_path=browser_path())
         try:
-            results = {locale: check_locale(browser, root, headers, locale) for locale in ("ru", "en")}
+            results = {locale: check_locale(browser, root, headers, locale, exercise=args.exercise) for locale in ("ru", "en")}
         finally:
             browser.close()
     if args.receipt:
         receipt = {"manifest_sha256": sha(manifest_raw),
                    "release_id": manifest["release_id"], "locales": results}
+        if args.exercise:
+            receipt["adult_exercise_locales"] = sorted(results)
         args.receipt.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
     print("Pilot audience verified: six guide links, ten simulated submissions, zero live requests.")
