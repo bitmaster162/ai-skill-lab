@@ -1,0 +1,79 @@
+name: Exact #261 absolute preflight (review evidence only)
+on:
+  push:
+    branches:
+      - review/aisl-261-absolute-evidence-20261124
+permissions:
+  contents: read
+jobs:
+  absolute-candidate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout immutable reviewed source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: a1b776f59d609a99b1ca162ade3aabdf72745a1b
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22'
+      - name: Install existing locked test dependencies
+        run: |
+          npm ci --ignore-scripts --audit=false --fund=false
+          pip install --disable-pip-version-check playwright==1.55.0
+      - name: Build exact candidate and verify manifests
+        run: |
+          test "$(git rev-parse HEAD)" = "a1b776f59d609a99b1ca162ade3aabdf72745a1b"
+          test -z "$(git status --porcelain --untracked-files=no)"
+          mkdir "$RUNNER_TEMP/pilot-original"
+          git archive 2444bd77f7616ba916c37b2b3bcba11898926be0 deploy/live | tar -x -C "$RUNNER_TEMP/pilot-original"
+          python -B scripts/build_business_pilot_audience_preview.py "$RUNNER_TEMP/business-pilot-audience" --parent-root "$RUNNER_TEMP/pilot-original/deploy/live"
+          (cd "$RUNNER_TEMP/business-pilot-audience" && echo "ed753e4324d6fce0f1d258d8bad422730271f46a865934d32c4abab9267a6430  _release.json" | sha256sum --check)
+          python -B scripts/rebuild_joint_pilot_review.py "$RUNNER_TEMP/business-pilot-audience" "$RUNNER_TEMP/labels-parent"
+          (cd "$RUNNER_TEMP/labels-parent" && echo "8e7824978e4e4d7a898e8214ab4b337b92209b80b06d51dcf2dc2133d6e84793  _release.json" | sha256sum --check)
+          python -B scripts/build_business_simulator_labels_preview.py "$RUNNER_TEMP/labels-parent" "$RUNNER_TEMP/labels-candidate"
+          (cd "$RUNNER_TEMP/labels-candidate" && echo "0e2702981427152474dbdfbe12380bdd02b9ea08fa9dc3ab73ed5931941550b7  _release.json" | sha256sum --check)
+      - name: Run all exact absolute checks in disposable clone
+        run: |
+          python -B - <<'PY'
+          import hashlib
+          import json
+          import os
+          import subprocess
+          import sys
+          from pathlib import Path
+          from tempfile import TemporaryDirectory
+          sys.path.insert(0, 'scripts')
+          from rehearse_pilot_audience_release import CHECKS, run_preflight
+          head = "a1b776f59d609a99b1ca162ade3aabdf72745a1b"
+          manifest = "0e2702981427152474dbdfbe12380bdd02b9ea08fa9dc3ab73ed5931941550b7"
+          assert subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip() == head
+          names = [name for name, _ in CHECKS] + ["git_diff_check"]
+          canonical = lambda seq: json.dumps(sorted(seq), separators=(",", ":")).encode("utf-8")
+          inventory_sha = "11531ce1dc9e50f84a7f23e59ccf2952c5d0e3e3ee1bb9bcb04aa15cd1407885"
+          assert len(names) == len(set(names)) == 121
+          assert hashlib.sha256(canonical(names)).hexdigest() == inventory_sha
+          temp = Path(os.environ["RUNNER_TEMP"])
+          with TemporaryDirectory(prefix="aisl-261-absolute-") as work:
+              result = run_preflight(Path(work) / "candidate", temp / "labels-candidate", manifest, head)
+          assert set(result["checks"]) == set(names)
+          receipt = {"schema": "ai-skill-lab.pilot-preflight-comparison.v1",
+                     "git": head, "candidate": result, "check_names_sha256": inventory_sha,
+                     "scope": "absolute #261 candidate evidence only; no production authority"}
+          (temp / "aisl-261-absolute-preflight.json").write_text(json.dumps(receipt, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+          failed = sorted(name for name, item in result["checks"].items() if type(item.get("exit_code")) is not int or item["exit_code"] != 0)
+          print(json.dumps({"passed": len(names)-len(failed), "failed": failed, "status": result["status"]}))
+          sys.exit(0 if not failed and result["status"] == "PASS" else 2)
+          PY
+      - name: Save exact absolute receipt even when gate fails
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: aisl-261-absolute-preflight
+          path: ${{ runner.temp }}/aisl-261-absolute-preflight.json
+          if-no-files-found: error
