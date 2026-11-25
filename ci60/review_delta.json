@@ -1,0 +1,180 @@
+{
+  "business.html": {
+    "before_sha256": "3818b1a5d3fe58df7fcef7b2e7842fec02802a244553fc742d941580b2ee1270",
+    "after_sha256": "1d300ff7ec33f5f64e7ad66d6a81dbba28f405ac028b96101b749c0120cb30b3",
+    "edits_utf8_codepoints": [
+      {
+        "at": 13769,
+        "remove": "",
+        "insert": "disabled "
+      },
+      {
+        "at": 13889,
+        "remove": "",
+        "insert": "disabled "
+      },
+      {
+        "at": 14010,
+        "remove": "",
+        "insert": "disabled "
+      },
+      {
+        "at": 14127,
+        "remove": "",
+        "insert": "disabled "
+      },
+      {
+        "at": 17638,
+        "remove": "",
+        "insert": " hidden"
+      },
+      {
+        "at": 23666,
+        "remove": "",
+        "insert": ";\nfor (const button of buttons) button.disabled = false;\n"
+      },
+      {
+        "at": 24277,
+        "remove": "b=m*l",
+        "insert": "displayNumerator=s*u*52*i,displayHours=displayNumerator<12000?Math.floor((displayNumerator+60)/120)/10:Math.floor((displayNumerator+600)/1200),b=s*u*l*i*52/1200"
+      },
+      {
+        "at": 24485,
+        "remove": "",
+        "insert": "\"recoverableHours\"===t?displayHours:"
+      },
+      {
+        "at": 24836,
+        "remove": "m",
+        "insert": "displayHours"
+      },
+      {
+        "at": 25156,
+        "remove": "",
+        "insert": ";\nr.querySelector(\".businessValueBrief\").hidden = false;\n"
+      }
+    ]
+  },
+  "en/business.html": {
+    "before_sha256": "7814a0883725876104d2d63f5fadeee6d0915b860ec78f5d438c38a16e9e3aa0",
+    "after_sha256": "93f50e2bca7fd686007e1abe21c3c7de9dd2b8c51f14e521b4ef4f76648a6966",
+    "edits_utf8_codepoints": [
+      {
+        "at": 13243,
+        "remove": "",
+        "insert": "disabled "
+      },
+      {
+        "at": 13363,
+        "remove": "",
+        "insert": "disabled "
+      },
+      {
+        "at": 13484,
+        "remove": "",
+        "insert": "disabled "
+      },
+      {
+        "at": 13601,
+        "remove": "",
+        "insert": "disabled "
+      },
+      {
+        "at": 17031,
+        "remove": "",
+        "insert": " hidden"
+      },
+      {
+        "at": 23515,
+        "remove": "",
+        "insert": ";\nfor (const button of buttons) button.disabled = false;\n"
+      },
+      {
+        "at": 24126,
+        "remove": "h=m*l",
+        "insert": "displayNumerator=s*u*52*i,displayHours=displayNumerator<12000?Math.floor((displayNumerator+60)/120)/10:Math.floor((displayNumerator+600)/1200),h=s*u*l*i*52/1200"
+      },
+      {
+        "at": 24334,
+        "remove": "",
+        "insert": "\"recoverableHours\"===t?displayHours:"
+      },
+      {
+        "at": 24685,
+        "remove": "m",
+        "insert": "displayHours"
+      },
+      {
+        "at": 25005,
+        "remove": "",
+        "insert": ";\nr.querySelector(\".businessValueBrief\").hidden = false;\n"
+      }
+    ]
+  },
+  "vercel.json": {
+    "before_sha256": "785918397a6986d8e2c0ac8d31ad56b22e3d59dc387e5bdd08645ccdb776fd4d",
+    "after_sha256": "016f8ce27fdd23b3ef5a3623a4130f1c7276a13356321cc398fbefde64231dbd",
+    "edits_utf8_codepoints": [
+      {
+        "at": 645,
+        "remove": "0Tb45MQ03apliidDn6QCQJ0R7y7ZMOATs64o/ho0zT",
+        "insert": "+MahSSMZPMny1p7xCpTVMk5axtmI27w3t5Pfpx2p0s"
+      },
+      {
+        "at": 2049,
+        "remove": "qPpJ2aGgRZeJXgr2t3KZQO3/d9/tTM8C8zOaiM7pP+k",
+        "insert": "zV3Yf2mtBvbBaCT3cvT7pCKjiZ8n0N3XV8wG1gA6H8Q"
+      },
+      {
+        "at": 2319,
+        "remove": "xmJCMQd4ca6dXIWouYK72T7Gbd0IolZ+XnjIlwkkr+U",
+        "insert": "naArkhNn6RhMT9Xr4VLLNgWnUqsOEm1xyPdfql6P9gE"
+      },
+      {
+        "at": 2481,
+        "remove": "zHvZSfQKhrDTlvMfskNertqUc+kpFTJOzd2vr6Ejj58",
+        "insert": "oAlLwsPiuxMldN2A4myIvYfWAbxtEayXKsxXzstfzkE"
+      },
+      {
+        "at": 5955,
+        "remove": "0Tb45MQ03apliidDn6QCQJ0R7y7ZMOATs64o/ho0zT",
+        "insert": "+MahSSMZPMny1p7xCpTVMk5axtmI27w3t5Pfpx2p0s"
+      },
+      {
+        "at": 7359,
+        "remove": "qPpJ2aGgRZeJXgr2t3KZQO3/d9/tTM8C8zOaiM7pP+k",
+        "insert": "zV3Yf2mtBvbBaCT3cvT7pCKjiZ8n0N3XV8wG1gA6H8Q"
+      },
+      {
+        "at": 7629,
+        "remove": "xmJCMQd4ca6dXIWouYK72T7Gbd0IolZ+XnjIlwkkr+U",
+        "insert": "naArkhNn6RhMT9Xr4VLLNgWnUqsOEm1xyPdfql6P9gE"
+      },
+      {
+        "at": 7791,
+        "remove": "zHvZSfQKhrDTlvMfskNertqUc+kpFTJOzd2vr6Ejj58",
+        "insert": "oAlLwsPiuxMldN2A4myIvYfWAbxtEayXKsxXzstfzkE"
+      },
+      {
+        "at": 8643,
+        "remove": "0Tb45MQ03apliidDn6QCQJ0R7y7ZMOATs64o/ho0zT",
+        "insert": "+MahSSMZPMny1p7xCpTVMk5axtmI27w3t5Pfpx2p0s"
+      },
+      {
+        "at": 10047,
+        "remove": "qPpJ2aGgRZeJXgr2t3KZQO3/d9/tTM8C8zOaiM7pP+k",
+        "insert": "zV3Yf2mtBvbBaCT3cvT7pCKjiZ8n0N3XV8wG1gA6H8Q"
+      },
+      {
+        "at": 10317,
+        "remove": "xmJCMQd4ca6dXIWouYK72T7Gbd0IolZ+XnjIlwkkr+U",
+        "insert": "naArkhNn6RhMT9Xr4VLLNgWnUqsOEm1xyPdfql6P9gE"
+      },
+      {
+        "at": 10479,
+        "remove": "zHvZSfQKhrDTlvMfskNertqUc+kpFTJOzd2vr6Ejj58",
+        "insert": "oAlLwsPiuxMldN2A4myIvYfWAbxtEayXKsxXzstfzkE"
+      }
+    ]
+  }
+}

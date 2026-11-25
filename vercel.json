@@ -1,0 +1,7 @@
+{
+  "git": {
+    "deploymentEnabled": {
+      "qa/ci60-a679d188-20261125": false
+    }
+  }
+}
