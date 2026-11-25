@@ -1,48 +1,86 @@
-name: Single AI Skill Lab review ZIP, offline route check
+name: Native IndexNow contract for the pinned 60-route review ZIP
+
 on:
   push:
     branches:
       - 'qa/ci60-a679d188-20261125'
+
 permissions:
   contents: read
+
 jobs:
   verify-ci60:
     if: github.repository == 'bitmaster162/ai-skill-lab' && github.ref == 'refs/heads/qa/ci60-a679d188-20261125'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    env:
+      POLICY_REF: refs/heads/review/ci60-policy-a679d188-20261125
+      POLICY_SHA: 493eb9cbe3440c36e33340589f05cf410dc510cb
+      SOURCE_SHA: a1b776f59d609a99b1ca162ade3aabdf72745a1b
     steps:
-      - name: Check out QA sources separately
+      - name: Check out QA inputs
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           path: qa
           persist-credentials: false
-      - name: Check out the frozen public source
+      - name: Check out frozen fixture sources and history
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          repository: bitmaster162/ai-skill-lab
-          ref: a1b776f59d609a99b1ca162ade3aabdf72745a1b
+          ref: ${{ env.SOURCE_SHA }}
           path: source
-          fetch-depth: 0
           persist-credentials: false
-      - name: Verify every immutable source commit for the reconstruction
-        working-directory: source
-        run: |
-          test "$(git rev-parse HEAD)" = "a1b776f59d609a99b1ca162ade3aabdf72745a1b"
-          for ref in a1b776f59d609a99b1ca162ade3aabdf72745a1b 2444bd77f7616ba916c37b2b3bcba11898926be0 0c87e0795f8e898ef06bacd4840579a1af5dac7b 5ca166f7a905c6887ae872fc6931b71ca76ac17a; do
-            git cat-file -e "$ref^{commit}"
-          done
-      - name: Set up Python for the offline test
+          fetch-depth: 0
+      - name: Check out named policy branch and its historical fixtures
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ env.POLICY_REF }}
+          path: policy
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: '3.11'
-      - name: Verify the candidate recipes before running
-        working-directory: qa/ci60
+      - name: Verify identities before executing checked-out code
+        shell: bash
         run: |
-          sha256sum --check <<'HASHES'
-          e0379be6f433d91d011cf59c51384b4e8d3f926fd48e1171292f391ae9590d4d  from_git.py
-          030e794a72df7715cb5757a83fea525bd9d12e3a9c976d375a9c60cb07f7b8c7  rebuild_and_verify.py
-          9cca58a8f85ee3b5cb07cf8160bd1eabb75aa09a90b30d7345f1e11a2f75aab3  verify_ci60.py
-          97c31d18e7f35dad28d7517189b08238069512c50021adcfc5911e0ef4945aa6  review_delta.json
-          HASHES
-      - name: Rebuild exact ZIP and run unchanged route contract
-        run: python -B -X utf8 qa/ci60/from_git.py "$GITHUB_WORKSPACE/source"
+          set -euo pipefail
+          test "$(git -C qa rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git -C policy rev-parse HEAD)" = "$POLICY_SHA"
+          test "$(git -C source rev-parse HEAD)" = "$SOURCE_SHA"
+          test -z "$(git -C policy status --porcelain --untracked-files=all)"
+          test -z "$(git -C source status --porcelain --untracked-files=all)"
+          git -C policy cat-file -e '63fa9d3103e951edc3cdd801a51b0954bcb5a3fa^{commit}'
+          for commit in 2444bd77f7616ba916c37b2b3bcba11898926be0 0c87e0795f8e898ef06bacd4840579a1af5dac7b 5ca166f7a905c6887ae872fc6931b71ca76ac17a; do
+            git -C source cat-file -e "$commit^{commit}"
+          done
+          printf 'QA=%s\nSOURCE=%s\nPOLICY_REF=%s\nPOLICY_SHA=%s\n' "$GITHUB_SHA" "$SOURCE_SHA" "$POLICY_REF" "$POLICY_SHA"
+          (cd qa && sha256sum --check <<'PINS'
+          030e794a72df7715cb5757a83fea525bd9d12e3a9c976d375a9c60cb07f7b8c7  ci60/rebuild_and_verify.py
+          97c31d18e7f35dad28d7517189b08238069512c50021adcfc5911e0ef4945aa6  ci60/review_delta.json
+          0790b5543fb8c9542ad3bce4f0d9d79b574d9f5e94934220305bbd39a496986d  vercel.json
+          0790b5543fb8c9542ad3bce4f0d9d79b574d9f5e94934220305bbd39a496986d  deploy/live/vercel.json
+          0790b5543fb8c9542ad3bce4f0d9d79b574d9f5e94934220305bbd39a496986d  services/lead-ingress/vercel.json
+          PINS
+          )
+      - name: Rebuild and run the native contract on isolated Linux
+        shell: bash
+        run: |
+          set -euo pipefail
+          scratch="$(mktemp -d "$RUNNER_TEMP/ci60-native.XXXXXXXX")"
+          py="$(command -v python)"
+          host_net="$(readlink /proc/self/ns/net)"
+          sudo -n unshare --net -- setpriv --reuid="$(id -u)" --regid="$(id -g)" --init-groups --no-new-privs -- \
+            env -i PATH="$PATH" LANG=C.UTF-8 GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null GIT_ALLOW_PROTOCOL=file \
+            HOME="$scratch" TMPDIR="$scratch" RUNNER_TEMP="$scratch" PARENT_NET="$host_net" \
+            LD_LIBRARY_PATH="$(dirname "$(dirname "$py")")/lib" PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 \
+            bash --noprofile --norc -seu -o pipefail -- "$py" "$GITHUB_WORKSPACE" "$POLICY_SHA" "$scratch" <<'OFFLINE'
+          test "$(id -u)" -ne 0
+          test "$(readlink /proc/self/ns/net)" != "$PARENT_NET"
+          "$1" -c 'import socket; names = [n for _, n in socket.if_nameindex()]; print("isolated_interfaces", names); assert names == ["lo"]'
+          test -z "$(ip -4 route show default)"
+          test -z "$(ip -6 route show default)"
+          printf 'offline_linux=%s uid=%s\n' "$(uname -sr)" "$(id -u)"
+          "$1" -B "$2/qa/ci60/rebuild_native_input.py" --source "$2/source" --output "$4/review.zip"
+          "$1" -B "$2/qa/ci60/native_contract.py" --policy "$2/policy" --policy-sha "$3" --zip "$4/review.zip"
+          OFFLINE
