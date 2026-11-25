@@ -36,7 +36,10 @@ def expected_live_routes() -> frozenset[str]:
     release = json.loads((LIVE / "_release.json").read_text(encoding="utf-8")).get("release_id")
     from seo_method_static_release_profile_r1 import inherited_gate_family
     from restored_guides_release import RELEASE_ID as restored_guides_id
-    if release == restored_guides_id:
+    if release in (
+        restored_guides_id,
+        "AISL_R2_NOJS_P2P3_LOCAL_REVIEW_9b5e13d9441e8716cd9306e4ab10d77c35ddfe303b17bb1aba70997624f26425",
+    ):
         slugs = ("ai-start-for-adults", "ai-pilot-for-small-business")
         restored = {f"{prefix}/guides/{slug}" for prefix in ("", "/en") for slug in slugs}
         return BASELINE_ROUTES | FUTURE_PAIR | {"/phuket-universe", "/en/phuket-universe"} | restored
