@@ -1,0 +1,41 @@
+{
+  "base": "b76fbcf4c42104a057c80d6a6a59df9d936b039a",
+  "candidate_files": 120,
+  "candidate_payload_sha256": "e9a07b6acb3bd09390b61bca996856ddaedc0c34355735223cb3d58c654d6d0e",
+  "delta": {
+    "en/phuket-universe.html": {
+      "bytes": 25287,
+      "git_blob": "882a25943dbfbfec572e01ccacf85e1aff0ec2fd",
+      "sha256": "a41b66c64ed1331ff5c6ba333531271fdaaa4f9bb5dc6fd4b000e2e5598222a5"
+    },
+    "en/phuket-universe/daily-essentials.html": {
+      "bytes": 4861,
+      "git_blob": "99d68b34db4acba6d743af4a3851712d22496ceb",
+      "sha256": "ecdea66496b39c4deb125fb0c7ee177a331cd4294e0d00764a8c258a3b66e50d"
+    },
+    "phuket-daily-assets/essentials.css": {
+      "bytes": 1789,
+      "git_blob": "4efa148cf4f6016b5414544cbb0d951c5fea9071",
+      "sha256": "9d5e4c1bd3ccedb6f420c04adfe8f5814c6d13955fc0f6f58086a8f8a64294c8"
+    },
+    "phuket-daily-assets/essentials.js": {
+      "bytes": 1031,
+      "git_blob": "5cef8aecfdfd233c90876235b3a49f463bfaaa0b",
+      "sha256": "5f6f74b7669546890ec23f9118e9d4e510db8d2db799bb99880d401ec007c216"
+    },
+    "phuket-universe.html": {
+      "bytes": 28009,
+      "git_blob": "b45a55586f0f1b322f4d9098841e28f0c3f667d8",
+      "sha256": "08dc24e3fd45de91b1b30001f68fc46893340829d5c993e9102babb78123b40f"
+    },
+    "phuket-universe/daily-essentials.html": {
+      "bytes": 6048,
+      "git_blob": "c8c869dfcc55a95a0c37cdd1ccfaba0b9be845d8",
+      "sha256": "c0ba702cfb2208f13591ff062c54f2931dcc4785645382ba060bfdacb8560a11"
+    }
+  },
+  "limitations": "Independent of R22 rental candidate; no actual listings, opening-hours claims, service recommendations or routing. Browser-local native controls and generated manual-copy plan; no server, storage or clipboard writes. No Next equivalent, combined rental integration, release admission or live publication.",
+  "parent_payload_sha256": "f11a64758e9c5661eea55a24b9a98c6c078e17dcdfca8e335bd04c23776d99e5",
+  "release_approval": false,
+  "scope": "DAILY_ESSENTIALS_R1_DRAFT_ONLY"
+}
