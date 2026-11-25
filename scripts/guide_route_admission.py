@@ -142,11 +142,49 @@ def restored_guide_routes() -> frozenset[str]:
     return frozenset(NEW_ROUTES) if active() else frozenset()
 
 
+# Only the existing URLs inherited from these verified snapshots are shared.
+# Matching this route profile is not approval to deploy its content.
+PILOT_ROUTE_MANIFESTS = {
+    "AISL_R2_NOJS_P2P3_LOCAL_REVIEW_9b5e13d9441e8716cd9306e4ab10d77c35ddfe303b17bb1aba70997624f26425":
+        "01b68a85993c20f34614816df735e33af3c0636f4a787386a037fa453e671926",
+}
+
+
+def pilot_snapshot_routes(live: Path) -> frozenset[str] | None:
+    from phuket_release_profile import ADULT_ROUTES, UNIVERSE_ROUTES
+    from prepare_phuket_universe_static_r1 import verify_manifest
+    from restored_guides_release import NEW_ROUTES
+
+    manifest_path = live / "_release.json"
+    raw = manifest_path.read_bytes()
+    expected_sha = PILOT_ROUTE_MANIFESTS.get(json.loads(raw).get("release_id"))
+    if expected_sha is None:
+        return None
+    if hashlib.sha256(raw).hexdigest() != expected_sha:
+        raise RouteAdmissionError("pilot snapshot manifest digest mismatch")
+    paths = list(live.rglob("*"))
+    if live.is_symlink() or any(p.is_symlink() for p in paths):
+        raise RouteAdmissionError("symlink in pilot snapshot")
+    assets = {p.relative_to(live).as_posix(): p.read_bytes() for p in paths
+              if p != manifest_path and p.is_file()}
+    verify_manifest(assets, raw)
+    expected = BASELINE_ROUTES | ADULT_ROUTES | UNIVERSE_ROUTES | NEW_ROUTES
+    actual = {route_for_html(live, live / name) for name in assets
+              if name.endswith(".html") and name != "404.html"}
+    if actual != expected:
+        raise RouteAdmissionError("pilot snapshot changed its public routes")
+    return expected
+
+
 def admitted_routes(
     approved_slugs: Iterable[str] | None = None,
 ) -> frozenset[str]:
     """Return exact allowed paths; approved_slugs is for synthetic QA only."""
     from phuket_release_profile import active, verify_integrity, UNIVERSE_ROUTES, ADULT_ROUTES
+    if approved_slugs is None:
+        pilot = pilot_snapshot_routes(Path(__file__).resolve().parents[1] / "deploy/live")
+        if pilot is not None:
+            return pilot
     if approved_slugs is None and active():
         verify_integrity()
         return BASELINE_ROUTES | ADULT_ROUTES | UNIVERSE_ROUTES | restored_guide_routes()
