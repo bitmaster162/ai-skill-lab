@@ -1,0 +1,335 @@
+{
+  "base": "b76fbcf4c42104a057c80d6a6a59df9d936b039a",
+  "candidate_payload_sha256": "fca36841bb4a352296c46191f994d050cecb74017e3e74c18349f55ce4d132ed",
+  "checks": {
+    "actual_isolated_apply": true,
+    "all_45_postimages_exact": true,
+    "exact_three_preimages": true,
+    "git_apply_check": true,
+    "git_reverse_check": true
+  },
+  "files": {
+    "app/(en)/en/phuket-universe/rental-budget-calculator/route.ts": {
+      "bytes": 4296,
+      "new_git_blob": "0217b4811bb384fe800db49d2afd739a9916402a",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "82ff0e92d6a6a713320ba5a08ccdaac5f78a9c4a767b819205743b9276ecaa45"
+    },
+    "app/(en)/en/phuket-universe/rental-journey/route.ts": {
+      "bytes": 13529,
+      "new_git_blob": "4fd578672d2516ef900fa3d50fe6e080ccc61abf",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "c3529e0eeeac0564b1c10260de706c8c9683c2988e5e6903713691cccdcfd02a"
+    },
+    "app/(en)/en/phuket-universe/rental-move-in/route.ts": {
+      "bytes": 6518,
+      "new_git_blob": "b5a6f15fc8bf5663b72613e874ab4984703d4d76",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "9d6d1f14f37bbd510c6017ae7e2d37cb895d5fe264c9b12ec3d32921b3cfc752"
+    },
+    "app/(en)/en/phuket-universe/rental-move-out/route.ts": {
+      "bytes": 6230,
+      "new_git_blob": "dd12c6b210baeaa647055e9b9205618ab0e82faf",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "833483ca242eed4121b52c702243081fae367837a4eb0c2f2969ad461de38b70"
+    },
+    "app/(en)/en/phuket-universe/rental-shortlist/route.ts": {
+      "bytes": 10327,
+      "new_git_blob": "ff56ce98ffcf3c818fa9f66bac5b0189c10239a3",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "8c9fa320e23968296a08d32179c2b1e4ad28af9b9ac336d9a5e3192504ce3d55"
+    },
+    "app/(ru)/phuket-universe/rental-budget-calculator/route.ts": {
+      "bytes": 5195,
+      "new_git_blob": "5930820e0a38b77f758d1552bc5dd278c39df6e3",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "79dff8c27c69e3edbe558dd9e58aa99fb17195e7f1c66e9e9cbfeffccd27c21d"
+    },
+    "app/(ru)/phuket-universe/rental-journey/route.ts": {
+      "bytes": 16775,
+      "new_git_blob": "b62221605ecb61e97a67f5c9d3ac21d40fe8583d",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "75348d46d551ea2f0cf9b02918bd1c0f8fc8b62504494b00504ccc3a44735455"
+    },
+    "app/(ru)/phuket-universe/rental-move-in/route.ts": {
+      "bytes": 8414,
+      "new_git_blob": "7e53d2326dea0a660499d1ec4b42afc298ae765a",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "fa7e8b28a3a6acfe16936dd28d3e389ffa56907da1980b3c3bf0b77100d7c26c"
+    },
+    "app/(ru)/phuket-universe/rental-move-out/route.ts": {
+      "bytes": 8522,
+      "new_git_blob": "fa87b6c7aeab903dffcf9cdc974fc254d964d3ed",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "9b9c49563b0f4fdbe1ef0c93410f595c85ec0593cc0bac8c4248e36acb6d1059"
+    },
+    "app/(ru)/phuket-universe/rental-shortlist/route.ts": {
+      "bytes": 13502,
+      "new_git_blob": "d35e6d29600c66982a0c9af9bc65c24f3e3ec559",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "dc5f5b7a326df6f60e39a3a492f27a92ab078a55c461829d45215f81c6ded2b8"
+    },
+    "components/PhuketUniverse.tsx": {
+      "bytes": 1206,
+      "new_git_blob": "6969399eb60f93e2c7a7574adfb12dcd68474584",
+      "old_git_blob": "a478fe67234ef846fea295150740467500522d38",
+      "operation": "replace",
+      "sha256": "9c37eb073982b91b2af9d51a0a68418e0115e716b0656143b4e897d8aff4ca6e"
+    },
+    "components/phuketRentalJourney.ts": {
+      "bytes": 2141,
+      "new_git_blob": "3a0d337b871cd996b49a285c9ead432160ff19d2",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "73b4a2deac6b69549204bbb919fa61c18f10ed0e3396e820ed43b85e4c626720"
+    },
+    "deploy/live/en/phuket-universe.html": {
+      "bytes": 25073,
+      "new_git_blob": "75686c7cfd6068f747a455d72fc33ed711bc80d8",
+      "old_git_blob": "17b25dc2b9b377cd4f3c38f1e326e357e272dd12",
+      "operation": "replace",
+      "sha256": "0515368343252f79e8cb4b81402880188127df481ef595cc38815894092a36c8"
+    },
+    "deploy/live/en/phuket-universe/rental-budget-calculator.html": {
+      "bytes": 3479,
+      "new_git_blob": "3dd488d21d4cfb9dec905b592497aee95b3914a1",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "592e6e676ae0b772107f5a9e1ea29757be1538866a5d9f301ff2cececd5baf41"
+    },
+    "deploy/live/en/phuket-universe/rental-journey.html": {
+      "bytes": 12313,
+      "new_git_blob": "505e0c400e7ffcd40d98e85efc4b8eb255bc7137",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "3ba8d29847db90db52f23aeb7b8e21ffde613b9613e973edbaaa05e773b81022"
+    },
+    "deploy/live/en/phuket-universe/rental-move-in.html": {
+      "bytes": 5637,
+      "new_git_blob": "932befe99bd6125285255fdcbcb26595af23cb76",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "9e26f136f0c70d4075e94e0c6f8041e0c7a3f2d2eff0bfa91382b620cd6df3b8"
+    },
+    "deploy/live/en/phuket-universe/rental-move-out.html": {
+      "bytes": 5353,
+      "new_git_blob": "c613201484d97c747f48535581b17b907a6ab5a3",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "9e39b6532998a8d3ce654b45ce1169d478dbd31922c09be1dd8e2cfed5f62e97"
+    },
+    "deploy/live/en/phuket-universe/rental-shortlist.html": {
+      "bytes": 9046,
+      "new_git_blob": "248fd262692a10c56db8397d7b8e1484a8ba7322",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "3c5e0390960a30c4705d4a098c061e2b3d66fb3344fa0890afb3783f2287a943"
+    },
+    "deploy/live/phuket-rental-assets/rental-budget-calculator-1.js": {
+      "bytes": 1340,
+      "new_git_blob": "8d6decf7ca236846c73197979bb06b10437dcc49",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "17c738154904383152cd3852dac77c2bd11dcd16f59331832601ade3ce7080e9"
+    },
+    "deploy/live/phuket-rental-assets/rental-budget-calculator.css": {
+      "bytes": 1934,
+      "new_git_blob": "3d8af8527df75b9afa19df30878f61fce8082536",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "d4092e6d76e0bb73a23929c523484daf84f9c3d2a1d40818862744ae5f719ccb"
+    },
+    "deploy/live/phuket-rental-assets/rental-journey.css": {
+      "bytes": 2600,
+      "new_git_blob": "8ebd22e0aeb5fca94b2f0f5dea802439593755fe",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "7f0c0e50e8188cdeb2f93202bb855bd66b929f61245a04d99b44078ec8cfdbe0"
+    },
+    "deploy/live/phuket-rental-assets/rental-move-in-1.js": {
+      "bytes": 516,
+      "new_git_blob": "4043904dd99e6706f2fdcef47c3d240544d8b01b",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "27719ea8298e743b83b345a9725931f4b45b3e4f14cf4263b41409d03bb9ef10"
+    },
+    "deploy/live/phuket-rental-assets/rental-move-in.css": {
+      "bytes": 1417,
+      "new_git_blob": "7756f33de0f81d54c1ee295c1ec490b04faac4b1",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "4c46091f405d0c9f5dc5ea1651eddb3e668e70dac0dacb2d82577c8e2878fc53"
+    },
+    "deploy/live/phuket-rental-assets/rental-move-out-1.js": {
+      "bytes": 1350,
+      "new_git_blob": "418e23ec615c2db7e276a520a92caab3d242e23a",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "9ce5d79d304eddca946c428360fe2b76aca7d0081563800fe74d644551b65511"
+    },
+    "deploy/live/phuket-rental-assets/rental-move-out.css": {
+      "bytes": 1815,
+      "new_git_blob": "46f799877afa77b95f30e4410112c19a04f2d7f9",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "40749f28e10f43241d709dd66fdad39c39e02806f807c6efea74df612dfe2850"
+    },
+    "deploy/live/phuket-rental-assets/rental-shortlist-1.js": {
+      "bytes": 2382,
+      "new_git_blob": "0515ab117ea4f954b8c0d159440b0bc8aeb69778",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "44130b887dfb0afa4d25a8a4e0ece23e8292c71498d6c06fd93b95c2b2bd7b54"
+    },
+    "deploy/live/phuket-rental-assets/rental-shortlist-2.js": {
+      "bytes": 2114,
+      "new_git_blob": "6f3e9df1ec31252f607a38337dcc1b0902b8be8c",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "957f4badcfdc5eb587af631bcf853b6ad2b3eecd33877a95e0eb031cfb006e02"
+    },
+    "deploy/live/phuket-rental-assets/rental-shortlist.css": {
+      "bytes": 2304,
+      "new_git_blob": "fd272a653b3d169f51f299b344f7c96f275f8914",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "406ade68573373b38980e9c1b19adc7dcc3de97c5f8b86bfb0343b9cbd0602e2"
+    },
+    "deploy/live/phuket-universe.html": {
+      "bytes": 27757,
+      "new_git_blob": "afd0e8ec47628be9059eaec19f588f17f99618bf",
+      "old_git_blob": "748bc52857a41e20a5eed6ef27fb3f3d7722a412",
+      "operation": "replace",
+      "sha256": "aab8adad6f27448dbd102cbef3d7d0d5e10e6fa4d9b284526ad33264ab69b02f"
+    },
+    "deploy/live/phuket-universe/rental-budget-calculator.html": {
+      "bytes": 4378,
+      "new_git_blob": "6ca23c225cee6a1ec67cd93ecdb406fcf324d6f9",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "29b96cf3beb6798f8f4c201dfa9733e87a1b623dd46996f0f40ce354757fa1ab"
+    },
+    "deploy/live/phuket-universe/rental-journey.html": {
+      "bytes": 15559,
+      "new_git_blob": "4662d4b73f000f22140f4f6956c119aa25e1d1ae",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "6c4f6c28ef4276b3cbc2f23330df6765dd460d5accaa3a31e25cae2accbc7fec"
+    },
+    "deploy/live/phuket-universe/rental-move-in.html": {
+      "bytes": 7533,
+      "new_git_blob": "7d7d64fc69389173e4d47760ade51d345e4b7054",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "d5dc37204c7b9e9b26042bb3f12c1f8c07f560f98080cf9a3f785fcdbb52e402"
+    },
+    "deploy/live/phuket-universe/rental-move-out.html": {
+      "bytes": 7645,
+      "new_git_blob": "2cd5efd509efeafbc69975794f1ba069364adbfc",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "a865093e9fe3a20581513cd301dd6937b86e36e576f067f08366634d86397283"
+    },
+    "deploy/live/phuket-universe/rental-shortlist.html": {
+      "bytes": 12221,
+      "new_git_blob": "d644e927ae5ad148cfe8cd07ec56ac7a7299a87d",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "3720cfa41ed66d0167e3c010c8751f6f18103c6a33308cdb81ca649c02a3d1f0"
+    },
+    "public/phuket-rental-assets/rental-budget-calculator-1.js": {
+      "bytes": 1340,
+      "new_git_blob": "8d6decf7ca236846c73197979bb06b10437dcc49",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "17c738154904383152cd3852dac77c2bd11dcd16f59331832601ade3ce7080e9"
+    },
+    "public/phuket-rental-assets/rental-budget-calculator.css": {
+      "bytes": 1934,
+      "new_git_blob": "3d8af8527df75b9afa19df30878f61fce8082536",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "d4092e6d76e0bb73a23929c523484daf84f9c3d2a1d40818862744ae5f719ccb"
+    },
+    "public/phuket-rental-assets/rental-journey.css": {
+      "bytes": 2600,
+      "new_git_blob": "8ebd22e0aeb5fca94b2f0f5dea802439593755fe",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "7f0c0e50e8188cdeb2f93202bb855bd66b929f61245a04d99b44078ec8cfdbe0"
+    },
+    "public/phuket-rental-assets/rental-move-in-1.js": {
+      "bytes": 516,
+      "new_git_blob": "4043904dd99e6706f2fdcef47c3d240544d8b01b",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "27719ea8298e743b83b345a9725931f4b45b3e4f14cf4263b41409d03bb9ef10"
+    },
+    "public/phuket-rental-assets/rental-move-in.css": {
+      "bytes": 1417,
+      "new_git_blob": "7756f33de0f81d54c1ee295c1ec490b04faac4b1",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "4c46091f405d0c9f5dc5ea1651eddb3e668e70dac0dacb2d82577c8e2878fc53"
+    },
+    "public/phuket-rental-assets/rental-move-out-1.js": {
+      "bytes": 1350,
+      "new_git_blob": "418e23ec615c2db7e276a520a92caab3d242e23a",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "9ce5d79d304eddca946c428360fe2b76aca7d0081563800fe74d644551b65511"
+    },
+    "public/phuket-rental-assets/rental-move-out.css": {
+      "bytes": 1815,
+      "new_git_blob": "46f799877afa77b95f30e4410112c19a04f2d7f9",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "40749f28e10f43241d709dd66fdad39c39e02806f807c6efea74df612dfe2850"
+    },
+    "public/phuket-rental-assets/rental-shortlist-1.js": {
+      "bytes": 2382,
+      "new_git_blob": "0515ab117ea4f954b8c0d159440b0bc8aeb69778",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "44130b887dfb0afa4d25a8a4e0ece23e8292c71498d6c06fd93b95c2b2bd7b54"
+    },
+    "public/phuket-rental-assets/rental-shortlist-2.js": {
+      "bytes": 2114,
+      "new_git_blob": "6f3e9df1ec31252f607a38337dcc1b0902b8be8c",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "957f4badcfdc5eb587af631bcf853b6ad2b3eecd33877a95e0eb031cfb006e02"
+    },
+    "public/phuket-rental-assets/rental-shortlist.css": {
+      "bytes": 2304,
+      "new_git_blob": "fd272a653b3d169f51f299b344f7c96f275f8914",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "406ade68573373b38980e9c1b19adc7dcc3de97c5f8b86bfb0343b9cbd0602e2"
+    },
+    "public/phuket-universe.css": {
+      "bytes": 14806,
+      "new_git_blob": "183d64838d273d923b40b02375513eba60c21c52",
+      "old_git_blob": null,
+      "operation": "add",
+      "sha256": "c362ad0aa48033ad465c976619fb0d5a315610baf99e7b8caa2532e18ea6b287"
+    }
+  },
+  "limitations": "Patch is an inspectable source proposal. Do not apply to main or deploy: historical route/font rules and exact release admission still conflict, no new manifest, actual Next build, full preflight, visual/independent approval or deployment.",
+  "patch_bytes": 244225,
+  "patch_git_blob": "48b8b0936ca0fc6ff3d7193729f8ada0ee447c10",
+  "patch_sha256": "de4fe99f8340a71c0d1ae9a4475888e422dc18fed0a741957366216aef5afd94",
+  "profile_sha256": "5c91d5044cec3737d64289e49daad86d2ed786581d7d3af1dbe7bf0491f280a0",
+  "release_approval": false,
+  "scope": "R22_CONSOLIDATED_REVIEW_PATCH_ONLY"
+}
