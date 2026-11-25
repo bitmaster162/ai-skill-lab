@@ -1,0 +1,986 @@
+{
+  "authority": {
+    "deploy": false,
+    "merge": false,
+    "production": false
+  },
+  "base": "b76fbcf4c42104a057c80d6a6a59df9d936b039a",
+  "candidate_payload": {
+    "files": 136,
+    "nonfont_bytes": 1496425,
+    "payload_sha256": "fca36841bb4a352296c46191f994d050cecb74017e3e74c18349f55ce4d132ed",
+    "total_bytes": 1617813
+  },
+  "font_policy_proposal": {
+    "en/phuket-universe/rental-budget-calculator.html": {
+      "csp": "default-src 'none'; script-src 'sha256-F8c4FUkEODFSzThS2sd8K9EdzRb1kzGDJgGt485wgOk='; style-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'",
+      "css_path": "phuket-rental-assets/rental-budget-calculator.css",
+      "css_sha256": "d4092e6d76e0bb73a23929c523484daf84f9c3d2a1d40818862744ae5f719ccb",
+      "font_bytes": 0,
+      "font_count": 0,
+      "html_sha256": "592e6e676ae0b772107f5a9e1ea29757be1538866a5d9f301ff2cececd5baf41"
+    },
+    "en/phuket-universe/rental-journey.html": {
+      "csp": "default-src 'none'; style-src 'self'; font-src 'none'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'",
+      "css_path": "phuket-rental-assets/rental-journey.css",
+      "css_sha256": "7f0c0e50e8188cdeb2f93202bb855bd66b929f61245a04d99b44078ec8cfdbe0",
+      "font_bytes": 0,
+      "font_count": 0,
+      "html_sha256": "3ba8d29847db90db52f23aeb7b8e21ffde613b9613e973edbaaa05e773b81022"
+    },
+    "en/phuket-universe/rental-move-in.html": {
+      "csp": "default-src 'none'; script-src 'sha256-J3GeqCmOdDuDs0Wpclkx9LRbPk8Uz0JjtBQJ0Du57xA='; style-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'",
+      "css_path": "phuket-rental-assets/rental-move-in.css",
+      "css_sha256": "4c46091f405d0c9f5dc5ea1651eddb3e668e70dac0dacb2d82577c8e2878fc53",
+      "font_bytes": 0,
+      "font_count": 0,
+      "html_sha256": "9e26f136f0c70d4075e94e0c6f8041e0c7a3f2d2eff0bfa91382b620cd6df3b8"
+    },
+    "en/phuket-universe/rental-move-out.html": {
+      "csp": "default-src 'none'; script-src 'sha256-nOXXnTBO3cqUbEKDYP4rdqyn0AgVY4AP501kRVG2VRE='; style-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'",
+      "css_path": "phuket-rental-assets/rental-move-out.css",
+      "css_sha256": "40749f28e10f43241d709dd66fdad39c39e02806f807c6efea74df612dfe2850",
+      "font_bytes": 0,
+      "font_count": 0,
+      "html_sha256": "9e39b6532998a8d3ce654b45ce1169d478dbd31922c09be1dd8e2cfed5f62e97"
+    },
+    "en/phuket-universe/rental-shortlist.html": {
+      "csp": "default-src 'none'; script-src 'sha256-RBMLiH37CvpNJaik4OziPoKSxxSY1sBv2TuVwrK9e1Q=' 'sha256-lX9Lrc/cXrWHr2Mbz4U7atKz7s0zh3qV4OsDHPsAbgI='; style-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'",
+      "css_path": "phuket-rental-assets/rental-shortlist.css",
+      "css_sha256": "406ade68573373b38980e9c1b19adc7dcc3de97c5f8b86bfb0343b9cbd0602e2",
+      "font_bytes": 0,
+      "font_count": 0,
+      "html_sha256": "3c5e0390960a30c4705d4a098c061e2b3d66fb3344fa0890afb3783f2287a943"
+    },
+    "phuket-universe/rental-budget-calculator.html": {
+      "csp": "default-src 'none'; script-src 'sha256-F8c4FUkEODFSzThS2sd8K9EdzRb1kzGDJgGt485wgOk='; style-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'",
+      "css_path": "phuket-rental-assets/rental-budget-calculator.css",
+      "css_sha256": "d4092e6d76e0bb73a23929c523484daf84f9c3d2a1d40818862744ae5f719ccb",
+      "font_bytes": 0,
+      "font_count": 0,
+      "html_sha256": "29b96cf3beb6798f8f4c201dfa9733e87a1b623dd46996f0f40ce354757fa1ab"
+    },
+    "phuket-universe/rental-journey.html": {
+      "csp": "default-src 'none'; style-src 'self'; font-src 'none'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'",
+      "css_path": "phuket-rental-assets/rental-journey.css",
+      "css_sha256": "7f0c0e50e8188cdeb2f93202bb855bd66b929f61245a04d99b44078ec8cfdbe0",
+      "font_bytes": 0,
+      "font_count": 0,
+      "html_sha256": "6c4f6c28ef4276b3cbc2f23330df6765dd460d5accaa3a31e25cae2accbc7fec"
+    },
+    "phuket-universe/rental-move-in.html": {
+      "csp": "default-src 'none'; script-src 'sha256-J3GeqCmOdDuDs0Wpclkx9LRbPk8Uz0JjtBQJ0Du57xA='; style-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'",
+      "css_path": "phuket-rental-assets/rental-move-in.css",
+      "css_sha256": "4c46091f405d0c9f5dc5ea1651eddb3e668e70dac0dacb2d82577c8e2878fc53",
+      "font_bytes": 0,
+      "font_count": 0,
+      "html_sha256": "d5dc37204c7b9e9b26042bb3f12c1f8c07f560f98080cf9a3f785fcdbb52e402"
+    },
+    "phuket-universe/rental-move-out.html": {
+      "csp": "default-src 'none'; script-src 'sha256-nOXXnTBO3cqUbEKDYP4rdqyn0AgVY4AP501kRVG2VRE='; style-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'",
+      "css_path": "phuket-rental-assets/rental-move-out.css",
+      "css_sha256": "40749f28e10f43241d709dd66fdad39c39e02806f807c6efea74df612dfe2850",
+      "font_bytes": 0,
+      "font_count": 0,
+      "html_sha256": "a865093e9fe3a20581513cd301dd6937b86e36e576f067f08366634d86397283"
+    },
+    "phuket-universe/rental-shortlist.html": {
+      "csp": "default-src 'none'; script-src 'sha256-RBMLiH37CvpNJaik4OziPoKSxxSY1sBv2TuVwrK9e1Q=' 'sha256-lX9Lrc/cXrWHr2Mbz4U7atKz7s0zh3qV4OsDHPsAbgI='; style-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'",
+      "css_path": "phuket-rental-assets/rental-shortlist.css",
+      "css_sha256": "406ade68573373b38980e9c1b19adc7dcc3de97c5f8b86bfb0343b9cbd0602e2",
+      "font_bytes": 0,
+      "font_count": 0,
+      "html_sha256": "3720cfa41ed66d0167e3c010c8751f6f18103c6a33308cdb81ca649c02a3d1f0"
+    }
+  },
+  "historical_rule_disposition": "Keep existing checks for all existing pages. Proposed exact ten-tool nonindex and zero-font rules only. Not installed or approved.",
+  "historical_source_sha256": {
+    "data/phuket_universe_u3_e38_r7b_profile.json": "4bb0b241618a3d75aee2de39ffd1771279e4d13399e00af2fa45661e57b26d39",
+    "scripts/check_security_headers.py": "f0cdc6545a37fa2fd107d5e84ea17a2ae50f3e0c3bc806249466364af52fbfa4",
+    "scripts/check_static_accessibility.py": "39924b267d53bb9816b785a1ae587177b9a2cead6ea195365cfd69b123edebbd",
+    "scripts/check_static_release.py": "116d4eaf7dfc6ae19f305368421692f4559253ab3c8d4290227a8298c52eb0df",
+    "scripts/check_transfer_performance.mjs": "05f1781f24cb7319eea7ffcaea0992eec85964651ada025766ff699b950d791c"
+  },
+  "next_files": {
+    "app/(en)/en/phuket-universe/rental-budget-calculator/route.ts": {
+      "bytes": 4296,
+      "sha256": "82ff0e92d6a6a713320ba5a08ccdaac5f78a9c4a767b819205743b9276ecaa45"
+    },
+    "app/(en)/en/phuket-universe/rental-journey/route.ts": {
+      "bytes": 13529,
+      "sha256": "c3529e0eeeac0564b1c10260de706c8c9683c2988e5e6903713691cccdcfd02a"
+    },
+    "app/(en)/en/phuket-universe/rental-move-in/route.ts": {
+      "bytes": 6518,
+      "sha256": "9d6d1f14f37bbd510c6017ae7e2d37cb895d5fe264c9b12ec3d32921b3cfc752"
+    },
+    "app/(en)/en/phuket-universe/rental-move-out/route.ts": {
+      "bytes": 6230,
+      "sha256": "833483ca242eed4121b52c702243081fae367837a4eb0c2f2969ad461de38b70"
+    },
+    "app/(en)/en/phuket-universe/rental-shortlist/route.ts": {
+      "bytes": 10327,
+      "sha256": "8c9fa320e23968296a08d32179c2b1e4ad28af9b9ac336d9a5e3192504ce3d55"
+    },
+    "app/(ru)/phuket-universe/rental-budget-calculator/route.ts": {
+      "bytes": 5195,
+      "sha256": "79dff8c27c69e3edbe558dd9e58aa99fb17195e7f1c66e9e9cbfeffccd27c21d"
+    },
+    "app/(ru)/phuket-universe/rental-journey/route.ts": {
+      "bytes": 16775,
+      "sha256": "75348d46d551ea2f0cf9b02918bd1c0f8fc8b62504494b00504ccc3a44735455"
+    },
+    "app/(ru)/phuket-universe/rental-move-in/route.ts": {
+      "bytes": 8414,
+      "sha256": "fa7e8b28a3a6acfe16936dd28d3e389ffa56907da1980b3c3bf0b77100d7c26c"
+    },
+    "app/(ru)/phuket-universe/rental-move-out/route.ts": {
+      "bytes": 8522,
+      "sha256": "9b9c49563b0f4fdbe1ef0c93410f595c85ec0593cc0bac8c4248e36acb6d1059"
+    },
+    "app/(ru)/phuket-universe/rental-shortlist/route.ts": {
+      "bytes": 13502,
+      "sha256": "dc5f5b7a326df6f60e39a3a492f27a92ab078a55c461829d45215f81c6ded2b8"
+    },
+    "components/PhuketUniverse.tsx": {
+      "bytes": 1206,
+      "sha256": "9c37eb073982b91b2af9d51a0a68418e0115e716b0656143b4e897d8aff4ca6e"
+    },
+    "components/phuketRentalJourney.ts": {
+      "bytes": 2141,
+      "sha256": "73b4a2deac6b69549204bbb919fa61c18f10ed0e3396e820ed43b85e4c626720"
+    },
+    "public/phuket-rental-assets/rental-budget-calculator-1.js": {
+      "bytes": 1340,
+      "sha256": "17c738154904383152cd3852dac77c2bd11dcd16f59331832601ade3ce7080e9"
+    },
+    "public/phuket-rental-assets/rental-budget-calculator.css": {
+      "bytes": 1934,
+      "sha256": "d4092e6d76e0bb73a23929c523484daf84f9c3d2a1d40818862744ae5f719ccb"
+    },
+    "public/phuket-rental-assets/rental-journey.css": {
+      "bytes": 2600,
+      "sha256": "7f0c0e50e8188cdeb2f93202bb855bd66b929f61245a04d99b44078ec8cfdbe0"
+    },
+    "public/phuket-rental-assets/rental-move-in-1.js": {
+      "bytes": 516,
+      "sha256": "27719ea8298e743b83b345a9725931f4b45b3e4f14cf4263b41409d03bb9ef10"
+    },
+    "public/phuket-rental-assets/rental-move-in.css": {
+      "bytes": 1417,
+      "sha256": "4c46091f405d0c9f5dc5ea1651eddb3e668e70dac0dacb2d82577c8e2878fc53"
+    },
+    "public/phuket-rental-assets/rental-move-out-1.js": {
+      "bytes": 1350,
+      "sha256": "9ce5d79d304eddca946c428360fe2b76aca7d0081563800fe74d644551b65511"
+    },
+    "public/phuket-rental-assets/rental-move-out.css": {
+      "bytes": 1815,
+      "sha256": "40749f28e10f43241d709dd66fdad39c39e02806f807c6efea74df612dfe2850"
+    },
+    "public/phuket-rental-assets/rental-shortlist-1.js": {
+      "bytes": 2382,
+      "sha256": "44130b887dfb0afa4d25a8a4e0ece23e8292c71498d6c06fd93b95c2b2bd7b54"
+    },
+    "public/phuket-rental-assets/rental-shortlist-2.js": {
+      "bytes": 2114,
+      "sha256": "957f4badcfdc5eb587af631bcf853b6ad2b3eecd33877a95e0eb031cfb006e02"
+    },
+    "public/phuket-rental-assets/rental-shortlist.css": {
+      "bytes": 2304,
+      "sha256": "406ade68573373b38980e9c1b19adc7dcc3de97c5f8b86bfb0343b9cbd0602e2"
+    },
+    "public/phuket-universe.css": {
+      "bytes": 14806,
+      "sha256": "c362ad0aa48033ad465c976619fb0d5a315610baf99e7b8caa2532e18ea6b287"
+    }
+  },
+  "open_gates": [
+    "Independent approval of exact successor profile and changed guide typography.",
+    "Implement separately versioned lineage/route/font checks without modifying historical seals.",
+    "Actual Next build/router, full preflight, accessibility/visual review and owner merge."
+  ],
+  "parent_payload_sha256": "f11a64758e9c5661eea55a24b9a98c6c078e17dcdfca8e335bd04c23776d99e5",
+  "r20_commit": "b77cd16f44a6ba31ad39117273b3cf91f20f9258",
+  "release_approval": false,
+  "route_partition": {
+    "all_html_routes": 70,
+    "nonindex": [
+      "/en/phuket-universe/rental-budget-calculator",
+      "/en/phuket-universe/rental-journey",
+      "/en/phuket-universe/rental-move-in",
+      "/en/phuket-universe/rental-move-out",
+      "/en/phuket-universe/rental-shortlist",
+      "/phuket-universe/rental-budget-calculator",
+      "/phuket-universe/rental-journey",
+      "/phuket-universe/rental-move-in",
+      "/phuket-universe/rental-move-out",
+      "/phuket-universe/rental-shortlist"
+    ],
+    "public": [
+      "/",
+      "/about",
+      "/build",
+      "/business",
+      "/certificate",
+      "/challenge",
+      "/curriculum",
+      "/en",
+      "/en/about",
+      "/en/build",
+      "/en/business",
+      "/en/certificate",
+      "/en/challenge",
+      "/en/curriculum",
+      "/en/family",
+      "/en/faq",
+      "/en/guides",
+      "/en/guides/ai-first-tasks-for-adults",
+      "/en/guides/ai-pilot-for-small-business",
+      "/en/guides/ai-safety-for-kids",
+      "/en/guides/ai-start-for-adults",
+      "/en/kids",
+      "/en/matcher",
+      "/en/method",
+      "/en/parents",
+      "/en/personal",
+      "/en/phuket",
+      "/en/phuket-universe",
+      "/en/pricing",
+      "/en/privacy",
+      "/en/projects",
+      "/en/proof",
+      "/en/safety",
+      "/en/start",
+      "/en/studio",
+      "/en/teens",
+      "/en/terms",
+      "/family",
+      "/faq",
+      "/guides",
+      "/guides/ai-first-tasks-for-adults",
+      "/guides/ai-pilot-for-small-business",
+      "/guides/ai-safety-for-kids",
+      "/guides/ai-start-for-adults",
+      "/kids",
+      "/matcher",
+      "/method",
+      "/parents",
+      "/personal",
+      "/phuket",
+      "/phuket-universe",
+      "/pricing",
+      "/privacy",
+      "/projects",
+      "/proof",
+      "/safety",
+      "/start",
+      "/studio",
+      "/teens",
+      "/terms"
+    ]
+  },
+  "schema": "phuket-rental-successor-profile.draft.v1",
+  "static_additions": [
+    "en/phuket-universe/rental-budget-calculator.html",
+    "en/phuket-universe/rental-journey.html",
+    "en/phuket-universe/rental-move-in.html",
+    "en/phuket-universe/rental-move-out.html",
+    "en/phuket-universe/rental-shortlist.html",
+    "phuket-rental-assets/rental-budget-calculator-1.js",
+    "phuket-rental-assets/rental-budget-calculator.css",
+    "phuket-rental-assets/rental-journey.css",
+    "phuket-rental-assets/rental-move-in-1.js",
+    "phuket-rental-assets/rental-move-in.css",
+    "phuket-rental-assets/rental-move-out-1.js",
+    "phuket-rental-assets/rental-move-out.css",
+    "phuket-rental-assets/rental-shortlist-1.js",
+    "phuket-rental-assets/rental-shortlist-2.js",
+    "phuket-rental-assets/rental-shortlist.css",
+    "phuket-universe/rental-budget-calculator.html",
+    "phuket-universe/rental-journey.html",
+    "phuket-universe/rental-move-in.html",
+    "phuket-universe/rental-move-out.html",
+    "phuket-universe/rental-shortlist.html"
+  ],
+  "static_files": {
+    "404.html": {
+      "bytes": 1952,
+      "sha256": "c47c3d76d0cdbae30470ae3d8d4c45ccbf50a588a3973dcab9776042bde9e18f"
+    },
+    "98ac1c70-f355-43f0-84f5-57cbf4c68e18.txt": {
+      "bytes": 37,
+      "sha256": "464000dca8907fbe778ead1e70c10110c45bb844c94a040da8ed6656c1c57329"
+    },
+    "about.html": {
+      "bytes": 13319,
+      "sha256": "0f32d5b007be429a3a0ac8b3f4c3a56f3262f652d77a861509ed46cb00b7f9d0"
+    },
+    "analytics/preferences.css": {
+      "bytes": 511,
+      "sha256": "f01b317812dfb7d66a33c9a2a71c04644aa16344bbb231b8d0c23a8fd64c15ac"
+    },
+    "analytics/preferences.htm": {
+      "bytes": 644,
+      "sha256": "7abf4359d21644d5ee5d0e622a67fdaf3ff7fa34e0c1a47a6d873858a1df8edc"
+    },
+    "analytics/preferences.js": {
+      "bytes": 9424,
+      "sha256": "74dfa71045f4dff74ebc7773dc6a729f7008a82e3648605c1c3b1678c7708499"
+    },
+    "analytics/restore.js": {
+      "bytes": 202,
+      "sha256": "514cb77287256018bf4f23590da4e5c431a96e2b9681e19445bb92876731a33f"
+    },
+    "apple-touch-icon.png": {
+      "bytes": 793,
+      "sha256": "9cb88cac8049098fdfec1bb9e61bc25e9e2fa3fb8e1ac56516d06e4b332399f0"
+    },
+    "build.html": {
+      "bytes": 20120,
+      "sha256": "dd179f4045bb4a25bff1984f5295bbad63db30aa1d96d9d1d7af50be0de42886"
+    },
+    "business.html": {
+      "bytes": 37803,
+      "sha256": "4c57525899de9399ba4cbc1f2e49bb56563696774f8391af779f1d0430f90c3e"
+    },
+    "certificate.html": {
+      "bytes": 13376,
+      "sha256": "a2c766c55cd5bfe6c449f490e22a628484d2c3e21a35e36fbc78929a7c9c0ee6"
+    },
+    "challenge.html": {
+      "bytes": 14850,
+      "sha256": "f85503a1ad426473b2fa4b7bb8d88248104aec080e2372717dc09577f15e9305"
+    },
+    "curriculum.html": {
+      "bytes": 18798,
+      "sha256": "7f3ca5dedcbc506b1e4f71b96c17ae1709bab004e76399561d0c2deea65010ad"
+    },
+    "en.html": {
+      "bytes": 14548,
+      "sha256": "80ea5d9e93052a143af442a1b9f23e55857eb123602ce9a3b5029d0cab13af90"
+    },
+    "en/about.html": {
+      "bytes": 11009,
+      "sha256": "8cd910e0e995eae6b4821be667b679655a8f68030c4216f6e86683934934f096"
+    },
+    "en/build.html": {
+      "bytes": 14900,
+      "sha256": "120c60e327bf3a08c1d12875c384613ff113e3f6fc13f1ebc46e51c646aba0f8"
+    },
+    "en/business.html": {
+      "bytes": 27900,
+      "sha256": "3d8c281eec5e18895774b63f9139240a65aec78795257480f2c394bf78aa328d"
+    },
+    "en/certificate.html": {
+      "bytes": 10397,
+      "sha256": "51807ea0572be0c7f08d75036bab552fda2b3a11292e0a1d1b92bc3cef378977"
+    },
+    "en/challenge.html": {
+      "bytes": 12307,
+      "sha256": "5f860d5ee9ae2a4dbbfdc106f71b103e715bc5a906da57b7f68ea28f3eb31d6f"
+    },
+    "en/curriculum.html": {
+      "bytes": 15008,
+      "sha256": "5d648492b7723f2c175b2c4c698dd4a1a3e4f199fd1ffd9a3dc7821bde8a4602"
+    },
+    "en/family.html": {
+      "bytes": 9856,
+      "sha256": "f3d4e1241c9a3c9223266e055e164f27d1311feffba3ae300a13297c090eec2f"
+    },
+    "en/faq.html": {
+      "bytes": 12580,
+      "sha256": "a377b58cfa3d0830e7c1afb86f2e5c86ae7802eaf5019a04225081af844d3c14"
+    },
+    "en/guides.html": {
+      "bytes": 8650,
+      "sha256": "c286bf7c698056351f1b0eec10a5a18be622a6cf8f3c10b1ba6c164a72e67303"
+    },
+    "en/guides/ai-first-tasks-for-adults.html": {
+      "bytes": 20997,
+      "sha256": "5831839b802f7755adaf8d17420e0b6cbc8ee5445713924b92dfa29c1325a20b"
+    },
+    "en/guides/ai-pilot-for-small-business.html": {
+      "bytes": 22542,
+      "sha256": "eee69b48d498df6a3ba6477a4d225d6923a2de804708417b6f0c54d02c5bea22"
+    },
+    "en/guides/ai-safety-for-kids.html": {
+      "bytes": 15347,
+      "sha256": "fe89326ba58644c69465eada31e1a2aecd9a96f7bab8990b9c9b62d8805b56eb"
+    },
+    "en/guides/ai-start-for-adults.html": {
+      "bytes": 24827,
+      "sha256": "00f1c2ead1f7a3845f0fdff18e43692e664213e4a94e05e153ef9f8e4869b2de"
+    },
+    "en/kids.html": {
+      "bytes": 13242,
+      "sha256": "46efb18c307f7a74d3e6fb52a7d741e186bafe62ccd28a83a893f6986ff514c3"
+    },
+    "en/matcher.html": {
+      "bytes": 10970,
+      "sha256": "70ab1f2457938b4f29f47b9a56d3b7a3512a914d0ac1e7eaf4bd15da7724c149"
+    },
+    "en/method.html": {
+      "bytes": 9385,
+      "sha256": "2c15cc2b174d323facd601cb99a68ff53e7fdb7c732bc7c08801314fdad72f9a"
+    },
+    "en/parents.html": {
+      "bytes": 12109,
+      "sha256": "e0a65860924e30fb8040bfd76f6cf36f264b2f25a0eae9bb61fa9fe52e560ba9"
+    },
+    "en/personal.html": {
+      "bytes": 15536,
+      "sha256": "6b51f58bb8d38a1f3379f54010e863e5f0acfca38a0fded31a3a389de79ad9d2"
+    },
+    "en/phuket-universe.html": {
+      "bytes": 25073,
+      "sha256": "0515368343252f79e8cb4b81402880188127df481ef595cc38815894092a36c8"
+    },
+    "en/phuket-universe/rental-budget-calculator.html": {
+      "bytes": 3479,
+      "sha256": "592e6e676ae0b772107f5a9e1ea29757be1538866a5d9f301ff2cececd5baf41"
+    },
+    "en/phuket-universe/rental-journey.html": {
+      "bytes": 12313,
+      "sha256": "3ba8d29847db90db52f23aeb7b8e21ffde613b9613e973edbaaa05e773b81022"
+    },
+    "en/phuket-universe/rental-move-in.html": {
+      "bytes": 5637,
+      "sha256": "9e26f136f0c70d4075e94e0c6f8041e0c7a3f2d2eff0bfa91382b620cd6df3b8"
+    },
+    "en/phuket-universe/rental-move-out.html": {
+      "bytes": 5353,
+      "sha256": "9e39b6532998a8d3ce654b45ce1169d478dbd31922c09be1dd8e2cfed5f62e97"
+    },
+    "en/phuket-universe/rental-shortlist.html": {
+      "bytes": 9046,
+      "sha256": "3c5e0390960a30c4705d4a098c061e2b3d66fb3344fa0890afb3783f2287a943"
+    },
+    "en/phuket.html": {
+      "bytes": 10384,
+      "sha256": "a3c2b88c44b6225fad85487bbe217f471fa5986f50213258c38ae0517e71fd56"
+    },
+    "en/pricing.html": {
+      "bytes": 19007,
+      "sha256": "1db7800c6cf9623b914b2f46559efc762d023a25d117c7b9fc902c17146141c0"
+    },
+    "en/privacy.html": {
+      "bytes": 9938,
+      "sha256": "84e684ee96f3705811b4c66efff3fdde73f225c54b9de7513c45fe1501773c18"
+    },
+    "en/projects.html": {
+      "bytes": 21415,
+      "sha256": "0644af5700e445fddb57d058fcb1a7b18484504e1467c11cc5da9d8dab154779"
+    },
+    "en/proof.html": {
+      "bytes": 23181,
+      "sha256": "8f8513b775105c3b7794747efbd77ede24eb9f3ab519f3442e21de8a8e27bb63"
+    },
+    "en/safety.html": {
+      "bytes": 11696,
+      "sha256": "8ddf95e7ff0faeb65298e67ebcfc8aaa7ca0e233a2fef7de8c752df09b125067"
+    },
+    "en/start.html": {
+      "bytes": 16622,
+      "sha256": "d86be38ecf0a6796d5800dac04af84fafc081621794ec10e877323d802bf0d74"
+    },
+    "en/studio.html": {
+      "bytes": 12890,
+      "sha256": "e0c396e44ed0fcba060a2d5bb9e4f9749baa319d79c1991f15f4bae2ef9e3fdd"
+    },
+    "en/teens.html": {
+      "bytes": 17076,
+      "sha256": "6ddcf8ebcfe34492d51ae2e822530d04885bd4933013ee47d1a43ecaaac3f0d0"
+    },
+    "en/terms.html": {
+      "bytes": 7351,
+      "sha256": "b14018349aef529d59fec8f75603084dc9052ba6255572491a8d29afadbb6150"
+    },
+    "family.html": {
+      "bytes": 11946,
+      "sha256": "05a5541bc19795a0aa7cf96f996877935a294ec8d61ab88d09d20d4233aab37f"
+    },
+    "faq.html": {
+      "bytes": 17074,
+      "sha256": "642d13c0b6d14a01acb700459ab6210f6f28416bcd03abcad0d89515a9bd4303"
+    },
+    "favicon.ico": {
+      "bytes": 3775,
+      "sha256": "d81acfcbbdc40f45cebffe3378706282124fec993f182cab128b9346147d9b7d"
+    },
+    "favicon.svg": {
+      "bytes": 234,
+      "sha256": "3530c65a4a778bb4ad243457cffd36d6d3c063b33231e1838413a97f0b4ce927"
+    },
+    "fonts/Manrope-cyrillic.woff2": {
+      "bytes": 14500,
+      "sha256": "c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914"
+    },
+    "fonts/Manrope-latin.woff2": {
+      "bytes": 24836,
+      "sha256": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972"
+    },
+    "fonts/OFL-Manrope.txt": {
+      "bytes": 4386,
+      "sha256": "d6a309fcfb963d329a93baf9df66fa5f3c23a4be2b5f67edf24d6cafecde12ac"
+    },
+    "fonts/Onest-ru-en.woff2": {
+      "bytes": 30036,
+      "sha256": "1527f4a5e3a2c65b9d789bf86a49cceefea2472bda0b1b3edc08b3adae4a9997"
+    },
+    "fonts/Unbounded-ru-en.woff2": {
+      "bytes": 52016,
+      "sha256": "1600f2b8c27dc942601fdd2fc3f894f0375e371287d740289bf58945ab1991b1"
+    },
+    "guides.html": {
+      "bytes": 10413,
+      "sha256": "ff53748467ea3b65103ee26ed65154f7ae761410402956fae468903db37ddc38"
+    },
+    "guides/ai-first-tasks-for-adults.html": {
+      "bytes": 27846,
+      "sha256": "580cc6096fe22e0a27d60543d7d3d93b8b61fd1db582511d31087c29fd57497c"
+    },
+    "guides/ai-pilot-for-small-business.html": {
+      "bytes": 32954,
+      "sha256": "ec63bec22f1ce238525f10946b4df83b86db9325ace40b2c5579fca0332e5d99"
+    },
+    "guides/ai-safety-for-kids.html": {
+      "bytes": 19410,
+      "sha256": "e63c4e2b819d5f1078fe782a53eb0317e50878c1b7584ee6810de066810a4f3a"
+    },
+    "guides/ai-start-for-adults.html": {
+      "bytes": 36138,
+      "sha256": "4121b9a5c5a7e2cfe733732f12b8cdf56e0004e0ed9071a470a02d580f03730a"
+    },
+    "icon-192.png": {
+      "bytes": 858,
+      "sha256": "9493b6adadc37e7a0a3408e0a9e6ec014e7502c15e7adec20c49cf40a4d8f09c"
+    },
+    "icon-512.png": {
+      "bytes": 2432,
+      "sha256": "d06c3ab86ab5268a5648eeeeb68a013298839d519e58bb2bed4139884c81f823"
+    },
+    "index.html": {
+      "bytes": 18783,
+      "sha256": "becab971c71aed00555b58b8e82f4c5af1b5096adaa04c485d88246c67cfaef2"
+    },
+    "kids.html": {
+      "bytes": 17088,
+      "sha256": "3c9e6eb7fe9090ba44b9c070d448ad83a8fdba0e7d8f7fff982b8e7ea72b1128"
+    },
+    "lab-command.js": {
+      "bytes": 2974,
+      "sha256": "967f8b85b31a079e3077dd41fe0cf66305d59895cf06211f9baf4aca443d9ea3"
+    },
+    "lead-form-runtime.js": {
+      "bytes": 4743,
+      "sha256": "cb0582dcccfb813112b06c70f9ab2638586af346383f2f9c919e4bea94b1cc17"
+    },
+    "llms.txt": {
+      "bytes": 3525,
+      "sha256": "5b084e3ca99aaee6e2090eb6e1ddf27868a0444aea6c4ed8cc47e00e27cbbc0c"
+    },
+    "logo.png": {
+      "bytes": 7465,
+      "sha256": "80b1e1966105ece5fa5e8727d5be472bff2c9efdc0ecbf8ea0af61fc7fe52a07"
+    },
+    "matcher-v2.js": {
+      "bytes": 15796,
+      "sha256": "8b9b4b952e46375ead3ad01b6d6a070f52feebdef5e26a09d489d46d38e5be5b"
+    },
+    "matcher.html": {
+      "bytes": 13021,
+      "sha256": "1e657893fe197c6da2d8fc28c6a5de5e8b435f3d4f4ac88634face48d2fa25f1"
+    },
+    "method.html": {
+      "bytes": 11298,
+      "sha256": "52c740db4161b3d409fe6396c0525ebd551997394ebacdd66bd34f49f9d37340"
+    },
+    "og-en-business.png": {
+      "bytes": 8986,
+      "sha256": "ea2e5fe1a2707b1875685bc231c95898988498701d819f0c54d247fe22b8a551"
+    },
+    "og-en-faq.png": {
+      "bytes": 8276,
+      "sha256": "7c34e4daa11b6bfc4699deb0c3a2a3fa14c54d9fd914be50ca4303d88125a55c"
+    },
+    "og-en-home.png": {
+      "bytes": 9349,
+      "sha256": "302cdb4cecbc76d5dba39338bb2c386d0db12fa25e6f69041b72c31596199eb8"
+    },
+    "og-en-kids.png": {
+      "bytes": 9946,
+      "sha256": "f4248b79cbfd65d15c30a903accee50da3bb21e9c2cbb1c6da74d0aadb195918"
+    },
+    "og-en-parents.png": {
+      "bytes": 11208,
+      "sha256": "de603bccb599389f9fde47434985521bcd4a406fdb2969246d184e1e26e6ab1f"
+    },
+    "og-en-personal.png": {
+      "bytes": 10653,
+      "sha256": "3d0047a49199ec4d5732c21f9eae07231c565e0514acf85724da65974c65f56f"
+    },
+    "og-en-phuket.png": {
+      "bytes": 8208,
+      "sha256": "476dad46df2d7b13bf797c382256f7f9c1b109ede651cb8e5248eed8f21399db"
+    },
+    "og-en-pricing.png": {
+      "bytes": 8417,
+      "sha256": "d4a4cfeaa09be3e424a2a1c2dfb90a62962bc0a116723ee7e7b66eaf8df506e2"
+    },
+    "og-en-start.png": {
+      "bytes": 7935,
+      "sha256": "8526784e01f7f718a184d7e80a4d680a894ff9c64f4bc5196b6a078ee43993d2"
+    },
+    "og-en-teens.png": {
+      "bytes": 8263,
+      "sha256": "d214837b837fbc909e8159643125a92aca4ed9ba3ea4a4daa9172b86a9a1304e"
+    },
+    "og-ru-business.png": {
+      "bytes": 9080,
+      "sha256": "cc4d2737c32b80abae1bb5a318e83198dc3054df1b210a519337e27f547804e6"
+    },
+    "og-ru-faq.png": {
+      "bytes": 7826,
+      "sha256": "60362a7fa06131799ffbfdcda11030e775e8daef8bcc22799bd9adc3bc0bd6e0"
+    },
+    "og-ru-home.png": {
+      "bytes": 9432,
+      "sha256": "636fdf86ef13749514f8b03c2df8913e66c97bc91f3d2f8fb4006dadcf79fefa"
+    },
+    "og-ru-kids.png": {
+      "bytes": 9965,
+      "sha256": "280686326263971116903712f8330763c4cb1fe9fca1a1c23745ac414bcf4972"
+    },
+    "og-ru-parents.png": {
+      "bytes": 11040,
+      "sha256": "8ccd91bde923c719992d06df6df77615cf8746682f6c4c21555a45dbc0ff1a5c"
+    },
+    "og-ru-personal.png": {
+      "bytes": 9743,
+      "sha256": "ceaa3de7f42ee1c574877be557d5655e724a1c5408979a7d5856c9b2467b3771"
+    },
+    "og-ru-phuket.png": {
+      "bytes": 8379,
+      "sha256": "6011b07763303074990e6fdbcb5809ef8c8d8094b5440404fa9540e649c0644b"
+    },
+    "og-ru-pricing.png": {
+      "bytes": 8983,
+      "sha256": "c1a1fee223e67774bb66f62ee7b523b6b79f3081eba1f8b7addb074ab09d705d"
+    },
+    "og-ru-start.png": {
+      "bytes": 7828,
+      "sha256": "7a695ab6b7eaf1916c7ad049f93ab327da7b0786a5fdd34f436cad682dbf39b6"
+    },
+    "og-ru-teens.png": {
+      "bytes": 9291,
+      "sha256": "33b9eb38381e28d501aec3e7c027bafcc18c6e89de782f400ae145f17f3b5808"
+    },
+    "og.png": {
+      "bytes": 7988,
+      "sha256": "673558d19bd5203c77db540ffd80d73f6ed8b7c791085fe92949f3d84fafd664"
+    },
+    "parents.html": {
+      "bytes": 15130,
+      "sha256": "167ac3e97dd5b1f090c3f50a3a97e5fa5e0b50bd4f94ee54d2c767186fcc9cb6"
+    },
+    "personal.html": {
+      "bytes": 19069,
+      "sha256": "ce70990f94fb68a7e39f401901a7c1bc284396af3130dac23827d51a5e1a15ce"
+    },
+    "phuket-housing-u2.css": {
+      "bytes": 1448,
+      "sha256": "8696c711fa7bc961a6ac5e949c80e242d76601668f2af96dfd4b0020679577d0"
+    },
+    "phuket-housing-u2.js": {
+      "bytes": 3342,
+      "sha256": "20341e10c125636cd770e704c1f456f2a634854f5c7843de4edf8cb702ba0a8c"
+    },
+    "phuket-rental-assets/rental-budget-calculator-1.js": {
+      "bytes": 1340,
+      "sha256": "17c738154904383152cd3852dac77c2bd11dcd16f59331832601ade3ce7080e9"
+    },
+    "phuket-rental-assets/rental-budget-calculator.css": {
+      "bytes": 1934,
+      "sha256": "d4092e6d76e0bb73a23929c523484daf84f9c3d2a1d40818862744ae5f719ccb"
+    },
+    "phuket-rental-assets/rental-journey.css": {
+      "bytes": 2600,
+      "sha256": "7f0c0e50e8188cdeb2f93202bb855bd66b929f61245a04d99b44078ec8cfdbe0"
+    },
+    "phuket-rental-assets/rental-move-in-1.js": {
+      "bytes": 516,
+      "sha256": "27719ea8298e743b83b345a9725931f4b45b3e4f14cf4263b41409d03bb9ef10"
+    },
+    "phuket-rental-assets/rental-move-in.css": {
+      "bytes": 1417,
+      "sha256": "4c46091f405d0c9f5dc5ea1651eddb3e668e70dac0dacb2d82577c8e2878fc53"
+    },
+    "phuket-rental-assets/rental-move-out-1.js": {
+      "bytes": 1350,
+      "sha256": "9ce5d79d304eddca946c428360fe2b76aca7d0081563800fe74d644551b65511"
+    },
+    "phuket-rental-assets/rental-move-out.css": {
+      "bytes": 1815,
+      "sha256": "40749f28e10f43241d709dd66fdad39c39e02806f807c6efea74df612dfe2850"
+    },
+    "phuket-rental-assets/rental-shortlist-1.js": {
+      "bytes": 2382,
+      "sha256": "44130b887dfb0afa4d25a8a4e0ece23e8292c71498d6c06fd93b95c2b2bd7b54"
+    },
+    "phuket-rental-assets/rental-shortlist-2.js": {
+      "bytes": 2114,
+      "sha256": "957f4badcfdc5eb587af631bcf853b6ad2b3eecd33877a95e0eb031cfb006e02"
+    },
+    "phuket-rental-assets/rental-shortlist.css": {
+      "bytes": 2304,
+      "sha256": "406ade68573373b38980e9c1b19adc7dcc3de97c5f8b86bfb0343b9cbd0602e2"
+    },
+    "phuket-universe-events.js": {
+      "bytes": 1964,
+      "sha256": "e29a7b8dab7963c1c0dff2d76682e72cb99a9f752461fa2c60c63df02ba54dd5"
+    },
+    "phuket-universe.css": {
+      "bytes": 14806,
+      "sha256": "c362ad0aa48033ad465c976619fb0d5a315610baf99e7b8caa2532e18ea6b287"
+    },
+    "phuket-universe.html": {
+      "bytes": 27757,
+      "sha256": "aab8adad6f27448dbd102cbef3d7d0d5e10e6fa4d9b284526ad33264ab69b02f"
+    },
+    "phuket-universe/rental-budget-calculator.html": {
+      "bytes": 4378,
+      "sha256": "29b96cf3beb6798f8f4c201dfa9733e87a1b623dd46996f0f40ce354757fa1ab"
+    },
+    "phuket-universe/rental-journey.html": {
+      "bytes": 15559,
+      "sha256": "6c4f6c28ef4276b3cbc2f23330df6765dd460d5accaa3a31e25cae2accbc7fec"
+    },
+    "phuket-universe/rental-move-in.html": {
+      "bytes": 7533,
+      "sha256": "d5dc37204c7b9e9b26042bb3f12c1f8c07f560f98080cf9a3f785fcdbb52e402"
+    },
+    "phuket-universe/rental-move-out.html": {
+      "bytes": 7645,
+      "sha256": "a865093e9fe3a20581513cd301dd6937b86e36e576f067f08366634d86397283"
+    },
+    "phuket-universe/rental-shortlist.html": {
+      "bytes": 12221,
+      "sha256": "3720cfa41ed66d0167e3c010c8751f6f18103c6a33308cdb81ca649c02a3d1f0"
+    },
+    "phuket.html": {
+      "bytes": 13073,
+      "sha256": "92e22b89466ed9a3407e07d6b3505c0db1caa430941b277fbd748f447389c6a9"
+    },
+    "pricing.html": {
+      "bytes": 22508,
+      "sha256": "31eca4e766a11dcaad03a6a8006d42dcf36b065fdea56143b4f9e8fc471bafb9"
+    },
+    "privacy.html": {
+      "bytes": 13358,
+      "sha256": "e08a553a611e9414a2bf0b78e86a4a6cc3e2a92af16e6f5eded5ef758bc277ee"
+    },
+    "project-filter.js": {
+      "bytes": 714,
+      "sha256": "9ffbc90afc98556eb1539629ede2876362e2a00f2b84fe20df315fc09997dc28"
+    },
+    "projects.html": {
+      "bytes": 28271,
+      "sha256": "2f96255923562450e387c96840bc68349df689dae97a1f22827855aeeae6d002"
+    },
+    "prompt-auditor.js": {
+      "bytes": 3080,
+      "sha256": "b39ca83a8200e6ffbbefe5fbb503a85bcbb0478d92ab90c52040c44daf8c82d4"
+    },
+    "proof.html": {
+      "bytes": 30526,
+      "sha256": "7efb388d98f52382fa6b1a2ccd39256322dfd225d785e265efde3dbc05e349fb"
+    },
+    "robert-dumanyan-mentor.webp": {
+      "bytes": 10582,
+      "sha256": "1ccb8e47747706274a47302ed1a379748269de24890b5778ab721fd62ff8251b"
+    },
+    "robots.txt": {
+      "bytes": 67,
+      "sha256": "332cbcca130fa5d82115641450e6b05b939f5a02243a141c7795281b5286af88"
+    },
+    "safety-quiz.js": {
+      "bytes": 1240,
+      "sha256": "c2ebe9fd79afcd3b7655286cd7610ecc2c0cb7f89052a3641244494778311937"
+    },
+    "safety.html": {
+      "bytes": 14843,
+      "sha256": "cd246655865fb50e09791752bfc40c0bf929cd220db0e999cfe097f94f69897c"
+    },
+    "site.webmanifest": {
+      "bytes": 336,
+      "sha256": "e81aa3eab6c8b595a0c90e7f42325e4baa8e379e463dd5207693194c0648268d"
+    },
+    "sitemap.xml": {
+      "bytes": 5325,
+      "sha256": "232305ab57fec5a42fddfcbb02a85c738a7ddef513bfc42b79a7e0d7f36fffbe"
+    },
+    "start-brief.js": {
+      "bytes": 1844,
+      "sha256": "3a6e63cccdc1c9b67f5a99c3c3457c565a49e0a96d9b0ca33ed8313ac68f763a"
+    },
+    "start.html": {
+      "bytes": 22919,
+      "sha256": "3f109253334b31915d4943ee1d5cc8e16218709a9da23363c25b22a2b02c6b1e"
+    },
+    "studio.html": {
+      "bytes": 16577,
+      "sha256": "fc6d15de784831e19649aa3a7115daf9dbb579df89356fc5b97a4d12431187a0"
+    },
+    "teens.html": {
+      "bytes": 21844,
+      "sha256": "011817e43c312c1127596c4f3b6d11363c84a332586e4d3af8aa57236878b3dd"
+    },
+    "terms.html": {
+      "bytes": 9437,
+      "sha256": "d639d20fd0883e22688f3f2349c8c4133545913fd8bc3128c66c2bb865275742"
+    },
+    "vercel.json": {
+      "bytes": 12728,
+      "sha256": "691fa69c52d689ece2ded370065690a72d37ceea648a2952b0fd13db4865773f"
+    },
+    "workshop.css": {
+      "bytes": 41174,
+      "sha256": "a666815eb37b12ab643de504fd17e0a12255d25989c63b364ea5c58693a3da06"
+    }
+  },
+  "static_replacements": [
+    "en/phuket-universe.html",
+    "phuket-universe.html"
+  ],
+  "status": "PROPOSED_NOT_ADMITTED",
+  "tool_byte_caps": {
+    "cssBr": 8192,
+    "firstBr": 19456,
+    "firstGz": 23040,
+    "firstWithFonts": 102400,
+    "htmlBr": 10240
+  },
+  "tool_observed_transfer": {
+    "en/phuket-universe/rental-budget-calculator.html": {
+      "cssBr": 663,
+      "firstBr": 2225,
+      "firstGz": 2870,
+      "firstWithFonts": 2225,
+      "fontBytes": 0,
+      "fontCount": 0,
+      "fonts": [],
+      "htmlBr": 1028,
+      "htmlGz": 1417,
+      "jsBr": 534
+    },
+    "en/phuket-universe/rental-journey.html": {
+      "cssBr": 729,
+      "firstBr": 2999,
+      "firstGz": 3947,
+      "firstWithFonts": 2999,
+      "fontBytes": 0,
+      "fontCount": 0,
+      "fonts": [],
+      "htmlBr": 2270,
+      "htmlGz": 3006,
+      "jsBr": 0
+    },
+    "en/phuket-universe/rental-move-in.html": {
+      "cssBr": 485,
+      "firstBr": 1958,
+      "firstGz": 2675,
+      "firstWithFonts": 1958,
+      "fontBytes": 0,
+      "fontCount": 0,
+      "fonts": [],
+      "htmlBr": 1260,
+      "htmlGz": 1763,
+      "jsBr": 213
+    },
+    "en/phuket-universe/rental-move-out.html": {
+      "cssBr": 596,
+      "firstBr": 2608,
+      "firstGz": 3310,
+      "firstWithFonts": 2608,
+      "fontBytes": 0,
+      "fontCount": 0,
+      "fonts": [],
+      "htmlBr": 1421,
+      "htmlGz": 1856,
+      "jsBr": 591
+    },
+    "en/phuket-universe/rental-shortlist.html": {
+      "cssBr": 730,
+      "firstBr": 4369,
+      "firstGz": 5404,
+      "firstWithFonts": 4369,
+      "fontBytes": 0,
+      "fontCount": 0,
+      "fonts": [],
+      "htmlBr": 1926,
+      "htmlGz": 2514,
+      "jsBr": 1713
+    },
+    "phuket-universe/rental-budget-calculator.html": {
+      "cssBr": 663,
+      "firstBr": 2534,
+      "firstGz": 3270,
+      "firstWithFonts": 2534,
+      "fontBytes": 0,
+      "fontCount": 0,
+      "fonts": [],
+      "htmlBr": 1337,
+      "htmlGz": 1817,
+      "jsBr": 534
+    },
+    "phuket-universe/rental-journey.html": {
+      "cssBr": 729,
+      "firstBr": 3650,
+      "firstGz": 4686,
+      "firstWithFonts": 3650,
+      "fontBytes": 0,
+      "fontCount": 0,
+      "fonts": [],
+      "htmlBr": 2921,
+      "htmlGz": 3745,
+      "jsBr": 0
+    },
+    "phuket-universe/rental-move-in.html": {
+      "cssBr": 485,
+      "firstBr": 2395,
+      "firstGz": 3181,
+      "firstWithFonts": 2395,
+      "fontBytes": 0,
+      "fontCount": 0,
+      "fonts": [],
+      "htmlBr": 1697,
+      "htmlGz": 2269,
+      "jsBr": 213
+    },
+    "phuket-universe/rental-move-out.html": {
+      "cssBr": 596,
+      "firstBr": 2989,
+      "firstGz": 3771,
+      "firstWithFonts": 2989,
+      "fontBytes": 0,
+      "fontCount": 0,
+      "fonts": [],
+      "htmlBr": 1802,
+      "htmlGz": 2317,
+      "jsBr": 591
+    },
+    "phuket-universe/rental-shortlist.html": {
+      "cssBr": 730,
+      "firstBr": 4938,
+      "firstGz": 6140,
+      "firstWithFonts": 4938,
+      "fontBytes": 0,
+      "fontCount": 0,
+      "fonts": [],
+      "htmlBr": 2495,
+      "htmlGz": 3250,
+      "jsBr": 1713
+    }
+  }
+}
