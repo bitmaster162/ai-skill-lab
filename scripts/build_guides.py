@@ -13,6 +13,7 @@ LIVE = ROOT / "deploy" / "live"
 GUIDE_DIR = ROOT / "guides" / "aiskillab"
 ORIGIN = "https://aiskillab.work"
 ORG_ID = f"{ORIGIN}/#organization"
+SOCIAL_CARDS = json.loads((GUIDE_DIR / "social-cards.json").read_text(encoding="utf-8"))
 RU_GUIDES_SEO_TITLE = "Гайды по ИИ — AI Skill Lab · Пхукет"
 RU_GUIDES_DESCRIPTION = "Короткие проверенные материалы об ИИ для родителей, взрослых учеников и команд. У каждого — дата проверки и источники."
 SAFETY_QUIZ_SCRIPT = '<script src="/safety-quiz.js" defer></script>'
@@ -298,6 +299,18 @@ def sub_one(pattern: str, repl: str, value: str, label: str) -> str:
     return result
 
 
+def apply_card_metadata(prefix: str, route: str, image_alt: str) -> str:
+    if card := SOCIAL_CARDS.get(route):
+        image_url = html.escape(ORIGIN + card["url"], quote=True)
+        image_alt = card["alt"]
+        twitter_image = (f'<meta name="twitter:image" content="{image_url}">'
+                         f'<meta name="twitter:image:alt" content="{html.escape(image_alt, quote=True)}">')
+        prefix = sub_one(r'<meta property="og:image" content="[^"]*">', f'<meta property="og:image" content="{image_url}">', prefix, "og:image")
+        prefix = sub_one(r'<meta name="twitter:image" content="[^"]*">', twitter_image, prefix, "twitter:image")
+    prefix = sub_one(r'<meta property="og:image:alt" content="[^"]*">', f'<meta property="og:image:alt" content="{html.escape(image_alt, quote=True)}">', prefix, "og:image:alt")
+    return prefix
+
+
 def update_head(prefix: str, *, title: str, description: str, route: str, alternate: str, lang: str, page_type: str, image_alt: str, schemas: list[dict]) -> str:
     ru_path = route if lang == "ru" else alternate
     en_path = route if lang == "en" else alternate
@@ -314,7 +327,7 @@ def update_head(prefix: str, *, title: str, description: str, route: str, altern
     prefix = sub_one(r'<meta property="og:title" content="[^"]*">', f'<meta property="og:title" content="{html.escape(title, quote=True)}">', prefix, "og:title")
     prefix = sub_one(r'<meta property="og:description" content="[^"]*">', f'<meta property="og:description" content="{html.escape(description, quote=True)}">', prefix, "og:description")
     prefix = sub_one(r'<meta property="og:url" content="[^"]*">', f'<meta property="og:url" content="{ORIGIN}{route}">', prefix, "og:url")
-    prefix = sub_one(r'<meta property="og:image:alt" content="[^"]*">', f'<meta property="og:image:alt" content="{html.escape(image_alt, quote=True)}">', prefix, "og:image:alt")
+    prefix = apply_card_metadata(prefix, route, image_alt)
     prefix = sub_one(r'<meta name="twitter:title" content="[^"]*">', f'<meta name="twitter:title" content="{html.escape(title, quote=True)}">', prefix, "twitter:title")
     prefix = sub_one(r'<meta name="twitter:description" content="[^"]*">', f'<meta name="twitter:description" content="{html.escape(description, quote=True)}">', prefix, "twitter:description")
     blocks = "".join(f'<script type="application/ld+json">{html.escape(json.dumps(obj, ensure_ascii=False, separators=(",", ":")), quote=False)}</script>' for obj in schemas)
