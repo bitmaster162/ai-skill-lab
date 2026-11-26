@@ -100,6 +100,31 @@ jobs:
         run: pip install --disable-pip-version-check playwright==1.55.0
       - name: Follow diagnostic CTAs and verify mocked form intent in Chrome
         run: python -B scripts/test_diagnostic_intent_browser.py
+      - name: Verify the business-pilot audience candidate in both languages
+        run: |
+          git apply --check docs/release-candidates/business-pilot-audience/next-source.patch || git apply --reverse --check docs/release-candidates/business-pilot-audience/next-source.patch
+          mkdir "$RUNNER_TEMP/pilot-original"
+          git archive 2444bd77f7616ba916c37b2b3bcba11898926be0 deploy/live | tar -x -C "$RUNNER_TEMP/pilot-original"
+          python -B scripts/build_business_pilot_audience_preview.py "$RUNNER_TEMP/business-pilot-audience" --parent-root "$RUNNER_TEMP/pilot-original/deploy/live"
+          cd "$RUNNER_TEMP/business-pilot-audience"
+          echo "c70f71cc58d4977b82600adf5b12db773606542573d28ad309cde4ad39d94799  _release.json" | sha256sum --check
+          python -B "$GITHUB_WORKSPACE/scripts/test_pilot_audience_browser.py" . --receipt "$RUNNER_TEMP/reference-audience.json"
+      - name: Check the submitted static site whenever a pull request changes its payload
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          if ! git diff --quiet "$BASE_SHA" HEAD -- deploy/live; then
+            python -B scripts/test_pilot_audience_browser.py deploy/live --receipt "$RUNNER_TEMP/candidate-audience.json"
+          fi
+      - name: Save the browser result with the tested release digest
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: business-pilot-audience-receipts
+          path: |
+            ${{ runner.temp }}/reference-audience.json
+            ${{ runner.temp }}/candidate-audience.json
+          if-no-files-found: error
       - name: Verify exact adult analytics successor
         run: python -B scripts/test_adult_analytics_release.py
       - name: Test optional adult pageview consent boundaries
