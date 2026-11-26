@@ -110,6 +110,24 @@ for raw in workflow_text.splitlines():
         if command.startswith(("python ", "node ")):
             workflow_commands.append(command)
 
+# R4E: exact admission gate sequence after the still-protected E2 guide check.
+R4E_ADMISSION_COMMANDS = (
+    "python scripts/check_release_profile_admission.py",
+    "python scripts/test_guide_route_admission.py",
+    "python scripts/test_release_profile_admission.py",
+)
+for surface_name, surface in (("workflow", workflow_commands), ("preflight", preflight_commands)):
+    checks += 1
+    if surface.count("python scripts/check_guides.py") != 1:
+        errors.append(f"{surface_name}: E2 guide anchor missing or duplicated")
+        continue
+    pos = surface.index("python scripts/check_guides.py")
+    if tuple(surface[pos+1:pos+4]) != R4E_ADMISSION_COMMANDS:
+        errors.append(f"{surface_name}: R4E triplet missing, reordered, or incomplete")
+    for command in R4E_ADMISSION_COMMANDS:
+        if surface.count(command) != 1:
+            errors.append(f"{surface_name}: admission command count drift {command}")
+
 checks += 1
 if len(preflight_commands) != len(set(preflight_commands)):
     errors.append("preflight CHECKS contains duplicate commands")
